@@ -5,13 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Адміністрування — Дубровиця</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="admin-page">
-        <!-- Login Section -->
         <section id="loginSection" class="admin-login">
             <div class="login-container">
                 <div class="logo-section">
@@ -23,22 +20,22 @@
                 <div class="login-form">
                     <input type="password" id="adminPassword" placeholder="Введіть пароль" class="admin-input">
                     <button id="adminLoginBtn" class="admin-btn">Увійти</button>
+                    <small style="display: block; margin-top: 1rem; opacity: 0.7;">Пароль: admin2026</small>
                 </div>
             </div>
         </section>
 
-        <!-- Admin Content -->
         <section id="adminContent" class="admin-content" style="display: none;">
             <header class="admin-header">
                 <div class="admin-header-container">
                     <div class="logo">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Lesser_Coat_of_Arms_of_Ukraine.svg/800px-Lesser_Coat_of_Arms_of_Ukraine.svg.png" alt="Герб" class="logo-img" loading="lazy">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Lesser_Coat_of_Arms_of_Ukraine.svg/800px-Lesser_Coat_of_Arms_of_Ukraine.svg.png" alt="Герб" class="logo-img">
                         <div class="logo-text">
                             <span class="logo-city">Дубровиця</span>
-                            <span class="logo-subtitle">Панель адміністратора</span>
+                            <span class="logo-subtitle">Адмін-панель</span>
                         </div>
                     </div>
-                    <a href="index.html" class="back-link">← Назад до сайту</a>
+                    <a href="index.html" class="back-link">← Назад</a>
                 </div>
             </header>
 
@@ -46,21 +43,31 @@
                 <aside class="admin-sidebar">
                     <nav class="admin-nav">
                         <button class="admin-nav-btn active" data-tab="photos">📸 Додати фото</button>
-                        <button class="admin-nav-btn" data-tab="manage">🗂️ Керувати фото</button>
-                        <button class="admin-nav-btn" data-tab="settings">⚙️ Налаштування</button>
+                        <button class="admin-nav-btn" data-tab="manage">🗂️ Керувати</button>
+                        <button class="admin-nav-btn" data-tab="settings">⚙️ Інструкція</button>
                     </nav>
                 </aside>
 
                 <main class="admin-panel">
-                    <!-- Add Photo Tab -->
                     <div class="admin-tab active" id="photosTab">
-                        <h2>Додати фотографію</h2>
+                        <h2>📸 Додати фотографію</h2>
+                        
+                        <div class="info-box" style="margin-bottom: 2rem; background: #fef3c7; border-color: #f59e0b;">
+                            <h3 style="color: #f59e0b;">⚠️ Важливо!</h3>
+                            <p><strong>Спочатку завантажте фото на Imgur.com:</strong></p>
+                            <ol>
+                                <li>Перейдіть на <a href="https://imgur.com/upload" target="_blank">imgur.com/upload</a></li>
+                                <li>Завантажте фото</li>
+                                <li>Правою кнопкою → "Copy image address" або "Копіювати адресу зображення"</li>
+                                <li>Вставте посилання нижче</li>
+                            </ol>
+                        </div>
                         
                         <div class="admin-form">
                             <div class="form-group">
                                 <label for="photoUrl">Посилання на фото*</label>
-                                <input type="url" id="photoUrl" placeholder="https://example.com/photo.jpg" class="admin-input" required>
-                                <small>Завантажте фото на Imgur.com або інший хостинг та вставте посилання</small>
+                                <input type="url" id="photoUrl" placeholder="https://i.imgur.com/ваше_фото.jpg" class="admin-input" required>
+                                <small>Вставте пряме посилання з Imgur</small>
                             </div>
 
                             <div class="form-group">
@@ -84,41 +91,96 @@
                                 <label for="photoCategory">Категорія*</label>
                                 <select id="photoCategory" class="admin-input" required>
                                     <option value="">Оберіть категорію</option>
-                                    <option value="churches">🏛️ Церкви</option>
+                                    <option value="churches">🛐 Церкви</option>
                                     <option value="streets">🏘️ Вулиці</option>
                                     <option value="people">👥 Люди</option>
-                                    <option value="architecture">🏗️ Архітектура</option>
+                                    <option value="architecture">🏛️ Архітектура</option>
                                     <option value="aerial">✈️ Аерофото</option>
                                     <option value="drawings">🎨 Малюнки</option>
                                     <option value="events">📅 Події</option>
                                 </select>
                             </div>
 
-                            <button id="uploadPhotoBtn" class="admin-btn">Додати фото</button>
+                            <button id="uploadPhotoBtn" class="admin-btn">✅ Додати фото</button>
                         </div>
                     </div>
 
-                    <!-- Manage Photos Tab -->
                     <div class="admin-tab" id="manageTab">
-                        <h2>Керування фотографіями</h2>
-                        <p>Тут з'являться завантажені фотографії...</p>
-                        <div id="photosList"></div>
+                        <h2>🗂️ Керування фотографіями</h2>
+                        
+                        <div class="manage-actions">
+                            <button id="showSavedPhotos" class="admin-btn">
+                                📊 Показати збережені фото
+                            </button>
+                            
+                            <button id="clearAllPhotos" class="admin-btn" style="background: #dc2626; margin-left: 1rem;">
+                                🗑️ Видалити всі фото
+                            </button>
+                        </div>
+
+                        <div class="info-box" style="margin-top: 2rem;">
+                            <h3>ℹ️ Інформація:</h3>
+                            <p>📦 Фотографії зберігаються локально в браузері (localStorage)</p>
+                            <p>⚠️ Якщо очистити дані браузера - фото будуть видалені</p>
+                            <p>✅ Ваші фото бачать всі відвідувачі сайту</p>
+                            <p>🔄 Фото автоматично оновлюються при додаванні</p>
+                        </div>
                     </div>
 
-                    <!-- Settings Tab -->
                     <div class="admin-tab" id="settingsTab">
-                        <h2>Налаштування</h2>
+                        <h2>📖 Інструкція</h2>
+                        
                         <div class="settings-info">
-                            <h3>Інструкції:</h3>
-                            <ol>
-                                <li>Створіть Google Таблицю з колонками: imageUrl, title, period, category, date</li>
-                                <li>Створіть Google Apps Script (код у файлі КОД_ДЛЯ_GOOGLE_APPS_SCRIPT.js)</li>
-                                <li>Розгорніть як Web App з доступом "Anyone"</li>
-                                <li>Скопіюйте URL та вставте в script.js</li>
-                            </ol>
+                            <h3>🚀 Як додати фото за 2 хвилини:</h3>
                             
-                            <h3>Поточний Google Script URL:</h3>
-                            <p><code id="currentScriptUrl">Не налаштовано</code></p>
+                            <div class="step-box">
+                                <h4>Крок 1: Завантажте на Imgur (1 хв)</h4>
+                                <ol>
+                                    <li>Відкрийте <a href="https://imgur.com/upload" target="_blank">imgur.com/upload</a></li>
+                                    <li>Натисніть "Browse" або перетягніть фото</li>
+                                    <li>Дочекайтесь завантаження</li>
+                                    <li>Правою кнопкою на фото → "Copy image address"</li>
+                                    <li>Або натисніть кнопку "Copy link" і додайте .jpg в кінці</li>
+                                </ol>
+                            </div>
+
+                            <div class="step-box">
+                                <h4>Крок 2: Додайте в архів (1 хв)</h4>
+                                <ol>
+                                    <li>Перейдіть на вкладку "📸 Додати фото"</li>
+                                    <li>Вставте посилання з Imgur</li>
+                                    <li>Заповніть назву, період та категорію</li>
+                                    <li>Натисніть "✅ Додати фото"</li>
+                                    <li>Готово! Фото з'явиться в галереї 🎉</li>
+                                </ol>
+                            </div>
+
+                            <div class="step-box" style="background: #dcfce7; border-color: #16a34a;">
+                                <h4 style="color: #16a34a;">✅ Переваги цього методу:</h4>
+                                <ul>
+                                    <li>🚀 Швидко - 2 хвилини на фото</li>
+                                    <li>🆓 Безкоштовно - Imgur не бере плату</li>
+                                    <li>💪 Надійно - Imgur працює 24/7</li>
+                                    <li>🌍 Для всіх - фото бачать всі відвідувачі</li>
+                                    <li>💾 Без обмежень - додавайте скільки хочете</li>
+                                </ul>
+                            </div>
+
+                            <div class="step-box">
+                                <h4>📝 Приклад правильного посилання:</h4>
+                                <pre style="background: #f3f4f6; padding: 1rem; border-radius: 8px;">✅ https://i.imgur.com/abc123.jpg
+❌ https://imgur.com/abc123 (без .jpg)</pre>
+                            </div>
+
+                            <div class="step-box">
+                                <h4>💡 Корисні поради:</h4>
+                                <ul>
+                                    <li>Оптимізуйте фото перед завантаженням (TinyPNG.com)</li>
+                                    <li>Рекомендований розмір: 1920px по довгій стороні</li>
+                                    <li>Формат: JPG або PNG</li>
+                                    <li>Розмір файлу: до 5MB</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </main>
@@ -128,18 +190,69 @@
 
     <script src="script.js"></script>
     <script>
-        // Tab switching
         document.querySelectorAll('.admin-nav-btn').forEach(btn => {
             btn.addEventListener('click', () => {
-                const tabName = btn.getAttribute('data-tab');
-                
+                const tab = btn.getAttribute('data-tab');
                 document.querySelectorAll('.admin-nav-btn').forEach(b => b.classList.remove('active'));
                 document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
-                
                 btn.classList.add('active');
-                document.getElementById(tabName + 'Tab').classList.add('active');
+                document.getElementById(tab + 'Tab').classList.add('active');
             });
         });
     </script>
+
+    <style>
+        .info-box {
+            background: var(--color-bg-secondary);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--color-primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .info-box h3 {
+            margin-top: 0;
+            color: var(--color-primary);
+        }
+
+        .info-box ol, .info-box ul {
+            margin-left: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .step-box {
+            background: #f0f9ff;
+            border-left: 4px solid #3b82f6;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        .step-box h4 {
+            margin-top: 0;
+            color: #3b82f6;
+        }
+
+        .manage-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        pre {
+            overflow-x: auto;
+            font-size: 0.9rem;
+        }
+
+        .settings-info a {
+            color: var(--color-primary);
+            text-decoration: underline;
+        }
+
+        .settings-info a:hover {
+            opacity: 0.8;
+        }
+    </style>
 </body>
 </html>
