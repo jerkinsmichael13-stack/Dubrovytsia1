@@ -3,256 +3,338 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Адміністрування — Дубровиця</title>
+    <title>Адмін-панель — Дубровиця</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .admin-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+        .admin-section {
+            background: var(--color-surface);
+            padding: 2rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-lg);
+        }
+        .admin-input {
+            width: 100%;
+            padding: 0.75rem;
+            margin: 0.5rem 0;
+            border: 2px solid var(--color-border);
+            border-radius: 0.5rem;
+            font-size: 1rem;
+        }
+        .admin-btn {
+            background: var(--color-primary);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 1rem;
+            margin: 0.5rem 0.5rem 0.5rem 0;
+        }
+        .admin-btn:hover {
+            opacity: 0.9;
+        }
+        .code-display {
+            background: #f5f5f5;
+            border: 2px solid #ddd;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-family: monospace;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            margin: 1rem 0;
+            display: none;
+        }
+        .dark .code-display {
+            background: #2a2a2a;
+            border-color: #444;
+            color: #f5f5f5;
+        }
+        .instruction {
+            background: #e3f2fd;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin: 1rem 0;
+            border-left: 4px solid #2196F3;
+        }
+        .dark .instruction {
+            background: #1a3a52;
+            border-left-color: #64b5f6;
+        }
+        .warning {
+            background: #fff3cd;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin: 1rem 0;
+            border-left: 4px solid #ffc107;
+        }
+        .dark .warning {
+            background: #4a3f1a;
+            border-left-color: #ffd54f;
+        }
+        .step {
+            margin: 1.5rem 0;
+            padding-left: 2rem;
+            position: relative;
+        }
+        .step::before {
+            content: attr(data-step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: var(--color-accent);
+            color: white;
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.875rem;
+        }
+    </style>
 </head>
 <body>
-    <div class="admin-page">
-        <section id="loginSection" class="admin-login">
-            <div class="login-container">
-                <div class="logo-section">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Lesser_Coat_of_Arms_of_Ukraine.svg/800px-Lesser_Coat_of_Arms_of_Ukraine.svg.png" alt="Герб" class="admin-logo" loading="lazy">
-                    <h1>Адміністрування</h1>
-                    <p>Цифровий архів Дубровиці</p>
+    <header class="header">
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Lesser_Coat_of_Arms_of_Ukraine.svg/800px-Lesser_Coat_of_Arms_of_Ukraine.svg.png" alt="Герб" class="logo-img">
+                <div class="logo-text">
+                    <span class="logo-city">Дубровиця</span>
+                    <span class="logo-subtitle">Адмін-панель</span>
                 </div>
+            </a>
+            
+            <button class="theme-toggle" id="themeToggle" aria-label="Перемкнути тему">
+                <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <svg class="theme-icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <div class="admin-container">
+        <!-- Login Section -->
+        <div id="loginSection" class="admin-section">
+            <h2>🔐 Вхід в адмін-панель</h2>
+            <input type="password" id="adminPassword" class="admin-input" placeholder="Введіть пароль">
+            <button id="adminLoginBtn" class="admin-btn">Увійти</button>
+            <p style="margin-top: 1rem; color: var(--color-text-secondary);">Пароль за замовчуванням: <code>admin2026</code></p>
+        </div>
+
+        <!-- Admin Content -->
+        <div id="adminContent" style="display: none;">
+            
+            <!-- Важливе повідомлення -->
+            <div class="admin-section">
+                <h2>⚠️ ВАЖЛИВО: Як працює додавання фото</h2>
                 
-                <div class="login-form">
-                    <input type="password" id="adminPassword" placeholder="Введіть пароль" class="admin-input">
-                    <button id="adminLoginBtn" class="admin-btn">Увійти</button>
-                    <small style="display: block; margin-top: 1rem; opacity: 0.7;">Пароль: admin2026</small>
+                <div class="warning">
+                    <strong>Чому інші не бачать ваші фото?</strong>
+                    <p>Фото зберігаються в масиві <code>ALL_PHOTOS</code> у файлі <code>script.js</code>. Щоб всі бачили фото, потрібно редагувати цей файл на GitHub.</p>
+                </div>
+
+                <div class="instruction">
+                    <strong>Як це працює:</strong>
+                    <ol style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                        <li>Завантажте фото на <a href="https://imgur.com/upload" target="_blank">Imgur.com</a></li>
+                        <li>Скопіюйте пряме посилання (має закінчуватися на .jpg або .png)</li>
+                        <li>Заповніть форму нижче</li>
+                        <li>Натисніть "Згенерувати код"</li>
+                        <li>Скопіюйте згенерований код</li>
+                        <li>Додайте код в файл <code>script.js</code> на GitHub</li>
+                        <li>Через 2-5 хвилин фото побачать ВСІ! ✅</li>
+                    </ol>
                 </div>
             </div>
-        </section>
 
-        <section id="adminContent" class="admin-content" style="display: none;">
-            <header class="admin-header">
-                <div class="admin-header-container">
-                    <div class="logo">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Lesser_Coat_of_Arms_of_Ukraine.svg/800px-Lesser_Coat_of_Arms_of_Ukraine.svg.png" alt="Герб" class="logo-img">
-                        <div class="logo-text">
-                            <span class="logo-city">Дубровиця</span>
-                            <span class="logo-subtitle">Адмін-панель</span>
-                        </div>
-                    </div>
-                    <a href="index.html" class="back-link">← Назад</a>
+            <!-- Форма додавання фото -->
+            <div class="admin-section">
+                <h2>📸 Додати нове фото</h2>
+                
+                <div class="step" data-step="1">
+                    <h3>Завантажте фото на Imgur</h3>
+                    <p>Перейдіть на <a href="https://imgur.com/upload" target="_blank" style="color: var(--color-primary);">imgur.com/upload</a> і завантажте фото</p>
+                    <p style="color: var(--color-text-secondary); font-size: 0.875rem;">Правою кнопкою на фото → "Copy image address"</p>
                 </div>
-            </header>
 
-            <div class="admin-main">
-                <aside class="admin-sidebar">
-                    <nav class="admin-nav">
-                        <button class="admin-nav-btn active" data-tab="photos">📸 Додати фото</button>
-                        <button class="admin-nav-btn" data-tab="manage">🗂️ Керувати</button>
-                        <button class="admin-nav-btn" data-tab="settings">⚙️ Інструкція</button>
-                    </nav>
-                </aside>
+                <div class="step" data-step="2">
+                    <h3>Вставте посилання на фото</h3>
+                    <input type="text" id="photoUrl" class="admin-input" placeholder="https://i.imgur.com/ваше_фото.jpg">
+                    <p style="color: var(--color-text-secondary); font-size: 0.875rem;">
+                        ✅ Правильно: https://i.imgur.com/abc123.jpg<br>
+                        ❌ Неправильно: https://imgur.com/abc123
+                    </p>
+                </div>
 
-                <main class="admin-panel">
-                    <div class="admin-tab active" id="photosTab">
-                        <h2>📸 Додати фотографію</h2>
-                        
-                        <div class="info-box" style="margin-bottom: 2rem; background: #fef3c7; border-color: #f59e0b;">
-                            <h3 style="color: #f59e0b;">⚠️ Важливо!</h3>
-                            <p><strong>Спочатку завантажте фото на Imgur.com:</strong></p>
-                            <ol>
-                                <li>Перейдіть на <a href="https://imgur.com/upload" target="_blank">imgur.com/upload</a></li>
-                                <li>Завантажте фото</li>
-                                <li>Правою кнопкою → "Copy image address" або "Копіювати адресу зображення"</li>
-                                <li>Вставте посилання нижче</li>
-                            </ol>
-                        </div>
-                        
-                        <div class="admin-form">
-                            <div class="form-group">
-                                <label for="photoUrl">Посилання на фото*</label>
-                                <input type="url" id="photoUrl" placeholder="https://i.imgur.com/ваше_фото.jpg" class="admin-input" required>
-                                <small>Вставте пряме посилання з Imgur</small>
-                            </div>
+                <div class="step" data-step="3">
+                    <h3>Заповніть інформацію</h3>
+                    
+                    <label style="display: block; margin-top: 1rem; font-weight: 500;">Назва фото *</label>
+                    <input type="text" id="photoTitle" class="admin-input" placeholder="Наприклад: Центральна площа, 1935 рік">
+                    
+                    <label style="display: block; margin-top: 1rem; font-weight: 500;">Період *</label>
+                    <select id="photoPeriod" class="admin-input">
+                        <option value="">Оберіть період</option>
+                        <option value="before-1900">До 1900</option>
+                        <option value="1900-1939">1900—1939</option>
+                        <option value="1939-1945">1939—1945 (Друга світова)</option>
+                        <option value="1945-1991">1945—1991 (Радянський період)</option>
+                        <option value="after-1991">Після 1991 (Незалежна Україна)</option>
+                    </select>
+                    
+                    <label style="display: block; margin-top: 1rem; font-weight: 500;">Категорія *</label>
+                    <select id="photoCategory" class="admin-input">
+                        <option value="">Оберіть категорію</option>
+                        <option value="churches">🛐 Церкви та храми</option>
+                        <option value="streets">🏘️ Вулиці міста</option>
+                        <option value="people">👥 Люди та портрети</option>
+                        <option value="architecture">🏛️ Архітектура</option>
+                        <option value="aerial">✈️ Аерофотознімки</option>
+                        <option value="drawings">🎨 Малюнки та гравюри</option>
+                        <option value="events">📅 Історичні події</option>
+                    </select>
+                    
+                    <label style="display: block; margin-top: 1rem; font-weight: 500;">Рік (необов'язково)</label>
+                    <input type="text" id="photoDate" class="admin-input" placeholder="Наприклад: 1935">
+                </div>
 
-                            <div class="form-group">
-                                <label for="photoTitle">Назва фото*</label>
-                                <input type="text" id="photoTitle" placeholder="Наприклад: Центральна площа, 1935 рік" class="admin-input" required>
-                            </div>
+                <div class="step" data-step="4">
+                    <h3>Згенеруйте код</h3>
+                    <button id="generateCode" class="admin-btn">✨ Згенерувати код для додавання</button>
+                </div>
 
-                            <div class="form-group">
-                                <label for="photoPeriod">Період*</label>
-                                <select id="photoPeriod" class="admin-input" required>
-                                    <option value="">Оберіть період</option>
-                                    <option value="before-1900">До 1900</option>
-                                    <option value="1900-1939">1900—1939</option>
-                                    <option value="1939-1945">1939—1945</option>
-                                    <option value="1945-1991">1945—1991</option>
-                                    <option value="after-1991">Після 1991</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="photoCategory">Категорія*</label>
-                                <select id="photoCategory" class="admin-input" required>
-                                    <option value="">Оберіть категорію</option>
-                                    <option value="churches">🛐 Церкви</option>
-                                    <option value="streets">🏘️ Вулиці</option>
-                                    <option value="people">👥 Люди</option>
-                                    <option value="architecture">🏛️ Архітектура</option>
-                                    <option value="aerial">✈️ Аерофото</option>
-                                    <option value="drawings">🎨 Малюнки</option>
-                                    <option value="events">📅 Події</option>
-                                </select>
-                            </div>
-
-                            <button id="uploadPhotoBtn" class="admin-btn">✅ Додати фото</button>
-                        </div>
-                    </div>
-
-                    <div class="admin-tab" id="manageTab">
-                        <h2>🗂️ Керування фотографіями</h2>
-                        
-                        <div class="manage-actions">
-                            <button id="showSavedPhotos" class="admin-btn">
-                                📊 Показати збережені фото
-                            </button>
-                            
-                            <button id="clearAllPhotos" class="admin-btn" style="background: #dc2626; margin-left: 1rem;">
-                                🗑️ Видалити всі фото
-                            </button>
-                        </div>
-
-                        <div class="info-box" style="margin-top: 2rem;">
-                            <h3>ℹ️ Інформація:</h3>
-                            <p>📦 Фотографії зберігаються локально в браузері (localStorage)</p>
-                            <p>⚠️ Якщо очистити дані браузера - фото будуть видалені</p>
-                            <p>✅ Ваші фото бачать всі відвідувачі сайту</p>
-                            <p>🔄 Фото автоматично оновлюються при додаванні</p>
-                        </div>
-                    </div>
-
-                    <div class="admin-tab" id="settingsTab">
-                        <h2>📖 Інструкція</h2>
-                        
-                        <div class="settings-info">
-                            <h3>🚀 Як додати фото за 2 хвилини:</h3>
-                            
-                            <div class="step-box">
-                                <h4>Крок 1: Завантажте на Imgur (1 хв)</h4>
-                                <ol>
-                                    <li>Відкрийте <a href="https://imgur.com/upload" target="_blank">imgur.com/upload</a></li>
-                                    <li>Натисніть "Browse" або перетягніть фото</li>
-                                    <li>Дочекайтесь завантаження</li>
-                                    <li>Правою кнопкою на фото → "Copy image address"</li>
-                                    <li>Або натисніть кнопку "Copy link" і додайте .jpg в кінці</li>
-                                </ol>
-                            </div>
-
-                            <div class="step-box">
-                                <h4>Крок 2: Додайте в архів (1 хв)</h4>
-                                <ol>
-                                    <li>Перейдіть на вкладку "📸 Додати фото"</li>
-                                    <li>Вставте посилання з Imgur</li>
-                                    <li>Заповніть назву, період та категорію</li>
-                                    <li>Натисніть "✅ Додати фото"</li>
-                                    <li>Готово! Фото з'явиться в галереї 🎉</li>
-                                </ol>
-                            </div>
-
-                            <div class="step-box" style="background: #dcfce7; border-color: #16a34a;">
-                                <h4 style="color: #16a34a;">✅ Переваги цього методу:</h4>
-                                <ul>
-                                    <li>🚀 Швидко - 2 хвилини на фото</li>
-                                    <li>🆓 Безкоштовно - Imgur не бере плату</li>
-                                    <li>💪 Надійно - Imgur працює 24/7</li>
-                                    <li>🌍 Для всіх - фото бачать всі відвідувачі</li>
-                                    <li>💾 Без обмежень - додавайте скільки хочете</li>
-                                </ul>
-                            </div>
-
-                            <div class="step-box">
-                                <h4>📝 Приклад правильного посилання:</h4>
-                                <pre style="background: #f3f4f6; padding: 1rem; border-radius: 8px;">✅ https://i.imgur.com/abc123.jpg
-❌ https://imgur.com/abc123 (без .jpg)</pre>
-                            </div>
-
-                            <div class="step-box">
-                                <h4>💡 Корисні поради:</h4>
-                                <ul>
-                                    <li>Оптимізуйте фото перед завантаженням (TinyPNG.com)</li>
-                                    <li>Рекомендований розмір: 1920px по довгій стороні</li>
-                                    <li>Формат: JPG або PNG</li>
-                                    <li>Розмір файлу: до 5MB</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </main>
+                <div id="codeDisplay" class="code-display"></div>
+                
+                <button id="copyCode" class="admin-btn" style="background: #4CAF50; display: none;">📋 Копіювати код</button>
             </div>
-        </section>
+
+            <!-- Інструкція для GitHub -->
+            <div class="admin-section">
+                <h2>📝 Як додати код в GitHub</h2>
+                
+                <div class="step" data-step="1">
+                    <h3>Відкрийте ваш репозиторій</h3>
+                    <p>Перейдіть на: <a href="https://github.com/jerkinsmichael13-stack/Dubrovytsia1" target="_blank" style="color: var(--color-primary);">github.com/jerkinsmichael13-stack/Dubrovytsia1</a></p>
+                </div>
+
+                <div class="step" data-step="2">
+                    <h3>Відкрийте файл script.js</h3>
+                    <p>Клікніть на файл <code>script.js</code> в списку файлів</p>
+                </div>
+
+                <div class="step" data-step="3">
+                    <h3>Натисніть "Edit" (олівець ✏️)</h3>
+                    <p>У верхньому правому куті файлу</p>
+                </div>
+
+                <div class="step" data-step="4">
+                    <h3>Знайдіть масив ALL_PHOTOS</h3>
+                    <p>Використайте Ctrl+F і шукайте: <code>=== ДОДАЙТЕ СВОЇ ФОТО ТУТ ===</code></p>
+                </div>
+
+                <div class="step" data-step="5">
+                    <h3>Вставте згенерований код</h3>
+                    <p>Вставте код <strong>ПЕРЕД</strong> коментарем <code>// === ДОДАЙТЕ СВОЇ ФОТО ТУТ ===</code></p>
+                    <div style="background: #f5f5f5; padding: 1rem; border-radius: 0.5rem; margin-top: 0.5rem; font-family: monospace; font-size: 0.875rem;">
+                        // Інші фото...<br>
+                        <span style="color: #4CAF50;">    ← ТУТ ВСТАВТЕ ВАШ КОД</span><br>
+                        <br>
+                        // === ДОДАЙТЕ СВОЇ ФОТО ТУТ ===
+                    </div>
+                </div>
+
+                <div class="step" data-step="6">
+                    <h3>Збережіть зміни</h3>
+                    <p>Прокрутіть вниз → "Commit changes" → Напишіть опис (наприклад: "Додано фото") → "Commit changes"</p>
+                </div>
+
+                <div class="step" data-step="7">
+                    <h3>Дочекайтесь оновлення</h3>
+                    <p>Через 2-5 хвилин GitHub Pages оновиться і фото з'явиться для ВСІХ! 🎉</p>
+                </div>
+            </div>
+
+            <!-- Додаткові підказки -->
+            <div class="admin-section">
+                <h2>💡 Корисні поради</h2>
+                
+                <div class="instruction">
+                    <h3>Формат посилання на Imgur:</h3>
+                    <p>✅ <code>https://i.imgur.com/abc123.jpg</code> - ПРАВИЛЬНО</p>
+                    <p>✅ <code>https://i.imgur.com/xyz789.png</code> - ПРАВИЛЬНО</p>
+                    <p>❌ <code>https://imgur.com/abc123</code> - НЕ ПРАЦЮЄ</p>
+                    <p style="margin-top: 0.5rem; font-size: 0.875rem;">Обов'язково натисніть "Copy image address" (правою кнопкою на фото)</p>
+                </div>
+
+                <div class="instruction">
+                    <h3>Якість фото:</h3>
+                    <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                        <li>Мінімальна ширина: 800px</li>
+                        <li>Рекомендована ширина: 1920px</li>
+                        <li>Формат: JPG (для фото), PNG (для малюнків)</li>
+                        <li>Розмір: до 5MB</li>
+                    </ul>
+                </div>
+
+                <div class="instruction">
+                    <h3>Назви фото:</h3>
+                    <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                        <li>Будьте конкретні: "Центральна площа, 1935" замість "Площа"</li>
+                        <li>Вказуйте рік якщо знаєте</li>
+                        <li>Додавайте контекст: "під час святкування", "після відбудови"</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Зворотній зв'язок -->
+            <div class="admin-section">
+                <h2>📞 Потрібна допомога?</h2>
+                <p>Якщо виникли проблеми:</p>
+                <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                    <li>Перевірте що посилання починається з <code>https://i.imgur.com/</code></li>
+                    <li>Перевірте що ви вставили код в правильне місце (перед коментарем)</li>
+                    <li>Дочекайтесь 5 хвилин після збереження на GitHub</li>
+                    <li>Очистіть кеш браузера (Ctrl+Shift+Delete)</li>
+                </ul>
+            </div>
+
+        </div>
     </div>
 
     <script src="script.js"></script>
     <script>
-        document.querySelectorAll('.admin-nav-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const tab = btn.getAttribute('data-tab');
-                document.querySelectorAll('.admin-nav-btn').forEach(b => b.classList.remove('active'));
-                document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
-                btn.classList.add('active');
-                document.getElementById(tab + 'Tab').classList.add('active');
-            });
+        // Додатковий функціонал для адмін-панелі
+        document.addEventListener('DOMContentLoaded', () => {
+            const copyBtn = document.getElementById('copyCode');
+            const codeDisplay = document.getElementById('codeDisplay');
+            const generateBtn = document.getElementById('generateCode');
+            
+            if (generateBtn) {
+                generateBtn.addEventListener('click', () => {
+                    if (codeDisplay && codeDisplay.textContent) {
+                        copyBtn.style.display = 'inline-block';
+                    }
+                });
+            }
         });
     </script>
-
-    <style>
-        .info-box {
-            background: var(--color-bg-secondary);
-            padding: 1.5rem;
-            border-radius: 12px;
-            border-left: 4px solid var(--color-primary);
-            margin-bottom: 1.5rem;
-        }
-
-        .info-box h3 {
-            margin-top: 0;
-            color: var(--color-primary);
-        }
-
-        .info-box ol, .info-box ul {
-            margin-left: 1.5rem;
-            line-height: 1.8;
-        }
-
-        .step-box {
-            background: #f0f9ff;
-            border-left: 4px solid #3b82f6;
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
-        }
-
-        .step-box h4 {
-            margin-top: 0;
-            color: #3b82f6;
-        }
-
-        .manage-actions {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            margin-bottom: 2rem;
-        }
-
-        pre {
-            overflow-x: auto;
-            font-size: 0.9rem;
-        }
-
-        .settings-info a {
-            color: var(--color-primary);
-            text-decoration: underline;
-        }
-
-        .settings-info a:hover {
-            opacity: 0.8;
-        }
-    </style>
 </body>
 </html>
