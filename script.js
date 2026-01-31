@@ -12,13 +12,12 @@ console.log('✅ Дубровиця Script v5.0 - Google Apps Script інтег�
 // ================================================
 // GOOGLE APPS SCRIPT НАЛАШТУВАННЯ
 // ================================================
-// ⚠️ ЗАМІНІТЬ ЦЕЙ URL НА ВАШ ВЛАСНИЙ з Google Apps Script
-// Інструкція: див. файл ІНСТРУКЦІЯ_GOOGLE_APPS_SCRIPT.md
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID_HERE/exec';
+// ✅ ВАШ GOOGLE APPS SCRIPT URL
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw1uVaFJo-H_ULEu6uC-37i4y2oJMEFOxxISf_dbPOiyFsbDis1mfNevDCs67KP7xwn/exec';
 
 // Увімкнути/вимкнути завантаження з Google Sheets
-// Встановіть true після налаштування Google Apps Script
-const USE_GOOGLE_SHEETS = false;
+// ✅ УВІМКНЕНО - фото завантажуються з Google Sheets
+const USE_GOOGLE_SHEETS = true;
 
 // ================================================
 // ФУНКЦІЯ ЗАВАНТАЖЕННЯ ФОТО З GOOGLE SHEETS
