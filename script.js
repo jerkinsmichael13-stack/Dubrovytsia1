@@ -1,56 +1,20 @@
 // ================================================
-// ДУБРОВИЦЯ - GITHUB PAGES VERSION
-// ✅ БЕЗ ЗОВНІШНІХ API
-// ✅ ЛОКАЛЬНЕ ЗБЕРІГАННЯ
+// ДУБРОВИЦЯ - ВИПРАВЛЕНА ВЕРСІЯ
+// ✅ Фото для всіх через GitHub Pages
+// ✅ Робоча навігація в lightbox
 // ================================================
 
-console.log('✅ Дубровиця GitHub Pages');
+console.log('✅ Дубровиця - виправлена версія');
 
 // ================================================
-// ЛОКАЛЬНЕ ЗБЕРІГАННЯ ФОТО
+// ЗБЕРІГАННЯ ФОТО В ФАЙЛІ (для всіх користувачів)
 // ================================================
-function savePhotoLocally(photoData) {
-    try {
-        let savedPhotos = localStorage.getItem('dubrovytsia_photos');
-        savedPhotos = savedPhotos ? JSON.parse(savedPhotos) : [];
-        savedPhotos.push(photoData);
-        localStorage.setItem('dubrovytsia_photos', JSON.stringify(savedPhotos));
-        console.log('✅ Фото збережено');
-        return { status: 'success' };
-    } catch (error) {
-        console.error('❌ Помилка:', error);
-        return { status: 'error', message: error.message };
-    }
-}
 
-function loadPhotosLocally() {
-    try {
-        let savedPhotos = localStorage.getItem('dubrovytsia_photos');
-        savedPhotos = savedPhotos ? JSON.parse(savedPhotos) : [];
-        console.log(`✅ Завантажено ${savedPhotos.length} фото`);
-        return savedPhotos.length > 0 ? [...savedPhotos, ...DEMO_PHOTOS] : DEMO_PHOTOS;
-    } catch (error) {
-        console.error('❌ Помилка:', error);
-        return DEMO_PHOTOS;
-    }
-}
-
-function deletePhoto(index) {
-    try {
-        let savedPhotos = localStorage.getItem('dubrovytsia_photos');
-        savedPhotos = savedPhotos ? JSON.parse(savedPhotos) : [];
-        savedPhotos.splice(index, 1);
-        localStorage.setItem('dubrovytsia_photos', JSON.stringify(savedPhotos));
-        return { status: 'success' };
-    } catch (error) {
-        return { status: 'error', message: error.message };
-    }
-}
-
-// ================================================
-// ДЕМО-ДАНІ
-// ================================================
-const DEMO_PHOTOS = [
+// ❗ ВАЖЛИВО: Додайте свої фото тут!
+// Кожне фото що ви додаєте через адмін-панель
+// потрібно також додати в цей масив вручну
+const ALL_PHOTOS = [
+    // === ДЕМО-ФОТО ===
     {
         imageUrl: 'https://images.unsplash.com/photo-1548013146-72479768bada?w=800&q=80',
         title: 'Костел Іоана Хрестителя, початок XX століття',
@@ -74,25 +38,142 @@ const DEMO_PHOTOS = [
     },
     {
         imageUrl: 'https://images.unsplash.com/photo-1590004953392-5aba2e72269a?w=800&q=80',
-        title: 'Центральна вулиця Дубровиці',
+        title: 'Центральна вулиця Дубровиці, міжвоєнний період',
         period: '1900-1939',
         category: 'streets',
         date: '1930'
     },
     {
         imageUrl: 'https://images.unsplash.com/photo-1583137890236-e5a1b4e3f0b3?w=800&q=80',
-        title: 'Ринкова площа',
+        title: 'Ринкова площа Дубровиці',
         period: '1945-1991',
         category: 'streets',
         date: '1960'
+    },
+    {
+        imageUrl: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800&q=80',
+        title: 'Головна вулиця після відбудови',
+        period: '1945-1991',
+        category: 'streets',
+        date: '1955'
+    },
+    {
+        imageUrl: 'https://images.unsplash.com/photo-1519817914152-22d216bb9170?w=800&q=80',
+        title: 'Сучасна Дубровиця',
+        period: 'after-1991',
+        category: 'streets',
+        date: '2015'
+    },
+    {
+        imageUrl: 'https://images.unsplash.com/photo-1604537466158-719b1972feb8?w=800&q=80',
+        title: 'Родина дубровицьких купців',
+        period: 'before-1900',
+        category: 'people',
+        date: '1895'
+    },
+    {
+        imageUrl: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?w=800&q=80',
+        title: 'Жителі Дубровиці на святковій ході',
+        period: '1900-1939',
+        category: 'people',
+        date: '1935'
+    },
+    {
+        imageUrl: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=800&q=80',
+        title: 'Святкування на центральній площі',
+        period: '1945-1991',
+        category: 'people',
+        date: '1970'
+    },
+    {
+        imageUrl: 'https://images.unsplash.com/photo-1568667256549-094345857637?w=800&q=80',
+        title: 'Будинок Дубровицької ратуші',
+        period: 'before-1900',
+        category: 'architecture',
+        date: '1890'
+    },
+    {
+        imageUrl: 'https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?w=800&q=80',
+        title: 'Історична будівля міської управи',
+        period: '1900-1939',
+        category: 'architecture',
+        date: '1920'
+    },
+    {
+        imageUrl: 'https://images.unsplash.com/photo-1513467535987-fd81bc7d62f8?w=800&q=80',
+        title: 'Радянська архітектура Дубровиці',
+        period: '1945-1991',
+        category: 'architecture',
+        date: '1975'
+    },
+    {
+        imageUrl: 'https://images.unsplash.com/photo-1573037403143-fd084e3d2b5e?w=800&q=80',
+        title: 'Дубровиця з висоти пташиного польоту, 1960-ті',
+        period: '1945-1991',
+        category: 'aerial',
+        date: '1965'
+    },
+    {
+        imageUrl: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=80',
+        title: 'Панорама Дубровиці сучасна',
+        period: 'after-1991',
+        category: 'aerial',
+        date: '2020'
+    },
+    {
+        imageUrl: 'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=800&q=80',
+        title: 'Гравюра Дубровицького замку',
+        period: 'before-1900',
+        category: 'drawings',
+        date: '1850'
+    },
+    {
+        imageUrl: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=800&q=80',
+        title: 'Малюнок Дубровиці з оборонними спорудами',
+        period: 'before-1900',
+        category: 'drawings',
+        date: '1780'
+    },
+    {
+        imageUrl: 'https://images.unsplash.com/photo-1545992952-fb2a5a6e3e4e?w=800&q=80',
+        title: 'Відкриття пам\'ятника героям війни',
+        period: '1945-1991',
+        category: 'events',
+        date: '1985'
+    },
+    {
+        imageUrl: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&q=80',
+        title: 'День незалежності України в Дубровиці',
+        period: 'after-1991',
+        category: 'events',
+        date: '2000'
+    },
+    {
+        imageUrl: 'https://images.unsplash.com/photo-1464047736614-af63643285bf?w=800&q=80',
+        title: 'Святкування 1000-річчя Дубровиці',
+        period: 'after-1991',
+        category: 'events',
+        date: '2005'
     }
+    
+    // === ДОДАЙТЕ СВОЇ ФОТО ТУТ ===
+    // Приклад:
+    // {
+    //     imageUrl: 'https://i.imgur.com/ваше_фото.jpg',
+    //     title: 'Назва вашого фото',
+    //     period: '1900-1939',  // або інший період
+    //     category: 'churches',  // або інша категорія
+    //     date: '1925'
+    // },
 ];
+
+console.log(`📸 Завантажено ${ALL_PHOTOS.length} фото`);
 
 const PERIOD_NAMES = {
     'before-1900': 'До 1900',
-    '1900-1939': '1900-1939',
-    '1939-1945': '1939-1945',
-    '1945-1991': '1945-1991',
+    '1900-1939': '1900—1939',
+    '1939-1945': '1939—1945',
+    '1945-1991': '1945—1991',
     'after-1991': 'Після 1991'
 };
 
@@ -186,9 +267,9 @@ function initHeaderScroll() {
 }
 
 function initCounters() {
-    const counters = document.querySelectorAll('[data-count]');
+    const counters = document.querySelectorAll('[data-target]');
     counters.forEach(counter => {
-        const target = parseInt(counter.getAttribute('data-count'));
+        const target = parseInt(counter.getAttribute('data-target'));
         let current = 0;
         const increment = target / 50;
         
@@ -212,16 +293,15 @@ function initCounters() {
 }
 
 // ================================================
-// ФОТОГАЛЕРЕЯ
+// ФОТОГАЛЕРЕЯ - ВИПРАВЛЕНА ВЕРСІЯ
 // ================================================
-let allPhotos = [];
 let currentFilter = 'all';
 let currentCategory = 'all';
+let filteredPhotos = [];  // ✅ Зберігаємо відфільтровані фото глобально
 let currentPhotoIndex = 0;
 
 function initPhotoGallery() {
     console.log('🖼️ Ініціалізація галереї');
-    allPhotos = loadPhotosLocally();
     displayPhotos();
     initGalleryFilters();
     initLightbox();
@@ -231,90 +311,152 @@ function displayPhotos() {
     const gallery = document.getElementById('photoGallery');
     if (!gallery) return;
     
-    const filtered = allPhotos.filter(photo => {
+    // Фільтруємо фото
+    filteredPhotos = ALL_PHOTOS.filter(photo => {
         const matchesPeriod = currentFilter === 'all' || photo.period === currentFilter;
         const matchesCategory = currentCategory === 'all' || photo.category === currentCategory;
         return matchesPeriod && matchesCategory;
     });
     
-    if (filtered.length === 0) {
-        gallery.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: 2rem;">Нічого не знайдено</p>';
+    console.log(`📊 Показано ${filteredPhotos.length} фото (з ${ALL_PHOTOS.length})`);
+    
+    if (filteredPhotos.length === 0) {
+        gallery.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: 2rem; color: var(--color-text-secondary);">Нічого не знайдено за обраними фільтрами</p>';
         return;
     }
     
-    gallery.innerHTML = filtered.map((photo, index) => `
-        <div class="photo-card" onclick="openLightbox(${index}, ${JSON.stringify(filtered).replace(/"/g, '&quot;')})">
+    // ✅ ВИПРАВЛЕНО: Використовуємо onclick з індексом
+    gallery.innerHTML = filteredPhotos.map((photo, index) => `
+        <div class="photo-card" onclick="openLightbox(${index})">
             <img src="${photo.imageUrl}" alt="${photo.title}" loading="lazy">
-            <div class="photo-info">
-                <h3>${photo.title}</h3>
-                <p>${PERIOD_NAMES[photo.period]} • ${CATEGORY_NAMES[photo.category]}</p>
+            <div class="photo-overlay">
+                <div class="photo-info">
+                    <h3>${photo.title}</h3>
+                    <p>${PERIOD_NAMES[photo.period]} · ${CATEGORY_NAMES[photo.category]}</p>
+                </div>
             </div>
         </div>
     `).join('');
 }
 
 function initGalleryFilters() {
+    // Фільтри періодів
     document.querySelectorAll('.filter-btn').forEach(btn => {
         btn.addEventListener('click', function() {
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
             this.classList.add('active');
-            currentFilter = this.getAttribute('data-filter');
+            currentFilter = this.dataset.filter;
             displayPhotos();
         });
     });
     
+    // Фільтри категорій
     document.querySelectorAll('.category-btn').forEach(btn => {
         btn.addEventListener('click', function() {
             document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
             this.classList.add('active');
-            currentCategory = this.getAttribute('data-category');
+            currentCategory = this.dataset.category;
             displayPhotos();
         });
     });
 }
 
-function openLightbox(index, photos) {
-    const lightbox = document.getElementById('lightbox');
-    if (!lightbox || !photos) return;
-    
+// ✅ ВИПРАВЛЕНО: Функція відкриття lightbox
+function openLightbox(index) {
     currentPhotoIndex = index;
-    const photo = photos[currentPhotoIndex];
+    const photo = filteredPhotos[index];
     
-    document.getElementById('lightboxImage').src = photo.imageUrl;
-    document.getElementById('lightboxCaption').textContent = photo.title;
-    document.getElementById('lightboxMeta').textContent = 
-        `${PERIOD_NAMES[photo.period]} • ${CATEGORY_NAMES[photo.category]}`;
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = document.getElementById('lightboxImage');
+    const lightboxCaption = document.getElementById('lightboxCaption');
+    const lightboxMeta = document.getElementById('lightboxMeta');
+    
+    if (!lightbox || !lightboxImage) return;
+    
+    lightboxImage.src = photo.imageUrl;
+    lightboxImage.alt = photo.title;
+    
+    if (lightboxCaption) lightboxCaption.textContent = photo.title;
+    if (lightboxMeta) {
+        lightboxMeta.textContent = `${PERIOD_NAMES[photo.period]} · ${CATEGORY_NAMES[photo.category]}${photo.date ? ` · ${photo.date}` : ''}`;
+    }
     
     lightbox.classList.add('active');
     document.body.style.overflow = 'hidden';
+    
+    console.log(`🖼️ Відкрито фото ${index + 1}/${filteredPhotos.length}: ${photo.title}`);
+}
+
+// ✅ ВИПРАВЛЕНО: Навігація в lightbox
+function navigateLightbox(direction) {
+    if (filteredPhotos.length === 0) return;
+    
+    if (direction === 'next') {
+        currentPhotoIndex = (currentPhotoIndex + 1) % filteredPhotos.length;
+    } else {
+        currentPhotoIndex = (currentPhotoIndex - 1 + filteredPhotos.length) % filteredPhotos.length;
+    }
+    
+    openLightbox(currentPhotoIndex);
+}
+
+function closeLightbox() {
+    const lightbox = document.getElementById('lightbox');
+    if (lightbox) {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+    }
 }
 
 function initLightbox() {
     const lightbox = document.getElementById('lightbox');
-    const closeBtn = lightbox?.querySelector('.lightbox-close');
+    if (!lightbox) return;
     
+    // ✅ Кнопка закриття
+    const closeBtn = lightbox.querySelector('.lightbox-close');
     if (closeBtn) {
-        closeBtn.addEventListener('click', () => {
-            lightbox.classList.remove('active');
-            document.body.style.overflow = '';
+        closeBtn.addEventListener('click', closeLightbox);
+    }
+    
+    // ✅ Навігація вперед/назад
+    const prevBtn = lightbox.querySelector('.lightbox-prev');
+    const nextBtn = lightbox.querySelector('.lightbox-next');
+    
+    if (prevBtn) {
+        prevBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            navigateLightbox('prev');
         });
     }
     
-    if (lightbox) {
-        lightbox.addEventListener('click', e => {
-            if (e.target === lightbox) {
-                lightbox.classList.remove('active');
-                document.body.style.overflow = '';
-            }
+    if (nextBtn) {
+        nextBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            navigateLightbox('next');
         });
     }
     
-    document.addEventListener('keydown', e => {
-        if (lightbox?.classList.contains('active') && e.key === 'Escape') {
-            lightbox.classList.remove('active');
-            document.body.style.overflow = '';
+    // ✅ Закриття при кліку на фон
+    lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) {
+            closeLightbox();
         }
     });
+    
+    // ✅ Клавіатурна навігація
+    document.addEventListener('keydown', (e) => {
+        if (!lightbox.classList.contains('active')) return;
+        
+        if (e.key === 'ArrowLeft') {
+            navigateLightbox('prev');
+        } else if (e.key === 'ArrowRight') {
+            navigateLightbox('next');
+        } else if (e.key === 'Escape') {
+            closeLightbox();
+        }
+    });
+    
+    console.log('✅ Lightbox ініціалізовано з навігацією');
 }
 
 // ================================================
@@ -325,15 +467,36 @@ const BOOKS_DATA = [
         title: 'Історія Дубровиці та околиць',
         author: 'Іван Петренко',
         year: '1995',
-        description: 'Всебічне дослідження історії міста',
+        description: 'Всебічне дослідження історії міста від найдавніших часів до сучасності',
         category: 'history'
     },
     {
-        title: 'Дубровицькі родини',
+        title: 'Дубровицькі родини: генеалогічні нариси',
         author: 'Марія Коваленко',
         year: '2003',
-        description: 'Генеалогічні нариси',
+        description: 'Дослідження родоводів найвідоміших дубровицьких сімей',
         category: 'genealogy'
+    },
+    {
+        title: 'Церкви та храми Дубровиччини',
+        author: 'Петро Савчук',
+        year: '2010',
+        description: 'Архітектурний огляд релігійних споруд регіону',
+        category: 'architecture'
+    },
+    {
+        title: 'Спогади старожилів',
+        author: 'Збірка',
+        year: '2015',
+        description: 'Усні історії жителів Дубровиці про життя у XX столітті',
+        category: 'memories'
+    },
+    {
+        title: 'Дубровиця у старих фотографіях',
+        author: 'Олександр Мельник',
+        year: '2018',
+        description: 'Альбом рідкісних історичних світлин міста',
+        category: 'photo'
     }
 ];
 
@@ -342,7 +505,7 @@ function initBooksSearch() {
     if (!searchInput) return;
     
     function displayBooks() {
-        const term = searchInput.value.toLowerCase();
+        const term = searchInput.value.toLowerCase().trim();
         const filtered = BOOKS_DATA.filter(book => 
             book.title.toLowerCase().includes(term) ||
             book.author.toLowerCase().includes(term) ||
@@ -353,23 +516,27 @@ function initBooksSearch() {
         if (!grid) return;
         
         if (filtered.length === 0) {
-            grid.innerHTML = '<p style="text-align: center;">Нічого не знайдено</p>';
+            grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: 2rem; color: var(--color-text-secondary);">Нічого не знайдено</p>';
             return;
         }
         
         grid.innerHTML = filtered.map(book => `
-            <div class="book-card">
+            <div class="book-card fade-in-up">
                 <div class="book-icon">📖</div>
                 <h3>${book.title}</h3>
-                <p class="book-author">${book.author}</p>
-                <p class="book-year">Рік: ${book.year}</p>
-                <p>${book.description}</p>
+                <p class="book-author">Автор: ${book.author}</p>
+                <p class="book-year">Рік видання: ${book.year}</p>
+                <p class="book-description">${book.description}</p>
             </div>
         `).join('');
+        
+        // Реініціалізуємо анімації
+        initScrollAnimations();
     }
     
     searchInput.addEventListener('input', displayBooks);
     displayBooks();
+    console.log('✅ Пошук книг ініціалізовано');
 }
 
 // ================================================
@@ -380,19 +547,43 @@ const METRIC_BOOKS = [
         type: 'birth',
         year: '1850-1870',
         parish: 'Парафія Святої Трійці',
-        records: 1243
+        records: 1243,
+        details: 'Записи про народження'
     },
     {
         type: 'marriage',
         year: '1850-1870',
         parish: 'Парафія Святої Трійці',
-        records: 324
+        records: 324,
+        details: 'Записи про шлюби'
+    },
+    {
+        type: 'death',
+        year: '1850-1870',
+        parish: 'Парафія Святої Трійці',
+        records: 876,
+        details: 'Записи про смерті'
+    },
+    {
+        type: 'birth',
+        year: '1871-1900',
+        parish: 'Костел Іоана Хрестителя',
+        records: 2156,
+        details: 'Записи про народження'
+    },
+    {
+        type: 'marriage',
+        year: '1871-1900',
+        parish: 'Костел Іоана Хрестителя',
+        records: 567,
+        details: 'Записи про шлюби'
     }
 ];
 
 function initMetricSearch() {
     const typeFilter = document.getElementById('typeFilter');
     const yearFilter = document.getElementById('yearFilter');
+    
     if (!typeFilter || !yearFilter) return;
     
     function displayMetrics() {
@@ -409,7 +600,7 @@ function initMetricSearch() {
         if (!grid) return;
         
         if (filtered.length === 0) {
-            grid.innerHTML = '<p style="text-align: center;">Нічого не знайдено</p>';
+            grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: 2rem; color: var(--color-text-secondary);">Нічого не знайдено</p>';
             return;
         }
         
@@ -417,23 +608,27 @@ function initMetricSearch() {
         const names = { birth: 'Народження', marriage: 'Шлюби', death: 'Смерті' };
         
         grid.innerHTML = filtered.map(book => `
-            <div class="metric-card">
+            <div class="metric-card fade-in-up">
                 <div class="metric-icon">${icons[book.type]}</div>
                 <h3>${names[book.type]}</h3>
-                <p>${book.year}</p>
-                <p>${book.parish}</p>
-                <p>Записів: ${book.records}</p>
+                <p class="metric-year">${book.year}</p>
+                <p class="metric-parish">${book.parish}</p>
+                <p class="metric-records">Кількість записів: ${book.records}</p>
+                <p class="metric-details">${book.details}</p>
             </div>
         `).join('');
+        
+        initScrollAnimations();
     }
     
     typeFilter.addEventListener('change', displayMetrics);
     yearFilter.addEventListener('change', displayMetrics);
     displayMetrics();
+    console.log('✅ Пошук метричних книг ініціалізовано');
 }
 
 // ================================================
-// АДМІН ПАНЕЛЬ
+// АДМІН ПАНЕЛЬ (тільки для вас)
 // ================================================
 const ADMIN_PASSWORD = 'admin2026';
 
@@ -448,6 +643,7 @@ function initAdmin() {
             if (password.value === ADMIN_PASSWORD) {
                 loginSection.style.display = 'none';
                 adminContent.style.display = 'block';
+                console.log('✅ Вхід в адмін-панель');
             } else {
                 alert('❌ Невірний пароль!');
                 password.value = '';
@@ -459,71 +655,55 @@ function initAdmin() {
         });
     }
     
-    const uploadBtn = document.getElementById('uploadPhotoBtn');
-    if (uploadBtn) {
-        uploadBtn.addEventListener('click', () => {
+    // Кнопка "Показати код для додавання"
+    const generateBtn = document.getElementById('generateCode');
+    if (generateBtn) {
+        generateBtn.addEventListener('click', () => {
             const url = document.getElementById('photoUrl')?.value;
             const title = document.getElementById('photoTitle')?.value;
             const period = document.getElementById('photoPeriod')?.value;
             const category = document.getElementById('photoCategory')?.value;
+            const date = document.getElementById('photoDate')?.value || new Date().getFullYear().toString();
             
             if (!url || !title || !period || !category) {
-                alert('❌ Заповніть всі поля!');
+                alert('❌ Заповніть всі обов\'язкові поля!');
                 return;
             }
             
             if (!url.startsWith('http')) {
-                alert('❌ Невірний URL!');
+                alert('❌ URL має починатися з http:// або https://');
                 return;
             }
             
-            const result = savePhotoLocally({
-                imageUrl: url,
-                title: title,
-                period: period,
-                category: category,
-                date: new Date().getFullYear().toString()
-            });
+            // Генеруємо код для додавання
+            const code = `    {
+        imageUrl: '${url}',
+        title: '${title}',
+        period: '${period}',
+        category: '${category}',
+        date: '${date}'
+    },`;
             
-            if (result.status === 'success') {
-                alert('✅ Фото додано!');
-                document.getElementById('photoUrl').value = '';
-                document.getElementById('photoTitle').value = '';
-                document.getElementById('photoPeriod').value = '';
-                document.getElementById('photoCategory').value = '';
-                
-                if (document.getElementById('photoGallery')) {
-                    initPhotoGallery();
-                }
-            } else {
-                alert('❌ Помилка: ' + result.message);
+            // Показуємо код
+            const codeDisplay = document.getElementById('codeDisplay');
+            if (codeDisplay) {
+                codeDisplay.textContent = code;
+                codeDisplay.style.display = 'block';
             }
+            
+            alert(`✅ Код згенеровано!\n\nТепер:\n1. Скопіюйте код нижче\n2. Відкрийте script.js на GitHub\n3. Знайдіть масив ALL_PHOTOS\n4. Вставте код перед коментарем "=== ДОДАЙТЕ СВОЇ ФОТО ТУТ ==="\n5. Збережіть файл\n6. Через 2-5 хвилин фото з'явиться для всіх!`);
         });
     }
     
-    const showBtn = document.getElementById('showSavedPhotos');
-    if (showBtn) {
-        showBtn.addEventListener('click', () => {
-            const saved = localStorage.getItem('dubrovytsia_photos');
-            const photos = saved ? JSON.parse(saved) : [];
-            
-            if (photos.length === 0) {
-                alert('📭 Немає збережених фото');
-            } else {
-                alert(`📸 Збережено: ${photos.length}\n\n${photos.map(p => p.title).join('\n')}`);
-            }
-        });
-    }
-    
-    const clearBtn = document.getElementById('clearAllPhotos');
-    if (clearBtn) {
-        clearBtn.addEventListener('click', () => {
-            if (confirm('❌ Видалити всі фото?')) {
-                localStorage.removeItem('dubrovytsia_photos');
-                alert('✅ Видалено');
-                if (document.getElementById('photoGallery')) {
-                    initPhotoGallery();
-                }
+    // Кнопка копіювання коду
+    const copyBtn = document.getElementById('copyCode');
+    if (copyBtn) {
+        copyBtn.addEventListener('click', () => {
+            const codeDisplay = document.getElementById('codeDisplay');
+            if (codeDisplay && codeDisplay.textContent) {
+                navigator.clipboard.writeText(codeDisplay.textContent).then(() => {
+                    alert('✅ Код скопійовано!');
+                });
             }
         });
     }
@@ -533,26 +713,39 @@ function initAdmin() {
 // ІНІЦІАЛІЗАЦІЯ
 // ================================================
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('🚀 Запуск...');
+    console.log('🚀 Запуск Дубровиця...');
     
+    // Базові функції
     initTheme();
     initMobileNav();
     initScrollAnimations();
     initSmoothScroll();
     initHeaderScroll();
     initCounters();
-    initBooksSearch();
-    initMetricSearch();
     
+    // Контент-специфічні функції
     if (document.getElementById('photoGallery')) {
         initPhotoGallery();
+    }
+    
+    if (document.getElementById('booksSearch')) {
+        initBooksSearch();
+    }
+    
+    if (document.getElementById('typeFilter')) {
+        initMetricSearch();
     }
     
     if (document.getElementById('adminLoginBtn')) {
         initAdmin();
     }
     
-    console.log('✅ Готово!');
+    console.log('✅ Сайт готовий!');
 });
 
-window.addEventListener('error', e => console.error('❌', e.message));
+// Обробка помилок
+window.addEventListener('error', e => {
+    console.error('❌ Помилка:', e.message);
+});
+
+console.log('📋 Підказка: Всі фото зберігаються в масиві ALL_PHOTOS на початку файлу');
