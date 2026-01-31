@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Книги про Дубровицю — Цифровий архів</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Lesser_Coat_of_Arms_of_Ukraine.svg/800px-Lesser_Coat_of_Arms_of_Ukraine.svg.png" alt="Герб" class="logo-img">
+                <div class="logo-text">
+                    <span class="logo-city">Дубровиця</span>
+                    <span class="logo-subtitle">Цифровий архів</span>
+                </div>
+            </a>
+            
+            <nav class="nav" id="mainNav">
+                <a href="index.html" class="nav-link">Головна</a>
+                <a href="history.html" class="nav-link">Історія</a>
+                <a href="photo-archive.html" class="nav-link">Фотоархів</a>
+                <a href="metrychni-knyhy.html" class="nav-link">Метричні книги</a>
+                <a href="books.html" class="nav-link active">Книги</a>
+                <a href="contacts.html" class="nav-link">Контакти</a>
+            </nav>
+
+            <button class="theme-toggle" id="themeToggle" aria-label="Перемкнути тему">
+                <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <svg class="theme-icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </button>
+
+            <button class="mobile-toggle" id="mobileToggle" aria-label="Відкрити меню">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Catalog Header -->
+    <section class="catalog-header">
+        <div class="container">
+            <h1 class="article-title" data-aos="fade-up">Книги про Дубровицю</h1>
+            <p class="article-meta" data-aos="fade-up" data-aos-delay="100">
+                Бібліографія досліджень і спогадів
+            </p>
+            
+            <!-- Search -->
+            <div class="search-box" data-aos="fade-up" data-aos-delay="200">
+                <input type="text" 
+                       class="search-input" 
+                       id="searchInput" 
+                       placeholder="Пошук за назвою, автором або темою...">
+            </div>
+        </div>
+    </section>
+
+    <!-- Books Catalog -->
+    <section class="catalog-section">
+        <div class="container">
+            <div class="catalog-grid">
+                
+                <div class="catalog-item book-item" data-aos="fade-up">
+                    <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=300&q=80" 
+                         alt="Обкладинка книги" 
+                         class="book-cover">
+                    <div class="book-info">
+                        <h3>Дубровиця: Історія та сучасність</h3>
+                        <p class="book-meta">Автор: Іван Петренко · Рік: 2015</p>
+                        <p class="book-description">
+                            Комплексне дослідження історії Дубровиці від найдавніших часів до сьогодення. 
+                            Книга охоплює політичні, економічні та культурні аспекти розвитку селища, 
+                            містить багатий ілюстративний матеріал та архівні документи.
+                        </p>
+                        <p><strong>Місце зберігання:</strong> Рівненська обласна бібліотека</p>
+                        <a href="#" class="catalog-link">Детальна інформація →</a>
+                    </div>
+                </div>
+
+                <div class="catalog-item book-item" data-aos="fade-up" data-aos-delay="50">
+                    <img src="https://images.unsplash.com/photo-1495446815901-a7297e633e8d?w=300&q=80" 
+                         alt="Обкладинка книги" 
+                         class="book-cover">
+                    <div class="book-info">
+                        <h3>Спогади про Дубровицю</h3>
+                        <p class="book-meta">Автор: Марія Ковальчук · Рік: 2008</p>
+                        <p class="book-description">
+                            Збірка спогадів старожилів Дубровиці про життя в селищі в XX столітті. 
+                            Унікальні розповіді про повсякденне життя, традиції, звичаї та події, 
+                            які формували історію громади.
+                        </p>
+                        <p><strong>Місце зберігання:</strong> Дубровицька центральна бібліотека</p>
+                        <a href="#" class="catalog-link">Детальна інформація →</a>
+                    </div>
+                </div>
+
+                <div class="catalog-item book-item" data-aos="fade-up" data-aos-delay="100">
+                    <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?w=300&q=80" 
+                         alt="Обкладинка книги" 
+                         class="book-cover">
+                    <div class="book-info">
+                        <h3>Культурна спадщина Дубровицького краю</h3>
+                        <p class="book-meta">Автор: Олександр Мельник · Рік: 2018</p>
+                        <p class="book-description">
+                            Дослідження культурної спадщини регіону: архітектурні пам'ятки, народні 
+                            традиції, фольклор, ремесла. Книга супроводжується численними фотографіями 
+                            та етнографічними матеріалами.
+                        </p>
+                        <p><strong>Місце зберігання:</strong> Національна бібліотека України</p>
+                        <a href="#" class="catalog-link">Детальна інформація →</a>
+                    </div>
+                </div>
+
+                <div class="catalog-item book-item" data-aos="fade-up" data-aos-delay="150">
+                    <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=300&q=80" 
+                         alt="Обкладинка книги" 
+                         class="book-cover">
+                    <div class="book-info">
+                        <h3>Церкви та храми Дубровицького регіону</h3>
+                        <p class="book-meta">Автор: Священик Василь Григорович · Рік: 2012</p>
+                        <p class="book-description">
+                            Історія релігійного життя Дубровиці та околиць. Детальний опис церков, 
+                            каплиць та інших сакральних споруд, біографії священнослужителів, 
+                            релігійні традиції громади.
+                        </p>
+                        <p><strong>Місце зберігання:</strong> Церковний архів</p>
+                        <a href="#" class="catalog-link">Детальна інформація →</a>
+                    </div>
+                </div>
+
+                <div class="catalog-item book-item" data-aos="fade-up" data-aos-delay="200">
+                    <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=300&q=80" 
+                         alt="Обкладинка книги" 
+                         class="book-cover">
+                    <div class="book-info">
+                        <h3>Дубровиця у документах і матеріалах (1850-1950)</h3>
+                        <p class="book-meta">Упорядник: Наталія Дмитренко · Рік: 2020</p>
+                        <p class="book-description">
+                            Збірка архівних документів, що висвітлюють історію Дубровиці протягом ста 
+                            років. Містить офіційні документи, листування, статистичні дані, газетні 
+                            вирізки та інші історичні джерела.
+                        </p>
+                        <p><strong>Місце зберігання:</strong> Державний архів Рівненської області</p>
+                        <a href="#" class="catalog-link">Детальна інформація →</a>
+                    </div>
+                </div>
+
+                <div class="catalog-item book-item" data-aos="fade-up" data-aos-delay="250">
+                    <img src="https://images.unsplash.com/photo-1541963463532-d68292c34b19?w=300&q=80" 
+                         alt="Обкладинка книги" 
+                         class="book-cover">
+                    <div class="book-info">
+                        <h3>Легенди та перекази Дубровицького краю</h3>
+                        <p class="book-meta">Збирач: Тетяна Василенко · Рік: 2010</p>
+                        <p class="book-description">
+                            Колекція народних легенд, переказів, повір'їв та історій, що передавалися 
+                            з покоління в покоління серед мешканців Дубровиці та навколишніх сіл. 
+                            Збережена усна народна творчість регіону.
+                        </p>
+                        <p><strong>Місце зберігання:</strong> Дубровицька центральна бібліотека</p>
+                        <a href="#" class="catalog-link">Детальна інформація →</a>
+                    </div>
+                </div>
+
+                <div class="catalog-item book-item" data-aos="fade-up" data-aos-delay="300">
+                    <img src="https://images.unsplash.com/photo-1589829085413-56de8ae18c73?w=300&q=80" 
+                         alt="Обкладинка книги" 
+                         class="book-cover">
+                    <div class="book-info">
+                        <h3>Дубровиця в роки Другої світової війни</h3>
+                        <p class="book-meta">Автор: Юрій Коваленко · Рік: 2014</p>
+                        <p class="book-description">
+                            Дослідження подій Другої світової війни в Дубровиці та регіоні. Історія 
+                            окупації, спротиву, партизанського руху, визволення. Спогади очевидців, 
+                            архівні документи, фотографії.
+                        </p>
+                        <p><strong>Місце зберігання:</strong> Рівненська обласна бібліотека</p>
+                        <a href="#" class="catalog-link">Детальна інформація →</a>
+                    </div>
+                </div>
+
+                <div class="catalog-item book-item" data-aos="fade-up" data-aos-delay="350">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&q=80" 
+                         alt="Обкладинка книги" 
+                         class="book-cover">
+                    <div class="book-info">
+                        <h3>Видатні постаті Дубровиччини</h3>
+                        <p class="book-meta">Автор: Микола Романюк · Рік: 2016</p>
+                        <p class="book-description">
+                            Біографічні нариси про видатних людей, які народилися або жили в Дубровиці 
+                            та зробили значний внесок у розвиток культури, науки, мистецтва та 
+                            громадського життя України.
+                        </p>
+                        <p><strong>Місце зберігання:</strong> Дубровицька центральна бібліотека</p>
+                        <a href="#" class="catalog-link">Детальна інформація →</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4 class="footer-title">Дубровиця</h4>
+                    <p class="footer-text">
+                        Цифровий архів історичної спадщини селища міського типу Дубровиця, 
+                        Рівненська область, Україна.
+                    </p>
+                </div>
+                <div class="footer-section">
+                    <h4 class="footer-title">Навігація</h4>
+                    <nav class="footer-nav">
+                        <a href="history.html">Історія</a>
+                        <a href="photo-archive.html">Фотоархів</a>
+                        <a href="metrychni-knyhy.html">Метричні книги</a>
+                        <a href="books.html">Книги</a>
+                    </nav>
+                </div>
+                <div class="footer-section">
+                    <h4 class="footer-title">Контакти</h4>
+                    <p class="footer-text">
+                        Маєте матеріали або пропозиції?<br>
+                        <a href="contacts.html" class="footer-link">Зв'яжіться з нами</a>
+                    </p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Дубровиця. Цифровий архів.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

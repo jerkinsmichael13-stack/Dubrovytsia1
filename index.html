@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Цифровий архів найдавнішого міста Рівненщини - Дубровиці. Історія від 1005 року, фотоархів, метричні книги">
+    <meta name="keywords" content="Дубровиця, історія, архів, Рівненська область, Україна, Полісся">
+    <meta property="og:title" content="Дубровиця — Найдавніше місто Рівненщини">
+    <meta property="og:description" content="Цифровий архів історичної спадщини міста Дубровиця">
+    <meta property="og:type" content="website">
+    <title>Дубровиця — Історія та спадщина</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Lesser_Coat_of_Arms_of_Ukraine.svg/800px-Lesser_Coat_of_Arms_of_Ukraine.svg.png" alt="Герб" class="logo-img" loading="lazy">
+                <div class="logo-text">
+                    <span class="logo-city">Дубровиця</span>
+                    <span class="logo-subtitle">Цифровий архів</span>
+                </div>
+            </a>
+            
+            <nav class="nav" id="mainNav">
+                <a href="index.html" class="nav-link active">Головна</a>
+                <a href="history.html" class="nav-link">Історія</a>
+                <a href="photo-archive.html" class="nav-link">Фотоархів</a>
+                <a href="metrychni-knyhy.html" class="nav-link">Метричні книги</a>
+                <a href="books.html" class="nav-link">Книги</a>
+                <a href="contacts.html" class="nav-link">Контакти</a>
+            </nav>
+
+            <button class="theme-toggle" id="themeToggle" aria-label="Перемкнути тему">
+                <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <svg class="theme-icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </button>
+
+            <button class="mobile-toggle" id="mobileToggle" aria-label="Відкрити меню">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section with Video Background -->
+    <section class="hero">
+        <div class="hero-bg">
+            <!-- Video background (можна замінити на власне відео) -->
+            <video class="hero-video" autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1590004953392-5aba2e72269a?w=1920&q=80">
+                <!-- Додайте посилання на своє відео тут -->
+                <!-- <source src="video/dubrovytsia.mp4" type="video/mp4"> -->
+            </video>
+            <!-- Fallback image якщо відео не завантажиться -->
+            <img src="https://images.unsplash.com/photo-1590004953392-5aba2e72269a?w=1920&q=80" alt="Історична Дубровиця" class="hero-image" loading="eager">
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title fade-in-up">
+                    Дубровиця
+                </h1>
+                <p class="hero-subtitle fade-in-up delay-1">
+                    Найдавніше місто Рівненщини з 1015-річною історією
+                </p>
+                <div class="hero-meta fade-in-up delay-2">
+                    <span>Рівненська область</span>
+                    <span class="separator">·</span>
+                    <span>Полісся</span>
+                    <span class="separator">·</span>
+                    <span>Україна</span>
+                </div>
+            </div>
+            <div class="hero-scroll fade-in-up delay-3">
+                <span class="scroll-text">Прокрутіть</span>
+                <div class="scroll-line"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Introduction -->
+    <section class="intro-section">
+        <div class="container">
+            <div class="intro-content">
+                <p class="intro-lead fade-in-up">
+                    Дубровиця — найдавніше місто Рівненської області, перша писемна згадка про яке датується 1005 роком. 
+                    Місто розташоване на мальовничих берегах річки Горинь у серці Волинського Полісся.
+                </p>
+                <p class="intro-text fade-in-up delay-1">
+                    Цей цифровий архів створено для збереження, систематизації та популяризації історичної спадщини, 
+                    культури та пам'яті нашого міста. Тут ви знайдете історичні фотографії, метричні книги, дослідження 
+                    та матеріали, які розкривають багатовікову історію Дубровиці.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Navigation Cards -->
+    <section class="cards-section">
+        <div class="container">
+            <div class="cards-grid">
+                <a href="history.html" class="card fade-in-up">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1461360370896-922624d12aa1?w=800&q=80" alt="Історія" loading="lazy">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Історія міста</h3>
+                        <p class="card-description">
+                            Досліджуйте понад тисячолітню історію Дубровиці від першої згадки у 1005 році до сьогодення
+                        </p>
+                        <span class="card-link">Читати далі →</span>
+                    </div>
+                </a>
+
+                <a href="photo-archive.html" class="card fade-in-up delay-1">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1604537466158-719b1972feb8?w=800&q=80" alt="Фотоархів" loading="lazy">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Фотоархів</h3>
+                        <p class="card-description">
+                            Унікальна колекція історичних фотографій від кінця XIX століття до наших днів
+                        </p>
+                        <span class="card-link">Переглянути →</span>
+                    </div>
+                </a>
+
+                <a href="metrychni-knyhy.html" class="card fade-in-up delay-2">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1568667256549-094345857637?w=800&q=80" alt="Метричні книги" loading="lazy">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Метричні книги</h3>
+                        <p class="card-description">
+                            Генеалогічні дослідження: метричні записи парафій Дубровицького регіону
+                        </p>
+                        <span class="card-link">Досліджуйте →</span>
+                    </div>
+                </a>
+
+                <a href="books.html" class="card fade-in-up delay-3">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=800&q=80" alt="Книги" loading="lazy">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Книги про Дубровицю</h3>
+                        <p class="card-description">
+                            Бібліографія досліджень, спогадів та літератури про історію регіону
+                        </p>
+                        <span class="card-link">Читати →</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item fade-in-up">
+                    <div class="stat-number" data-target="1015">0</div>
+                    <div class="stat-label">Років історії</div>
+                </div>
+                <div class="stat-item fade-in-up delay-1">
+                    <div class="stat-number" data-target="500">0</div>
+                    <div class="stat-label">Історичних фотографій</div>
+                </div>
+                <div class="stat-item fade-in-up delay-2">
+                    <div class="stat-number" data-target="20">0</div>
+                    <div class="stat-label">Книг та досліджень</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Preview -->
+    <section class="timeline-section">
+        <div class="container">
+            <h2 class="section-title fade-in-up">Ключові моменти історії</h2>
+            <div class="timeline">
+                <div class="timeline-item fade-in-up">
+                    <div class="timeline-year">1005</div>
+                    <div class="timeline-content">
+                        <h3>Перша згадка</h3>
+                        <p>Володимир Великий засновує єпископську кафедру в Турові, Дубровиця згадується серед міст єпархії</p>
+                    </div>
+                </div>
+                <div class="timeline-item fade-in-up delay-1">
+                    <div class="timeline-year">XII ст.</div>
+                    <div class="timeline-content">
+                        <h3>Столиця князівства</h3>
+                        <p>Дубровиця стає центром окремого удільного князівства</p>
+                    </div>
+                </div>
+                <div class="timeline-item fade-in-up delay-2">
+                    <div class="timeline-year">1695-1702</div>
+                    <div class="timeline-content">
+                        <h3>Костел Іоана Хрестителя</h3>
+                        <p>Спорудження костелу та колегіуму ордена піярів</p>
+                    </div>
+                </div>
+                <div class="timeline-item fade-in-up delay-3">
+                    <div class="timeline-year">1940</div>
+                    <div class="timeline-content">
+                        <h3>Статус міста</h3>
+                        <p>Дубровиця офіційно стає містом та районним центром</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4 class="footer-title">Дубровиця</h4>
+                    <p class="footer-text">
+                        Цифровий архів історичної спадщини селища міського типу Дубровиця, 
+                        Сарненський район, Рівненська область, Україна.
+                    </p>
+                </div>
+                <div class="footer-section">
+                    <h4 class="footer-title">Навігація</h4>
+                    <nav class="footer-nav">
+                        <a href="history.html">Історія</a>
+                        <a href="photo-archive.html">Фотоархів</a>
+                        <a href="metrychni-knyhy.html">Метричні книги</a>
+                        <a href="books.html">Книги</a>
+                    </nav>
+                </div>
+                <div class="footer-section">
+                    <h4 class="footer-title">Контакти</h4>
+                    <p class="footer-text">
+                        Маєте матеріали або пропозиції?<br>
+                        <a href="contacts.html" class="footer-link">Зв'яжіться з нами</a>
+                    </p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Дубровиця. Цифровий архів.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

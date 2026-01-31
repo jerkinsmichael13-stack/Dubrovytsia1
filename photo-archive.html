@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Фотоархів Дубровиці - історичні фотографії, церкви, вулиці, люди, аерофотознімки від XIX століття">
+    <title>Фотоархів — Дубровиця</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Lesser_Coat_of_Arms_of_Ukraine.svg/800px-Lesser_Coat_of_Arms_of_Ukraine.svg.png" alt="Герб" class="logo-img" loading="lazy">
+                <div class="logo-text">
+                    <span class="logo-city">Дубровиця</span>
+                    <span class="logo-subtitle">Цифровий архів</span>
+                </div>
+            </a>
+            
+            <nav class="nav" id="mainNav">
+                <a href="index.html" class="nav-link">Головна</a>
+                <a href="history.html" class="nav-link">Історія</a>
+                <a href="photo-archive.html" class="nav-link active">Фотоархів</a>
+                <a href="metrychni-knyhy.html" class="nav-link">Метричні книги</a>
+                <a href="books.html" class="nav-link">Книги</a>
+                <a href="contacts.html" class="nav-link">Контакти</a>
+            </nav>
+
+            <button class="theme-toggle" id="themeToggle" aria-label="Перемкнути тему">
+                <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <svg class="theme-icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </button>
+
+            <button class="mobile-toggle" id="mobileToggle" aria-label="Відкрити меню">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <section class="gallery-header">
+        <div class="container">
+            <h1 class="article-title fade-in-up">Фотоархів Дубровиці</h1>
+            <p class="article-meta fade-in-up delay-1">Унікальна колекція історичних фотографій</p>
+            
+            <!-- Period Filters -->
+            <div class="gallery-filters fade-in-up delay-2">
+                <h3>Періоди:</h3>
+                <div class="filter-group">
+                    <button class="filter-btn active" data-filter="all">Усі періоди</button>
+                    <button class="filter-btn" data-filter="before-1900">До 1900</button>
+                    <button class="filter-btn" data-filter="1900-1939">1900—1939</button>
+                    <button class="filter-btn" data-filter="1939-1945">1939—1945</button>
+                    <button class="filter-btn" data-filter="1945-1991">1945—1991</button>
+                    <button class="filter-btn" data-filter="after-1991">Після 1991</button>
+                </div>
+            </div>
+
+            <!-- Category Filters -->
+            <div class="gallery-filters fade-in-up delay-3" style="margin-top: 1rem;">
+                <h3>Категорії:</h3>
+                <div class="filter-group">
+                    <button class="category-btn active" data-category="all">Усі</button>
+                    <button class="category-btn" data-category="churches">Церкви</button>
+                    <button class="category-btn" data-category="streets">Вулиці</button>
+                    <button class="category-btn" data-category="people">Люди</button>
+                    <button class="category-btn" data-category="architecture">Архітектура</button>
+                    <button class="category-btn" data-category="aerial">Аерофото</button>
+                    <button class="category-btn" data-category="drawings">Малюнки</button>
+                    <button class="category-btn" data-category="events">Події</button>
+                </div>
+            </div>
+
+            <!-- Loading indicator -->
+            <div class="loading-indicator" id="loadingIndicator" style="display: none;">
+                <div class="spinner"></div>
+                <p>Завантаження фотографій...</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="gallery-section">
+        <div class="container">
+            <div class="gallery-grid" id="photoGallery">
+                <!-- Photos will be loaded dynamically -->
+            </div>
+
+            <!-- Load More Button -->
+            <div class="load-more-container">
+                <button class="load-more-btn" id="loadMoreBtn">Завантажити більше</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <span class="lightbox-close">×</span>
+            <button class="lightbox-nav lightbox-prev" aria-label="Попереднє">‹</button>
+            <button class="lightbox-nav lightbox-next" aria-label="Наступне">›</button>
+            <img src="" alt="" class="lightbox-image" id="lightboxImage" loading="lazy">
+            <div class="lightbox-info">
+                <p class="lightbox-caption" id="lightboxCaption"></p>
+                <p class="lightbox-meta" id="lightboxMeta"></p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4 class="footer-title">Дубровиця</h4>
+                    <p class="footer-text">
+                        Цифровий архів історичної спадщини селища міського типу Дубровиця, 
+                        Сарненський район, Рівненська область, Україна.
+                    </p>
+                </div>
+                <div class="footer-section">
+                    <h4 class="footer-title">Навігація</h4>
+                    <nav class="footer-nav">
+                        <a href="history.html">Історія</a>
+                        <a href="photo-archive.html">Фотоархів</a>
+                        <a href="metrychni-knyhy.html">Метричні книги</a>
+                        <a href="books.html">Книги</a>
+                    </nav>
+                </div>
+                <div class="footer-section">
+                    <h4 class="footer-title">Контакти</h4>
+                    <p class="footer-text">
+                        Маєте матеріали або пропозиції?<br>
+                        <a href="contacts.html" class="footer-link">Зв'яжіться з нами</a>
+                    </p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Дубровиця. Цифровий архів.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

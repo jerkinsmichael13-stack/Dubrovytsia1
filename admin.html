@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Адміністрування — Дубровиця</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="admin-page">
+        <!-- Login Section -->
+        <section id="loginSection" class="admin-login">
+            <div class="login-container">
+                <div class="logo-section">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Lesser_Coat_of_Arms_of_Ukraine.svg/800px-Lesser_Coat_of_Arms_of_Ukraine.svg.png" alt="Герб" class="admin-logo" loading="lazy">
+                    <h1>Адміністрування</h1>
+                    <p>Цифровий архів Дубровиці</p>
+                </div>
+                
+                <div class="login-form">
+                    <input type="password" id="adminPassword" placeholder="Введіть пароль" class="admin-input">
+                    <button id="adminLoginBtn" class="admin-btn">Увійти</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Admin Content -->
+        <section id="adminContent" class="admin-content" style="display: none;">
+            <header class="admin-header">
+                <div class="admin-header-container">
+                    <div class="logo">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Lesser_Coat_of_Arms_of_Ukraine.svg/800px-Lesser_Coat_of_Arms_of_Ukraine.svg.png" alt="Герб" class="logo-img" loading="lazy">
+                        <div class="logo-text">
+                            <span class="logo-city">Дубровиця</span>
+                            <span class="logo-subtitle">Панель адміністратора</span>
+                        </div>
+                    </div>
+                    <a href="index.html" class="back-link">← Назад до сайту</a>
+                </div>
+            </header>
+
+            <div class="admin-main">
+                <aside class="admin-sidebar">
+                    <nav class="admin-nav">
+                        <button class="admin-nav-btn active" data-tab="photos">📸 Додати фото</button>
+                        <button class="admin-nav-btn" data-tab="manage">🗂️ Керувати фото</button>
+                        <button class="admin-nav-btn" data-tab="settings">⚙️ Налаштування</button>
+                    </nav>
+                </aside>
+
+                <main class="admin-panel">
+                    <!-- Add Photo Tab -->
+                    <div class="admin-tab active" id="photosTab">
+                        <h2>Додати фотографію</h2>
+                        
+                        <div class="admin-form">
+                            <div class="form-group">
+                                <label for="photoUrl">Посилання на фото*</label>
+                                <input type="url" id="photoUrl" placeholder="https://example.com/photo.jpg" class="admin-input" required>
+                                <small>Завантажте фото на Imgur.com або інший хостинг та вставте посилання</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="photoTitle">Назва фото*</label>
+                                <input type="text" id="photoTitle" placeholder="Наприклад: Центральна площа, 1935 рік" class="admin-input" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="photoPeriod">Період*</label>
+                                <select id="photoPeriod" class="admin-input" required>
+                                    <option value="">Оберіть період</option>
+                                    <option value="before-1900">До 1900</option>
+                                    <option value="1900-1939">1900—1939</option>
+                                    <option value="1939-1945">1939—1945</option>
+                                    <option value="1945-1991">1945—1991</option>
+                                    <option value="after-1991">Після 1991</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="photoCategory">Категорія*</label>
+                                <select id="photoCategory" class="admin-input" required>
+                                    <option value="">Оберіть категорію</option>
+                                    <option value="churches">🏛️ Церкви</option>
+                                    <option value="streets">🏘️ Вулиці</option>
+                                    <option value="people">👥 Люди</option>
+                                    <option value="architecture">🏗️ Архітектура</option>
+                                    <option value="aerial">✈️ Аерофото</option>
+                                    <option value="drawings">🎨 Малюнки</option>
+                                    <option value="events">📅 Події</option>
+                                </select>
+                            </div>
+
+                            <button id="uploadPhotoBtn" class="admin-btn">Додати фото</button>
+                        </div>
+                    </div>
+
+                    <!-- Manage Photos Tab -->
+                    <div class="admin-tab" id="manageTab">
+                        <h2>Керування фотографіями</h2>
+                        <p>Тут з'являться завантажені фотографії...</p>
+                        <div id="photosList"></div>
+                    </div>
+
+                    <!-- Settings Tab -->
+                    <div class="admin-tab" id="settingsTab">
+                        <h2>Налаштування</h2>
+                        <div class="settings-info">
+                            <h3>Інструкції:</h3>
+                            <ol>
+                                <li>Створіть Google Таблицю з колонками: imageUrl, title, period, category, date</li>
+                                <li>Створіть Google Apps Script (код у файлі КОД_ДЛЯ_GOOGLE_APPS_SCRIPT.js)</li>
+                                <li>Розгорніть як Web App з доступом "Anyone"</li>
+                                <li>Скопіюйте URL та вставте в script.js</li>
+                            </ol>
+                            
+                            <h3>Поточний Google Script URL:</h3>
+                            <p><code id="currentScriptUrl">Не налаштовано</code></p>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Tab switching
+        document.querySelectorAll('.admin-nav-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabName = btn.getAttribute('data-tab');
+                
+                document.querySelectorAll('.admin-nav-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+                
+                btn.classList.add('active');
+                document.getElementById(tabName + 'Tab').classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
