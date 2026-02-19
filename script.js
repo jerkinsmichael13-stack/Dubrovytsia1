@@ -1,3 +1,9 @@
+// ⚡ Apply theme IMMEDIATELY before DOM loads to prevent flash
+(function() {
+    var t = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', t);
+})();
+
 // ================================================
 // ДУБРОВИЦЯ - ВИПРАВЛЕНА ВЕРСІЯ
 // ✅ Фото для всіх через GitHub Pages
@@ -73,12 +79,19 @@ function initScrollAnimations() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
+                observer.unobserve(entry.target); // stop watching after visible
             }
         });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
     
-    document.querySelectorAll('.fade-in-up, .card, .photo-card').forEach(el => {
-        observer.observe(el);
+    document.querySelectorAll('.fade-in-up').forEach(el => {
+        // If element is already in viewport (hero elements), show immediately
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom >= 0) {
+            el.classList.add('visible');
+        } else {
+            observer.observe(el);
+        }
     });
 }
 

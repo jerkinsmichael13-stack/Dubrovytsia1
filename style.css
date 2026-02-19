@@ -42,8 +42,8 @@
     --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
     
     /* Шрифти */
-    --font-display: 'Cormorant Garamond', 'Georgia', serif;
-    --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-display: 'Cormorant Garamond', 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
+    --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
     
     /* Відступи */
     --spacing-xs: 0.5rem;
@@ -389,29 +389,12 @@ input, textarea, select {
     transition: all var(--transition-base);
 }
 
-.sun-icon {
-    display: none;
-}
+/* Show moon on light theme, sun on dark theme */
+.sun-icon { display: none; }
+.moon-icon { display: block; }
 
-[data-theme="dark"] .sun-icon {
-    display: block;
-}
-
-[data-theme="dark"] .moon-icon {
-    display: none;
-}
-
-.moon-icon {
-    display: block;
-}
-
-[data-theme="light"] .moon-icon {
-    display: none;
-}
-
-[data-theme="light"] .sun-icon {
-    display: block;
-}
+[data-theme="dark"] .sun-icon { display: block; }
+[data-theme="dark"] .moon-icon { display: none; }
 
 /* Мобільне меню */
 .mobile-toggle {
@@ -570,7 +553,7 @@ input, textarea, select {
     font-weight: 700;
     margin-bottom: var(--spacing-md);
     text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-    animation: slideInLeft 1s ease-out;
+    animation: slideInLeft 0.9s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
 .hero-subtitle {
@@ -578,7 +561,7 @@ input, textarea, select {
     margin-bottom: var(--spacing-lg);
     opacity: 0.95;
     font-weight: 400;
-    animation: slideInRight 1s ease-out 0.2s backwards;
+    animation: slideInRight 0.9s cubic-bezier(0.4, 0, 0.2, 1) 0.15s both;
 }
 
 .hero-meta {
@@ -588,7 +571,7 @@ input, textarea, select {
     gap: var(--spacing-sm);
     font-size: 1rem;
     opacity: 0.9;
-    animation: fadeIn 1s ease-out 0.4s backwards;
+    animation: fadeIn 0.8s ease 0.35s both;
 }
 
 .separator {
@@ -2060,4 +2043,18 @@ select.admin-input {
     vertical-align: super;
     margin-left: 2px;
     opacity: 0.7;
+}
+
+/* Hero elements are ALWAYS visible (controlled by keyframe animation, not JS) */
+.hero-content .fade-in-up {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+}
+
+/* Ensure hero title/subtitle never hidden */
+.hero-title,
+.hero-subtitle,
+.hero-meta {
+    opacity: 1;
 }
