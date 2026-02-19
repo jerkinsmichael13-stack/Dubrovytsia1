@@ -426,7 +426,21 @@
     </div><!-- /adminContent -->
 </div>
 
-<script src="script.js"></script>
+<script>
+(function(){
+    var saved = localStorage.getItem("theme") || "light";
+    document.documentElement.setAttribute("data-theme", saved);
+    document.addEventListener("DOMContentLoaded", function() {
+        var btn = document.getElementById("themeToggle");
+        if (btn) btn.addEventListener("click", function() {
+            var cur = document.documentElement.getAttribute("data-theme");
+            var next = cur === "dark" ? "light" : "dark";
+            document.documentElement.setAttribute("data-theme", next);
+            localStorage.setItem("theme", next);
+        });
+    });
+})();
+</script>
 <script>
 // ===================================================================
 // АДМІН ПАНЕЛЬ - ЛОГІКА
@@ -501,6 +515,8 @@ async function loadPhotosFromGH() {
 }
 
 // ─── Login ───────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', function() {
+
 document.getElementById('loginBtn').addEventListener('click', () => {
     const pw = document.getElementById('loginPassword').value;
     if (pw === ADMIN_PASSWORD) {
@@ -717,6 +733,8 @@ async function renderPhotoList() {
         wrap.innerHTML = `<div class="notice notice-error">❌ ${msg}</div>`;
     }
 }
+
+}); // end DOMContentLoaded
 </script>
 </body>
 </html>
