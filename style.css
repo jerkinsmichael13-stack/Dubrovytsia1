@@ -1772,3 +1772,28 @@ select.admin-input { cursor: pointer; }
 /* Hero завжди видимий */
 .hero-title, .hero-subtitle, .hero-meta { opacity: 1; }
 .hero-content .fade-in-up { opacity: 1 !important; transform: none !important; }
+
+/* ================================================================
+   LIGHTBOX — DOWNLOAD LINK
+   ================================================================ */
+
+.lightbox-download {
+    display: inline-block;
+    margin-top: 0.75rem;
+    padding: 0.5rem 1.25rem;
+    background: rgba(201, 162, 39, 0.15);
+    border: 1px solid rgba(201, 162, 39, 0.4);
+    border-radius: var(--radius-full);
+    color: var(--color-accent-light);
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+.lightbox-download:hover {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: #1a1208;
+    transform: translateY(-1px);
+}

@@ -215,6 +215,7 @@ function displayPhotos() {
                 <div class="photo-info">
                     <h3>${photo.title}</h3>
                     <p>${PERIOD_NAMES[photo.period]} · ${CATEGORY_NAMES[photo.category]}</p>
+                    ${photo.originalUrl ? `<p style="font-size:0.68rem;opacity:0.75;margin-top:0.25rem;">📥 Є оригінал для завантаження</p>` : ''}
                 </div>
             </div>
         </div>
@@ -261,6 +262,17 @@ function openLightbox(index) {
     if (lightboxCaption) lightboxCaption.textContent = photo.title;
     if (lightboxMeta) {
         lightboxMeta.textContent = `${PERIOD_NAMES[photo.period]} · ${CATEGORY_NAMES[photo.category]}${photo.date ? ` · ${photo.date}` : ''}`;
+    }
+    
+    // Посилання на оригінал (Google Drive)
+    const downloadBtn = document.getElementById('lightboxDownload');
+    if (downloadBtn) {
+        if (photo.originalUrl) {
+            downloadBtn.href = photo.originalUrl;
+            downloadBtn.style.display = 'inline-block';
+        } else {
+            downloadBtn.style.display = 'none';
+        }
     }
     
     lightbox.classList.add('active');
