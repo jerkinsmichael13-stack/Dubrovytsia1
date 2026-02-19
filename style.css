@@ -43,7 +43,7 @@
     
     /* Шрифти */
     --font-display: 'Cormorant Garamond', 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
-    --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    --font-body: 'DM Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
     
     /* Відступи */
     --spacing-xs: 0.5rem;
@@ -389,12 +389,11 @@ input, textarea, select {
     transition: all var(--transition-base);
 }
 
-/* Show moon on light theme, sun on dark theme */
+/* Light theme → moon icon visible; Dark theme → sun icon visible */
 .sun-icon { display: none; }
 .moon-icon { display: block; }
-
-[data-theme="dark"] .sun-icon { display: block; }
-[data-theme="dark"] .moon-icon { display: none; }
+html[data-theme="dark"] .sun-icon { display: block; }
+html[data-theme="dark"] .moon-icon { display: none; }
 
 /* Мобільне меню */
 .mobile-toggle {
@@ -553,7 +552,7 @@ input, textarea, select {
     font-weight: 700;
     margin-bottom: var(--spacing-md);
     text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-    animation: slideInLeft 0.9s cubic-bezier(0.4, 0, 0.2, 1) both;
+    animation: slideInLeft 0.9s ease-out both;
 }
 
 .hero-subtitle {
@@ -561,7 +560,7 @@ input, textarea, select {
     margin-bottom: var(--spacing-lg);
     opacity: 0.95;
     font-weight: 400;
-    animation: slideInRight 0.9s cubic-bezier(0.4, 0, 0.2, 1) 0.15s both;
+    animation: slideInRight 0.9s ease-out 0.15s both;
 }
 
 .hero-meta {
@@ -571,7 +570,7 @@ input, textarea, select {
     gap: var(--spacing-sm);
     font-size: 1rem;
     opacity: 0.9;
-    animation: fadeIn 0.8s ease 0.35s both;
+    animation: fadeIn 0.8s ease-out 0.3s both;
 }
 
 .separator {
@@ -2045,16 +2044,6 @@ select.admin-input {
     opacity: 0.7;
 }
 
-/* Hero elements are ALWAYS visible (controlled by keyframe animation, not JS) */
-.hero-content .fade-in-up {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
-}
-
-/* Ensure hero title/subtitle never hidden */
-.hero-title,
-.hero-subtitle,
-.hero-meta {
-    opacity: 1;
-}
+/* Hero — always visible, animation handles appearance */
+.hero-title, .hero-subtitle, .hero-meta { opacity: 1; }
+.hero-content .fade-in-up { opacity: 1 !important; transform: none !important; }

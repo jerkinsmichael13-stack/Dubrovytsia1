@@ -1,7 +1,7 @@
-// ⚡ Apply theme IMMEDIATELY before DOM loads to prevent flash
-(function() {
-    var t = localStorage.getItem('theme') || 'light';
-    document.documentElement.setAttribute('data-theme', t);
+// ⚡ Apply saved theme INSTANTLY (before page renders) to avoid flash
+(function(){
+    var t = localStorage.getItem('theme');
+    if (t) document.documentElement.setAttribute('data-theme', t);
 })();
 
 // ================================================
@@ -79,15 +79,14 @@ function initScrollAnimations() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
-                observer.unobserve(entry.target); // stop watching after visible
+                observer.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
-    
+    }, { threshold: 0.05 });
+
     document.querySelectorAll('.fade-in-up').forEach(el => {
-        // If element is already in viewport (hero elements), show immediately
         const rect = el.getBoundingClientRect();
-        if (rect.top < window.innerHeight && rect.bottom >= 0) {
+        if (rect.top < window.innerHeight) {
             el.classList.add('visible');
         } else {
             observer.observe(el);
@@ -166,7 +165,9 @@ async function initPhotoGallery() {
     }
     
     try {
-        const resp = await fetch('photos.json?v=' + Date.now());
+        // Use raw GitHub URL to bypass GitHub Pages CDN cache
+        const RAW_URL = 'https://raw.githubusercontent.com/jerkinsmichael13-stack/Dubrovytsia1/main/photos.json';
+        const resp = await fetch(RAW_URL + '?v=' + Date.now());
         if (resp.ok) {
             ALL_PHOTOS = await resp.json();
             console.log(`📸 Завантажено ${ALL_PHOTOS.length} фото з photos.json`);
