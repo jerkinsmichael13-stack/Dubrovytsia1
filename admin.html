@@ -279,7 +279,7 @@
 <header class="header">
     <div class="header-container">
         <a href="index.html" class="logo">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Lesser_Coat_of_Arms_of_Ukraine.svg/800px-Lesser_Coat_of_Arms_of_Ukraine.svg.png" alt="Герб" class="logo-img">
+            <img src="https://i.imgur.com/mXCrjjG.png" alt="Герб" class="logo-img">
             <div class="logo-text">
                 <span class="logo-city">Дубровиця</span>
                 <span class="logo-subtitle">Адмін-панель</span>
@@ -511,6 +511,7 @@
                             <label style="display:flex;align-items:center;gap:0.4rem;font-weight:400;cursor:pointer;"><input type="checkbox" id="metricBirth" value="Народження"> 👶 Народження</label>
                             <label style="display:flex;align-items:center;gap:0.4rem;font-weight:400;cursor:pointer;"><input type="checkbox" id="metricMarriage" value="Шлюби"> 💍 Шлюби</label>
                             <label style="display:flex;align-items:center;gap:0.4rem;font-weight:400;cursor:pointer;"><input type="checkbox" id="metricDeath" value="Смерті"> 🕊️ Смерті</label>
+                            <label style="display:flex;align-items:center;gap:0.4rem;font-weight:400;cursor:pointer;"><input type="checkbox" id="metricConfessionRec" value="Сповідні записи"> 📜 Сповідні записи</label>
                         </div>
                     </div>
 
@@ -886,6 +887,7 @@ async function publishMetric() {
     if (document.getElementById('metricBirth').checked) types.push('Народження');
     if (document.getElementById('metricMarriage').checked) types.push('Шлюби');
     if (document.getElementById('metricDeath').checked) types.push('Смерті');
+    if (document.getElementById('metricConfessionRec').checked) types.push('Сповідні записи');
 
     if (!parish || !years || !confession) {
         showStatus('statusMsgMetric', '❌ Заповніть обов\'язкові поля: парафія, роки, конфесія', 'error');
@@ -1209,6 +1211,7 @@ async function renderMetricList(wrap) {
                     <label style="display:flex;align-items:center;gap:.4rem;font-weight:400;cursor:pointer;"><input type="checkbox" id="ef_mb" ${rt.includes('Народження')?'checked':''}> 👶 Народження</label>
                     <label style="display:flex;align-items:center;gap:.4rem;font-weight:400;cursor:pointer;"><input type="checkbox" id="ef_mm" ${rt.includes('Шлюби')?'checked':''}> 💍 Шлюби</label>
                     <label style="display:flex;align-items:center;gap:.4rem;font-weight:400;cursor:pointer;"><input type="checkbox" id="ef_md" ${rt.includes('Смерті')?'checked':''}> 🕊️ Смерті</label>
+                    <label style="display:flex;align-items:center;gap:.4rem;font-weight:400;cursor:pointer;"><input type="checkbox" id="ef_mcr" ${rt.includes('Сповідні записи')?'checked':''}> 📜 Сповідні записи</label>
                 </div>
             </div>
             <div class="field"><label>Населені пункти</label><input id="ef_mvil" type="text" value="${esc(m.villages||'')}"></div>
@@ -1225,6 +1228,7 @@ async function renderMetricList(wrap) {
             if (document.getElementById('ef_mb').checked) types.push('Народження');
             if (document.getElementById('ef_mm').checked) types.push('Шлюби');
             if (document.getElementById('ef_md').checked) types.push('Смерті');
+            if (document.getElementById('ef_mcr') && document.getElementById('ef_mcr').checked) types.push('Сповідні записи');
             const { items, sha } = await loadJsonFromGH(METRICS_FILE);
             const upd = { parish, years, confession: document.getElementById('ef_mconf').value, recordTypes: types.length ? types.join(', ') : 'Народження, шлюби, смерті', villages: document.getElementById('ef_mvil').value.trim(), archive: document.getElementById('ef_marc').value.trim() };
             const scan = document.getElementById('ef_mscan').value.trim();

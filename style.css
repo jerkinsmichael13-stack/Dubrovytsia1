@@ -889,6 +889,10 @@ html[data-theme="dark"] .moon-icon { display: none; }
    ПРАВИЛО: без дублювання https://, правильні URL */
 
 .article-header {
+    min-height: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: calc(var(--spacing-3xl) + 1rem) 0 var(--spacing-2xl);
     text-align: center;
     position: relative;
@@ -1040,6 +1044,10 @@ html[data-theme="dark"] .moon-icon { display: none; }
    ================================================================ */
 
 .catalog-header {
+    min-height: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: calc(var(--spacing-3xl) + 1rem) 0 var(--spacing-2xl);
     text-align: center;
     position: relative;
@@ -1095,6 +1103,62 @@ html[data-theme="dark"] .moon-icon { display: none; }
     border-color: var(--color-accent-light);
     background-color: rgba(255,255,255,0.18);
     box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.2);
+}
+
+/* Catalog filter buttons (for books and metrics pages) */
+.catalog-filters {
+    margin-top: var(--spacing-xl);
+    text-align: center;
+}
+.catalog-filters h3 {
+    font-size: 0.68rem;
+    font-weight: 500;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+}
+.catalog-filter-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+}
+.catalog-filter-btn {
+    padding: 0.45rem 1.1rem;
+    border-radius: var(--radius-full);
+    background-color: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 400;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.82rem;
+    letter-spacing: 0.03em;
+    backdrop-filter: blur(4px);
+    font-family: var(--font-body);
+}
+.catalog-filter-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+    color: white;
+}
+.catalog-filter-btn.active {
+    background: var(--color-accent);
+    color: #1a1208;
+    border-color: var(--color-accent);
+    font-weight: 600;
+    box-shadow: 0 3px 12px rgba(201, 162, 39, 0.35);
+}
+.catalog-item.hidden { display: none; }
+.catalog-no-results {
+    grid-column: 1/-1;
+    text-align: center;
+    padding: 3rem;
+    color: var(--color-text-secondary);
+    font-style: italic;
+    font-family: var(--font-display);
+    font-size: 1.1rem;
 }
 
 .catalog-section { padding: var(--spacing-3xl) 0; }
@@ -1236,6 +1300,10 @@ html[data-theme="dark"] .moon-icon { display: none; }
    ================================================================ */
 
 .gallery-header {
+    min-height: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: calc(var(--spacing-3xl) + 1rem) 0 var(--spacing-2xl);
     text-align: center;
     position: relative;

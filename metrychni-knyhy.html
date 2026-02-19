@@ -14,7 +14,7 @@
     <header class="header">
         <div class="header-container">
             <a href="index.html" class="logo">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Lesser_Coat_of_Arms_of_Ukraine.svg/800px-Lesser_Coat_of_Arms_of_Ukraine.svg.png" alt="Герб" class="logo-img">
+                <img src="https://i.imgur.com/mXCrjjG.png" alt="Герб" class="logo-img">
                 <div class="logo-text">
                     <span class="logo-city">Дубровиця</span>
                     <span class="logo-subtitle">Цифровий архів</span>
@@ -58,17 +58,32 @@
     <!-- Catalog Header -->
     <section class="catalog-header">
         <div class="container">
-            <h1 class="article-title" data-aos="fade-up">Метричні книги</h1>
-            <p class="article-meta" data-aos="fade-up" data-aos-delay="100">
+            <h1 class="article-title fade-in-up">Метричні книги</h1>
+            <p class="article-meta fade-in-up delay-1">
                 Генеалогічні дослідження · Метричні записи парафій
             </p>
-            
-            <!-- Search -->
-            <div class="search-box" data-aos="fade-up" data-aos-delay="200">
-                <input type="text" 
-                       class="search-input" 
-                       id="searchInput" 
-                       placeholder="Пошук за парафією, роками або населеним пунктом...">
+            <!-- Confession Filters -->
+            <div class="catalog-filters fade-in-up delay-2">
+                <h3>Конфесія:</h3>
+                <div class="catalog-filter-group">
+                    <button class="catalog-filter-btn active" data-metric-filter="all">Усі</button>
+                    <button class="catalog-filter-btn" data-metric-filter="orthodox">Православна</button>
+                    <button class="catalog-filter-btn" data-metric-filter="catholic">Римо-католицька</button>
+                    <button class="catalog-filter-btn" data-metric-filter="greek-catholic">Греко-католицька</button>
+                    <button class="catalog-filter-btn" data-metric-filter="jewish">Іудаїзм</button>
+                    <button class="catalog-filter-btn" data-metric-filter="civil">Цивільні реєстри</button>
+                </div>
+            </div>
+            <!-- Record Type Filters -->
+            <div class="catalog-filters fade-in-up delay-3" style="margin-top:1rem;">
+                <h3>Тип записів:</h3>
+                <div class="catalog-filter-group">
+                    <button class="catalog-filter-btn active" data-metric-type="all">Усі типи</button>
+                    <button class="catalog-filter-btn" data-metric-type="birth">👶 Народження</button>
+                    <button class="catalog-filter-btn" data-metric-type="marriage">💍 Шлюби</button>
+                    <button class="catalog-filter-btn" data-metric-type="death">🕊️ Смерті</button>
+                    <button class="catalog-filter-btn" data-metric-type="confession">📜 Сповідні записи</button>
+                </div>
             </div>
         </div>
     </section>
@@ -78,7 +93,7 @@
         <div class="container">
             <div class="catalog-grid">
                 
-                <div class="catalog-item" data-aos="fade-up">
+                <div class="catalog-item" data-metric-confession="orthodox" data-metric-types="birth marriage death" data-aos="fade-up">
                     <h3>Свято-Миколаївська парафія, Дубровиця</h3>
                     <p><strong>Роки:</strong> 1875–1915</p>
                     <p><strong>Тип записів:</strong> Народження, шлюби, смерті</p>
@@ -88,7 +103,7 @@
                     <a href="#" class="catalog-link">Детальна інформація →</a>
                 </div>
 
-                <div class="catalog-item" data-aos="fade-up" data-aos-delay="50">
+                <div class="catalog-item" data-metric-confession="catholic" data-metric-types="birth marriage death" data-aos="fade-up" data-aos-delay="50">
                     <h3>Римо-католицька парафія Дубровиці</h3>
                     <p><strong>Роки:</strong> 1850–1900</p>
                     <p><strong>Тип записів:</strong> Народження, шлюби, смерті</p>
@@ -98,7 +113,7 @@
                     <a href="#" class="catalog-link">Детальна інформація →</a>
                 </div>
 
-                <div class="catalog-item" data-aos="fade-up" data-aos-delay="100">
+                <div class="catalog-item" data-metric-confession="jewish" data-metric-types="birth marriage death" data-aos="fade-up" data-aos-delay="100">
                     <h3>Єврейська громада Дубровиці</h3>
                     <p><strong>Роки:</strong> 1865–1920</p>
                     <p><strong>Тип записів:</strong> Народження, шлюби, смерті</p>
@@ -108,7 +123,7 @@
                     <a href="#" class="catalog-link">Детальна інформація →</a>
                 </div>
 
-                <div class="catalog-item" data-aos="fade-up" data-aos-delay="150">
+                <div class="catalog-item" data-metric-confession="orthodox" data-metric-types="birth marriage death" data-aos="fade-up" data-aos-delay="150">
                     <h3>Свято-Покровська церква, село Степангород</h3>
                     <p><strong>Роки:</strong> 1880–1910</p>
                     <p><strong>Тип записів:</strong> Народження, шлюби, смерті</p>
@@ -118,7 +133,7 @@
                     <a href="#" class="catalog-link">Детальна інформація →</a>
                 </div>
 
-                <div class="catalog-item" data-aos="fade-up" data-aos-delay="200">
+                <div class="catalog-item" data-metric-confession="orthodox" data-metric-types="birth marriage death" data-aos="fade-up" data-aos-delay="200">
                     <h3>Свято-Троїцька парафія, село Білка</h3>
                     <p><strong>Роки:</strong> 1870–1920</p>
                     <p><strong>Тип записів:</strong> Народження, шлюби, смерті</p>
@@ -128,7 +143,7 @@
                     <a href="#" class="catalog-link">Детальна інформація →</a>
                 </div>
 
-                <div class="catalog-item" data-aos="fade-up" data-aos-delay="250">
+                <div class="catalog-item" data-metric-confession="greek-catholic" data-metric-types="birth marriage death" data-aos="fade-up" data-aos-delay="250">
                     <h3>Греко-католицька парафія Дубровиці</h3>
                     <p><strong>Роки:</strong> 1860–1895</p>
                     <p><strong>Тип записів:</strong> Народження, шлюби, смерті</p>
@@ -138,7 +153,7 @@
                     <a href="#" class="catalog-link">Детальна інформація →</a>
                 </div>
 
-                <div class="catalog-item" data-aos="fade-up" data-aos-delay="300">
+                <div class="catalog-item" data-metric-confession="civil" data-metric-types="birth marriage death" data-aos="fade-up" data-aos-delay="300">
                     <h3>Реєстри цивільних актів Дубровицької волості</h3>
                     <p><strong>Роки:</strong> 1920–1939</p>
                     <p><strong>Тип записів:</strong> Народження, шлюби, смерті</p>
@@ -148,7 +163,7 @@
                     <a href="#" class="catalog-link">Детальна інформація →</a>
                 </div>
 
-                <div class="catalog-item" data-aos="fade-up" data-aos-delay="350">
+                <div class="catalog-item" data-metric-confession="orthodox" data-metric-types="birth marriage death" data-aos="fade-up" data-aos-delay="350">
                     <h3>Свято-Успенська церква, село Мости</h3>
                     <p><strong>Роки:</strong> 1885–1915</p>
                     <p><strong>Тип записів:</strong> Народження, шлюби, смерті</p>

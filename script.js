@@ -629,12 +629,116 @@ document.addEventListener('DOMContentLoaded', () => {
         initMetricSearch();
     }
     
+    // Book filters (new button-based)
+    if (document.querySelector('[data-book-filter]')) {
+        initBookFilters();
+    }
+    
+    // Metric filters (new button-based)
+    if (document.querySelector('[data-metric-filter]')) {
+        initMetricFilters();
+    }
+    
     if (document.getElementById('adminLoginBtn')) {
         initAdmin();
     }
     
     console.log('✅ Сайт готовий!');
 });
+
+// ================================================
+// ФІЛЬТРИ КНИГ (кнопки-фільтри)
+// ================================================
+function initBookFilters() {
+    let activeBookFilter = 'all';
+
+    function applyBookFilter() {
+        const items = document.querySelectorAll('.catalog-item.book-item');
+        let visible = 0;
+        items.forEach(item => {
+            const cat = item.dataset.bookCategory || '';
+            const show = activeBookFilter === 'all' || cat === activeBookFilter;
+            item.classList.toggle('hidden', !show);
+            if (show) visible++;
+        });
+        // Show/hide no-results
+        let noResults = document.getElementById('booksNoResults');
+        if (!noResults) {
+            noResults = document.createElement('p');
+            noResults.id = 'booksNoResults';
+            noResults.className = 'catalog-no-results';
+            noResults.textContent = 'Книг за цією темою ще не додано.';
+            const grid = document.querySelector('.catalog-grid');
+            if (grid) grid.appendChild(noResults);
+        }
+        noResults.style.display = visible === 0 ? 'block' : 'none';
+    }
+
+    document.querySelectorAll('[data-book-filter]').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('[data-book-filter]').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            activeBookFilter = this.dataset.bookFilter;
+            applyBookFilter();
+        });
+    });
+
+    applyBookFilter();
+    console.log('✅ Фільтри книг ініціалізовано');
+}
+
+// ================================================
+// ФІЛЬТРИ МЕТРИЧНИХ КНИГ (кнопки-фільтри)
+// ================================================
+function initMetricFilters() {
+    let activeConfession = 'all';
+    let activeType = 'all';
+
+    function applyMetricFilter() {
+        const items = document.querySelectorAll('.catalog-item[data-metric-confession]');
+        let visible = 0;
+        items.forEach(item => {
+            const conf = item.dataset.metricConfession || '';
+            const types = item.dataset.metricTypes || '';
+            const confMatch = activeConfession === 'all' || conf === activeConfession;
+            const typeMatch = activeType === 'all' || types.includes(activeType);
+            const show = confMatch && typeMatch;
+            item.classList.toggle('hidden', !show);
+            if (show) visible++;
+        });
+        let noResults = document.getElementById('metricsNoResults');
+        if (!noResults) {
+            noResults = document.createElement('p');
+            noResults.id = 'metricsNoResults';
+            noResults.className = 'catalog-no-results';
+            noResults.textContent = 'Записів за цими параметрами не знайдено.';
+            const grid = document.querySelector('.catalog-grid');
+            if (grid) grid.appendChild(noResults);
+        }
+        noResults.style.display = visible === 0 ? 'block' : 'none';
+    }
+
+    document.querySelectorAll('[data-metric-filter]').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('[data-metric-filter]').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            activeConfession = this.dataset.metricFilter;
+            applyMetricFilter();
+        });
+    });
+
+    document.querySelectorAll('[data-metric-type]').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('[data-metric-type]').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            activeType = this.dataset.metricType;
+            applyMetricFilter();
+        });
+    });
+
+    applyMetricFilter();
+    console.log('✅ Фільтри метричних книг ініціалізовано');
+}
 
 // Обробка помилок
 window.addEventListener('error', e => {
