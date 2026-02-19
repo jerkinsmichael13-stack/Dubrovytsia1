@@ -5,336 +5,718 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Адмін-панель — Дубровиця</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        .admin-container {
-            max-width: 800px;
+        /* ============================================
+           АДМІН ПАНЕЛЬ - СТИЛІ
+        ============================================ */
+        .admin-wrap {
+            max-width: 860px;
             margin: 2rem auto;
-            padding: 2rem;
+            padding: 0 1.5rem 4rem;
         }
-        .admin-section {
+
+        .admin-card {
             background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 1.25rem;
             padding: 2rem;
-            border-radius: 1rem;
-            margin-bottom: 2rem;
-            box-shadow: var(--shadow-lg);
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.07);
         }
-        .admin-input {
-            width: 100%;
-            padding: 0.75rem;
-            margin: 0.5rem 0;
-            border: 2px solid var(--color-border);
-            border-radius: 0.5rem;
+
+        .admin-card h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            color: var(--color-text);
+        }
+
+        .admin-card h3 {
             font-size: 1rem;
+            font-weight: 600;
+            margin: 1.25rem 0 0.4rem;
+            color: var(--color-text);
         }
-        .admin-btn {
+
+        /* ---- Inputs ---- */
+        .field {
+            margin-bottom: 1rem;
+        }
+        .field label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 0.35rem;
+            color: var(--color-text-secondary);
+            letter-spacing: 0.02em;
+        }
+        .field input,
+        .field select,
+        .field textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--color-border);
+            border-radius: 0.625rem;
+            font-size: 0.9375rem;
+            font-family: 'DM Sans', sans-serif;
+            background: var(--color-bg);
+            color: var(--color-text);
+            transition: border-color 0.2s;
+            box-sizing: border-box;
+        }
+        .field input:focus,
+        .field select:focus,
+        .field textarea:focus {
+            outline: none;
+            border-color: var(--color-primary);
+        }
+        .field input[type="password"] {
+            letter-spacing: 0.1em;
+        }
+
+        /* ---- Buttons ---- */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.75rem;
+            border: none;
+            border-radius: 0.625rem;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            font-family: 'DM Sans', sans-serif;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-primary {
             background: var(--color-primary);
             color: white;
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 0.5rem;
-            cursor: pointer;
-            font-size: 1rem;
-            margin: 0.5rem 0.5rem 0.5rem 0;
         }
-        .admin-btn:hover {
-            opacity: 0.9;
+        .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+        .btn-green { background: #2e7d32; color: white; }
+        .btn-green:hover { opacity: 0.88; }
+        .btn-red { background: #c62828; color: white; }
+        .btn-red:hover { opacity: 0.88; }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--color-border);
+            color: var(--color-text);
         }
-        .code-display {
-            background: #f5f5f5;
-            border: 2px solid #ddd;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            font-family: monospace;
-            white-space: pre-wrap;
-            word-wrap: break-word;
+        .btn-outline:hover { border-color: var(--color-primary); color: var(--color-primary); }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+        /* ---- Notices ---- */
+        .notice {
+            padding: 1rem 1.25rem;
+            border-radius: 0.75rem;
             margin: 1rem 0;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        .notice-info { background: #e3f2fd; border-left: 4px solid #1976d2; color: #0d47a1; }
+        .notice-warn { background: #fff8e1; border-left: 4px solid #f9a825; color: #6d4c00; }
+        .notice-success { background: #e8f5e9; border-left: 4px solid #2e7d32; color: #1b5e20; }
+        .notice-error { background: #ffebee; border-left: 4px solid #c62828; color: #7f0000; }
+        [data-theme="dark"] .notice-info { background: #0d2a4a; color: #90caf9; }
+        [data-theme="dark"] .notice-warn { background: #3e2a00; color: #ffe082; }
+        [data-theme="dark"] .notice-success { background: #0a2e12; color: #a5d6a7; }
+        [data-theme="dark"] .notice-error { background: #3e0a0a; color: #ef9a9a; }
+
+        /* ---- Status message ---- */
+        #statusMsg {
             display: none;
+            margin-top: 1rem;
+            font-weight: 600;
         }
-        .dark .code-display {
-            background: #2a2a2a;
-            border-color: #444;
-            color: #f5f5f5;
+
+        /* ---- Photo preview ---- */
+        #photoPreview {
+            display: none;
+            width: 100%;
+            max-height: 260px;
+            object-fit: cover;
+            border-radius: 0.75rem;
+            margin-top: 0.75rem;
+            border: 2px solid var(--color-border);
         }
-        .instruction {
-            background: #e3f2fd;
-            padding: 1rem;
+
+        /* ---- Photo list ---- */
+        .photo-list {
+            display: grid;
+            gap: 0.75rem;
+        }
+        .photo-item {
+            display: grid;
+            grid-template-columns: 72px 1fr auto;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.875rem;
+            background: var(--color-bg);
+            border: 1px solid var(--color-border);
+            border-radius: 0.75rem;
+        }
+        .photo-item img {
+            width: 72px;
+            height: 52px;
+            object-fit: cover;
             border-radius: 0.5rem;
-            margin: 1rem 0;
-            border-left: 4px solid #2196F3;
         }
-        .dark .instruction {
-            background: #1a3a52;
-            border-left-color: #64b5f6;
+        .photo-item-info h4 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin: 0 0 0.2rem;
         }
-        .warning {
-            background: #fff3cd;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            margin: 1rem 0;
-            border-left: 4px solid #ffc107;
+        .photo-item-info p {
+            font-size: 0.75rem;
+            color: var(--color-text-secondary);
+            margin: 0;
         }
-        .dark .warning {
-            background: #4a3f1a;
-            border-left-color: #ffd54f;
-        }
-        .step {
-            margin: 1.5rem 0;
-            padding-left: 2rem;
-            position: relative;
-        }
-        .step::before {
-            content: attr(data-step);
-            position: absolute;
-            left: 0;
-            top: 0;
-            background: var(--color-accent);
+        .badge {
+            display: inline-block;
+            padding: 0.15rem 0.5rem;
+            border-radius: 999px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            background: var(--color-primary);
             color: white;
-            width: 1.5rem;
-            height: 1.5rem;
+            margin-right: 0.25rem;
+        }
+
+        /* ---- Token input with toggle ---- */
+        .token-row {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .token-row input { flex: 1; }
+
+        /* ---- Step indicators ---- */
+        .steps { counter-reset: step; }
+        .step-item {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 0.875rem;
+            align-items: flex-start;
+        }
+        .step-item::before {
+            counter-increment: step;
+            content: counter(step);
+            min-width: 28px;
+            height: 28px;
             border-radius: 50%;
+            background: var(--color-primary);
+            color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
-            font-size: 0.875rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-top: 0.1rem;
         }
+        .step-item p { margin: 0; line-height: 1.55; font-size: 0.9rem; }
+        .step-item a { color: var(--color-primary); }
+
+        /* ---- Tabs ---- */
+        .tabs {
+            display: flex;
+            gap: 0.25rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--color-border);
+        }
+        .tab-btn {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            background: none;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--color-text-secondary);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+            transition: all 0.2s;
+        }
+        .tab-btn.active { color: var(--color-primary); border-bottom-color: var(--color-primary); }
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; }
+
+        /* ---- Loader ---- */
+        .spinner-sm {
+            width: 18px; height: 18px;
+            border: 2px solid rgba(255,255,255,0.4);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            display: inline-block;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ---- Upload area ---- */
+        .upload-area {
+            border: 2px dashed var(--color-border);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 1rem;
+        }
+        .upload-area:hover, .upload-area.drag-over {
+            border-color: var(--color-primary);
+            background: rgba(26, 86, 50, 0.04);
+        }
+        .upload-area p { margin: 0.5rem 0 0; font-size: 0.875rem; color: var(--color-text-secondary); }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        @media (max-width: 600px) { .grid-2 { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
-    <header class="header">
-        <div class="header-container">
-            <a href="index.html" class="logo">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Lesser_Coat_of_Arms_of_Ukraine.svg/800px-Lesser_Coat_of_Arms_of_Ukraine.svg.png" alt="Герб" class="logo-img">
-                <div class="logo-text">
-                    <span class="logo-city">Дубровиця</span>
-                    <span class="logo-subtitle">Адмін-панель</span>
-                </div>
-            </a>
-            
-            <button class="theme-toggle" id="themeToggle" aria-label="Перемкнути тему">
-                <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="5"></circle>
-                    <line x1="12" y1="1" x2="12" y2="3"></line>
-                    <line x1="12" y1="21" x2="12" y2="23"></line>
-                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                    <line x1="1" y1="12" x2="3" y2="12"></line>
-                    <line x1="21" y1="12" x2="23" y2="12"></line>
-                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                </svg>
-                <svg class="theme-icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                </svg>
+
+<!-- ==================== HEADER ==================== -->
+<header class="header">
+    <div class="header-container">
+        <a href="index.html" class="logo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Lesser_Coat_of_Arms_of_Ukraine.svg/800px-Lesser_Coat_of_Arms_of_Ukraine.svg.png" alt="Герб" class="logo-img">
+            <div class="logo-text">
+                <span class="logo-city">Дубровиця</span>
+                <span class="logo-subtitle">Адмін-панель</span>
+            </div>
+        </a>
+        <div style="display:flex;gap:0.75rem;align-items:center;">
+            <a href="index.html" class="btn btn-outline" style="padding:0.5rem 1rem;font-size:0.875rem;">← На сайт</a>
+            <button class="theme-toggle" id="themeToggle" aria-label="Тема">
+                <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                <svg class="theme-icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
             </button>
         </div>
-    </header>
+    </div>
+</header>
 
-    <div class="admin-container">
-        <!-- Login Section -->
-        <div id="loginSection" class="admin-section">
-            <h2>🔐 Вхід в адмін-панель</h2>
-            <input type="password" id="adminPassword" class="admin-input" placeholder="Введіть пароль">
-            <button id="adminLoginBtn" class="admin-btn">Увійти</button>
-            <p style="margin-top: 1rem; color: var(--color-text-secondary);">Пароль за замовчуванням: <code>admin2026</code></p>
+<!-- ==================== MAIN ==================== -->
+<div class="admin-wrap">
+
+    <!-- ===== LOGIN ===== -->
+    <div id="loginCard" class="admin-card">
+        <h2>🔐 Вхід в адмін-панель</h2>
+        <div class="notice notice-info">
+            Тільки адміністратор сайту може додавати та видаляти фотографії.
+        </div>
+        <div class="field">
+            <label>Пароль адміна</label>
+            <input type="password" id="loginPassword" placeholder="Введіть пароль" autocomplete="off">
+        </div>
+        <button class="btn btn-primary" id="loginBtn">Увійти</button>
+        <div id="loginError" class="notice notice-error" style="display:none;">❌ Невірний пароль</div>
+    </div>
+
+    <!-- ===== ADMIN CONTENT ===== -->
+    <div id="adminContent" style="display:none;">
+
+        <!-- GitHub Token Setup -->
+        <div class="admin-card" id="tokenCard">
+            <h2>⚙️ Налаштування GitHub</h2>
+
+            <div id="tokenSetupSection">
+                <div class="notice notice-warn">
+                    <strong>Одноразове налаштування!</strong> Вам потрібен GitHub Personal Access Token, щоб адмін-панель могла зберігати фото безпосередньо на GitHub без ручного редагування коду.
+                </div>
+
+                <div class="notice notice-info steps">
+                    <strong>Як отримати токен (1 хвилина):</strong>
+                    <div class="step-item"><p>Перейдіть на <a href="https://github.com/settings/tokens/new" target="_blank"><strong>github.com/settings/tokens/new</strong></a></p></div>
+                    <div class="step-item"><p>У полі <strong>"Note"</strong> напишіть: <code>Дубровиця архів</code></p></div>
+                    <div class="step-item"><p>У <strong>"Expiration"</strong> оберіть <strong>"No expiration"</strong></p></div>
+                    <div class="step-item"><p>Поставте галочку <strong>"repo"</strong> (перший пункт у списку)</p></div>
+                    <div class="step-item"><p>Натисніть зелену кнопку <strong>"Generate token"</strong></p></div>
+                    <div class="step-item"><p>Скопіюйте токен (він починається з <code>ghp_</code>) і вставте нижче</p></div>
+                </div>
+
+                <div class="field">
+                    <label>GitHub Personal Access Token</label>
+                    <div class="token-row">
+                        <input type="password" id="githubToken" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+                        <button class="btn btn-outline" id="toggleToken" style="white-space:nowrap;">Показати</button>
+                    </div>
+                </div>
+                <button class="btn btn-primary" id="saveTokenBtn">✅ Зберегти токен</button>
+            </div>
+
+            <div id="tokenOkSection" style="display:none;" class="notice notice-success">
+                ✅ Токен збережено. GitHub API підключено. <button class="btn btn-outline" id="changeTokenBtn" style="margin-left:0.5rem;padding:0.3rem 0.75rem;font-size:0.8rem;">Змінити</button>
+            </div>
         </div>
 
-        <!-- Admin Content -->
-        <div id="adminContent" style="display: none;">
-            
-            <!-- Важливе повідомлення -->
-            <div class="admin-section">
-                <h2>⚠️ ВАЖЛИВО: Як працює додавання фото</h2>
-                
-                <div class="warning">
-                    <strong>Чому інші не бачать ваші фото?</strong>
-                    <p>Фото зберігаються в масиві <code>ALL_PHOTOS</code> у файлі <code>script.js</code>. Щоб всі бачили фото, потрібно редагувати цей файл на GitHub.</p>
-                </div>
-
-                <div class="instruction">
-                    <strong>Як це працює:</strong>
-                    <ol style="margin: 0.5rem 0; padding-left: 1.5rem;">
-                        <li>Завантажте фото на <a href="https://imgur.com/upload" target="_blank">Imgur.com</a></li>
-                        <li>Скопіюйте пряме посилання (має закінчуватися на .jpg або .png)</li>
-                        <li>Заповніть форму нижче</li>
-                        <li>Натисніть "Згенерувати код"</li>
-                        <li>Скопіюйте згенерований код</li>
-                        <li>Додайте код в файл <code>script.js</code> на GitHub</li>
-                        <li>Через 2-5 хвилин фото побачать ВСІ! ✅</li>
-                    </ol>
-                </div>
+        <!-- Tabs -->
+        <div class="admin-card">
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="add">➕ Додати фото</button>
+                <button class="tab-btn" data-tab="list">📋 Усі фото</button>
             </div>
 
-            <!-- Форма додавання фото -->
-            <div class="admin-section">
-                <h2>📸 Додати нове фото</h2>
-                
-                <div class="step" data-step="1">
-                    <h3>Завантажте фото на Imgur</h3>
-                    <p>Перейдіть на <a href="https://imgur.com/upload" target="_blank" style="color: var(--color-primary);">imgur.com/upload</a> і завантажте фото</p>
-                    <p style="color: var(--color-text-secondary); font-size: 0.875rem;">Правою кнопкою на фото → "Copy image address"</p>
+            <!-- TAB: ADD PHOTO -->
+            <div class="tab-panel active" id="tab-add">
+                <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;margin-bottom:1.25rem;">Додати нове фото</h2>
+
+                <div class="notice notice-info" style="margin-bottom:1.5rem;">
+                    <strong>Як завантажити фото:</strong> Перейдіть на <a href="https://imgur.com/upload" target="_blank"><strong>imgur.com/upload</strong></a>, завантажте фото, потім натисніть правою кнопкою на зображення → <strong>"Копіювати адресу зображення"</strong> — посилання повинно закінчуватись на <code>.jpg</code> або <code>.png</code>.
                 </div>
 
-                <div class="step" data-step="2">
-                    <h3>Вставте посилання на фото</h3>
-                    <input type="text" id="photoUrl" class="admin-input" placeholder="https://i.imgur.com/ваше_фото.jpg">
-                    <p style="color: var(--color-text-secondary); font-size: 0.875rem;">
-                        ✅ Правильно: https://i.imgur.com/abc123.jpg<br>
-                        ❌ Неправильно: https://imgur.com/abc123
-                    </p>
+                <div class="field">
+                    <label>Посилання на фото (URL) *</label>
+                    <input type="url" id="newPhotoUrl" placeholder="https://i.imgur.com/abc123.jpg">
+                    <img id="photoPreview" src="" alt="Попередній перегляд">
                 </div>
 
-                <div class="step" data-step="3">
-                    <h3>Заповніть інформацію</h3>
-                    
-                    <label style="display: block; margin-top: 1rem; font-weight: 500;">Назва фото *</label>
-                    <input type="text" id="photoTitle" class="admin-input" placeholder="Наприклад: Центральна площа, 1935 рік">
-                    
-                    <label style="display: block; margin-top: 1rem; font-weight: 500;">Період *</label>
-                    <select id="photoPeriod" class="admin-input">
-                        <option value="">Оберіть період</option>
-                        <option value="before-1900">До 1900</option>
-                        <option value="1900-1939">1900—1939</option>
-                        <option value="1939-1945">1939—1945 (Друга світова)</option>
-                        <option value="1945-1991">1945—1991 (Радянський період)</option>
-                        <option value="after-1991">Після 1991 (Незалежна Україна)</option>
-                    </select>
-                    
-                    <label style="display: block; margin-top: 1rem; font-weight: 500;">Категорія *</label>
-                    <select id="photoCategory" class="admin-input">
-                        <option value="">Оберіть категорію</option>
-                        <option value="churches">🛐 Церкви та храми</option>
-                        <option value="streets">🏘️ Вулиці міста</option>
-                        <option value="people">👥 Люди та портрети</option>
-                        <option value="architecture">🏛️ Архітектура</option>
-                        <option value="aerial">✈️ Аерофотознімки</option>
-                        <option value="drawings">🎨 Малюнки та гравюри</option>
-                        <option value="events">📅 Історичні події</option>
-                    </select>
-                    
-                    <label style="display: block; margin-top: 1rem; font-weight: 500;">Рік (необов'язково)</label>
-                    <input type="text" id="photoDate" class="admin-input" placeholder="Наприклад: 1935">
+                <div class="field">
+                    <label>Назва фото *</label>
+                    <input type="text" id="newPhotoTitle" placeholder="Центральна площа, 1935 рік">
                 </div>
 
-                <div class="step" data-step="4">
-                    <h3>Згенеруйте код</h3>
-                    <button id="generateCode" class="admin-btn">✨ Згенерувати код для додавання</button>
-                </div>
-
-                <div id="codeDisplay" class="code-display"></div>
-                
-                <button id="copyCode" class="admin-btn" style="background: #4CAF50; display: none;">📋 Копіювати код</button>
-            </div>
-
-            <!-- Інструкція для GitHub -->
-            <div class="admin-section">
-                <h2>📝 Як додати код в GitHub</h2>
-                
-                <div class="step" data-step="1">
-                    <h3>Відкрийте ваш репозиторій</h3>
-                    <p>Перейдіть на: <a href="https://github.com/jerkinsmichael13-stack/Dubrovytsia1" target="_blank" style="color: var(--color-primary);">github.com/jerkinsmichael13-stack/Dubrovytsia1</a></p>
-                </div>
-
-                <div class="step" data-step="2">
-                    <h3>Відкрийте файл script.js</h3>
-                    <p>Клікніть на файл <code>script.js</code> в списку файлів</p>
-                </div>
-
-                <div class="step" data-step="3">
-                    <h3>Натисніть "Edit" (олівець ✏️)</h3>
-                    <p>У верхньому правому куті файлу</p>
-                </div>
-
-                <div class="step" data-step="4">
-                    <h3>Знайдіть масив ALL_PHOTOS</h3>
-                    <p>Використайте Ctrl+F і шукайте: <code>=== ДОДАЙТЕ СВОЇ ФОТО ТУТ ===</code></p>
-                </div>
-
-                <div class="step" data-step="5">
-                    <h3>Вставте згенерований код</h3>
-                    <p>Вставте код <strong>ПЕРЕД</strong> коментарем <code>// === ДОДАЙТЕ СВОЇ ФОТО ТУТ ===</code></p>
-                    <div style="background: #f5f5f5; padding: 1rem; border-radius: 0.5rem; margin-top: 0.5rem; font-family: monospace; font-size: 0.875rem;">
-                        // Інші фото...<br>
-                        <span style="color: #4CAF50;">    ← ТУТ ВСТАВТЕ ВАШ КОД</span><br>
-                        <br>
-                        // === ДОДАЙТЕ СВОЇ ФОТО ТУТ ===
+                <div class="grid-2">
+                    <div class="field">
+                        <label>Період *</label>
+                        <select id="newPhotoPeriod">
+                            <option value="">Оберіть...</option>
+                            <option value="before-1900">До 1900</option>
+                            <option value="1900-1939">1900—1939</option>
+                            <option value="1939-1945">1939—1945 (Друга світова)</option>
+                            <option value="1945-1991">1945—1991 (Радянський)</option>
+                            <option value="after-1991">Після 1991 (Незалежна Україна)</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Категорія *</label>
+                        <select id="newPhotoCategory">
+                            <option value="">Оберіть...</option>
+                            <option value="churches">🛐 Церкви та храми</option>
+                            <option value="streets">🏘️ Вулиці міста</option>
+                            <option value="people">👥 Люди та портрети</option>
+                            <option value="architecture">🏛️ Архітектура</option>
+                            <option value="aerial">✈️ Аерофотознімки</option>
+                            <option value="drawings">🎨 Малюнки та гравюри</option>
+                            <option value="events">📅 Історичні події</option>
+                        </select>
                     </div>
                 </div>
 
-                <div class="step" data-step="6">
-                    <h3>Збережіть зміни</h3>
-                    <p>Прокрутіть вниз → "Commit changes" → Напишіть опис (наприклад: "Додано фото") → "Commit changes"</p>
+                <div class="field">
+                    <label>Рік (або приблизний рік)</label>
+                    <input type="text" id="newPhotoDate" placeholder="1935">
                 </div>
 
-                <div class="step" data-step="7">
-                    <h3>Дочекайтесь оновлення</h3>
-                    <p>Через 2-5 хвилин GitHub Pages оновиться і фото з'явиться для ВСІХ! 🎉</p>
-                </div>
+                <button class="btn btn-green" id="publishBtn">
+                    🚀 Опублікувати фото на сайт
+                </button>
+
+                <div id="statusMsg" class="notice"></div>
             </div>
 
-            <!-- Додаткові підказки -->
-            <div class="admin-section">
-                <h2>💡 Корисні поради</h2>
-                
-                <div class="instruction">
-                    <h3>Формат посилання на Imgur:</h3>
-                    <p>✅ <code>https://i.imgur.com/abc123.jpg</code> - ПРАВИЛЬНО</p>
-                    <p>✅ <code>https://i.imgur.com/xyz789.png</code> - ПРАВИЛЬНО</p>
-                    <p>❌ <code>https://imgur.com/abc123</code> - НЕ ПРАЦЮЄ</p>
-                    <p style="margin-top: 0.5rem; font-size: 0.875rem;">Обов'язково натисніть "Copy image address" (правою кнопкою на фото)</p>
-                </div>
-
-                <div class="instruction">
-                    <h3>Якість фото:</h3>
-                    <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
-                        <li>Мінімальна ширина: 800px</li>
-                        <li>Рекомендована ширина: 1920px</li>
-                        <li>Формат: JPG (для фото), PNG (для малюнків)</li>
-                        <li>Розмір: до 5MB</li>
-                    </ul>
-                </div>
-
-                <div class="instruction">
-                    <h3>Назви фото:</h3>
-                    <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
-                        <li>Будьте конкретні: "Центральна площа, 1935" замість "Площа"</li>
-                        <li>Вказуйте рік якщо знаєте</li>
-                        <li>Додавайте контекст: "під час святкування", "після відбудови"</li>
-                    </ul>
+            <!-- TAB: PHOTO LIST -->
+            <div class="tab-panel" id="tab-list">
+                <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;margin-bottom:1.25rem;">Усі фотографії в архіві</h2>
+                <div id="photoListWrap">
+                    <p style="color:var(--color-text-secondary);">Завантаження...</p>
                 </div>
             </div>
-
-            <!-- Зворотній зв'язок -->
-            <div class="admin-section">
-                <h2>📞 Потрібна допомога?</h2>
-                <p>Якщо виникли проблеми:</p>
-                <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
-                    <li>Перевірте що посилання починається з <code>https://i.imgur.com/</code></li>
-                    <li>Перевірте що ви вставили код в правильне місце (перед коментарем)</li>
-                    <li>Дочекайтесь 5 хвилин після збереження на GitHub</li>
-                    <li>Очистіть кеш браузера (Ctrl+Shift+Delete)</li>
-                </ul>
-            </div>
-
         </div>
-    </div>
 
-    <script src="script.js"></script>
-    <script>
-        // Додатковий функціонал для адмін-панелі
-        document.addEventListener('DOMContentLoaded', () => {
-            const copyBtn = document.getElementById('copyCode');
-            const codeDisplay = document.getElementById('codeDisplay');
-            const generateBtn = document.getElementById('generateCode');
-            
-            if (generateBtn) {
-                generateBtn.addEventListener('click', () => {
-                    if (codeDisplay && codeDisplay.textContent) {
-                        copyBtn.style.display = 'inline-block';
-                    }
-                });
-            }
+    </div><!-- /adminContent -->
+</div>
+
+<script src="script.js"></script>
+<script>
+// ===================================================================
+// АДМІН ПАНЕЛЬ - ЛОГІКА
+// ===================================================================
+
+const ADMIN_PASSWORD  = 'admin2026';
+const GITHUB_REPO     = 'jerkinsmichael13-stack/Dubrovytsia1';
+const PHOTOS_FILE     = 'photos.json';
+const BRANCH          = 'main';
+
+const PERIOD_NAMES = {
+    'before-1900': 'До 1900',
+    '1900-1939':   '1900—1939',
+    '1939-1945':   '1939—1945',
+    '1945-1991':   '1945—1991',
+    'after-1991':  'Після 1991'
+};
+const CATEGORY_NAMES = {
+    churches:     '🛐 Церкви',
+    streets:      '🏘️ Вулиці',
+    people:       '👥 Люди',
+    architecture: '🏛️ Архітектура',
+    aerial:       '✈️ Аерофото',
+    drawings:     '🎨 Малюнки',
+    events:       '📅 Події'
+};
+
+// ─── Utility ────────────────────────────────────────────────────────
+function getToken() { return localStorage.getItem('gh_token_dubrovytsia') || ''; }
+function setToken(t) { localStorage.setItem('gh_token_dubrovytsia', t); }
+
+function showStatus(msg, type='info') {
+    const el = document.getElementById('statusMsg');
+    el.className = `notice notice-${type}`;
+    el.innerHTML = msg;
+    el.style.display = 'block';
+    el.scrollIntoView({ behavior:'smooth', block:'nearest' });
+}
+
+// ─── GitHub API ──────────────────────────────────────────────────────
+async function ghGet(path) {
+    const r = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${path}`, {
+        headers: { Authorization: `token ${getToken()}`, Accept: 'application/vnd.github.v3+json' }
+    });
+    if (!r.ok) throw new Error(`GitHub API: ${r.status} ${r.statusText}`);
+    return r.json();
+}
+
+async function ghPut(path, content, sha, message) {
+    const body = { message, content: btoa(unescape(encodeURIComponent(content))), branch: BRANCH };
+    if (sha) body.sha = sha;
+    const r = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${path}`, {
+        method: 'PUT',
+        headers: {
+            Authorization: `token ${getToken()}`,
+            Accept: 'application/vnd.github.v3+json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+    });
+    if (!r.ok) {
+        const err = await r.json().catch(()=>({}));
+        throw new Error(err.message || `GitHub API: ${r.status}`);
+    }
+    return r.json();
+}
+
+async function loadPhotosFromGH() {
+    const data = await ghGet(PHOTOS_FILE);
+    const json = decodeURIComponent(escape(atob(data.content.replace(/\n/g,''))));
+    return { photos: JSON.parse(json), sha: data.sha };
+}
+
+// ─── Login ───────────────────────────────────────────────────────────
+document.getElementById('loginBtn').addEventListener('click', () => {
+    const pw = document.getElementById('loginPassword').value;
+    if (pw === ADMIN_PASSWORD) {
+        document.getElementById('loginCard').style.display = 'none';
+        document.getElementById('adminContent').style.display = 'block';
+        document.getElementById('loginError').style.display = 'none';
+        initAdmin();
+    } else {
+        document.getElementById('loginError').style.display = 'block';
+        document.getElementById('loginPassword').value = '';
+    }
+});
+document.getElementById('loginPassword').addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.getElementById('loginBtn').click();
+});
+
+// ─── Init Admin ───────────────────────────────────────────────────────
+function initAdmin() {
+    // Token section
+    const tok = getToken();
+    if (tok) {
+        document.getElementById('tokenSetupSection').style.display = 'none';
+        document.getElementById('tokenOkSection').style.display = 'block';
+    }
+
+    document.getElementById('saveTokenBtn').addEventListener('click', () => {
+        const t = document.getElementById('githubToken').value.trim();
+        if (!t.startsWith('ghp_') && !t.startsWith('github_pat_')) {
+            alert('❌ Токен має починатися з ghp_ або github_pat_');
+            return;
+        }
+        setToken(t);
+        document.getElementById('tokenSetupSection').style.display = 'none';
+        document.getElementById('tokenOkSection').style.display = 'block';
+    });
+
+    document.getElementById('changeTokenBtn').addEventListener('click', () => {
+        document.getElementById('tokenSetupSection').style.display = 'block';
+        document.getElementById('tokenOkSection').style.display = 'none';
+    });
+
+    document.getElementById('toggleToken').addEventListener('click', function() {
+        const inp = document.getElementById('githubToken');
+        if (inp.type === 'password') { inp.type = 'text'; this.textContent = 'Приховати'; }
+        else { inp.type = 'password'; this.textContent = 'Показати'; }
+    });
+
+    // Tabs
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+            this.classList.add('active');
+            const panel = document.getElementById('tab-' + this.dataset.tab);
+            if (panel) { panel.classList.add('active'); }
+            if (this.dataset.tab === 'list') renderPhotoList();
         });
-    </script>
+    });
+
+    // Preview image on URL input
+    const urlInput = document.getElementById('newPhotoUrl');
+    const preview  = document.getElementById('photoPreview');
+    let previewTimer;
+    urlInput.addEventListener('input', () => {
+        clearTimeout(previewTimer);
+        previewTimer = setTimeout(() => {
+            const v = urlInput.value.trim();
+            if (v.startsWith('http')) {
+                preview.src = v;
+                preview.style.display = 'block';
+                preview.onerror = () => { preview.style.display = 'none'; };
+            } else {
+                preview.style.display = 'none';
+            }
+        }, 500);
+    });
+
+    // Publish button
+    document.getElementById('publishBtn').addEventListener('click', publishPhoto);
+}
+
+// ─── Publish Photo ────────────────────────────────────────────────────
+async function publishPhoto() {
+    const url      = document.getElementById('newPhotoUrl').value.trim();
+    const title    = document.getElementById('newPhotoTitle').value.trim();
+    const period   = document.getElementById('newPhotoPeriod').value;
+    const category = document.getElementById('newPhotoCategory').value;
+    const date     = document.getElementById('newPhotoDate').value.trim();
+
+    // Validation
+    if (!url || !title || !period || !category) {
+        showStatus('❌ Будь ласка, заповніть усі обов\'язкові поля (*)', 'error');
+        return;
+    }
+    if (!url.startsWith('http')) {
+        showStatus('❌ URL фото має починатися з https://', 'error');
+        return;
+    }
+    if (!getToken()) {
+        showStatus('❌ Спочатку збережіть GitHub Token вище', 'error');
+        return;
+    }
+
+    const btn = document.getElementById('publishBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner-sm"></span> Публікація...';
+    showStatus('⏳ Підключення до GitHub...', 'info');
+
+    try {
+        // Load current photos.json from GitHub
+        showStatus('⏳ Завантаження поточного архіву...', 'info');
+        const { photos, sha } = await loadPhotosFromGH();
+
+        // Add new photo
+        const newPhoto = { imageUrl: url, title, period, category, date: date || new Date().getFullYear().toString() };
+        photos.unshift(newPhoto); // add to beginning
+
+        // Save back to GitHub
+        showStatus('⏳ Збереження в GitHub...', 'info');
+        await ghPut(PHOTOS_FILE, JSON.stringify(photos, null, 4), sha, `Додано фото: ${title}`);
+
+        showStatus(`✅ Фото "<strong>${title}</strong>" успішно опубліковано! Через 1-3 хвилини з'явиться на сайті для всіх відвідувачів.`, 'success');
+
+        // Clear form
+        document.getElementById('newPhotoUrl').value = '';
+        document.getElementById('newPhotoTitle').value = '';
+        document.getElementById('newPhotoPeriod').value = '';
+        document.getElementById('newPhotoCategory').value = '';
+        document.getElementById('newPhotoDate').value = '';
+        document.getElementById('photoPreview').style.display = 'none';
+
+    } catch (err) {
+        let msg = err.message;
+        if (msg.includes('401') || msg.includes('Bad credentials')) {
+            msg = 'Невірний GitHub Token. Перевірте токен та спробуйте знову.';
+        } else if (msg.includes('404')) {
+            msg = 'Файл photos.json не знайдено в репозиторії. Переконайтесь, що ви завантажили його на GitHub.';
+        }
+        showStatus(`❌ Помилка: ${msg}`, 'error');
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = '🚀 Опублікувати фото на сайт';
+    }
+}
+
+// ─── Photo List ────────────────────────────────────────────────────────
+async function renderPhotoList() {
+    const wrap = document.getElementById('photoListWrap');
+    wrap.innerHTML = '<p style="color:var(--color-text-secondary);">⏳ Завантаження...</p>';
+
+    if (!getToken()) {
+        wrap.innerHTML = '<div class="notice notice-warn">Збережіть GitHub Token вище, щоб побачити список фотографій.</div>';
+        return;
+    }
+
+    try {
+        const { photos, sha: fileSha } = await loadPhotosFromGH();
+
+        if (photos.length === 0) {
+            wrap.innerHTML = '<p style="color:var(--color-text-secondary);">Фотографій ще немає</p>';
+            return;
+        }
+
+        wrap.innerHTML = `
+            <p style="color:var(--color-text-secondary);margin-bottom:1rem;">Всього: <strong>${photos.length}</strong> фото</p>
+            <div class="photo-list" id="photoListItems"></div>
+        `;
+
+        const list = document.getElementById('photoListItems');
+        photos.forEach((p, idx) => {
+            const item = document.createElement('div');
+            item.className = 'photo-item';
+            item.innerHTML = `
+                <img src="${p.imageUrl}" alt="${p.title}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'72\' height=\'52\'%3E%3Crect fill=\'%23ddd\' width=\'100%25\' height=\'100%25\'/%3E%3C/svg%3E'">
+                <div class="photo-item-info">
+                    <h4>${p.title}</h4>
+                    <p>
+                        <span class="badge">${PERIOD_NAMES[p.period] || p.period}</span>
+                        <span class="badge" style="background:#5d4037;">${CATEGORY_NAMES[p.category] || p.category}</span>
+                        ${p.date ? `<span style="font-size:0.75rem;color:var(--color-text-secondary);">${p.date} р.</span>` : ''}
+                    </p>
+                </div>
+                <button class="btn btn-red" data-idx="${idx}" style="padding:0.5rem 0.875rem;font-size:0.8rem;">Видалити</button>
+            `;
+            list.appendChild(item);
+        });
+
+        // Delete handlers
+        list.querySelectorAll('[data-idx]').forEach(btn => {
+            btn.addEventListener('click', async function() {
+                const idx = parseInt(this.dataset.idx);
+                const title = photos[idx].title;
+                if (!confirm(`Видалити фото "${title}"?\nЦю дію не можна скасувати.`)) return;
+                this.disabled = true;
+                this.textContent = '...';
+                try {
+                    const { photos: fresh, sha } = await loadPhotosFromGH();
+                    // Find by imageUrl to be safe
+                    const removeUrl = photos[idx].imageUrl;
+                    const updated = fresh.filter(p => p.imageUrl !== removeUrl);
+                    await ghPut(PHOTOS_FILE, JSON.stringify(updated, null, 4), sha, `Видалено фото: ${title}`);
+                    renderPhotoList(); // refresh
+                } catch(e) {
+                    alert('❌ Помилка видалення: ' + e.message);
+                    this.disabled = false;
+                    this.textContent = 'Видалити';
+                }
+            });
+        });
+
+    } catch(e) {
+        let msg = e.message;
+        if (msg.includes('401')) msg = 'Невірний GitHub Token.';
+        wrap.innerHTML = `<div class="notice notice-error">❌ ${msg}</div>`;
+    }
+}
+</script>
 </body>
 </html>

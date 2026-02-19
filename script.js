@@ -4,170 +4,14 @@
 // ✅ Робоча навігація в lightbox
 // ================================================
 
-console.log('✅ Дубровиця - виправлена версія');
+console.log('✅ Дубровиця v5.0 — з динамічним photos.json');
 
 // ================================================
-// ЗБЕРІГАННЯ ФОТО В ФАЙЛІ (для всіх користувачів)
+// ФОТО ЗБЕРІГАЮТЬСЯ В photos.json
+// Додавайте через admin.html — без редагування коду!
 // ================================================
 
-// ❗ ВАЖЛИВО: Додайте свої фото тут!
-// Кожне фото що ви додаєте через адмін-панель
-// потрібно також додати в цей масив вручну
-const ALL_PHOTOS = [
-    // === ДЕМО-ФОТО ===
-    {
-        imageUrl: 'https://images.unsplash.com/photo-1548013146-72479768bada?w=800&q=80',
-        title: 'Костел Іоана Хрестителя, початок XX століття',
-        period: '1900-1939',
-        category: 'churches',
-        date: '1910'
-    },
-    {
-        imageUrl: 'https://images.unsplash.com/photo-1584448062751-f63e4e7cc2e3?w=800&q=80',
-        title: 'Православна церква Святої Трійці',
-        period: '1900-1939',
-        category: 'churches',
-        date: '1925'
-    },
-    {
-        imageUrl: 'https://images.unsplash.com/photo-1605106250963-ffda6d2a4b32?w=800&q=80',
-        title: 'Дерев\'яна церква біля Дубровиці',
-        period: 'before-1900',
-        category: 'churches',
-        date: '1880'
-    },
-    {
-        imageUrl: 'https://images.unsplash.com/photo-1590004953392-5aba2e72269a?w=800&q=80',
-        title: 'Центральна вулиця Дубровиці, міжвоєнний період',
-        period: '1900-1939',
-        category: 'streets',
-        date: '1930'
-    },
-    {
-        imageUrl: 'https://images.unsplash.com/photo-1583137890236-e5a1b4e3f0b3?w=800&q=80',
-        title: 'Ринкова площа Дубровиці',
-        period: '1945-1991',
-        category: 'streets',
-        date: '1960'
-    },
-    {
-        imageUrl: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800&q=80',
-        title: 'Головна вулиця після відбудови',
-        period: '1945-1991',
-        category: 'streets',
-        date: '1955'
-    },
-    {
-        imageUrl: 'https://images.unsplash.com/photo-1519817914152-22d216bb9170?w=800&q=80',
-        title: 'Сучасна Дубровиця',
-        period: 'after-1991',
-        category: 'streets',
-        date: '2015'
-    },
-    {
-        imageUrl: 'https://images.unsplash.com/photo-1604537466158-719b1972feb8?w=800&q=80',
-        title: 'Родина дубровицьких купців',
-        period: 'before-1900',
-        category: 'people',
-        date: '1895'
-    },
-    {
-        imageUrl: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?w=800&q=80',
-        title: 'Жителі Дубровиці на святковій ході',
-        period: '1900-1939',
-        category: 'people',
-        date: '1935'
-    },
-    {
-        imageUrl: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=800&q=80',
-        title: 'Святкування на центральній площі',
-        period: '1945-1991',
-        category: 'people',
-        date: '1970'
-    },
-    {
-        imageUrl: 'https://images.unsplash.com/photo-1568667256549-094345857637?w=800&q=80',
-        title: 'Будинок Дубровицької ратуші',
-        period: 'before-1900',
-        category: 'architecture',
-        date: '1890'
-    },
-    {
-        imageUrl: 'https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?w=800&q=80',
-        title: 'Історична будівля міської управи',
-        period: '1900-1939',
-        category: 'architecture',
-        date: '1920'
-    },
-    {
-        imageUrl: 'https://images.unsplash.com/photo-1513467535987-fd81bc7d62f8?w=800&q=80',
-        title: 'Радянська архітектура Дубровиці',
-        period: '1945-1991',
-        category: 'architecture',
-        date: '1975'
-    },
-    {
-        imageUrl: 'https://images.unsplash.com/photo-1573037403143-fd084e3d2b5e?w=800&q=80',
-        title: 'Дубровиця з висоти пташиного польоту, 1960-ті',
-        period: '1945-1991',
-        category: 'aerial',
-        date: '1965'
-    },
-    {
-        imageUrl: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=80',
-        title: 'Панорама Дубровиці сучасна',
-        period: 'after-1991',
-        category: 'aerial',
-        date: '2020'
-    },
-    {
-        imageUrl: 'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=800&q=80',
-        title: 'Гравюра Дубровицького замку',
-        period: 'before-1900',
-        category: 'drawings',
-        date: '1850'
-    },
-    {
-        imageUrl: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=800&q=80',
-        title: 'Малюнок Дубровиці з оборонними спорудами',
-        period: 'before-1900',
-        category: 'drawings',
-        date: '1780'
-    },
-    {
-        imageUrl: 'https://images.unsplash.com/photo-1545992952-fb2a5a6e3e4e?w=800&q=80',
-        title: 'Відкриття пам\'ятника героям війни',
-        period: '1945-1991',
-        category: 'events',
-        date: '1985'
-    },
-    {
-        imageUrl: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&q=80',
-        title: 'День незалежності України в Дубровиці',
-        period: 'after-1991',
-        category: 'events',
-        date: '2000'
-    },
-    {
-        imageUrl: 'https://images.unsplash.com/photo-1464047736614-af63643285bf?w=800&q=80',
-        title: 'Святкування 1000-річчя Дубровиці',
-        period: 'after-1991',
-        category: 'events',
-        date: '2005'
-    }
-    
-    // === ДОДАЙТЕ СВОЇ ФОТО ТУТ ===
-    // Приклад:
-    // {
-    //     imageUrl: 'https://i.imgur.com/ваше_фото.jpg',
-    //     title: 'Назва вашого фото',
-    //     period: '1900-1939',  // або інший період
-    //     category: 'churches',  // або інша категорія
-    //     date: '1925'
-    // },
-];
-
-console.log(`📸 Завантажено ${ALL_PHOTOS.length} фото`);
+let ALL_PHOTOS = [];
 
 const PERIOD_NAMES = {
     'before-1900': 'До 1900',
@@ -300,8 +144,32 @@ let currentCategory = 'all';
 let filteredPhotos = [];  // ✅ Зберігаємо відфільтровані фото глобально
 let currentPhotoIndex = 0;
 
-function initPhotoGallery() {
-    console.log('🖼️ Ініціалізація галереї');
+async function initPhotoGallery() {
+    console.log('🖼️ Ініціалізація галереї — завантаження photos.json');
+    
+    const gallery = document.getElementById('photoGallery');
+    if (gallery) {
+        gallery.innerHTML = '<p style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--color-text-secondary);">⏳ Завантаження фотографій...</p>';
+    }
+    
+    try {
+        const resp = await fetch('photos.json?v=' + Date.now());
+        if (resp.ok) {
+            ALL_PHOTOS = await resp.json();
+            console.log(`📸 Завантажено ${ALL_PHOTOS.length} фото з photos.json`);
+        } else {
+            throw new Error('photos.json not found');
+        }
+    } catch(e) {
+        console.warn('⚠️ Не вдалося завантажити photos.json:', e.message);
+        if (gallery) {
+            gallery.innerHTML = '<p style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--color-text-secondary);">Фотоархів порожній. Додайте фото через <a href="admin.html">адмін-панель</a>.</p>';
+        }
+        initGalleryFilters();
+        initLightbox();
+        return;
+    }
+    
     displayPhotos();
     initGalleryFilters();
     initLightbox();
@@ -725,7 +593,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Контент-специфічні функції
     if (document.getElementById('photoGallery')) {
-        initPhotoGallery();
+        initPhotoGallery(); // async - no need to await at top level
     }
     
     if (document.getElementById('booksSearch')) {
