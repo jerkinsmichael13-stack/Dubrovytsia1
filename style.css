@@ -898,7 +898,7 @@ html[data-theme="dark"] .moon-icon { display: none; }
     background-color: #1a3d28;   /* fallback */
     background-image:
         linear-gradient(to bottom, rgba(18, 40, 25, 0.88) 0%, rgba(8, 20, 12, 0.82) 100%),
-        url('https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=1200&q=80');
+        url('https://i.imgur.com/QTP89kg.jpeg');
     background-size: cover;
     background-position: center;
     color: white;
@@ -907,7 +907,7 @@ html[data-theme="dark"] .moon-icon { display: none; }
 [data-theme="dark"] .article-header {
     background-image:
         linear-gradient(to bottom, rgba(5, 10, 7, 0.95) 0%, rgba(0, 0, 0, 0.90) 100%),
-        url('https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=1200&q=80');
+        url('https://i.imgur.com/QTP89kg.jpeg');
 }
 
 .article-header .article-title {
@@ -1047,7 +1047,7 @@ html[data-theme="dark"] .moon-icon { display: none; }
     background-color: #1e3825;   /* fallback */
     background-image:
         linear-gradient(135deg, rgba(20, 40, 28, 0.90) 0%, rgba(50, 35, 8, 0.75) 100%),
-        url('https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=1200&q=80');
+        url('https://i.imgur.com/WeDmtIY.jpeg');
     background-size: cover;
     background-position: center;
     color: white;
@@ -1056,7 +1056,7 @@ html[data-theme="dark"] .moon-icon { display: none; }
 [data-theme="dark"] .catalog-header {
     background-image:
         linear-gradient(135deg, rgba(5, 10, 7, 0.97) 0%, rgba(25, 15, 3, 0.93) 100%),
-        url('https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=1200&q=80');
+        url('https://i.imgur.com/WeDmtIY.jpeg');
 }
 
 .catalog-header .article-title { color: white; text-shadow: 0 2px 12px rgba(0,0,0,0.3); }
@@ -1243,7 +1243,7 @@ html[data-theme="dark"] .moon-icon { display: none; }
     background-color: #0e1a12;   /* fallback */
     background-image:
         linear-gradient(to bottom, rgba(8, 18, 12, 0.90) 0%, rgba(25, 50, 35, 0.78) 100%),
-        url('https://images.unsplash.com/photo-1568667256549-094345857637?w=1200&q=80');
+        url('https://i.imgur.com/qcjgN1I.jpeg');
     background-size: cover;
     background-position: center;
     color: white;
@@ -1252,7 +1252,7 @@ html[data-theme="dark"] .moon-icon { display: none; }
 [data-theme="dark"] .gallery-header {
     background-image:
         linear-gradient(to bottom, rgba(0, 0, 0, 0.97) 0%, rgba(5, 15, 8, 0.93) 100%),
-        url('https://images.unsplash.com/photo-1568667256549-094345857637?w=1200&q=80');
+        url('https://i.imgur.com/qcjgN1I.jpeg');
 }
 
 .gallery-header .article-title { color: white; text-shadow: 0 2px 12px rgba(0,0,0,0.35); }
