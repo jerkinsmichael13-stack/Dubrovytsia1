@@ -409,12 +409,12 @@ html[data-theme="dark"] .moon-icon { display: none; }
     position: absolute;
     inset: 0;
     z-index: 0;
-    background: url('https://i.imgur.com/5cS6wyh.jpeg') center/cover no-repeat;
+    background: url('https://i.imgur.com/94c1vhS.jpeg') center/cover no-repeat;
     transition: filter 0.7s ease;
 }
 
 [data-theme="dark"] .hero-bg {
-    background: url('https://i.imgur.com/90IpAR9.jpeg') center/cover no-repeat;
+    background: url('https://i.imgur.com/94c1vhS.jpeg') center/cover no-repeat;
     filter: sepia(0.3) brightness(0.55);
 }
 
