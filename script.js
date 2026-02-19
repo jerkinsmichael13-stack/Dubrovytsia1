@@ -189,7 +189,7 @@ function displayPhotos() {
     console.log(`📊 Показано ${filteredPhotos.length} фото (з ${ALL_PHOTOS.length})`);
     
     if (filteredPhotos.length === 0) {
-        gallery.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: 2rem; color: var(--color-text-secondary);">Нічого не знайдено за обраними фільтрами</p>';
+        gallery.innerHTML = '<p style="grid-column:1/-1;text-align:center;padding:3rem;font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--color-text-secondary);">За обраними фільтрами нічого не знайдено</p>';
         return;
     }
     
