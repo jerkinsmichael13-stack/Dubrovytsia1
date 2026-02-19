@@ -1,5 +1,12 @@
 [
     {
+        "imageUrl": "https://i.imgur.com/qcjgN1I.jpeg",
+        "title": "Центр міста",
+        "period": "1900-1939",
+        "category": "streets",
+        "date": "1920-1939"
+    },
+    {
         "imageUrl": "https://i.imgur.com/QTP89kg.jpeg",
         "title": "Костел Іоана Хрестителя",
         "period": "1900-1939",
