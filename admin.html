@@ -960,130 +960,290 @@ async function renderList() {
     }
 }
 
+
+// ─── HTML-escape helper ──────────────────────────────────────────────
+function esc(s) {
+    return String(s||'')
+        .replace(/&/g,'&amp;')
+        .replace(/"/g,'&quot;')
+        .replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;');
+}
+
+// ─── Edit Modal ───────────────────────────────────────────────────────
+function openEditModal(fieldsHtml, onSave) {
+    document.getElementById('editModal')?.remove();
+    const m = document.createElement('div');
+    m.id = 'editModal';
+    m.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.78);backdrop-filter:blur(10px);z-index:9999;display:flex;align-items:center;justify-content:center;padding:1rem;';
+    m.innerHTML = `
+        <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:1.25rem;padding:2rem;width:100%;max-width:620px;max-height:92vh;overflow-y:auto;box-shadow:0 40px 100px rgba(0,0,0,0.55);">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">
+                <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:500;color:var(--color-text);margin:0;">✏️ Редагування</h3>
+                <button id="em_close" style="width:36px;height:36px;border-radius:50%;border:1px solid var(--color-border);background:var(--color-bg);color:var(--color-text);font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;">×</button>
+            </div>
+            <div id="em_body">${fieldsHtml}</div>
+            <div id="em_status" class="notice" style="display:none;margin-top:1rem;"></div>
+            <div style="display:flex;gap:0.75rem;justify-content:flex-end;margin-top:1.5rem;">
+                <button id="em_cancel" class="btn btn-outline">Скасувати</button>
+                <button id="em_save" class="btn btn-green">💾 Зберегти зміни</button>
+            </div>
+        </div>`;
+    document.body.appendChild(m);
+
+    const close = () => m.remove();
+    document.getElementById('em_close').onclick = close;
+    document.getElementById('em_cancel').onclick = close;
+    m.addEventListener('click', e => { if (e.target === m) close(); });
+
+    document.getElementById('em_save').addEventListener('click', async () => {
+        const saveBtn = document.getElementById('em_save');
+        const statusEl = document.getElementById('em_status');
+        saveBtn.disabled = true;
+        saveBtn.innerHTML = '<span class="spinner-sm"></span> Збереження...';
+        try {
+            await onSave();
+            m.remove();
+            renderList();
+        } catch(err) {
+            statusEl.className = 'notice notice-error';
+            statusEl.textContent = '❌ ' + err.message;
+            statusEl.style.display = 'block';
+            saveBtn.disabled = false;
+            saveBtn.innerHTML = '💾 Зберегти зміни';
+        }
+    });
+}
+
+// ─── Render Photo List ────────────────────────────────────────────────
 async function renderPhotoList(wrap) {
-    const { items: photos, sha: fileSha } = await loadJsonFromGH(PHOTOS_FILE);
-    if (photos.length === 0) { wrap.innerHTML = '<p style="color:var(--color-text-secondary);">Фотографій ще немає</p>'; return; }
+    const { items: photos } = await loadJsonFromGH(PHOTOS_FILE);
+    if (!photos.length) { wrap.innerHTML = '<p style="color:var(--color-text-secondary);">Фотографій ще немає</p>'; return; }
 
-    wrap.innerHTML = `<p style="color:var(--color-text-secondary);margin-bottom:1rem;">Всього: <strong>${photos.length}</strong> фото</p><div class="photo-list" id="photoListItems"></div>`;
+    wrap.innerHTML = `<p style="color:var(--color-text-secondary);margin-bottom:1rem;">Всього: <strong>${photos.length}</strong> фото</p><div class="photo-list" id="pList"></div>`;
+    const list = document.getElementById('pList');
 
-    const list = document.getElementById('photoListItems');
-    photos.forEach((p, idx) => {
-        const item = document.createElement('div');
-        item.className = 'photo-item';
-        item.innerHTML = `
-            <img src="${p.imageUrl}" alt="${p.title}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'72\\' height=\\'52\\'%3E%3Crect fill=\\'%23ddd\\' width=\\'100%25\\' height=\\'100%25\\'/%3E%3C/svg%3E'">
-            <div class="photo-item-info">
-                <h4>${p.title}</h4>
+    photos.forEach((p, i) => {
+        const d = document.createElement('div');
+        d.className = 'photo-item';
+        d.innerHTML = `
+            <img src="${esc(p.imageUrl)}" style="width:72px;height:52px;object-fit:cover;border-radius:0.5rem;flex-shrink:0;" onerror="this.style.opacity=0">
+            <div class="photo-item-info" style="flex:1;min-width:0;">
+                <h4 style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${esc(p.title)}</h4>
                 <p>
-                    <span class="badge">${PERIOD_NAMES[p.period] || p.period}</span>
-                    <span class="badge" style="background:#5d4037;">${CATEGORY_NAMES[p.category] || p.category}</span>
-                    ${p.date ? `<span style="font-size:0.75rem;color:var(--color-text-secondary);">${p.date} р.</span>` : ''}
-                    ${p.originalUrl ? `<span style="font-size:0.75rem;color:#1976d2;">📥 є оригінал</span>` : ''}
+                    <span class="badge">${PERIOD_NAMES[p.period]||p.period}</span>
+                    <span class="badge" style="background:#5d4037;">${CATEGORY_NAMES[p.category]||p.category}</span>
+                    ${p.date?`<span style="font-size:.75rem;color:var(--color-text-secondary);">${esc(p.date)}</span>`:''}
+                    ${p.originalUrl?`<span style="font-size:.75rem;color:#2196f3;">📥 оригінал</span>`:''}
                 </p>
             </div>
-            <button class="btn btn-red" data-idx="${idx}" style="padding:0.5rem 0.875rem;font-size:0.8rem;">Видалити</button>
-        `;
-        list.appendChild(item);
+            <div style="display:flex;gap:.4rem;flex-shrink:0;">
+                <button class="btn ep-edit" data-i="${i}" style="padding:.45rem .7rem;font-size:.8rem;background:var(--color-bg);border:1px solid var(--color-border);color:var(--color-text);border-radius:.5rem;">✏️</button>
+                <button class="btn btn-red ep-del" data-i="${i}" style="padding:.45rem .7rem;font-size:.8rem;">🗑</button>
+            </div>`;
+        list.appendChild(d);
     });
 
-    list.querySelectorAll('[data-idx]').forEach(btn => {
-        btn.addEventListener('click', async function() {
-            const idx = parseInt(this.dataset.idx);
-            const title = photos[idx].title;
-            if (!confirm(`Видалити фото "${title}"?\nЦю дію не можна скасувати.`)) return;
-            this.disabled = true; this.textContent = '...';
-            try {
-                const { items: fresh, sha } = await loadJsonFromGH(PHOTOS_FILE);
-                const removeUrl = photos[idx].imageUrl;
-                const updated = fresh.filter(p => p.imageUrl !== removeUrl);
-                await ghPut(PHOTOS_FILE, JSON.stringify(updated, null, 4), sha, `Видалено фото: ${title}`);
-                renderList();
-            } catch(e) {
-                alert('❌ Помилка видалення: ' + e.message);
-                this.disabled = false; this.textContent = 'Видалити';
-            }
-        });
-    });
-}
-
-async function renderBookList(wrap) {
-    const { items: books, sha } = await loadJsonFromGH(BOOKS_FILE);
-    if (books.length === 0) { wrap.innerHTML = '<p style="color:var(--color-text-secondary);">Книг ще немає</p>'; return; }
-
-    wrap.innerHTML = `<p style="color:var(--color-text-secondary);margin-bottom:1rem;">Всього: <strong>${books.length}</strong> книг</p><div class="photo-list" id="bookListItems"></div>`;
-
-    const list = document.getElementById('bookListItems');
-    books.forEach((b, idx) => {
-        const item = document.createElement('div');
-        item.className = 'photo-item';
-        item.innerHTML = `
-            <div style="width:72px;height:52px;background:var(--color-bg-secondary);border-radius:0.5rem;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;">📚</div>
-            <div class="photo-item-info">
-                <h4>${b.title}</h4>
-                <p style="color:var(--color-text-secondary);font-size:0.8rem;">${b.author}${b.year ? ' · ' + b.year : ''}${b.downloadUrl ? ' · <span style="color:#1976d2;">📥 є завантаження</span>' : ''}</p>
+    list.querySelectorAll('.ep-edit').forEach(btn => btn.addEventListener('click', () => {
+        const i = +btn.dataset.i, p = photos[i];
+        openEditModal(`
+            <div class="field"><label>Назва *</label><input id="ef_title" type="text" value="${esc(p.title)}"></div>
+            <div class="field"><label>URL фото *</label><input id="ef_url" type="url" value="${esc(p.imageUrl)}"></div>
+            <div class="field">
+                <label>Посилання на оригінал (Google Drive)</label>
+                <input id="ef_orig" type="url" value="${esc(p.originalUrl||'')}" placeholder="https://drive.google.com/file/d/...">
+                <div style="font-size:.78rem;color:var(--color-text-secondary);margin-top:.3rem;">Пряме посилання на Google Drive — буде показано як кнопка завантаження у фотоархіві</div>
             </div>
-            <button class="btn btn-red" data-idx="${idx}" style="padding:0.5rem 0.875rem;font-size:0.8rem;">Видалити</button>
-        `;
-        list.appendChild(item);
-    });
-
-    list.querySelectorAll('[data-idx]').forEach(btn => {
-        btn.addEventListener('click', async function() {
-            const idx = parseInt(this.dataset.idx);
-            const title = books[idx].title;
-            if (!confirm(`Видалити книгу "${title}"?`)) return;
-            this.disabled = true; this.textContent = '...';
-            try {
-                const { items: fresh, sha: newSha } = await loadJsonFromGH(BOOKS_FILE);
-                const updated = fresh.filter((_, i) => i !== idx);
-                await ghPut(BOOKS_FILE, JSON.stringify(updated, null, 4), newSha, `Видалено книгу: ${title}`);
-                renderList();
-            } catch(e) {
-                alert('❌ Помилка: ' + e.message);
-                this.disabled = false; this.textContent = 'Видалити';
-            }
+            <div class="grid-2">
+                <div class="field"><label>Період</label><select id="ef_period">
+                    <option value="before-1900" ${p.period==='before-1900'?'selected':''}>До 1900</option>
+                    <option value="1900-1939" ${p.period==='1900-1939'?'selected':''}>1900—1939</option>
+                    <option value="1939-1945" ${p.period==='1939-1945'?'selected':''}>1939—1945</option>
+                    <option value="1945-1991" ${p.period==='1945-1991'?'selected':''}>1945—1991</option>
+                    <option value="after-1991" ${p.period==='after-1991'?'selected':''}>Після 1991</option>
+                </select></div>
+                <div class="field"><label>Категорія</label><select id="ef_cat">
+                    <option value="churches" ${p.category==='churches'?'selected':''}>🛐 Церкви</option>
+                    <option value="streets" ${p.category==='streets'?'selected':''}>🏘️ Вулиці</option>
+                    <option value="people" ${p.category==='people'?'selected':''}>👥 Люди</option>
+                    <option value="architecture" ${p.category==='architecture'?'selected':''}>🏛️ Архітектура</option>
+                    <option value="aerial" ${p.category==='aerial'?'selected':''}>✈️ Аерофото</option>
+                    <option value="drawings" ${p.category==='drawings'?'selected':''}>🎨 Малюнки</option>
+                    <option value="events" ${p.category==='events'?'selected':''}>📅 Події</option>
+                </select></div>
+            </div>
+            <div class="field"><label>Рік</label><input id="ef_date" type="text" value="${esc(p.date||'')}"></div>
+        `, async () => {
+            const title = document.getElementById('ef_title').value.trim();
+            const url   = document.getElementById('ef_url').value.trim();
+            if (!title || !url) throw new Error('Назва та URL обов\'язкові');
+            const orig = document.getElementById('ef_orig').value.trim();
+            const { items, sha } = await loadJsonFromGH(PHOTOS_FILE);
+            items[i] = { imageUrl: url, title, period: document.getElementById('ef_period').value, category: document.getElementById('ef_cat').value, date: document.getElementById('ef_date').value.trim() };
+            if (orig) items[i].originalUrl = orig;
+            await ghPut(PHOTOS_FILE, JSON.stringify(items, null, 4), sha, `Редаговано: ${title}`);
         });
-    });
+    }));
+
+    list.querySelectorAll('.ep-del').forEach(btn => btn.addEventListener('click', async () => {
+        const i = +btn.dataset.i;
+        if (!confirm(`Видалити "${photos[i].title}"?`)) return;
+        btn.disabled = true; btn.textContent = '...';
+        try {
+            const { items, sha } = await loadJsonFromGH(PHOTOS_FILE);
+            await ghPut(PHOTOS_FILE, JSON.stringify(items.filter((_,j) => j !== i), null, 4), sha, `Видалено: ${photos[i].title}`);
+            renderList();
+        } catch(e) { alert('❌ '+e.message); btn.disabled=false; btn.textContent='🗑'; }
+    }));
 }
 
+// ─── Render Book List ─────────────────────────────────────────────────
+async function renderBookList(wrap) {
+    const { items: books } = await loadJsonFromGH(BOOKS_FILE);
+    if (!books.length) { wrap.innerHTML = '<p style="color:var(--color-text-secondary);">Книг ще немає</p>'; return; }
+
+    wrap.innerHTML = `<p style="color:var(--color-text-secondary);margin-bottom:1rem;">Всього: <strong>${books.length}</strong> книг</p><div class="photo-list" id="bList"></div>`;
+    const list = document.getElementById('bList');
+
+    books.forEach((b, i) => {
+        const d = document.createElement('div');
+        d.className = 'photo-item';
+        d.innerHTML = `
+            <div style="width:72px;height:52px;background:var(--color-bg);border-radius:.5rem;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;">📚</div>
+            <div class="photo-item-info" style="flex:1;min-width:0;">
+                <h4 style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${esc(b.title)}</h4>
+                <p style="color:var(--color-text-secondary);font-size:.8rem;">${esc(b.author||'')}${b.year?' · '+esc(b.year):''}${b.downloadUrl?' · <span style="color:#2196f3;">📥 завантаження</span>':''}</p>
+            </div>
+            <div style="display:flex;gap:.4rem;flex-shrink:0;">
+                <button class="btn eb-edit" data-i="${i}" style="padding:.45rem .7rem;font-size:.8rem;background:var(--color-bg);border:1px solid var(--color-border);color:var(--color-text);border-radius:.5rem;">✏️</button>
+                <button class="btn btn-red eb-del" data-i="${i}" style="padding:.45rem .7rem;font-size:.8rem;">🗑</button>
+            </div>`;
+        list.appendChild(d);
+    });
+
+    list.querySelectorAll('.eb-edit').forEach(btn => btn.addEventListener('click', () => {
+        const i = +btn.dataset.i, b = books[i];
+        openEditModal(`
+            <div class="grid-2">
+                <div class="field"><label>Назва *</label><input id="ef_btitle" type="text" value="${esc(b.title)}"></div>
+                <div class="field"><label>Автор</label><input id="ef_bauthor" type="text" value="${esc(b.author||'')}"></div>
+            </div>
+            <div class="grid-2">
+                <div class="field"><label>Рік</label><input id="ef_byear" type="text" value="${esc(b.year||'')}"></div>
+                <div class="field"><label>Місце зберігання</label><input id="ef_bloc" type="text" value="${esc(b.location||'')}"></div>
+            </div>
+            <div class="field"><label>Опис</label><textarea id="ef_bdesc" rows="4">${esc(b.description||'')}</textarea></div>
+            <div class="field"><label>Обкладинка (URL)</label><input id="ef_bcover" type="url" value="${esc(b.coverUrl||'')}"></div>
+            <div class="field">
+                <label>Посилання для завантаження (Google Drive / PDF)</label>
+                <input id="ef_bdl" type="url" value="${esc(b.downloadUrl||'')}" placeholder="https://drive.google.com/file/d/...">
+            </div>
+        `, async () => {
+            const title = document.getElementById('ef_btitle').value.trim();
+            if (!title) throw new Error('Назва обов\'язкова');
+            const { items, sha } = await loadJsonFromGH(BOOKS_FILE);
+            const upd = { title, author: document.getElementById('ef_bauthor').value.trim(), year: document.getElementById('ef_byear').value.trim(), location: document.getElementById('ef_bloc').value.trim(), description: document.getElementById('ef_bdesc').value.trim() };
+            const cv = document.getElementById('ef_bcover').value.trim();
+            const dl = document.getElementById('ef_bdl').value.trim();
+            if (cv) upd.coverUrl = cv;
+            if (dl) upd.downloadUrl = dl;
+            items[i] = upd;
+            await ghPut(BOOKS_FILE, JSON.stringify(items, null, 4), sha, `Редаговано книгу: ${title}`);
+        });
+    }));
+
+    list.querySelectorAll('.eb-del').forEach(btn => btn.addEventListener('click', async () => {
+        const i = +btn.dataset.i;
+        if (!confirm(`Видалити книгу "${books[i].title}"?`)) return;
+        btn.disabled=true; btn.textContent='...';
+        try {
+            const { items, sha } = await loadJsonFromGH(BOOKS_FILE);
+            await ghPut(BOOKS_FILE, JSON.stringify(items.filter((_,j)=>j!==i), null, 4), sha, `Видалено книгу: ${books[i].title}`);
+            renderList();
+        } catch(e) { alert('❌ '+e.message); btn.disabled=false; btn.textContent='🗑'; }
+    }));
+}
+
+// ─── Render Metric List ───────────────────────────────────────────────
 async function renderMetricList(wrap) {
     const { items: metrics } = await loadJsonFromGH(METRICS_FILE);
-    if (metrics.length === 0) { wrap.innerHTML = '<p style="color:var(--color-text-secondary);">Метричних книг ще немає</p>'; return; }
+    if (!metrics.length) { wrap.innerHTML = '<p style="color:var(--color-text-secondary);">Метричних книг ще немає</p>'; return; }
 
-    wrap.innerHTML = `<p style="color:var(--color-text-secondary);margin-bottom:1rem;">Всього: <strong>${metrics.length}</strong> записів</p><div class="photo-list" id="metricListItems"></div>`;
+    wrap.innerHTML = `<p style="color:var(--color-text-secondary);margin-bottom:1rem;">Всього: <strong>${metrics.length}</strong> записів</p><div class="photo-list" id="mList"></div>`;
+    const list = document.getElementById('mList');
 
-    const list = document.getElementById('metricListItems');
-    metrics.forEach((m, idx) => {
-        const item = document.createElement('div');
-        item.className = 'photo-item';
-        item.innerHTML = `
-            <div style="width:72px;height:52px;background:var(--color-bg-secondary);border-radius:0.5rem;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;">📖</div>
-            <div class="photo-item-info">
-                <h4>${m.parish}</h4>
-                <p style="color:var(--color-text-secondary);font-size:0.8rem;">${m.years} · ${m.confession}${m.scanUrl ? ' · <span style="color:#1976d2;">📥 є скан</span>' : ''}</p>
+    metrics.forEach((m, i) => {
+        const d = document.createElement('div');
+        d.className = 'photo-item';
+        d.innerHTML = `
+            <div style="width:72px;height:52px;background:var(--color-bg);border-radius:.5rem;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;">📖</div>
+            <div class="photo-item-info" style="flex:1;min-width:0;">
+                <h4 style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${esc(m.parish)}</h4>
+                <p style="color:var(--color-text-secondary);font-size:.8rem;">${esc(m.years)} · ${esc(m.confession)}${m.scanUrl?' · <span style="color:#2196f3;">📥 скан</span>':''}</p>
             </div>
-            <button class="btn btn-red" data-idx="${idx}" style="padding:0.5rem 0.875rem;font-size:0.8rem;">Видалити</button>
-        `;
-        list.appendChild(item);
+            <div style="display:flex;gap:.4rem;flex-shrink:0;">
+                <button class="btn em-edit" data-i="${i}" style="padding:.45rem .7rem;font-size:.8rem;background:var(--color-bg);border:1px solid var(--color-border);color:var(--color-text);border-radius:.5rem;">✏️</button>
+                <button class="btn btn-red em-del" data-i="${i}" style="padding:.45rem .7rem;font-size:.8rem;">🗑</button>
+            </div>`;
+        list.appendChild(d);
     });
 
-    list.querySelectorAll('[data-idx]').forEach(btn => {
-        btn.addEventListener('click', async function() {
-            const idx = parseInt(this.dataset.idx);
-            const parish = metrics[idx].parish;
-            if (!confirm(`Видалити запис "${parish}"?`)) return;
-            this.disabled = true; this.textContent = '...';
-            try {
-                const { items: fresh, sha } = await loadJsonFromGH(METRICS_FILE);
-                const updated = fresh.filter((_, i) => i !== idx);
-                await ghPut(METRICS_FILE, JSON.stringify(updated, null, 4), sha, `Видалено метричну книгу: ${parish}`);
-                renderList();
-            } catch(e) {
-                alert('❌ Помилка: ' + e.message);
-                this.disabled = false; this.textContent = 'Видалити';
-            }
+    list.querySelectorAll('.em-edit').forEach(btn => btn.addEventListener('click', () => {
+        const i = +btn.dataset.i, m = metrics[i];
+        const rt = m.recordTypes || '';
+        openEditModal(`
+            <div class="field"><label>Парафія / установа *</label><input id="ef_mpar" type="text" value="${esc(m.parish)}"></div>
+            <div class="grid-2">
+                <div class="field"><label>Роки *</label><input id="ef_myrs" type="text" value="${esc(m.years)}"></div>
+                <div class="field"><label>Конфесія</label><select id="ef_mconf">
+                    <option ${m.confession==='Православна'?'selected':''}>Православна</option>
+                    <option ${m.confession==='Римо-католицька'?'selected':''}>Римо-католицька</option>
+                    <option ${m.confession==='Греко-католицька'?'selected':''}>Греко-католицька</option>
+                    <option ${m.confession==='Іудаїзм'?'selected':''}>Іудаїзм</option>
+                    <option ${m.confession==='Протестантська'?'selected':''}>Протестантська</option>
+                    <option ${m.confession==='Всі конфесії'?'selected':''}>Всі конфесії</option>
+                </select></div>
+            </div>
+            <div class="field"><label>Тип записів</label>
+                <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:.35rem;">
+                    <label style="display:flex;align-items:center;gap:.4rem;font-weight:400;cursor:pointer;"><input type="checkbox" id="ef_mb" ${rt.includes('Народження')?'checked':''}> 👶 Народження</label>
+                    <label style="display:flex;align-items:center;gap:.4rem;font-weight:400;cursor:pointer;"><input type="checkbox" id="ef_mm" ${rt.includes('Шлюби')?'checked':''}> 💍 Шлюби</label>
+                    <label style="display:flex;align-items:center;gap:.4rem;font-weight:400;cursor:pointer;"><input type="checkbox" id="ef_md" ${rt.includes('Смерті')?'checked':''}> 🕊️ Смерті</label>
+                </div>
+            </div>
+            <div class="field"><label>Населені пункти</label><input id="ef_mvil" type="text" value="${esc(m.villages||'')}"></div>
+            <div class="field"><label>Архів та фонд</label><input id="ef_marc" type="text" value="${esc(m.archive||'')}"></div>
+            <div class="field">
+                <label>Посилання на скан (Google Drive)</label>
+                <input id="ef_mscan" type="url" value="${esc(m.scanUrl||'')}" placeholder="https://drive.google.com/file/d/...">
+            </div>
+        `, async () => {
+            const parish = document.getElementById('ef_mpar').value.trim();
+            const years  = document.getElementById('ef_myrs').value.trim();
+            if (!parish || !years) throw new Error('Парафія та роки обов\'язкові');
+            const types = [];
+            if (document.getElementById('ef_mb').checked) types.push('Народження');
+            if (document.getElementById('ef_mm').checked) types.push('Шлюби');
+            if (document.getElementById('ef_md').checked) types.push('Смерті');
+            const { items, sha } = await loadJsonFromGH(METRICS_FILE);
+            const upd = { parish, years, confession: document.getElementById('ef_mconf').value, recordTypes: types.length ? types.join(', ') : 'Народження, шлюби, смерті', villages: document.getElementById('ef_mvil').value.trim(), archive: document.getElementById('ef_marc').value.trim() };
+            const scan = document.getElementById('ef_mscan').value.trim();
+            if (scan) upd.scanUrl = scan;
+            items[i] = upd;
+            await ghPut(METRICS_FILE, JSON.stringify(items, null, 4), sha, `Редаговано метричну книгу: ${parish}`);
         });
-    });
+    }));
+
+    list.querySelectorAll('.em-del').forEach(btn => btn.addEventListener('click', async () => {
+        const i = +btn.dataset.i;
+        if (!confirm(`Видалити "${metrics[i].parish}"?`)) return;
+        btn.disabled=true; btn.textContent='...';
+        try {
+            const { items, sha } = await loadJsonFromGH(METRICS_FILE);
+            await ghPut(METRICS_FILE, JSON.stringify(items.filter((_,j)=>j!==i), null, 4), sha, `Видалено: ${metrics[i].parish}`);
+            renderList();
+        } catch(e) { alert('❌ '+e.message); btn.disabled=false; btn.textContent='🗑'; }
+    }));
 }
 
 }); // end DOMContentLoaded

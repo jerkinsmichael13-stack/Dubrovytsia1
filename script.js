@@ -264,14 +264,13 @@ function openLightbox(index) {
         lightboxMeta.textContent = `${PERIOD_NAMES[photo.period]} · ${CATEGORY_NAMES[photo.category]}${photo.date ? ` · ${photo.date}` : ''}`;
     }
     
-    // Посилання на оригінал (Google Drive)
-    const downloadBtn = document.getElementById('lightboxDownload');
-    if (downloadBtn) {
-        if (photo.originalUrl) {
-            downloadBtn.href = photo.originalUrl;
-            downloadBtn.style.display = 'inline-block';
+    // Посилання на оригінал (Google Drive) — будуємо динамічно
+    const dlContainer = document.getElementById('lightboxDownloadContainer');
+    if (dlContainer) {
+        if (photo.originalUrl && photo.originalUrl.startsWith('http')) {
+            dlContainer.innerHTML = `<a href="${photo.originalUrl}" target="_blank" rel="noopener" class="lightbox-download">📥 Переглянути / завантажити оригінал</a>`;
         } else {
-            downloadBtn.style.display = 'none';
+            dlContainer.innerHTML = '';
         }
     }
     
