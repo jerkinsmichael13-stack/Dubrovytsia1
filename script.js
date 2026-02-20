@@ -134,6 +134,12 @@ let currentCategory = 'all';
 let filteredPhotos = [];
 let currentPhotoIndex = 0;
 
+// Повертає 1024px версію imgur-посилання для мініатюр
+function imgurThumb(url) {
+    if (!url || !url.includes('i.imgur.com')) return url;
+    return url.replace(/\.(jpe?g|png|gif|webp)$/i, 'h.$1');
+}
+
 async function initPhotoGallery() {
     const gallery = document.getElementById('photoGallery');
     if (!gallery) return;
@@ -176,7 +182,7 @@ function displayPhotos() {
 
     gallery.innerHTML = filteredPhotos.map((photo, index) => `
         <div class="photo-card" onclick="openLightbox(${index})">
-            <img src="${photo.imageUrl}" alt="${photo.title}" loading="lazy">
+            <img src="${imgurThumb(photo.imageUrl)}" alt="${photo.title}" loading="lazy">
             <div class="photo-overlay">
                 <div class="photo-info">
                     <h3>${photo.title}</h3>
