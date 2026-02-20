@@ -480,7 +480,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Premium enhancements
     initScrollProgress();
-    initLazyImages();
     initHeroParticles();
 });
 
@@ -500,23 +499,7 @@ function initScrollProgress() {
     }, { passive: true });
 }
 
-// ================================================
-// LAZY IMAGE OBSERVER (для плавного появлення)
-// ================================================
-function initLazyImages() {
-    const imgs = document.querySelectorAll('img[loading="lazy"]');
-    const obs = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-            if (e.isIntersecting) {
-                const img = e.target;
-                img.addEventListener('load', () => img.classList.add('loaded'));
-                if (img.complete) img.classList.add('loaded');
-                obs.unobserve(img);
-            }
-        });
-    }, { rootMargin: '100px' });
-    imgs.forEach(img => obs.observe(img));
-}
+
 
 // ================================================
 // HERO PARTICLES
