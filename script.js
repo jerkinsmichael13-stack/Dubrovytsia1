@@ -134,10 +134,10 @@ let currentCategory = 'all';
 let filteredPhotos = [];
 let currentPhotoIndex = 0;
 
-// Повертає 1024px версію imgur-посилання для мініатюр
+// Повертає 640px версію imgur-посилання для мініатюр у галереї
 function imgurThumb(url) {
     if (!url || !url.includes('i.imgur.com')) return url;
-    return url.replace(/\.(jpe?g|png|gif|webp)$/i, 'h.$1');
+    return url.replace(/\.(jpe?g|png|gif|webp)$/i, 'l.$1');
 }
 
 async function initPhotoGallery() {
