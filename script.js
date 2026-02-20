@@ -5,36 +5,29 @@
 })();
 
 // ================================================
-// ДУБРОВИЦЯ - ВИПРАВЛЕНА ВЕРСІЯ
-// ✅ Фото для всіх через GitHub Pages
-// ✅ Робоча навігація в lightbox
+// ДУБРОВИЦЯ v6.0 — Dynamic JSON loading
 // ================================================
 
-console.log('✅ Дубровиця v5.0 — з динамічним photos.json');
-
-// ================================================
-// ФОТО ЗБЕРІГАЮТЬСЯ В photos.json
-// Додавайте через admin.html — без редагування коду!
-// ================================================
+const GITHUB_RAW = 'https://raw.githubusercontent.com/jerkinsmichael13-stack/Dubrovytsia1/main/';
 
 let ALL_PHOTOS = [];
 
 const PERIOD_NAMES = {
     'before-1900': 'До 1900',
-    '1900-1939': '1900—1939',
-    '1939-1945': '1939—1945',
-    '1945-1991': '1945—1991',
-    'after-1991': 'Після 1991'
+    '1900-1939':   '1900—1939',
+    '1939-1945':   '1939—1945',
+    '1945-1991':   '1945—1991',
+    'after-1991':  'Після 1991'
 };
 
 const CATEGORY_NAMES = {
-    'churches': 'Церкви',
-    'streets': 'Вулиці',
-    'people': 'Люди',
+    'churches':     'Церкви',
+    'streets':      'Вулиці',
+    'people':       'Люди',
     'architecture': 'Архітектура',
-    'aerial': 'Аерофото',
-    'drawings': 'Малюнки',
-    'events': 'Події'
+    'aerial':       'Аерофото',
+    'drawings':     'Малюнки',
+    'events':       'Події'
 };
 
 // ================================================
@@ -43,10 +36,8 @@ const CATEGORY_NAMES = {
 function initTheme() {
     const themeToggle = document.getElementById('themeToggle');
     if (!themeToggle) return;
-    
     const savedTheme = localStorage.getItem('theme') || 'light';
     document.documentElement.setAttribute('data-theme', savedTheme);
-    
     themeToggle.addEventListener('click', function() {
         const current = document.documentElement.getAttribute('data-theme');
         const newTheme = current === 'dark' ? 'light' : 'dark';
@@ -58,14 +49,11 @@ function initTheme() {
 function initMobileNav() {
     const menuToggle = document.querySelector('.mobile-toggle');
     const nav = document.querySelector('.nav');
-    
     if (!menuToggle || !nav) return;
-    
     menuToggle.addEventListener('click', function() {
         nav.classList.toggle('active');
         this.classList.toggle('active');
     });
-    
     document.querySelectorAll('.nav a').forEach(link => {
         link.addEventListener('click', () => {
             nav.classList.remove('active');
@@ -99,7 +87,6 @@ function initSmoothScroll() {
         link.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
             if (href === '#') return;
-            
             const target = document.querySelector(href);
             if (target) {
                 e.preventDefault();
@@ -112,13 +99,8 @@ function initSmoothScroll() {
 function initHeaderScroll() {
     const header = document.querySelector('.header');
     if (!header) return;
-    
     window.addEventListener('scroll', () => {
-        if (window.pageYOffset > 100) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
-        }
+        header.classList.toggle('scrolled', window.pageYOffset > 100);
     });
 }
 
@@ -127,63 +109,51 @@ function initCounters() {
     counters.forEach(counter => {
         const target = parseInt(counter.getAttribute('data-target'));
         let current = 0;
-        const increment = target / 50;
-        
+        const increment = target / 60;
         const updateCounter = () => {
             if (current < target) {
                 current += increment;
-                counter.textContent = Math.floor(current);
+                counter.textContent = Math.floor(current).toLocaleString('uk-UA');
                 requestAnimationFrame(updateCounter);
             } else {
-                counter.textContent = target;
+                counter.textContent = target.toLocaleString('uk-UA');
             }
         };
-        
         const observer = new IntersectionObserver(entries => {
-            if (entries[0].isIntersecting && current === 0) {
-                updateCounter();
-            }
+            if (entries[0].isIntersecting && current === 0) updateCounter();
         });
         observer.observe(counter);
     });
 }
 
 // ================================================
-// ФОТОГАЛЕРЕЯ - ВИПРАВЛЕНА ВЕРСІЯ
+// ФОТОГАЛЕРЕЯ
 // ================================================
 let currentFilter = 'all';
 let currentCategory = 'all';
-let filteredPhotos = [];  // ✅ Зберігаємо відфільтровані фото глобально
+let filteredPhotos = [];
 let currentPhotoIndex = 0;
 
 async function initPhotoGallery() {
-    console.log('🖼️ Ініціалізація галереї — завантаження photos.json');
-    
     const gallery = document.getElementById('photoGallery');
-    if (gallery) {
-        gallery.innerHTML = '<p style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--color-text-secondary);">⏳ Завантаження фотографій...</p>';
-    }
-    
+    if (!gallery) return;
+
+    gallery.innerHTML = '<p style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--color-text-secondary);">⏳ Завантаження...</p>';
+
     try {
-        // Use raw GitHub URL to bypass GitHub Pages CDN cache
-        const RAW_URL = 'https://raw.githubusercontent.com/jerkinsmichael13-stack/Dubrovytsia1/main/photos.json';
-        const resp = await fetch(RAW_URL + '?v=' + Date.now());
+        const resp = await fetch(GITHUB_RAW + 'photos.json?v=' + Date.now());
         if (resp.ok) {
             ALL_PHOTOS = await resp.json();
-            console.log(`📸 Завантажено ${ALL_PHOTOS.length} фото з photos.json`);
         } else {
             throw new Error('photos.json not found');
         }
     } catch(e) {
-        console.warn('⚠️ Не вдалося завантажити photos.json:', e.message);
-        if (gallery) {
-            gallery.innerHTML = '<p style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--color-text-secondary);">Фотоархів порожній. Додайте фото через <a href="admin.html">адмін-панель</a>.</p>';
-        }
+        gallery.innerHTML = '<p style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--color-text-secondary);">Фотоархів порожній. Додайте фото через <a href="admin.html">адмін-панель</a>.</p>';
         initGalleryFilters();
         initLightbox();
         return;
     }
-    
+
     displayPhotos();
     initGalleryFilters();
     initLightbox();
@@ -192,30 +162,26 @@ async function initPhotoGallery() {
 function displayPhotos() {
     const gallery = document.getElementById('photoGallery');
     if (!gallery) return;
-    
-    // Фільтруємо фото
+
     filteredPhotos = ALL_PHOTOS.filter(photo => {
         const matchesPeriod = currentFilter === 'all' || photo.period === currentFilter;
         const matchesCategory = currentCategory === 'all' || photo.category === currentCategory;
         return matchesPeriod && matchesCategory;
     });
-    
-    console.log(`📊 Показано ${filteredPhotos.length} фото (з ${ALL_PHOTOS.length})`);
-    
+
     if (filteredPhotos.length === 0) {
-        gallery.innerHTML = `<p style="grid-column:1/-1;text-align:center;padding:3rem;font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--color-text-secondary);">За обраними фільтрами нічого не знайдено</p>`;
+        gallery.innerHTML = '<p style="grid-column:1/-1;text-align:center;padding:3rem;font-family:var(--font-display);font-size:1.3rem;color:var(--color-text-secondary);">За обраними фільтрами нічого не знайдено</p>';
         return;
     }
-    
-    // ✅ ВИПРАВЛЕНО: Використовуємо onclick з індексом
+
     gallery.innerHTML = filteredPhotos.map((photo, index) => `
         <div class="photo-card" onclick="openLightbox(${index})">
             <img src="${photo.imageUrl}" alt="${photo.title}" loading="lazy">
             <div class="photo-overlay">
                 <div class="photo-info">
                     <h3>${photo.title}</h3>
-                    <p>${PERIOD_NAMES[photo.period]} · ${CATEGORY_NAMES[photo.category]}</p>
-                    ${photo.originalUrl ? `<p style="font-size:0.68rem;opacity:0.75;margin-top:0.25rem;">📥 Є оригінал для завантаження</p>` : ''}
+                    <p>${PERIOD_NAMES[photo.period] || photo.period} · ${CATEGORY_NAMES[photo.category] || photo.category}</p>
+                    ${photo.originalUrl ? '<p style="font-size:0.7rem;opacity:0.75;margin-top:0.25rem;">📥 Є оригінал</p>' : ''}
                 </div>
             </div>
         </div>
@@ -223,7 +189,6 @@ function displayPhotos() {
 }
 
 function initGalleryFilters() {
-    // Фільтри періодів
     document.querySelectorAll('.filter-btn').forEach(btn => {
         btn.addEventListener('click', function() {
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -232,8 +197,6 @@ function initGalleryFilters() {
             displayPhotos();
         });
     });
-    
-    // Фільтри категорій
     document.querySelectorAll('.category-btn').forEach(btn => {
         btn.addEventListener('click', function() {
             document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
@@ -244,52 +207,36 @@ function initGalleryFilters() {
     });
 }
 
-// ✅ ВИПРАВЛЕНО: Функція відкриття lightbox
 function openLightbox(index) {
     currentPhotoIndex = index;
     const photo = filteredPhotos[index];
-    
     const lightbox = document.getElementById('lightbox');
     const lightboxImage = document.getElementById('lightboxImage');
     const lightboxCaption = document.getElementById('lightboxCaption');
     const lightboxMeta = document.getElementById('lightboxMeta');
-    
     if (!lightbox || !lightboxImage) return;
-    
+
     lightboxImage.src = photo.imageUrl;
     lightboxImage.alt = photo.title;
-    
     if (lightboxCaption) lightboxCaption.textContent = photo.title;
     if (lightboxMeta) {
-        lightboxMeta.textContent = `${PERIOD_NAMES[photo.period]} · ${CATEGORY_NAMES[photo.category]}${photo.date ? ` · ${photo.date}` : ''}`;
+        lightboxMeta.textContent = `${PERIOD_NAMES[photo.period] || photo.period} · ${CATEGORY_NAMES[photo.category] || photo.category}${photo.date ? ' · ' + photo.date : ''}`;
     }
-    
-    // Посилання на оригінал (Google Drive) — будуємо динамічно
     const dlContainer = document.getElementById('lightboxDownloadContainer');
     if (dlContainer) {
-        if (photo.originalUrl && photo.originalUrl.startsWith('http')) {
-            dlContainer.innerHTML = `<a href="${photo.originalUrl}" target="_blank" rel="noopener" class="lightbox-download">📥 Переглянути / завантажити оригінал</a>`;
-        } else {
-            dlContainer.innerHTML = '';
-        }
+        dlContainer.innerHTML = photo.originalUrl && photo.originalUrl.startsWith('http')
+            ? `<a href="${photo.originalUrl}" target="_blank" rel="noopener" class="lightbox-download">📥 Переглянути / завантажити оригінал</a>`
+            : '';
     }
-    
     lightbox.classList.add('active');
     document.body.style.overflow = 'hidden';
-    
-    console.log(`🖼️ Відкрито фото ${index + 1}/${filteredPhotos.length}: ${photo.title}`);
 }
 
-// ✅ ВИПРАВЛЕНО: Навігація в lightbox
 function navigateLightbox(direction) {
-    if (filteredPhotos.length === 0) return;
-    
-    if (direction === 'next') {
-        currentPhotoIndex = (currentPhotoIndex + 1) % filteredPhotos.length;
-    } else {
-        currentPhotoIndex = (currentPhotoIndex - 1 + filteredPhotos.length) % filteredPhotos.length;
-    }
-    
+    if (!filteredPhotos.length) return;
+    currentPhotoIndex = direction === 'next'
+        ? (currentPhotoIndex + 1) % filteredPhotos.length
+        : (currentPhotoIndex - 1 + filteredPhotos.length) % filteredPhotos.length;
     openLightbox(currentPhotoIndex);
 }
 
@@ -304,301 +251,214 @@ function closeLightbox() {
 function initLightbox() {
     const lightbox = document.getElementById('lightbox');
     if (!lightbox) return;
-    
-    // ✅ Кнопка закриття
-    const closeBtn = lightbox.querySelector('.lightbox-close');
-    if (closeBtn) {
-        closeBtn.addEventListener('click', closeLightbox);
-    }
-    
-    // ✅ Навігація вперед/назад
-    const prevBtn = lightbox.querySelector('.lightbox-prev');
-    const nextBtn = lightbox.querySelector('.lightbox-next');
-    
-    if (prevBtn) {
-        prevBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            navigateLightbox('prev');
-        });
-    }
-    
-    if (nextBtn) {
-        nextBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            navigateLightbox('next');
-        });
-    }
-    
-    // ✅ Закриття при кліку на фон
-    lightbox.addEventListener('click', (e) => {
-        if (e.target === lightbox) {
-            closeLightbox();
-        }
-    });
-    
-    // ✅ Клавіатурна навігація
-    document.addEventListener('keydown', (e) => {
+    lightbox.querySelector('.lightbox-close')?.addEventListener('click', closeLightbox);
+    lightbox.querySelector('.lightbox-prev')?.addEventListener('click', e => { e.stopPropagation(); navigateLightbox('prev'); });
+    lightbox.querySelector('.lightbox-next')?.addEventListener('click', e => { e.stopPropagation(); navigateLightbox('next'); });
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+    document.addEventListener('keydown', e => {
         if (!lightbox.classList.contains('active')) return;
-        
-        if (e.key === 'ArrowLeft') {
-            navigateLightbox('prev');
-        } else if (e.key === 'ArrowRight') {
-            navigateLightbox('next');
-        } else if (e.key === 'Escape') {
-            closeLightbox();
-        }
+        if (e.key === 'ArrowLeft') navigateLightbox('prev');
+        else if (e.key === 'ArrowRight') navigateLightbox('next');
+        else if (e.key === 'Escape') closeLightbox();
     });
-    
-    console.log('✅ Lightbox ініціалізовано з навігацією');
 }
 
 // ================================================
-// ПОШУК КНИГ
+// КНИГИ — динамічне завантаження з books.json
 // ================================================
-const BOOKS_DATA = [
-    {
-        title: 'Історія Дубровиці та околиць',
-        author: 'Іван Петренко',
-        year: '1995',
-        description: 'Всебічне дослідження історії міста від найдавніших часів до сучасності',
-        category: 'history'
-    },
-    {
-        title: 'Дубровицькі родини: генеалогічні нариси',
-        author: 'Марія Коваленко',
-        year: '2003',
-        description: 'Дослідження родоводів найвідоміших дубровицьких сімей',
-        category: 'genealogy'
-    },
-    {
-        title: 'Церкви та храми Дубровиччини',
-        author: 'Петро Савчук',
-        year: '2010',
-        description: 'Архітектурний огляд релігійних споруд регіону',
-        category: 'architecture'
-    },
-    {
-        title: 'Спогади старожилів',
-        author: 'Збірка',
-        year: '2015',
-        description: 'Усні історії жителів Дубровиці про життя у XX столітті',
-        category: 'memories'
-    },
-    {
-        title: 'Дубровиця у старих фотографіях',
-        author: 'Олександр Мельник',
-        year: '2018',
-        description: 'Альбом рідкісних історичних світлин міста',
-        category: 'photo'
-    }
-];
+let ALL_BOOKS = [];
+let activeBookFilter = 'all';
 
-function initBooksSearch() {
-    const searchInput = document.getElementById('booksSearch');
-    if (!searchInput) return;
-    
-    function displayBooks() {
-        const term = searchInput.value.toLowerCase().trim();
-        const filtered = BOOKS_DATA.filter(book => 
-            book.title.toLowerCase().includes(term) ||
-            book.author.toLowerCase().includes(term) ||
-            book.description.toLowerCase().includes(term)
-        );
-        
-        const grid = document.getElementById('booksGrid');
-        if (!grid) return;
-        
-        if (filtered.length === 0) {
-            grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: 2rem; color: var(--color-text-secondary);">Нічого не знайдено</p>';
-            return;
+async function initBooksPage() {
+    const grid = document.getElementById('booksGrid');
+    if (!grid) return;
+
+    grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--color-text-secondary);">⏳ Завантаження...</p>';
+
+    try {
+        const resp = await fetch(GITHUB_RAW + 'books.json?v=' + Date.now());
+        if (resp.ok) {
+            ALL_BOOKS = await resp.json();
+        } else {
+            throw new Error('books.json not found');
         }
-        
-        grid.innerHTML = filtered.map(book => `
-            <div class="book-card fade-in-up">
-                <div class="book-icon">📖</div>
+    } catch(e) {
+        ALL_BOOKS = [];
+    }
+
+    renderBooks();
+    initBookFilters();
+}
+
+function renderBooks() {
+    const grid = document.getElementById('booksGrid');
+    const emptyMsg = document.getElementById('booksEmptyMsg');
+    if (!grid) return;
+
+    const filtered = ALL_BOOKS.filter(b =>
+        activeBookFilter === 'all' || b.category === activeBookFilter
+    );
+
+    if (filtered.length === 0) {
+        grid.innerHTML = '';
+        if (emptyMsg) emptyMsg.style.display = 'block';
+        return;
+    }
+    if (emptyMsg) emptyMsg.style.display = 'none';
+
+    grid.innerHTML = filtered.map(book => `
+        <div class="catalog-item book-item fade-in-up">
+            ${book.coverUrl
+                ? `<img src="${book.coverUrl}" alt="${book.title}" class="book-cover" loading="lazy">`
+                : `<div class="book-cover-placeholder">📚</div>`}
+            <div class="book-info">
                 <h3>${book.title}</h3>
-                <p class="book-author">Автор: ${book.author}</p>
-                <p class="book-year">Рік видання: ${book.year}</p>
+                <p class="book-meta">Автор: ${book.author}${book.year ? ' · Рік: ' + book.year : ''}</p>
                 <p class="book-description">${book.description}</p>
+                ${book.location ? `<p><strong>Місце зберігання:</strong> ${book.location}</p>` : ''}
+                ${book.downloadUrl ? `<a href="${book.downloadUrl}" target="_blank" rel="noopener" class="catalog-link">📥 Завантажити / переглянути →</a>` : ''}
             </div>
-        `).join('');
-        
-        // Реініціалізуємо анімації
-        initScrollAnimations();
-    }
-    
-    searchInput.addEventListener('input', displayBooks);
-    displayBooks();
-    console.log('✅ Пошук книг ініціалізовано');
+        </div>
+    `).join('');
+
+    initScrollAnimations();
 }
 
-// ================================================
-// МЕТРИЧНІ КНИГИ
-// ================================================
-const METRIC_BOOKS = [
-    {
-        type: 'birth',
-        year: '1850-1870',
-        parish: 'Парафія Святої Трійці',
-        records: 1243,
-        details: 'Записи про народження'
-    },
-    {
-        type: 'marriage',
-        year: '1850-1870',
-        parish: 'Парафія Святої Трійці',
-        records: 324,
-        details: 'Записи про шлюби'
-    },
-    {
-        type: 'death',
-        year: '1850-1870',
-        parish: 'Парафія Святої Трійці',
-        records: 876,
-        details: 'Записи про смерті'
-    },
-    {
-        type: 'birth',
-        year: '1871-1900',
-        parish: 'Костел Іоана Хрестителя',
-        records: 2156,
-        details: 'Записи про народження'
-    },
-    {
-        type: 'marriage',
-        year: '1871-1900',
-        parish: 'Костел Іоана Хрестителя',
-        records: 567,
-        details: 'Записи про шлюби'
-    }
-];
-
-function initMetricSearch() {
-    const typeFilter = document.getElementById('typeFilter');
-    const yearFilter = document.getElementById('yearFilter');
-    
-    if (!typeFilter || !yearFilter) return;
-    
-    function displayMetrics() {
-        const type = typeFilter.value;
-        const year = yearFilter.value;
-        
-        const filtered = METRIC_BOOKS.filter(book => {
-            const matchesType = type === 'all' || book.type === type;
-            const matchesYear = year === 'all' || book.year === year;
-            return matchesType && matchesYear;
+function initBookFilters() {
+    document.querySelectorAll('[data-book-filter]').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('[data-book-filter]').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            activeBookFilter = this.dataset.bookFilter;
+            renderBooks();
         });
-        
-        const grid = document.getElementById('metricsGrid');
-        if (!grid) return;
-        
-        if (filtered.length === 0) {
-            grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: 2rem; color: var(--color-text-secondary);">Нічого не знайдено</p>';
-            return;
-        }
-        
-        const icons = { birth: '👶', marriage: '💍', death: '🕊️' };
-        const names = { birth: 'Народження', marriage: 'Шлюби', death: 'Смерті' };
-        
-        grid.innerHTML = filtered.map(book => `
-            <div class="metric-card fade-in-up">
-                <div class="metric-icon">${icons[book.type]}</div>
-                <h3>${names[book.type]}</h3>
-                <p class="metric-year">${book.year}</p>
-                <p class="metric-parish">${book.parish}</p>
-                <p class="metric-records">Кількість записів: ${book.records}</p>
-                <p class="metric-details">${book.details}</p>
-            </div>
-        `).join('');
-        
-        initScrollAnimations();
-    }
-    
-    typeFilter.addEventListener('change', displayMetrics);
-    yearFilter.addEventListener('change', displayMetrics);
-    displayMetrics();
-    console.log('✅ Пошук метричних книг ініціалізовано');
+    });
 }
 
 // ================================================
-// АДМІН ПАНЕЛЬ (тільки для вас)
+// МЕТРИЧНІ КНИГИ — динамічне завантаження з metrics.json
+// Mapping: confession filter values to stored values
+// ================================================
+let ALL_METRICS = [];
+let activeMetricConfession = 'all';
+let activeMetricType = 'all';
+
+// Map from filter button value → stored confession string
+const CONFESSION_MAP = {
+    'orthodox':      'Православна',
+    'catholic':      'Римо-католицька',
+    'greek-catholic':'Греко-католицька',
+    'jewish':        'Іудаїзм',
+    'civil':         'Всі конфесії',
+    'protestant':    'Протестантська'
+};
+
+// Map from record type filter → keyword in recordTypes string
+const RECORD_TYPE_MAP = {
+    'birth':      'Народження',
+    'marriage':   'Шлюби',
+    'death':      'Смерті',
+    'confession': 'Сповідні'
+};
+
+async function initMetricsPage() {
+    const grid = document.getElementById('metricsGrid');
+    if (!grid) return;
+
+    grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--color-text-secondary);">⏳ Завантаження...</p>';
+
+    try {
+        const resp = await fetch(GITHUB_RAW + 'metrics.json?v=' + Date.now());
+        if (resp.ok) {
+            ALL_METRICS = await resp.json();
+        } else {
+            throw new Error('metrics.json not found');
+        }
+    } catch(e) {
+        ALL_METRICS = [];
+    }
+
+    renderMetrics();
+    initMetricFilters();
+}
+
+function renderMetrics() {
+    const grid = document.getElementById('metricsGrid');
+    const emptyMsg = document.getElementById('metricsEmptyMsg');
+    if (!grid) return;
+
+    const filtered = ALL_METRICS.filter(m => {
+        const confessionMatch = activeMetricConfession === 'all' ||
+            m.confession === CONFESSION_MAP[activeMetricConfession] ||
+            m.confession === activeMetricConfession;
+
+        const typeKeyword = RECORD_TYPE_MAP[activeMetricType];
+        const typeMatch = activeMetricType === 'all' ||
+            (m.recordTypes && m.recordTypes.includes(typeKeyword));
+
+        return confessionMatch && typeMatch;
+    });
+
+    if (filtered.length === 0) {
+        grid.innerHTML = '';
+        if (emptyMsg) emptyMsg.style.display = 'block';
+        return;
+    }
+    if (emptyMsg) emptyMsg.style.display = 'none';
+
+    grid.innerHTML = filtered.map(m => `
+        <div class="catalog-item fade-in-up">
+            <h3>${m.parish}</h3>
+            <p><strong>Роки:</strong> ${m.years}</p>
+            ${m.recordTypes ? `<p><strong>Тип записів:</strong> ${m.recordTypes}</p>` : ''}
+            <p><strong>Конфесія:</strong> ${m.confession}</p>
+            ${m.villages ? `<p><strong>Населені пункти:</strong> ${m.villages}</p>` : ''}
+            ${m.archive ? `<p><strong>Архів:</strong> ${m.archive}</p>` : ''}
+            ${m.scanUrl ? `<a href="${m.scanUrl}" target="_blank" rel="noopener" class="catalog-link">📥 Переглянути скан →</a>` : ''}
+        </div>
+    `).join('');
+
+    initScrollAnimations();
+}
+
+function initMetricFilters() {
+    document.querySelectorAll('[data-metric-filter]').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('[data-metric-filter]').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            activeMetricConfession = this.dataset.metricFilter;
+            renderMetrics();
+        });
+    });
+    document.querySelectorAll('[data-metric-type]').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('[data-metric-type]').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            activeMetricType = this.dataset.metricType;
+            renderMetrics();
+        });
+    });
+}
+
+// ================================================
+// ADMIN (login only — heavy logic in admin.html)
 // ================================================
 const ADMIN_PASSWORD = 'admin2026';
 
 function initAdmin() {
     const loginBtn = document.getElementById('adminLoginBtn');
     const password = document.getElementById('adminPassword');
-    const loginSection = document.getElementById('loginSection');
-    const adminContent = document.getElementById('adminContent');
-    
     if (loginBtn && password) {
         loginBtn.addEventListener('click', () => {
             if (password.value === ADMIN_PASSWORD) {
-                loginSection.style.display = 'none';
-                adminContent.style.display = 'block';
-                console.log('✅ Вхід в адмін-панель');
+                document.getElementById('loginSection').style.display = 'none';
+                document.getElementById('adminContent').style.display = 'block';
             } else {
                 alert('❌ Невірний пароль!');
                 password.value = '';
             }
         });
-        
-        password.addEventListener('keypress', e => {
-            if (e.key === 'Enter') loginBtn.click();
-        });
-    }
-    
-    // Кнопка "Показати код для додавання"
-    const generateBtn = document.getElementById('generateCode');
-    if (generateBtn) {
-        generateBtn.addEventListener('click', () => {
-            const url = document.getElementById('photoUrl')?.value;
-            const title = document.getElementById('photoTitle')?.value;
-            const period = document.getElementById('photoPeriod')?.value;
-            const category = document.getElementById('photoCategory')?.value;
-            const date = document.getElementById('photoDate')?.value || new Date().getFullYear().toString();
-            
-            if (!url || !title || !period || !category) {
-                alert('❌ Заповніть всі обов\'язкові поля!');
-                return;
-            }
-            
-            if (!url.startsWith('http')) {
-                alert('❌ URL має починатися з http:// або https://');
-                return;
-            }
-            
-            // Генеруємо код для додавання
-            const code = `    {
-        imageUrl: '${url}',
-        title: '${title}',
-        period: '${period}',
-        category: '${category}',
-        date: '${date}'
-    },`;
-            
-            // Показуємо код
-            const codeDisplay = document.getElementById('codeDisplay');
-            if (codeDisplay) {
-                codeDisplay.textContent = code;
-                codeDisplay.style.display = 'block';
-            }
-            
-            alert(`✅ Код згенеровано!\n\nТепер:\n1. Скопіюйте код нижче\n2. Відкрийте script.js на GitHub\n3. Знайдіть масив ALL_PHOTOS\n4. Вставте код перед коментарем "=== ДОДАЙТЕ СВОЇ ФОТО ТУТ ==="\n5. Збережіть файл\n6. Через 2-5 хвилин фото з'явиться для всіх!`);
-        });
-    }
-    
-    // Кнопка копіювання коду
-    const copyBtn = document.getElementById('copyCode');
-    if (copyBtn) {
-        copyBtn.addEventListener('click', () => {
-            const codeDisplay = document.getElementById('codeDisplay');
-            if (codeDisplay && codeDisplay.textContent) {
-                navigator.clipboard.writeText(codeDisplay.textContent).then(() => {
-                    alert('✅ Код скопійовано!');
-                });
-            }
-        });
+        password.addEventListener('keypress', e => { if (e.key === 'Enter') loginBtn.click(); });
     }
 }
 
@@ -606,143 +466,69 @@ function initAdmin() {
 // ІНІЦІАЛІЗАЦІЯ
 // ================================================
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('🚀 Запуск Дубровиця...');
-    
-    // Базові функції
     initTheme();
     initMobileNav();
     initScrollAnimations();
     initSmoothScroll();
     initHeaderScroll();
     initCounters();
-    
-    // Контент-специфічні функції
-    if (document.getElementById('photoGallery')) {
-        initPhotoGallery(); // async - no need to await at top level
-    }
-    
-    if (document.getElementById('booksSearch')) {
-        initBooksSearch();
-    }
-    
-    if (document.getElementById('typeFilter')) {
-        initMetricSearch();
-    }
-    
-    // Book filters (new button-based)
-    if (document.querySelector('[data-book-filter]')) {
-        initBookFilters();
-    }
-    
-    // Metric filters (new button-based)
-    if (document.querySelector('[data-metric-filter]')) {
-        initMetricFilters();
-    }
-    
-    if (document.getElementById('adminLoginBtn')) {
-        initAdmin();
-    }
-    
-    console.log('✅ Сайт готовий!');
+
+    if (document.getElementById('photoGallery')) initPhotoGallery();
+    if (document.getElementById('booksGrid')) initBooksPage();
+    if (document.getElementById('metricsGrid')) initMetricsPage();
+    if (document.getElementById('adminLoginBtn')) initAdmin();
+
+    // Premium enhancements
+    initScrollProgress();
+    initLazyImages();
+    initHeroParticles();
 });
 
+window.addEventListener('error', e => console.error('❌', e.message));
+
 // ================================================
-// ФІЛЬТРИ КНИГ (кнопки-фільтри)
+// SCROLL PROGRESS BAR
 // ================================================
-function initBookFilters() {
-    let activeBookFilter = 'all';
-
-    function applyBookFilter() {
-        const items = document.querySelectorAll('.catalog-item.book-item');
-        let visible = 0;
-        items.forEach(item => {
-            const cat = item.dataset.bookCategory || '';
-            const show = activeBookFilter === 'all' || cat === activeBookFilter;
-            item.classList.toggle('hidden', !show);
-            if (show) visible++;
-        });
-        // Show/hide no-results
-        let noResults = document.getElementById('booksNoResults');
-        if (!noResults) {
-            noResults = document.createElement('p');
-            noResults.id = 'booksNoResults';
-            noResults.className = 'catalog-no-results';
-            noResults.textContent = 'Книг за цією темою ще не додано.';
-            const grid = document.querySelector('.catalog-grid');
-            if (grid) grid.appendChild(noResults);
-        }
-        noResults.style.display = visible === 0 ? 'block' : 'none';
-    }
-
-    document.querySelectorAll('[data-book-filter]').forEach(btn => {
-        btn.addEventListener('click', function() {
-            document.querySelectorAll('[data-book-filter]').forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-            activeBookFilter = this.dataset.bookFilter;
-            applyBookFilter();
-        });
-    });
-
-    applyBookFilter();
-    console.log('✅ Фільтри книг ініціалізовано');
+function initScrollProgress() {
+    const bar = document.createElement('div');
+    bar.className = 'scroll-progress';
+    document.body.prepend(bar);
+    window.addEventListener('scroll', () => {
+        const scrolled = window.scrollY;
+        const max = document.body.scrollHeight - window.innerHeight;
+        bar.style.width = (scrolled / max * 100) + '%';
+    }, { passive: true });
 }
 
 // ================================================
-// ФІЛЬТРИ МЕТРИЧНИХ КНИГ (кнопки-фільтри)
+// LAZY IMAGE OBSERVER (для плавного появлення)
 // ================================================
-function initMetricFilters() {
-    let activeConfession = 'all';
-    let activeType = 'all';
-
-    function applyMetricFilter() {
-        const items = document.querySelectorAll('.catalog-item[data-metric-confession]');
-        let visible = 0;
-        items.forEach(item => {
-            const conf = item.dataset.metricConfession || '';
-            const types = item.dataset.metricTypes || '';
-            const confMatch = activeConfession === 'all' || conf === activeConfession;
-            const typeMatch = activeType === 'all' || types.includes(activeType);
-            const show = confMatch && typeMatch;
-            item.classList.toggle('hidden', !show);
-            if (show) visible++;
+function initLazyImages() {
+    const imgs = document.querySelectorAll('img[loading="lazy"]');
+    const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                const img = e.target;
+                img.addEventListener('load', () => img.classList.add('loaded'));
+                if (img.complete) img.classList.add('loaded');
+                obs.unobserve(img);
+            }
         });
-        let noResults = document.getElementById('metricsNoResults');
-        if (!noResults) {
-            noResults = document.createElement('p');
-            noResults.id = 'metricsNoResults';
-            noResults.className = 'catalog-no-results';
-            noResults.textContent = 'Записів за цими параметрами не знайдено.';
-            const grid = document.querySelector('.catalog-grid');
-            if (grid) grid.appendChild(noResults);
-        }
-        noResults.style.display = visible === 0 ? 'block' : 'none';
-    }
-
-    document.querySelectorAll('[data-metric-filter]').forEach(btn => {
-        btn.addEventListener('click', function() {
-            document.querySelectorAll('[data-metric-filter]').forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-            activeConfession = this.dataset.metricFilter;
-            applyMetricFilter();
-        });
-    });
-
-    document.querySelectorAll('[data-metric-type]').forEach(btn => {
-        btn.addEventListener('click', function() {
-            document.querySelectorAll('[data-metric-type]').forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-            activeType = this.dataset.metricType;
-            applyMetricFilter();
-        });
-    });
-
-    applyMetricFilter();
-    console.log('✅ Фільтри метричних книг ініціалізовано');
+    }, { rootMargin: '100px' });
+    imgs.forEach(img => obs.observe(img));
 }
 
-// Обробка помилок
-window.addEventListener('error', e => {
-    console.error('❌ Помилка:', e.message);
-});
+// ================================================
+// HERO PARTICLES
+// ================================================
+function initHeroParticles() {
+    const heroBg = document.querySelector('.hero-bg');
+    if (!heroBg) return;
+    for (let i = 0; i < 4; i++) {
+        const p = document.createElement('div');
+        p.className = 'hero-particle';
+        heroBg.appendChild(p);
+    }
+}
 
-console.log('📋 Підказка: Всі фото зберігаються в масиві ALL_PHOTOS на початку файлу');
+

@@ -451,9 +451,22 @@
                             <input type="text" id="newBookYear" placeholder="2015">
                         </div>
                         <div class="field">
-                            <label>Місце зберігання</label>
-                            <input type="text" id="newBookLocation" placeholder="Рівненська обласна бібліотека">
+                            <label>Тематична категорія *</label>
+                            <select id="newBookCategory">
+                                <option value="">Оберіть...</option>
+                                <option value="history">Історія</option>
+                                <option value="culture">Культура та спадщина</option>
+                                <option value="war">Друга світова</option>
+                                <option value="religion">Релігія та церкви</option>
+                                <option value="people">Видатні постаті</option>
+                                <option value="documents">Документи та архіви</option>
+                                <option value="folklore">Фольклор та легенди</option>
+                            </select>
                         </div>
+                    </div>
+                    <div class="field">
+                        <label>Місце зберігання</label>
+                        <input type="text" id="newBookLocation" placeholder="Рівненська обласна бібліотека">
                     </div>
 
                     <div class="field">
@@ -848,7 +861,7 @@ async function publishBook() {
     try {
         const { items: books, sha } = await loadJsonFromGH(BOOKS_FILE);
 
-        const newBook = { title, author, year, location, description };
+        const newBook = { title, author, year, category, location, description };
         if (coverUrl) newBook.coverUrl = coverUrl;
         if (downloadUrl) newBook.downloadUrl = downloadUrl;
         books.unshift(newBook);
@@ -1132,8 +1145,17 @@ async function renderBookList(wrap) {
             </div>
             <div class="grid-2">
                 <div class="field"><label>Рік</label><input id="ef_byear" type="text" value="${esc(b.year||'')}"></div>
-                <div class="field"><label>Місце зберігання</label><input id="ef_bloc" type="text" value="${esc(b.location||'')}"></div>
+                <div class="field"><label>Категорія</label><select id="ef_bcat">
+                    <option value="history" ${b.category==='history'?'selected':''}>Історія</option>
+                    <option value="culture" ${b.category==='culture'?'selected':''}>Культура та спадщина</option>
+                    <option value="war" ${b.category==='war'?'selected':''}>Друга світова</option>
+                    <option value="religion" ${b.category==='religion'?'selected':''}>Релігія та церкви</option>
+                    <option value="people" ${b.category==='people'?'selected':''}>Видатні постаті</option>
+                    <option value="documents" ${b.category==='documents'?'selected':''}>Документи та архіви</option>
+                    <option value="folklore" ${b.category==='folklore'?'selected':''}>Фольклор та легенди</option>
+                </select></div>
             </div>
+            <div class="field"><label>Місце зберігання</label><input id="ef_bloc" type="text" value="${esc(b.location||'')}"></div>
             <div class="field"><label>Опис</label><textarea id="ef_bdesc" rows="4">${esc(b.description||'')}</textarea></div>
             <div class="field"><label>Обкладинка (URL)</label><input id="ef_bcover" type="url" value="${esc(b.coverUrl||'')}"></div>
             <div class="field">
@@ -1144,7 +1166,7 @@ async function renderBookList(wrap) {
             const title = document.getElementById('ef_btitle').value.trim();
             if (!title) throw new Error('Назва обов\'язкова');
             const { items, sha } = await loadJsonFromGH(BOOKS_FILE);
-            const upd = { title, author: document.getElementById('ef_bauthor').value.trim(), year: document.getElementById('ef_byear').value.trim(), location: document.getElementById('ef_bloc').value.trim(), description: document.getElementById('ef_bdesc').value.trim() };
+            const upd = { title, author: document.getElementById('ef_bauthor').value.trim(), year: document.getElementById('ef_byear').value.trim(), category: document.getElementById('ef_bcat').value, location: document.getElementById('ef_bloc').value.trim(), description: document.getElementById('ef_bdesc').value.trim() };
             const cv = document.getElementById('ef_bcover').value.trim();
             const dl = document.getElementById('ef_bdl').value.trim();
             if (cv) upd.coverUrl = cv;
