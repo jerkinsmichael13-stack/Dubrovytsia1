@@ -726,129 +726,237 @@
     <!-- ═══ BEFORE/AFTER COMPARISON SLIDER ═══ -->
     <section id="CMP">
     <style>
-    #CMP{padding:4rem 0 5rem;background:#faf7f2;border-top:1px solid #e8e0d4;}
-    [data-theme="dark"] #CMP{background:#0e0c0a;border-color:#1e1b18;}
+    /* ── WRAPPER ── */
+    #CMP{padding:5rem 0 6rem;background:#0d0b09;position:relative;overflow:hidden;}
+    #CMP::before{content:'';position:absolute;inset:0;
+      background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(201,162,39,.07) 0%,transparent 70%);
+      pointer-events:none;}
     #CMP *{box-sizing:border-box;}
-    .CW{max-width:1200px;margin:0 auto;padding:0 2rem;}
-    .CH{text-align:center;margin-bottom:2.5rem;}
-    .CT{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(1.9rem,3.2vw,2.6rem);font-weight:500;color:#1c1917;margin:0 0 .5rem;}
-    [data-theme="dark"] .CT{color:#f0e6c8;}
-    .CL{display:block;width:44px;height:2px;background:linear-gradient(90deg,#c9a227,#e0bd5a);margin:.6rem auto 0;border-radius:2px;}
-    .CS{font-family:'DM Sans',sans-serif;font-size:.78rem;letter-spacing:.13em;text-transform:uppercase;color:#a09080;margin:.6rem 0 0;}
-    .CYR{display:flex;justify-content:center;align-items:center;gap:2rem;margin:1.5rem 0 2rem;}
-    .CYB{display:flex;flex-direction:column;align-items:center;gap:.2rem;}
-    .CYB .cy{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;line-height:1;}
-    .CYB .cl{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:#a09080;}
-    .CYB.yleft .cy{color:#c9a227;}
-    .CYB.yright .cy{color:#6aadf5;}
-    .CYD{font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:#c8c0b4;font-style:italic;}
-    [data-theme="dark"] .CYD{color:#3a3530;}
-    .CSF{position:relative;width:100%;aspect-ratio:16/10;border-radius:12px;overflow:hidden;
+    .CW{max-width:1240px;margin:0 auto;padding:0 2rem;}
+
+    /* ── HEADER ── */
+    .CH{text-align:center;margin-bottom:3rem;}
+    .CE{display:inline-flex;align-items:center;gap:.75rem;margin-bottom:1.2rem;}
+    .CE::before,.CE::after{content:'';display:block;width:32px;height:1px;background:linear-gradient(90deg,transparent,rgba(201,162,39,.5));}
+    .CE::after{background:linear-gradient(90deg,rgba(201,162,39,.5),transparent);}
+    .CE span{font-family:'DM Sans',sans-serif;font-size:.65rem;letter-spacing:.28em;text-transform:uppercase;color:#c9a227;}
+    .CT{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(2.2rem,4vw,3.2rem);font-weight:300;
+        color:#f0e6c8;line-height:1.1;margin:0 0 .6rem;}
+    .CT em{font-style:italic;color:#c9a227;}
+    .CS{font-family:'DM Sans',sans-serif;font-size:.8rem;letter-spacing:.1em;color:rgba(240,230,200,.35);margin:0;}
+
+    /* ── YEAR STRIP ── */
+    .CYR{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:1.5rem;margin:0 0 2rem;}
+    .CYB{display:flex;flex-direction:column;gap:.2rem;}
+    .CYB.yr{text-align:right;}
+    .CYB .cy{font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:300;line-height:1;
+             background:linear-gradient(135deg,#c9a227,#f0c840);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+    .CYB.yr .cy{background:linear-gradient(135deg,#6aadf5,#a8d4ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+    .CYB .cl{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(240,230,200,.3);}
+    .CYB .cd{font-size:.72rem;font-family:'DM Sans',sans-serif;color:rgba(240,230,200,.5);margin-top:.1rem;}
+    .CYD{text-align:center;font-size:1.4rem;color:rgba(201,162,39,.3);}
+
+    /* ── SLIDER FRAME ── */
+    .CSF{position:relative;width:100%;aspect-ratio:16/9;border-radius:3px;overflow:hidden;
          cursor:ew-resize;user-select:none;-webkit-user-select:none;
-         box-shadow:0 4px 12px rgba(0,0,0,.1),0 20px 60px rgba(0,0,0,.18);
-         border:1px solid rgba(201,162,39,.14);}
-    @media(max-width:600px){.CSF{aspect-ratio:4/3;}}
-    .CSF img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;display:block;}
-    .CSF .ci-ov{clip-path:inset(0 50% 0 0);will-change:clip-path;transform:translateZ(0);}
-    .CDL{position:absolute;top:0;bottom:0;left:50%;width:2px;transform:translateX(-50%);
-         background:linear-gradient(to bottom,transparent 0%,rgba(255,255,255,.95) 10%,#fff 50%,rgba(255,255,255,.95) 90%,transparent 100%);
-         pointer-events:none;z-index:10;}
+         box-shadow:0 0 0 1px rgba(201,162,39,.12),0 30px 80px rgba(0,0,0,.7),0 8px 24px rgba(0,0,0,.4);}
+    @media(max-width:600px){.CSF{aspect-ratio:3/2;cursor:default;}}
+
+    /* images */
+    .CSF .ci-base{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+                  pointer-events:none;display:block;
+                  filter:saturate(1.1) contrast(1.05) brightness(1.02);}
+    .CSF .ci-ov{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+                pointer-events:none;display:block;
+                clip-path:inset(0 50% 0 0);
+                will-change:clip-path;transform:translateZ(0);
+                filter:contrast(1.12) brightness(1.06) saturate(0.05);}
+
+    /* vignette */
+    .CSF::after{content:'';position:absolute;inset:0;
+      background:radial-gradient(ellipse 100% 100% at 50% 50%,transparent 55%,rgba(0,0,0,.45) 100%);
+      pointer-events:none;z-index:5;}
+
+    /* ── DIVIDER ── */
+    .CDL{position:absolute;top:0;bottom:0;left:50%;z-index:15;pointer-events:none;
+         transform:translateX(-50%);width:1px;
+         background:linear-gradient(to bottom,
+           transparent 0%,
+           rgba(255,255,255,.15) 4%,
+           rgba(255,255,255,.9) 20%,
+           #fff 50%,
+           rgba(255,255,255,.9) 80%,
+           rgba(255,255,255,.15) 96%,
+           transparent 100%);}
+
+    /* ── HANDLE ── */
     .CDH{position:absolute;top:50%;left:50%;z-index:20;
-         transform:translate(-50%,-50%);
-         width:48px;height:48px;border-radius:50%;background:#fff;
-         box-shadow:0 2px 16px rgba(0,0,0,.35),0 0 0 3px rgba(255,255,255,.3);
-         display:flex;align-items:center;justify-content:center;pointer-events:none;
-         transition:transform .18s,box-shadow .18s;}
-    .CSF.cdrag .CDH{transform:translate(-50%,-50%) scale(1.1);}
-    .CDH svg{width:20px;height:20px;fill:#1c1917;}
-    .CCLB{position:absolute;top:1rem;z-index:15;padding:.35rem .85rem;
-          border-radius:6px;pointer-events:none;backdrop-filter:blur(10px);}
-    .CCLB.cll{left:1rem;background:rgba(26,20,10,.75);border:1px solid rgba(201,162,39,.3);}
-    .CCLB.clr{right:1rem;background:rgba(10,20,40,.75);border:1px solid rgba(106,173,245,.3);text-align:right;}
-    .CCLB .ccy{display:block;font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:300;line-height:1;}
-    .CCLB.cll .ccy{color:#e0b94a;}
-    .CCLB.clr .ccy{color:#6aadf5;}
-    .CCLB .ccs{display:block;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-top:.1rem;}
-    .CIP{position:absolute;bottom:1.1rem;left:50%;transform:translateX(-50%);z-index:20;
-         background:rgba(0,0,0,.5);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.1);
-         border-radius:100px;padding:.4rem 1rem;font-size:.65rem;letter-spacing:.12em;
-         text-transform:uppercase;color:rgba(255,255,255,.45);pointer-events:none;
-         transition:opacity .35s;}
+         transform:translate(-50%,-50%);pointer-events:none;
+         display:flex;flex-direction:column;align-items:center;gap:0;}
+    /* vertical tick top */
+    .CDH::before,.CDH::after{content:'';display:block;width:1px;height:28px;background:rgba(255,255,255,.7);}
+    /* main disc */
+    .CDISC{width:44px;height:44px;border-radius:50%;
+           background:linear-gradient(135deg,#fff 0%,#f0ead8 100%);
+           box-shadow:0 2px 20px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.4),inset 0 1px 0 rgba(255,255,255,.8);
+           display:flex;align-items:center;justify-content:center;
+           transition:transform .15s;}
+    .CSF.cdrag .CDISC{transform:scale(1.12);}
+    .CDISC svg{width:18px;height:18px;fill:#1a1200;opacity:.7;}
+
+    /* ── CORNER LABELS ── */
+    .CCLB{position:absolute;z-index:16;pointer-events:none;}
+    .CCLB.cll{top:1.2rem;left:1.2rem;}
+    .CCLB.clr{top:1.2rem;right:1.2rem;text-align:right;}
+    .CCLB .ccy{display:block;font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;line-height:1;
+               text-shadow:0 1px 12px rgba(0,0,0,.8);}
+    .CCLB.cll .ccy{color:#e8c255;}
+    .CCLB.clr .ccy{color:#8ec8ff;}
+    .CCLB .ccs{display:block;font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;
+               color:rgba(255,255,255,.35);margin-top:.15rem;
+               text-shadow:0 1px 6px rgba(0,0,0,.9);}
+
+    /* ── HINT ── */
+    .CIP{position:absolute;bottom:1.4rem;left:50%;transform:translateX(-50%);z-index:20;
+         background:rgba(0,0,0,.6);backdrop-filter:blur(12px);
+         border:1px solid rgba(255,255,255,.08);border-radius:100px;
+         padding:.45rem 1.2rem .45rem 1rem;
+         display:flex;align-items:center;gap:.6rem;
+         font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.4);
+         pointer-events:none;transition:opacity .5s;}
+    .CIP svg{width:14px;height:14px;opacity:.5;flex-shrink:0;}
     .CSF.cmoved .CIP{opacity:0;}
-    .COBS{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:2rem;}
-    .COB{border:1px solid #e8e0d4;border-radius:10px;padding:1.2rem 1.4rem;background:#fff;
-         transition:border-color .2s,box-shadow .2s;}
-    [data-theme="dark"] .COB{background:#161310;border-color:#2a2520;}
-    .COB:hover{border-color:rgba(201,162,39,.4);box-shadow:0 4px 20px rgba(201,162,39,.08);}
-    .COI{font-size:1.2rem;margin-bottom:.5rem;}
-    .COT{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:#1c1917;margin-bottom:.25rem;}
-    [data-theme="dark"] .COT{color:#e8d8b8;}
-    .COD{font-size:.75rem;font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.6;color:#7a6a5a;}
-    [data-theme="dark"] .COD{color:#5a5040;}
+
+    /* ── FACT CARDS ── */
+    .COBS{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:1px;
+          background:rgba(255,255,255,.04);border-radius:0 0 3px 3px;overflow:hidden;}
+    @media(max-width:900px){.COBS{grid-template-columns:repeat(2,1fr);}}
+    @media(max-width:500px){.COBS{grid-template-columns:1fr;}}
+    .COB{padding:1.6rem 1.4rem;background:#0d0b09;position:relative;overflow:hidden;
+         transition:background .22s;}
+    .COB::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+                 background:linear-gradient(90deg,transparent,rgba(201,162,39,.0),transparent);
+                 transition:background .22s;}
+    .COB:hover{background:#131109;}
+    .COB:hover::before{background:linear-gradient(90deg,transparent,rgba(201,162,39,.5),transparent);}
+    .COI{font-size:1.4rem;margin-bottom:.7rem;display:block;}
+    .COT{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:500;
+         color:#e8d8a8;margin-bottom:.4rem;line-height:1.2;}
+    .COD{font-size:.73rem;font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.7;
+         color:rgba(240,230,200,.38);}
     </style>
 
     <div class="CW">
       <div class="CH">
-        <h2 class="CT">Місто тоді і зараз<span class="CL"></span></h2>
-        <p class="CS">Порівняйте Дубровицю 1944 та 2021 рр. — перетягніть лінію</p>
+        <div class="CE"><span>Цифровий архів · Дубровиця</span></div>
+        <h2 class="CT">Місто в розрізі часу:<br><em>1944 та 2021</em></h2>
+        <p class="CS">Перетягніть лінію — побачте, як змінилося місто за 77 років</p>
       </div>
 
       <div class="CYR">
-        <div class="CYB yleft"><span class="cy">1944</span><span class="cl">Аерофото Люфтваффе</span></div>
-        <span class="CYD">↔</span>
-        <div class="CYB yright"><span class="cy">2021</span><span class="cl">Супутниковий знімок</span></div>
+        <div class="CYB">
+          <span class="cy">1944</span>
+          <span class="cl">Люфтваффе</span>
+          <span class="cd">24 січня 1944 р.</span>
+        </div>
+        <div class="CYD">↔</div>
+        <div class="CYB yr">
+          <span class="cy">2021</span>
+          <span class="cl">Супутник</span>
+          <span class="cd">Google Maps</span>
+        </div>
       </div>
 
       <div class="CSF" id="CSLIDER">
-        <img src="https://i.imgur.com/FfgAmadh.jpeg" alt="Дубровиця 2021" draggable="false" decoding="async">
-        <img src="https://i.imgur.com/cMQeU7Ph.jpeg" alt="Дубровиця 1944" class="ci-ov" id="COVI" draggable="false" decoding="async">
+        <!-- Base: 2021 (right side) -->
+        <img class="ci-base" src="https://i.imgur.com/FfgAmadh.jpeg" alt="Дубровиця 2021" draggable="false" decoding="async">
+        <!-- Overlay: 1944 (left side, clips right) -->
+        <img class="ci-ov" id="COVI" src="https://i.imgur.com/cMQeU7Ph.jpeg" alt="Дубровиця 1944" draggable="false" decoding="async">
+
         <div class="CDL" id="CDIV"></div>
+
         <div class="CDH" id="CHDL">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8.5 5L3 12l5.5 7V5zm7 0v14L21 12l-5.5-7z"/></svg>
+          <div class="CDISC">
+            <svg viewBox="0 0 24 24"><path d="M8.5 5L3 12l5.5 7V5zm7 0v14L21 12l-5.5-7z"/></svg>
+          </div>
         </div>
-        <div class="CCLB cll"><span class="ccy">1944</span><span class="ccs">24.01.1944 · Люфтваффе</span></div>
-        <div class="CCLB clr"><span class="ccy">2021</span><span class="ccs">Супутник · Google</span></div>
-        <div class="CIP">← Тягніть для порівняння →</div>
+
+        <div class="CCLB cll">
+          <span class="ccy">1944</span>
+          <span class="ccs">Аерофото · Люфтваффе</span>
+        </div>
+        <div class="CCLB clr">
+          <span class="ccy">2021</span>
+          <span class="ccs">Супутниковий знімок</span>
+        </div>
+
+        <div class="CIP" id="CHINT">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 19l-7-7 7-7"/></svg>
+          Тягніть для порівняння
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5l7 7-7 7"/></svg>
+        </div>
       </div>
 
       <div class="COBS">
-        <div class="COB"><div class="COI">🌊</div><p class="COT">Річка Горинь</p><p class="COD">У 1944 р. русло проходило ближче до центру. Після меліорацій воно суттєво змінило своє положення.</p></div>
-        <div class="COB"><div class="COI">🕍</div><p class="COT">Зниклі споруди</p><p class="COD">На знімку 1944 р. видно будівлі, знищені під час Другої світової: синагога та єврейська забудова.</p></div>
-        <div class="COB"><div class="COI">🌳</div><p class="COT">Озеленення</p><p class="COD">Сучасне місто значно зеленіше — дерева, парки та сквери, яких не було у воєнні роки.</p></div>
-        <div class="COB"><div class="COI">🏙️</div><p class="COT">Забудова центру</p><p class="COD">Центральна площа зберегла основний планувальний кістяк, хоча щільність забудови суттєво зросла.</p></div>
+        <div class="COB">
+          <span class="COI">🌊</span>
+          <p class="COT">Старуха — нове життя старого русла</p>
+          <p class="COD">На знімку 1944 р. добре видно старе русло Горині. Після меліорацій річку відвели в нове русло, а на місці старого утворилася водойма, яку місцеві досі називають «Старухою».</p>
+        </div>
+        <div class="COB">
+          <span class="COI">✡️</span>
+          <p class="COT">Єврейська забудова</p>
+          <p class="COD">До 1942 р. євреї складали значну частину населення Дубровиці. На знімку 1944 р. видно будівлі єврейської громади — більшість з них зникла після Голокосту та Другої світової.</p>
+        </div>
+        <div class="COB">
+          <span class="COI">🌳</span>
+          <p class="COT">Озеленення міста</p>
+          <p class="COD">На кольоровому знімку 2021 р. місто виглядає значно зеленішим — дерева, парки, сквери, яких майже не було у воєнні роки.</p>
+        </div>
+        <div class="COB">
+          <span class="COI">🏟️</span>
+          <p class="COT">Стадіон і нова забудова</p>
+          <p class="COD">На сучасному знімку чітко видно стадіон і радянську забудову, що з'явилася після 1945 р. На місці пустирів і городів — вулиці та будинки.</p>
+        </div>
       </div>
     </div>
 
     <script>
     (function(){
-      var fr=document.getElementById('CSLIDER'),ov=document.getElementById('COVI'),
-          dv=document.getElementById('CDIV'),hd=document.getElementById('CHDL');
-      var drag=false, rafId=null, pendingX=null;
+      var fr=document.getElementById('CSLIDER');
+      var ov=document.getElementById('COVI');
+      var dv=document.getElementById('CDIV');
+      var hd=document.getElementById('CHDL');
+      var drag=false,rafId=null,pendingX=null;
 
       function apply(p){
-        p=Math.max(2,Math.min(98,p));
-        var inv=(100-p).toFixed(2);
-        ov.style.clipPath='inset(0 '+inv+'% 0 0)';
+        p=Math.max(0,Math.min(100,p));
+        ov.style.clipPath='inset(0 '+(100-p).toFixed(2)+'% 0 0)';
         dv.style.left=p+'%';
         hd.style.left=p+'%';
         fr.classList.add('cmoved');
       }
       function gp(cx){var r=fr.getBoundingClientRect();return((cx-r.left)/r.width)*100;}
-
       function onRAF(){rafId=null;if(pendingX!==null){apply(gp(pendingX));pendingX=null;}}
       function schedule(cx){pendingX=cx;if(!rafId)rafId=requestAnimationFrame(onRAF);}
 
-      fr.addEventListener('mousedown',function(e){drag=true;fr.classList.add('cdrag');apply(gp(e.clientX));});
+      fr.addEventListener('mousedown',function(e){e.preventDefault();drag=true;fr.classList.add('cdrag');apply(gp(e.clientX));});
       window.addEventListener('mousemove',function(e){if(drag)schedule(e.clientX);});
       window.addEventListener('mouseup',function(){drag=false;fr.classList.remove('cdrag');});
       fr.addEventListener('touchstart',function(e){drag=true;fr.classList.add('cdrag');apply(gp(e.touches[0].clientX));},{passive:true});
       window.addEventListener('touchmove',function(e){if(drag)schedule(e.touches[0].clientX);},{passive:true});
       window.addEventListener('touchend',function(){drag=false;fr.classList.remove('cdrag');});
 
-      /* intro sweep */
-      var pos=75,run=true;
-      function sw(){if(!run||drag)return;pos-=0.5;if(pos<=35){run=false;return;}apply(pos);requestAnimationFrame(sw);}
-      setTimeout(function(){apply(75);requestAnimationFrame(sw);},900);
+      /* intro: sweep right→left */
+      var pos=80,run=true;
+      function sw(){
+        if(!run||drag)return;
+        pos-=0.6;
+        if(pos<=30){run=false;return;}
+        apply(pos);
+        requestAnimationFrame(sw);
+      }
+      setTimeout(function(){apply(80);requestAnimationFrame(sw);},600);
     })();
     </script>
     </section>
