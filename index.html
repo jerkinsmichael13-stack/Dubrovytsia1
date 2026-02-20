@@ -1333,8 +1333,8 @@
       </div>
 
       <div class="WSF" id="WSLIDER">
-        <img class="wb" src="https://i.imgur.com/EOF4N4p.jpeg" alt="Регіон 2021" draggable="false" decoding="async" loading="lazy">
-        <img class="wo" id="WOVI" src="https://i.imgur.com/E3GKeD5.jpeg" alt="Регіон 1943" draggable="false" decoding="async" loading="lazy">
+        <img class="wb" src="https://i.imgur.com/EOF4N4ph.jpeg" data-src-hq="https://i.imgur.com/EOF4N4p.jpeg" alt="Регіон 2021" draggable="false" decoding="async" loading="lazy">
+        <img class="wo" id="WOVI" src="https://i.imgur.com/E3GKeD5h.jpeg" data-src-hq="https://i.imgur.com/E3GKeD5.jpeg" alt="Регіон 1943" draggable="false" decoding="async" loading="lazy">
         <div class="WDL" id="WDIV"></div>
         <div class="WDH" id="WHDL">
           <div class="WDISC">
@@ -1378,7 +1378,8 @@
     (function(){
       var fr=document.getElementById('WSLIDER'),ov=document.getElementById('WOVI'),
           dv=document.getElementById('WDIV'),hd=document.getElementById('WHDL');
-      var drag=false,rafId=null,pendingX=null;
+      var drag=false,rafId=null,pendingX=null,hqLoaded=false;
+
       function apply(p){
         p=Math.max(0,Math.min(100,p));
         ov.style.clipPath='inset(0 '+(100-p).toFixed(2)+'% 0 0)';
@@ -1388,12 +1389,30 @@
       function gp(cx){var r=fr.getBoundingClientRect();return((cx-r.left)/r.width)*100;}
       function onRAF(){rafId=null;if(pendingX!==null){apply(gp(pendingX));pendingX=null;}}
       function schedule(cx){pendingX=cx;if(!rafId)rafId=requestAnimationFrame(onRAF);}
-      fr.addEventListener('mousedown',function(e){e.preventDefault();drag=true;fr.classList.add('wdrag');apply(gp(e.clientX));});
+      fr.addEventListener('mousedown',function(e){e.preventDefault();drag=true;fr.classList.add('wdrag');apply(gp(e.clientX));loadHQ();});
       window.addEventListener('mousemove',function(e){if(drag)schedule(e.clientX);});
       window.addEventListener('mouseup',function(){drag=false;fr.classList.remove('wdrag');});
-      fr.addEventListener('touchstart',function(e){drag=true;fr.classList.add('wdrag');apply(gp(e.touches[0].clientX));},{passive:true});
+      fr.addEventListener('touchstart',function(e){drag=true;fr.classList.add('wdrag');apply(gp(e.touches[0].clientX));loadHQ();},{passive:true});
       window.addEventListener('touchmove',function(e){if(drag)schedule(e.touches[0].clientX);},{passive:true});
       window.addEventListener('touchend',function(){drag=false;fr.classList.remove('wdrag');});
+
+      /* preload HQ in background after slider is visible */
+      function loadHQ(){
+        if(hqLoaded)return; hqLoaded=true;
+        fr.querySelectorAll('img[data-src-hq]').forEach(function(img){
+          var hq=new Image();
+          hq.onload=function(){ img.src=hq.src; };
+          hq.src=img.getAttribute('data-src-hq');
+        });
+      }
+
+      /* start HQ preload when slider scrolls into view */
+      if('IntersectionObserver' in window){
+        new IntersectionObserver(function(entries,obs){
+          if(entries[0].isIntersecting){ loadHQ(); obs.disconnect(); }
+        },{rootMargin:'200px'}).observe(fr);
+      }
+
       var pos=80,run=true;
       function sw(){if(!run||drag)return;pos-=0.6;if(pos<=30){run=false;return;}apply(pos);requestAnimationFrame(sw);}
       setTimeout(function(){apply(80);requestAnimationFrame(sw);},1200);
