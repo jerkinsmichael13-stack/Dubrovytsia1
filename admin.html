@@ -589,8 +589,8 @@
                  cursor:crosshair;user-select:none;background:#111;line-height:0;margin-bottom:1.25rem;">
                 <img id="editorImg" src="https://i.imgur.com/dyP4WgZ.jpeg"
                      style="width:100%;height:auto;display:block;filter:sepia(0.06) contrast(1.04);pointer-events:none;">
-                <svg id="editorSVG" style="position:absolute;top:0;left:0;width:100%;height:100%;overflow:visible;"
-                     viewBox="0 0 1200 951" xmlns="http://www.w3.org/2000/svg">
+                <svg id="editorSVG" style="position:absolute;top:0;left:0;width:100%;height:100%;overflow:visible;pointer-events:all;"
+                     xmlns="http://www.w3.org/2000/svg">
                 </svg>
                 <!-- Instruction overlay -->
                 <div id="editorHint" style="position:absolute;top:10px;left:50%;transform:translateX(-50%);
@@ -1375,20 +1375,19 @@ async function renderMetricList(wrap) {
 var MAPS_CONFIG = {
     '1944': {
         img:    'https://i.imgur.com/dyP4WgZ.jpeg',
-        file:   'aerial_pins_1944.json',
-        vbW:    1200, vbH: 951
+        file:   'aerial_pins_1944.json'
     },
     '1943': {
         img:    'https://i.imgur.com/EhsjkKX.jpeg',
-        file:   'aerial_pins_1943.json',
-        vbW:    1200, vbH: 1200
+        file:   'aerial_pins_1943.json'
     }
 };
 
 var currentMapId = '1944';
-var pins = {};          // { '1944': [...], '1943': [...] }
-var pendingCX = 0, pendingCY = 0;
+var pins = { '1944': [], '1943': [] };
+var pendingX = 0, pendingY = 0;  // in percentages 0-100
 var dragPin = null, dragOffset = {x:0, y:0};
+var hasDragged = false;
 
 var editorWrap = document.getElementById('mapEditorWrap');
 var editorImg  = document.getElementById('editorImg');
@@ -1402,8 +1401,6 @@ var edStatus   = document.getElementById('mapEditorStatus');
 
 // ── Initialize ────────────────────────────────────────────
 function init() {
-    pins['1944'] = []; pins['1943'] = [];
-
     // Map selector buttons
     document.querySelectorAll('.map-sel-btn').forEach(function(btn){
         btn.addEventListener('click', function(){
@@ -1419,30 +1416,27 @@ function init() {
         });
     });
 
-    // Click on editor to add pin
+    // Click on editor to add pin — use mousedown/mouseup to detect drag vs click
+    editorWrap.addEventListener('mousedown', function(e){
+        if (e.target.closest('[data-pin-id]')) return;
+        hasDragged = false;
+    });
+    editorWrap.addEventListener('mousemove', function(e){
+        if (dragPin) { hasDragged = true; }
+    });
     editorWrap.addEventListener('click', function(e){
-        if (e.target.closest('circle') || e.target.closest('text')) return;
-        var rect = editorWrap.getBoundingClientRect();
-        var cfg  = MAPS_CONFIG[currentMapId];
-        var pxX  = e.clientX - rect.left;
-        var pxY  = e.clientY - rect.top;
-        var scX  = rect.width  / cfg.vbW;
-        var scY  = rect.height / cfg.vbH;
-        pendingCX = Math.round(pxX / scX);
-        pendingCY = Math.round(pxY / scY);
+        if (hasDragged) { hasDragged = false; return; }
+        if (e.target.closest('[data-pin-id]')) return;
+        var rect = editorImg.getBoundingClientRect();
+        pendingX = Math.round(((e.clientX - rect.left) / rect.width)  * 100 * 10) / 10;
+        pendingY = Math.round(((e.clientY - rect.top)  / rect.height) * 100 * 10) / 10;
+        pendingX = Math.max(0, Math.min(100, pendingX));
+        pendingY = Math.max(0, Math.min(100, pendingY));
         openModal();
     });
 
-    // Modal save
-    document.getElementById('pinModalSave').addEventListener('click', function(){
-        var title = modalTitle.value.trim();
-        if (!title){ modalTitle.focus(); return; }
-        var list = pins[currentMapId];
-        var id   = list.length ? Math.max.apply(null, list.map(function(p){return p.id;})) + 1 : 1;
-        list.push({ id:id, cx:pendingCX, cy:pendingCY, title:title, desc:modalDesc.value.trim() });
-        closeModal();
-        renderEditor();
-    });
+    // Modal save — single listener via onclick property only
+    document.getElementById('pinModalSave').onclick = defaultModalSave;
 
     // Modal cancel
     document.getElementById('pinModalCancel').addEventListener('click', closeModal);
@@ -1469,46 +1463,51 @@ function init() {
         });
     });
 
-    // SVG drag
+    // SVG drag — pins are stored as % but SVG uses pixel positions within wrap
     editorSVG.addEventListener('mousedown', function(e){
         var g = e.target.closest('[data-pin-id]');
         if (!g) return;
         e.stopPropagation();
+        hasDragged = false;
         dragPin = g;
-        var rect = editorWrap.getBoundingClientRect();
-        var cfg  = MAPS_CONFIG[currentMapId];
-        var pin  = pins[currentMapId].find(function(p){ return String(p.id)===g.dataset.pinId; });
+        var pin = pins[currentMapId].find(function(p){ return String(p.id)===g.dataset.pinId; });
         if (!pin) return;
-        var pxX = pin.cx * (rect.width / cfg.vbW);
-        var pxY = pin.cy * (rect.height / cfg.vbH);
+        var rect = editorImg.getBoundingClientRect();
+        var pxX = pin.x / 100 * rect.width;
+        var pxY = pin.y / 100 * rect.height;
         dragOffset.x = e.clientX - rect.left - pxX;
         dragOffset.y = e.clientY - rect.top  - pxY;
     });
 
     document.addEventListener('mousemove', function(e){
         if (!dragPin) return;
-        var rect = editorWrap.getBoundingClientRect();
-        var cfg  = MAPS_CONFIG[currentMapId];
-        var pxX  = e.clientX - rect.left - dragOffset.x;
-        var pxY  = e.clientY - rect.top  - dragOffset.y;
-        var cx   = Math.round(Math.max(0, Math.min(cfg.vbW, pxX / (rect.width  / cfg.vbW))));
-        var cy   = Math.round(Math.max(0, Math.min(cfg.vbH, pxY / (rect.height / cfg.vbH))));
-        var pin  = pins[currentMapId].find(function(p){ return String(p.id)===dragPin.dataset.pinId; });
-        if (pin){ pin.cx=cx; pin.cy=cy; }
-        // update SVG directly for smooth drag
-        dragPin.querySelector('circle.ed-ring').setAttribute('cx', cx);
-        dragPin.querySelector('circle.ed-ring').setAttribute('cy', cy);
-        dragPin.querySelector('circle.ed-dot').setAttribute('cx', cx);
-        dragPin.querySelector('circle.ed-dot').setAttribute('cy', cy);
-        dragPin.querySelector('text').setAttribute('x', cx);
-        dragPin.querySelector('text').setAttribute('y', cy);
+        hasDragged = true;
+        var rect = editorImg.getBoundingClientRect();
+        var pxX = e.clientX - rect.left - dragOffset.x;
+        var pxY = e.clientY - rect.top  - dragOffset.y;
+        var x = Math.round(Math.max(0, Math.min(100, pxX / rect.width  * 100)) * 10) / 10;
+        var y = Math.round(Math.max(0, Math.min(100, pxY / rect.height * 100)) * 10) / 10;
+        var pin = pins[currentMapId].find(function(p){ return String(p.id)===dragPin.dataset.pinId; });
+        if (pin){ pin.x = x; pin.y = y; }
+        // update SVG position
+        var wRect = editorWrap.getBoundingClientRect();
+        var svgX = (e.clientX - rect.left) - dragOffset.x + (rect.left - wRect.left);
+        var svgY = (e.clientY - rect.top)  - dragOffset.y + (rect.top  - wRect.top);
+        // recalculate from % to wrap-relative px
+        var wpxX = x / 100 * rect.width  + (rect.left - wRect.left);
+        var wpxY = y / 100 * rect.height + (rect.top  - wRect.top);
+        dragPin.querySelectorAll('circle').forEach(function(c){
+            c.setAttribute('cx', wpxX); c.setAttribute('cy', wpxY);
+        });
+        var t = dragPin.querySelector('text');
+        if (t){ t.setAttribute('x', wpxX); t.setAttribute('y', wpxY); }
         // update coord display
         var coordEl = document.getElementById('coord-'+dragPin.dataset.pinId);
-        if (coordEl) coordEl.textContent = 'cx:'+cx+' cy:'+cy;
+        if (coordEl) coordEl.textContent = 'x:'+x+'% y:'+y+'%';
     });
 
     document.addEventListener('mouseup', function(){
-        if (dragPin){ dragPin=null; renderPinList(); }
+        if (dragPin){ dragPin=null; renderEditor(); }
     });
 
     // Load existing pins on init
@@ -1520,7 +1519,6 @@ function switchMap(id) {
     currentMapId = id;
     var cfg = MAPS_CONFIG[id];
     editorImg.src = cfg.img;
-    editorSVG.setAttribute('viewBox', '0 0 '+cfg.vbW+' '+cfg.vbH);
     renderEditor();
 }
 
@@ -1533,32 +1531,40 @@ function renderEditor() {
 function renderSVG() {
     var ns   = 'http://www.w3.org/2000/svg';
     var list = pins[currentMapId] || [];
-    // Clear
     while (editorSVG.firstChild) editorSVG.removeChild(editorSVG.firstChild);
 
+    // We need to position pins in wrap-relative pixels from % values
+    // Use the image's rendered rect relative to the wrap
+    var wRect = editorWrap.getBoundingClientRect();
+    var iRect = editorImg.getBoundingClientRect();
+    var offX = iRect.left - wRect.left;
+    var offY = iRect.top  - wRect.top;
+
     list.forEach(function(pin){
+        var px = pin.x / 100 * iRect.width  + offX;
+        var py = pin.y / 100 * iRect.height + offY;
+
         var g = document.createElementNS(ns,'g');
         g.setAttribute('data-pin-id', String(pin.id));
         g.style.cursor = 'move';
+        g.style.pointerEvents = 'all';
 
         var ring = document.createElementNS(ns,'circle');
-        ring.setAttribute('class','ed-ring');
-        ring.setAttribute('cx', pin.cx); ring.setAttribute('cy', pin.cy);
+        ring.setAttribute('cx', px); ring.setAttribute('cy', py);
         ring.setAttribute('r','14');
         ring.setAttribute('fill','none');
         ring.setAttribute('stroke','rgba(201,162,39,0.5)');
         ring.setAttribute('stroke-width','1.5');
 
         var circ = document.createElementNS(ns,'circle');
-        circ.setAttribute('class','ed-dot');
-        circ.setAttribute('cx', pin.cx); circ.setAttribute('cy', pin.cy);
+        circ.setAttribute('cx', px); circ.setAttribute('cy', py);
         circ.setAttribute('r','10');
         circ.setAttribute('fill','#c9a227');
         circ.setAttribute('stroke','#fff'); circ.setAttribute('stroke-width','2');
         circ.setAttribute('filter','drop-shadow(0 2px 5px rgba(0,0,0,.6))');
 
         var txt = document.createElementNS(ns,'text');
-        txt.setAttribute('x', pin.cx); txt.setAttribute('y', pin.cy);
+        txt.setAttribute('x', px); txt.setAttribute('y', py);
         txt.setAttribute('text-anchor','middle');
         txt.setAttribute('dominant-baseline','central');
         txt.setAttribute('fill','#1a1000');
@@ -1591,7 +1597,7 @@ function renderPinList() {
         var info = document.createElement('div');
         info.style.cssText = 'flex:1;min-width:0;';
         info.innerHTML = '<div style="font-size:0.8rem;font-weight:600;color:var(--color-text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+escHtml(pin.title)+'</div>'+
-            '<div id="coord-'+pin.id+'" style="font-size:0.65rem;color:var(--color-text-secondary);font-family:monospace;">cx:'+pin.cx+' cy:'+pin.cy+'</div>';
+            '<div id="coord-'+pin.id+'" style="font-size:0.65rem;color:var(--color-text-secondary);font-family:monospace;">x:'+pin.x+'% y:'+pin.y+'%</div>';
 
         var editBtn = document.createElement('button');
         editBtn.style.cssText = 'padding:0.3rem 0.6rem;border:1px solid var(--color-border);border-radius:6px;'+
@@ -1616,31 +1622,31 @@ function renderPinList() {
 }
 
 function escHtml(s) {
-    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
 // ── Modal ─────────────────────────────────────────────────
 function openModal() {
     modalTitle.value = ''; modalDesc.value = '';
+    document.getElementById('pinModalSave').onclick = defaultModalSave;
     pinModal.style.display = 'flex';
     setTimeout(function(){ modalTitle.focus(); }, 50);
 }
 function closeModal() { pinModal.style.display = 'none'; }
 
 function editPin(pin) {
-    pendingCX = pin.cx; pendingCY = pin.cy;
+    pendingX = pin.x; pendingY = pin.y;
     modalTitle.value = pin.title;
     modalDesc.value  = pin.desc || '';
-    pinModal.style.display = 'flex';
     document.getElementById('pinModalSave').onclick = function(){
         var title = modalTitle.value.trim();
         if (!title){ modalTitle.focus(); return; }
         pin.title = title; pin.desc = modalDesc.value.trim();
         closeModal(); renderEditor();
-        // restore default save handler
-        document.getElementById('pinModalSave').onclick = null;
-        document.getElementById('pinModalSave').addEventListener('click', defaultModalSave);
+        document.getElementById('pinModalSave').onclick = defaultModalSave;
     };
+    pinModal.style.display = 'flex';
+    setTimeout(function(){ modalTitle.focus(); }, 50);
 }
 
 function defaultModalSave() {
@@ -1648,10 +1654,10 @@ function defaultModalSave() {
     if (!title){ modalTitle.focus(); return; }
     var list = pins[currentMapId];
     var id   = list.length ? Math.max.apply(null, list.map(function(p){return p.id;})) + 1 : 1;
-    list.push({ id:id, cx:pendingCX, cy:pendingCY, title:title, desc:modalDesc.value.trim() });
+    // Store in unified % format
+    list.push({ id:id, x:pendingX, y:pendingY, title:title, desc:modalDesc.value.trim() });
     closeModal(); renderEditor();
 }
-document.getElementById('pinModalSave').addEventListener('click', defaultModalSave);
 
 // ── GitHub save ───────────────────────────────────────────
 async function savePins() {
@@ -1678,6 +1684,12 @@ async function savePins() {
 }
 
 // ── Load pins from GitHub ─────────────────────────────────
+function normalizePin(p) {
+    var x = p.x !== undefined ? p.x : (p.pct ? p.pct.x : 50);
+    var y = p.y !== undefined ? p.y : (p.pct ? p.pct.y : 50);
+    return { id: p.id||p.n||1, x: parseFloat(x)||0, y: parseFloat(y)||0, title: p.title||p.t||'', desc: p.desc||p.d||'' };
+}
+
 function loadAllPins() {
     ['1944','1943'].forEach(function(key){
         var file = MAPS_CONFIG[key].file;
@@ -1685,7 +1697,7 @@ function loadAllPins() {
             .then(function(r){ return r.ok ? r.json() : []; })
             .then(function(data){
                 if (Array.isArray(data) && data.length) {
-                    pins[key] = data;
+                    pins[key] = data.map(normalizePin);
                     if (key === currentMapId) renderEditor();
                 }
             })
@@ -1699,17 +1711,24 @@ function showEdStatus(msg, type) {
     edStatus.style.display = 'block';
 }
 
-// Start
+// Start — wait for image to load before first render
 document.addEventListener('DOMContentLoaded', function(){
-    // Only init after login (adminContent visible)
     var observer = new MutationObserver(function(muts){
         muts.forEach(function(m){
             if (m.target.id==='adminContent' && m.target.style.display!=='none') {
-                init(); observer.disconnect();
+                // Wait for image to load for correct positioning
+                if (editorImg.complete) { init(); }
+                else { editorImg.addEventListener('load', init, {once:true}); }
+                observer.disconnect();
             }
         });
     });
     observer.observe(document.getElementById('adminContent'), { attributes:true, attributeFilter:['style'] });
+
+    // Also re-render on resize for correct pin placement
+    window.addEventListener('resize', function(){
+        if (pins[currentMapId]) renderEditor();
+    });
 });
 
 })();

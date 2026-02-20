@@ -202,20 +202,19 @@
     .ABT::before{content:'';display:inline-block;width:4px;height:22px;background:#c9a227;border-radius:2px;flex-shrink:0;}
     .AG{display:grid;grid-template-columns:1fr 248px;gap:1.5rem;align-items:start;}
     @media(max-width:820px){.AG{grid-template-columns:1fr;}}
-    /* Map container: fixed height, clips image */
+    /* Map container: auto height based on image, no cropping */
     .MBOX{position:relative;border-radius:12px;overflow:hidden;
           box-shadow:0 4px 12px rgba(0,0,0,.08),0 16px 40px rgba(0,0,0,.13);
           border:1px solid rgba(201,162,39,.12);background:#0a0a0a;
-          height:520px;cursor:grab;touch-action:none;}
+          cursor:grab;touch-action:none;line-height:0;}
     .MBOX:active{cursor:grabbing;}
-    @media(max-width:600px){.MBOX{height:320px;}}
-    /* image: fills container, transforms for zoom/pan */
-    .MIMG{position:absolute;top:0;left:0;width:100%;height:100%;
-          object-fit:cover;filter:sepia(.07) contrast(1.05);
+    /* image: natural size with contain, expands box height */
+    .MIMG{display:block;width:100%;height:auto;
+          filter:sepia(.07) contrast(1.05);
           transform-origin:center center;
           pointer-events:none;user-select:none;}
-    /* pin layer: sits on top, NOT transformed */
-    .MLAY{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;}
+    /* pin layer: sits on top of image, absolute */
+    .MLAY{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:visible;}
     /* pins */
     .PIN{position:absolute;pointer-events:all;cursor:pointer;
          transform:translate(-50%,-50%);}
@@ -386,19 +385,9 @@
     <script>
     document.addEventListener('DOMContentLoaded', function() {
 
-      // ── PIN DATA (x,y = % of image width/height) ──────────────
+      // ── PIN DATA (x,y = % of image width/height, loaded from GitHub) ──
       var DATA = {
-        '44': [
-          {n:1, x:54, y:64, t:'Давнє городище',           d:"Колись тут стояв замок Дубровицьких князів, зруйнований татарами у XIII ст."},
-          {n:2, x:55, y:77, t:'Святомиколаївська церква',  d:"Православна церква Святого Миколая — одна з найстаріших парафій Дубровиці."},
-          {n:3, x:60, y:50, t:'Костел Іоанна Хрестителя', d:"Збудований у 1695–1702 рр. орденом піярів. Унікальна пам'ятка барокової архітектури Полісся."},
-          {n:4, x:44, y:31, t:"Кам'яна церква",           d:"Мурована православна церква — помітний орієнтир у тогочасній забудові міста."},
-          {n:5, x:45, y:63, t:'Синагога',                  d:"Єврейська громада була значною частиною Дубровиці аж до Голокосту 1942 року."},
-          {n:6, x:88, y:59, t:'Нове русло Горині',         d:"Сьогодні тут протікає основне русло річки Горинь — воно змінилося після 1944 р."},
-          {n:7, x:77, y:56, t:'Стара Горинь (1944)',       d:"На момент зйомки — повноцінне русло річки Горинь, яке пізніше обміліло."},
-          {n:8, x:33, y:12, t:'Єврейське кладовище',       d:"Старе єврейське кладовище на північній околиці — пам'ятник трагічній долі громади."},
-          {n:9, x:50, y:53, t:'Центральна площа',          d:"Ринкова площа — серце міського життя Дубровиці протягом багатьох століть."}
-        ],
+        '44': [],
         '43': []
       };
 
@@ -496,8 +485,8 @@
 
       function clamp(mid) {
         var s = ST[mid];
-        var box = document.getElementById('M'+mid);
-        var w = box.offsetWidth, h = box.offsetHeight;
+        var img = document.getElementById('I'+mid);
+        var w = img.offsetWidth || 0, h = img.offsetHeight || 0;
         var maxOx = w/2 * (s.sc - 1);
         var maxOy = h/2 * (s.sc - 1);
         s.ox = Math.max(-maxOx, Math.min(maxOx, s.ox));
@@ -512,13 +501,15 @@
         updatePinPositions(mid);
       }
 
-      // Pins: their "base" position is (x%*w, y%*h) relative to box.
+      // Pins: their "base" position is (x%*w, y%*h) relative to image rendered area.
       // After transform: center=(w/2,h/2), so transformed pos =
       //   center + (base - center) * sc + offset
       function updatePinPositions(mid) {
         var s = ST[mid];
-        var box = document.getElementById('M'+mid);
-        var w = box.offsetWidth, h = box.offsetHeight;
+        var img = document.getElementById('I'+mid);
+        // Use actual rendered image dimensions (image expands box height)
+        var w = img.offsetWidth, h = img.offsetHeight;
+        if (!w || !h) return;
         var cx = w/2, cy = h/2;
         DATA[mid].forEach(function(p) {
           var pin = document.getElementById('PIN_'+mid+'_'+p.n);
@@ -530,22 +521,21 @@
           pin.style.left = nx + 'px';
           pin.style.top  = ny + 'px';
           // hide if out of bounds
-          pin.style.opacity = (nx>-15&&nx<w+15&&ny>-15&&ny<h+15) ? '1' : '0';
-          pin.style.pointerEvents = (nx>-15&&nx<w+15&&ny>-15&&ny<h+15) ? 'all' : 'none';
+          var vis = (nx>-15&&nx<w+15&&ny>-15&&ny<h+15);
+          pin.style.opacity = vis ? '1' : '0';
+          pin.style.pointerEvents = vis ? 'all' : 'none';
         });
       }
 
       function doZoom(mid, delta, pivotX, pivotY) {
         var s = ST[mid];
-        var box = document.getElementById('M'+mid);
-        var w = box.offsetWidth, h = box.offsetHeight;
+        var img = document.getElementById('I'+mid);
+        var w = img.offsetWidth || 0, h = img.offsetHeight || 0;
         var oldSc = s.sc;
         s.sc = Math.min(6, Math.max(1, s.sc + delta));
         if (s.sc === oldSc) return;
-        // zoom toward pivot point (in box coordinates)
         var px = (pivotX !== undefined) ? pivotX : w/2;
         var py = (pivotY !== undefined) ? pivotY : h/2;
-        // pivot relative to center
         var rx = px - w/2;
         var ry = py - h/2;
         s.ox = rx - (rx - s.ox) * (s.sc / oldSc);
@@ -595,14 +585,14 @@
           if (!dragging) return;
           ST[mid].ox = e.clientX - startX;
           ST[mid].oy = e.clientY - startY;
-          clamp(mid);
-          applyTransform(mid, false);
+          clamp(mid); applyTransform(mid, false);
         });
         document.addEventListener('mouseup', function() { dragging = false; });
 
         box.addEventListener('wheel', function(e) {
           e.preventDefault();
-          var rect = box.getBoundingClientRect();
+          var img = document.getElementById('I'+mid);
+          var rect = img.getBoundingClientRect();
           var px = e.clientX - rect.left;
           var py = e.clientY - rect.top;
           doZoom(mid, e.deltaY < 0 ? 0.4 : -0.4, px, py);
@@ -658,37 +648,42 @@
         }
       });
 
-      // ── LOAD 1943 pins from GitHub ─────────────────────────────
-      fetch('https://raw.githubusercontent.com/jerkinsmichael13-stack/Dubrovytsia1/main/aerial_pins_1943.json?v=' + Date.now())
-        .then(function(r) { return r.ok ? r.json() : []; })
-        .then(function(data) {
-          if (!Array.isArray(data) || !data.length) {
-            document.getElementById('L43').innerHTML =
-              '<li style="font-size:.72rem;color:#a09080;font-family:\'DM Sans\',sans-serif;padding:.4rem .25rem">Позначень ще немає</li>';
-            return;
-          }
-          DATA['43'] = data.map(function(p) {
-            var px = p.pct ? p.pct.x : (p.x !== undefined ? p.x : p.cx/12);
-            var py = p.pct ? p.pct.y : (p.y !== undefined ? p.y : p.cy/12);
-            return {n: p.id||p.n, x: px, y: py, t: p.title||p.t, d: p.desc||p.d||''};
-          });
-          buildPins('43');
-          buildLegend('43');
-        })
-        .catch(function() {
-          document.getElementById('L43').innerHTML =
-            '<li style="font-size:.72rem;color:#a09080;font-family:\'DM Sans\',sans-serif;padding:.4rem .25rem">Помилка завантаження</li>';
-        });
+      // ── LOAD PINS FROM GITHUB ──────────────────────────────────
+      // Unified pin format: {id, x, y, title, desc} where x,y are 0-100 percentages
+      function normalizePin(p) {
+        // Support both {x,y} percent and {cx,cy} SVG-coord formats
+        var x = p.x !== undefined ? p.x : (p.pct ? p.pct.x : undefined);
+        var y = p.y !== undefined ? p.y : (p.pct ? p.pct.y : undefined);
+        return {
+          n: p.id || p.n,
+          x: parseFloat(x),
+          y: parseFloat(y),
+          t: p.title || p.t || '',
+          d: p.desc  || p.d || ''
+        };
+      }
 
-      // ── INIT ───────────────────────────────────────────────────
-      buildPins('44');
-      buildLegend('44');
-      // updatePinPositions called inside buildPins after DOM insert — but we need box size
-      // Use a short timeout to ensure layout is done
-      setTimeout(function() {
-        updatePinPositions('44');
-        updatePinPositions('43');
-      }, 50);
+      function loadMap(mid, file, legId) {
+        var leg = document.getElementById(legId);
+        fetch('https://raw.githubusercontent.com/jerkinsmichael13-stack/Dubrovytsia1/main/' + file + '?v=' + Date.now())
+          .then(function(r) { return r.ok ? r.json() : []; })
+          .then(function(data) {
+            if (!Array.isArray(data) || !data.length) {
+              if (leg) leg.innerHTML = '<li style="font-size:.72rem;color:#a09080;font-family:\'DM Sans\',sans-serif;padding:.4rem .25rem">Позначень ще немає</li>';
+              return;
+            }
+            DATA[mid] = data.map(normalizePin).filter(function(p){ return !isNaN(p.x) && !isNaN(p.y); });
+            buildPins(mid);
+            buildLegend(mid);
+            setTimeout(function(){ updatePinPositions(mid); }, 30);
+          })
+          .catch(function() {
+            if (leg) leg.innerHTML = '<li style="font-size:.72rem;color:#a09080;font-family:\'DM Sans\',sans-serif;padding:.4rem .25rem">Помилка завантаження</li>';
+          });
+      }
+
+      loadMap('44', 'aerial_pins_1944.json', 'L44');
+      loadMap('43', 'aerial_pins_1943.json', 'L43');
 
       // Also update on window resize
       window.addEventListener('resize', function() {
