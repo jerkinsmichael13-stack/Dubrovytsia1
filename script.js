@@ -515,3 +515,197 @@ function initHeroParticles() {
 }
 
 
+
+// ================================================
+// AERIAL INTERACTIVE MAP
+// ================================================
+function initAerialMap() {
+    const container = document.getElementById('aerialMap');
+    if (!container) return;
+
+    const photo = document.getElementById('aerialPhoto');
+    const zoomInBtn = document.getElementById('zoomIn');
+    const zoomOutBtn = document.getElementById('zoomOut');
+    const resetBtn = document.getElementById('resetView');
+
+    let scale = 1;
+    let originX = 0, originY = 0;
+    let isDragging = false;
+    let startX, startY, lastX = 0, lastY = 0;
+
+    const MIN_SCALE = 1, MAX_SCALE = 4;
+
+    function applyTransform(animate = false) {
+        const rect = container.getBoundingClientRect();
+        const maxX = (rect.width * (scale - 1)) / 2;
+        const maxY = (rect.height * (scale - 1)) / 2;
+        originX = Math.min(maxX, Math.max(-maxX, originX));
+        originY = Math.min(maxY, Math.max(-maxY, originY));
+
+        const t = `translate(${originX}px, ${originY}px) scale(${scale})`;
+        photo.style.transition = animate ? 'transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94)' : '';
+        photo.style.transform = t;
+
+        // Also move markers with the same transform
+        document.querySelectorAll('.aerial-marker').forEach(m => {
+            m.style.transition = animate ? 'transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94)' : '';
+        });
+    }
+
+    // Zoom
+    function zoom(delta, cx, cy) {
+        const rect = container.getBoundingClientRect();
+        const oldScale = scale;
+        scale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, scale + delta));
+        if (scale === oldScale) return;
+
+        // Zoom toward cursor
+        const mouseX = (cx || rect.left + rect.width / 2) - rect.left - rect.width / 2;
+        const mouseY = (cy || rect.top + rect.height / 2) - rect.top - rect.height / 2;
+        originX += mouseX * (1 - scale / oldScale);
+        originY += mouseY * (1 - scale / oldScale);
+        applyTransform(true);
+    }
+
+    zoomInBtn.addEventListener('click', () => zoom(0.5));
+    zoomOutBtn.addEventListener('click', () => zoom(-0.5));
+    resetBtn.addEventListener('click', () => {
+        scale = 1; originX = 0; originY = 0;
+        applyTransform(true);
+        document.querySelectorAll('.aerial-marker').forEach(m => m.classList.remove('active'));
+        document.querySelectorAll('.legend-item').forEach(l => l.classList.remove('active'));
+    });
+
+    // Wheel zoom
+    container.addEventListener('wheel', e => {
+        e.preventDefault();
+        zoom(e.deltaY < 0 ? 0.3 : -0.3, e.clientX, e.clientY);
+    }, { passive: false });
+
+    // Drag to pan
+    container.addEventListener('mousedown', e => {
+        if (e.button !== 0) return;
+        isDragging = true;
+        startX = e.clientX - lastX;
+        startY = e.clientY - lastY;
+        container.style.cursor = 'grabbing';
+    });
+
+    document.addEventListener('mousemove', e => {
+        if (!isDragging) return;
+        lastX = e.clientX - startX;
+        lastY = e.clientY - startY;
+        originX = lastX;
+        originY = lastY;
+        applyTransform();
+    });
+
+    document.addEventListener('mouseup', () => {
+        isDragging = false;
+        lastX = originX;
+        lastY = originY;
+        container.style.cursor = 'grab';
+    });
+
+    // Touch support
+    let lastTouchDist = 0;
+    container.addEventListener('touchstart', e => {
+        if (e.touches.length === 1) {
+            isDragging = true;
+            startX = e.touches[0].clientX - lastX;
+            startY = e.touches[0].clientY - lastY;
+        } else if (e.touches.length === 2) {
+            isDragging = false;
+            lastTouchDist = Math.hypot(
+                e.touches[0].clientX - e.touches[1].clientX,
+                e.touches[0].clientY - e.touches[1].clientY
+            );
+        }
+    }, { passive: true });
+
+    container.addEventListener('touchmove', e => {
+        e.preventDefault();
+        if (e.touches.length === 1 && isDragging) {
+            lastX = e.touches[0].clientX - startX;
+            lastY = e.touches[0].clientY - startY;
+            originX = lastX;
+            originY = lastY;
+            applyTransform();
+        } else if (e.touches.length === 2) {
+            const d = Math.hypot(
+                e.touches[0].clientX - e.touches[1].clientX,
+                e.touches[0].clientY - e.touches[1].clientY
+            );
+            zoom((d - lastTouchDist) * 0.01);
+            lastTouchDist = d;
+        }
+    }, { passive: false });
+
+    container.addEventListener('touchend', () => {
+        isDragging = false;
+        lastX = originX;
+        lastY = originY;
+    });
+
+    // Marker + legend interactivity
+    const markers = document.querySelectorAll('.aerial-marker');
+    const legendItems = document.querySelectorAll('.legend-item');
+
+    function activateMarker(id, fromLegend = false) {
+        markers.forEach(m => m.classList.remove('active'));
+        legendItems.forEach(l => l.classList.remove('active'));
+
+        const marker = document.querySelector(`.aerial-marker[data-id="${id}"]`);
+        const legend = document.querySelector(`.legend-item[data-target="${id}"]`);
+        if (marker) marker.classList.add('active');
+        if (legend) legend.classList.add('active');
+
+        // Pan to marker when clicking from legend
+        if (fromLegend && marker) {
+            const rect = container.getBoundingClientRect();
+            const mLeft = parseFloat(marker.style.left) / 100;
+            const mTop = parseFloat(marker.style.top) / 100;
+            const targetX = (0.5 - mLeft) * rect.width * scale;
+            const targetY = (0.5 - mTop) * rect.height * scale;
+            originX = targetX;
+            originY = targetY;
+            lastX = originX;
+            lastY = originY;
+            if (scale < 1.6) { scale = 1.8; }
+            applyTransform(true);
+        }
+    }
+
+    markers.forEach(m => {
+        m.addEventListener('click', e => {
+            e.stopPropagation();
+            const id = m.dataset.id;
+            if (m.classList.contains('active')) {
+                m.classList.remove('active');
+                document.querySelectorAll('.legend-item').forEach(l => l.classList.remove('active'));
+            } else {
+                activateMarker(id, false);
+            }
+        });
+    });
+
+    legendItems.forEach(item => {
+        item.addEventListener('click', () => {
+            const id = item.dataset.target;
+            activateMarker(id, true);
+        });
+    });
+
+    // Close on click outside
+    container.addEventListener('click', e => {
+        if (!e.target.closest('.aerial-marker')) {
+            markers.forEach(m => m.classList.remove('active'));
+            legendItems.forEach(l => l.classList.remove('active'));
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    if (document.getElementById('aerialMap')) initAerialMap();
+});
+

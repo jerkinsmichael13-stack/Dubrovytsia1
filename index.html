@@ -184,6 +184,185 @@
         </div>
     </section>
 
+    <!-- Aerial Map Section -->
+    <section class="aerial-section">
+        <div class="container">
+            <h2 class="section-title fade-in-up">Аерофотознімок 1944 року</h2>
+            <p class="aerial-subtitle fade-in-up delay-1">Дубровиця, 24 січня 1944 — інтерактивна карта міста</p>
+            <div class="aerial-wrapper fade-in-up delay-2">
+                <div class="aerial-map-container" id="aerialMap">
+                    <img src="https://i.imgur.com/dyP4WgZ.jpeg" alt="Аерофотознімок Дубровиці 1944 року" class="aerial-photo" id="aerialPhoto" draggable="false">
+
+                    <!-- Markers -->
+                    <div class="aerial-marker" data-id="1" style="left:56.5%;top:63%;">
+                        <div class="marker-pulse"></div>
+                        <div class="marker-dot">1</div>
+                        <div class="marker-tooltip marker-tooltip--left">
+                            <div class="tooltip-num">1</div>
+                            <div class="tooltip-body">
+                                <strong>Давнє городище</strong>
+                                <span>Колись тут стояв замок Дубровицьких князів, зруйнований татарами у XIII ст.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="aerial-marker" data-id="2" style="left:57.5%;top:76%;">
+                        <div class="marker-pulse"></div>
+                        <div class="marker-dot">2</div>
+                        <div class="marker-tooltip marker-tooltip--left">
+                            <div class="tooltip-num">2</div>
+                            <div class="tooltip-body">
+                                <strong>Святомиколаївська церква</strong>
+                                <span>Православна церква Святого Миколая — одна з найстаріших парафій Дубровиці.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="aerial-marker" data-id="3" style="left:62%;top:50%;">
+                        <div class="marker-pulse"></div>
+                        <div class="marker-dot">3</div>
+                        <div class="marker-tooltip marker-tooltip--left">
+                            <div class="tooltip-num">3</div>
+                            <div class="tooltip-body">
+                                <strong>Костел Іоанна Хрестителя</strong>
+                                <span>Збудований у 1695–1702 рр. орденом піярів. Унікальна пам'ятка барокової архітектури Полісся.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="aerial-marker" data-id="4" style="left:43%;top:29%;">
+                        <div class="marker-pulse"></div>
+                        <div class="marker-dot">4</div>
+                        <div class="marker-tooltip marker-tooltip--right">
+                            <div class="tooltip-num">4</div>
+                            <div class="tooltip-body">
+                                <strong>Кам'яна церква</strong>
+                                <span>Мурована православна церква — помітний орієнтир у тогочасній забудові міста.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="aerial-marker" data-id="5" style="left:46%;top:66%;">
+                        <div class="marker-pulse"></div>
+                        <div class="marker-dot">5</div>
+                        <div class="marker-tooltip marker-tooltip--right">
+                            <div class="tooltip-num">5</div>
+                            <div class="tooltip-body">
+                                <strong>Синагога</strong>
+                                <span>Єврейська громада була значною частиною Дубровиці аж до Голокосту 1942 року.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="aerial-marker" data-id="6" style="left:87%;top:60%;">
+                        <div class="marker-pulse"></div>
+                        <div class="marker-dot">6</div>
+                        <div class="marker-tooltip marker-tooltip--left">
+                            <div class="tooltip-num">6</div>
+                            <div class="tooltip-body">
+                                <strong>Нове русло Горині</strong>
+                                <span>Сьогодні тут протікає основне русло річки Горинь — воно змінилося після 1944 р.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="aerial-marker" data-id="7" style="left:76%;top:57%;">
+                        <div class="marker-pulse"></div>
+                        <div class="marker-dot">7</div>
+                        <div class="marker-tooltip marker-tooltip--left">
+                            <div class="tooltip-num">7</div>
+                            <div class="tooltip-body">
+                                <strong>Стара Горинь</strong>
+                                <span>На момент зйомки — повноцінне русло річки Горинь, яке пізніше обміліло.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="aerial-marker" data-id="8" style="left:31%;top:10%;">
+                        <div class="marker-pulse"></div>
+                        <div class="marker-dot">8</div>
+                        <div class="marker-tooltip marker-tooltip--right">
+                            <div class="tooltip-num">8</div>
+                            <div class="tooltip-body">
+                                <strong>Єврейське кладовище</strong>
+                                <span>Старе єврейське кладовище на північній околиці міста — пам'ятник трагічній долі громади.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="aerial-marker" data-id="9" style="left:48%;top:55%;">
+                        <div class="marker-pulse"></div>
+                        <div class="marker-dot">9</div>
+                        <div class="marker-tooltip marker-tooltip--right">
+                            <div class="tooltip-num">9</div>
+                            <div class="tooltip-body">
+                                <strong>Центральна площа</strong>
+                                <span>Ринкова площа — серце міського життя Дубровиці протягом багатьох століть.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Zoom controls -->
+                    <div class="aerial-controls">
+                        <button class="aerial-ctrl-btn" id="zoomIn" aria-label="Збільшити">+</button>
+                        <button class="aerial-ctrl-btn" id="zoomOut" aria-label="Зменшити">−</button>
+                        <button class="aerial-ctrl-btn" id="resetView" aria-label="Скинути" title="Скинути вигляд">⌂</button>
+                    </div>
+
+                    <!-- Date badge -->
+                    <div class="aerial-date-badge">
+                        <span class="badge-label">Аерофотознімок</span>
+                        <span class="badge-date">24 · I · 1944</span>
+                    </div>
+                </div>
+
+                <!-- Legend -->
+                <div class="aerial-legend">
+                    <h4 class="legend-title">Позначення</h4>
+                    <ul class="legend-list">
+                        <li class="legend-item" data-target="1">
+                            <span class="legend-num">1</span>
+                            <span class="legend-text">Давнє городище (замок)</span>
+                        </li>
+                        <li class="legend-item" data-target="2">
+                            <span class="legend-num">2</span>
+                            <span class="legend-text">Святомиколаївська церква</span>
+                        </li>
+                        <li class="legend-item" data-target="3">
+                            <span class="legend-num">3</span>
+                            <span class="legend-text">Костел Іоанна Хрестителя</span>
+                        </li>
+                        <li class="legend-item" data-target="4">
+                            <span class="legend-num">4</span>
+                            <span class="legend-text">Кам'яна церква</span>
+                        </li>
+                        <li class="legend-item" data-target="5">
+                            <span class="legend-num">5</span>
+                            <span class="legend-text">Синагога</span>
+                        </li>
+                        <li class="legend-item" data-target="6">
+                            <span class="legend-num">6</span>
+                            <span class="legend-text">Нове русло Горині</span>
+                        </li>
+                        <li class="legend-item" data-target="7">
+                            <span class="legend-num">7</span>
+                            <span class="legend-text">Стара Горинь (1944)</span>
+                        </li>
+                        <li class="legend-item" data-target="8">
+                            <span class="legend-num">8</span>
+                            <span class="legend-text">Єврейське кладовище</span>
+                        </li>
+                        <li class="legend-item" data-target="9">
+                            <span class="legend-num">9</span>
+                            <span class="legend-text">Центральна площа</span>
+                        </li>
+                    </ul>
+                    <p class="legend-hint">Натисніть на позначення або номер у легенді, щоб дізнатися більше</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Timeline Preview -->
     <section class="timeline-section">
         <div class="container">
