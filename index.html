@@ -184,306 +184,465 @@
         </div>
     </section>
 
-    <!-- ═══ AERIAL INTERACTIVE MAP — self-contained ═══ -->
-    <section id="aerialSection" style="padding:5rem 0;background:#faf7f2;border-top:1px solid #ede7db;border-bottom:1px solid #ede7db;">
-        <style>
-        [data-theme="dark"] #aerialSection { background:#0e0c0a!important; border-color:#2a2520!important; }
-        [data-theme="dark"] #aerialSection .aer-legend-box { background:#1a1712!important;border-color:#2a2520!important; }
-        [data-theme="dark"] #aerialSection .aer-legend-title { color:#f0e6c8!important; border-color:#2a2520!important; }
-        [data-theme="dark"] #aerialSection .aer-leg-item { color:#a89880!important; }
-        [data-theme="dark"] #aerialSection .aer-leg-item:hover { background:rgba(255,255,255,0.05)!important; }
-        [data-theme="dark"] #aerialSection .aer-sec-title { color:#f0e6c8!important; }
-        [data-theme="dark"] #aerialSection .aer-subtitle { color:#6b5e4e!important; }
-        [data-theme="dark"] #aerialSection .aer-hint { color:#5a4e40!important; border-color:#2a2520!important; }
+    <!-- ═══ AERIAL INTERACTIVE MAP v3 ═══ -->
+    <section id="aerialSection">
+    <style>
+    #aerialSection {
+        padding: 5rem 0;
+        background: #faf7f2;
+        border-top: 1px solid #e8e0d4;
+        border-bottom: 1px solid #e8e0d4;
+        position: relative;
+    }
+    [data-theme="dark"] #aerialSection { background:#0e0c0a; border-color:#1e1b18; }
+    #aerialSection *, #aerialSection *::before, #aerialSection *::after { box-sizing:border-box; }
 
-        #aerialSection * { box-sizing:border-box; }
-        #aerialSection .aer-container { max-width:1200px;margin:0 auto;padding:0 2rem; }
-        #aerialSection .aer-sec-title {
-            font-family:'Cormorant Garamond',Georgia,serif;
-            font-size:clamp(1.8rem,3vw,2.5rem);
-            font-weight:600;
-            color:#1c1917;
-            text-align:center;
-            margin:0 0 0.4rem;
-        }
-        #aerialSection .aer-sec-title::after {
-            content:'';display:block;width:50px;height:2px;
-            background:#c9a227;margin:0.7rem auto 0;
-        }
-        #aerialSection .aer-subtitle {
-            text-align:center;font-family:'DM Sans',sans-serif;
-            font-size:0.85rem;letter-spacing:0.1em;text-transform:uppercase;
-            color:#78716c;margin:0 0 2.5rem;
-        }
-        #aerialSection .aer-layout {
-            display:grid;grid-template-columns:1fr 270px;gap:2rem;align-items:start;
-        }
-        @media(max-width:800px){
-            #aerialSection .aer-layout{grid-template-columns:1fr;}
-        }
+    /* ── CONTAINER ── */
+    .aer-wrap { max-width:1160px; margin:0 auto; padding:0 2rem; }
 
-        /* MAP */
-        #aerialMapWrap {
-            position:relative;border-radius:12px;overflow:hidden;
-            box-shadow:0 20px 60px rgba(0,0,0,0.25);
-            background:#111;line-height:0;
-        }
-        #aerialMapWrap img.aer-photo {
-            width:100%;height:auto;display:block;
-            filter:sepia(0.1) contrast(1.05);
-        }
-        /* SVG overlay fills the photo exactly */
-        #aerialMapWrap svg.aer-svg {
-            position:absolute;top:0;left:0;width:100%;height:100%;
-            overflow:visible;
-        }
+    /* ── HEADER ── */
+    .aer-head { text-align:center; margin-bottom:2.5rem; }
+    .aer-title {
+        font-family:'Cormorant Garamond',Georgia,serif;
+        font-size:clamp(1.9rem,3.2vw,2.6rem);
+        font-weight:500; color:#1c1917; margin:0 0 0.5rem;
+        letter-spacing:0.01em;
+    }
+    [data-theme="dark"] .aer-title { color:#f0e6c8; }
+    .aer-title-line {
+        display:block; width:44px; height:2px;
+        background:linear-gradient(90deg,#c9a227,#e0bd5a);
+        margin:0.6rem auto 0; border-radius:2px;
+    }
+    .aer-sub {
+        font-family:'DM Sans',sans-serif; font-size:0.78rem;
+        letter-spacing:0.13em; text-transform:uppercase;
+        color:#a09080; margin:0.6rem 0 0;
+    }
 
-        /* date badge */
-        #aerialMapWrap .aer-badge {
-            position:absolute;top:12px;right:12px;
-            background:rgba(10,8,5,0.80);backdrop-filter:blur(8px);
-            border:1px solid rgba(201,162,39,0.35);border-radius:8px;
-            padding:5px 12px;line-height:1;
-        }
-        #aerialMapWrap .aer-badge span { display:block; }
-        #aerialMapWrap .aer-badge .b-lbl { font-family:'DM Sans',sans-serif;font-size:0.55rem;text-transform:uppercase;letter-spacing:0.12em;color:#7a6a4e; }
-        #aerialMapWrap .aer-badge .b-date { font-family:'Cormorant Garamond',serif;font-size:0.95rem;color:#c9a227;letter-spacing:0.06em; }
+    /* ── GRID ── */
+    .aer-grid {
+        display:grid;
+        grid-template-columns:1fr 260px;
+        gap:1.8rem; align-items:start;
+    }
+    @media(max-width:820px){ .aer-grid{grid-template-columns:1fr;} }
 
-        /* SVG marker circles */
-        .aer-m-ring { fill:none;stroke:rgba(201,162,39,0.3);stroke-width:1.5; animation:aerPulse 2.5s ease-out infinite; transform-box:fill-box;transform-origin:center; }
-        .aer-m-circle { fill:#c9a227;stroke:#fff;stroke-width:1.5;cursor:pointer;transition:r 0.15s; }
-        .aer-m-circle:hover, .aer-m-circle.active { fill:#f0c840;r:11; }
-        .aer-m-text { font-family:'DM Sans',sans-serif;font-size:9px;font-weight:800;fill:#1a1000;text-anchor:middle;dominant-baseline:central;pointer-events:none;user-select:none; }
-        @keyframes aerPulse { 0%{r:10;opacity:0.7} 70%{r:24;opacity:0} 100%{r:10;opacity:0} }
+    /* ── MAP WRAP ── */
+    .aer-map {
+        position:relative; border-radius:14px;
+        overflow:hidden;
+        box-shadow:0 4px 6px rgba(0,0,0,.04),
+                   0 10px 28px rgba(0,0,0,.10),
+                   0 24px 56px rgba(0,0,0,.10);
+        background:#0a0a0a; line-height:0;
+        border:1px solid rgba(201,162,39,0.15);
+    }
+    .aer-img {
+        width:100%; height:auto; display:block;
+        filter:sepia(0.08) contrast(1.06) brightness(0.97);
+        pointer-events:none; user-select:none;
+    }
+    .aer-svg {
+        position:absolute; top:0; left:0;
+        width:100%; height:100%;
+    }
 
-        /* Tooltip popup (absolutely positioned, managed by JS) */
-        #aerTooltip {
-            position:fixed;z-index:9999;
-            background:rgba(10,8,5,0.93);backdrop-filter:blur(14px);
-            border:1px solid rgba(201,162,39,0.35);border-radius:10px;
-            padding:11px 14px;width:230px;pointer-events:none;
-            opacity:0;transition:opacity 0.15s;
-            box-shadow:0 8px 32px rgba(0,0,0,0.5);
-        }
-        #aerTooltip.show { opacity:1; }
-        #aerTooltip .tt-num { display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#c9a227;color:#1a1000;font-size:0.6rem;font-weight:800;font-family:'DM Sans',sans-serif;margin-bottom:5px; }
-        #aerTooltip .tt-title { font-family:'Cormorant Garamond',serif;font-size:0.95rem;font-weight:600;color:#f0e6c8;display:block;margin-bottom:4px;line-height:1.2; }
-        #aerTooltip .tt-desc { font-family:'DM Sans',sans-serif;font-size:0.68rem;color:#9e9080;line-height:1.5; }
+    /* ── DATE BADGE ── */
+    .aer-badge {
+        position:absolute; top:13px; right:13px;
+        background:rgba(8,6,4,0.82);
+        backdrop-filter:blur(10px);
+        border:1px solid rgba(201,162,39,0.28);
+        border-radius:9px; padding:6px 13px;
+        pointer-events:none;
+    }
+    .aer-badge-lbl {
+        display:block; font-family:'DM Sans',sans-serif;
+        font-size:0.5rem; letter-spacing:0.18em;
+        text-transform:uppercase; color:#6b5a3e;
+    }
+    .aer-badge-date {
+        display:block; font-family:'Cormorant Garamond',serif;
+        font-size:0.98rem; color:#c9a227;
+        letter-spacing:0.07em; font-weight:500;
+    }
 
-        /* LEGEND */
-        #aerialSection .aer-legend-box {
-            background:#fff;border:1px solid #ddd5c8;border-radius:12px;
-            padding:1.3rem 1.2rem;position:sticky;top:90px;
-            box-shadow:0 4px 16px rgba(0,0,0,0.06);
-        }
-        #aerialSection .aer-legend-title {
-            font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;
-            color:#1c1917;margin:0 0 0.9rem;padding-bottom:0.7rem;
-            border-bottom:1px solid #ddd5c8;
-        }
-        #aerialSection .aer-leg-list { list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:4px; }
-        #aerialSection .aer-leg-item {
-            display:flex;align-items:center;gap:9px;padding:6px 8px;
-            border-radius:7px;cursor:pointer;transition:background 0.15s;
-            font-family:'DM Sans',sans-serif;font-size:0.75rem;color:#44403c;
-            border:1px solid transparent;
-        }
-        #aerialSection .aer-leg-item:hover { background:#f4efe7; }
-        #aerialSection .aer-leg-item.active { background:#f4efe7;border-color:#c9a227; }
-        #aerialSection .aer-leg-num {
-            min-width:22px;height:22px;border-radius:50%;background:#c9a227;
-            color:#1a1000;font-size:0.6rem;font-weight:800;font-family:'DM Sans',sans-serif;
-            display:flex;align-items:center;justify-content:center;flex-shrink:0;
-        }
-        #aerialSection .aer-hint {
-            margin-top:0.9rem;font-size:0.67rem;color:#a8a29e;font-family:'DM Sans',sans-serif;
-            line-height:1.5;font-style:italic;border-top:1px solid #ede7db;padding-top:0.7rem;
-        }
-        </style>
+    /* ── SVG MARKERS ── */
+    .aer-pin-ring {
+        fill:none; stroke:rgba(201,162,39,0.35); stroke-width:1.5;
+        transform-box:fill-box; transform-origin:center;
+        animation:aerRing 2.8s ease-out infinite;
+    }
+    @keyframes aerRing {
+        0%  { r:11; opacity:.7; }
+        65% { r:22; opacity:0; }
+        100%{ r:11; opacity:0; }
+    }
+    .aer-pin-circle {
+        fill:#c9a227; stroke:rgba(255,255,255,0.9); stroke-width:1.8;
+        cursor:pointer;
+        transition:fill .18s, r .18s;
+        filter:drop-shadow(0 2px 6px rgba(0,0,0,.5));
+    }
+    .aer-pin-circle:hover { fill:#f0c840; }
+    .aer-pin-circle.aer-active { fill:#f0c840; stroke:#fff; stroke-width:2.2; }
+    .aer-pin-label {
+        font-family:'DM Sans',sans-serif; font-size:9.5px;
+        font-weight:800; fill:#1a1000;
+        text-anchor:middle; dominant-baseline:central;
+        pointer-events:none; user-select:none;
+    }
+    .aer-marker-g { cursor:pointer; }
 
-        <div class="aer-container">
-            <h2 class="aer-sec-title">Аерофотознімок 1944 року</h2>
-            <p class="aer-subtitle">Дубровиця, 24 січня 1944 — інтерактивна карта міста</p>
+    /* ── TOOLTIP (inside map, bottom-aligned) ── */
+    #aerTT {
+        position:absolute;
+        background:rgba(8,6,4,0.93);
+        backdrop-filter:blur(14px);
+        border:1px solid rgba(201,162,39,0.32);
+        border-radius:10px;
+        padding:11px 14px 12px;
+        width:220px;
+        pointer-events:none;
+        opacity:0;
+        transform:translateY(4px);
+        transition:opacity .18s, transform .18s;
+        z-index:20;
+        box-shadow:0 8px 32px rgba(0,0,0,.55);
+    }
+    #aerTT.show { opacity:1; transform:translateY(0); }
+    .tt-row { display:flex; align-items:center; gap:8px; margin-bottom:5px; }
+    .tt-num {
+        flex-shrink:0; width:20px; height:20px; border-radius:50%;
+        background:#c9a227; color:#1a1000;
+        font-family:'DM Sans',sans-serif; font-size:0.6rem; font-weight:800;
+        display:flex; align-items:center; justify-content:center;
+    }
+    .tt-title {
+        font-family:'Cormorant Garamond',serif;
+        font-size:0.92rem; font-weight:600;
+        color:#f0e6c8; line-height:1.2;
+    }
+    .tt-desc {
+        font-family:'DM Sans',sans-serif;
+        font-size:0.68rem; color:#9e9080; line-height:1.55;
+        display:block; margin-top:1px;
+    }
+    .tt-close {
+        position:absolute; top:7px; right:9px;
+        width:18px; height:18px;
+        background:rgba(255,255,255,0.08);
+        border:none; border-radius:50%; cursor:pointer;
+        color:#7a6a5a; font-size:0.75rem; line-height:18px;
+        text-align:center; pointer-events:all;
+        display:flex; align-items:center; justify-content:center;
+        transition:background .15s, color .15s;
+    }
+    .tt-close:hover { background:rgba(255,255,255,0.18); color:#fff; }
 
-            <div class="aer-layout">
-                <!-- MAP CONTAINER -->
-                <div id="aerialMapWrap">
-                    <img class="aer-photo" src="https://i.imgur.com/dyP4WgZ.jpeg" alt="Аерофотознімок Дубровиці 1944" id="aerPhoto">
+    /* ── LEGEND ── */
+    .aer-legend {
+        background:#ffffff;
+        border:1px solid #e0d8cd;
+        border-radius:13px;
+        padding:1.3rem 1.1rem 1.1rem;
+        position:sticky; top:90px;
+        box-shadow:0 2px 4px rgba(0,0,0,.04),
+                   0 8px 20px rgba(0,0,0,.06);
+    }
+    [data-theme="dark"] .aer-legend { background:#161310; border-color:#2a2520; }
+    .aer-leg-head {
+        font-family:'Cormorant Garamond',serif;
+        font-size:1.05rem; font-weight:600;
+        color:#1c1917; margin:0 0 0.85rem;
+        padding-bottom:0.65rem;
+        border-bottom:1px solid #e0d8cd;
+    }
+    [data-theme="dark"] .aer-leg-head { color:#e0d4bc; border-color:#2a2520; }
+    .aer-leg-list { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:3px; }
+    .aer-leg-item {
+        display:flex; align-items:center; gap:9px;
+        padding:6px 9px; border-radius:7px;
+        cursor:pointer;
+        border:1px solid transparent;
+        transition:background .15s, border-color .15s;
+        font-family:'DM Sans',sans-serif;
+        font-size:0.74rem; color:#44403c;
+        user-select:none;
+    }
+    [data-theme="dark"] .aer-leg-item { color:#a09080; }
+    .aer-leg-item:hover { background:#f4efe7; }
+    [data-theme="dark"] .aer-leg-item:hover { background:rgba(255,255,255,0.05); }
+    .aer-leg-item.aer-active {
+        background:#fdf5e0;
+        border-color:rgba(201,162,39,0.5);
+    }
+    [data-theme="dark"] .aer-leg-item.aer-active { background:rgba(201,162,39,0.1); }
+    .aer-leg-num {
+        flex-shrink:0; width:22px; height:22px; border-radius:50%;
+        background:#c9a227; color:#1a1000;
+        font-family:'DM Sans',sans-serif; font-size:0.6rem; font-weight:800;
+        display:flex; align-items:center; justify-content:center;
+        transition:transform .15s;
+    }
+    .aer-leg-item:hover .aer-leg-num,
+    .aer-leg-item.aer-active .aer-leg-num { transform:scale(1.12); }
+    .aer-leg-hint {
+        margin-top:0.9rem; font-size:0.65rem; color:#b0a898;
+        font-family:'DM Sans',sans-serif; line-height:1.55;
+        font-style:italic; border-top:1px solid #e8e0d4;
+        padding-top:0.75rem;
+    }
+    [data-theme="dark"] .aer-leg-hint { color:#4e4540; border-color:#2a2520; }
+    </style>
 
-                    <!-- SVG markers overlay — viewBox matches natural image ratio 1200x951 -->
-                    <svg class="aer-svg" viewBox="0 0 1200 951" xmlns="http://www.w3.org/2000/svg" id="aerSVG">
-                        <!-- Marker 1 — Давнє городище: ~56.5% x, 63% y -->
-                        <g class="aer-marker-g" data-id="1" data-title="Давнє городище" data-desc="Колись тут стояв замок Дубровицьких князів, зруйнований татарами у XIII ст.">
-                            <circle class="aer-m-ring" cx="678" cy="599" r="10"/>
-                            <circle class="aer-m-circle" cx="678" cy="599" r="9"/>
-                            <text class="aer-m-text" x="678" y="599">1</text>
-                        </g>
-                        <!-- Marker 2 — Святомиколаївська церква: ~57.5% x, 76% y -->
-                        <g class="aer-marker-g" data-id="2" data-title="Святомиколаївська церква" data-desc="Православна церква Святого Миколая — одна з найстаріших парафій Дубровиці.">
-                            <circle class="aer-m-ring" cx="690" cy="723" r="10" style="animation-delay:0.5s"/>
-                            <circle class="aer-m-circle" cx="690" cy="723" r="9"/>
-                            <text class="aer-m-text" x="690" y="723">2</text>
-                        </g>
-                        <!-- Marker 3 — Костел Іоанна Хрестителя: ~62% x, 50% y -->
-                        <g class="aer-marker-g" data-id="3" data-title="Костел Іоанна Хрестителя" data-desc="Збудований у 1695–1702 рр. орденом піярів. Унікальна пам'ятка барокової архітектури Полісся.">
-                            <circle class="aer-m-ring" cx="744" cy="476" r="10" style="animation-delay:1s"/>
-                            <circle class="aer-m-circle" cx="744" cy="476" r="9"/>
-                            <text class="aer-m-text" x="744" y="476">3</text>
-                        </g>
-                        <!-- Marker 4 — Кам'яна церква: ~43% x, 29% y -->
-                        <g class="aer-marker-g" data-id="4" data-title="Кам'яна церква" data-desc="Мурована православна церква — помітний орієнтир у тогочасній забудові міста.">
-                            <circle class="aer-m-ring" cx="516" cy="276" r="10" style="animation-delay:0.3s"/>
-                            <circle class="aer-m-circle" cx="516" cy="276" r="9"/>
-                            <text class="aer-m-text" x="516" y="276">4</text>
-                        </g>
-                        <!-- Marker 5 — Синагога: ~46% x, 66% y -->
-                        <g class="aer-marker-g" data-id="5" data-title="Синагога" data-desc="Єврейська громада була значною частиною Дубровиці аж до Голокосту 1942 року.">
-                            <circle class="aer-m-ring" cx="552" cy="627" r="10" style="animation-delay:0.8s"/>
-                            <circle class="aer-m-circle" cx="552" cy="627" r="9"/>
-                            <text class="aer-m-text" x="552" y="627">5</text>
-                        </g>
-                        <!-- Marker 6 — Нове русло Горині: ~87% x, 60% y -->
-                        <g class="aer-marker-g" data-id="6" data-title="Нове русло Горині" data-desc="Сьогодні тут протікає основне русло річки Горинь — воно змінилося після 1944 р.">
-                            <circle class="aer-m-ring" cx="1044" cy="570" r="10" style="animation-delay:1.3s"/>
-                            <circle class="aer-m-circle" cx="1044" cy="570" r="9"/>
-                            <text class="aer-m-text" x="1044" y="570">6</text>
-                        </g>
-                        <!-- Marker 7 — Стара Горинь: ~76% x, 57% y -->
-                        <g class="aer-marker-g" data-id="7" data-title="Стара Горинь (1944)" data-desc="На момент зйомки — повноцінне русло річки Горинь, яке пізніше обміліло.">
-                            <circle class="aer-m-ring" cx="912" cy="542" r="10" style="animation-delay:0.6s"/>
-                            <circle class="aer-m-circle" cx="912" cy="542" r="9"/>
-                            <text class="aer-m-text" x="912" y="542">7</text>
-                        </g>
-                        <!-- Marker 8 — Єврейське кладовище: ~31% x, 10% y -->
-                        <g class="aer-marker-g" data-id="8" data-title="Єврейське кладовище" data-desc="Старе єврейське кладовище на північній околиці міста — пам'ятник трагічній долі громади.">
-                            <circle class="aer-m-ring" cx="372" cy="95" r="10" style="animation-delay:1.1s"/>
-                            <circle class="aer-m-circle" cx="372" cy="95" r="9"/>
-                            <text class="aer-m-text" x="372" y="95">8</text>
-                        </g>
-                        <!-- Marker 9 — Центральна площа: ~48% x, 55% y -->
-                        <g class="aer-marker-g" data-id="9" data-title="Центральна площа" data-desc="Ринкова площа — серце міського життя Дубровиці протягом багатьох століть.">
-                            <circle class="aer-m-ring" cx="576" cy="523" r="10" style="animation-delay:1.6s"/>
-                            <circle class="aer-m-circle" cx="576" cy="523" r="9"/>
-                            <text class="aer-m-text" x="576" y="523">9</text>
-                        </g>
-                    </svg>
+    <div class="aer-wrap">
+        <div class="aer-head">
+            <h2 class="aer-title">Аерофотознімок 1944 року<span class="aer-title-line"></span></h2>
+            <p class="aer-sub">Дубровиця &middot; 24 січня 1944 &middot; Інтерактивна карта</p>
+        </div>
 
-                    <div class="aer-badge">
-                        <span class="b-lbl">Аерофотознімок</span>
-                        <span class="b-date">24 · I · 1944</span>
+        <div class="aer-grid">
+            <!-- MAP -->
+            <div class="aer-map" id="aerMap">
+                <img class="aer-img" src="https://i.imgur.com/dyP4WgZ.jpeg"
+                     alt="Аерофотознімок Дубровиці 1944" id="aerImg">
+
+                <!-- SVG markers — viewBox 1200×951 matches image natural size -->
+                <svg class="aer-svg" viewBox="0 0 1200 951"
+                     xmlns="http://www.w3.org/2000/svg" id="aerSVG">
+
+                    <!-- Corrected positions based on annotated reference photo -->
+                    <!-- 1 — Давнє городище  ~54% x, 64% y -->
+                    <g class="aer-marker-g" data-id="1"
+                       data-title="Давнє городище"
+                       data-desc="Колись тут стояв замок Дубровицьких князів, зруйнований татарами у XIII ст.">
+                        <circle class="aer-pin-ring" cx="648" cy="608" r="11"/>
+                        <circle class="aer-pin-circle" cx="648" cy="608" r="9.5" id="pc1"/>
+                        <text class="aer-pin-label" x="648" y="608">1</text>
+                    </g>
+                    <!-- 2 — Святомиколаївська церква  ~55% x, 77% y -->
+                    <g class="aer-marker-g" data-id="2"
+                       data-title="Святомиколаївська церква"
+                       data-desc="Православна церква Святого Миколая — одна з найстаріших парафій Дубровиці.">
+                        <circle class="aer-pin-ring" cx="660" cy="732" r="11" style="animation-delay:.6s"/>
+                        <circle class="aer-pin-circle" cx="660" cy="732" r="9.5" id="pc2"/>
+                        <text class="aer-pin-label" x="660" y="732">2</text>
+                    </g>
+                    <!-- 3 — Костел Іоанна Хрестителя  ~60% x, 50% y -->
+                    <g class="aer-marker-g" data-id="3"
+                       data-title="Костел Іоанна Хрестителя"
+                       data-desc="Збудований у 1695–1702 рр. орденом піярів. Унікальна пам&#39;ятка барокової архітектури Полісся.">
+                        <circle class="aer-pin-ring" cx="720" cy="475" r="11" style="animation-delay:1.1s"/>
+                        <circle class="aer-pin-circle" cx="720" cy="475" r="9.5" id="pc3"/>
+                        <text class="aer-pin-label" x="720" y="475">3</text>
+                    </g>
+                    <!-- 4 — Кам'яна церква  ~44% x, 31% y -->
+                    <g class="aer-marker-g" data-id="4"
+                       data-title="Кам&#39;яна церква"
+                       data-desc="Мурована православна церква — помітний орієнтир у тогочасній забудові міста.">
+                        <circle class="aer-pin-ring" cx="528" cy="295" r="11" style="animation-delay:.3s"/>
+                        <circle class="aer-pin-circle" cx="528" cy="295" r="9.5" id="pc4"/>
+                        <text class="aer-pin-label" x="528" y="295">4</text>
+                    </g>
+                    <!-- 5 — Синагога  ~45% x, 63% y -->
+                    <g class="aer-marker-g" data-id="5"
+                       data-title="Синагога"
+                       data-desc="Єврейська громада була значною частиною Дубровиці аж до Голокосту 1942 року.">
+                        <circle class="aer-pin-ring" cx="540" cy="599" r="11" style="animation-delay:.9s"/>
+                        <circle class="aer-pin-circle" cx="540" cy="599" r="9.5" id="pc5"/>
+                        <text class="aer-pin-label" x="540" y="599">5</text>
+                    </g>
+                    <!-- 6 — Нове русло Горині  ~88% x, 59% y -->
+                    <g class="aer-marker-g" data-id="6"
+                       data-title="Нове русло Горині"
+                       data-desc="Сьогодні тут протікає основне русло річки Горинь — воно змінилося після 1944 р.">
+                        <circle class="aer-pin-ring" cx="1056" cy="561" r="11" style="animation-delay:1.4s"/>
+                        <circle class="aer-pin-circle" cx="1056" cy="561" r="9.5" id="pc6"/>
+                        <text class="aer-pin-label" x="1056" y="561">6</text>
+                    </g>
+                    <!-- 7 — Стара Горинь  ~77% x, 56% y -->
+                    <g class="aer-marker-g" data-id="7"
+                       data-title="Стара Горинь (1944)"
+                       data-desc="На момент зйомки — повноцінне русло річки Горинь, яке пізніше обміліло.">
+                        <circle class="aer-pin-ring" cx="924" cy="532" r="11" style="animation-delay:.5s"/>
+                        <circle class="aer-pin-circle" cx="924" cy="532" r="9.5" id="pc7"/>
+                        <text class="aer-pin-label" x="924" y="532">7</text>
+                    </g>
+                    <!-- 8 — Єврейське кладовище  ~33% x, 12% y -->
+                    <g class="aer-marker-g" data-id="8"
+                       data-title="Єврейське кладовище"
+                       data-desc="Старе єврейське кладовище на північній околиці міста — пам&#39;ятник трагічній долі громади.">
+                        <circle class="aer-pin-ring" cx="396" cy="114" r="11" style="animation-delay:1.2s"/>
+                        <circle class="aer-pin-circle" cx="396" cy="114" r="9.5" id="pc8"/>
+                        <text class="aer-pin-label" x="396" y="114">8</text>
+                    </g>
+                    <!-- 9 — Центральна площа  ~50% x, 53% y -->
+                    <g class="aer-marker-g" data-id="9"
+                       data-title="Центральна площа"
+                       data-desc="Ринкова площа — серце міського життя Дубровиці протягом багатьох століть.">
+                        <circle class="aer-pin-ring" cx="600" cy="504" r="11" style="animation-delay:.7s"/>
+                        <circle class="aer-pin-circle" cx="600" cy="504" r="9.5" id="pc9"/>
+                        <text class="aer-pin-label" x="600" y="504">9</text>
+                    </g>
+                </svg>
+
+                <!-- Tooltip: absolute inside the map container -->
+                <div id="aerTT">
+                    <button class="tt-close" id="aerTTClose" aria-label="Закрити">&#x2715;</button>
+                    <div class="tt-row">
+                        <span class="tt-num" id="aerTTNum"></span>
+                        <span class="tt-title" id="aerTTTitle"></span>
                     </div>
+                    <span class="tt-desc" id="aerTTDesc"></span>
                 </div>
 
-                <!-- LEGEND -->
-                <div class="aer-legend-box">
-                    <p class="aer-legend-title">Позначення</p>
-                    <ul class="aer-leg-list">
-                        <li class="aer-leg-item" data-leg="1"><span class="aer-leg-num">1</span>Давнє городище (замок)</li>
-                        <li class="aer-leg-item" data-leg="2"><span class="aer-leg-num">2</span>Святомиколаївська церква</li>
-                        <li class="aer-leg-item" data-leg="3"><span class="aer-leg-num">3</span>Костел Іоанна Хрестителя</li>
-                        <li class="aer-leg-item" data-leg="4"><span class="aer-leg-num">4</span>Кам'яна церква</li>
-                        <li class="aer-leg-item" data-leg="5"><span class="aer-leg-num">5</span>Синагога</li>
-                        <li class="aer-leg-item" data-leg="6"><span class="aer-leg-num">6</span>Нове русло Горині</li>
-                        <li class="aer-leg-item" data-leg="7"><span class="aer-leg-num">7</span>Стара Горинь (1944)</li>
-                        <li class="aer-leg-item" data-leg="8"><span class="aer-leg-num">8</span>Єврейське кладовище</li>
-                        <li class="aer-leg-item" data-leg="9"><span class="aer-leg-num">9</span>Центральна площа</li>
-                    </ul>
-                    <p class="aer-hint">Натисніть на маркер на карті або на рядок у списку, щоб дізнатися більше</p>
+                <div class="aer-badge">
+                    <span class="aer-badge-lbl">Аерофотознімок</span>
+                    <span class="aer-badge-date">24 &middot; I &middot; 1944</span>
                 </div>
             </div>
+
+            <!-- LEGEND -->
+            <div class="aer-legend">
+                <p class="aer-leg-head">Позначення</p>
+                <ul class="aer-leg-list" id="aerLegList">
+                    <li class="aer-leg-item" data-leg="1"><span class="aer-leg-num">1</span>Давнє городище (замок)</li>
+                    <li class="aer-leg-item" data-leg="2"><span class="aer-leg-num">2</span>Святомиколаївська церква</li>
+                    <li class="aer-leg-item" data-leg="3"><span class="aer-leg-num">3</span>Костел Іоанна Хрестителя</li>
+                    <li class="aer-leg-item" data-leg="4"><span class="aer-leg-num">4</span>Кам&apos;яна церква</li>
+                    <li class="aer-leg-item" data-leg="5"><span class="aer-leg-num">5</span>Синагога</li>
+                    <li class="aer-leg-item" data-leg="6"><span class="aer-leg-num">6</span>Нове русло Горині</li>
+                    <li class="aer-leg-item" data-leg="7"><span class="aer-leg-num">7</span>Стара Горинь (1944)</li>
+                    <li class="aer-leg-item" data-leg="8"><span class="aer-leg-num">8</span>Єврейське кладовище</li>
+                    <li class="aer-leg-item" data-leg="9"><span class="aer-leg-num">9</span>Центральна площа</li>
+                </ul>
+                <p class="aer-leg-hint">Натисніть на маркер або пункт списку, щоб дізнатися більше</p>
+            </div>
         </div>
+    </div>
 
-        <!-- Tooltip (shared, fixed-position) -->
-        <div id="aerTooltip">
-            <span class="tt-num" id="aerTTNum"></span>
-            <span class="tt-title" id="aerTTTitle"></span>
-            <span class="tt-desc" id="aerTTDesc"></span>
-        </div>
+    <script>
+    (function(){
+        var mapEl   = document.getElementById('aerMap');
+        var svgEl   = document.getElementById('aerSVG');
+        var tt      = document.getElementById('aerTT');
+        var ttNum   = document.getElementById('aerTTNum');
+        var ttTitle = document.getElementById('aerTTTitle');
+        var ttDesc  = document.getElementById('aerTTDesc');
+        var ttClose = document.getElementById('aerTTClose');
 
-        <script>
-        (function(){
-            var markers = document.querySelectorAll('#aerSVG .aer-marker-g');
-            var legItems = document.querySelectorAll('.aer-leg-item');
-            var tooltip  = document.getElementById('aerTooltip');
-            var ttNum    = document.getElementById('aerTTNum');
-            var ttTitle  = document.getElementById('aerTTTitle');
-            var ttDesc   = document.getElementById('aerTTDesc');
-            var activeId = null;
+        var markers  = svgEl.querySelectorAll('.aer-marker-g');
+        var legItems = document.querySelectorAll('#aerLegList .aer-leg-item');
+        var circles  = svgEl.querySelectorAll('.aer-pin-circle');
 
-            function clearAll() {
-                markers.forEach(function(g){ g.querySelector('.aer-m-circle').classList.remove('active'); });
-                legItems.forEach(function(l){ l.classList.remove('active'); });
-                tooltip.classList.remove('show');
-                activeId = null;
-            }
+        var activeId = null;
 
-            function showTooltip(id, title, desc, x, y) {
-                ttNum.textContent  = id;
-                ttTitle.textContent = title;
-                ttDesc.textContent  = desc;
-                tooltip.classList.add('show');
-                positionTooltip(x, y);
-            }
+        /* ── helpers ── */
+        function clearAll() {
+            circles.forEach(function(c){ c.classList.remove('aer-active'); });
+            legItems.forEach(function(l){ l.classList.remove('aer-active'); });
+            tt.classList.remove('show');
+            activeId = null;
+        }
 
-            function positionTooltip(x, y) {
-                var tw = 230, th = 110;
-                var vw = window.innerWidth, vh = window.innerHeight;
-                var left = x + 18;
-                var top  = y - 55;
-                if (left + tw > vw - 10) left = x - tw - 18;
-                if (top < 10) top = 10;
-                if (top + th > vh - 10) top = vh - th - 10;
-                tooltip.style.left = left + 'px';
-                tooltip.style.top  = top  + 'px';
-            }
+        function positionTooltip(svgCX, svgCY) {
+            /* Convert SVG viewBox coords → pixel position inside mapEl */
+            var vb   = svgEl.viewBox.baseVal;          // 0 0 1200 951
+            var rect = mapEl.getBoundingClientRect();
+            var scaleX = rect.width  / vb.width;
+            var scaleY = rect.height / vb.height;
 
-            markers.forEach(function(g){
-                g.style.cursor = 'pointer';
-                var circle = g.querySelector('.aer-m-circle');
+            var px = svgCX * scaleX;   // px from map left
+            var py = svgCY * scaleY;   // px from map top
 
-                g.addEventListener('click', function(e){
-                    var id    = g.dataset.id;
-                    var title = g.dataset.title;
-                    var desc  = g.dataset.desc;
-                    if (activeId === id) { clearAll(); return; }
-                    clearAll();
-                    activeId = id;
-                    circle.classList.add('active');
-                    var leg = document.querySelector('.aer-leg-item[data-leg="'+id+'"]');
-                    if (leg) leg.classList.add('active');
-                    showTooltip(id, title, desc, e.clientX, e.clientY);
-                    e.stopPropagation();
-                });
+            var ttW = 220, ttH = 90;
+            var mapW = rect.width, mapH = rect.height;
 
-                g.addEventListener('mousemove', function(e){
-                    if (activeId === g.dataset.id) positionTooltip(e.clientX, e.clientY);
-                });
+            /* Prefer right of marker, flip left if overflow */
+            var left = px + 16;
+            var top  = py - ttH / 2;
+
+            if (left + ttW > mapW - 10) left = px - ttW - 16;
+            if (left < 6) left = 6;
+            if (top < 6)  top = 6;
+            if (top + ttH > mapH - 6) top = mapH - ttH - 6;
+
+            tt.style.left = left + 'px';
+            tt.style.top  = top  + 'px';
+        }
+
+        function activate(id, svgCX, svgCY) {
+            if (activeId === id) { clearAll(); return; }
+            clearAll();
+            activeId = id;
+
+            /* highlight circle */
+            var c = document.getElementById('pc' + id);
+            if (c) c.classList.add('aer-active');
+
+            /* highlight legend */
+            legItems.forEach(function(l){
+                if (l.dataset.leg === id) l.classList.add('aer-active');
             });
 
-            legItems.forEach(function(item){
-                item.addEventListener('click', function(){
-                    var id = item.dataset.leg;
-                    var g  = document.querySelector('.aer-marker-g[data-id="'+id+'"]');
-                    if (!g) return;
-                    if (activeId === id) { clearAll(); return; }
-                    clearAll();
-                    activeId = id;
-                    g.querySelector('.aer-m-circle').classList.add('active');
-                    item.classList.add('active');
-                    // Position tooltip near the map
-                    var wrap = document.getElementById('aerialMapWrap');
-                    var r = wrap.getBoundingClientRect();
-                    showTooltip(id, g.dataset.title, g.dataset.desc, r.left + r.width / 2, r.top + r.height / 2);
-                });
-            });
+            /* fill tooltip */
+            var g = svgEl.querySelector('.aer-marker-g[data-id="'+id+'"]');
+            ttNum.textContent   = id;
+            ttTitle.textContent = g.dataset.title;
+            ttDesc.textContent  = g.dataset.desc;
 
-            document.addEventListener('click', function(){ clearAll(); });
-        })();
-        </script>
+            positionTooltip(svgCX, svgCY);
+            tt.classList.add('show');
+        }
+
+        /* ── marker clicks ── */
+        markers.forEach(function(g){
+            g.addEventListener('click', function(e){
+                e.stopPropagation();
+                var id = g.dataset.id;
+                /* Get cx,cy from the ring circle (first circle child) */
+                var ring = g.querySelector('.aer-pin-ring');
+                var cx = parseFloat(ring.getAttribute('cx'));
+                var cy = parseFloat(ring.getAttribute('cy'));
+                activate(id, cx, cy);
+            });
+        });
+
+        /* ── legend clicks ── */
+        legItems.forEach(function(item){
+            item.addEventListener('click', function(e){
+                e.stopPropagation();
+                var id = item.dataset.leg;
+                var g  = svgEl.querySelector('.aer-marker-g[data-id="'+id+'"]');
+                if (!g) return;
+                var ring = g.querySelector('.aer-pin-ring');
+                var cx = parseFloat(ring.getAttribute('cx'));
+                var cy = parseFloat(ring.getAttribute('cy'));
+                activate(id, cx, cy);
+            });
+        });
+
+        /* ── close button ── */
+        ttClose.addEventListener('click', function(e){
+            e.stopPropagation();
+            clearAll();
+        });
+
+        /* ── click outside → close ── */
+        document.addEventListener('click', function(){ clearAll(); });
+        mapEl.addEventListener('click', function(e){
+            if (!e.target.closest('.aer-marker-g') && !e.target.closest('#aerTT')){
+                clearAll();
+            }
+        });
+    })();
+    </script>
     </section>
     <!-- ═══ END AERIAL MAP ═══ -->
 
-    <!-- Timeline Preview -->
+        <!-- Timeline Preview -->
     <section class="timeline-section">
         <div class="container">
             <h2 class="section-title fade-in-up">Ключові моменти історії</h2>
