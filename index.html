@@ -202,11 +202,11 @@
     .ABT::before{content:'';display:inline-block;width:4px;height:22px;background:#c9a227;border-radius:2px;flex-shrink:0;}
     .AG{display:grid;grid-template-columns:1fr 248px;gap:1.5rem;align-items:start;}
     @media(max-width:820px){.AG{grid-template-columns:1fr;}}
-    /* Map container: auto height based on image, no cropping */
+    /* Map container: auto height based on image, clips on zoom */
     .MBOX{position:relative;border-radius:12px;overflow:hidden;
           box-shadow:0 4px 12px rgba(0,0,0,.08),0 16px 40px rgba(0,0,0,.13);
           border:1px solid rgba(201,162,39,.12);background:#0a0a0a;
-          cursor:grab;touch-action:none;line-height:0;}
+          cursor:grab;touch-action:none;line-height:0;max-height:80vh;}
     .MBOX:active{cursor:grabbing;}
     /* image: natural size with contain, expands box height */
     .MIMG{display:block;width:100%;height:auto;
@@ -463,16 +463,23 @@
         document.getElementById('MTTT').textContent = title;
         document.getElementById('MTTD').textContent = desc;
         var el = document.getElementById('MTTIP');
-        var tw=220, th=105, vw=window.innerWidth, vh=window.innerHeight;
-        var lft = cx + 16;
-        var top = cy - th/2;
-        if (lft + tw > vw - 10) lft = cx - tw - 16;
-        if (lft < 10) lft = 10;
-        if (top < 10) top = 10;
-        if (top + th > vh - 10) top = vh - th - 10;
+        // Measure tooltip after content set
+        el.style.visibility = 'hidden';
+        el.style.display = 'block';
+        el.classList.add('show');
+        var tw = el.offsetWidth, th = el.offsetHeight;
+        el.style.display = '';
+        el.style.visibility = '';
+        var vw = window.innerWidth, vh = window.innerHeight;
+        // Try right of pin, then left, clamped to viewport
+        var lft = cx + 18;
+        var top = cy - Math.round(th / 2);
+        if (lft + tw > vw - 12) lft = cx - tw - 18;
+        if (lft < 12) lft = 12;
+        if (top < 12) top = 12;
+        if (top + th > vh - 12) top = vh - th - 12;
         el.style.left = lft + 'px';
         el.style.top  = top + 'px';
-        el.classList.add('show');
       }
 
       document.getElementById('MTTX').addEventListener('click', function(e) {
@@ -553,10 +560,10 @@
       // ── BUTTON EVENTS ──────────────────────────────────────────
       ['44','43'].forEach(function(mid) {
         document.getElementById('z'+mid+'p').addEventListener('click', function(e) {
-          e.stopPropagation(); doZoom(mid, 0.7);
+          e.stopPropagation(); doZoom(mid, 0.4);
         });
         document.getElementById('z'+mid+'m').addEventListener('click', function(e) {
-          e.stopPropagation(); doZoom(mid, -0.7);
+          e.stopPropagation(); doZoom(mid, -0.4);
         });
         document.getElementById('z'+mid+'r').addEventListener('click', function(e) {
           e.stopPropagation(); doReset(mid);
@@ -595,7 +602,7 @@
           var rect = img.getBoundingClientRect();
           var px = e.clientX - rect.left;
           var py = e.clientY - rect.top;
-          doZoom(mid, e.deltaY < 0 ? 0.4 : -0.4, px, py);
+          doZoom(mid, e.deltaY < 0 ? 0.25 : -0.25, px, py);
         }, {passive: false});
 
         // click outside pins

@@ -1416,18 +1416,32 @@ function init() {
         });
     });
 
-    // Click on editor to add pin — use mousedown/mouseup to detect drag vs click
+    // Click on editor to add pin — track mousedown pos to distinguish drag from click
+    var mouseDownX = 0, mouseDownY = 0;
+
     editorWrap.addEventListener('mousedown', function(e){
-        if (e.target.closest('[data-pin-id]')) return;
+        mouseDownX = e.clientX; mouseDownY = e.clientY;
         hasDragged = false;
     });
-    editorWrap.addEventListener('mousemove', function(e){
-        if (dragPin) { hasDragged = true; }
+    // Also catch mousedown on SVG transparent area (it has pointer-events:all)
+    editorSVG.addEventListener('mousedown', function(e){
+        mouseDownX = e.clientX; mouseDownY = e.clientY;
+        if (!e.target.closest('[data-pin-id]')) {
+            hasDragged = false;
+        }
     });
+
+    document.addEventListener('mousemove', function(e){
+        if (Math.abs(e.clientX - mouseDownX) > 4 || Math.abs(e.clientY - mouseDownY) > 4) {
+            hasDragged = true;
+        }
+    });
+
     editorWrap.addEventListener('click', function(e){
         if (hasDragged) { hasDragged = false; return; }
         if (e.target.closest('[data-pin-id]')) return;
         var rect = editorImg.getBoundingClientRect();
+        if (!rect.width || !rect.height) return;
         pendingX = Math.round(((e.clientX - rect.left) / rect.width)  * 100 * 10) / 10;
         pendingY = Math.round(((e.clientY - rect.top)  / rect.height) * 100 * 10) / 10;
         pendingX = Math.max(0, Math.min(100, pendingX));
@@ -1467,8 +1481,7 @@ function init() {
     editorSVG.addEventListener('mousedown', function(e){
         var g = e.target.closest('[data-pin-id]');
         if (!g) return;
-        e.stopPropagation();
-        hasDragged = false;
+        e.preventDefault();
         dragPin = g;
         var pin = pins[currentMapId].find(function(p){ return String(p.id)===g.dataset.pinId; });
         if (!pin) return;
@@ -1483,17 +1496,16 @@ function init() {
         if (!dragPin) return;
         hasDragged = true;
         var rect = editorImg.getBoundingClientRect();
+        if (!rect.width || !rect.height) return;
         var pxX = e.clientX - rect.left - dragOffset.x;
         var pxY = e.clientY - rect.top  - dragOffset.y;
         var x = Math.round(Math.max(0, Math.min(100, pxX / rect.width  * 100)) * 10) / 10;
         var y = Math.round(Math.max(0, Math.min(100, pxY / rect.height * 100)) * 10) / 10;
         var pin = pins[currentMapId].find(function(p){ return String(p.id)===dragPin.dataset.pinId; });
-        if (pin){ pin.x = x; pin.y = y; }
-        // update SVG position
+        if (!pin) return;
+        pin.x = x; pin.y = y;
+        // update SVG circles position in wrap-relative coords
         var wRect = editorWrap.getBoundingClientRect();
-        var svgX = (e.clientX - rect.left) - dragOffset.x + (rect.left - wRect.left);
-        var svgY = (e.clientY - rect.top)  - dragOffset.y + (rect.top  - wRect.top);
-        // recalculate from % to wrap-relative px
         var wpxX = x / 100 * rect.width  + (rect.left - wRect.left);
         var wpxY = y / 100 * rect.height + (rect.top  - wRect.top);
         dragPin.querySelectorAll('circle').forEach(function(c){
@@ -1501,7 +1513,6 @@ function init() {
         });
         var t = dragPin.querySelector('text');
         if (t){ t.setAttribute('x', wpxX); t.setAttribute('y', wpxY); }
-        // update coord display
         var coordEl = document.getElementById('coord-'+dragPin.dataset.pinId);
         if (coordEl) coordEl.textContent = 'x:'+x+'% y:'+y+'%';
     });
