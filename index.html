@@ -765,7 +765,7 @@
     /* images */
     .CSF .ci-base{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
                   pointer-events:none;display:block;
-                  filter:saturate(1.1) contrast(1.05) brightness(1.02);}
+                  filter:saturate(1.15) contrast(1.06) brightness(1.03);}
     .CSF .ci-ov{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
                 pointer-events:none;display:block;
                 clip-path:inset(0 50% 0 0);
@@ -809,12 +809,12 @@
     .CCLB.cll{top:1.2rem;left:1.2rem;}
     .CCLB.clr{top:1.2rem;right:1.2rem;text-align:right;}
     .CCLB .ccy{display:block;font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;line-height:1;
-               text-shadow:0 1px 12px rgba(0,0,0,.8);}
-    .CCLB.cll .ccy{color:#e8c255;}
-    .CCLB.clr .ccy{color:#8ec8ff;}
-    .CCLB .ccs{display:block;font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;
-               color:rgba(255,255,255,.35);margin-top:.15rem;
-               text-shadow:0 1px 6px rgba(0,0,0,.9);}
+               text-shadow:0 0 20px rgba(0,0,0,1),0 2px 8px rgba(0,0,0,1),0 0 4px rgba(0,0,0,1);}
+    .CCLB.cll .ccy{color:#f5d060;}
+    .CCLB.clr .ccy{color:#a8d8ff;}
+    .CCLB .ccs{display:block;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+               color:#fff;margin-top:.2rem;font-weight:500;
+               text-shadow:0 1px 8px rgba(0,0,0,1),0 0 12px rgba(0,0,0,1);}
 
     /* ── HINT ── */
     .CIP{position:absolute;bottom:1.4rem;left:50%;transform:translateX(-50%);z-index:20;
@@ -868,10 +868,10 @@
       </div>
 
       <div class="CSF" id="CSLIDER">
-        <!-- Base: 2021 (right side) -->
-        <img class="ci-base" src="https://i.imgur.com/FfgAmadh.jpeg" alt="Дубровиця 2021" draggable="false" decoding="async">
-        <!-- Overlay: 1944 (left side, clips right) -->
-        <img class="ci-ov" id="COVI" src="https://i.imgur.com/cMQeU7Ph.jpeg" alt="Дубровиця 1944" draggable="false" decoding="async">
+        <!-- Base: 1944 (right side when slider is left) -->
+        <img class="ci-base" src="https://i.imgur.com/cMQeU7Ph.jpeg" alt="Дубровиця 1944" draggable="false" decoding="async">
+        <!-- Overlay: 2021 (left side, clips right) -->
+        <img class="ci-ov" id="COVI" src="https://i.imgur.com/FfgAmadh.jpeg" alt="Дубровиця 2021" draggable="false" decoding="async">
 
         <div class="CDL" id="CDIV"></div>
 
