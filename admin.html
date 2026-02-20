@@ -559,6 +559,95 @@
 
         </div>
 
+
+        <!-- ════ MAP EDITOR CARD ════ -->
+        <div class="admin-card" id="mapEditorCard" style="margin-top:0;">
+            <h2 style="font-family:'Cormorant Garamond',serif;margin-bottom:0.5rem;">🗺️ Редактор карт (Аерофотознімки)</h2>
+            <p style="font-size:0.85rem;color:var(--color-text-secondary);margin-bottom:1.5rem;">
+                Клікніть на фото, щоб додати новий пін. Перетягуйте існуючі піни. Після редагування — натисніть «Зберегти».
+            </p>
+
+            <!-- Map selector -->
+            <div style="display:flex;gap:0.75rem;margin-bottom:1.5rem;flex-wrap:wrap;">
+                <button class="map-sel-btn active" data-mapid="1944"
+                    style="padding:0.6rem 1.2rem;border-radius:0.6rem;border:2px solid var(--color-primary);
+                           background:var(--color-primary);color:#fff;font-family:'DM Sans',sans-serif;
+                           font-size:0.875rem;font-weight:600;cursor:pointer;transition:all 0.2s;">
+                    📸 Знімок 1944
+                </button>
+                <button class="map-sel-btn" data-mapid="1943"
+                    style="padding:0.6rem 1.2rem;border-radius:0.6rem;border:2px solid var(--color-border);
+                           background:transparent;color:var(--color-text);font-family:'DM Sans',sans-serif;
+                           font-size:0.875rem;font-weight:600;cursor:pointer;transition:all 0.2s;">
+                    📸 Знімок 1943
+                </button>
+            </div>
+
+            <!-- Editor area -->
+            <div id="mapEditorWrap" style="position:relative;border-radius:10px;overflow:hidden;
+                 box-shadow:0 4px 20px rgba(0,0,0,0.12);border:2px solid var(--color-border);
+                 cursor:crosshair;user-select:none;background:#111;line-height:0;margin-bottom:1.25rem;">
+                <img id="editorImg" src="https://i.imgur.com/dyP4WgZ.jpeg"
+                     style="width:100%;height:auto;display:block;filter:sepia(0.06) contrast(1.04);pointer-events:none;">
+                <svg id="editorSVG" style="position:absolute;top:0;left:0;width:100%;height:100%;overflow:visible;"
+                     viewBox="0 0 1200 951" xmlns="http://www.w3.org/2000/svg">
+                </svg>
+                <!-- Instruction overlay -->
+                <div id="editorHint" style="position:absolute;top:10px;left:50%;transform:translateX(-50%);
+                     background:rgba(10,8,5,0.82);backdrop-filter:blur(8px);
+                     border:1px solid rgba(201,162,39,0.3);border-radius:8px;
+                     padding:6px 14px;font-family:'DM Sans',sans-serif;font-size:0.72rem;
+                     color:#c9a227;white-space:nowrap;pointer-events:none;">
+                    👆 Клік на фото — додати пін &nbsp;|&nbsp; Перетягнути пін — перемістити
+                </div>
+            </div>
+
+            <!-- Pin list -->
+            <div style="margin-bottom:1.25rem;">
+                <h3 style="font-size:0.95rem;font-weight:600;margin-bottom:0.75rem;color:var(--color-text);">Список пінів</h3>
+                <div id="pinListWrap" style="display:flex;flex-direction:column;gap:0.5rem;max-height:320px;overflow-y:auto;"></div>
+                <div id="pinListEmpty" style="text-align:center;padding:1.5rem;color:var(--color-text-secondary);font-size:0.875rem;">Пінів ще немає. Клікніть на карті, щоб додати.</div>
+            </div>
+
+            <!-- Save -->
+            <div style="display:flex;gap:0.75rem;align-items:center;flex-wrap:wrap;">
+                <button id="saveMapBtn" class="btn btn-green" style="font-size:0.9rem;">💾 Зберегти піни на GitHub</button>
+                <button id="clearAllPinsBtn" class="btn btn-outline" style="font-size:0.875rem;color:#c0392b;border-color:#c0392b;">🗑️ Видалити всі піни</button>
+                <button id="copyJsonBtn" class="btn btn-outline" style="font-size:0.875rem;">📋 Скопіювати JSON</button>
+            </div>
+            <div id="mapEditorStatus" class="notice" style="display:none;margin-top:1rem;"></div>
+
+            <!-- Modal for new pin info -->
+            <div id="pinModal" style="display:none;position:fixed;inset:0;z-index:10000;
+                 background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);
+                 align-items:center;justify-content:center;">
+                <div style="background:var(--color-bg-card);border-radius:14px;padding:1.75rem;
+                     width:min(420px,92vw);box-shadow:0 20px 60px rgba(0,0,0,0.3);
+                     border:1px solid var(--color-border);">
+                    <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;margin:0 0 1.2rem;color:var(--color-text);">Новий пін</h3>
+                    <div class="field">
+                        <label style="font-size:0.8rem;font-weight:600;color:var(--color-text-secondary);">Назва *</label>
+                        <input id="pinModalTitle" type="text" placeholder="Костел Іоанна Хрестителя"
+                            style="width:100%;padding:0.65rem 0.9rem;border:2px solid var(--color-border);
+                            border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.9rem;
+                            background:var(--color-bg);color:var(--color-text);box-sizing:border-box;">
+                    </div>
+                    <div class="field" style="margin-top:0.75rem;">
+                        <label style="font-size:0.8rem;font-weight:600;color:var(--color-text-secondary);">Опис (необов'язково)</label>
+                        <textarea id="pinModalDesc" rows="3" placeholder="Короткий опис об'єкта..."
+                            style="width:100%;padding:0.65rem 0.9rem;border:2px solid var(--color-border);
+                            border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.875rem;
+                            background:var(--color-bg);color:var(--color-text);box-sizing:border-box;resize:vertical;"></textarea>
+                    </div>
+                    <div style="display:flex;gap:0.75rem;margin-top:1.25rem;">
+                        <button id="pinModalSave" class="btn btn-primary" style="flex:1;">✅ Додати пін</button>
+                        <button id="pinModalCancel" class="btn btn-outline" style="flex:1;">Скасувати</button>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /mapEditorCard -->
+
     </div><!-- /adminContent -->
 </div>
 
@@ -1276,4 +1365,353 @@ async function renderMetricList(wrap) {
 }); // end DOMContentLoaded
 </script>
 </body>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// MAP EDITOR — Aerial Pin Manager
+// ═══════════════════════════════════════════════════════════
+(function(){
+
+var MAPS_CONFIG = {
+    '1944': {
+        img:    'https://i.imgur.com/dyP4WgZ.jpeg',
+        file:   'aerial_pins_1944.json',
+        vbW:    1200, vbH: 951
+    },
+    '1943': {
+        img:    'https://i.imgur.com/EhsjkKX.jpeg',
+        file:   'aerial_pins_1943.json',
+        vbW:    1200, vbH: 1200
+    }
+};
+
+var currentMapId = '1944';
+var pins = {};          // { '1944': [...], '1943': [...] }
+var pendingCX = 0, pendingCY = 0;
+var dragPin = null, dragOffset = {x:0, y:0};
+
+var editorWrap = document.getElementById('mapEditorWrap');
+var editorImg  = document.getElementById('editorImg');
+var editorSVG  = document.getElementById('editorSVG');
+var pinListWrap= document.getElementById('pinListWrap');
+var pinListEmpty=document.getElementById('pinListEmpty');
+var pinModal   = document.getElementById('pinModal');
+var modalTitle = document.getElementById('pinModalTitle');
+var modalDesc  = document.getElementById('pinModalDesc');
+var edStatus   = document.getElementById('mapEditorStatus');
+
+// ── Initialize ────────────────────────────────────────────
+function init() {
+    pins['1944'] = []; pins['1943'] = [];
+
+    // Map selector buttons
+    document.querySelectorAll('.map-sel-btn').forEach(function(btn){
+        btn.addEventListener('click', function(){
+            document.querySelectorAll('.map-sel-btn').forEach(function(b){
+                b.style.background = 'transparent';
+                b.style.color = 'var(--color-text)';
+                b.style.borderColor = 'var(--color-border)';
+            });
+            btn.style.background = 'var(--color-primary)';
+            btn.style.color = '#fff';
+            btn.style.borderColor = 'var(--color-primary)';
+            switchMap(btn.dataset.mapid);
+        });
+    });
+
+    // Click on editor to add pin
+    editorWrap.addEventListener('click', function(e){
+        if (e.target.closest('circle') || e.target.closest('text')) return;
+        var rect = editorWrap.getBoundingClientRect();
+        var cfg  = MAPS_CONFIG[currentMapId];
+        var pxX  = e.clientX - rect.left;
+        var pxY  = e.clientY - rect.top;
+        var scX  = rect.width  / cfg.vbW;
+        var scY  = rect.height / cfg.vbH;
+        pendingCX = Math.round(pxX / scX);
+        pendingCY = Math.round(pxY / scY);
+        openModal();
+    });
+
+    // Modal save
+    document.getElementById('pinModalSave').addEventListener('click', function(){
+        var title = modalTitle.value.trim();
+        if (!title){ modalTitle.focus(); return; }
+        var list = pins[currentMapId];
+        var id   = list.length ? Math.max.apply(null, list.map(function(p){return p.id;})) + 1 : 1;
+        list.push({ id:id, cx:pendingCX, cy:pendingCY, title:title, desc:modalDesc.value.trim() });
+        closeModal();
+        renderEditor();
+    });
+
+    // Modal cancel
+    document.getElementById('pinModalCancel').addEventListener('click', closeModal);
+    pinModal.addEventListener('click', function(e){ if(e.target===pinModal) closeModal(); });
+    document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeModal(); });
+
+    // Save button
+    document.getElementById('saveMapBtn').addEventListener('click', savePins);
+
+    // Clear all
+    document.getElementById('clearAllPinsBtn').addEventListener('click', function(){
+        if (!confirm('Видалити всі піни для цього знімку?')) return;
+        pins[currentMapId] = [];
+        renderEditor();
+    });
+
+    // Copy JSON
+    document.getElementById('copyJsonBtn').addEventListener('click', function(){
+        var json = JSON.stringify(pins[currentMapId], null, 2);
+        navigator.clipboard.writeText(json).then(function(){
+            showEdStatus('📋 JSON скопійовано!', 'success');
+        }).catch(function(){
+            showEdStatus(json, 'info');
+        });
+    });
+
+    // SVG drag
+    editorSVG.addEventListener('mousedown', function(e){
+        var g = e.target.closest('[data-pin-id]');
+        if (!g) return;
+        e.stopPropagation();
+        dragPin = g;
+        var rect = editorWrap.getBoundingClientRect();
+        var cfg  = MAPS_CONFIG[currentMapId];
+        var pin  = pins[currentMapId].find(function(p){ return String(p.id)===g.dataset.pinId; });
+        if (!pin) return;
+        var pxX = pin.cx * (rect.width / cfg.vbW);
+        var pxY = pin.cy * (rect.height / cfg.vbH);
+        dragOffset.x = e.clientX - rect.left - pxX;
+        dragOffset.y = e.clientY - rect.top  - pxY;
+    });
+
+    document.addEventListener('mousemove', function(e){
+        if (!dragPin) return;
+        var rect = editorWrap.getBoundingClientRect();
+        var cfg  = MAPS_CONFIG[currentMapId];
+        var pxX  = e.clientX - rect.left - dragOffset.x;
+        var pxY  = e.clientY - rect.top  - dragOffset.y;
+        var cx   = Math.round(Math.max(0, Math.min(cfg.vbW, pxX / (rect.width  / cfg.vbW))));
+        var cy   = Math.round(Math.max(0, Math.min(cfg.vbH, pxY / (rect.height / cfg.vbH))));
+        var pin  = pins[currentMapId].find(function(p){ return String(p.id)===dragPin.dataset.pinId; });
+        if (pin){ pin.cx=cx; pin.cy=cy; }
+        // update SVG directly for smooth drag
+        dragPin.querySelector('circle.ed-ring').setAttribute('cx', cx);
+        dragPin.querySelector('circle.ed-ring').setAttribute('cy', cy);
+        dragPin.querySelector('circle.ed-dot').setAttribute('cx', cx);
+        dragPin.querySelector('circle.ed-dot').setAttribute('cy', cy);
+        dragPin.querySelector('text').setAttribute('x', cx);
+        dragPin.querySelector('text').setAttribute('y', cy);
+        // update coord display
+        var coordEl = document.getElementById('coord-'+dragPin.dataset.pinId);
+        if (coordEl) coordEl.textContent = 'cx:'+cx+' cy:'+cy;
+    });
+
+    document.addEventListener('mouseup', function(){
+        if (dragPin){ dragPin=null; renderPinList(); }
+    });
+
+    // Load existing pins on init
+    loadAllPins();
+}
+
+// ── Switch map ────────────────────────────────────────────
+function switchMap(id) {
+    currentMapId = id;
+    var cfg = MAPS_CONFIG[id];
+    editorImg.src = cfg.img;
+    editorSVG.setAttribute('viewBox', '0 0 '+cfg.vbW+' '+cfg.vbH);
+    renderEditor();
+}
+
+// ── Render SVG + pin list ─────────────────────────────────
+function renderEditor() {
+    renderSVG();
+    renderPinList();
+}
+
+function renderSVG() {
+    var ns   = 'http://www.w3.org/2000/svg';
+    var list = pins[currentMapId] || [];
+    // Clear
+    while (editorSVG.firstChild) editorSVG.removeChild(editorSVG.firstChild);
+
+    list.forEach(function(pin){
+        var g = document.createElementNS(ns,'g');
+        g.setAttribute('data-pin-id', String(pin.id));
+        g.style.cursor = 'move';
+
+        var ring = document.createElementNS(ns,'circle');
+        ring.setAttribute('class','ed-ring');
+        ring.setAttribute('cx', pin.cx); ring.setAttribute('cy', pin.cy);
+        ring.setAttribute('r','14');
+        ring.setAttribute('fill','none');
+        ring.setAttribute('stroke','rgba(201,162,39,0.5)');
+        ring.setAttribute('stroke-width','1.5');
+
+        var circ = document.createElementNS(ns,'circle');
+        circ.setAttribute('class','ed-dot');
+        circ.setAttribute('cx', pin.cx); circ.setAttribute('cy', pin.cy);
+        circ.setAttribute('r','10');
+        circ.setAttribute('fill','#c9a227');
+        circ.setAttribute('stroke','#fff'); circ.setAttribute('stroke-width','2');
+        circ.setAttribute('filter','drop-shadow(0 2px 5px rgba(0,0,0,.6))');
+
+        var txt = document.createElementNS(ns,'text');
+        txt.setAttribute('x', pin.cx); txt.setAttribute('y', pin.cy);
+        txt.setAttribute('text-anchor','middle');
+        txt.setAttribute('dominant-baseline','central');
+        txt.setAttribute('fill','#1a1000');
+        txt.setAttribute('font-size','10');
+        txt.setAttribute('font-weight','800');
+        txt.setAttribute('font-family','DM Sans,sans-serif');
+        txt.setAttribute('pointer-events','none');
+        txt.textContent = String(pin.id);
+
+        g.appendChild(ring); g.appendChild(circ); g.appendChild(txt);
+        editorSVG.appendChild(g);
+    });
+}
+
+function renderPinList() {
+    var list = pins[currentMapId] || [];
+    pinListEmpty.style.display = list.length ? 'none' : 'block';
+    pinListWrap.innerHTML = '';
+    list.forEach(function(pin){
+        var row = document.createElement('div');
+        row.style.cssText = 'display:flex;align-items:center;gap:0.6rem;padding:0.55rem 0.75rem;'+
+            'background:var(--color-bg);border:1px solid var(--color-border);border-radius:8px;';
+
+        var num = document.createElement('span');
+        num.style.cssText = 'min-width:22px;height:22px;border-radius:50%;background:#c9a227;'+
+            'color:#1a1000;font-size:0.6rem;font-weight:800;display:flex;align-items:center;'+
+            'justify-content:center;flex-shrink:0;';
+        num.textContent = pin.id;
+
+        var info = document.createElement('div');
+        info.style.cssText = 'flex:1;min-width:0;';
+        info.innerHTML = '<div style="font-size:0.8rem;font-weight:600;color:var(--color-text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+escHtml(pin.title)+'</div>'+
+            '<div id="coord-'+pin.id+'" style="font-size:0.65rem;color:var(--color-text-secondary);font-family:monospace;">cx:'+pin.cx+' cy:'+pin.cy+'</div>';
+
+        var editBtn = document.createElement('button');
+        editBtn.style.cssText = 'padding:0.3rem 0.6rem;border:1px solid var(--color-border);border-radius:6px;'+
+            'background:transparent;color:var(--color-text-secondary);font-size:0.7rem;cursor:pointer;flex-shrink:0;';
+        editBtn.textContent = '✏️';
+        editBtn.title = 'Редагувати';
+        editBtn.addEventListener('click', (function(p){ return function(){ editPin(p); }; })(pin));
+
+        var delBtn = document.createElement('button');
+        delBtn.style.cssText = 'padding:0.3rem 0.6rem;border:1px solid #e0b0b0;border-radius:6px;'+
+            'background:transparent;color:#c0392b;font-size:0.7rem;cursor:pointer;flex-shrink:0;';
+        delBtn.textContent = '🗑️';
+        delBtn.title = 'Видалити';
+        delBtn.addEventListener('click', (function(id){ return function(){
+            pins[currentMapId] = pins[currentMapId].filter(function(p){ return p.id!==id; });
+            renderEditor();
+        }; })(pin.id));
+
+        row.appendChild(num); row.appendChild(info); row.appendChild(editBtn); row.appendChild(delBtn);
+        pinListWrap.appendChild(row);
+    });
+}
+
+function escHtml(s) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ── Modal ─────────────────────────────────────────────────
+function openModal() {
+    modalTitle.value = ''; modalDesc.value = '';
+    pinModal.style.display = 'flex';
+    setTimeout(function(){ modalTitle.focus(); }, 50);
+}
+function closeModal() { pinModal.style.display = 'none'; }
+
+function editPin(pin) {
+    pendingCX = pin.cx; pendingCY = pin.cy;
+    modalTitle.value = pin.title;
+    modalDesc.value  = pin.desc || '';
+    pinModal.style.display = 'flex';
+    document.getElementById('pinModalSave').onclick = function(){
+        var title = modalTitle.value.trim();
+        if (!title){ modalTitle.focus(); return; }
+        pin.title = title; pin.desc = modalDesc.value.trim();
+        closeModal(); renderEditor();
+        // restore default save handler
+        document.getElementById('pinModalSave').onclick = null;
+        document.getElementById('pinModalSave').addEventListener('click', defaultModalSave);
+    };
+}
+
+function defaultModalSave() {
+    var title = modalTitle.value.trim();
+    if (!title){ modalTitle.focus(); return; }
+    var list = pins[currentMapId];
+    var id   = list.length ? Math.max.apply(null, list.map(function(p){return p.id;})) + 1 : 1;
+    list.push({ id:id, cx:pendingCX, cy:pendingCY, title:title, desc:modalDesc.value.trim() });
+    closeModal(); renderEditor();
+}
+document.getElementById('pinModalSave').addEventListener('click', defaultModalSave);
+
+// ── GitHub save ───────────────────────────────────────────
+async function savePins() {
+    var tok = localStorage.getItem('gh_token_dubrovytsia') || '';
+    if (!tok){ showEdStatus('⚠️ Спочатку введіть GitHub токен у розділі налаштувань вище', 'warn'); return; }
+    var file = MAPS_CONFIG[currentMapId].file;
+    var json = JSON.stringify(pins[currentMapId], null, 2);
+    showEdStatus('⏳ Збереження...', 'info');
+    try {
+        var sha = null;
+        var resp = await fetch('https://api.github.com/repos/jerkinsmichael13-stack/Dubrovytsia1/contents/'+file,{
+            headers:{ Authorization:'token '+tok, Accept:'application/vnd.github.v3+json' }
+        });
+        if (resp.ok){ var d = await resp.json(); sha = d.sha; }
+        var body = { message:'Update '+file+' via admin', content:btoa(unescape(encodeURIComponent(json))), branch:'main' };
+        if (sha) body.sha = sha;
+        var put = await fetch('https://api.github.com/repos/jerkinsmichael13-stack/Dubrovytsia1/contents/'+file,{
+            method:'PUT', headers:{ Authorization:'token '+tok, Accept:'application/vnd.github.v3+json', 'Content-Type':'application/json' },
+            body: JSON.stringify(body)
+        });
+        if (put.ok) showEdStatus('✅ Піни збережено на GitHub! Сайт оновиться за ~1 хв.', 'success');
+        else { var e=await put.json(); showEdStatus('❌ '+( e.message||'Помилка'), 'error'); }
+    } catch(err){ showEdStatus('❌ '+err.message, 'error'); }
+}
+
+// ── Load pins from GitHub ─────────────────────────────────
+function loadAllPins() {
+    ['1944','1943'].forEach(function(key){
+        var file = MAPS_CONFIG[key].file;
+        fetch('https://raw.githubusercontent.com/jerkinsmichael13-stack/Dubrovytsia1/main/'+file+'?v='+Date.now())
+            .then(function(r){ return r.ok ? r.json() : []; })
+            .then(function(data){
+                if (Array.isArray(data) && data.length) {
+                    pins[key] = data;
+                    if (key === currentMapId) renderEditor();
+                }
+            })
+            .catch(function(){});
+    });
+}
+
+function showEdStatus(msg, type) {
+    edStatus.className = 'notice notice-'+(type||'info');
+    edStatus.innerHTML = msg;
+    edStatus.style.display = 'block';
+}
+
+// Start
+document.addEventListener('DOMContentLoaded', function(){
+    // Only init after login (adminContent visible)
+    var observer = new MutationObserver(function(muts){
+        muts.forEach(function(m){
+            if (m.target.id==='adminContent' && m.target.style.display!=='none') {
+                init(); observer.disconnect();
+            }
+        });
+    });
+    observer.observe(document.getElementById('adminContent'), { attributes:true, attributeFilter:['style'] });
+});
+
+})();
+</script>
 </html>
