@@ -3,395 +3,284 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Архітектурні пам'ятки Дубровиці — Костел Іоанна Хрестителя">
     <title>Архітектурні пам'ятки — Дубровиця</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-    *, *::before, *::after { box-sizing: border-box; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* ═══ PAGE WRAPPER ═══ */
-    #KOSTEL-PAGE {
-        background: #07060a;
-        color: #f0e8d0;
-        font-family: 'DM Sans', sans-serif;
-    }
+    /* ═══ DARK PAGE ═══ */
+    #KP { background: #07060a; color: #f0e8d0; font-family: 'DM Sans', sans-serif; }
 
-    /* ── Section header ── */
+    /* ── Page header ── */
     .KPH {
         text-align: center;
         padding: 5rem 2rem 3rem;
     }
-    .KPH-EYEBROW {
-        display: inline-flex;
-        align-items: center;
-        gap: .8rem;
+    .KPH-EYE {
+        display: inline-flex; align-items: center; gap: .8rem;
         margin-bottom: 1.2rem;
-        font-size: .58rem;
-        letter-spacing: .3em;
-        text-transform: uppercase;
-        color: #b8902a;
+        font-size: .57rem; letter-spacing: .3em; text-transform: uppercase; color: #b8902a;
     }
-    .KPH-EYEBROW::before,
-    .KPH-EYEBROW::after {
-        content: '';
-        display: block;
-        width: 40px;
-        height: 1px;
+    .KPH-EYE::before, .KPH-EYE::after {
+        content: ''; display: block; width: 38px; height: 1px;
     }
-    .KPH-EYEBROW::before { background: linear-gradient(90deg, transparent, rgba(180,145,40,.55)); }
-    .KPH-EYEBROW::after  { background: linear-gradient(90deg, rgba(180,145,40,.55), transparent); }
-    .KPH-TITLE {
+    .KPH-EYE::before { background: linear-gradient(90deg, transparent, rgba(180,145,40,.5)); }
+    .KPH-EYE::after  { background: linear-gradient(90deg, rgba(180,145,40,.5), transparent); }
+    .KPH-T {
         font-family: 'Cormorant Garamond', serif;
-        font-size: clamp(2.4rem, 5vw, 4rem);
-        font-weight: 300;
-        line-height: 1.05;
-        color: #f5ead8;
-        margin-bottom: .4rem;
+        font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 300; line-height: 1.05;
+        color: #f5ead8; margin-bottom: .4rem;
     }
-    .KPH-TITLE em { font-style: italic; color: #c9a227; }
-    .KPH-SUB {
+    .KPH-T em { font-style: italic; color: #c9a227; }
+    .KPH-S {
         font-family: 'Cormorant Garamond', serif;
-        font-size: clamp(.95rem, 1.8vw, 1.2rem);
-        font-style: italic;
-        color: rgba(245,234,216,.35);
-        margin-bottom: .5rem;
+        font-size: clamp(.95rem, 1.8vw, 1.2rem); font-style: italic;
+        color: rgba(245,234,216,.32); margin-bottom: .5rem;
     }
-    .KPH-META {
-        font-size: .63rem;
-        letter-spacing: .14em;
-        text-transform: uppercase;
-        color: rgba(245,234,216,.2);
+    .KPH-M {
+        font-size: .62rem; letter-spacing: .15em; text-transform: uppercase;
+        color: rgba(245,234,216,.18);
     }
 
-    /* ── Photo wrap — contains image + overlaid pins ── */
-    .KPHOTO-WRAP {
-        position: relative;
-        max-width: 900px;
+    /* ══════════════════════════════════════════
+       ANNOTATED PHOTO STAGE
+       Layout: [left-panel] [photo] [right-panel]
+    ══════════════════════════════════════════ */
+    .KSTAGE {
+        display: grid;
+        /* panels shrink to 0 on small screens */
+        grid-template-columns: 1fr minmax(0, 820px) 1fr;
+        align-items: start;
+        max-width: 1600px;
         margin: 0 auto;
-        padding: 0 1.5rem 0;
-        /* pins are absolute inside this, image defines height */
+        padding: 0 0 2rem;
+        position: relative;
+    }
+
+    /* Photo column */
+    .KPHOTO-COL {
+        position: relative;
+        grid-column: 2;
     }
     .KPHOTO-IMG {
-        display: block;
-        width: 100%;
-        height: auto;
-        border-radius: 6px;
-        filter: contrast(1.05) brightness(.94) saturate(.82);
-        box-shadow: 0 0 0 1px rgba(180,145,40,.1), 0 40px 100px rgba(0,0,0,.85);
-        user-select: none;
-        -webkit-user-drag: none;
+        display: block; width: 100%; height: auto;
+        border-radius: 4px;
+        filter: contrast(1.04) brightness(.93) saturate(.82);
+        box-shadow: 0 0 0 1px rgba(180,145,40,.08), 0 30px 90px rgba(0,0,0,.85);
+        user-select: none; -webkit-user-drag: none;
     }
 
-    /* Overlay sits exactly on the image */
-    .KPINS {
+    /* Pin overlay — JS sets height */
+    .KPINS-OVL {
         position: absolute;
-        top: 0;
-        left: 1.5rem;
-        right: 1.5rem;
-        /* height matched by JS to image rendered height */
+        top: 0; left: 0; right: 0;
         pointer-events: none;
+        overflow: visible;
     }
 
-    /* Single pin */
-    .KPIN {
+    /* Single marker — diamond shape */
+    .KM {
         position: absolute;
         transform: translate(-50%, -50%);
         pointer-events: all;
-        cursor: pointer;
+        cursor: default;
+        z-index: 10;
     }
-    /* Pulse ring */
-    .KPIN-RING {
-        position: absolute;
-        top: 50%; left: 50%;
-        width: 34px; height: 34px;
-        border-radius: 50%;
-        background: rgba(201,162,39,.2);
-        transform: translate(-50%,-50%);
-        animation: kRingPulse 2.8s ease-out infinite;
-        pointer-events: none;
-    }
-    @keyframes kRingPulse {
-        0%   { transform: translate(-50%,-50%) scale(1);   opacity:.75; }
-        75%  { transform: translate(-50%,-50%) scale(2.6); opacity:0; }
-        100% { transform: translate(-50%,-50%) scale(1);   opacity:0; }
-    }
-    /* Gold dot */
-    .KPIN-DOT {
+    /* Diamond */
+    .KM-DIAMOND {
+        width: 18px; height: 18px;
+        background: linear-gradient(135deg, #f5d060, #c9a227);
+        transform: rotate(45deg);
+        box-shadow: 0 0 0 2px rgba(201,162,39,.35), 0 3px 12px rgba(0,0,0,.6);
+        transition: transform .22s, box-shadow .22s;
         position: relative; z-index: 2;
-        width: 24px; height: 24px;
-        border-radius: 50%;
-        background: radial-gradient(circle at 38% 32%, #f5d060, #c9a227);
-        border: 2.5px solid rgba(255,255,255,.9);
-        box-shadow: 0 2px 10px rgba(0,0,0,.55), 0 0 0 3px rgba(201,162,39,.22);
-        display: flex; align-items: center; justify-content: center;
-        font-family: 'DM Sans', sans-serif;
-        font-size: 9.5px; font-weight: 800;
-        color: #1a1000;
-        transition: transform .18s, box-shadow .18s;
     }
-    .KPIN:hover .KPIN-DOT,
-    .KPIN.open   .KPIN-DOT {
-        transform: scale(1.28);
-        box-shadow: 0 4px 20px rgba(0,0,0,.7), 0 0 0 5px rgba(201,162,39,.38);
+    .KM:hover .KM-DIAMOND {
+        transform: rotate(45deg) scale(1.3);
+        box-shadow: 0 0 0 3px rgba(201,162,39,.55), 0 5px 20px rgba(0,0,0,.8);
     }
-
-    /* Tooltip card */
-    .KPIN-TIP {
-        position: absolute;
-        left: 50%;
-        width: 240px;
-        background: rgba(5,3,9,.96);
-        backdrop-filter: blur(18px);
-        border: 1px solid rgba(201,162,39,.28);
-        border-radius: 10px;
-        padding: 14px 16px 13px;
+    /* Subtle pulse on diamond */
+    .KM-PULSE {
+        position: absolute; top: 50%; left: 50%;
+        width: 18px; height: 18px;
+        transform: translate(-50%,-50%) rotate(45deg);
+        background: rgba(201,162,39,.22);
+        animation: dPulse 3s ease-out infinite;
         pointer-events: none;
+    }
+    @keyframes dPulse {
+        0%   { transform: translate(-50%,-50%) rotate(45deg) scale(1);   opacity: .7; }
+        70%  { transform: translate(-50%,-50%) rotate(45deg) scale(2.8); opacity: 0; }
+        100% { transform: translate(-50%,-50%) rotate(45deg) scale(1);   opacity: 0; }
+    }
+
+    /* ── SVG arrows overlay — sits above photo, same size ── */
+    .KARROWS {
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        pointer-events: none;
+        overflow: visible;
+    }
+    .KARROW-LINE {
+        stroke: rgba(201,162,39,.55);
+        stroke-width: 1.2;
+        fill: none;
+        stroke-dasharray: 4 3;
+    }
+
+    /* ── Side panels ── */
+    .KPANEL {
+        padding: 2.5rem 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+    }
+    .KPANEL-L { grid-column: 1; padding-right: 2rem; padding-left: 1.5rem; align-items: flex-end; }
+    .KPANEL-R { grid-column: 3; padding-left: 2rem; padding-right: 1.5rem; align-items: flex-start; }
+
+    /* Info card on panel */
+    .KCARD {
+        width: 100%;
+        max-width: 240px;
+        position: relative;
+        padding: 1.1rem 1.3rem 1.1rem 1rem;
+        border-left: 1px solid rgba(201,162,39,.2);
+        margin-bottom: 2.2rem;
         opacity: 0;
-        visibility: hidden;
-        transition: opacity .2s, transform .2s;
-        box-shadow: 0 14px 48px rgba(0,0,0,.75);
-        text-align: left;
-        z-index: 100;
+        transform: translateX(-12px);
+        transition: opacity .5s ease, transform .5s ease;
     }
-    /* Default: tooltip above pin */
-    .KPIN-TIP {
-        bottom: calc(100% + 16px);
-        transform: translateX(-50%) translateY(8px);
+    .KPANEL-R .KCARD {
+        border-left: none;
+        border-right: 1px solid rgba(201,162,39,.2);
+        padding: 1.1rem 1rem 1.1rem 1.3rem;
+        transform: translateX(12px);
     }
-    /* below variant */
-    .KPIN.tip-below .KPIN-TIP {
-        bottom: auto;
-        top: calc(100% + 16px);
-        transform: translateX(-50%) translateY(-8px);
-    }
-    /* left-edge: shift right */
-    .KPIN.tip-right .KPIN-TIP {
-        left: 0;
-        transform: translateX(0) translateY(8px);
-    }
-    .KPIN.tip-right.tip-below .KPIN-TIP {
-        left: 0;
-        bottom: auto;
-        top: calc(100% + 16px);
-        transform: translateX(0) translateY(-8px);
-    }
-    /* right-edge: shift left */
-    .KPIN.tip-left .KPIN-TIP {
-        left: auto;
-        right: 0;
-        transform: translateX(0) translateY(8px);
-    }
-
-    .KPIN:hover .KPIN-TIP,
-    .KPIN.open  .KPIN-TIP {
+    .KCARD.vis {
         opacity: 1;
-        visibility: visible;
-        transform: translateX(-50%) translateY(0) !important;
+        transform: translateX(0);
     }
-    .KPIN.tip-right:hover .KPIN-TIP,
-    .KPIN.tip-right.open  .KPIN-TIP {
-        transform: translateX(0) translateY(0) !important;
-    }
-    .KPIN.tip-left:hover .KPIN-TIP,
-    .KPIN.tip-left.open  .KPIN-TIP {
-        transform: translateX(0) translateY(0) !important;
-    }
-
-    /* Arrow on tooltip */
-    .KPIN-TIP::after {
+    /* Gold accent dot on the border */
+    .KCARD::before {
         content: '';
         position: absolute;
-        bottom: -6px; left: 50%;
-        transform: translateX(-50%);
-        border: 6px solid transparent;
-        border-top-color: rgba(5,3,9,.96);
-        border-bottom: none;
+        top: 1.1rem; left: -4px;
+        width: 7px; height: 7px;
+        background: #c9a227;
+        transform: rotate(45deg);
     }
-    .KPIN.tip-below .KPIN-TIP::after {
-        bottom: auto; top: -6px;
-        border-top: none;
-        border-bottom: 6px solid rgba(5,3,9,.96);
+    .KPANEL-R .KCARD::before {
+        left: auto; right: -4px;
     }
-    .KPIN.tip-right .KPIN-TIP::after,
-    .KPIN.tip-left  .KPIN-TIP::after {
-        left: 18px; transform: none;
-    }
-
-    .KPIN-TIP-NUM {
-        font-size: .57rem;
-        font-weight: 700;
-        letter-spacing: .15em;
+    .KCARD-LABEL {
+        font-size: .55rem;
+        letter-spacing: .22em;
         text-transform: uppercase;
         color: #c9a227;
-        margin-bottom: 4px;
+        margin-bottom: .4rem;
+        opacity: .8;
     }
-    .KPIN-TIP-TITLE {
+    .KCARD-TITLE {
         font-family: 'Cormorant Garamond', serif;
-        font-size: 1.05rem;
+        font-size: 1rem;
         font-weight: 500;
         color: #f0e6c8;
-        line-height: 1.2;
-        margin-bottom: 6px;
+        line-height: 1.25;
+        margin-bottom: .45rem;
     }
-    .KPIN-TIP-TEXT {
-        font-size: .72rem;
+    .KCARD-TEXT {
+        font-size: .7rem;
         font-weight: 300;
-        line-height: 1.68;
-        color: rgba(240,230,200,.5);
+        line-height: 1.72;
+        color: rgba(240,230,200,.45);
+    }
+
+    /* On small screens — hide panels, show tooltip instead */
+    @media (max-width: 900px) {
+        .KSTAGE { grid-template-columns: 1fr; }
+        .KPHOTO-COL { grid-column: 1; }
+        .KPANEL { display: none; }
+        .KARROWS { display: none; }
     }
 
     /* hint */
     .KHINT {
-        text-align: center;
-        margin: .9rem 0 0;
-        font-size: .57rem;
-        letter-spacing: .2em;
-        text-transform: uppercase;
-        color: rgba(240,230,200,.17);
+        text-align: center; margin: .6rem 0 0;
+        font-size: .57rem; letter-spacing: .2em; text-transform: uppercase;
+        color: rgba(240,230,200,.15);
         display: flex; align-items: center; justify-content: center; gap: .5rem;
     }
 
-    /* ── Stats grid ── */
+    /* ── Stats ── */
     .KSTATS {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 1px;
-        background: rgba(255,255,255,.04);
-        max-width: 900px;
-        margin: 3.5rem auto 0;
+        display: grid; grid-template-columns: repeat(4,1fr);
+        gap: 1px; background: rgba(255,255,255,.04);
+        max-width: 820px; margin: 3.5rem auto 0;
     }
     @media (max-width: 640px) { .KSTATS { grid-template-columns: repeat(2,1fr); } }
     .KST {
-        background: #07060a;
-        padding: 1.8rem 1.5rem;
-        position: relative;
-        transition: background .22s;
-        overflow: hidden;
+        background: #07060a; padding: 1.7rem 1.4rem;
+        position: relative; transition: background .22s; overflow: hidden;
     }
     .KST::before {
-        content: '';
-        position: absolute;
-        top: 0; left: 0; right: 0; height: 1px;
-        background: transparent;
-        transition: background .25s;
+        content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+        background: transparent; transition: background .25s;
     }
     .KST:hover { background: #0e0c07; }
     .KST:hover::before { background: linear-gradient(90deg, transparent, rgba(201,162,39,.45), transparent); }
-    .KST-VAL {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 2.9rem;
-        font-weight: 300;
-        line-height: 1;
+    .KST-V {
+        font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 300; line-height: 1;
         background: linear-gradient(135deg, #c9a227, #edd060);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+        -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
         margin-bottom: .3rem;
     }
-    .KST-KEY {
-        font-size: .6rem;
-        letter-spacing: .13em;
-        text-transform: uppercase;
-        color: rgba(240,230,200,.26);
-        margin-bottom: .3rem;
-    }
-    .KST-DESC {
-        font-size: .7rem;
-        font-weight: 300;
-        line-height: 1.7;
-        color: rgba(240,230,200,.4);
-    }
+    .KST-K { font-size: .58rem; letter-spacing: .13em; text-transform: uppercase; color: rgba(240,230,200,.24); margin-bottom: .3rem; }
+    .KST-D { font-size: .7rem; font-weight: 300; line-height: 1.68; color: rgba(240,230,200,.4); }
 
     /* ── Gallery ── */
-    .KGAL {
-        max-width: 900px;
-        margin: 4rem auto 0;
-        padding: 0 1.5rem 6rem;
-    }
-    .KGAL-HDR {
-        display: flex;
-        align-items: baseline;
-        gap: 1rem;
-        margin-bottom: 1.2rem;
-    }
-    .KGAL-HDR::after {
-        content: ''; flex: 1; height: 1px;
-        background: rgba(255,255,255,.06);
-        align-self: center;
-    }
-    .KGAL-TITLE {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 1.4rem; font-weight: 300; font-style: italic;
-        color: #e0d0a8;
-    }
-    .KGAL-SUB {
-        font-size: .58rem;
-        letter-spacing: .16em;
-        text-transform: uppercase;
-        color: rgba(240,230,200,.2);
-    }
+    .KGAL { max-width: 820px; margin: 4rem auto 0; padding: 0 1.5rem 6rem; }
+    .KGAL-HDR { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 1.2rem; }
+    .KGAL-HDR::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,.06); align-self: center; }
+    .KGAL-TITLE { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 300; font-style: italic; color: #e0d0a8; }
     .KGAL-GRID {
         display: grid;
         grid-template-columns: 1.65fr 1fr 1fr;
         grid-template-rows: 1fr 1fr;
-        gap: .5rem;
-        height: 400px;
+        gap: .5rem; height: 400px;
     }
-    @media (max-width: 640px) {
-        .KGAL-GRID { grid-template-columns: 1fr 1fr; grid-template-rows: auto; height: auto; }
-        .KGAL-MAIN { grid-column: span 2; }
-    }
+    @media (max-width: 640px) { .KGAL-GRID { grid-template-columns: 1fr 1fr; grid-template-rows: auto; height: auto; } .KGAL-MAIN { grid-column: span 2; } }
     .KGAL-ITEM {
         position: relative; overflow: hidden;
         border-radius: 4px; background: #0d0b0a;
-        cursor: pointer;
-        box-shadow: 0 2px 16px rgba(0,0,0,.5);
+        cursor: pointer; box-shadow: 0 2px 16px rgba(0,0,0,.5);
     }
     .KGAL-MAIN { grid-row: span 2; }
-    .KGAL-ITEM img {
-        width: 100%; height: 100%;
-        object-fit: cover; display: block;
-        filter: contrast(1.04) brightness(.96);
-        transition: transform .5s ease, filter .5s ease;
-    }
+    .KGAL-ITEM img { width: 100%; height: 100%; object-fit: cover; display: block; filter: contrast(1.04) brightness(.96); transition: transform .5s ease, filter .5s ease; }
     .KGAL-ITEM:hover img { transform: scale(1.05); filter: contrast(1.07) brightness(1.03); }
-    .KGAL-CAP {
-        position: absolute; bottom: 0; left: 0; right: 0;
-        padding: .6rem .85rem;
-        background: linear-gradient(to top, rgba(0,0,0,.8), transparent);
-        font-size: .6rem; letter-spacing: .07em;
-        color: rgba(255,255,255,.5);
-        opacity: 0; transform: translateY(4px);
-        transition: opacity .28s, transform .28s;
-    }
-    .KGAL-ITEM:hover .KGAL-CAP { opacity: 1; transform: translateY(0); }
 
     /* ── Lightbox ── */
     #KLB {
         position: fixed; inset: 0; z-index: 99999;
         background: rgba(4,2,8,.97);
         display: flex; align-items: center; justify-content: center;
-        opacity: 0; pointer-events: none;
-        transition: opacity .22s;
+        opacity: 0; pointer-events: none; transition: opacity .22s;
     }
     #KLB.on { opacity: 1; pointer-events: all; }
     #KLB img { max-width: 94vw; max-height: 90vh; object-fit: contain; border-radius: 4px; }
     .KLB-X {
         position: absolute; top: 1.2rem; right: 1.4rem;
         width: 42px; height: 42px; border-radius: 50%;
-        background: rgba(255,255,255,.1); border: none;
-        color: #fff; font-size: 1.1rem; cursor: pointer;
-        display: flex; align-items: center; justify-content: center;
-        transition: background .15s;
+        background: rgba(255,255,255,.1); border: none; color: #fff;
+        font-size: 1.1rem; cursor: pointer;
+        display: flex; align-items: center; justify-content: center; transition: background .15s;
     }
     .KLB-X:hover { background: rgba(255,255,255,.22); }
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header class="header">
         <div class="header-container">
             <a href="index.html" class="logo">
@@ -428,7 +317,6 @@
         </div>
     </header>
 
-    <!-- Page Hero -->
     <section class="article-header">
         <div class="container">
             <h1 class="article-title fade-in-up">Архітектурні пам'ятки</h1>
@@ -436,123 +324,115 @@
         </div>
     </section>
 
-    <!-- ═══════════════ KOSTEL SECTION ═══════════════ -->
-    <div id="KOSTEL-PAGE">
+    <div id="KP">
 
+        <!-- Header -->
         <div class="KPH">
-            <div class="KPH-EYEBROW">
-                <span>Пам'ятка архітектури національного значення · №&thinsp;1497</span>
-            </div>
-            <h2 class="KPH-TITLE">Костел <em>Іоанна Хрестителя</em></h2>
-            <p class="KPH-SUB">Найстаріша архітектурна пам'ятка Дубровиці</p>
-            <p class="KPH-META">Збудований 1695–1742 · Стиль рококо · Орден піарів</p>
+            <div class="KPH-EYE"><span>Пам'ятка архітектури національного значення · №&thinsp;1497</span></div>
+            <h2 class="KPH-T">Костел <em>Іоанна Хрестителя</em></h2>
+            <p class="KPH-S">Найстаріша архітектурна пам'ятка Дубровиці</p>
+            <p class="KPH-M">Збудований 1695–1742 · Стиль рококо · Орден піарів</p>
         </div>
 
-        <!-- Photo + pins -->
-        <!--
-            Photo: https://i.imgur.com/Ru7uTkK.jpeg
-            The building occupies roughly the left 55% horizontally,
-            with the main tower centered around x=32%, top of cross ~y=3%.
-            Left tower dome: x≈24%, y≈21%
-            Right (taller) tower dome: x≈40%, y≈9%
-            Left baroque facade: x≈18%, y≈48%
-            Main portal (bottom-center facade): x≈34%, y≈88%
-            Right nave windows: x≈52%, y≈62%
-        -->
-        <div class="KPHOTO-WRAP" id="KPHOTO-WRAP">
-            <img
-                class="KPHOTO-IMG"
-                id="KPHOTO-IMG"
-                src="https://i.imgur.com/Ru7uTkK.jpeg"
-                alt="Костел Іоанна Хрестителя"
-                draggable="false"
-            >
-            <div class="KPINS" id="KPINS">
+        <!-- ═══ STAGE: panels + photo + arrows ═══ -->
+        <div class="KSTAGE" id="KSTAGE">
 
-                <!-- 1 · Орден піарів / замовник — top of right tower -->
-                <div class="KPIN tip-below tip-right" style="left:40%;top:9%;">
-                    <div class="KPIN-RING"></div>
-                    <div class="KPIN-DOT">1</div>
-                    <div class="KPIN-TIP">
-                        <div class="KPIN-TIP-NUM">Будівництво · 1695–1742</div>
-                        <div class="KPIN-TIP-TITLE">Орден піарів</div>
-                        <div class="KPIN-TIP-TEXT">Збудований орденом піарів коштом Яна Кароля Дольського (33 тис. злотих) та графів Плятерів. Консекрований єпископом Франциском Кобельським у 1742 р.</div>
-                    </div>
+            <!-- LEFT PANEL -->
+            <div class="KPANEL KPANEL-L" id="KPANEL-L">
+
+                <div class="KCARD" id="card-A">
+                    <div class="KCARD-LABEL">Будівництво · 1695–1742</div>
+                    <div class="KCARD-TITLE">Орден піарів</div>
+                    <div class="KCARD-TEXT">Збудований орденом піарів коштом Яна Кароля Дольського — 33 тис. злотих. Додаткові кошти надали графи Плятери та скарбник київський В. Прушеневський (50 тис. злотих). Консекрований єпископом Франциском Кобельським у 1742 р.</div>
                 </div>
 
-                <!-- 2 · Ліва вежа / доля при совєтах — left tower dome -->
-                <div class="KPIN tip-below" style="left:24%;top:21%;">
-                    <div class="KPIN-RING"></div>
-                    <div class="KPIN-DOT">2</div>
-                    <div class="KPIN-TIP">
-                        <div class="KPIN-TIP-NUM">1945 — закрито радянською владою</div>
-                        <div class="KPIN-TIP-TITLE">Вежа-дзвіниця</div>
-                        <div class="KPIN-TIP-TEXT">У 1945 р. дзвони зняли, орган розібрали й вивезли. Цінні ікони й майно розграбували. Костел перефарбували з білого у червоний і перетворили на промисловий склад.</div>
-                    </div>
+                <div class="KCARD" id="card-B">
+                    <div class="KCARD-LABEL">Дзвіниця · XVIII ст.</div>
+                    <div class="KCARD-TITLE">Вежа-дзвіниця</div>
+                    <div class="KCARD-TEXT">У 1945 р. радянська влада зняла і вивезла дзвони, розібрала та знищила орган. Цінні ікони, срібне начиння й майно розграбували. Костел перефарбували з білого у червоний і перетворили на промисловий склад.</div>
                 </div>
 
-                <!-- 3 · Бічний фасад / парафія — left baroque facade -->
-                <div class="KPIN tip-right" style="left:18%;top:50%;">
-                    <div class="KPIN-RING"></div>
-                    <div class="KPIN-DOT">3</div>
-                    <div class="KPIN-TIP">
-                        <div class="KPIN-TIP-NUM">Парафія · 1938 р.</div>
-                        <div class="KPIN-TIP-TITLE">1 045 парафіян</div>
-                        <div class="KPIN-TIP-TEXT">До закриття парафія об'єднувала вірян з понад 100 навколишніх сіл: Крупове, Острівці, Мочулище, Воробин та інших. Стиль — рококо, трьохнавна базиліка.</div>
-                    </div>
+                <div class="KCARD" id="card-C">
+                    <div class="KCARD-LABEL">Парафія · 1938 р.</div>
+                    <div class="KCARD-TITLE">1 045 парафіян</div>
+                    <div class="KCARD-TEXT">До закриття парафія охоплювала понад 100 навколишніх сіл — Крупове, Острівці, Мочулище, Воробин та ін. Стиль — рококо. Трьохнавна базиліка з хрестовими склепіннями.</div>
                 </div>
 
-                <!-- 4 · Головний портал — bottom center of facade -->
-                <div class="KPIN" style="left:34%;top:87%;">
-                    <div class="KPIN-RING"></div>
-                    <div class="KPIN-DOT">4</div>
-                    <div class="KPIN-TIP">
-                        <div class="KPIN-TIP-NUM">Відкрито 1702 р.</div>
-                        <div class="KPIN-TIP-TITLE">Головний портал</div>
-                        <div class="KPIN-TIP-TEXT">Відкритий у 1702 р. — до завершення всього будівництва. Перший дерев'яний костел 1684 р. шведи спалили після Полтавської битви у 1709 р.</div>
-                    </div>
+            </div><!-- /KPANEL-L -->
+
+            <!-- PHOTO COLUMN -->
+            <div class="KPHOTO-COL" id="KPHOTO-COL">
+                <img
+                    class="KPHOTO-IMG"
+                    id="KPHOTO-IMG"
+                    src="https://i.imgur.com/Ru7uTkK.jpeg"
+                    alt="Костел Іоанна Хрестителя"
+                    draggable="false"
+                >
+
+                <!-- Diamond markers — % of image -->
+                <!--
+                  Looking at the photo carefully:
+                  The photo shows the building taking up the left ~55% of the frame.
+                  Left tower top dome: ~x=22%, y=20%
+                  Right (main taller) tower dome: ~x=38%, y=8%
+                  Left baroque facade/body mid: ~x=20%, y=45%
+                  Main portal bottom: ~x=33%, y=91%
+                  Right nave body / windows: ~x=57%, y=65%
+                -->
+                <div class="KPINS-OVL" id="KPINS-OVL">
+                    <!-- markers go here, positioned via JS from MARKERS data -->
                 </div>
 
-                <!-- 5 · Вікна / вітраж — right nave -->
-                <div class="KPIN" style="left:52%;top:60%;">
-                    <div class="KPIN-RING"></div>
-                    <div class="KPIN-DOT">5</div>
-                    <div class="KPIN-TIP">
-                        <div class="KPIN-TIP-NUM">Втрачено 1945 р. ✝</div>
-                        <div class="KPIN-TIP-TITLE">Венеційський вітраж</div>
-                        <div class="KPIN-TIP-TEXT">Найцінніший елемент інтер'єру — вітраж, замовлений у Венеції. Знищений радянською владою у 1945 р. Костел повернутий громаді лише у 1992 р.</div>
-                    </div>
+                <!-- SVG arrows drawn by JS -->
+                <svg class="KARROWS" id="KARROWS-SVG" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
+            </div>
+
+            <!-- RIGHT PANEL -->
+            <div class="KPANEL KPANEL-R" id="KPANEL-R">
+
+                <div class="KCARD" id="card-D">
+                    <div class="KCARD-LABEL">Відкрито 1702 р.</div>
+                    <div class="KCARD-TITLE">Головний портал</div>
+                    <div class="KCARD-TEXT">Відкритий у 1702 р. — ще до завершення всього будівництва. Перший дерев'яний костел 1684 р. шведи спалили у 1709 р. під час відступу після Полтавської битви.</div>
                 </div>
 
-            </div><!-- /KPINS -->
-        </div><!-- /KPHOTO-WRAP -->
+                <div class="KCARD" id="card-E">
+                    <div class="KCARD-LABEL">Втрачено 1945 р. ✝</div>
+                    <div class="KCARD-TITLE">Венеційський вітраж</div>
+                    <div class="KCARD-TEXT">Найцінніший елемент інтер'єру — вітраж, замовлений спеціально у Венеції. Знищений радянською владою у 1945 р. разом із закриттям костелу. Відновлення вітражу досі не відбулося.</div>
+                </div>
 
-        <p class="KHINT">
+            </div><!-- /KPANEL-R -->
+
+        </div><!-- /KSTAGE -->
+
+        <p class="KHINT" id="KHINT">
             <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2"/></svg>
-            Наведіть на маркер щоб дізнатись більше
+            Маркери вказують на ключові елементи будівлі
         </p>
 
         <!-- Stats -->
         <div class="KSTATS">
             <div class="KST">
-                <div class="KST-VAL">1684</div>
-                <div class="KST-KEY">Перший костел</div>
-                <div class="KST-DESC">Дерев'яний, збудований коштом Яна Кароля Дольського. Спалений шведами у 1709 р. після Полтавської битви.</div>
+                <div class="KST-V">1684</div>
+                <div class="KST-K">Перший костел</div>
+                <div class="KST-D">Дерев'яний, коштом Дольського. Спалений шведами у 1709 р. після Полтавської битви.</div>
             </div>
             <div class="KST">
-                <div class="KST-VAL">330+</div>
-                <div class="KST-KEY">Років історії</div>
-                <div class="KST-DESC">Пам'ятка архітектури національного значення — охоронний №&thinsp;1497. Найстаріша збережена споруда Дубровиці.</div>
+                <div class="KST-V">330+</div>
+                <div class="KST-K">Років історії</div>
+                <div class="KST-D">Пам'ятка національного значення №&thinsp;1497. Найстаріша збережена споруда Дубровиці.</div>
             </div>
             <div class="KST">
-                <div class="KST-VAL">1045</div>
-                <div class="KST-KEY">Парафіян у 1938 р.</div>
-                <div class="KST-DESC">Понад 100 навколишніх сіл. Після 1945 р. парафію ліквідували, майно конфіскували, будівлю зробили складом.</div>
+                <div class="KST-V">1045</div>
+                <div class="KST-K">Парафіян · 1938</div>
+                <div class="KST-D">Понад 100 навколишніх сіл. Після 1945 р. парафію ліквідовано, будівлю зробили складом.</div>
             </div>
             <div class="KST">
-                <div class="KST-VAL">1992</div>
-                <div class="KST-KEY">Повернення громаді</div>
-                <div class="KST-DESC">Після десятиліть радянського складу — освячений єпископом Маркіяном Трофим'яком у листопаді 1992 р.</div>
+                <div class="KST-V">1992</div>
+                <div class="KST-K">Повернення</div>
+                <div class="KST-D">Освячений єпископом Маркіяном Трофим'яком у листопаді 1992 р. після десятиліть занедбаності.</div>
             </div>
         </div>
 
@@ -560,37 +440,30 @@
         <div class="KGAL">
             <div class="KGAL-HDR">
                 <div class="KGAL-TITLE">Інтер'єр костелу</div>
-                <div class="KGAL-SUB">Архівні фотографії · бл. 1929 р.</div>
             </div>
             <div class="KGAL-GRID">
                 <div class="KGAL-ITEM KGAL-MAIN" onclick="openKLB(this)">
                     <img src="https://i.imgur.com/u6vHC49.jpeg" alt="Головний вівтар" loading="lazy">
-                    <div class="KGAL-CAP">Головний вівтар · образ св. Іоанна Хрестителя пензля Лукаша Хубля</div>
                 </div>
                 <div class="KGAL-ITEM" onclick="openKLB(this)">
                     <img src="https://i.imgur.com/pcuoEmD.jpeg" alt="Бічна нава" loading="lazy">
-                    <div class="KGAL-CAP">Бічна нава · барокове різьблення</div>
                 </div>
                 <div class="KGAL-ITEM" onclick="openKLB(this)">
                     <img src="https://i.imgur.com/JM3Qg4Z.jpeg" alt="Склепіння" loading="lazy">
-                    <div class="KGAL-CAP">Хрестові склепіння нефу</div>
                 </div>
                 <div class="KGAL-ITEM" onclick="openKLB(this)">
                     <img src="https://i.imgur.com/dHKnHPp.jpeg" alt="Орнамент" loading="lazy">
-                    <div class="KGAL-CAP">Різьблений геометричний орнамент</div>
                 </div>
             </div>
         </div>
 
-    </div><!-- /KOSTEL-PAGE -->
+    </div><!-- /#KP -->
 
-    <!-- Lightbox -->
     <div id="KLB">
         <button class="KLB-X" onclick="document.getElementById('KLB').classList.remove('on')">&#x2715;</button>
         <img id="KLB-I" src="" alt="">
     </div>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
@@ -618,45 +491,129 @@
     </footer>
 
     <script>
-    // ── Sync pin overlay height to rendered image height ──
-    function syncPins() {
-        var img  = document.getElementById('KPHOTO-IMG');
-        var pins = document.getElementById('KPINS');
-        if (img && pins) {
-            pins.style.height = img.offsetHeight + 'px';
-        }
-    }
-    var img = document.getElementById('KPHOTO-IMG');
-    img.addEventListener('load', syncPins);
-    window.addEventListener('resize', syncPins);
-    // Run immediately in case image is cached
-    if (img.complete) syncPins();
-    // Also run after fonts/layout settle
-    setTimeout(syncPins, 300);
+    // ══════════════════════════════════════════════════════════════
+    // MARKERS DATA
+    // Each marker: { px, py } = % position on the photo (left, top)
+    // side = 'L' or 'R' — which panel it connects to
+    // cardId = id of the .KCARD element
+    // ══════════════════════════════════════════════════════════════
+    var MARKERS = [
+        // Left panel cards — arrows go from marker LEFT off photo
+        { px: 32, py: 9,  side: 'L', cardId: 'card-A' },  // top of main tower — Орден піарів
+        { px: 22, py: 22, side: 'L', cardId: 'card-B' },  // left tower dome — Дзвіниця
+        { px: 19, py: 47, side: 'L', cardId: 'card-C' },  // left baroque facade — Парафія
+        // Right panel cards — arrows go from marker RIGHT off photo
+        { px: 33, py: 90, side: 'R', cardId: 'card-D' },  // portal bottom
+        { px: 57, py: 62, side: 'R', cardId: 'card-E' },  // right nave windows
+    ];
 
-    // ── Click to toggle pin on mobile ──
-    document.querySelectorAll('.KPIN').forEach(function(pin) {
-        pin.addEventListener('click', function(e) {
-            e.stopPropagation();
-            var isOpen = this.classList.contains('open');
-            document.querySelectorAll('.KPIN').forEach(function(p) { p.classList.remove('open'); });
-            if (!isOpen) this.classList.add('open');
+    var photoEl  = document.getElementById('KPHOTO-IMG');
+    var ovlEl    = document.getElementById('KPINS-OVL');
+    var svgEl    = document.getElementById('KARROWS-SVG');
+    var stageEl  = document.getElementById('KSTAGE');
+    var panelL   = document.getElementById('KPANEL-L');
+    var panelR   = document.getElementById('KPANEL-R');
+    var photoCol = document.getElementById('KPHOTO-COL');
+
+    // Build marker elements
+    MARKERS.forEach(function(m, i) {
+        var el = document.createElement('div');
+        el.className = 'KM';
+        el.id = 'km-' + i;
+        el.style.left = m.px + '%';
+        el.style.top  = m.py + '%';
+        el.style.opacity = '0';
+        el.style.transition = 'opacity .45s ease';
+
+        var pulse = document.createElement('div');
+        pulse.className = 'KM-PULSE';
+
+        var diamond = document.createElement('div');
+        diamond.className = 'KM-DIAMOND';
+
+        el.appendChild(pulse);
+        el.appendChild(diamond);
+        ovlEl.appendChild(el);
+
+        setTimeout(function() { el.style.opacity = '1'; }, 500 + i * 180);
+    });
+
+    // ── Draw SVG arrows ──────────────────────────────────────────
+    // Each arrow: from the marker (in % of photo) to the edge of the photo,
+    // then a short elbow to help point toward the card.
+    // We use percentage-based SVG (viewBox="0 0 100 100" preserveAspectRatio="none").
+    // For left markers: line goes from (px, py) to (0, py) — exits left edge.
+    // For right markers: line goes from (px, py) to (100, py) — exits right edge.
+    // An arrowhead polygon.
+
+    function buildArrows() {
+        // Only draw on wide screens
+        if (window.innerWidth <= 900) return;
+
+        svgEl.innerHTML = '';
+
+        MARKERS.forEach(function(m, i) {
+            var x1 = m.px, y1 = m.py;
+            var x2 = (m.side === 'L') ? 0 : 100;
+            // Slight curve downward for lower markers, up for upper
+            var ymid = y1;
+
+            // Dashed line from marker to edge
+            var line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            line.setAttribute('x1', x1 + '%');
+            line.setAttribute('y1', y1 + '%');
+            line.setAttribute('x2', x2 + '%');
+            line.setAttribute('y2', ymid + '%');
+            line.setAttribute('class', 'KARROW-LINE');
+            svgEl.appendChild(line);
+
+            // Arrowhead at the edge
+            var arr = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+            var ax = parseFloat(x2);
+            var ay = parseFloat(ymid);
+            var sz = 1.2; // arrowhead size in %
+            var pts;
+            if (m.side === 'L') {
+                // pointing left
+                pts = [
+                    (ax - sz*1.8) + '% ' + ay + '%',
+                    (ax)          + '% ' + (ay - sz*.9) + '%',
+                    (ax)          + '% ' + (ay + sz*.9) + '%',
+                ].join(', ');
+            } else {
+                // pointing right
+                pts = [
+                    (ax + sz*1.8) + '% ' + ay + '%',
+                    (ax)          + '% ' + (ay - sz*.9) + '%',
+                    (ax)          + '% ' + (ay + sz*.9) + '%',
+                ].join(', ');
+            }
+            arr.setAttribute('points', pts);
+            arr.setAttribute('fill', 'rgba(201,162,39,.55)');
+            arr.setAttribute('stroke', 'none');
+            svgEl.appendChild(arr);
         });
-    });
-    document.addEventListener('click', function() {
-        document.querySelectorAll('.KPIN').forEach(function(p) { p.classList.remove('open'); });
-    });
+    }
 
-    // ── Stagger pin fade-in ──
-    document.querySelectorAll('.KPIN').forEach(function(pin, i) {
-        pin.style.opacity = '0';
-        setTimeout(function() {
-            pin.style.transition = 'opacity .45s ease';
-            pin.style.opacity = '1';
-        }, 400 + i * 170);
-    });
+    // ── Animate cards into view ───────────────────────────────────
+    function animateCards() {
+        document.querySelectorAll('.KCARD').forEach(function(card, i) {
+            setTimeout(function() { card.classList.add('vis'); }, 300 + i * 200);
+        });
+    }
 
-    // ── Lightbox ──
+    // ── Sync overlay height to rendered photo ─────────────────────
+    function sync() {
+        ovlEl.style.height = photoEl.offsetHeight + 'px';
+        buildArrows();
+    }
+
+    photoEl.addEventListener('load', function() { sync(); animateCards(); });
+    window.addEventListener('resize', sync);
+    if (photoEl.complete) { sync(); animateCards(); }
+    setTimeout(function() { sync(); animateCards(); }, 400);
+
+    // ── Lightbox ──────────────────────────────────────────────────
     function openKLB(el) {
         document.getElementById('KLB-I').src = el.querySelector('img').src;
         document.getElementById('KLB').classList.add('on');
