@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Архітектурні пам'ятки Дубровиці — Костел Іоанна Хрестителя, церкви та історичні будівлі">
+    <title>Архітектурні пам'ятки — Дубровиця</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+    /* ── Intro header ── */
+    .arch-intro {
+        padding: 2rem 0 3rem;
+        background: var(--color-bg, #faf7f2);
+    }
+    [data-theme="dark"] .arch-intro { background: #0a0806; }
+
+    .arch-intro .container { max-width: 820px; }
+
+    .arch-intro p {
+        font-family: 'DM Sans', sans-serif;
+        font-size: .92rem;
+        line-height: 1.85;
+        color: var(--color-text-light, #78716c);
+        margin-bottom: 1rem;
+    }
+
+    /* ── Landmark list cards ── */
+    .landmark-list {
+        padding: 3rem 0 5rem;
+        background: var(--color-bg, #faf7f2);
+        border-top: 1px solid rgba(0,0,0,.07);
+    }
+    [data-theme="dark"] .landmark-list { background: #0a0806; border-color: rgba(255,255,255,.05); }
+
+    .landmark-list .section-title {
+        text-align: center;
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+        font-weight: 400;
+        color: #1c1917;
+        margin-bottom: 2.5rem;
+    }
+    [data-theme="dark"] .landmark-list .section-title { color: #f0e6c8; }
+
+    .landmarks-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        max-width: 1100px;
+        margin: 0 auto;
+    }
+
+    .landmark-card {
+        background: #fff;
+        border: 1px solid #e8e0d4;
+        border-radius: 12px;
+        overflow: hidden;
+        transition: box-shadow .25s, transform .25s;
+        text-decoration: none;
+        color: inherit;
+        display: flex;
+        flex-direction: column;
+    }
+    [data-theme="dark"] .landmark-card { background: #161310; border-color: #2a2520; }
+    .landmark-card:hover { box-shadow: 0 8px 40px rgba(0,0,0,.12); transform: translateY(-3px); }
+
+    .landmark-card-img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        display: block;
+        filter: contrast(1.04) saturate(.88);
+    }
+
+    .landmark-card-body {
+        padding: 1.2rem 1.4rem 1.4rem;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: .4rem;
+    }
+
+    .landmark-card-badge {
+        font-family: 'DM Sans', sans-serif;
+        font-size: .58rem;
+        letter-spacing: .18em;
+        text-transform: uppercase;
+        color: #c9a227;
+    }
+
+    .landmark-card-title {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: #1c1917;
+        line-height: 1.2;
+    }
+    [data-theme="dark"] .landmark-card-title { color: #f0e6c8; }
+
+    .landmark-card-desc {
+        font-family: 'DM Sans', sans-serif;
+        font-size: .76rem;
+        line-height: 1.7;
+        color: #78716c;
+        margin-top: .2rem;
+        flex: 1;
+    }
+    [data-theme="dark"] .landmark-card-desc { color: #9e8e7e; }
+
+    .landmark-card-year {
+        font-family: 'DM Sans', sans-serif;
+        font-size: .68rem;
+        color: #a09080;
+        margin-top: .5rem;
+    }
+
+    .landmark-card-anchor {
+        display: inline-flex;
+        align-items: center;
+        gap: .35rem;
+        margin-top: .8rem;
+        font-family: 'DM Sans', sans-serif;
+        font-size: .72rem;
+        font-weight: 500;
+        color: #c9a227;
+        text-decoration: none;
+        letter-spacing: .04em;
+    }
+    .landmark-card-anchor:hover { color: #a07c10; }
+
+    /* ── Kostel section overrides for page embedding ── */
+    /* The kostel section uses its own dark bg; we preserve that */
+    #KOSTEL { margin: 0; }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <img src="https://i.imgur.com/mXCrjjG.png" alt="Герб" class="logo-img" loading="lazy">
+                <div class="logo-text">
+                    <span class="logo-city">Дубровиця</span>
+                    <span class="logo-subtitle">Цифровий архів</span>
+                </div>
+            </a>
+
+            <nav class="nav" id="mainNav">
+                <a href="index.html" class="nav-link">Головна</a>
+                <a href="history.html" class="nav-link">Історія</a>
+                <a href="photo-archive.html" class="nav-link">Фотоархів</a>
+                <a href="architecture.html" class="nav-link active">Пам'ятки</a>
+                <a href="metrychni-knyhy.html" class="nav-link">Метричні книги</a>
+                <a href="books.html" class="nav-link">Книги</a>
+                <a href="contacts.html" class="nav-link">Контакти</a>
+            </nav>
+
+            <button class="theme-toggle" id="themeToggle" aria-label="Перемкнути тему">
+                <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <svg class="theme-icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </button>
+
+            <button class="mobile-toggle" id="mobileToggle" aria-label="Відкрити меню">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="article-header">
+        <div class="container">
+            <h1 class="article-title fade-in-up">Архітектурні пам'ятки</h1>
+            <p class="article-meta fade-in-up delay-1">
+                Сакральна архітектура · Пам'ятки національного значення · Дубровиця
+            </p>
+        </div>
+    </section>
+
+    <!-- Intro text -->
+    <section class="arch-intro">
+        <div class="container">
+            <p>
+                Дубровиця зберігає унікальну сакральну архітектуру, що охоплює понад три століття будівництва. 
+                Кожна пам'ятка — це не лише художня цінність, а й жива сторінка багатонаціональної та 
+                багатоконфесійної історії міста: католицької, православної та єврейської громад, які 
+                протягом століть жили поруч.
+            </p>
+            <p>
+                На цій сторінці зібрані найважливіші архітектурні об'єкти Дубровиці — з детальними 
+                описами, архівними фотографіями та інтерактивними схемами.
+            </p>
+        </div>
+    </section>
+
+    <!-- Landmarks overview cards -->
+    <section class="landmark-list">
+        <div class="container">
+            <h2 class="section-title">Пам'ятки міста</h2>
+            <div class="landmarks-grid">
+
+                <!-- Kostel -->
+                <div class="landmark-card">
+                    <img class="landmark-card-img" src="https://i.imgur.com/n74FSvK.jpeg" alt="Костел Іоанна Хрестителя" loading="lazy">
+                    <div class="landmark-card-body">
+                        <span class="landmark-card-badge">Пам'ятка національного значення · №1497</span>
+                        <div class="landmark-card-title">Костел Іоанна Хрестителя</div>
+                        <p class="landmark-card-desc">
+                            Найстаріша архітектурна пам'ятка Дубровиці. Збудований орденом піярів у стилі рококо. 
+                            Консекрований у 1742 р. єпископом Кобельським. Закритий радянською владою у 1945 р., 
+                            повернутий громаді у 1992 р.
+                        </p>
+                        <span class="landmark-card-year">📅 1695–1742 · Стиль рококо</span>
+                        <a class="landmark-card-anchor" href="#kostel-section">
+                            Детальний огляд ↓
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Cerkva Rizdva -->
+                <div class="landmark-card">
+                    <img class="landmark-card-img" src="https://i.imgur.com/0HyroRq.jpeg" alt="Церква Різдва Богородиці" loading="lazy">
+                    <div class="landmark-card-body">
+                        <span class="landmark-card-badge">Православна церква</span>
+                        <div class="landmark-card-title">Церква Різдва Богородиці</div>
+                        <p class="landmark-card-desc">
+                            Мурована православна церква, збудована у 1862 році. Помітний архітектурний орієнтир 
+                            у центральній частині міста. Добре видна на аерофотознімку 1944 р. — один з небагатьох 
+                            будинків, що залишився цілим після воєнних руйнувань.
+                        </p>
+                        <span class="landmark-card-year">📅 1862 р. · Цегляна</span>
+                    </div>
+                </div>
+
+                <!-- Mykola -->
+                <div class="landmark-card">
+                    <img class="landmark-card-img" src="https://i.imgur.com/CImFE7S.jpeg" alt="Святомиколаївська церква (аерофото 1944)" loading="lazy">
+                    <div class="landmark-card-body">
+                        <span class="landmark-card-badge">Православна церква</span>
+                        <div class="landmark-card-title">Святомиколаївська церква</div>
+                        <p class="landmark-card-desc">
+                            Одна з найстаріших парафій Дубровиці. Православна церква Святого Миколая 
+                            розташована поблизу берега Горині. Добре видна на аерофотознімку 1944 р. 
+                            як орієнтир у південній частині міста.
+                        </p>
+                        <span class="landmark-card-year">📅 XIX ст.</span>
+                    </div>
+                </div>
+
+                <!-- Gorodyshe -->
+                <div class="landmark-card">
+                    <img class="landmark-card-img" src="https://i.imgur.com/zef8WRy.jpeg" alt="Давнє городище Дубровиці" loading="lazy">
+                    <div class="landmark-card-body">
+                        <span class="landmark-card-badge">Археологічна пам'ятка</span>
+                        <div class="landmark-card-title">Давнє городище (замкова гора)</div>
+                        <p class="landmark-card-desc">
+                            Залишки укріпленого давньоруського городища, де у XII–XIII ст. стояв замок 
+                            Дубровицьких князів. Зруйнований татарами під час навали 1240 р. 
+                            Одне з найстаріших задокументованих поселень на Рівненщині.
+                        </p>
+                        <span class="landmark-card-year">📅 XI–XIV ст. · Давньоруський період</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- KOSTEL DETAILED SECTION                                -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <div id="kostel-section">
+    <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    #KOSTEL{background:#07060a;color:#f0e8d0;font-family:'DM Sans',sans-serif;position:relative;overflow:hidden;}
+    #KOSTEL::before{content:'';position:absolute;inset:0;pointer-events:none;
+      background:radial-gradient(ellipse 55% 35% at 50% 0%,rgba(180,140,50,.09),transparent 70%),
+        radial-gradient(ellipse 40% 25% at 10% 60%,rgba(100,70,30,.06),transparent 60%),
+        radial-gradient(ellipse 40% 25% at 90% 40%,rgba(60,40,80,.06),transparent 60%);}
+    .KH{text-align:center;padding:5.5rem 2rem 3rem;position:relative;}
+    .KE{display:inline-flex;align-items:center;gap:.9rem;margin-bottom:1.5rem;opacity:0;transform:translateY(16px);animation:kUp .7s ease forwards .05s;}
+    .KE::before,.KE::after{content:'';display:block;width:48px;height:1px;}
+    .KE::before{background:linear-gradient(90deg,transparent,rgba(180,145,40,.55));}
+    .KE::after{background:linear-gradient(90deg,rgba(180,145,40,.55),transparent);}
+    .KE-T{font-size:.6rem;letter-spacing:.32em;text-transform:uppercase;color:#b8902a;}
+    .KT1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.6rem,5.5vw,4.4rem);font-weight:300;line-height:1;color:#f5ead8;margin-bottom:.5rem;opacity:0;transform:translateY(18px);animation:kUp .75s ease forwards .18s;}
+    .KT1 em{font-style:italic;color:#c9a227;}
+    .KT2{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,2vw,1.3rem);font-weight:300;font-style:italic;color:rgba(245,234,216,.4);margin-bottom:.8rem;opacity:0;transform:translateY(14px);animation:kUp .7s ease forwards .3s;}
+    .KSUB{font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;color:rgba(245,234,216,.22);opacity:0;animation:kUp .7s ease forwards .42s;}
+    .KSTAGE{position:relative;max-width:1180px;margin:0 auto;padding:0 1.5rem 1.5rem;opacity:0;animation:kUp .8s ease forwards .55s;}
+    .KPHOTO{display:block;width:100%;border-radius:4px;filter:contrast(1.05) brightness(.96) saturate(.88);box-shadow:0 0 0 1px rgba(180,145,40,.1),0 50px 120px rgba(0,0,0,.85);}
+    .KSVG{position:absolute;top:0;left:1.5rem;width:calc(100% - 3rem);height:calc(100% - 1.5rem);overflow:visible;pointer-events:none;}
+    .k-dot{cursor:pointer;pointer-events:all;}
+    .k-dot circle.bg{fill:rgba(7,6,10,.85);stroke:rgba(201,162,39,.45);stroke-width:1;transition:stroke-width .2s,stroke-opacity .2s;}
+    .k-dot circle.inner{fill:url(#dotGrad);transition:r .2s;}
+    .k-dot:hover circle.bg,.k-dot.active circle.bg{stroke-width:1.5;stroke-opacity:1;}
+    .k-dot:hover circle.inner,.k-dot.active circle.inner{r:6;}
+    .k-dot .pulse1{fill:none;stroke:rgba(201,162,39,.5);stroke-width:.8;animation:kPulse 2.8s ease-out infinite;}
+    .k-dot .pulse2{fill:none;stroke:rgba(201,162,39,.25);stroke-width:.8;animation:kPulse 2.8s ease-out infinite .55s;}
+    .k-line{stroke:#c9a227;stroke-width:.7;fill:none;stroke-dasharray:300;stroke-dashoffset:300;transition:stroke-dashoffset .5s ease,opacity .35s;opacity:0;}
+    .k-line.show{stroke-dashoffset:0;opacity:.55;}
+    .k-card{pointer-events:all;cursor:pointer;opacity:0;transition:opacity .3s .08s;}
+    .k-card.show{opacity:1;}
+    .k-card rect{fill:rgba(7,5,10,.92);stroke:rgba(201,162,39,.22);stroke-width:.7;}
+    .k-card text.num{font-family:'DM Sans',sans-serif;font-size:8px;font-weight:600;fill:#c9a227;}
+    .k-card text.title{font-family:'Cormorant Garamond',serif;font-size:11.5px;fill:#f0e6c8;}
+    .k-card text.sub{font-family:'DM Sans',sans-serif;font-size:8.5px;font-weight:300;fill:rgba(240,230,200,.45);}
+    .KBADGE{position:absolute;bottom:2.5rem;right:2.2rem;background:rgba(7,5,10,.9);backdrop-filter:blur(12px);border:1px solid rgba(201,162,39,.18);border-radius:6px;padding:.55rem 1.1rem;pointer-events:none;}
+    .KBADGE span{display:block;font-size:.57rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(201,162,39,.55);}
+    .KBADGE strong{display:block;font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:300;color:#f0e6c8;}
+    .KHINT{text-align:center;margin:.7rem 0;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(240,230,200,.18);display:flex;align-items:center;justify-content:center;gap:.5rem;}
+    .KDRAWER{max-width:1180px;margin:0 auto;padding:0 1.5rem;height:0;overflow:hidden;transition:height .4s cubic-bezier(.4,0,.2,1);}
+    .KDRAWER-IN{border-top:1px solid rgba(201,162,39,.12);padding:1.4rem 0 .4rem;display:grid;grid-template-columns:auto 1fr;gap:1.4rem;align-items:start;}
+    .KD-NUM{font-family:'Cormorant Garamond',serif;font-size:3.2rem;font-weight:300;line-height:1;background:linear-gradient(135deg,#c9a227,#edd060);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;min-width:54px;}
+    .KD-T{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:400;color:#f0e6c8;margin-bottom:.35rem;}
+    .KD-D{font-size:.74rem;font-weight:300;line-height:1.78;color:rgba(240,230,200,.5);max-width:680px;}
+    .KD-TAG{display:inline-block;margin-top:.5rem;font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:#c9a227;opacity:.6;}
+    .KFACTS{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.035);max-width:1180px;margin:3rem auto 0;padding:0 1.5rem;opacity:0;animation:kUp .8s ease forwards .72s;}
+    @media(max-width:760px){.KFACTS{grid-template-columns:repeat(2,1fr);}}
+    .KF{background:#07060a;padding:1.6rem 1.4rem;position:relative;transition:background .2s;overflow:hidden;}
+    .KF::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(201,162,39,0),transparent);transition:background .25s;}
+    .KF:hover{background:#0d0b07;}
+    .KF:hover::before{background:linear-gradient(90deg,transparent,rgba(201,162,39,.5),transparent);}
+    .KF-VAL{font-family:'Cormorant Garamond',serif;font-size:2.6rem;font-weight:300;line-height:1;background:linear-gradient(135deg,#c9a227,#edd060);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.3rem;}
+    .KF-K{font-size:.63rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(240,230,200,.28);margin-bottom:.3rem;}
+    .KF-D{font-size:.71rem;font-weight:300;line-height:1.65;color:rgba(240,230,200,.42);}
+    .KGAL{max-width:1180px;margin:3.5rem auto 0;padding:0 1.5rem 5.5rem;opacity:0;animation:kUp .8s ease forwards .88s;}
+    .KGAL-HDR{display:flex;align-items:baseline;gap:1.2rem;margin-bottom:1.4rem;}
+    .KGAL-HDR::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.055);align-self:center;}
+    .KGAL-TIT{font-family:'Cormorant Garamond',serif;font-size:1.55rem;font-weight:300;font-style:italic;color:#e0d0a8;}
+    .KGAL-SUB{font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(240,230,200,.22);}
+    .KGRID{display:grid;grid-template-columns:1.7fr 1fr 1fr;grid-template-rows:1fr 1fr;gap:.55rem;height:480px;}
+    @media(max-width:700px){.KGRID{grid-template-columns:1fr 1fr;grid-template-rows:auto;height:auto;}.KGRID-A{grid-column:span 2;}}
+    .KGI{position:relative;overflow:hidden;border-radius:3px;background:#0d0b0a;cursor:pointer;box-shadow:0 3px 20px rgba(0,0,0,.5);}
+    .KGRID-A{grid-row:span 2;}
+    .KGI img{width:100%;height:100%;object-fit:cover;display:block;filter:contrast(1.04) brightness(.97);transition:transform .55s ease,filter .55s ease;}
+    .KGI:hover img{transform:scale(1.05);filter:contrast(1.07) brightness(1.03);}
+    .KGICAP{position:absolute;bottom:0;left:0;right:0;padding:.7rem .9rem;background:linear-gradient(to top,rgba(0,0,0,.82),transparent);font-size:.62rem;letter-spacing:.09em;color:rgba(255,255,255,.55);opacity:0;transform:translateY(5px);transition:opacity .3s,transform .3s;z-index:2;}
+    .KGI:hover .KGICAP{opacity:1;transform:translateY(0);}
+    #KLB{position:fixed;inset:0;z-index:99999;background:rgba(4,2,8,.97);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .24s;}
+    #KLB.on{opacity:1;pointer-events:all;}
+    #KLB img{max-width:94vw;max-height:90vh;object-fit:contain;border-radius:3px;box-shadow:0 20px 80px rgba(0,0,0,.8);}
+    .KLB-X{position:absolute;top:1.2rem;right:1.4rem;width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.1);border:none;color:#fff;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s;}
+    .KLB-X:hover{background:rgba(255,255,255,.22);}
+    @keyframes kUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+    @keyframes kPulse{0%{r:11;opacity:.6;}80%{r:28;opacity:0;}100%{r:11;opacity:0;}}
+    </style>
+
+    <section id="KOSTEL">
+
+    <div class="KH">
+      <div class="KE"><span class="KE-T">Пам'ятка архітектури національного значення &middot; №&thinsp;1497</span></div>
+      <h2 class="KT1">Костел <em>Іоанна Хрестителя</em></h2>
+      <p class="KT2">Найстаріша архітектурна пам'ятка Дубровиці</p>
+      <p class="KSUB">Збудований 1695–1742 &middot; Стиль рококо &middot; Орден піарів</p>
+    </div>
+
+    <div class="KSTAGE" id="KSTAGE">
+      <img class="KPHOTO" id="KIMG" src="https://i.imgur.com/Ru7uTkK.jpeg" alt="Костел Іоанна Хрестителя" draggable="false">
+
+      <svg class="KSVG" id="KSVG" viewBox="0 0 1000 660" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="dotGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#f0c840"/>
+            <stop offset="100%" stop-color="#c9a227"/>
+          </linearGradient>
+        </defs>
+
+        <!-- ① Left tower -->
+        <g class="k-dot" data-id="0" transform="translate(192,98)">
+          <circle class="pulse1" cx="0" cy="0" r="11"/>
+          <circle class="pulse2" cx="0" cy="0" r="11"/>
+          <circle class="bg" cx="0" cy="0" r="13"/>
+          <circle class="inner" cx="0" cy="0" r="4"/>
+        </g>
+        <line class="k-line" id="kl0" x1="179" y1="98" x2="12" y2="160"/>
+        <g class="k-card" id="kc0">
+          <rect x="2" y="145" width="162" height="72" rx="7"/>
+          <text class="num" x="12" y="162">①</text>
+          <text class="title" x="26" y="162">Ліва вежа-дзвіниця</text>
+          <text class="sub" x="12" y="178">Двоярусна, квадратна у плані.</text>
+          <text class="sub" x="12" y="192">Барокове кулясте ребристе</text>
+          <text class="sub" x="12" y="206">завершення · XVIII ст.</text>
+        </g>
+
+        <!-- ② Central pediment -->
+        <g class="k-dot" data-id="1" transform="translate(498,58)">
+          <circle class="pulse1" cx="0" cy="0" r="11"/>
+          <circle class="pulse2" cx="0" cy="0" r="11"/>
+          <circle class="bg" cx="0" cy="0" r="13"/>
+          <circle class="inner" cx="0" cy="0" r="4"/>
+        </g>
+        <line class="k-line" id="kl1" x1="498" y1="45" x2="498" y2="10"/>
+        <g class="k-card" id="kc1">
+          <rect x="374" y="-55" width="250" height="58" rx="7"/>
+          <text class="num" x="384" y="-38">②</text>
+          <text class="title" x="398" y="-38">Центральний фронтон</text>
+          <text class="sub" x="384" y="-22">Головна вертикальна домінанта фасаду.</text>
+          <text class="sub" x="384" y="-8">Характерний контраст веж і фронтону</text>
+        </g>
+
+        <!-- ③ Right tower -->
+        <g class="k-dot" data-id="2" transform="translate(800,92)">
+          <circle class="pulse1" cx="0" cy="0" r="11"/>
+          <circle class="pulse2" cx="0" cy="0" r="11"/>
+          <circle class="bg" cx="0" cy="0" r="13"/>
+          <circle class="inner" cx="0" cy="0" r="4"/>
+        </g>
+        <line class="k-line" id="kl2" x1="813" y1="92" x2="928" y2="148"/>
+        <g class="k-card" id="kc2">
+          <rect x="836" y="133" width="155" height="72" rx="7"/>
+          <text class="num" x="846" y="150">③</text>
+          <text class="title" x="860" y="150">Права вежа</text>
+          <text class="sub" x="846" y="166">Дзвіниця симетрична до лівої.</text>
+          <text class="sub" x="846" y="180">Дзвони та орган вивезені</text>
+          <text class="sub" x="846" y="194">радянською владою у 1945 р.</text>
+        </g>
+
+        <!-- ④ Pilasters -->
+        <g class="k-dot" data-id="3" transform="translate(338,305)">
+          <circle class="pulse1" cx="0" cy="0" r="11"/>
+          <circle class="pulse2" cx="0" cy="0" r="11"/>
+          <circle class="bg" cx="0" cy="0" r="13"/>
+          <circle class="inner" cx="0" cy="0" r="4"/>
+        </g>
+        <line class="k-line" id="kl3" x1="325" y1="305" x2="88" y2="330"/>
+        <g class="k-card" id="kc3">
+          <rect x="0" y="308" width="178" height="82" rx="7"/>
+          <text class="num" x="10" y="325">④</text>
+          <text class="title" x="24" y="325">Пілястри &middot; Трьохнавна базиліка</text>
+          <text class="sub" x="10" y="341">Кожен ярус розчленований</text>
+          <text class="sub" x="10" y="355">пілястрами. Хрестові склепіння</text>
+          <text class="sub" x="10" y="369">середніх та бічних нав.</text>
+          <text class="sub" x="10" y="383">Підлога на вапні з яєчних білків</text>
+        </g>
+
+        <!-- ⑤ Main portal -->
+        <g class="k-dot" data-id="4" transform="translate(497,570)">
+          <circle class="pulse1" cx="0" cy="0" r="11"/>
+          <circle class="pulse2" cx="0" cy="0" r="11"/>
+          <circle class="bg" cx="0" cy="0" r="13"/>
+          <circle class="inner" cx="0" cy="0" r="4"/>
+        </g>
+        <line class="k-line" id="kl4" x1="497" y1="583" x2="497" y2="650"/>
+        <g class="k-card" id="kc4">
+          <rect x="372" y="646" width="252" height="58" rx="7"/>
+          <text class="num" x="382" y="662">⑤</text>
+          <text class="title" x="396" y="662">Головний портал</text>
+          <text class="sub" x="382" y="678">Відкритий 1702 р. коштом Дольського</text>
+          <text class="sub" x="382" y="692">та графів Плятерів · 33 тис. злотих</text>
+        </g>
+
+        <!-- ⑥ Windows / Venice stained glass -->
+        <g class="k-dot" data-id="5" transform="translate(670,375)">
+          <circle class="pulse1" cx="0" cy="0" r="11"/>
+          <circle class="pulse2" cx="0" cy="0" r="11"/>
+          <circle class="bg" cx="0" cy="0" r="13"/>
+          <circle class="inner" cx="0" cy="0" r="4"/>
+        </g>
+        <line class="k-line" id="kl5" x1="683" y1="375" x2="888" y2="390"/>
+        <g class="k-card" id="kc5">
+          <rect x="838" y="362" width="158" height="82" rx="7"/>
+          <text class="num" x="848" y="379">⑥</text>
+          <text class="title" x="862" y="379">Вікна бічної нави</text>
+          <text class="sub" x="848" y="395">Венеційський вітраж —</text>
+          <text class="sub" x="848" y="409">знищений у 1945 р. ✝</text>
+          <text class="sub" x="848" y="423">Костел перефарбований</text>
+          <text class="sub" x="848" y="437">з білого на червоний</text>
+        </g>
+      </svg>
+
+      <div class="KBADGE">
+        <span>Архітектурний стиль</span>
+        <strong>Рококо</strong>
+      </div>
+    </div>
+
+    <div class="KHINT">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2"/></svg>
+      Натисніть на маркер, щоб дізнатись більше
+    </div>
+
+    <!-- INFO DRAWER -->
+    <div class="KDRAWER" id="KDRAWER">
+      <div class="KDRAWER-IN">
+        <div class="KD-NUM" id="KD-NUM">①</div>
+        <div>
+          <div class="KD-T" id="KD-T"></div>
+          <div class="KD-D" id="KD-D"></div>
+          <span class="KD-TAG" id="KD-TAG"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- FACTS -->
+    <div class="KFACTS">
+      <div class="KF">
+        <div class="KF-VAL">1684</div>
+        <div class="KF-K">Перший костел</div>
+        <div class="KF-D">Дерев'яний, коштом Яна Кароля Дольського. Спалений шведами у 1709 р. по дорозі з Полтавської битви.</div>
+      </div>
+      <div class="KF">
+        <div class="KF-VAL">330+</div>
+        <div class="KF-K">Років історії</div>
+        <div class="KF-D">Найстаріша архітектурна пам'ятка Дубровиці. Пам'ятка архітектури національного значення &mdash; охоронний №&thinsp;1497.</div>
+      </div>
+      <div class="KF">
+        <div class="KF-VAL">1045</div>
+        <div class="KF-K">Парафіян у 1938 р.</div>
+        <div class="KF-D">Понад 100 навколишніх населених пунктів, включно з Крупове, Острівці, Мочулище та Воробин.</div>
+      </div>
+      <div class="KF">
+        <div class="KF-VAL">1992</div>
+        <div class="KF-K">Повернення</div>
+        <div class="KF-D">Після десятиліть радянського складу — освячений єпископом Маркіяном Трофим'яком у листопаді 1992 р.</div>
+      </div>
+    </div>
+
+    <!-- GALLERY -->
+    <div class="KGAL">
+      <div class="KGAL-HDR">
+        <div>
+          <div class="KGAL-TIT">Інтер'єр костелу</div>
+          <div class="KGAL-SUB">Архівні фотографії &middot; бл. 1929 р.</div>
+        </div>
+      </div>
+      <div class="KGRID">
+        <div class="KGRID-A KGI" onclick="openKLB(this)">
+          <img src="https://i.imgur.com/u6vHC49.jpeg" alt="Головний вівтар" loading="lazy">
+          <div class="KGICAP">Головний вівтар &middot; образ св. Іоанна Хрестителя роботи Лукаша Хубля пережив радянські часи</div>
+        </div>
+        <div class="KGI" onclick="openKLB(this)">
+          <img src="https://i.imgur.com/pcuoEmD.jpeg" alt="Бічний вівтар" loading="lazy">
+          <div class="KGICAP">Бічна нава &middot; різьблене барокове оздоблення</div>
+        </div>
+        <div class="KGI" onclick="openKLB(this)">
+          <img src="https://i.imgur.com/JM3Qg4Z.jpeg" alt="Склепіння" loading="lazy">
+          <div class="KGICAP">Хрестові склепіння нефу &middot; різдвяні сосни</div>
+        </div>
+        <div class="KGI" onclick="openKLB(this)">
+          <img src="https://i.imgur.com/dHKnHPp.jpeg" alt="Деталь" loading="lazy">
+          <div class="KGICAP">Клячник із різьбленим геометричним орнаментом</div>
+        </div>
+      </div>
+    </div>
+
+    </section>
+    </div>
+    <!-- ═══ END KOSTEL SECTION ═══ -->
+
+    <div id="KLB">
+      <button class="KLB-X" onclick="document.getElementById('KLB').classList.remove('on')">&#x2715;</button>
+      <img id="KLB-I" src="" alt="">
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4 class="footer-title">Дубровиця</h4>
+                    <p class="footer-text">
+                        Цифровий архів історичної спадщини міста Дубровиця,
+                        Сарненський район, Рівненська область, Україна.
+                    </p>
+                </div>
+                <div class="footer-section">
+                    <h4 class="footer-title">Навігація</h4>
+                    <nav class="footer-nav">
+                        <a href="history.html">Історія</a>
+                        <a href="photo-archive.html">Фотоархів</a>
+                        <a href="architecture.html">Пам'ятки</a>
+                        <a href="metrychni-knyhy.html">Метричні книги</a>
+                        <a href="books.html">Книги</a>
+                    </nav>
+                </div>
+                <div class="footer-section">
+                    <h4 class="footer-title">Контакти</h4>
+                    <p class="footer-text">
+                        Маєте матеріали або пропозиції?<br>
+                        <a href="contacts.html" class="footer-link">Зв'яжіться з нами</a>
+                    </p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Дубровиця. Цифровий архів.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    var PINS=[
+      {num:'①',title:'Ліва вежа-дзвіниця',desc:'Двоярусна, квадратна у плані вежа, завершена барокowym кулястим ребристим верхом. Нижній ярус глухий, верхній — з арковими прольотами для дзвонів. Разом з правою вежею формує симетричний фасад костелу.',tag:'Архітектура рококо · XVIII ст.'},
+      {num:'②',title:'Центральний фронтон',desc:'Високий фронтон по центральній осі — головна вертикальна домінанта фасаду. Ефектно контрастує зі стриманими формами бічних веж, створюючи характерний для рококо динамічний силует.',tag:'Збудований 1695–1742 рр.'},
+      {num:'③',title:'Права вежа-дзвіниця',desc:'Дзвіниця, симетрична до лівої. За радянської влади дзвони зняли, орган розібрали й вивезли у невідомому напрямку. Цінні ікони і церковне приладдя розікрали. Костел перефарбували з білого у червоний.',tag:'Пошкоджена у 1945 р.'},
+      {num:'④',title:'Пілястри · Трьохнавна базиліка',desc:'Кожен ярус фасаду розчленований пілястрами. Внутрішнім стовпам відповідають пілястри бічних фасадів — єдина конструктивна система. Середні та бічні нави перекриті хрестовими склепіннями. Підлога оздоблена керамічними кахлями на вапняному розчині, гашеному сирими яйцями.',tag:'Інтер\'єр рококо'},
+      {num:'⑤',title:'Головний портал',desc:'Відкритий ще у 1702 р. — до завершення всього будівництва. Костел збудовано на кошти Яна Кароля Дольського (33 тис. злотих), графів Плятерів, а також скарбника київського В. Прушеневського (50 тис. злотих). Консекрований єпископом Франциском Кобельським у 1742 р.',tag:'Відкрито 1702 · Консекровано 1742'},
+      {num:'⑥',title:'Вікна та втрачений венеційський вітраж',desc:'Найціннішим об\'єктом інтер\'єру був вітраж, виготовлений на замовлення у Венеції. Радянська влада закрила костел у 1945 р., перефарбувала в червоний і зробила промисловий склад. Вітраж тоді ж знищено назавжди.',tag:'Венеційський вітраж знищений 1945 р. ✝'}
+    ];
+
+    var drawer=document.getElementById('KDRAWER');
+    var activeId=null;
+
+    function openDrawer(id){
+      var p=PINS[id];
+      document.getElementById('KD-NUM').textContent=p.num;
+      document.getElementById('KD-T').textContent=p.title;
+      document.getElementById('KD-D').textContent=p.desc;
+      document.getElementById('KD-TAG').textContent=p.tag;
+      drawer.style.height='0';
+      requestAnimationFrame(function(){
+        drawer.style.height=drawer.scrollHeight+'px';
+        setTimeout(function(){drawer.style.height='auto';},420);
+      });
+    }
+    function closeDrawer(){
+      drawer.style.height=drawer.scrollHeight+'px';
+      requestAnimationFrame(function(){
+        requestAnimationFrame(function(){drawer.style.height='0';});
+      });
+    }
+    function showAnn(id){
+      document.getElementById('kl'+id).classList.add('show');
+      document.getElementById('kc'+id).classList.add('show');
+    }
+    function hideAnn(id){
+      document.getElementById('kl'+id).classList.remove('show');
+      document.getElementById('kc'+id).classList.remove('show');
+    }
+
+    document.querySelectorAll('.k-dot').forEach(function(dot){
+      dot.addEventListener('click',function(e){
+        e.stopPropagation();
+        var id=parseInt(this.getAttribute('data-id'));
+        if(activeId===id){
+          this.classList.remove('active');hideAnn(id);closeDrawer();activeId=null;return;
+        }
+        if(activeId!==null){
+          document.querySelector('.k-dot[data-id="'+activeId+'"]').classList.remove('active');
+          hideAnn(activeId);
+        }
+        this.classList.add('active');showAnn(id);openDrawer(id);activeId=id;
+      });
+    });
+    document.addEventListener('click',function(){
+      if(activeId!==null){
+        document.querySelector('.k-dot[data-id="'+activeId+'"]').classList.remove('active');
+        hideAnn(activeId);closeDrawer();activeId=null;
+      }
+    });
+
+    // stagger pin reveal
+    document.querySelectorAll('.k-dot').forEach(function(dot,i){
+      dot.style.opacity='0';
+      setTimeout(function(){
+        dot.style.transition='opacity .45s ease';dot.style.opacity='1';
+      },700+i*140);
+    });
+
+    // lightbox
+    function openKLB(el){
+      document.getElementById('KLB-I').src=el.querySelector('img').src;
+      document.getElementById('KLB').classList.add('on');
+    }
+    document.getElementById('KLB').addEventListener('click',function(e){if(e.target===this)this.classList.remove('on');});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape')document.getElementById('KLB').classList.remove('on');});
+
+    // scroll reveal
+    if('IntersectionObserver' in window){
+      var io=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting)e.target.style.animationPlayState='running';});},{threshold:.07});
+      document.querySelectorAll('.KE,.KT1,.KT2,.KSUB,.KSTAGE,.KFACTS,.KGAL').forEach(function(el){el.style.animationPlayState='paused';io.observe(el);});
+    }
+    </script>
+
+    <script src="script.js"></script>
+</body>
+</html>
