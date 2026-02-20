@@ -962,7 +962,274 @@
     </section>
     <!-- ═══ END COMPARISON SLIDER ═══ -->
 
-        <!-- Timeline Preview -->
+    <!-- ═══ PLATER ESTATE SECTION ═══ -->
+    <section id="PLTR">
+    <style>
+    #PLTR{padding:5rem 0 6rem;background:#0a0907;position:relative;overflow:hidden;}
+    #PLTR::before{content:'';position:absolute;inset:0;
+      background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(139,90,43,.08) 0%,transparent 70%);
+      pointer-events:none;}
+    #PLTR *{box-sizing:border-box;}
+    .PW{max-width:1240px;margin:0 auto;padding:0 2rem;}
+
+    /* header */
+    .PH{text-align:center;margin-bottom:3rem;}
+    .PE{display:inline-flex;align-items:center;gap:.75rem;margin-bottom:1.2rem;}
+    .PE::before,.PE::after{content:'';display:block;width:32px;height:1px;}
+    .PE::before{background:linear-gradient(90deg,transparent,rgba(139,90,43,.6));}
+    .PE::after{background:linear-gradient(90deg,rgba(139,90,43,.6),transparent);}
+    .PE span{font-family:'DM Sans',sans-serif;font-size:.65rem;letter-spacing:.28em;text-transform:uppercase;color:#a06830;}
+    .PT{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,4vw,3.2rem);font-weight:300;
+        color:#f0e6c8;line-height:1.1;margin:0 0 .6rem;}
+    .PT em{font-style:italic;color:#c8924a;}
+    .PSB{font-family:'DM Sans',sans-serif;font-size:.8rem;letter-spacing:.1em;color:rgba(240,230,200,.35);margin:0;}
+
+    /* year strip */
+    .PYR{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:1.5rem;margin:0 0 2rem;}
+    .PYB{display:flex;flex-direction:column;gap:.2rem;}
+    .PYB.pr{text-align:right;}
+    .PYB .py{font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:300;line-height:1;
+             background:linear-gradient(135deg,#c8924a,#e8b870);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+    .PYB.pr .py{background:linear-gradient(135deg,#6aadf5,#a8d4ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+    .PYB .pl{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(240,230,200,.3);}
+    .PYB .pd{font-size:.72rem;font-family:'DM Sans',sans-serif;color:rgba(240,230,200,.5);margin-top:.1rem;}
+    .PYD{text-align:center;font-size:1.4rem;color:rgba(200,146,74,.3);}
+
+    /* slider frame — same as CMP but separate IDs */
+    .PSF{position:relative;width:100%;aspect-ratio:16/9;border-radius:3px;overflow:hidden;
+         cursor:ew-resize;user-select:none;-webkit-user-select:none;
+         box-shadow:0 0 0 1px rgba(200,146,74,.12),0 30px 80px rgba(0,0,0,.7);}
+    @media(max-width:600px){.PSF{aspect-ratio:3/2;}}
+    .PSF .pb{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;display:block;
+             filter:saturate(1.1) contrast(1.05) brightness(1.02);}
+    .PSF .po{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;display:block;
+             clip-path:inset(0 50% 0 0);will-change:clip-path;transform:translateZ(0);
+             filter:contrast(1.15) brightness(1.08) saturate(0.04);}
+    .PSF::after{content:'';position:absolute;inset:0;
+      background:radial-gradient(ellipse 100% 100% at 50% 50%,transparent 55%,rgba(0,0,0,.45) 100%);
+      pointer-events:none;z-index:5;}
+    .PDL{position:absolute;top:0;bottom:0;left:50%;z-index:15;pointer-events:none;
+         transform:translateX(-50%);width:1px;
+         background:linear-gradient(to bottom,transparent 0%,rgba(255,255,255,.15) 4%,rgba(255,255,255,.9) 20%,#fff 50%,rgba(255,255,255,.9) 80%,rgba(255,255,255,.15) 96%,transparent 100%);}
+    .PDH{position:absolute;top:50%;left:50%;z-index:20;
+         transform:translate(-50%,-50%);pointer-events:none;
+         display:flex;flex-direction:column;align-items:center;gap:0;}
+    .PDH::before,.PDH::after{content:'';display:block;width:1px;height:28px;background:rgba(255,255,255,.7);}
+    .PDISC{width:44px;height:44px;border-radius:50%;
+           background:linear-gradient(135deg,#fff 0%,#f5ead0 100%);
+           box-shadow:0 2px 20px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.4);
+           display:flex;align-items:center;justify-content:center;transition:transform .15s;}
+    .PSF.pdrag .PDISC{transform:scale(1.12);}
+    .PDISC svg{width:18px;height:18px;fill:#1a0e00;opacity:.7;}
+    .PCLB{position:absolute;z-index:16;pointer-events:none;}
+    .PCLB.pll{top:1.2rem;left:1.2rem;}
+    .PCLB.plr{top:1.2rem;right:1.2rem;text-align:right;}
+    .PCLB .pcy{display:block;font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:300;line-height:1;
+               text-shadow:0 0 20px rgba(0,0,0,1),0 2px 8px rgba(0,0,0,1);}
+    .PCLB.pll .pcy{color:#e8c080;}
+    .PCLB.plr .pcy{color:#a8d8ff;}
+    .PCLB .pcs{display:block;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;
+               color:#fff;margin-top:.15rem;font-weight:500;
+               text-shadow:0 1px 8px rgba(0,0,0,1),0 0 12px rgba(0,0,0,1);}
+    .PIP{position:absolute;bottom:1.4rem;left:50%;transform:translateX(-50%);z-index:20;
+         background:rgba(0,0,0,.6);backdrop-filter:blur(12px);
+         border:1px solid rgba(255,255,255,.08);border-radius:100px;
+         padding:.45rem 1.2rem .45rem 1rem;
+         display:flex;align-items:center;gap:.6rem;
+         font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.4);
+         pointer-events:none;transition:opacity .5s;}
+    .PIP svg{width:14px;height:14px;opacity:.5;flex-shrink:0;}
+    .PSF.pmoved .PIP{opacity:0;}
+
+    /* fact cards */
+    .POBS{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:1px;
+          background:rgba(255,255,255,.04);border-radius:0 0 3px 3px;overflow:hidden;}
+    @media(max-width:900px){.POBS{grid-template-columns:repeat(2,1fr);}}
+    @media(max-width:500px){.POBS{grid-template-columns:1fr;}}
+    .POB{padding:1.6rem 1.4rem;background:#0a0907;position:relative;overflow:hidden;transition:background .22s;}
+    .POB::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+                 background:linear-gradient(90deg,transparent,rgba(200,146,74,.0),transparent);transition:background .22s;}
+    .POB:hover{background:#110e08;}
+    .POB:hover::before{background:linear-gradient(90deg,transparent,rgba(200,146,74,.5),transparent);}
+    .POI{font-size:1.4rem;margin-bottom:.7rem;display:block;}
+    .POT{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:500;color:#e8c890;margin-bottom:.4rem;line-height:1.2;}
+    .POD{font-size:.73rem;font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.7;color:rgba(240,230,200,.38);}
+
+    /* photo gallery */
+    .PGL{margin-top:3rem;}
+    .PGLH{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:300;color:#e0d0a8;
+          margin:0 0 1.2rem;display:flex;align-items:center;gap:.8rem;}
+    .PGLH::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.06);}
+    .PGRID{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;}
+    @media(max-width:700px){.PGRID{grid-template-columns:1fr 1fr;}}
+    @media(max-width:420px){.PGRID{grid-template-columns:1fr;}}
+    .PGITEM{position:relative;border-radius:3px;overflow:hidden;cursor:pointer;
+            aspect-ratio:4/3;background:#111;
+            box-shadow:0 2px 12px rgba(0,0,0,.4);}
+    .PGITEM img{width:100%;height:100%;object-fit:cover;display:block;
+                filter:contrast(1.05) brightness(1.02);
+                transition:transform .4s ease,filter .4s ease;}
+    .PGITEM:hover img{transform:scale(1.04);filter:contrast(1.08) brightness(1.05);}
+    .PGCAP{position:absolute;bottom:0;left:0;right:0;padding:.7rem .9rem;
+           background:linear-gradient(to top,rgba(0,0,0,.85) 0%,transparent 100%);
+           font-family:'DM Sans',sans-serif;font-size:.65rem;letter-spacing:.08em;
+           color:rgba(255,255,255,.6);line-height:1.4;}
+
+    /* lightbox */
+    #PLB{position:fixed;inset:0;z-index:99999;background:rgba(4,3,2,.96);
+         display:flex;align-items:center;justify-content:center;
+         opacity:0;pointer-events:none;transition:opacity .24s;}
+    #PLB.open{opacity:1;pointer-events:all;}
+    #PLB img{max-width:92vw;max-height:88vh;object-fit:contain;border-radius:3px;}
+    #PLB .plbc{position:absolute;top:1.2rem;right:1.4rem;width:40px;height:40px;
+               background:rgba(255,255,255,.1);border:none;border-radius:50%;
+               color:#fff;font-size:1.2rem;cursor:pointer;
+               display:flex;align-items:center;justify-content:center;transition:background .15s;}
+    #PLB .plbc:hover{background:rgba(255,255,255,.22);}
+    #PLB .plbcap{position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);
+                 font-family:'DM Sans',sans-serif;font-size:.72rem;letter-spacing:.1em;
+                 color:rgba(255,255,255,.4);white-space:nowrap;}
+    </style>
+
+    <div class="PW">
+      <div class="PH">
+        <div class="PE"><span>Втрачена спадщина · Воробин</span></div>
+        <h2 class="PT">Маєток графів <em>Плятерів</em></h2>
+        <p class="PSB">Перетягніть лінію — порівняйте маєток 1944 та 2021 рр.</p>
+      </div>
+
+      <div class="PYR">
+        <div class="PYB">
+          <span class="py">1944</span>
+          <span class="pl">Аерофото Люфтваффе</span>
+          <span class="pd">Маєток вже знищений</span>
+        </div>
+        <div class="PYD">↔</div>
+        <div class="PYB pr">
+          <span class="py">2021</span>
+          <span class="pl">Супутник</span>
+          <span class="pd">Порожнє поле</span>
+        </div>
+      </div>
+
+      <div class="PSF" id="PSLIDER">
+        <img class="pb" src="https://i.imgur.com/K4aPm0X.jpeg" alt="Маєток Плятерів 2021" draggable="false" decoding="async">
+        <img class="po" id="POVI" src="https://i.imgur.com/ASr1iwm.jpeg" alt="Маєток Плятерів 1944" draggable="false" decoding="async">
+        <div class="PDL" id="PDIV"></div>
+        <div class="PDH" id="PHDL">
+          <div class="PDISC">
+            <svg viewBox="0 0 24 24"><path d="M8.5 5L3 12l5.5 7V5zm7 0v14L21 12l-5.5-7z"/></svg>
+          </div>
+        </div>
+        <div class="PCLB pll"><span class="pcy">1944</span><span class="pcs">Аерофото · Люфтваффе</span></div>
+        <div class="PCLB plr"><span class="pcy">2021</span><span class="pcs">Супутниковий знімок</span></div>
+        <div class="PIP" id="PHINT">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 19l-7-7 7-7"/></svg>
+          Тягніть для порівняння
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5l7 7-7 7"/></svg>
+        </div>
+      </div>
+
+      <div class="POBS">
+        <div class="POB">
+          <span class="POI">🏛️</span>
+          <p class="POT">Рід Плятерів</p>
+          <p class="POD">Знатний польсько-литовський шляхетський рід герба Доленга. Отримали Воробин у XVIII ст. Збудували розкішний маєток у класицистичному стилі з парком, ставками та господарськими будівлями.</p>
+        </div>
+        <div class="POB">
+          <span class="POI">⚔️</span>
+          <p class="POT">Пограбування та занепад</p>
+          <p class="POD">Після революції 1917 р. і польсько-радянської війни маєток був пограбований. У 1920–1930-х рр. будівлі стояли порожніми і поступово руйнувалися. Фотографії того часу фіксують вже розграбований палац.</p>
+        </div>
+        <div class="POB">
+          <span class="POI">💥</span>
+          <p class="POT">Знищений під час війни</p>
+          <p class="POD">На аерофотознімку Люфтваффе 1944 р. від маєтку не лишилося майже нічого — лише контури фундаментів і залишки парку. Точна дата знищення невідома, але до 1944 р. його вже не існувало.</p>
+        </div>
+        <div class="POB">
+          <span class="POI">🌿</span>
+          <p class="POT">Сьогодні — порожнє поле</p>
+          <p class="POD">На супутниковому знімку 2021 р. на місці колишнього маєтку — поле. Жодного сліду від палацу, парку чи господарських будівель. Один з найяскравіших прикладів втраченої спадщини Дубровиці.</p>
+        </div>
+      </div>
+
+      <!-- Photo Gallery -->
+      <div class="PGL">
+        <p class="PGLH">Архівні фотографії маєтку</p>
+        <div class="PGRID">
+          <div class="PGITEM" onclick="openPLB(this)">
+            <img src="https://i.imgur.com/u0k5sJt.jpeg" alt="Маєток Плятерів ~1910-1920" loading="lazy">
+            <div class="PGCAP">Маєток Плятерів · орієнт. 1910–1920 рр.</div>
+          </div>
+          <div class="PGITEM" onclick="openPLB(this)">
+            <img src="https://i.imgur.com/CT4rMSK.jpeg" alt="Пограбований маєток 1920-1930" loading="lazy">
+            <div class="PGCAP">Пограбований маєток · 1920–1930 рр.</div>
+          </div>
+          <div class="PGITEM" onclick="openPLB(this)">
+            <img src="https://i.imgur.com/5SOfOuh.jpeg" alt="Пограбований маєток 1920-1930" loading="lazy">
+            <div class="PGCAP">Пограбований маєток · 1920–1930 рр.</div>
+          </div>
+          <div class="PGITEM" onclick="openPLB(this)">
+            <img src="https://i.imgur.com/ASr1iwm.jpeg" alt="Аерофото 1944" loading="lazy" style="filter:contrast(1.15) brightness(1.06) saturate(0.05);">
+            <div class="PGCAP">Аерофотознімок · 24.01.1944 р.</div>
+          </div>
+          <div class="PGITEM" onclick="openPLB(this)">
+            <img src="https://i.imgur.com/K4aPm0X.jpeg" alt="Супутник 2021" loading="lazy">
+            <div class="PGCAP">Супутниковий знімок · 2021 р.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div id="PLB">
+      <button class="plbc" onclick="document.getElementById('PLB').classList.remove('open')">&#x2715;</button>
+      <img id="PLBI" src="" alt="">
+      <div class="plbcap" id="PLBCAP"></div>
+    </div>
+
+    <script>
+    /* Plater slider */
+    (function(){
+      var fr=document.getElementById('PSLIDER'),ov=document.getElementById('POVI'),
+          dv=document.getElementById('PDIV'),hd=document.getElementById('PHDL');
+      var drag=false,rafId=null,pendingX=null;
+      function apply(p){
+        p=Math.max(0,Math.min(100,p));
+        ov.style.clipPath='inset(0 '+(100-p).toFixed(2)+'% 0 0)';
+        dv.style.left=p+'%'; hd.style.left=p+'%';
+        fr.classList.add('pmoved');
+      }
+      function gp(cx){var r=fr.getBoundingClientRect();return((cx-r.left)/r.width)*100;}
+      function onRAF(){rafId=null;if(pendingX!==null){apply(gp(pendingX));pendingX=null;}}
+      function schedule(cx){pendingX=cx;if(!rafId)rafId=requestAnimationFrame(onRAF);}
+      fr.addEventListener('mousedown',function(e){e.preventDefault();drag=true;fr.classList.add('pdrag');apply(gp(e.clientX));});
+      window.addEventListener('mousemove',function(e){if(drag)schedule(e.clientX);});
+      window.addEventListener('mouseup',function(){drag=false;fr.classList.remove('pdrag');});
+      fr.addEventListener('touchstart',function(e){drag=true;fr.classList.add('pdrag');apply(gp(e.touches[0].clientX));},{passive:true});
+      window.addEventListener('touchmove',function(e){if(drag)schedule(e.touches[0].clientX);},{passive:true});
+      window.addEventListener('touchend',function(){drag=false;fr.classList.remove('pdrag');});
+      var pos=80,run=true;
+      function sw(){if(!run||drag)return;pos-=0.6;if(pos<=30){run=false;return;}apply(pos);requestAnimationFrame(sw);}
+      setTimeout(function(){apply(80);requestAnimationFrame(sw);},1000);
+    })();
+
+    /* Lightbox */
+    function openPLB(el){
+      var img=el.querySelector('img'), cap=el.querySelector('.PGCAP');
+      document.getElementById('PLBI').src=img.src;
+      document.getElementById('PLBCAP').textContent=cap?cap.textContent:'';
+      document.getElementById('PLB').classList.add('open');
+    }
+    document.getElementById('PLB').addEventListener('click',function(e){
+      if(e.target===this)this.classList.remove('open');
+    });
+    document.addEventListener('keydown',function(e){
+      if(e.key==='Escape')document.getElementById('PLB').classList.remove('open');
+    });
+    </script>
+    </section>
+    <!-- ═══ END PLATER SECTION ═══ -->
     <section class="timeline-section">
         <div class="container">
             <h2 class="section-title fade-in-up">Ключові моменти історії</h2>
