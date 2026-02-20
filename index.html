@@ -721,10 +721,122 @@
     </section>
     <!-- ═══ END AERIAL MAPS ═══ -->
 
-    
-    
-    
-    
+    <!-- ═══ BEFORE/AFTER COMPARISON SLIDER ═══ -->
+    <section id="CMP">
+    <style>
+    #CMP{padding:4rem 0 5rem;background:#faf7f2;border-top:1px solid #e8e0d4;}
+    [data-theme="dark"] #CMP{background:#0e0c0a;border-color:#1e1b18;}
+    #CMP *{box-sizing:border-box;}
+    .CW{max-width:1200px;margin:0 auto;padding:0 2rem;}
+    .CH{text-align:center;margin-bottom:2.5rem;}
+    .CT{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(1.9rem,3.2vw,2.6rem);font-weight:500;color:#1c1917;margin:0 0 .5rem;}
+    [data-theme="dark"] .CT{color:#f0e6c8;}
+    .CL{display:block;width:44px;height:2px;background:linear-gradient(90deg,#c9a227,#e0bd5a);margin:.6rem auto 0;border-radius:2px;}
+    .CS{font-family:'DM Sans',sans-serif;font-size:.78rem;letter-spacing:.13em;text-transform:uppercase;color:#a09080;margin:.6rem 0 0;}
+    .CYR{display:flex;justify-content:center;align-items:center;gap:2rem;margin:1.5rem 0 2rem;}
+    .CYB{display:flex;flex-direction:column;align-items:center;gap:.2rem;}
+    .CYB .cy{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;line-height:1;}
+    .CYB .cl{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:#a09080;}
+    .CYB.yleft .cy{color:#c9a227;}
+    .CYB.yright .cy{color:#6aadf5;}
+    .CYD{font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:#c8c0b4;font-style:italic;}
+    [data-theme="dark"] .CYD{color:#3a3530;}
+    .CSF{position:relative;width:100%;aspect-ratio:16/10;border-radius:12px;overflow:hidden;
+         cursor:ew-resize;user-select:none;-webkit-user-select:none;
+         box-shadow:0 4px 12px rgba(0,0,0,.1),0 20px 60px rgba(0,0,0,.18);
+         border:1px solid rgba(201,162,39,.14);}
+    @media(max-width:600px){.CSF{aspect-ratio:4/3;}}
+    .CSF img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;display:block;}
+    .CSF .ci-ov{clip-path:inset(0 50% 0 0);transition:clip-path .04s linear;}
+    .CDL{position:absolute;top:0;bottom:0;left:50%;width:2px;transform:translateX(-50%);
+         background:linear-gradient(to bottom,transparent 0%,rgba(255,255,255,.95) 10%,#fff 50%,rgba(255,255,255,.95) 90%,transparent 100%);
+         pointer-events:none;z-index:10;}
+    .CDH{position:absolute;top:50%;left:50%;z-index:20;
+         transform:translate(-50%,-50%);
+         width:48px;height:48px;border-radius:50%;background:#fff;
+         box-shadow:0 2px 16px rgba(0,0,0,.35),0 0 0 3px rgba(255,255,255,.3);
+         display:flex;align-items:center;justify-content:center;pointer-events:none;
+         transition:transform .18s,box-shadow .18s;}
+    .CSF.cdrag .CDH{transform:translate(-50%,-50%) scale(1.1);}
+    .CDH svg{width:20px;height:20px;fill:#1c1917;}
+    .CCLB{position:absolute;top:1rem;z-index:15;padding:.35rem .85rem;
+          border-radius:6px;pointer-events:none;backdrop-filter:blur(10px);}
+    .CCLB.cll{left:1rem;background:rgba(26,20,10,.75);border:1px solid rgba(201,162,39,.3);}
+    .CCLB.clr{right:1rem;background:rgba(10,20,40,.75);border:1px solid rgba(106,173,245,.3);text-align:right;}
+    .CCLB .ccy{display:block;font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:300;line-height:1;}
+    .CCLB.cll .ccy{color:#e0b94a;}
+    .CCLB.clr .ccy{color:#6aadf5;}
+    .CCLB .ccs{display:block;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-top:.1rem;}
+    .CIP{position:absolute;bottom:1.1rem;left:50%;transform:translateX(-50%);z-index:20;
+         background:rgba(0,0,0,.5);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.1);
+         border-radius:100px;padding:.4rem 1rem;font-size:.65rem;letter-spacing:.12em;
+         text-transform:uppercase;color:rgba(255,255,255,.45);pointer-events:none;
+         transition:opacity .35s;}
+    .CSF.cmoved .CIP{opacity:0;}
+    .COBS{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:2rem;}
+    .COB{border:1px solid #e8e0d4;border-radius:10px;padding:1.2rem 1.4rem;background:#fff;
+         transition:border-color .2s,box-shadow .2s;}
+    [data-theme="dark"] .COB{background:#161310;border-color:#2a2520;}
+    .COB:hover{border-color:rgba(201,162,39,.4);box-shadow:0 4px 20px rgba(201,162,39,.08);}
+    .COI{font-size:1.2rem;margin-bottom:.5rem;}
+    .COT{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:#1c1917;margin-bottom:.25rem;}
+    [data-theme="dark"] .COT{color:#e8d8b8;}
+    .COD{font-size:.75rem;font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.6;color:#7a6a5a;}
+    [data-theme="dark"] .COD{color:#5a5040;}
+    </style>
+
+    <div class="CW">
+      <div class="CH">
+        <h2 class="CT">Місто тоді і зараз<span class="CL"></span></h2>
+        <p class="CS">Порівняйте Дубровицю 1944 та 2021 рр. — перетягніть лінію</p>
+      </div>
+
+      <div class="CYR">
+        <div class="CYB yleft"><span class="cy">1944</span><span class="cl">Аерофото Люфтваффе</span></div>
+        <span class="CYD">↔</span>
+        <div class="CYB yright"><span class="cy">2021</span><span class="cl">Супутниковий знімок</span></div>
+      </div>
+
+      <div class="CSF" id="CSLIDER">
+        <img src="https://i.imgur.com/FfgAmad.jpeg" alt="Дубровиця 2021" draggable="false">
+        <img src="https://i.imgur.com/cMQeU7P.jpeg" alt="Дубровиця 1944" class="ci-ov" id="COVI" draggable="false">
+        <div class="CDL" id="CDIV"></div>
+        <div class="CDH" id="CHDL">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8.5 5L3 12l5.5 7V5zm7 0v14L21 12l-5.5-7z"/></svg>
+        </div>
+        <div class="CCLB cll"><span class="ccy">1944</span><span class="ccs">24.01.1944 · Люфтваффе</span></div>
+        <div class="CCLB clr"><span class="ccy">2021</span><span class="ccs">Супутник · Google</span></div>
+        <div class="CIP">← Тягніть для порівняння →</div>
+      </div>
+
+      <div class="COBS">
+        <div class="COB"><div class="COI">🌊</div><p class="COT">Річка Горинь</p><p class="COD">У 1944 р. русло проходило ближче до центру. Після меліорацій воно суттєво змінило своє положення.</p></div>
+        <div class="COB"><div class="COI">🕍</div><p class="COT">Зниклі споруди</p><p class="COD">На знімку 1944 р. видно будівлі, знищені під час Другої світової: синагога та єврейська забудова.</p></div>
+        <div class="COB"><div class="COI">🌳</div><p class="COT">Озеленення</p><p class="COD">Сучасне місто значно зеленіше — дерева, парки та сквери, яких не було у воєнні роки.</p></div>
+        <div class="COB"><div class="COI">🏙️</div><p class="COT">Забудова центру</p><p class="COD">Центральна площа зберегла основний планувальний кістяк, хоча щільність забудови суттєво зросла.</p></div>
+      </div>
+    </div>
+
+    <script>
+    (function(){
+      var fr=document.getElementById('CSLIDER'),ov=document.getElementById('COVI'),
+          dv=document.getElementById('CDIV'),hd=document.getElementById('CHDL'),drag=false;
+      function sp(p){p=Math.max(2,Math.min(98,p));ov.style.clipPath='inset(0 '+(100-p)+'% 0 0)';dv.style.left=hd.style.left=p+'%';fr.classList.add('cmoved');}
+      function gp(cx){var r=fr.getBoundingClientRect();return((cx-r.left)/r.width)*100;}
+      fr.addEventListener('mousedown',function(e){drag=true;fr.classList.add('cdrag');sp(gp(e.clientX));});
+      window.addEventListener('mousemove',function(e){if(drag)sp(gp(e.clientX));});
+      window.addEventListener('mouseup',function(){drag=false;fr.classList.remove('cdrag');});
+      fr.addEventListener('touchstart',function(e){drag=true;fr.classList.add('cdrag');sp(gp(e.touches[0].clientX));},{passive:true});
+      window.addEventListener('touchmove',function(e){if(drag)sp(gp(e.touches[0].clientX));},{passive:true});
+      window.addEventListener('touchend',function(){drag=false;fr.classList.remove('cdrag');});
+      var pos=75,run=true;
+      function sw(){if(!run||drag)return;pos-=0.45;if(pos<=35){run=false;return;}sp(pos);requestAnimationFrame(sw);}
+      setTimeout(function(){sp(75);requestAnimationFrame(sw);},900);
+    })();
+    </script>
+    </section>
+    <!-- ═══ END COMPARISON SLIDER ═══ -->
+
         <!-- Timeline Preview -->
     <section class="timeline-section">
         <div class="container">
