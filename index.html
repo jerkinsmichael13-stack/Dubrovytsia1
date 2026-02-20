@@ -211,7 +211,7 @@
     /* image: natural size with contain, expands box height */
     .MIMG{display:block;width:100%;height:auto;
           filter:sepia(.07) contrast(1.05);
-          transform-origin:center center;
+          transform-origin:0 0;
           pointer-events:none;user-select:none;}
     /* pin layer: sits on top of image, absolute */
     .MLAY{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:visible;}
@@ -233,13 +233,13 @@
           font-family:'DM Sans',sans-serif;font-size:9.5px;font-weight:800;color:#1a1000;
           transition:transform .14s,background .14s;}
     .PIN:hover .PDOT,.PIN.act .PDOT{background:#f0c840;transform:scale(1.18);}
-    /* tooltip */
-    .MTTIP{position:fixed;z-index:9999;
+    /* tooltip — absolute inside MBOX, рухається разом зі скролом */
+    .MTTIP{position:absolute;z-index:50;
            background:rgba(8,6,4,.94);backdrop-filter:blur(14px);
            border:1px solid rgba(201,162,39,.36);border-radius:10px;
-           padding:11px 14px 12px;width:220px;
+           padding:11px 14px 12px;width:220px;max-width:calc(100% - 24px);
            pointer-events:auto;
-           opacity:0;transform:translateY(5px);
+           opacity:0;transform:translateY(4px);
            transition:opacity .18s,transform .18s;
            visibility:hidden;
            box-shadow:0 8px 30px rgba(0,0,0,.55);}
@@ -335,6 +335,11 @@
             </div>
             <button class="FSB" id="fs44">&#x26F6;</button>
             <div class="BADGE"><span class="bl">Аерофотознімок</span><span class="bd">24 Jan 1944</span></div>
+            <div class="MTTIP" id="TIP44">
+              <button class="TTX" data-mid="44">&#x2715;</button>
+              <div class="TTR"><span class="TTN" id="TN44"></span><span class="TTT" id="TT44"></span></div>
+              <span class="TTD" id="TD44"></span>
+            </div>
           </div>
           <div class="LEG">
             <p class="LEGH">Позначення</p>
@@ -360,6 +365,11 @@
             </div>
             <button class="FSB" id="fs43">&#x26F6;</button>
             <div class="BADGE"><span class="bl">Аерофотознімок</span><span class="bd">Oct 1943</span></div>
+            <div class="MTTIP" id="TIP43">
+              <button class="TTX" data-mid="43">&#x2715;</button>
+              <div class="TTR"><span class="TTN" id="TN43"></span><span class="TTT" id="TT43"></span></div>
+              <span class="TTD" id="TD43"></span>
+            </div>
           </div>
           <div class="LEG">
             <p class="LEGH">Позначення</p>
@@ -372,29 +382,17 @@
       </div>
     </div>
 
-    <!-- Shared tooltip (one for both maps) -->
-    <div class="MTTIP" id="MTTIP">
-      <button class="TTX" id="MTTX">&#x2715;</button>
-      <div class="TTR"><span class="TTN" id="MTTN"></span><span class="TTT" id="MTTT"></span></div>
-      <span class="TTD" id="MTTD"></span>
-    </div>
-
     <!-- Fullscreen overlay -->
     <div id="MFSO"><button class="fc" id="MFSC">&#x2715;</button><img id="MFSI" src="" alt=""></div>
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
 
-      // ── PIN DATA (x,y = % of image width/height, loaded from GitHub) ──
-      var DATA = {
-        '44': [],
-        '43': []
-      };
-
-      // ── STATE ──────────────────────────────────────────────────
+      var DATA = { '44': [], '43': [] };
+      // State: scale + translate from top-left (transform-origin: 0 0)
       var ST = {
-        '44': {sc:1, ox:0, oy:0},
-        '43': {sc:1, ox:0, oy:0}
+        '44': { sc: 1, tx: 0, ty: 0 },
+        '43': { sc: 1, tx: 0, ty: 0 }
       };
       var activeMid = null, activeN = null;
 
@@ -406,16 +404,14 @@
           var el = document.createElement('div');
           el.className = 'PIN';
           el.id = 'PIN_'+mid+'_'+p.n;
-          // Start at % position (will be updated by updatePins to px)
-          el.style.left = p.x + '%';
-          el.style.top  = p.y + '%';
           el.innerHTML = '<div class="PRING"></div><div class="PDOT">'+p.n+'</div>';
           el.addEventListener('click', function(e) {
             e.stopPropagation();
-            togglePin(mid, p.n, p.t, p.d, e.clientX, e.clientY);
+            togglePin(mid, p.n, p.t, p.d);
           });
           layer.appendChild(el);
         });
+        updatePinPositions(mid);
       }
 
       function buildLegend(mid) {
@@ -428,15 +424,14 @@
           li.innerHTML = '<span class="LEGN">'+p.n+'</span>'+p.t;
           li.addEventListener('click', function(e) {
             e.stopPropagation();
-            var r = document.getElementById('M'+mid).getBoundingClientRect();
-            togglePin(mid, p.n, p.t, p.d, r.left + r.width/2, r.top + r.height/3);
+            togglePin(mid, p.n, p.t, p.d);
           });
           leg.appendChild(li);
         });
       }
 
-      // ── TOGGLE PIN / TOOLTIP ───────────────────────────────────
-      function togglePin(mid, n, title, desc, cx, cy) {
+      // ── TOOLTIP — absolute inside MBOX, never leaves the map ───
+      function togglePin(mid, n, title, desc) {
         if (activeMid === mid && activeN === n) { hideTooltip(); return; }
         hideTooltip();
         activeMid = mid; activeN = n;
@@ -444,12 +439,14 @@
         var li  = document.getElementById('LI_'+mid+'_'+n);
         if (pin) pin.classList.add('act');
         if (li)  li.classList.add('act');
-        showTooltip(n, title, desc, cx, cy);
+        positionTooltip(mid, n, title, desc);
       }
 
       function hideTooltip() {
-        document.getElementById('MTTIP').classList.remove('show');
-        if (activeMid !== null) {
+        ['44','43'].forEach(function(m) {
+          document.getElementById('TIP'+m).classList.remove('show');
+        });
+        if (activeMid) {
           var pin = document.getElementById('PIN_'+activeMid+'_'+activeN);
           var li  = document.getElementById('LI_'+activeMid+'_'+activeN);
           if (pin) pin.classList.remove('act');
@@ -458,187 +455,219 @@
         activeMid = null; activeN = null;
       }
 
-      function showTooltip(n, title, desc, cx, cy) {
-        document.getElementById('MTTN').textContent = n;
-        document.getElementById('MTTT').textContent = title;
-        document.getElementById('MTTD').textContent = desc;
-        var el = document.getElementById('MTTIP');
-        // Measure tooltip after content set
-        el.style.visibility = 'hidden';
-        el.style.display = 'block';
-        el.classList.add('show');
-        var tw = el.offsetWidth, th = el.offsetHeight;
-        el.style.display = '';
-        el.style.visibility = '';
-        var vw = window.innerWidth, vh = window.innerHeight;
-        // Try right of pin, then left, clamped to viewport
-        var lft = cx + 18;
-        var top = cy - Math.round(th / 2);
-        if (lft + tw > vw - 12) lft = cx - tw - 18;
-        if (lft < 12) lft = 12;
-        if (top < 12) top = 12;
-        if (top + th > vh - 12) top = vh - th - 12;
-        el.style.left = lft + 'px';
-        el.style.top  = top + 'px';
+      function positionTooltip(mid, n, title, desc) {
+        var tip = document.getElementById('TIP'+mid);
+        var box = document.getElementById('M'+mid);
+        var pin = document.getElementById('PIN_'+mid+'_'+n);
+
+        document.getElementById('TN'+mid).textContent = n;
+        document.getElementById('TT'+mid).textContent = title;
+        document.getElementById('TD'+mid).textContent = desc;
+
+        // Show hidden to measure real size
+        tip.style.visibility = 'hidden';
+        tip.classList.add('show');
+        var tw = tip.offsetWidth, th = tip.offsetHeight;
+        tip.style.visibility = '';
+
+        // Pin absolute pos (center of pin dot) — already set by updatePinPositions
+        var pinX = parseFloat(pin.style.left) || box.offsetWidth/2;
+        var pinY = parseFloat(pin.style.top)  || box.offsetHeight/2;
+        var bw = box.offsetWidth, bh = box.offsetHeight;
+        var GAP = 14, MARGIN = 8;
+
+        // Try right, then left
+        var left = pinX + GAP;
+        if (left + tw > bw - MARGIN) left = pinX - tw - GAP;
+        // Try above center, clamp vertical
+        var top = pinY - th / 2;
+        // Clamp inside box
+        left = Math.max(MARGIN, Math.min(bw - tw - MARGIN, left));
+        top  = Math.max(MARGIN, Math.min(bh - th - MARGIN, top));
+
+        tip.style.left = left + 'px';
+        tip.style.top  = top  + 'px';
       }
 
-      document.getElementById('MTTX').addEventListener('click', function(e) {
-        e.stopPropagation(); hideTooltip();
+      // Close buttons
+      document.querySelectorAll('.TTX').forEach(function(btn) {
+        btn.addEventListener('click', function(e) { e.stopPropagation(); hideTooltip(); });
       });
 
-      // ── ZOOM & PAN MATH ────────────────────────────────────────
-      // Image transforms: translate(ox,oy) scale(sc) with transform-origin:center center
-      // Pin positions: recalculated from % to px accounting for the transform
+      // ── TRANSFORM: transform-origin 0 0, translate+scale ───────
+      // screenX = tx + pinX_pct * imgW * sc
+      // screenY = ty + pinY_pct * imgH * sc
+      // Zoom toward pivot (px, py) in box coords:
+      //   tx' = px - (px - tx) * (newSc / oldSc)
+
+      function getImg(mid) { return document.getElementById('I'+mid); }
+      function getBox(mid) { return document.getElementById('M'+mid); }
 
       function clamp(mid) {
         var s = ST[mid];
-        var img = document.getElementById('I'+mid);
-        var w = img.offsetWidth || 0, h = img.offsetHeight || 0;
-        var maxOx = w/2 * (s.sc - 1);
-        var maxOy = h/2 * (s.sc - 1);
-        s.ox = Math.max(-maxOx, Math.min(maxOx, s.ox));
-        s.oy = Math.max(-maxOy, Math.min(maxOy, s.oy));
+        var img = getImg(mid), box = getBox(mid);
+        var iw = img.offsetWidth * s.sc, ih = img.offsetHeight * s.sc;
+        var bw = box.offsetWidth,         bh = box.offsetHeight;
+        // Image must cover box (no empty space)
+        s.tx = Math.min(0, Math.max(bw - iw, s.tx));
+        s.ty = Math.min(0, Math.max(bh - ih, s.ty));
       }
 
       function applyTransform(mid, animate) {
-        var s = ST[mid];
-        var img = document.getElementById('I'+mid);
-        img.style.transition = animate ? 'transform .28s ease' : 'none';
-        img.style.transform = 'translate('+s.ox+'px,'+s.oy+'px) scale('+s.sc+')';
+        var s = ST[mid], img = getImg(mid);
+        img.style.transition = animate ? 'transform .25s cubic-bezier(.25,.46,.45,.94)' : 'none';
+        img.style.transform = 'translate('+s.tx+'px,'+s.ty+'px) scale('+s.sc+')';
         updatePinPositions(mid);
+        // Reposition open tooltip
+        if (activeMid === mid && activeN !== null) {
+          positionTooltip(mid, activeN,
+            document.getElementById('TT'+mid).textContent,
+            document.getElementById('TD'+mid).textContent);
+        }
       }
 
-      // Pins: their "base" position is (x%*w, y%*h) relative to image rendered area.
-      // After transform: center=(w/2,h/2), so transformed pos =
-      //   center + (base - center) * sc + offset
       function updatePinPositions(mid) {
-        var s = ST[mid];
-        var img = document.getElementById('I'+mid);
-        // Use actual rendered image dimensions (image expands box height)
+        var s = ST[mid], img = getImg(mid), box = getBox(mid);
         var w = img.offsetWidth, h = img.offsetHeight;
+        var bw = box.offsetWidth, bh = box.offsetHeight;
         if (!w || !h) return;
-        var cx = w/2, cy = h/2;
         DATA[mid].forEach(function(p) {
           var pin = document.getElementById('PIN_'+mid+'_'+p.n);
           if (!pin) return;
-          var bx = p.x/100 * w;
-          var by = p.y/100 * h;
-          var nx = cx + (bx - cx)*s.sc + s.ox;
-          var ny = cy + (by - cy)*s.sc + s.oy;
+          var nx = s.tx + (p.x / 100 * w) * s.sc;
+          var ny = s.ty + (p.y / 100 * h) * s.sc;
           pin.style.left = nx + 'px';
           pin.style.top  = ny + 'px';
-          // hide if out of bounds
-          var vis = (nx>-15&&nx<w+15&&ny>-15&&ny<h+15);
+          var vis = nx > -20 && nx < bw + 20 && ny > -20 && ny < bh + 20;
           pin.style.opacity = vis ? '1' : '0';
-          pin.style.pointerEvents = vis ? 'all' : 'none';
+          pin.style.pointerEvents = vis ? '' : 'none';
         });
       }
 
-      function doZoom(mid, delta, pivotX, pivotY) {
-        var s = ST[mid];
-        var img = document.getElementById('I'+mid);
-        var w = img.offsetWidth || 0, h = img.offsetHeight || 0;
+      function doZoom(mid, factor, pivotX, pivotY) {
+        var s = ST[mid], box = getBox(mid);
+        var px = (pivotX !== undefined) ? pivotX : box.offsetWidth / 2;
+        var py = (pivotY !== undefined) ? pivotY : box.offsetHeight / 2;
         var oldSc = s.sc;
-        s.sc = Math.min(6, Math.max(1, s.sc + delta));
+        s.sc = Math.min(8, Math.max(1, oldSc * factor));
         if (s.sc === oldSc) return;
-        var px = (pivotX !== undefined) ? pivotX : w/2;
-        var py = (pivotY !== undefined) ? pivotY : h/2;
-        var rx = px - w/2;
-        var ry = py - h/2;
-        s.ox = rx - (rx - s.ox) * (s.sc / oldSc);
-        s.oy = ry - (ry - s.oy) * (s.sc / oldSc);
+        var ratio = s.sc / oldSc;
+        s.tx = px - (px - s.tx) * ratio;
+        s.ty = py - (py - s.ty) * ratio;
         clamp(mid);
         applyTransform(mid, true);
       }
 
       function doReset(mid) {
-        ST[mid].sc = 1; ST[mid].ox = 0; ST[mid].oy = 0;
+        ST[mid] = { sc: 1, tx: 0, ty: 0 };
         applyTransform(mid, true);
         hideTooltip();
       }
 
-      // ── BUTTON EVENTS ──────────────────────────────────────────
+      // ── BUTTONS ────────────────────────────────────────────────
       ['44','43'].forEach(function(mid) {
         document.getElementById('z'+mid+'p').addEventListener('click', function(e) {
-          e.stopPropagation(); doZoom(mid, 0.4);
+          e.stopPropagation(); doZoom(mid, 1.5);
         });
         document.getElementById('z'+mid+'m').addEventListener('click', function(e) {
-          e.stopPropagation(); doZoom(mid, -0.4);
+          e.stopPropagation(); doZoom(mid, 1/1.5);
         });
         document.getElementById('z'+mid+'r').addEventListener('click', function(e) {
           e.stopPropagation(); doReset(mid);
         });
         document.getElementById('fs'+mid).addEventListener('click', function(e) {
           e.stopPropagation();
-          var src = document.getElementById('I'+mid).src;
-          document.getElementById('MFSI').src = src;
+          document.getElementById('MFSI').src = getImg(mid).src;
           document.getElementById('MFSO').classList.add('open');
         });
       });
 
       // ── DRAG & WHEEL ───────────────────────────────────────────
       ['44','43'].forEach(function(mid) {
-        var box = document.getElementById('M'+mid);
-        var dragging = false, startX=0, startY=0;
+        var box = getBox(mid);
+        var dragging = false, startX = 0, startY = 0;
 
         box.addEventListener('mousedown', function(e) {
           if (e.button !== 0) return;
-          if (e.target.closest('.PIN') || e.target.closest('.ZB') || e.target.closest('.FSB')) return;
+          if (e.target.closest('.PIN,.ZB,.FSB,.MTTIP')) return;
           dragging = true;
-          startX = e.clientX - ST[mid].ox;
-          startY = e.clientY - ST[mid].oy;
+          startX = e.clientX - ST[mid].tx;
+          startY = e.clientY - ST[mid].ty;
+          box.style.cursor = 'grabbing';
         });
+
         document.addEventListener('mousemove', function(e) {
           if (!dragging) return;
-          ST[mid].ox = e.clientX - startX;
-          ST[mid].oy = e.clientY - startY;
+          ST[mid].tx = e.clientX - startX;
+          ST[mid].ty = e.clientY - startY;
           clamp(mid); applyTransform(mid, false);
         });
-        document.addEventListener('mouseup', function() { dragging = false; });
 
-        box.addEventListener('wheel', function(e) {
-          e.preventDefault();
-          var img = document.getElementById('I'+mid);
-          var rect = img.getBoundingClientRect();
-          var px = e.clientX - rect.left;
-          var py = e.clientY - rect.top;
-          doZoom(mid, e.deltaY < 0 ? 0.25 : -0.25, px, py);
-        }, {passive: false});
-
-        // click outside pins
-        box.addEventListener('click', function(e) {
-          if (!e.target.closest('.PIN')) hideTooltip();
+        document.addEventListener('mouseup', function() {
+          if (dragging) { dragging = false; box.style.cursor = ''; }
         });
 
-        // touch
-        var lastDist = 0, tdragging = false, tsx=0, tsy=0;
+        // Wheel: smooth multiplicative zoom toward cursor
+        box.addEventListener('wheel', function(e) {
+          e.preventDefault();
+          var rect = box.getBoundingClientRect();
+          var px = e.clientX - rect.left;
+          var py = e.clientY - rect.top;
+          // Normalize delta — small steps for smooth feel
+          var raw = e.deltaY !== 0 ? e.deltaY : (e.detail ? e.detail * 40 : 0);
+          var factor = Math.pow(0.998, raw); // ~1.08x per 100px scroll
+          doZoom(mid, factor, px, py);
+        }, { passive: false });
+
+        box.addEventListener('click', function(e) {
+          if (!e.target.closest('.PIN') && !e.target.closest('.MTTIP')) hideTooltip();
+        });
+
+        // ── TOUCH ──────────────────────────────────────────────
+        var lastDist = 0, tdragging = false, tsx = 0, tsy = 0;
+
         box.addEventListener('touchstart', function(e) {
           if (e.touches.length === 1) {
             tdragging = true;
-            tsx = e.touches[0].clientX - ST[mid].ox;
-            tsy = e.touches[0].clientY - ST[mid].oy;
+            tsx = e.touches[0].clientX - ST[mid].tx;
+            tsy = e.touches[0].clientY - ST[mid].ty;
           } else if (e.touches.length === 2) {
             tdragging = false;
             lastDist = Math.hypot(
               e.touches[0].clientX - e.touches[1].clientX,
               e.touches[0].clientY - e.touches[1].clientY);
           }
-        }, {passive:true});
+        }, { passive: true });
+
         box.addEventListener('touchmove', function(e) {
           e.preventDefault();
           if (e.touches.length === 1 && tdragging) {
-            ST[mid].ox = e.touches[0].clientX - tsx;
-            ST[mid].oy = e.touches[0].clientY - tsy;
+            ST[mid].tx = e.touches[0].clientX - tsx;
+            ST[mid].ty = e.touches[0].clientY - tsy;
             clamp(mid); applyTransform(mid, false);
           } else if (e.touches.length === 2) {
-            var d = Math.hypot(
-              e.touches[0].clientX - e.touches[1].clientX,
-              e.touches[0].clientY - e.touches[1].clientY);
-            doZoom(mid, (d - lastDist) * 0.015);
-            lastDist = d;
+            var t0 = e.touches[0], t1 = e.touches[1];
+            var dist = Math.hypot(t0.clientX - t1.clientX, t0.clientY - t1.clientY);
+            if (lastDist > 0) {
+              var rect = box.getBoundingClientRect();
+              var mx = ((t0.clientX + t1.clientX) / 2) - rect.left;
+              var my = ((t0.clientY + t1.clientY) / 2) - rect.top;
+              doZoom(mid, dist / lastDist, mx, my);
+            }
+            lastDist = dist;
           }
-        }, {passive: false});
-        box.addEventListener('touchend', function() { tdragging = false; });
+        }, { passive: false });
+
+        box.addEventListener('touchend', function(e) {
+          if (e.touches.length < 2) lastDist = 0;
+          if (e.touches.length === 1) {
+            tsx = e.touches[0].clientX - ST[mid].tx;
+            tsy = e.touches[0].clientY - ST[mid].ty;
+            tdragging = true;
+          } else if (e.touches.length === 0) {
+            tdragging = false;
+          }
+        }, { passive: true });
       });
 
       // ── FULLSCREEN ─────────────────────────────────────────────
@@ -656,33 +685,24 @@
       });
 
       // ── LOAD PINS FROM GITHUB ──────────────────────────────────
-      // Unified pin format: {id, x, y, title, desc} where x,y are 0-100 percentages
       function normalizePin(p) {
-        // Support both {x,y} percent and {cx,cy} SVG-coord formats
-        var x = p.x !== undefined ? p.x : (p.pct ? p.pct.x : undefined);
-        var y = p.y !== undefined ? p.y : (p.pct ? p.pct.y : undefined);
-        return {
-          n: p.id || p.n,
-          x: parseFloat(x),
-          y: parseFloat(y),
-          t: p.title || p.t || '',
-          d: p.desc  || p.d || ''
-        };
+        var x = p.x !== undefined ? p.x : (p.pct ? p.pct.x : 50);
+        var y = p.y !== undefined ? p.y : (p.pct ? p.pct.y : 50);
+        return { n: p.id||p.n||1, x: +x||0, y: +y||0, t: p.title||p.t||'', d: p.desc||p.d||'' };
       }
 
       function loadMap(mid, file, legId) {
         var leg = document.getElementById(legId);
-        fetch('https://raw.githubusercontent.com/jerkinsmichael13-stack/Dubrovytsia1/main/' + file + '?v=' + Date.now())
+        fetch('https://raw.githubusercontent.com/jerkinsmichael13-stack/Dubrovytsia1/main/'+file+'?v='+Date.now())
           .then(function(r) { return r.ok ? r.json() : []; })
           .then(function(data) {
             if (!Array.isArray(data) || !data.length) {
               if (leg) leg.innerHTML = '<li style="font-size:.72rem;color:#a09080;font-family:\'DM Sans\',sans-serif;padding:.4rem .25rem">Позначень ще немає</li>';
               return;
             }
-            DATA[mid] = data.map(normalizePin).filter(function(p){ return !isNaN(p.x) && !isNaN(p.y); });
+            DATA[mid] = data.map(normalizePin).filter(function(p){ return !isNaN(p.x)&&!isNaN(p.y); });
             buildPins(mid);
             buildLegend(mid);
-            setTimeout(function(){ updatePinPositions(mid); }, 30);
           })
           .catch(function() {
             if (leg) leg.innerHTML = '<li style="font-size:.72rem;color:#a09080;font-family:\'DM Sans\',sans-serif;padding:.4rem .25rem">Помилка завантаження</li>';
@@ -692,13 +712,11 @@
       loadMap('44', 'aerial_pins_1944.json', 'L44');
       loadMap('43', 'aerial_pins_1943.json', 'L43');
 
-      // Also update on window resize
       window.addEventListener('resize', function() {
-        updatePinPositions('44');
-        updatePinPositions('43');
+        ['44','43'].forEach(function(mid) { clamp(mid); applyTransform(mid, false); });
       });
 
-    }); // end DOMContentLoaded
+    }); // DOMContentLoaded
     </script>
     </section>
     <!-- ═══ END AERIAL MAPS ═══ -->
