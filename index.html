@@ -185,570 +185,524 @@
     </section>
 
     <!-- ═══ AERIAL MAPS SECTION ═══ -->
-    <section id="aerialSection">
+    <section id="AER">
     <style>
-    #aerialSection { padding:5rem 0; background:#faf7f2; border-top:1px solid #e8e0d4; }
-    [data-theme="dark"] #aerialSection { background:#0e0c0a; border-color:#1e1b18; }
-    #aerialSection *, #aerialSection *::before, #aerialSection *::after { box-sizing:border-box; }
-    .aer-wrap { max-width:1200px; margin:0 auto; padding:0 2rem; }
-
-    .aer-head { text-align:center; margin-bottom:3rem; }
-    .aer-title { font-family:'Cormorant Garamond',Georgia,serif; font-size:clamp(1.9rem,3.2vw,2.6rem); font-weight:500; color:#1c1917; margin:0 0 0.5rem; }
-    [data-theme="dark"] .aer-title { color:#f0e6c8; }
-    .aer-title-line { display:block; width:44px; height:2px; background:linear-gradient(90deg,#c9a227,#e0bd5a); margin:0.6rem auto 0; border-radius:2px; }
-    .aer-sub { font-family:'DM Sans',sans-serif; font-size:0.78rem; letter-spacing:0.13em; text-transform:uppercase; color:#a09080; margin:0.6rem 0 0; }
-
-    .aer-block { margin-bottom:4rem; }
-    .aer-block-title { font-family:'Cormorant Garamond',serif; font-size:1.3rem; font-weight:600; color:#1c1917; margin:0 0 1.2rem; display:flex; align-items:center; gap:0.8rem; }
-    [data-theme="dark"] .aer-block-title { color:#e8d8b8; }
-    .aer-block-title::before { content:''; display:inline-block; width:4px; height:22px; background:#c9a227; border-radius:2px; flex-shrink:0; }
-
-    .aer-grid { display:grid; grid-template-columns:1fr 248px; gap:1.5rem; align-items:start; }
-    @media(max-width:820px){ .aer-grid{grid-template-columns:1fr;} }
-
-    /* The map viewport — clips the zoomed image */
-    .aer-map {
-        position:relative; border-radius:12px; overflow:hidden;
-        box-shadow:0 2px 4px rgba(0,0,0,.06), 0 8px 24px rgba(0,0,0,.10), 0 20px 48px rgba(0,0,0,.09);
-        border:1px solid rgba(201,162,39,0.12); background:#0a0a0a; line-height:0;
-        cursor:grab; touch-action:none;
-    }
-    .aer-map:active { cursor:grabbing; }
-
-    /* Image — transform applied here for zoom/pan */
-    .aer-img { width:100%; height:auto; display:block; filter:sepia(0.07) contrast(1.05); pointer-events:none; user-select:none; transform-origin:0 0; will-change:transform; }
-
-    /* Pin layer — SEPARATE from image, sits on top, never transforms */
-    .aer-pin-layer {
-        position:absolute; top:0; left:0; width:100%; height:100%;
-        pointer-events:none; overflow:visible;
-    }
-
-    /* Individual pins — positioned via JS left/top as % of container */
-    .aer-pin {
-        position:absolute;
-        transform:translate(-50%,-50%);
-        pointer-events:all;
-        cursor:pointer;
-        z-index:5;
-    }
-    .aer-pin-ring {
-        position:absolute; top:50%; left:50%;
-        transform:translate(-50%,-50%);
-        width:28px; height:28px; border-radius:50%;
-        background:rgba(201,162,39,0.25);
-        animation:aerPulse 2.8s ease-out infinite;
-    }
-    @keyframes aerPulse { 0%{transform:translate(-50%,-50%) scale(1);opacity:.8} 70%{transform:translate(-50%,-50%) scale(2.1);opacity:0} 100%{transform:translate(-50%,-50%) scale(1);opacity:0} }
-    .aer-pin-dot {
-        position:relative; z-index:2;
-        width:26px; height:26px; border-radius:50%;
-        background:#c9a227; border:2.5px solid rgba(255,255,255,0.95);
-        box-shadow:0 2px 8px rgba(0,0,0,.55);
-        display:flex; align-items:center; justify-content:center;
-        font-family:'DM Sans',sans-serif; font-size:9.5px; font-weight:800; color:#1a1000;
-        transition:transform .15s, background .15s;
-    }
-    .aer-pin:hover .aer-pin-dot, .aer-pin.active .aer-pin-dot { background:#f0c840; transform:scale(1.2); }
-
-    /* Tooltip — fixed to viewport so it never clips */
-    .aer-tt {
-        position:fixed; z-index:9999;
-        background:rgba(8,6,4,0.94); backdrop-filter:blur(14px);
-        border:1px solid rgba(201,162,39,0.35); border-radius:10px;
-        padding:11px 14px 12px; width:220px;
-        pointer-events:auto;
-        opacity:0; transform:translateY(4px);
-        transition:opacity .18s, transform .18s;
-        visibility:hidden;
-        box-shadow:0 8px 32px rgba(0,0,0,.55);
-    }
-    .aer-tt.show { opacity:1; transform:translateY(0); visibility:visible; }
-    .aer-tt-close { position:absolute; top:7px; right:8px; width:18px; height:18px; border-radius:50%; background:rgba(255,255,255,0.08); border:none; color:#7a6a5a; cursor:pointer; font-size:0.7rem; display:flex; align-items:center; justify-content:center; transition:background .15s; }
-    .aer-tt-close:hover { background:rgba(255,255,255,0.22); color:#fff; }
-    .aer-tt-row { display:flex; align-items:center; gap:7px; margin-bottom:4px; }
-    .aer-tt-num { flex-shrink:0; width:20px; height:20px; border-radius:50%; background:#c9a227; color:#1a1000; font-size:0.6rem; font-weight:800; font-family:'DM Sans',sans-serif; display:flex; align-items:center; justify-content:center; }
-    .aer-tt-name { font-family:'Cormorant Garamond',serif; font-size:0.92rem; font-weight:600; color:#f0e6c8; line-height:1.2; }
-    .aer-tt-desc { font-family:'DM Sans',sans-serif; font-size:0.68rem; color:#9e9080; line-height:1.5; display:block; }
-
-    /* Zoom controls */
-    .aer-zoom { position:absolute; bottom:12px; left:12px; display:flex; flex-direction:column; gap:4px; z-index:10; }
-    .aer-zb { width:32px; height:32px; background:rgba(8,6,4,0.82); backdrop-filter:blur(8px); border:1px solid rgba(201,162,39,0.28); border-radius:7px; color:#c9a227; font-size:1.1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; font-family:monospace; transition:background .15s; }
-    .aer-zb:hover { background:rgba(201,162,39,0.2); color:#f0c840; }
-
-    /* Fullscreen btn */
-    .aer-fsb { position:absolute; bottom:12px; right:12px; z-index:10; width:32px; height:32px; background:rgba(8,6,4,0.82); backdrop-filter:blur(8px); border:1px solid rgba(201,162,39,0.28); border-radius:7px; color:#c9a227; font-size:0.9rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background .15s; }
-    .aer-fsb:hover { background:rgba(201,162,39,0.2); }
-
-    /* Badge */
-    .aer-badge { position:absolute; top:12px; right:12px; z-index:5; background:rgba(8,6,4,0.82); backdrop-filter:blur(10px); border:1px solid rgba(201,162,39,0.28); border-radius:8px; padding:5px 11px; pointer-events:none; line-height:1.35; }
-    .aer-badge-lbl { display:block; font-family:'DM Sans',sans-serif; font-size:0.5rem; letter-spacing:0.16em; text-transform:uppercase; color:#6b5a3e; }
-    .aer-badge-date { display:block; font-family:'DM Sans',sans-serif; font-size:0.8rem; color:#c9a227; letter-spacing:0.04em; font-weight:600; }
-
-    /* Legend */
-    .aer-legend { background:#fff; border:1px solid #e0d8cd; border-radius:12px; padding:1.2rem 1rem; position:sticky; top:90px; box-shadow:0 2px 4px rgba(0,0,0,.04),0 6px 18px rgba(0,0,0,.06); }
-    [data-theme="dark"] .aer-legend { background:#161310; border-color:#2a2520; }
-    .aer-leg-head { font-family:'Cormorant Garamond',serif; font-size:1rem; font-weight:600; color:#1c1917; margin:0 0 0.75rem; padding-bottom:0.6rem; border-bottom:1px solid #e0d8cd; }
-    [data-theme="dark"] .aer-leg-head { color:#e0d4bc; border-color:#2a2520; }
-    .aer-leg-list { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:2px; }
-    .aer-leg-item { display:flex; align-items:center; gap:8px; padding:5px 7px; border-radius:6px; cursor:pointer; border:1px solid transparent; transition:background .14s; font-family:'DM Sans',sans-serif; font-size:0.72rem; color:#44403c; }
-    [data-theme="dark"] .aer-leg-item { color:#a09080; }
-    .aer-leg-item:hover { background:#f4efe7; }
-    [data-theme="dark"] .aer-leg-item:hover { background:rgba(255,255,255,0.04); }
-    .aer-leg-item.active { background:#fdf5e0; border-color:rgba(201,162,39,0.45); }
-    [data-theme="dark"] .aer-leg-item.active { background:rgba(201,162,39,0.09); }
-    .aer-leg-num { flex-shrink:0; width:20px; height:20px; border-radius:50%; background:#c9a227; color:#1a1000; font-size:0.58rem; font-weight:800; font-family:'DM Sans',sans-serif; display:flex; align-items:center; justify-content:center; transition:transform .13s; }
-    .aer-leg-item:hover .aer-leg-num, .aer-leg-item.active .aer-leg-num { transform:scale(1.12); }
-    .aer-leg-hint { margin-top:0.75rem; font-size:0.63rem; color:#b0a898; font-family:'DM Sans',sans-serif; line-height:1.5; font-style:italic; border-top:1px solid #ede7db; padding-top:0.65rem; }
-    [data-theme="dark"] .aer-leg-hint { color:#4e4540; border-color:#2a2520; }
-
-    /* Separator between maps */
-    .aer-sep { border:none; border-top:1px solid #e8e0d4; margin:3.5rem 0; }
-    [data-theme="dark"] .aer-sep { border-color:#1e1b18; }
-
-    /* Fullscreen overlay */
-    .aer-fs { position:fixed; inset:0; z-index:99999; background:rgba(5,4,3,0.97); display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity .25s; }
-    .aer-fs.open { opacity:1; pointer-events:all; }
-    .aer-fs img { max-width:95vw; max-height:92vh; border-radius:6px; object-fit:contain; }
-    .aer-fs-close { position:absolute; top:16px; right:20px; width:38px; height:38px; background:rgba(255,255,255,0.12); border:none; border-radius:50%; color:#fff; font-size:1.2rem; cursor:pointer; display:flex; align-items:center; justify-content:center; }
-    .aer-fs-close:hover { background:rgba(255,255,255,0.25); }
+    #AER{padding:5rem 0;background:#faf7f2;border-top:1px solid #e8e0d4;}
+    [data-theme="dark"] #AER{background:#0e0c0a;border-color:#1e1b18;}
+    #AER *{box-sizing:border-box;}
+    .AW{max-width:1200px;margin:0 auto;padding:0 2rem;}
+    .AH{text-align:center;margin-bottom:3rem;}
+    .AT{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(1.9rem,3.2vw,2.6rem);font-weight:500;color:#1c1917;margin:0 0 .5rem;}
+    [data-theme="dark"] .AT{color:#f0e6c8;}
+    .AL{display:block;width:44px;height:2px;background:linear-gradient(90deg,#c9a227,#e0bd5a);margin:.6rem auto 0;border-radius:2px;}
+    .AS{font-family:'DM Sans',sans-serif;font-size:.78rem;letter-spacing:.13em;text-transform:uppercase;color:#a09080;margin:.6rem 0 0;}
+    .ABLK{margin-bottom:4rem;}
+    .ABT{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;color:#1c1917;margin:0 0 1.2rem;display:flex;align-items:center;gap:.8rem;}
+    [data-theme="dark"] .ABT{color:#e8d8b8;}
+    .ABT::before{content:'';display:inline-block;width:4px;height:22px;background:#c9a227;border-radius:2px;flex-shrink:0;}
+    .AG{display:grid;grid-template-columns:1fr 248px;gap:1.5rem;align-items:start;}
+    @media(max-width:820px){.AG{grid-template-columns:1fr;}}
+    /* Map container: fixed height, clips image */
+    .MBOX{position:relative;border-radius:12px;overflow:hidden;
+          box-shadow:0 4px 12px rgba(0,0,0,.08),0 16px 40px rgba(0,0,0,.13);
+          border:1px solid rgba(201,162,39,.12);background:#0a0a0a;
+          height:520px;cursor:grab;touch-action:none;}
+    .MBOX:active{cursor:grabbing;}
+    @media(max-width:600px){.MBOX{height:320px;}}
+    /* image: fills container, transforms for zoom/pan */
+    .MIMG{position:absolute;top:0;left:0;width:100%;height:100%;
+          object-fit:cover;filter:sepia(.07) contrast(1.05);
+          transform-origin:center center;
+          pointer-events:none;user-select:none;}
+    /* pin layer: sits on top, NOT transformed */
+    .MLAY{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;}
+    /* pins */
+    .PIN{position:absolute;pointer-events:all;cursor:pointer;
+         transform:translate(-50%,-50%);}
+    .PRING{position:absolute;top:50%;left:50%;
+           width:30px;height:30px;border-radius:50%;
+           background:rgba(201,162,39,.28);
+           transform:translate(-50%,-50%);
+           animation:PR 2.6s ease-out infinite;}
+    @keyframes PR{0%{transform:translate(-50%,-50%) scale(1);opacity:.9}
+                  65%{transform:translate(-50%,-50%) scale(2.2);opacity:0}
+                  100%{transform:translate(-50%,-50%) scale(1);opacity:0}}
+    .PDOT{position:relative;z-index:2;width:27px;height:27px;border-radius:50%;
+          background:#c9a227;border:2.5px solid rgba(255,255,255,.95);
+          box-shadow:0 2px 8px rgba(0,0,0,.6);
+          display:flex;align-items:center;justify-content:center;
+          font-family:'DM Sans',sans-serif;font-size:9.5px;font-weight:800;color:#1a1000;
+          transition:transform .14s,background .14s;}
+    .PIN:hover .PDOT,.PIN.act .PDOT{background:#f0c840;transform:scale(1.18);}
+    /* tooltip */
+    .MTTIP{position:fixed;z-index:9999;
+           background:rgba(8,6,4,.94);backdrop-filter:blur(14px);
+           border:1px solid rgba(201,162,39,.36);border-radius:10px;
+           padding:11px 14px 12px;width:220px;
+           pointer-events:auto;
+           opacity:0;transform:translateY(5px);
+           transition:opacity .18s,transform .18s;
+           visibility:hidden;
+           box-shadow:0 8px 30px rgba(0,0,0,.55);}
+    .MTTIP.show{opacity:1;transform:translateY(0);visibility:visible;}
+    .TTX{position:absolute;top:7px;right:8px;width:18px;height:18px;
+         border-radius:50%;background:rgba(255,255,255,.09);border:none;
+         color:#7a6a5a;cursor:pointer;font-size:.7rem;
+         display:flex;align-items:center;justify-content:center;transition:background .14s;}
+    .TTX:hover{background:rgba(255,255,255,.22);color:#fff;}
+    .TTR{display:flex;align-items:center;gap:7px;margin-bottom:4px;}
+    .TTN{flex-shrink:0;width:20px;height:20px;border-radius:50%;background:#c9a227;
+         color:#1a1000;font-size:.6rem;font-weight:800;font-family:'DM Sans',sans-serif;
+         display:flex;align-items:center;justify-content:center;}
+    .TTT{font-family:'Cormorant Garamond',serif;font-size:.92rem;font-weight:600;color:#f0e6c8;line-height:1.2;}
+    .TTD{font-family:'DM Sans',sans-serif;font-size:.68rem;color:#9e9080;line-height:1.5;display:block;margin-top:2px;}
+    /* zoom btns */
+    .ZW{position:absolute;bottom:12px;left:12px;display:flex;flex-direction:column;gap:4px;z-index:10;}
+    .ZB{width:32px;height:32px;background:rgba(8,6,4,.82);backdrop-filter:blur(8px);
+        border:1px solid rgba(201,162,39,.28);border-radius:7px;color:#c9a227;
+        font-size:1.1rem;font-weight:700;cursor:pointer;
+        display:flex;align-items:center;justify-content:center;
+        font-family:monospace;border:1px solid rgba(201,162,39,.28);
+        transition:background .14s;}
+    .ZB:hover{background:rgba(201,162,39,.22);color:#f0c840;}
+    /* fullscreen btn */
+    .FSB{position:absolute;bottom:12px;right:12px;z-index:10;
+         width:32px;height:32px;background:rgba(8,6,4,.82);backdrop-filter:blur(8px);
+         border:1px solid rgba(201,162,39,.28);border-radius:7px;color:#c9a227;
+         font-size:.95rem;cursor:pointer;display:flex;align-items:center;justify-content:center;
+         transition:background .14s;}
+    .FSB:hover{background:rgba(201,162,39,.22);}
+    /* badge */
+    .BADGE{position:absolute;top:12px;right:12px;z-index:5;
+           background:rgba(8,6,4,.82);backdrop-filter:blur(10px);
+           border:1px solid rgba(201,162,39,.28);border-radius:8px;
+           padding:5px 11px;pointer-events:none;line-height:1.35;}
+    .BADGE .bl{display:block;font-family:'DM Sans',sans-serif;font-size:.5rem;letter-spacing:.16em;text-transform:uppercase;color:#6b5a3e;}
+    .BADGE .bd{display:block;font-family:'DM Sans',sans-serif;font-size:.8rem;color:#c9a227;font-weight:600;}
+    /* legend */
+    .LEG{background:#fff;border:1px solid #e0d8cd;border-radius:12px;
+         padding:1.2rem 1rem;position:sticky;top:90px;
+         box-shadow:0 2px 4px rgba(0,0,0,.04),0 6px 18px rgba(0,0,0,.06);}
+    [data-theme="dark"] .LEG{background:#161310;border-color:#2a2520;}
+    .LEGH{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;
+          color:#1c1917;margin:0 0 .75rem;padding-bottom:.6rem;border-bottom:1px solid #e0d8cd;}
+    [data-theme="dark"] .LEGH{color:#e0d4bc;border-color:#2a2520;}
+    .LEGL{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:2px;}
+    .LEGI{display:flex;align-items:center;gap:8px;padding:5px 7px;border-radius:6px;
+          cursor:pointer;border:1px solid transparent;transition:background .13s;
+          font-family:'DM Sans',sans-serif;font-size:.72rem;color:#44403c;}
+    [data-theme="dark"] .LEGI{color:#a09080;}
+    .LEGI:hover{background:#f4efe7;}
+    .LEGI.act{background:#fdf5e0;border-color:rgba(201,162,39,.45);}
+    .LEGN{flex-shrink:0;width:20px;height:20px;border-radius:50%;background:#c9a227;
+          color:#1a1000;font-size:.58rem;font-weight:800;font-family:'DM Sans',sans-serif;
+          display:flex;align-items:center;justify-content:center;transition:transform .13s;}
+    .LEGI:hover .LEGN,.LEGI.act .LEGN{transform:scale(1.12);}
+    .LEGHINT{margin-top:.75rem;font-size:.63rem;color:#b0a898;font-family:'DM Sans',sans-serif;
+             line-height:1.5;font-style:italic;border-top:1px solid #ede7db;padding-top:.65rem;}
+    [data-theme="dark"] .LEGHINT{color:#4e4540;border-color:#2a2520;}
+    .MSEP{border:none;border-top:1px solid #e8e0d4;margin:3rem 0;}
+    [data-theme="dark"] .MSEP{border-color:#1e1b18;}
+    /* fullscreen overlay */
+    #MFSO{position:fixed;inset:0;z-index:99999;background:rgba(4,3,2,.97);
+          display:flex;align-items:center;justify-content:center;
+          opacity:0;pointer-events:none;transition:opacity .24s;}
+    #MFSO.open{opacity:1;pointer-events:all;}
+    #MFSO img{max-width:95vw;max-height:92vh;object-fit:contain;border-radius:6px;}
+    #MFSO .fc{position:absolute;top:16px;right:20px;width:38px;height:38px;
+              background:rgba(255,255,255,.12);border:none;border-radius:50%;
+              color:#fff;font-size:1.2rem;cursor:pointer;
+              display:flex;align-items:center;justify-content:center;}
+    #MFSO .fc:hover{background:rgba(255,255,255,.25);}
     </style>
 
-    <div class="aer-wrap">
-        <div class="aer-head">
-            <h2 class="aer-title">Аерофотознімки Дубровиці<span class="aer-title-line"></span></h2>
-            <p class="aer-sub">Унікальні знімки міста часів Другої світової війни</p>
-        </div>
+    <div class="AW">
+      <div class="AH">
+        <h2 class="AT">Аерофотознімки Дубровиці<span class="AL"></span></h2>
+        <p class="AS">Унікальні знімки міста часів Другої світової війни</p>
+      </div>
 
-        <!-- MAP 1: 1944 -->
-        <div class="aer-block">
-            <p class="aer-block-title">Аерофотознімок 24 січня 1944 року</p>
-            <div class="aer-grid">
-                <div class="aer-map" id="aerMap1944">
-                    <img class="aer-img" id="aerImg1944" src="https://i.imgur.com/dyP4WgZ.jpeg" alt="Аерофотознімок Дубровиці 1944">
-                    <!-- Pin layer — NOT transformed, stays static over viewport -->
-                    <div class="aer-pin-layer" id="aerPins1944"></div>
-                    <div class="aer-zoom"><button class="aer-zb" data-m="1944" data-d="+">+</button><button class="aer-zb" data-m="1944" data-d="-">−</button><button class="aer-zb" data-m="1944" data-d="r" style="font-size:.8rem">⌂</button></div>
-                    <button class="aer-fsb" data-src="https://i.imgur.com/dyP4WgZ.jpeg">⛶</button>
-                    <div class="aer-badge"><span class="aer-badge-lbl">Аерофотознімок</span><span class="aer-badge-date">24 Jan 1944</span></div>
-                </div>
-                <div class="aer-legend">
-                    <p class="aer-leg-head">Позначення</p>
-                    <ul class="aer-leg-list" id="aerLeg1944">
-                        <li class="aer-leg-item" data-lid="1"><span class="aer-leg-num">1</span>Давнє городище (замок)</li>
-                        <li class="aer-leg-item" data-lid="2"><span class="aer-leg-num">2</span>Святомиколаївська церква</li>
-                        <li class="aer-leg-item" data-lid="3"><span class="aer-leg-num">3</span>Костел Іоанна Хрестителя</li>
-                        <li class="aer-leg-item" data-lid="4"><span class="aer-leg-num">4</span>Кам&#39;яна церква</li>
-                        <li class="aer-leg-item" data-lid="5"><span class="aer-leg-num">5</span>Синагога</li>
-                        <li class="aer-leg-item" data-lid="6"><span class="aer-leg-num">6</span>Нове русло Горині</li>
-                        <li class="aer-leg-item" data-lid="7"><span class="aer-leg-num">7</span>Стара Горинь (1944)</li>
-                        <li class="aer-leg-item" data-lid="8"><span class="aer-leg-num">8</span>Єврейське кладовище</li>
-                        <li class="aer-leg-item" data-lid="9"><span class="aer-leg-num">9</span>Центральна площа</li>
-                    </ul>
-                    <p class="aer-leg-hint">Натисніть маркер або пункт у списку · Scroll для збільшення</p>
-                </div>
+      <!-- MAP 1944 -->
+      <div class="ABLK">
+        <p class="ABT">Аерофотознімок 24 січня 1944 року</p>
+        <div class="AG">
+          <div class="MBOX" id="M44">
+            <img class="MIMG" id="I44" src="https://i.imgur.com/dyP4WgZ.jpeg" alt="1944" draggable="false">
+            <div class="MLAY" id="P44"></div>
+            <div class="ZW">
+              <button class="ZB" id="z44p">+</button>
+              <button class="ZB" id="z44m">&#8722;</button>
+              <button class="ZB" id="z44r" style="font-size:.78rem">&#8962;</button>
             </div>
+            <button class="FSB" id="fs44">&#x26F6;</button>
+            <div class="BADGE"><span class="bl">Аерофотознімок</span><span class="bd">24 Jan 1944</span></div>
+          </div>
+          <div class="LEG">
+            <p class="LEGH">Позначення</p>
+            <ul class="LEGL" id="L44"></ul>
+            <p class="LEGHINT">Натисніть маркер або пункт · Scroll для збільшення</p>
+          </div>
         </div>
+      </div>
 
-        <hr class="aer-sep">
+      <hr class="MSEP">
 
-        <!-- MAP 2: 1943 -->
-        <div class="aer-block">
-            <p class="aer-block-title">Аерофотознімок жовтень 1943 року</p>
-            <div class="aer-grid">
-                <div class="aer-map" id="aerMap1943">
-                    <img class="aer-img" id="aerImg1943" src="https://i.imgur.com/EhsjkKX.jpeg" alt="Аерофотознімок Дубровиці 1943">
-                    <div class="aer-pin-layer" id="aerPins1943"></div>
-                    <div class="aer-zoom"><button class="aer-zb" data-m="1943" data-d="+">+</button><button class="aer-zb" data-m="1943" data-d="-">−</button><button class="aer-zb" data-m="1943" data-d="r" style="font-size:.8rem">⌂</button></div>
-                    <button class="aer-fsb" data-src="https://i.imgur.com/EhsjkKX.jpeg">⛶</button>
-                    <div class="aer-badge"><span class="aer-badge-lbl">Аерофотознімок</span><span class="aer-badge-date">Oct 1943</span></div>
-                </div>
-                <div class="aer-legend">
-                    <p class="aer-leg-head">Позначення</p>
-                    <ul class="aer-leg-list" id="aerLeg1943">
-                        <li style="font-size:0.72rem;color:#a09080;font-family:'DM Sans',sans-serif;padding:0.5rem 0.25rem;">Позначення завантажуються...</li>
-                    </ul>
-                    <p class="aer-leg-hint">Позначення додаються через адмін-панель</p>
-                </div>
+      <!-- MAP 1943 -->
+      <div class="ABLK">
+        <p class="ABT">Аерофотознімок жовтень 1943 року</p>
+        <div class="AG">
+          <div class="MBOX" id="M43">
+            <img class="MIMG" id="I43" src="https://i.imgur.com/EhsjkKX.jpeg" alt="1943" draggable="false">
+            <div class="MLAY" id="P43"></div>
+            <div class="ZW">
+              <button class="ZB" id="z43p">+</button>
+              <button class="ZB" id="z43m">&#8722;</button>
+              <button class="ZB" id="z43r" style="font-size:.78rem">&#8962;</button>
             </div>
+            <button class="FSB" id="fs43">&#x26F6;</button>
+            <div class="BADGE"><span class="bl">Аерофотознімок</span><span class="bd">Oct 1943</span></div>
+          </div>
+          <div class="LEG">
+            <p class="LEGH">Позначення</p>
+            <ul class="LEGL" id="L43">
+              <li style="font-size:.72rem;color:#a09080;font-family:'DM Sans',sans-serif;padding:.4rem .25rem">Завантаження...</li>
+            </ul>
+            <p class="LEGHINT">Позначення додаються через адмін-панель</p>
+          </div>
         </div>
+      </div>
     </div>
 
-    <!-- Shared tooltip -->
-    <div class="aer-tt" id="aerTT">
-        <button class="aer-tt-close" id="aerTTClose">&#x2715;</button>
-        <div class="aer-tt-row">
-            <span class="aer-tt-num" id="aerTTNum"></span>
-            <span class="aer-tt-name" id="aerTTName"></span>
-        </div>
-        <span class="aer-tt-desc" id="aerTTDesc"></span>
+    <!-- Shared tooltip (one for both maps) -->
+    <div class="MTTIP" id="MTTIP">
+      <button class="TTX" id="MTTX">&#x2715;</button>
+      <div class="TTR"><span class="TTN" id="MTTN"></span><span class="TTT" id="MTTT"></span></div>
+      <span class="TTD" id="MTTD"></span>
     </div>
 
     <!-- Fullscreen overlay -->
-    <div class="aer-fs" id="aerFS"><button class="aer-fs-close" id="aerFSClose">&#x2715;</button><img id="aerFSImg" src="" alt=""></div>
+    <div id="MFSO"><button class="fc" id="MFSC">&#x2715;</button><img id="MFSI" src="" alt=""></div>
 
     <script>
-    (function(){
-    'use strict';
+    document.addEventListener('DOMContentLoaded', function() {
 
-    // ── PIN DATA for 1944 ────────────────────────────────────────
-    // cx/cy are percentages (0-100) of the original image dimensions
-    // Image natural size: 1200 x 951
-    var PINS_1944 = [
-        {id:1, pct:{x:54.0, y:64.0}, title:'Давнє городище', desc:'Колись тут стояв замок Дубровицьких князів, зруйнований татарами у XIII ст.'},
-        {id:2, pct:{x:55.0, y:77.0}, title:'Святомиколаївська церква', desc:'Православна церква Святого Миколая — одна з найстаріших парафій Дубровиці.'},
-        {id:3, pct:{x:60.0, y:50.0}, title:'Костел Іоанна Хрестителя', desc:'Збудований у 1695–1702 рр. орденом піярів. Унікальна пам'ятка барокової архітектури Полісся.'},
-        {id:4, pct:{x:44.0, y:31.0}, title:'Кам'яна церква', desc:'Мурована православна церква — помітний орієнтир у тогочасній забудові міста.'},
-        {id:5, pct:{x:45.0, y:63.0}, title:'Синагога', desc:'Єврейська громада була значною частиною Дубровиці аж до Голокосту 1942 року.'},
-        {id:6, pct:{x:88.0, y:59.0}, title:'Нове русло Горині', desc:'Сьогодні тут протікає основне русло річки Горинь — воно змінилося після 1944 р.'},
-        {id:7, pct:{x:77.0, y:56.0}, title:'Стара Горинь (1944)', desc:'На момент зйомки — повноцінне русло річки Горинь, яке пізніше обміліло.'},
-        {id:8, pct:{x:33.0, y:12.0}, title:'Єврейське кладовище', desc:'Старе єврейське кладовище на північній околиці міста — пам'ятник трагічній долі громади.'},
-        {id:9, pct:{x:50.0, y:53.0}, title:'Центральна площа', desc:'Ринкова площа — серце міського життя Дубровиці протягом багатьох століть.'}
-    ];
+      // ── PIN DATA (x,y = % of image width/height) ──────────────
+      var DATA = {
+        '44': [
+          {n:1, x:54, y:64, t:'Давнє городище',           d:"Колись тут стояв замок Дубровицьких князів, зруйнований татарами у XIII ст."},
+          {n:2, x:55, y:77, t:'Святомиколаївська церква',  d:"Православна церква Святого Миколая — одна з найстаріших парафій Дубровиці."},
+          {n:3, x:60, y:50, t:'Костел Іоанна Хрестителя', d:"Збудований у 1695–1702 рр. орденом піярів. Унікальна пам'ятка барокової архітектури Полісся."},
+          {n:4, x:44, y:31, t:"Кам'яна церква",           d:"Мурована православна церква — помітний орієнтир у тогочасній забудові міста."},
+          {n:5, x:45, y:63, t:'Синагога',                  d:"Єврейська громада була значною частиною Дубровиці аж до Голокосту 1942 року."},
+          {n:6, x:88, y:59, t:'Нове русло Горині',         d:"Сьогодні тут протікає основне русло річки Горинь — воно змінилося після 1944 р."},
+          {n:7, x:77, y:56, t:'Стара Горинь (1944)',       d:"На момент зйомки — повноцінне русло річки Горинь, яке пізніше обміліло."},
+          {n:8, x:33, y:12, t:'Єврейське кладовище',       d:"Старе єврейське кладовище на північній околиці — пам'ятник трагічній долі громади."},
+          {n:9, x:50, y:53, t:'Центральна площа',          d:"Ринкова площа — серце міського життя Дубровиці протягом багатьох століть."}
+        ],
+        '43': []
+      };
 
-    // ── MAP STATE ────────────────────────────────────────────────
-    var MAPS = {};
+      // ── STATE ──────────────────────────────────────────────────
+      var ST = {
+        '44': {sc:1, ox:0, oy:0},
+        '43': {sc:1, ox:0, oy:0}
+      };
+      var activeMid = null, activeN = null;
 
-    function createMap(id, pinsData, legEl) {
-        var mapEl  = document.getElementById('aerMap' + id);
-        var imgEl  = document.getElementById('aerImg' + id);
-        var pinLay = document.getElementById('aerPins' + id);
-        if (!mapEl || !imgEl || !pinLay) return;
+      // ── BUILD PINS ─────────────────────────────────────────────
+      function buildPins(mid) {
+        var layer = document.getElementById('P'+mid);
+        layer.innerHTML = '';
+        DATA[mid].forEach(function(p) {
+          var el = document.createElement('div');
+          el.className = 'PIN';
+          el.id = 'PIN_'+mid+'_'+p.n;
+          // Start at % position (will be updated by updatePins to px)
+          el.style.left = p.x + '%';
+          el.style.top  = p.y + '%';
+          el.innerHTML = '<div class="PRING"></div><div class="PDOT">'+p.n+'</div>';
+          el.addEventListener('click', function(e) {
+            e.stopPropagation();
+            togglePin(mid, p.n, p.t, p.d, e.clientX, e.clientY);
+          });
+          layer.appendChild(el);
+        });
+      }
 
-        var m = {
-            id: id, mapEl: mapEl, imgEl: imgEl, pinLayer: pinLay,
-            legEl: legEl,
-            pins: pinsData || [],
-            scale: 1, ox: 0, oy: 0,
-            dragging: false, startX: 0, startY: 0,
-            activePin: null
-        };
-        MAPS[id] = m;
+      function buildLegend(mid) {
+        var leg = document.getElementById('L'+mid);
+        leg.innerHTML = '';
+        DATA[mid].forEach(function(p) {
+          var li = document.createElement('li');
+          li.className = 'LEGI';
+          li.id = 'LI_'+mid+'_'+p.n;
+          li.innerHTML = '<span class="LEGN">'+p.n+'</span>'+p.t;
+          li.addEventListener('click', function(e) {
+            e.stopPropagation();
+            var r = document.getElementById('M'+mid).getBoundingClientRect();
+            togglePin(mid, p.n, p.t, p.d, r.left + r.width/2, r.top + r.height/3);
+          });
+          leg.appendChild(li);
+        });
+      }
 
-        // Build pin DOM elements
-        rebuildPins(m);
+      // ── TOGGLE PIN / TOOLTIP ───────────────────────────────────
+      function togglePin(mid, n, title, desc, cx, cy) {
+        if (activeMid === mid && activeN === n) { hideTooltip(); return; }
+        hideTooltip();
+        activeMid = mid; activeN = n;
+        var pin = document.getElementById('PIN_'+mid+'_'+n);
+        var li  = document.getElementById('LI_'+mid+'_'+n);
+        if (pin) pin.classList.add('act');
+        if (li)  li.classList.add('act');
+        showTooltip(n, title, desc, cx, cy);
+      }
 
-        // ── WHEEL ZOOM ──
-        mapEl.addEventListener('wheel', function(e){
-            e.preventDefault();
-            var rect = mapEl.getBoundingClientRect();
-            var mx = e.clientX - rect.left;
-            var my = e.clientY - rect.top;
-            var delta = e.deltaY < 0 ? 0.35 : -0.35;
-            doZoom(m, delta, mx, my);
+      function hideTooltip() {
+        document.getElementById('MTTIP').classList.remove('show');
+        if (activeMid !== null) {
+          var pin = document.getElementById('PIN_'+activeMid+'_'+activeN);
+          var li  = document.getElementById('LI_'+activeMid+'_'+activeN);
+          if (pin) pin.classList.remove('act');
+          if (li)  li.classList.remove('act');
+        }
+        activeMid = null; activeN = null;
+      }
+
+      function showTooltip(n, title, desc, cx, cy) {
+        document.getElementById('MTTN').textContent = n;
+        document.getElementById('MTTT').textContent = title;
+        document.getElementById('MTTD').textContent = desc;
+        var el = document.getElementById('MTTIP');
+        var tw=220, th=105, vw=window.innerWidth, vh=window.innerHeight;
+        var lft = cx + 16;
+        var top = cy - th/2;
+        if (lft + tw > vw - 10) lft = cx - tw - 16;
+        if (lft < 10) lft = 10;
+        if (top < 10) top = 10;
+        if (top + th > vh - 10) top = vh - th - 10;
+        el.style.left = lft + 'px';
+        el.style.top  = top + 'px';
+        el.classList.add('show');
+      }
+
+      document.getElementById('MTTX').addEventListener('click', function(e) {
+        e.stopPropagation(); hideTooltip();
+      });
+
+      // ── ZOOM & PAN MATH ────────────────────────────────────────
+      // Image transforms: translate(ox,oy) scale(sc) with transform-origin:center center
+      // Pin positions: recalculated from % to px accounting for the transform
+
+      function clamp(mid) {
+        var s = ST[mid];
+        var box = document.getElementById('M'+mid);
+        var w = box.offsetWidth, h = box.offsetHeight;
+        var maxOx = w/2 * (s.sc - 1);
+        var maxOy = h/2 * (s.sc - 1);
+        s.ox = Math.max(-maxOx, Math.min(maxOx, s.ox));
+        s.oy = Math.max(-maxOy, Math.min(maxOy, s.oy));
+      }
+
+      function applyTransform(mid, animate) {
+        var s = ST[mid];
+        var img = document.getElementById('I'+mid);
+        img.style.transition = animate ? 'transform .28s ease' : 'none';
+        img.style.transform = 'translate('+s.ox+'px,'+s.oy+'px) scale('+s.sc+')';
+        updatePinPositions(mid);
+      }
+
+      // Pins: their "base" position is (x%*w, y%*h) relative to box.
+      // After transform: center=(w/2,h/2), so transformed pos =
+      //   center + (base - center) * sc + offset
+      function updatePinPositions(mid) {
+        var s = ST[mid];
+        var box = document.getElementById('M'+mid);
+        var w = box.offsetWidth, h = box.offsetHeight;
+        var cx = w/2, cy = h/2;
+        DATA[mid].forEach(function(p) {
+          var pin = document.getElementById('PIN_'+mid+'_'+p.n);
+          if (!pin) return;
+          var bx = p.x/100 * w;
+          var by = p.y/100 * h;
+          var nx = cx + (bx - cx)*s.sc + s.ox;
+          var ny = cy + (by - cy)*s.sc + s.oy;
+          pin.style.left = nx + 'px';
+          pin.style.top  = ny + 'px';
+          // hide if out of bounds
+          pin.style.opacity = (nx>-15&&nx<w+15&&ny>-15&&ny<h+15) ? '1' : '0';
+          pin.style.pointerEvents = (nx>-15&&nx<w+15&&ny>-15&&ny<h+15) ? 'all' : 'none';
+        });
+      }
+
+      function doZoom(mid, delta, pivotX, pivotY) {
+        var s = ST[mid];
+        var box = document.getElementById('M'+mid);
+        var w = box.offsetWidth, h = box.offsetHeight;
+        var oldSc = s.sc;
+        s.sc = Math.min(6, Math.max(1, s.sc + delta));
+        if (s.sc === oldSc) return;
+        // zoom toward pivot point (in box coordinates)
+        var px = (pivotX !== undefined) ? pivotX : w/2;
+        var py = (pivotY !== undefined) ? pivotY : h/2;
+        // pivot relative to center
+        var rx = px - w/2;
+        var ry = py - h/2;
+        s.ox = rx - (rx - s.ox) * (s.sc / oldSc);
+        s.oy = ry - (ry - s.oy) * (s.sc / oldSc);
+        clamp(mid);
+        applyTransform(mid, true);
+      }
+
+      function doReset(mid) {
+        ST[mid].sc = 1; ST[mid].ox = 0; ST[mid].oy = 0;
+        applyTransform(mid, true);
+        hideTooltip();
+      }
+
+      // ── BUTTON EVENTS ──────────────────────────────────────────
+      ['44','43'].forEach(function(mid) {
+        document.getElementById('z'+mid+'p').addEventListener('click', function(e) {
+          e.stopPropagation(); doZoom(mid, 0.7);
+        });
+        document.getElementById('z'+mid+'m').addEventListener('click', function(e) {
+          e.stopPropagation(); doZoom(mid, -0.7);
+        });
+        document.getElementById('z'+mid+'r').addEventListener('click', function(e) {
+          e.stopPropagation(); doReset(mid);
+        });
+        document.getElementById('fs'+mid).addEventListener('click', function(e) {
+          e.stopPropagation();
+          var src = document.getElementById('I'+mid).src;
+          document.getElementById('MFSI').src = src;
+          document.getElementById('MFSO').classList.add('open');
+        });
+      });
+
+      // ── DRAG & WHEEL ───────────────────────────────────────────
+      ['44','43'].forEach(function(mid) {
+        var box = document.getElementById('M'+mid);
+        var dragging = false, startX=0, startY=0;
+
+        box.addEventListener('mousedown', function(e) {
+          if (e.button !== 0) return;
+          if (e.target.closest('.PIN') || e.target.closest('.ZB') || e.target.closest('.FSB')) return;
+          dragging = true;
+          startX = e.clientX - ST[mid].ox;
+          startY = e.clientY - ST[mid].oy;
+        });
+        document.addEventListener('mousemove', function(e) {
+          if (!dragging) return;
+          ST[mid].ox = e.clientX - startX;
+          ST[mid].oy = e.clientY - startY;
+          clamp(mid);
+          applyTransform(mid, false);
+        });
+        document.addEventListener('mouseup', function() { dragging = false; });
+
+        box.addEventListener('wheel', function(e) {
+          e.preventDefault();
+          var rect = box.getBoundingClientRect();
+          var px = e.clientX - rect.left;
+          var py = e.clientY - rect.top;
+          doZoom(mid, e.deltaY < 0 ? 0.4 : -0.4, px, py);
         }, {passive: false});
 
-        // ── ZOOM BUTTONS ──
-        mapEl.querySelectorAll('.aer-zb[data-m="' + id + '"]').forEach(function(btn){
-            btn.addEventListener('click', function(e){
-                e.stopPropagation();
-                var rect = mapEl.getBoundingClientRect();
-                if (btn.dataset.d === '+') doZoom(m, 0.5, rect.width/2, rect.height/2);
-                else if (btn.dataset.d === '-') doZoom(m, -0.5, rect.width/2, rect.height/2);
-                else resetView(m);
-            });
+        // click outside pins
+        box.addEventListener('click', function(e) {
+          if (!e.target.closest('.PIN')) hideTooltip();
         });
 
-        // ── DRAG ──
-        mapEl.addEventListener('mousedown', function(e){
-            if (e.button !== 0) return;
-            if (e.target.closest('.aer-pin')) return; // don't drag when clicking pin
-            m.dragging = true;
-            m.startX = e.clientX - m.ox;
-            m.startY = e.clientY - m.oy;
-            mapEl.style.cursor = 'grabbing';
-        });
-        document.addEventListener('mousemove', function(e){
-            if (!m.dragging) return;
-            m.ox = e.clientX - m.startX;
-            m.oy = e.clientY - m.startY;
-            clampPan(m);
-            applyTransform(m);
-        });
-        document.addEventListener('mouseup', function(){
-            if (m.dragging){ m.dragging = false; mapEl.style.cursor = 'grab'; }
-        });
-
-        // ── TOUCH ──
-        var lastDist = 0;
-        mapEl.addEventListener('touchstart', function(e){
-            if (e.touches.length === 1){
-                m.dragging = true;
-                m.startX = e.touches[0].clientX - m.ox;
-                m.startY = e.touches[0].clientY - m.oy;
-            } else if (e.touches.length === 2){
-                m.dragging = false;
-                lastDist = Math.hypot(
-                    e.touches[0].clientX - e.touches[1].clientX,
-                    e.touches[0].clientY - e.touches[1].clientY);
-            }
+        // touch
+        var lastDist = 0, tdragging = false, tsx=0, tsy=0;
+        box.addEventListener('touchstart', function(e) {
+          if (e.touches.length === 1) {
+            tdragging = true;
+            tsx = e.touches[0].clientX - ST[mid].ox;
+            tsy = e.touches[0].clientY - ST[mid].oy;
+          } else if (e.touches.length === 2) {
+            tdragging = false;
+            lastDist = Math.hypot(
+              e.touches[0].clientX - e.touches[1].clientX,
+              e.touches[0].clientY - e.touches[1].clientY);
+          }
         }, {passive:true});
-        mapEl.addEventListener('touchmove', function(e){
-            e.preventDefault();
-            if (e.touches.length === 1 && m.dragging){
-                m.ox = e.touches[0].clientX - m.startX;
-                m.oy = e.touches[0].clientY - m.startY;
-                clampPan(m); applyTransform(m);
-            } else if (e.touches.length === 2){
-                var d = Math.hypot(
-                    e.touches[0].clientX - e.touches[1].clientX,
-                    e.touches[0].clientY - e.touches[1].clientY);
-                var rect = mapEl.getBoundingClientRect();
-                doZoom(m, (d - lastDist) * 0.01, rect.width/2, rect.height/2);
-                lastDist = d;
-            }
-        }, {passive:false});
-        mapEl.addEventListener('touchend', function(){ m.dragging = false; });
+        box.addEventListener('touchmove', function(e) {
+          e.preventDefault();
+          if (e.touches.length === 1 && tdragging) {
+            ST[mid].ox = e.touches[0].clientX - tsx;
+            ST[mid].oy = e.touches[0].clientY - tsy;
+            clamp(mid); applyTransform(mid, false);
+          } else if (e.touches.length === 2) {
+            var d = Math.hypot(
+              e.touches[0].clientX - e.touches[1].clientX,
+              e.touches[0].clientY - e.touches[1].clientY);
+            doZoom(mid, (d - lastDist) * 0.015);
+            lastDist = d;
+          }
+        }, {passive: false});
+        box.addEventListener('touchend', function() { tdragging = false; });
+      });
 
-        // ── CLICK outside pin → close tooltip ──
-        mapEl.addEventListener('click', function(e){
-            if (!e.target.closest('.aer-pin')) hideTT();
-        });
-    }
-
-    // ── ZOOM + PAN MATH ─────────────────────────────────────────
-    function doZoom(m, delta, mx, my) {
-        var oldScale = m.scale;
-        m.scale = Math.min(6, Math.max(1, m.scale + delta));
-        if (m.scale === oldScale) return;
-        // Zoom toward mouse point
-        m.ox = mx - (mx - m.ox) * (m.scale / oldScale);
-        m.oy = my - (my - m.oy) * (m.scale / oldScale);
-        clampPan(m);
-        applyTransform(m);
-    }
-
-    function clampPan(m) {
-        var rect = m.mapEl.getBoundingClientRect();
-        var w = rect.width, h = rect.height;
-        var maxX = w * (m.scale - 1);
-        var maxY = h * (m.scale - 1);
-        m.ox = Math.min(0, Math.max(-maxX, m.ox));
-        m.oy = Math.min(0, Math.max(-maxY, m.oy));
-    }
-
-    function applyTransform(m) {
-        // Only the IMAGE moves
-        m.imgEl.style.transform = 'translate(' + m.ox + 'px,' + m.oy + 'px) scale(' + m.scale + ')';
-        // Pins: update each pin's visual position to match where it sits in the zoomed image
-        updatePinPositions(m);
-    }
-
-    function resetView(m) {
-        m.scale = 1; m.ox = 0; m.oy = 0;
-        m.imgEl.style.transition = 'transform 0.3s ease';
-        m.imgEl.style.transform = 'none';
-        setTimeout(function(){ m.imgEl.style.transition = ''; }, 350);
-        updatePinPositions(m);
-        hideTT();
-    }
-
-    // ── PIN POSITIONING ─────────────────────────────────────────
-    // Each pin has a data-pct-x and data-pct-y attribute (0-100).
-    // Its visual position in the container = pct * containerSize * scale + offset
-    function updatePinPositions(m) {
-        var rect = m.mapEl.getBoundingClientRect();
-        var w = rect.width, h = rect.height;
-        m.pinLayer.querySelectorAll('.aer-pin').forEach(function(pin){
-            var px = parseFloat(pin.dataset.pctX) / 100;
-            var py = parseFloat(pin.dataset.pctY) / 100;
-            // Where this point is in the zoomed image coordinate space
-            var x = px * w * m.scale + m.ox;
-            var y = py * h * m.scale + m.oy;
-            pin.style.left = x + 'px';
-            pin.style.top  = y + 'px';
-            // Show/hide pin if it's outside the visible area
-            var visible = x > -20 && x < w + 20 && y > -20 && y < h + 20;
-            pin.style.display = visible ? '' : 'none';
-        });
-    }
-
-    function rebuildPins(m) {
-        m.pinLayer.innerHTML = '';
-        m.pins.forEach(function(pin){
-            var el = document.createElement('div');
-            el.className = 'aer-pin';
-            el.dataset.pid   = pin.id;
-            el.dataset.pctX  = pin.pct.x;
-            el.dataset.pctY  = pin.pct.y;
-            el.dataset.title = pin.title;
-            el.dataset.desc  = pin.desc || '';
-
-            var ring = document.createElement('div');
-            ring.className = 'aer-pin-ring';
-
-            var dot = document.createElement('div');
-            dot.className = 'aer-pin-dot';
-            dot.textContent = pin.id;
-
-            el.appendChild(ring);
-            el.appendChild(dot);
-            m.pinLayer.appendChild(el);
-
-            el.addEventListener('click', function(e){
-                e.stopPropagation();
-                if (m.activePin === String(pin.id)){
-                    deactivate(m); hideTT(); return;
-                }
-                deactivate(m);
-                m.activePin = String(pin.id);
-                el.classList.add('active');
-                // Highlight legend
-                if (m.legEl){
-                    m.legEl.querySelectorAll('.aer-leg-item').forEach(function(li){
-                        if (li.dataset.lid === String(pin.id)) li.classList.add('active');
-                    });
-                }
-                showTT(pin.id, pin.title, pin.desc, e.clientX, e.clientY);
-            });
-        });
-
-        // Legend clicks
-        if (m.legEl){
-            m.legEl.querySelectorAll('.aer-leg-item').forEach(function(li){
-                li.addEventListener('click', function(e){
-                    e.stopPropagation();
-                    var lid = li.dataset.lid;
-                    var pin = m.pins.find(function(p){ return String(p.id) === lid; });
-                    if (!pin) return;
-                    if (m.activePin === lid){ deactivate(m); hideTT(); return; }
-                    deactivate(m);
-                    m.activePin = lid;
-                    li.classList.add('active');
-                    var pinEl = m.pinLayer.querySelector('.aer-pin[data-pid="'+lid+'"]');
-                    if (pinEl) pinEl.classList.add('active');
-                    // Position tooltip near center of map
-                    var r = m.mapEl.getBoundingClientRect();
-                    showTT(pin.id, pin.title, pin.desc, r.left + r.width/2, r.top + r.height/2);
-                });
-            });
+      // ── FULLSCREEN ─────────────────────────────────────────────
+      document.getElementById('MFSC').addEventListener('click', function() {
+        document.getElementById('MFSO').classList.remove('open');
+      });
+      document.getElementById('MFSO').addEventListener('click', function(e) {
+        if (e.target === this) this.classList.remove('open');
+      });
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          hideTooltip();
+          document.getElementById('MFSO').classList.remove('open');
         }
+      });
 
-        updatePinPositions(m);
-    }
-
-    function deactivate(m) {
-        m.activePin = null;
-        m.pinLayer.querySelectorAll('.aer-pin').forEach(function(p){ p.classList.remove('active'); });
-        if (m.legEl) m.legEl.querySelectorAll('.aer-leg-item').forEach(function(li){ li.classList.remove('active'); });
-    }
-
-    // ── TOOLTIP ─────────────────────────────────────────────────
-    var ttEl   = document.getElementById('aerTT');
-    var ttNum  = document.getElementById('aerTTNum');
-    var ttName = document.getElementById('aerTTName');
-    var ttDesc = document.getElementById('aerTTDesc');
-
-    function showTT(id, title, desc, cx, cy) {
-        ttNum.textContent  = id;
-        ttName.textContent = title;
-        ttDesc.textContent = desc;
-        // Position with viewport clamping
-        var ttW = 220, ttH = 100;
-        var left = cx + 16;
-        var top  = cy - ttH / 2;
-        var vw = window.innerWidth, vh = window.innerHeight;
-        if (left + ttW > vw - 10) left = cx - ttW - 16;
-        if (left < 10) left = 10;
-        if (top  < 10) top  = 10;
-        if (top + ttH > vh - 10) top = vh - ttH - 10;
-        ttEl.style.left = left + 'px';
-        ttEl.style.top  = top  + 'px';
-        ttEl.classList.add('show');
-    }
-
-    function hideTT() {
-        ttEl.classList.remove('show');
-        // Deactivate all maps
-        Object.keys(MAPS).forEach(function(k){ deactivate(MAPS[k]); });
-    }
-
-    document.getElementById('aerTTClose').addEventListener('click', function(e){
-        e.stopPropagation(); hideTT();
-    });
-    document.addEventListener('keydown', function(e){ if(e.key==='Escape') hideTT(); });
-
-    // ── FULLSCREEN ───────────────────────────────────────────────
-    var fsEl = document.getElementById('aerFS');
-    var fsImg= document.getElementById('aerFSImg');
-    document.querySelectorAll('.aer-fsb').forEach(function(btn){
-        btn.addEventListener('click', function(e){
-            e.stopPropagation();
-            fsImg.src = btn.dataset.src;
-            fsEl.classList.add('open');
+      // ── LOAD 1943 pins from GitHub ─────────────────────────────
+      fetch('https://raw.githubusercontent.com/jerkinsmichael13-stack/Dubrovytsia1/main/aerial_pins_1943.json?v=' + Date.now())
+        .then(function(r) { return r.ok ? r.json() : []; })
+        .then(function(data) {
+          if (!Array.isArray(data) || !data.length) {
+            document.getElementById('L43').innerHTML =
+              '<li style="font-size:.72rem;color:#a09080;font-family:\'DM Sans\',sans-serif;padding:.4rem .25rem">Позначень ще немає</li>';
+            return;
+          }
+          DATA['43'] = data.map(function(p) {
+            var px = p.pct ? p.pct.x : (p.x !== undefined ? p.x : p.cx/12);
+            var py = p.pct ? p.pct.y : (p.y !== undefined ? p.y : p.cy/12);
+            return {n: p.id||p.n, x: px, y: py, t: p.title||p.t, d: p.desc||p.d||''};
+          });
+          buildPins('43');
+          buildLegend('43');
+        })
+        .catch(function() {
+          document.getElementById('L43').innerHTML =
+            '<li style="font-size:.72rem;color:#a09080;font-family:\'DM Sans\',sans-serif;padding:.4rem .25rem">Помилка завантаження</li>';
         });
-    });
-    document.getElementById('aerFSClose').addEventListener('click', function(){ fsEl.classList.remove('open'); });
-    fsEl.addEventListener('click', function(e){ if(e.target === fsEl) fsEl.classList.remove('open'); });
-    document.addEventListener('keydown', function(e){ if(e.key==='Escape') fsEl.classList.remove('open'); });
 
-    // ── INIT ────────────────────────────────────────────────────
-    function init() {
-        createMap('1944', PINS_1944, document.getElementById('aerLeg1944'));
-        createMap('1943', [], document.getElementById('aerLeg1943'));
+      // ── INIT ───────────────────────────────────────────────────
+      buildPins('44');
+      buildLegend('44');
+      // updatePinPositions called inside buildPins after DOM insert — but we need box size
+      // Use a short timeout to ensure layout is done
+      setTimeout(function() {
+        updatePinPositions('44');
+        updatePinPositions('43');
+      }, 50);
 
-        // Load 1943 pins from GitHub
-        var GH_RAW = 'https://raw.githubusercontent.com/jerkinsmichael13-stack/Dubrovytsia1/main/';
-        fetch(GH_RAW + 'aerial_pins_1943.json?v=' + Date.now())
-            .then(function(r){ return r.ok ? r.json() : []; })
-            .then(function(data){
-                if (!Array.isArray(data) || !data.length) return;
-                var m = MAPS['1943'];
-                // Convert cx/cy (SVG coords) or pct format
-                m.pins = data.map(function(p){
-                    if (p.pct) return p;
-                    // Legacy: if stored as cx/cy in 0-1200 range
-                    return { id:p.id, pct:{x: p.cx/12, y: p.cy/12}, title:p.title, desc:p.desc||'' };
-                });
-                var legEl = document.getElementById('aerLeg1943');
-                legEl.innerHTML = '';
-                m.pins.forEach(function(pin){
-                    var li = document.createElement('li');
-                    li.className = 'aer-leg-item';
-                    li.dataset.lid = pin.id;
-                    li.innerHTML = '<span class="aer-leg-num">'+pin.id+'</span>'+pin.title;
-                    legEl.appendChild(li);
-                });
-                rebuildPins(m);
-            })
-            .catch(function(){});
+      // Also update on window resize
+      window.addEventListener('resize', function() {
+        updatePinPositions('44');
+        updatePinPositions('43');
+      });
 
-        // Also try to load updated 1944 pins from GitHub (admin can override)
-        fetch(GH_RAW + 'aerial_pins_1944.json?v=' + Date.now())
-            .then(function(r){ return r.ok ? r.json() : null; })
-            .then(function(data){
-                if (!Array.isArray(data) || !data.length) return;
-                var m = MAPS['1944'];
-                m.pins = data.map(function(p){
-                    if (p.pct) return p;
-                    return { id:p.id, pct:{x: p.cx/12, y: p.cy/12}, title:p.title, desc:p.desc||'' };
-                });
-                // Rebuild legend
-                var legEl = document.getElementById('aerLeg1944');
-                legEl.innerHTML = '';
-                m.pins.forEach(function(pin){
-                    var li = document.createElement('li');
-                    li.className = 'aer-leg-item';
-                    li.dataset.lid = pin.id;
-                    li.innerHTML = '<span class="aer-leg-num">'+pin.id+'</span>'+pin.title;
-                    legEl.appendChild(li);
-                });
-                rebuildPins(m);
-            })
-            .catch(function(){});
-    }
-
-    if (document.readyState === 'loading'){
-        document.addEventListener('DOMContentLoaded', init);
-    } else {
-        init();
-    }
-
-    })();
+    }); // end DOMContentLoaded
     </script>
     </section>
     <!-- ═══ END AERIAL MAPS ═══ -->
 
+    
+    
     
     
         <!-- Timeline Preview -->
