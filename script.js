@@ -99,9 +99,16 @@ function initSmoothScroll() {
 function initHeaderScroll() {
     const header = document.querySelector('.header');
     if (!header) return;
+    let ticking = false;
     window.addEventListener('scroll', () => {
-        header.classList.toggle('scrolled', window.pageYOffset > 100);
-    });
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                header.classList.toggle('scrolled', window.pageYOffset > 100);
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }, { passive: true });
 }
 
 function initCounters() {
@@ -498,10 +505,17 @@ function initScrollProgress() {
     const bar = document.createElement('div');
     bar.className = 'scroll-progress';
     document.body.prepend(bar);
+    let ticking = false;
     window.addEventListener('scroll', () => {
-        const scrolled = window.scrollY;
-        const max = document.body.scrollHeight - window.innerHeight;
-        bar.style.width = (scrolled / max * 100) + '%';
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                const scrolled = window.scrollY;
+                const max = document.body.scrollHeight - window.innerHeight;
+                bar.style.width = (max > 0 ? scrolled / max * 100 : 0) + '%';
+                ticking = false;
+            });
+            ticking = true;
+        }
     }, { passive: true });
 }
 

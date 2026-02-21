@@ -99,6 +99,16 @@
     background: linear-gradient(135deg, #a8841c, #c9a227);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
+/* Plater fact cards — light theme */
+:root:not([data-theme="dark"]) .POB {
+    background: #ffffff;
+}
+:root:not([data-theme="dark"]) .POB:hover { background: #fdf8f2; }
+:root:not([data-theme="dark"]) .POT { color: #2c1f06; }
+:root:not([data-theme="dark"]) .POD { color: rgba(44,40,36,.6); }
+:root:not([data-theme="dark"]) .POBS { background: rgba(0,0,0,.06); }
+:root:not([data-theme="dark"]) .PGLH { color: #2c1f06; }
+:root:not([data-theme="dark"]) .PGLH::after { background: rgba(0,0,0,.1); }
 
 /* Mobile — PLTR */
 @media (max-width: 640px) {

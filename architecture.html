@@ -512,21 +512,21 @@
         <!-- ════════════════════════════════════════
              ЮЛІАНІЯ — редакційний блок
         ════════════════════════════════════════ -->
-        <div style="max-width:760px; margin:5rem auto 0; padding:0 1.5rem;">
+        <div class="yuliania-block" style="max-width:760px; margin:5rem auto 0; padding:3rem 1.5rem;">
 
             <!-- Thin divider with label -->
             <div style="display:flex;align-items:center;gap:1.2rem;margin-bottom:2.8rem;">
-                <div style="flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(201,162,39,.18));"></div>
+                <div style="flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(201,162,39,.3));"></div>
                 <span style="font-size:.52rem;letter-spacing:.28em;text-transform:uppercase;color:#b8902a;white-space:nowrap;">Свята, пов'язана з цим місцем</span>
-                <div style="flex:1;height:1px;background:linear-gradient(90deg,rgba(201,162,39,.18),transparent);"></div>
+                <div style="flex:1;height:1px;background:linear-gradient(90deg,rgba(201,162,39,.3),transparent);"></div>
             </div>
 
             <!-- Name + dates -->
             <div style="margin-bottom:2.2rem;">
-                <h3 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:300;color:#f5ead8;line-height:1.1;margin-bottom:.35rem;">
+                <h3 class="yuliania-name" style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:300;line-height:1.1;margin-bottom:.35rem;">
                     Свята <em style="font-style:italic;color:#c9a227;">Юліанія Гольшанська</em>
                 </h3>
-                <p style="font-family:'Cormorant Garamond',serif;font-size:.95rem;font-style:italic;color:rgba(245,234,216,.28);">
+                <p class="yuliania-sub" style="font-family:'Cormorant Garamond',serif;font-size:.95rem;font-style:italic;">
                     Праведна діва · пом. бл. 1566 р. · Мощі у Ближніх печерах Лаври · День пам'яті 28 вересня
                 </p>
             </div>
@@ -539,12 +539,12 @@
                         <img src="https://i.imgur.com/l1SHdOp.jpeg" alt="Ікона св. Юліанії Гольшанської" loading="lazy"
                              style="width:100%;height:100%;object-fit:cover;object-position:top;filter:sepia(.18) contrast(1.04) brightness(1.08);">
                     </div>
-                    <p style="font-size:.48rem;letter-spacing:.08em;color:rgba(240,230,200,.18);margin-top:.35rem;text-align:center;">Ікона св. Юліанії</p>
+                    <p class="ygal-cap">Ікона св. Юліанії</p>
                 </div>
 
                 <!-- Text -->
                 <div>
-                    <blockquote style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:300;font-style:italic;color:rgba(240,230,200,.48);line-height:1.72;border-left:1px solid rgba(201,162,39,.25);padding-left:1.1rem;margin-bottom:1.3rem;">
+                    <blockquote style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:300;font-style:italic;line-height:1.72;border-left:1px solid rgba(201,162,39,.35);padding-left:1.1rem;margin-bottom:1.3rem;">
                         «Радуйся, Юліаніє, діво, ліліє прекрасна, бо проросла ти в земному Христовому саду; радуйся, бо процвіла ти в небесному Його вертограді»
                     </blockquote>
                     <p class="KTXT-P">Юліанія Юріївна Гольшанська Дубровицька — православна свята праведна діва, дочка князя Юрія Гольшанського. Померла мирянкою на 16-му році життя, не пізніше 1566 р. Її мощі були чудесно знайдені біля Успенського собору Лаври на початку XVII ст. — на кришці труни зберігся герб Гольшанських і напис з ім'ям та віком.</p>
@@ -560,28 +560,28 @@
                         <img src="https://i.imgur.com/3jJc4j7.jpeg" alt="Гробниця Юліанії у Лаврі" loading="lazy"
                              style="width:100%;height:100%;object-fit:cover;filter:sepia(.35) contrast(1.04) brightness(1.06);">
                     </div>
-                    <p style="font-size:.47rem;letter-spacing:.07em;color:rgba(240,230,200,.18);margin-top:.3rem;text-align:center;line-height:1.55;">Гробниця у Лаврі<br>рис. А. ван Вестерфельда · 1651 р.</p>
+                    <p class="ygal-cap">Гробниця у Лаврі<br>рис. А. ван Вестерфельда · 1651 р.</p>
                 </div>
                 <div>
                     <div class="KGAL-ITEM" style="height:240px;border-radius:3px;cursor:pointer;" onclick="openKLB(this)">
                         <img src="https://i.imgur.com/JiDsvMw.jpeg" alt="Літографія 1886 р." loading="lazy"
                              style="width:100%;height:100%;object-fit:cover;filter:sepia(.38) contrast(1.04) brightness(1.09);">
                     </div>
-                    <p style="font-size:.47rem;letter-spacing:.07em;color:rgba(240,230,200,.18);margin-top:.3rem;text-align:center;line-height:1.55;">Літографія · 1886 р.</p>
+                    <p class="ygal-cap">Літографія · 1886 р.</p>
                 </div>
                 <div>
                     <div class="KGAL-ITEM" style="height:240px;border-radius:3px;cursor:pointer;" onclick="openKLB(this)">
                         <img src="https://i.imgur.com/sUnxh3B.jpeg" alt="Пам'ятник Юліанії у Дубровиці" loading="lazy"
                              style="width:100%;height:100%;object-fit:cover;filter:contrast(1.03) brightness(1.09) saturate(.8);">
                     </div>
-                    <p style="font-size:.47rem;letter-spacing:.07em;color:rgba(240,230,200,.18);margin-top:.3rem;text-align:center;line-height:1.55;">Пам'ятник у Дубровиці<br>відкрито 2005 р.</p>
+                    <p class="ygal-cap">Пам'ятник у Дубровиці<br>відкрито 2005 р.</p>
                 </div>
                 <div>
                     <div class="KGAL-ITEM" style="height:240px;border-radius:3px;cursor:pointer;" onclick="openKLB(this)">
                         <img src="https://i.imgur.com/GuDy8u6.jpeg" alt="Розпис ц. Іова Почаївського" loading="lazy"
                              style="width:100%;height:100%;object-fit:cover;filter:sepia(.22) contrast(1.04) brightness(1.06);">
                     </div>
-                    <p style="font-size:.47rem;letter-spacing:.07em;color:rgba(240,230,200,.18);margin-top:.3rem;text-align:center;line-height:1.55;">Розпис ц. Іова Почаївського<br>кін. ХIХ ст.</p>
+                    <p class="ygal-cap">Розпис ц. Іова Почаївського<br>кін. ХIХ ст.</p>
                 </div>
             </div>
 
@@ -683,18 +683,20 @@
             var x1 = m.px, y1 = m.py;
             var x2 = (m.side === 'L') ? 0 : 100;
 
+            // SVG viewBox is 0 0 100 100 — use unitless numbers, not %
             var line = document.createElementNS('http://www.w3.org/2000/svg','polyline');
-            line.setAttribute('points', x1+'% '+y1+'%, '+x2+'% '+cardMidPy+'%');
+            line.setAttribute('points', x1+','+y1+' '+x2+','+cardMidPy);
             line.setAttribute('class','KL');
             svg.appendChild(line);
 
+            // Arrowhead triangle
             var arr = document.createElementNS('http://www.w3.org/2000/svg','polygon');
-            var ax = x2, ay = cardMidPy, s = .75;
+            var ax = x2, ay = cardMidPy, s = 0.9;
             var pts;
             if (m.side === 'L') {
-                pts = (ax-s*1.7)+'% '+ay+'%, '+ax+'% '+(ay-s*.8)+'%, '+ax+'% '+(ay+s*.8)+'%';
+                pts = (ax-s*1.7)+','+ay+' '+ax+','+(ay-s*0.8)+' '+ax+','+(ay+s*0.8);
             } else {
-                pts = (ax+s*1.7)+'% '+ay+'%, '+ax+'% '+(ay-s*.8)+'%, '+ax+'% '+(ay+s*.8)+'%';
+                pts = (ax+s*1.7)+','+ay+' '+ax+','+(ay-s*0.8)+' '+ax+','+(ay+s*0.8);
             }
             arr.setAttribute('points', pts);
             arr.setAttribute('class','KA');

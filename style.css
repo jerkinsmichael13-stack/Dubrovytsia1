@@ -2101,13 +2101,6 @@ select.admin-input { cursor: pointer; }
 
 /* Gallery header gradient overlay enhancement */
 .gallery-header {
-    background: linear-gradient(
-        160deg,
-        #1a2e1e 0%,
-        #2c4a35 40%,
-        #1e3828 70%,
-        #162a1e 100%
-    );
     position: relative;
     overflow: hidden;
 }
@@ -2121,10 +2114,233 @@ select.admin-input { cursor: pointer; }
     pointer-events: none;
 }
 
-/* Smooth image transitions — do NOT hide lazy images globally */
-img {
-    transition: opacity 0.3s ease, transform 0.4s ease;
+/* ================================================================
+   LIGHT THEME — Readability fixes for mixed-theme sections
+   ================================================================ */
+
+/* Sections that are always dark (stats, footer, hero) — keep as-is */
+/* Sections that should adapt to theme */
+
+/* Aerial section adapts to theme */
+.aerial-section {
+    background: var(--color-bg);
 }
+
+/* Aerial map — always dark image container */
+.aerial-map-container {
+    background: #0a0a0a;
+}
+
+/* In light theme, make the aerial legend text readable */
+:root .aerial-legend {
+    background: var(--color-bg-card);
+}
+
+/* Photo gallery caption inside dark sections that had inline dark colors */
+/* Fix gallery-header to always be dark bg (it has white text) */
+.gallery-header {
+    background-color: #0e1a12;
+    background-image:
+        linear-gradient(to bottom, rgba(8, 18, 12, 0.90) 0%, rgba(25, 50, 35, 0.78) 100%),
+        url('https://i.imgur.com/qcjgN1I.jpeg') !important;
+    background-size: cover !important;
+    background-position: center !important;
+}
+
+/* Comparison section dark backgrounds in history — fix text */
+.compare-section-dark {
+    color: var(--color-text);
+}
+
+/* KP section adapts to theme */
+#KP {
+    background: var(--color-bg);
+    color: var(--color-text);
+}
+
+/* Fix Yuliania section text (hardcoded dark theme colors in inline styles)
+   We override via the parent block — the section with dark inline bg */
+#KP [style*="background:#0c0a08"],
+#KP [style*="background: #0c0a08"] {
+    background: var(--color-bg-secondary) !important;
+}
+
+/* Yuliania name heading — was hardcoded to near-white only for dark theme */
+.yuliania-name {
+    color: var(--color-text) !important;
+}
+
+/* Gallery item photo captions that were nearly invisible on light */
+.KGAL-CAP {
+    color: var(--color-text-light) !important;
+    opacity: 0.7;
+}
+
+/* Architectural section always-dark blocks */
+/* The Yuliania section has inline dark background - we can't easily override
+   without JS. We'll add a class-based override in architecture.html */
+
+/* ================================================================
+   PERFORMANCE OPTIMIZATIONS
+   ================================================================ */
+
+/* Reduce paint on non-interactive elements */
+.footer,
+.article-header,
+.catalog-header,
+.gallery-header,
+.hero {
+    contain: layout style;
+}
+
+/* Optimize animations */
+.card,
+.photo-card,
+.catalog-item {
+    will-change: auto;
+}
+.card:hover,
+.photo-card:hover,
+.catalog-item:hover {
+    will-change: transform;
+}
+
+/* Remove will-change when not needed (prevents layer promotion spam) */
+.fade-in-up {
+    contain: layout style paint;
+}
+
+/* Passive scroll events hint via GPU */
+.header {
+    transform: translateZ(0);
+}
+
+/* Reduce animation complexity for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    .hero-particle { display: none; }
+    .marker-pulse, .KM-PULSE { animation: none; }
+}
+
+/* ================================================================
+   KOSTEL ARROWS — ensure SVG arrows are visible
+   ================================================================ */
+.KARROWS {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    overflow: visible;
+    z-index: 5;
+}
+.KL {
+    stroke: rgba(201, 162, 39, 0.55);
+    stroke-width: 0.7;
+    fill: none;
+    stroke-linecap: round;
+    stroke-dasharray: none;
+}
+.KA {
+    fill: rgba(201, 162, 39, 0.6);
+}
+[data-theme="dark"] .KL {
+    stroke: rgba(201, 162, 39, 0.4);
+}
+[data-theme="dark"] .KA {
+    fill: rgba(201, 162, 39, 0.45);
+}
+
+/* ================================================================
+   YULIANIA SECTION DARK BLOCK — theme-aware version
+   ================================================================ */
+.yuliania-block {
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-xl);
+    padding: 3rem 1.5rem;
+    position: relative;
+}
+[data-theme="dark"] .yuliania-block {
+    background: #0c0a08;
+}
+.yuliania-block .yuliania-name {
+    color: var(--color-text);
+}
+[data-theme="dark"] .yuliania-block .yuliania-name {
+    color: #f5ead8;
+}
+.yuliania-block .yuliania-sub {
+    color: var(--color-text-secondary);
+    opacity: 0.7;
+}
+[data-theme="dark"] .yuliania-block .yuliania-sub {
+    color: rgba(245, 234, 216, 0.28);
+}
+.yuliania-block blockquote {
+    color: var(--color-text-light);
+    border-left-color: rgba(201, 162, 39, 0.35);
+}
+[data-theme="dark"] .yuliania-block blockquote {
+    color: rgba(240, 230, 200, 0.48);
+}
+.yuliania-block .KTXT-P {
+    color: var(--color-text-secondary);
+}
+[data-theme="dark"] .yuliania-block .KTXT-P {
+    color: #44403c;
+}
+/* Photo captions inside yuliania block */
+.yuliania-block .ygal-cap {
+    color: var(--color-text-muted);
+    font-size: 0.47rem;
+    letter-spacing: 0.07em;
+    margin-top: 0.3rem;
+    text-align: center;
+    line-height: 1.55;
+}
+[data-theme="dark"] .yuliania-block .ygal-cap {
+    color: rgba(240, 230, 200, 0.18);
+}
+
+/* ================================================================
+   HISTORY PAGE — comparison sections text fix
+   ================================================================ */
+
+/* Image comparison slider text in light mode */
+.compare-hero-text {
+    color: var(--color-text);
+}
+[data-theme="dark"] .compare-hero-text {
+    color: #e5ddd0;
+}
+
+/* Fix the compare section year labels */
+.compare-year-label {
+    color: var(--color-text-secondary);
+}
+
+/* Vorobyn estate bottom cards — always dark bg, white text */
+.vorobyn-card {
+    background: var(--color-bg-secondary);
+    color: var(--color-text);
+}
+[data-theme="dark"] .vorobyn-card {
+    background: #111a14;
+    color: #f0e6c8;
+}
+.vorobyn-card h4 {
+    color: var(--color-accent);
+}
+.vorobyn-card p {
+    color: var(--color-text-secondary);
+}
+[data-theme="dark"] .vorobyn-card p {
+    color: rgba(200, 185, 160, 0.85);
+}
+
 
 /* Custom scrollbar */
 ::-webkit-scrollbar { width: 6px; }
