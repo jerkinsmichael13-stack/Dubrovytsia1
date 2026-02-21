@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="uk" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Адмін-панель — Дубровиця</title>
+    <script>!function(){var t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t)}()</script>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -355,9 +356,10 @@
             <div style="margin-bottom:1.5rem;">
                 <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;margin-bottom:1rem;color:var(--color-text);">Що ви хочете додати?</h2>
                 <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
-                    <button class="content-type-btn active" data-type="photo" style="display:flex;align-items:center;gap:0.5rem;padding:0.75rem 1.25rem;border-radius:0.75rem;border:2px solid var(--color-primary);background:var(--color-primary);color:white;font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:600;cursor:pointer;transition:all 0.2s;">📸 Фото до архіву</button>
+                    <button class="content-type-btn" data-type="photo" style="display:flex;align-items:center;gap:0.5rem;padding:0.75rem 1.25rem;border-radius:0.75rem;border:2px solid var(--color-primary);background:var(--color-primary);color:white;font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:600;cursor:pointer;transition:all 0.2s;">📸 Фото до архіву</button>
                     <button class="content-type-btn" data-type="book" style="display:flex;align-items:center;gap:0.5rem;padding:0.75rem 1.25rem;border-radius:0.75rem;border:2px solid var(--color-border);background:transparent;color:var(--color-text);font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:600;cursor:pointer;transition:all 0.2s;">📚 Книга про Дубровицю</button>
                     <button class="content-type-btn" data-type="metric" style="display:flex;align-items:center;gap:0.5rem;padding:0.75rem 1.25rem;border-radius:0.75rem;border:2px solid var(--color-border);background:transparent;color:var(--color-text);font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:600;cursor:pointer;transition:all 0.2s;">📖 Метрична книга</button>
+                    <button class="content-type-btn" data-type="pin" style="display:flex;align-items:center;gap:0.5rem;padding:0.75rem 1.25rem;border-radius:0.75rem;border:2px solid var(--color-border);background:transparent;color:var(--color-text);font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:600;cursor:pointer;transition:all 0.2s;">📍 Піни костелу</button>
                 </div>
             </div>
 
@@ -548,7 +550,56 @@
                     <div id="statusMsgMetric" class="notice" style="display:none;margin-top:1rem;"></div>
                 </div>
 
-            </div><!-- /tab-panel add -->
+                <!-- ── ФОРМА: ПІН КОСТЕЛУ ── -->
+                <div class="content-form" id="form-pin" style="display:none;">
+                    <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;margin-bottom:1.25rem;">Піни костелу Іоанна Хрестителя</h3>
+                    <div class="notice notice-info" style="margin-bottom:1.5rem;">
+                        Піни відображаються на фото костелу на сторінці <strong>«Пам'ятки»</strong>. Координати X та Y — відсотки від ширини/висоти фото (0–100). Сторона: <strong>L</strong> = ліва панель, <strong>R</strong> = права.
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="field">
+                            <label>Позиція X (0–100) *</label>
+                            <input type="number" id="newPinX" placeholder="50" min="0" max="100" step="0.1">
+                        </div>
+                        <div class="field">
+                            <label>Позиція Y (0–100) *</label>
+                            <input type="number" id="newPinY" placeholder="50" min="0" max="100" step="0.1">
+                        </div>
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="field">
+                            <label>Сторона картки *</label>
+                            <select id="newPinSide">
+                                <option value="L">L — Ліва панель</option>
+                                <option value="R">R — Права панель</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label>Мітка (малий підпис)</label>
+                            <input type="text" id="newPinLabel" placeholder="Будівництво · 1695–1742">
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label>Заголовок картки *</label>
+                        <input type="text" id="newPinCardTitle" placeholder="Орден піарів">
+                    </div>
+
+                    <div class="field">
+                        <label>Текст параграф 1 *</label>
+                        <textarea id="newPinText1" rows="3" placeholder="Основний опис..."></textarea>
+                    </div>
+
+                    <div class="field">
+                        <label>Текст параграф 2</label>
+                        <textarea id="newPinText2" rows="3" placeholder="Додатковий текст (необов'язково)..."></textarea>
+                    </div>
+
+                    <button class="btn btn-green" id="publishPinBtn">📍 Додати пін</button>
+                    <div id="statusMsgPin" class="notice" style="display:none;margin-top:1rem;"></div>
+                </div>
 
             <!-- ══════════ TAB: LIST ══════════ -->
             <div class="tab-panel" id="tab-list">
@@ -956,6 +1007,7 @@ function initAdmin() {
     document.getElementById('publishPhotoBtn').addEventListener('click', publishPhoto);
     document.getElementById('publishBookBtn').addEventListener('click', publishBook);
     document.getElementById('publishMetricBtn').addEventListener('click', publishMetric);
+    document.getElementById('publishPinBtn').addEventListener('click', publishPin);
 }
 
 // ─── Publish Photo ────────────────────────────────────────────────────
@@ -1133,7 +1185,53 @@ async function publishMetric() {
     }
 }
 
-// ─── List (shows current type) ─────────────────────────────────────────
+// ─── Publish Kostel Pin ───────────────────────────────────────────────
+async function publishPin() {
+    const x         = parseFloat(document.getElementById('newPinX').value);
+    const y         = parseFloat(document.getElementById('newPinY').value);
+    const side      = document.getElementById('newPinSide').value;
+    const label     = document.getElementById('newPinLabel').value.trim();
+    const cardTitle = document.getElementById('newPinCardTitle').value.trim();
+    const text1     = document.getElementById('newPinText1').value.trim();
+    const text2     = document.getElementById('newPinText2').value.trim();
+
+    if (isNaN(x) || isNaN(y) || !cardTitle || !text1) {
+        showStatus('statusMsgPin', '❌ Заповніть обов\'язкові поля: координати X, Y, заголовок та текст', 'error');
+        return;
+    }
+    if (!getToken()) {
+        showStatus('statusMsgPin', '❌ Спочатку збережіть GitHub Token вище', 'error');
+        return;
+    }
+
+    const btn = document.getElementById('publishPinBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner-sm"></span> Збереження...';
+    showStatus('statusMsgPin', '⏳ Підключення до GitHub...', 'info');
+
+    try {
+        const { items: pins, sha } = await loadJsonFromGH('kostel_pins.json');
+        const newId = pins.length > 0 ? Math.max(...pins.map(p => p.id || 0)) + 1 : 1;
+        const newPin = { id: newId, x, y, side, label, cardTitle, text1 };
+        if (text2) newPin.text2 = text2;
+        pins.push(newPin);
+
+        await ghPut('kostel_pins.json', JSON.stringify(pins, null, 2), sha, `Додано пін: ${cardTitle}`);
+        showStatus('statusMsgPin', `✅ Пін "<strong>${cardTitle}</strong>" додано! Відобразиться на сторінці Пам'яток через 1–3 хв.`, 'success');
+
+        document.getElementById('newPinX').value = '';
+        document.getElementById('newPinY').value = '';
+        document.getElementById('newPinLabel').value = '';
+        document.getElementById('newPinCardTitle').value = '';
+        document.getElementById('newPinText1').value = '';
+        document.getElementById('newPinText2').value = '';
+    } catch (err) {
+        showStatus('statusMsgPin', `❌ Помилка: ${err.message}`, 'error');
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = '📍 Додати пін';
+    }
+}
 async function renderList() {
     const wrap = document.getElementById('photoListWrap');
 
@@ -1151,6 +1249,8 @@ async function renderList() {
             await renderBookList(wrap);
         } else if (currentContentType === 'metric') {
             await renderMetricList(wrap);
+        } else if (currentContentType === 'pin') {
+            await renderPinList(wrap);
         }
     } catch(e) {
         let msg = e.message;
@@ -1454,6 +1554,42 @@ async function renderMetricList(wrap) {
             renderList();
         } catch(e) { alert('❌ '+e.message); btn.disabled=false; btn.textContent='🗑'; }
     }));
+}
+
+async function renderPinList(wrap) {
+    const { items: pins, sha } = await loadJsonFromGH('kostel_pins.json');
+    if (!pins.length) {
+        wrap.innerHTML = '<div class="notice notice-info">📍 Піни ще не додано. Скористайтесь формою вище.</div>';
+        return;
+    }
+    wrap.innerHTML = `
+        <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;margin-bottom:1rem;color:var(--color-text);">
+            Піни костелу (${pins.length})
+        </h3>
+        <div class="photo-list">
+        ${pins.map((p, i) => `
+            <div class="photo-item">
+                <div style="width:72px;height:52px;background:var(--color-bg-secondary);border-radius:0.5rem;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;">📍</div>
+                <div class="photo-item-info">
+                    <h4>${esc(p.cardTitle)}</h4>
+                    <p>X: ${p.x}, Y: ${p.y} · Сторона: ${p.side} · ${esc(p.label || '—')}</p>
+                </div>
+                <button class="btn btn-red" style="padding:0.4rem 0.75rem;font-size:0.8rem;" data-delpin="${i}">🗑</button>
+            </div>
+        `).join('')}
+        </div>`;
+    wrap.querySelectorAll('[data-delpin]').forEach(btn => {
+        btn.addEventListener('click', async function() {
+            const i = parseInt(this.dataset.delpin);
+            if (!confirm(`Видалити пін «${pins[i].cardTitle}»?`)) return;
+            this.disabled = true; this.textContent = '...';
+            try {
+                const { items, sha: s2 } = await loadJsonFromGH('kostel_pins.json');
+                await ghPut('kostel_pins.json', JSON.stringify(items.filter((_,j)=>j!==i), null, 2), s2, `Видалено пін: ${pins[i].cardTitle}`);
+                renderList();
+            } catch(e) { alert('❌ '+e.message); this.disabled=false; this.textContent='🗑'; }
+        });
+    });
 }
 
 }); // end DOMContentLoaded

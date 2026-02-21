@@ -1,7 +1,7 @@
 // ⚡ Apply saved theme INSTANTLY (before page renders) to avoid flash
 (function(){
-    var t = localStorage.getItem('theme');
-    if (t) document.documentElement.setAttribute('data-theme', t);
+    var t = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', t);
 })();
 
 // ================================================
