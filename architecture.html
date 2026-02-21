@@ -49,36 +49,38 @@
     .KPH-M { font-size: .6rem; letter-spacing: .15em; text-transform: uppercase; color: var(--color-text-muted, #a8a29e); }
 
     /* ═══════════════════════════════════════
-       ANNOTATED STAGE
+       ANNOTATED STAGE — WIDE LAYOUT
     ═══════════════════════════════════════ */
     .KSTAGE {
         display: grid;
-        grid-template-columns: 1fr minmax(0, 760px) 1fr;
+        /* 280px side panels, photo takes everything in between */
+        grid-template-columns: 280px 1fr 280px;
         align-items: start;
-        max-width: 1700px; margin: 0 auto; padding: 0 0 1rem;
+        max-width: 1800px; margin: 0 auto; padding: 0 1rem 1rem;
         position: relative;
+        gap: 0;
     }
     .KPHOTO-COL { position: relative; grid-column: 2; }
     .KPHOTO-IMG {
         display: block; width: 100%; height: auto; border-radius: 4px;
         filter: contrast(1.03) brightness(.97) saturate(.88);
-        box-shadow: 0 2px 8px rgba(0,0,0,.1), 0 16px 48px rgba(0,0,0,.18);
+        box-shadow: 0 4px 20px rgba(0,0,0,.12), 0 20px 56px rgba(0,0,0,.2);
         user-select: none; -webkit-user-drag: none;
     }
     .KPINS-OVL { position: absolute; top: 0; left: 0; right: 0; pointer-events: none; overflow: visible; }
 
-    /* Circle marker — works on both themes */
+    /* Circle marker */
     .KM { position: absolute; transform: translate(-50%,-50%); pointer-events: none; z-index: 10; }
     .KM-RING {
-        width: 20px; height: 20px; border-radius: 50%;
-        border: 1.5px solid rgba(201,162,39,.85); background: rgba(201,162,39,.12);
+        width: 18px; height: 18px; border-radius: 50%;
+        border: 1.5px solid rgba(201,162,39,.9); background: rgba(201,162,39,.15);
         display: flex; align-items: center; justify-content: center;
         position: relative; z-index: 2;
     }
     .KM-DOT { width: 5px; height: 5px; border-radius: 50%; background: #c9a227; }
     .KM-PULSE {
         position: absolute; top: 50%; left: 50%;
-        width: 20px; height: 20px; border-radius: 50%;
+        width: 18px; height: 18px; border-radius: 50%;
         border: 1px solid rgba(201,162,39,.4);
         transform: translate(-50%,-50%);
         animation: mPulse 3.2s ease-out infinite;
@@ -90,48 +92,48 @@
         100% { transform: translate(-50%,-50%) scale(1);   opacity:0; }
     }
 
-    /* SVG lines */
-    .KARROWS { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
-    .KL { stroke: rgba(180,130,20,.4); stroke-width: .6; fill: none; stroke-linecap: round; }
-    .KA { fill: rgba(180,130,20,.45); }
+    /* SVG connector lines — drawn by JS, horizontal only */
+    .KARROWS { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; z-index: 5; }
+    .KL { stroke: rgba(201,162,39,.5); stroke-width: .55; fill: none; stroke-linecap: butt; stroke-dasharray: none; }
+    .KA { fill: rgba(201,162,39,.55); }
 
     /* Side panels */
-    .KPANEL { display: flex; flex-direction: column; padding-top: 1.5rem; }
-    .KPANEL-L { grid-column: 1; padding-right: 2.5rem; padding-left: 2rem; align-items: flex-end; }
-    .KPANEL-R { grid-column: 3; padding-left: 2.5rem; padding-right: 2rem; align-items: flex-start; }
+    .KPANEL { display: flex; flex-direction: column; padding-top: 2rem; }
+    .KPANEL-L { grid-column: 1; padding-right: 1.2rem; padding-left: 1.5rem; align-items: flex-end; }
+    .KPANEL-R { grid-column: 3; padding-left: 1.2rem; padding-right: 1.5rem; align-items: flex-start; }
 
     .KCARD {
-        width: 100%; max-width: 255px;
-        padding: 0 0 0 1.1rem;
-        border-left: 1px solid rgba(201,162,39,.25);
-        margin-bottom: 2.8rem;
-        opacity: 0; transform: translateX(-10px);
+        width: 100%;
+        padding: .8rem 0 .8rem 1rem;
+        border-left: 2px solid rgba(201,162,39,.2);
+        margin-bottom: 2.2rem;
+        opacity: 0; transform: translateX(-8px);
         transition: opacity .55s ease, transform .55s ease;
+        position: relative;
     }
     .KPANEL-R .KCARD {
-        border-left: none; border-right: 1px solid rgba(201,162,39,.25);
-        padding: 0 1.1rem 0 0; text-align: right;
-        transform: translateX(10px);
+        border-left: none; border-right: 2px solid rgba(201,162,39,.2);
+        padding: .8rem 1rem .8rem 0; text-align: right;
+        transform: translateX(8px);
     }
     .KCARD.vis { opacity: 1; transform: translateX(0); }
     .KCARD-LABEL {
-        font-size: .52rem; letter-spacing: .24em; text-transform: uppercase;
-        color: #b8902a; margin-bottom: .5rem; display: block;
+        font-size: .5rem; letter-spacing: .24em; text-transform: uppercase;
+        color: #b8902a; margin-bottom: .4rem; display: block;
     }
     .KCARD-TITLE {
-        font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 500;
-        color: var(--color-text, #1c1917); line-height: 1.25; margin-bottom: .6rem;
+        font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 500;
+        color: var(--color-text, #1c1917); line-height: 1.25; margin-bottom: .5rem;
     }
     .KCARD-TEXT {
-        font-size: .68rem; font-weight: 300; line-height: 1.82;
+        font-size: .67rem; font-weight: 300; line-height: 1.82;
         color: var(--color-text-secondary, #44403c);
-        opacity: .75;
     }
-    .KCARD-TEXT + .KCARD-TEXT { margin-top: .5rem; }
+    .KCARD-TEXT + .KCARD-TEXT { margin-top: .4rem; }
 
     /* ── Hide panels + arrows on mobile, show accordion instead ── */
-    @media (max-width: 960px) {
-        .KSTAGE { grid-template-columns: 1fr; }
+    @media (max-width: 1100px) {
+        .KSTAGE { grid-template-columns: 1fr; padding: 0 1rem; }
         .KPHOTO-COL { grid-column: 1; }
         .KPANEL, .KARROWS { display: none; }
     }
@@ -142,7 +144,7 @@
         max-width: 760px; margin: 1.5rem auto 0; padding: 0 1rem;
         flex-direction: column; gap: .6rem;
     }
-    @media (max-width: 960px) { .KMOBILE-CARDS { display: flex; } }
+    @media (max-width: 1100px) { .KMOBILE-CARDS { display: flex; } }
 
     .KMOB-CARD {
         background: var(--color-bg-card, #fff);
@@ -201,7 +203,7 @@
     .KSTATS {
         display: grid; grid-template-columns: repeat(4,1fr);
         gap: 1px; background: var(--color-border, #ddd5c8);
-        max-width: 760px; margin: 3.5rem auto 0;
+        max-width: 1060px; margin: 3.5rem auto 0;
     }
     @media (max-width: 640px) { .KSTATS { grid-template-columns: repeat(2,1fr); } }
     .KST {
@@ -221,13 +223,13 @@
     .KST-D { font-size: .68rem; font-weight: 300; line-height: 1.7; color: var(--color-text-secondary, #44403c); opacity: .8; }
 
     /* Gallery */
-    .KGAL { max-width: 760px; margin: 3.5rem auto 0; padding: 0 1.5rem 4rem; }
+    .KGAL { max-width: 1060px; margin: 3.5rem auto 0; padding: 0 1.5rem 4rem; }
     .KGAL-HDR { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 1.2rem; }
     .KGAL-HDR::after { content: ''; flex: 1; height: 1px; background: var(--color-border, #ddd5c8); align-self: center; }
     .KGAL-TITLE { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; font-weight: 300; font-style: italic; color: var(--color-text, #1c1917); }
     .KGAL-GRID {
         display: grid; grid-template-columns: 1.65fr 1fr 1fr;
-        grid-template-rows: 1fr 1fr; gap: .5rem; height: 520px;
+        grid-template-rows: 1fr 1fr; gap: .5rem; height: 600px;
     }
     @media (max-width: 640px) {
         .KGAL-GRID { grid-template-columns: 1fr; grid-template-rows: auto; height: auto; }
@@ -240,7 +242,7 @@
     .KGAL-ITEM:hover img { transform: scale(1.04); filter: contrast(1.04) brightness(1.1) saturate(.92); }
 
     /* Text block (Tserkva + Yuliania) */
-    .KTXT-BLOCK { max-width: 760px; margin: 0 auto; padding: 0 1.5rem; }
+    .KTXT-BLOCK { max-width: 1060px; margin: 0 auto; padding: 0 1.5rem; }
     .KTXT-COLS { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; margin-bottom: 2rem; }
     @media (max-width: 640px) { .KTXT-COLS { grid-template-columns: 1fr; gap: 1.2rem; } }
     .KTXT-P {
@@ -280,6 +282,44 @@
     #KLB.on { opacity: 1; pointer-events: all; }
     #KLB img { max-width: 94vw; max-height: 90vh; object-fit: contain; border-radius: 4px; }
     .KLB-X { position: absolute; top: 1.2rem; right: 1.4rem; width: 42px; height: 42px; border-radius: 50%; background: rgba(255,255,255,.15); border: none; color: #fff; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background .15s; }
+    /* Yuliania block — theme-aware */
+    .yuliania-block {
+        background: var(--color-bg-secondary, #ede7db);
+        border-radius: 10px;
+        max-width: 1060px; margin: 4rem auto 0; padding: 3rem 2rem;
+    }
+    [data-theme="dark"] .yuliania-block { background: #0d0b09; }
+
+    .yuliania-name {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(1.8rem,3.5vw,2.8rem); font-weight: 300;
+        color: var(--color-text, #1c1917); line-height: 1.1; margin-bottom: .35rem;
+    }
+    [data-theme="dark"] .yuliania-name { color: #f0e8d0; }
+
+    .yuliania-sub {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: .95rem; font-style: italic;
+        color: var(--color-text-light, #78716c);
+    }
+    [data-theme="dark"] .yuliania-sub { color: rgba(240,230,200,.45); }
+
+    .yuliania-block blockquote {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.05rem; font-weight: 300; font-style: italic;
+        color: var(--color-text-light, #78716c);
+        line-height: 1.72; border-left: 1px solid rgba(201,162,39,.35);
+        padding-left: 1.1rem; margin-bottom: 1.3rem;
+    }
+    [data-theme="dark"] .yuliania-block blockquote { color: rgba(240,230,200,.45); }
+
+    .ygal-cap {
+        font-size: .47rem; letter-spacing: .07em;
+        color: var(--color-text-muted, #a8a29e);
+        margin-top: .3rem; text-align: center; line-height: 1.55;
+    }
+    [data-theme="dark"] .ygal-cap { color: rgba(240,230,200,.3); }
+
     .KLB-X:hover { background: rgba(255,255,255,.3); }
     </style>
 </head>
@@ -478,7 +518,7 @@
         </div>
 
         <!-- Church photo — full width -->
-        <div style="max-width:760px; margin:0 auto; padding:0 1.5rem;">
+        <div style="max-width:1060px; margin:0 auto; padding:0 1.5rem;">
             <div class="KGAL-ITEM" style="height:520px; border-radius:3px; cursor:pointer;" onclick="openKLB(this)">
                 <img src="https://i.imgur.com/Szn6vcH.jpeg" alt="Церква Різдва Пресвятої Богородиці"
                      style="width:100%;height:100%;object-fit:cover;display:block;filter:contrast(1.03) brightness(1.05) saturate(.85);">
@@ -512,21 +552,19 @@
         <!-- ════════════════════════════════════════
              ЮЛІАНІЯ — редакційний блок
         ════════════════════════════════════════ -->
-        <div class="yuliania-block" style="max-width:760px; margin:5rem auto 0; padding:3rem 1.5rem;">
+        <div class="yuliania-block">
 
-            <!-- Thin divider with label -->
             <div style="display:flex;align-items:center;gap:1.2rem;margin-bottom:2.8rem;">
                 <div style="flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(201,162,39,.3));"></div>
                 <span style="font-size:.52rem;letter-spacing:.28em;text-transform:uppercase;color:#b8902a;white-space:nowrap;">Свята, пов'язана з цим місцем</span>
                 <div style="flex:1;height:1px;background:linear-gradient(90deg,rgba(201,162,39,.3),transparent);"></div>
             </div>
 
-            <!-- Name + dates -->
             <div style="margin-bottom:2.2rem;">
-                <h3 class="yuliania-name" style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:300;line-height:1.1;margin-bottom:.35rem;">
+                <h3 class="yuliania-name">
                     Свята <em style="font-style:italic;color:#c9a227;">Юліанія Гольшанська</em>
                 </h3>
-                <p class="yuliania-sub" style="font-family:'Cormorant Garamond',serif;font-size:.95rem;font-style:italic;">
+                <p class="yuliania-sub">
                     Праведна діва · пом. бл. 1566 р. · Мощі у Ближніх печерах Лаври · День пам'яті 28 вересня
                 </p>
             </div>
@@ -544,7 +582,7 @@
 
                 <!-- Text -->
                 <div>
-                    <blockquote style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:300;font-style:italic;line-height:1.72;border-left:1px solid rgba(201,162,39,.35);padding-left:1.1rem;margin-bottom:1.3rem;">
+                    <blockquote>
                         «Радуйся, Юліаніє, діво, ліліє прекрасна, бо проросла ти в земному Христовому саду; радуйся, бо процвіла ти в небесному Його вертограді»
                     </blockquote>
                     <p class="KTXT-P">Юліанія Юріївна Гольшанська Дубровицька — православна свята праведна діва, дочка князя Юрія Гольшанського. Померла мирянкою на 16-му році життя, не пізніше 1566 р. Її мощі були чудесно знайдені біля Успенського собору Лаври на початку XVII ст. — на кришці труни зберігся герб Гольшанських і напис з ім'ям та віком.</p>
@@ -662,44 +700,40 @@
         });
     }
 
-    function buildLines(markers, svgId, photoColId) {
-        if (window.innerWidth <= 960) return;
+    function buildLines(markers, svgId) {
+        if (window.innerWidth <= 1100) return;
         var svg = document.getElementById(svgId);
         if (!svg) return;
         svg.innerHTML = '';
-        var col = document.getElementById(photoColId);
-        if (!col) return;
-        var colRect = col.getBoundingClientRect();
-        var H = colRect.height;
-        var Y0 = colRect.top;
-        if (H < 10) return; // not rendered yet
 
         markers.forEach(function(m) {
-            var card = document.getElementById(m.cardId);
-            if (!card) return;
-            var cr = card.getBoundingClientRect();
-            var cardMidPy = ((cr.top + cr.height / 2 - Y0) / H) * 100;
-            cardMidPy = Math.max(1, Math.min(99, cardMidPy));
-            var x1 = m.px, y1 = m.py;
-            var x2 = (m.side === 'L') ? 0 : 100;
+            // marker dot position on photo (in SVG viewBox 0-100 units)
+            var mx = m.px, my = m.py;
+            // photo edge (x=0 for left side, x=100 for right)
+            var ex = (m.side === 'L') ? 0 : 100;
 
-            // SVG viewBox is 0 0 100 100 — use unitless numbers, not %
-            var line = document.createElementNS('http://www.w3.org/2000/svg','polyline');
-            line.setAttribute('points', x1+','+y1+' '+x2+','+cardMidPy);
-            line.setAttribute('class','KL');
+            // Draw a horizontal line from photo edge to marker X at marker Y
+            var line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            line.setAttribute('x1', ex);
+            line.setAttribute('y1', my);
+            line.setAttribute('x2', mx);
+            line.setAttribute('y2', my);
+            line.setAttribute('class', 'KL');
             svg.appendChild(line);
 
-            // Arrowhead triangle
-            var arr = document.createElementNS('http://www.w3.org/2000/svg','polygon');
-            var ax = x2, ay = cardMidPy, s = 0.9;
+            // Small arrowhead pointing INTO the photo at the marker
+            var arr = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+            var s = 1.0;
             var pts;
             if (m.side === 'L') {
-                pts = (ax-s*1.7)+','+ay+' '+ax+','+(ay-s*0.8)+' '+ax+','+(ay+s*0.8);
+                // arrow tip points right (toward marker)
+                pts = mx+','+my+' '+(mx-s*2)+','+(my-s*.8)+' '+(mx-s*2)+','+(my+s*.8);
             } else {
-                pts = (ax+s*1.7)+','+ay+' '+ax+','+(ay-s*0.8)+' '+ax+','+(ay+s*0.8);
+                // arrow tip points left (toward marker)
+                pts = mx+','+my+' '+(mx+s*2)+','+(my-s*.8)+' '+(mx+s*2)+','+(my+s*.8);
             }
             arr.setAttribute('points', pts);
-            arr.setAttribute('class','KA');
+            arr.setAttribute('class', 'KA');
             svg.appendChild(arr);
         });
     }
@@ -714,7 +748,7 @@
         var img = document.getElementById('KPHOTO-IMG-1');
         var ovl = document.getElementById('KPINS-OVL-1');
         if (img && ovl) ovl.style.height = img.offsetHeight + 'px';
-        buildLines(MARKERS_1, 'KARROWS-SVG-1', 'KPHOTO-COL-1');
+        buildLines(MARKERS_1, 'KARROWS-SVG-1');
     }
 
     var img1 = document.getElementById('KPHOTO-IMG-1');
