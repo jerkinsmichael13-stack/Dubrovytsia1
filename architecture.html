@@ -11,21 +11,25 @@
     <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* ═══ DARK WRAPPER ═══ */
-    #KP { background: #07060a; color: #f0e8d0; font-family: 'DM Sans', sans-serif; }
-
-    /* ── Section divider ── */
-    .KSEP {
-        max-width: 780px; margin: 0 auto;
-        height: 1px;
-        background: linear-gradient(90deg, transparent, rgba(201,162,39,.18), transparent);
+    /* ═══════════════════════════════════════════════
+       LIGHT THEME WRAPPER — adapts to site theme
+    ═══════════════════════════════════════════════ */
+    #KP {
+        background: var(--color-bg, #faf7f2);
+        color: var(--color-text, #1c1917);
+        font-family: 'DM Sans', sans-serif;
     }
 
-    /* ── Section header ── */
-    .KPH { text-align: center; padding: 5rem 2rem 3rem; }
+    /* Section divider */
+    .KSEP {
+        max-width: 780px; margin: 0 auto; height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(201,162,39,.25), transparent);
+    }
+
+    /* Section header */
+    .KPH { text-align: center; padding: 4.5rem 1.5rem 2.8rem; }
     .KPH-EYE {
-        display: inline-flex; align-items: center; gap: .8rem;
-        margin-bottom: 1.2rem;
+        display: inline-flex; align-items: center; gap: .8rem; margin-bottom: 1.2rem;
         font-size: .56rem; letter-spacing: .3em; text-transform: uppercase; color: #b8902a;
     }
     .KPH-EYE::before, .KPH-EYE::after { content: ''; display: block; width: 38px; height: 1px; }
@@ -33,43 +37,41 @@
     .KPH-EYE::after  { background: linear-gradient(90deg, rgba(180,145,40,.5), transparent); }
     .KPH-T {
         font-family: 'Cormorant Garamond', serif;
-        font-size: clamp(2.2rem, 4.5vw, 3.6rem); font-weight: 300; line-height: 1.05;
-        color: #f5ead8; margin-bottom: .4rem;
+        font-size: clamp(2rem, 4.5vw, 3.6rem); font-weight: 300; line-height: 1.08;
+        color: var(--color-text, #1c1917); margin-bottom: .4rem;
     }
     .KPH-T em { font-style: italic; color: #c9a227; }
     .KPH-S {
         font-family: 'Cormorant Garamond', serif;
-        font-size: clamp(.9rem, 1.6vw, 1.15rem); font-style: italic;
-        color: rgba(245,234,216,.32); margin-bottom: .5rem;
+        font-size: clamp(.88rem, 1.6vw, 1.12rem); font-style: italic;
+        color: var(--color-text-light, #78716c); margin-bottom: .5rem;
     }
-    .KPH-M { font-size: .6rem; letter-spacing: .15em; text-transform: uppercase; color: rgba(245,234,216,.18); }
+    .KPH-M { font-size: .6rem; letter-spacing: .15em; text-transform: uppercase; color: var(--color-text-muted, #a8a29e); }
 
     /* ═══════════════════════════════════════
-       ANNOTATED STAGE: left panel | photo | right panel
+       ANNOTATED STAGE
     ═══════════════════════════════════════ */
     .KSTAGE {
         display: grid;
         grid-template-columns: 1fr minmax(0, 760px) 1fr;
         align-items: start;
-        max-width: 1700px;
-        margin: 0 auto;
-        padding: 0 0 1rem;
+        max-width: 1700px; margin: 0 auto; padding: 0 0 1rem;
         position: relative;
     }
     .KPHOTO-COL { position: relative; grid-column: 2; }
     .KPHOTO-IMG {
-        display: block; width: 100%; height: auto; border-radius: 3px;
-        filter: contrast(1.03) brightness(.93) saturate(.82);
-        box-shadow: 0 0 0 1px rgba(180,145,40,.07), 0 30px 90px rgba(0,0,0,.9);
+        display: block; width: 100%; height: auto; border-radius: 4px;
+        filter: contrast(1.03) brightness(.97) saturate(.88);
+        box-shadow: 0 2px 8px rgba(0,0,0,.1), 0 16px 48px rgba(0,0,0,.18);
         user-select: none; -webkit-user-drag: none;
     }
     .KPINS-OVL { position: absolute; top: 0; left: 0; right: 0; pointer-events: none; overflow: visible; }
 
-    /* Circle marker */
+    /* Circle marker — works on both themes */
     .KM { position: absolute; transform: translate(-50%,-50%); pointer-events: none; z-index: 10; }
     .KM-RING {
         width: 20px; height: 20px; border-radius: 50%;
-        border: 1px solid rgba(201,162,39,.7); background: transparent;
+        border: 1.5px solid rgba(201,162,39,.85); background: rgba(201,162,39,.12);
         display: flex; align-items: center; justify-content: center;
         position: relative; z-index: 2;
     }
@@ -77,7 +79,7 @@
     .KM-PULSE {
         position: absolute; top: 50%; left: 50%;
         width: 20px; height: 20px; border-radius: 50%;
-        border: 1px solid rgba(201,162,39,.35);
+        border: 1px solid rgba(201,162,39,.4);
         transform: translate(-50%,-50%);
         animation: mPulse 3.2s ease-out infinite;
         pointer-events: none;
@@ -90,8 +92,8 @@
 
     /* SVG lines */
     .KARROWS { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
-    .KL { stroke: rgba(201,162,39,.32); stroke-width: .55; fill: none; stroke-linecap: round; }
-    .KA { fill: rgba(201,162,39,.4); }
+    .KL { stroke: rgba(180,130,20,.4); stroke-width: .6; fill: none; stroke-linecap: round; }
+    .KA { fill: rgba(180,130,20,.45); }
 
     /* Side panels */
     .KPANEL { display: flex; flex-direction: column; padding-top: 1.5rem; }
@@ -101,123 +103,184 @@
     .KCARD {
         width: 100%; max-width: 255px;
         padding: 0 0 0 1.1rem;
-        border-left: 1px solid rgba(201,162,39,.16);
+        border-left: 1px solid rgba(201,162,39,.25);
         margin-bottom: 2.8rem;
         opacity: 0; transform: translateX(-10px);
         transition: opacity .55s ease, transform .55s ease;
     }
     .KPANEL-R .KCARD {
-        border-left: none; border-right: 1px solid rgba(201,162,39,.16);
+        border-left: none; border-right: 1px solid rgba(201,162,39,.25);
         padding: 0 1.1rem 0 0; text-align: right;
         transform: translateX(10px);
     }
     .KCARD.vis { opacity: 1; transform: translateX(0); }
-    .KCARD-LABEL { font-size: .52rem; letter-spacing: .24em; text-transform: uppercase; color: rgba(201,162,39,.7); margin-bottom: .5rem; display: block; }
-    .KCARD-TITLE { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 400; color: #f0e6c8; line-height: 1.25; margin-bottom: .6rem; }
-    .KCARD-TEXT { font-size: .68rem; font-weight: 300; line-height: 1.82; color: rgba(240,230,200,.42); }
+    .KCARD-LABEL {
+        font-size: .52rem; letter-spacing: .24em; text-transform: uppercase;
+        color: #b8902a; margin-bottom: .5rem; display: block;
+    }
+    .KCARD-TITLE {
+        font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 500;
+        color: var(--color-text, #1c1917); line-height: 1.25; margin-bottom: .6rem;
+    }
+    .KCARD-TEXT {
+        font-size: .68rem; font-weight: 300; line-height: 1.82;
+        color: var(--color-text-secondary, #44403c);
+        opacity: .75;
+    }
     .KCARD-TEXT + .KCARD-TEXT { margin-top: .5rem; }
 
+    /* ── Hide panels + arrows on mobile, show accordion instead ── */
     @media (max-width: 960px) {
         .KSTAGE { grid-template-columns: 1fr; }
         .KPHOTO-COL { grid-column: 1; }
         .KPANEL, .KARROWS { display: none; }
     }
 
+    /* ── Mobile accordion cards (shown only on mobile) ── */
+    .KMOBILE-CARDS {
+        display: none;
+        max-width: 760px; margin: 1.5rem auto 0; padding: 0 1rem;
+        flex-direction: column; gap: .6rem;
+    }
+    @media (max-width: 960px) { .KMOBILE-CARDS { display: flex; } }
+
+    .KMOB-CARD {
+        background: var(--color-bg-card, #fff);
+        border: 1px solid var(--color-border, #ddd5c8);
+        border-left: 3px solid #c9a227;
+        border-radius: 6px; overflow: hidden;
+    }
+    .KMOB-CARD-HDR {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: .9rem 1rem; cursor: pointer; gap: .8rem;
+        background: none; width: 100%; text-align: left;
+        font-family: 'DM Sans', sans-serif;
+    }
+    .KMOB-CARD-HDR:active { background: var(--color-bg-alt, #f4efe7); }
+    .KMOB-LABEL {
+        font-size: .52rem; letter-spacing: .2em; text-transform: uppercase;
+        color: #b8902a; display: block; margin-bottom: .15rem;
+    }
+    .KMOB-TITLE {
+        font-family: 'Cormorant Garamond', serif; font-size: .95rem; font-weight: 500;
+        color: var(--color-text, #1c1917); line-height: 1.25;
+    }
+    .KMOB-CHEVRON {
+        width: 18px; height: 18px; flex-shrink: 0;
+        border: 1px solid rgba(201,162,39,.4); border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        font-size: .6rem; color: #c9a227;
+        transition: transform .25s ease;
+    }
+    .KMOB-CARD.open .KMOB-CHEVRON { transform: rotate(180deg); }
+    .KMOB-CARD-BODY {
+        max-height: 0; overflow: hidden;
+        transition: max-height .32s ease, padding .32s ease;
+        padding: 0 1rem;
+    }
+    .KMOB-CARD.open .KMOB-CARD-BODY {
+        max-height: 600px;
+        padding: 0 1rem .9rem;
+    }
+    .KMOB-TEXT {
+        font-size: .72rem; font-weight: 300; line-height: 1.82;
+        color: var(--color-text-secondary, #44403c); margin-top: .4rem;
+    }
+    .KMOB-TEXT + .KMOB-TEXT { margin-top: .5rem; }
+
     /* Hint */
     .KHINT {
-        text-align: center; margin: .6rem 0 0;
+        text-align: center; margin: .7rem 0 0;
         font-size: .53rem; letter-spacing: .2em; text-transform: uppercase;
-        color: rgba(240,230,200,.12);
+        color: var(--color-text-muted, #a8a29e);
         display: flex; align-items: center; justify-content: center; gap: .5rem;
     }
+    @media (max-width: 960px) { .KHINT { display: none; } }
 
-    /* ── Stats grid ── */
+    /* Stats grid */
     .KSTATS {
         display: grid; grid-template-columns: repeat(4,1fr);
-        gap: 1px; background: rgba(255,255,255,.035);
-        max-width: 760px; margin: 4rem auto 0;
+        gap: 1px; background: var(--color-border, #ddd5c8);
+        max-width: 760px; margin: 3.5rem auto 0;
     }
     @media (max-width: 640px) { .KSTATS { grid-template-columns: repeat(2,1fr); } }
-    .KST { background: #07060a; padding: 1.7rem 1.4rem; position: relative; transition: background .22s; overflow: hidden; }
-    .KST::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: transparent; transition: background .25s; }
-    .KST:hover { background: #0e0c07; }
-    .KST:hover::before { background: linear-gradient(90deg, transparent, rgba(201,162,39,.4), transparent); }
+    .KST {
+        background: var(--color-bg-card, #fff);
+        padding: 1.6rem 1.3rem; position: relative; transition: background .22s; overflow: hidden;
+    }
+    .KST::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: transparent; transition: background .25s; }
+    .KST:hover { background: var(--color-bg-alt, #f4efe7); }
+    .KST:hover::before { background: linear-gradient(90deg, transparent, rgba(201,162,39,.5), transparent); }
     .KST-V {
-        font-family: 'Cormorant Garamond', serif; font-size: 2.6rem; font-weight: 300; line-height: 1;
-        background: linear-gradient(135deg, #c9a227, #edd060);
+        font-family: 'Cormorant Garamond', serif; font-size: 2.4rem; font-weight: 300; line-height: 1;
+        background: linear-gradient(135deg, #a8841c, #c9a227);
         -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
         margin-bottom: .3rem;
     }
-    .KST-K { font-size: .56rem; letter-spacing: .13em; text-transform: uppercase; color: rgba(240,230,200,.22); margin-bottom: .28rem; }
-    .KST-D { font-size: .68rem; font-weight: 300; line-height: 1.7; color: rgba(240,230,200,.38); }
+    .KST-K { font-size: .56rem; letter-spacing: .13em; text-transform: uppercase; color: var(--color-text-muted, #a8a29e); margin-bottom: .28rem; }
+    .KST-D { font-size: .68rem; font-weight: 300; line-height: 1.7; color: var(--color-text-secondary, #44403c); opacity: .8; }
 
-    /* ── Gallery ── */
-    .KGAL { max-width: 760px; margin: 4rem auto 0; padding: 0 1.5rem 5rem; }
+    /* Gallery */
+    .KGAL { max-width: 760px; margin: 3.5rem auto 0; padding: 0 1.5rem 4rem; }
     .KGAL-HDR { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 1.2rem; }
-    .KGAL-HDR::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,.05); align-self: center; }
-    .KGAL-TITLE { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; font-weight: 300; font-style: italic; color: #e0d0a8; }
+    .KGAL-HDR::after { content: ''; flex: 1; height: 1px; background: var(--color-border, #ddd5c8); align-self: center; }
+    .KGAL-TITLE { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; font-weight: 300; font-style: italic; color: var(--color-text, #1c1917); }
     .KGAL-GRID {
         display: grid; grid-template-columns: 1.65fr 1fr 1fr;
         grid-template-rows: 1fr 1fr; gap: .5rem; height: 520px;
     }
-    @media (max-width: 640px) { .KGAL-GRID { grid-template-columns: 1fr 1fr; grid-template-rows: auto; height: auto; } .KGAL-MAIN { grid-column: span 2; } }
-    .KGAL-ITEM { position: relative; overflow: hidden; border-radius: 3px; background: #111; cursor: pointer; }
+    @media (max-width: 640px) {
+        .KGAL-GRID { grid-template-columns: 1fr; grid-template-rows: auto; height: auto; }
+        .KGAL-MAIN { grid-row: span 1; }
+        .KGAL-GRID .KGAL-ITEM { height: 240px; }
+    }
+    .KGAL-ITEM { position: relative; overflow: hidden; border-radius: 4px; background: var(--color-bg-secondary, #ede7db); cursor: pointer; }
     .KGAL-MAIN { grid-row: span 2; }
-    /* Lighter photos — brightness 1.05 */
-    .KGAL-ITEM img { width: 100%; height: 100%; object-fit: cover; display: block; filter: contrast(1.02) brightness(1.05) saturate(.85); transition: transform .5s ease, filter .5s ease; }
-    .KGAL-ITEM:hover img { transform: scale(1.04); filter: contrast(1.04) brightness(1.12) saturate(.9); }
+    .KGAL-ITEM img { width: 100%; height: 100%; object-fit: cover; display: block; filter: contrast(1.02) brightness(1.05) saturate(.88); transition: transform .5s ease, filter .5s ease; }
+    .KGAL-ITEM:hover img { transform: scale(1.04); filter: contrast(1.04) brightness(1.1) saturate(.92); }
 
-    /* ── Simple gallery (no main) — for Tserkva & Yuliania ── */
-    .KGAL-SIMPLE {
-        display: grid; grid-template-columns: repeat(4,1fr); gap: .5rem; height: 220px;
-    }
-    @media (max-width: 640px) { .KGAL-SIMPLE { grid-template-columns: repeat(2,1fr); height: auto; } }
-    /* Portrait gallery for Yuliania */
-    .KGAL-PORTRAIT {
-        display: grid; grid-template-columns: repeat(5,1fr); gap: .5rem; height: 260px;
-    }
-    @media (max-width: 640px) { .KGAL-PORTRAIT { grid-template-columns: repeat(3,1fr); height: auto; } }
-
-    /* ── Tserkva section: text layout ── */
-    .KTXT-BLOCK {
-        max-width: 760px; margin: 0 auto; padding: 0 1.5rem;
-    }
-    .KTXT-COLS {
-        display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; margin-bottom: 2rem;
-    }
-    @media (max-width: 640px) { .KTXT-COLS { grid-template-columns: 1fr; } }
+    /* Text block (Tserkva + Yuliania) */
+    .KTXT-BLOCK { max-width: 760px; margin: 0 auto; padding: 0 1.5rem; }
+    .KTXT-COLS { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; margin-bottom: 2rem; }
+    @media (max-width: 640px) { .KTXT-COLS { grid-template-columns: 1fr; gap: 1.2rem; } }
     .KTXT-P {
-        font-size: .72rem; font-weight: 300; line-height: 1.85;
-        color: rgba(240,230,200,.44);
+        font-size: .75rem; font-weight: 300; line-height: 1.85;
+        color: var(--color-text-secondary, #44403c);
     }
     .KTXT-P + .KTXT-P { margin-top: .6rem; }
 
-    /* ── Yuliania section ── */
-    .KY-LAYOUT {
-        max-width: 760px; margin: 0 auto; padding: 0 1.5rem;
-        display: grid; grid-template-columns: 280px 1fr; gap: 3rem; align-items: start;
-    }
-    @media (max-width: 760px) { .KY-LAYOUT { grid-template-columns: 1fr; } }
-    .KY-IMG-MAIN {
-        width: 100%; aspect-ratio: 3/4; object-fit: cover; border-radius: 3px;
-        filter: sepia(.3) contrast(1.04) brightness(1.05);
-        box-shadow: 0 8px 40px rgba(0,0,0,.6);
-    }
-    .KY-TEXT-COL {}
-    .KY-QUOTE {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 1.15rem; font-weight: 300; font-style: italic;
-        color: rgba(240,230,200,.55); line-height: 1.7;
-        border-left: 2px solid rgba(201,162,39,.3);
-        padding-left: 1.2rem; margin-bottom: 1.5rem;
+    /* Yuliania layout — collapses on mobile */
+    @media (max-width: 640px) {
+        /* The inline-style grid for Yuliania main block */
+        #KP [style*="grid-template-columns:220px"] {
+            display: block !important;
+        }
+        #KP [style*="grid-template-columns:220px"] > div:first-child {
+            margin-bottom: 1.5rem;
+        }
+        /* Four-strip gallery */
+        #KP [style*="grid-template-columns:repeat(4,1fr)"] {
+            grid-template-columns: repeat(2,1fr) !important;
+        }
+        #KP [style*="grid-template-columns:repeat(4,1fr)"] > div .KGAL-ITEM {
+            height: 160px !important;
+        }
+        /* Yuliania icon portrait */
+        #KP [style*="height:380px"] { height: 260px !important; }
+        /* Church photo */
+        #KP [style*="height:520px"] { height: 260px !important; }
+        /* Bottom 2-col grid */
+        #KP [style*="grid-template-columns:1fr 1fr"] {
+            grid-template-columns: 1fr !important;
+        }
     }
 
     /* Lightbox */
     #KLB { position: fixed; inset: 0; z-index: 99999; background: rgba(4,2,8,.97); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity .22s; }
     #KLB.on { opacity: 1; pointer-events: all; }
-    #KLB img { max-width: 94vw; max-height: 90vh; object-fit: contain; border-radius: 3px; }
-    .KLB-X { position: absolute; top: 1.2rem; right: 1.4rem; width: 42px; height: 42px; border-radius: 50%; background: rgba(255,255,255,.1); border: none; color: #fff; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background .15s; }
-    .KLB-X:hover { background: rgba(255,255,255,.22); }
+    #KLB img { max-width: 94vw; max-height: 90vh; object-fit: contain; border-radius: 4px; }
+    .KLB-X { position: absolute; top: 1.2rem; right: 1.4rem; width: 42px; height: 42px; border-radius: 50%; background: rgba(255,255,255,.15); border: none; color: #fff; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background .15s; }
+    .KLB-X:hover { background: rgba(255,255,255,.3); }
     </style>
 </head>
 <body>
@@ -328,6 +391,59 @@
             <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2"/></svg>
             Маркери на фото вказують на ключові елементи
         </p>
+
+        <!-- Mobile accordion — shown only on small screens -->
+        <div class="KMOBILE-CARDS">
+            <div class="KMOB-CARD">
+                <button class="KMOB-CARD-HDR" onclick="toggleKCard(this)">
+                    <div><span class="KMOB-LABEL">Будівництво · 1695–1742</span><div class="KMOB-TITLE">Орден піарів</div></div>
+                    <div class="KMOB-CHEVRON">▾</div>
+                </button>
+                <div class="KMOB-CARD-BODY">
+                    <p class="KMOB-TEXT">Костел збудований орденом піарів — католицьким чернечим орденом, заснованим у Римі 1617 р. і присвяченим освіті бідних. Разом із костелом орден заснував у Дубровиці колегіум — один із небагатьох навчальних закладів тогочасного Полісся.</p>
+                    <p class="KMOB-TEXT">Головним ктитором виступив Ян Кароль Дольський — 33 тис. злотих. Додаткові кошти надійшли від графів Плятерів та скарбника київського В. Прушеневського — ще 50 тис. злотих. Консекрований єпископом Франциском Кобельським у 1742 р.</p>
+                </div>
+            </div>
+            <div class="KMOB-CARD">
+                <button class="KMOB-CARD-HDR" onclick="toggleKCard(this)">
+                    <div><span class="KMOB-LABEL">1945 — Радянська окупація</span><div class="KMOB-TITLE">Знищення та пограбування</div></div>
+                    <div class="KMOB-CHEVRON">▾</div>
+                </button>
+                <div class="KMOB-CARD-BODY">
+                    <p class="KMOB-TEXT">Одразу після встановлення радянської влади у 1945 р. костел зачинили. Дзвони зняли і вивезли, орган розібрали та знищили. Срібне начиння, старовинні ікони та цінне церковне майно розграбували або знищили.</p>
+                    <p class="KMOB-TEXT">Будівлю перефарбували з білого у червоний і пристосували під промисловий склад. Так тривало понад чотири десятиліття. У 1992 р. костел освячено повторно єпископом Маркіяном Трофим'яком і повернуто громаді.</p>
+                </div>
+            </div>
+            <div class="KMOB-CARD">
+                <button class="KMOB-CARD-HDR" onclick="toggleKCard(this)">
+                    <div><span class="KMOB-LABEL">Парафія · до 1945 р.</span><div class="KMOB-TITLE">1 045 парафіян</div></div>
+                    <div class="KMOB-CHEVRON">▾</div>
+                </button>
+                <div class="KMOB-CARD-BODY">
+                    <p class="KMOB-TEXT">У 1938 р. парафія охоплювала понад 100 навколишніх сіл — Крупове, Острівці, Мочулище, Воробин та ін. Це була одна з найбільших католицьких громад на Рівненщині.</p>
+                    <p class="KMOB-TEXT">Перший дерев'яний костел 1684 р. шведи спалили у 1709 р. під час відступу після Полтавської битви. Нинішня мурована споруда — трьохнавна базиліка в стилі рококо — зведена на його місці.</p>
+                </div>
+            </div>
+            <div class="KMOB-CARD">
+                <button class="KMOB-CARD-HDR" onclick="toggleKCard(this)">
+                    <div><span class="KMOB-LABEL">Відкрито 1702 р.</span><div class="KMOB-TITLE">Головний портал</div></div>
+                    <div class="KMOB-CHEVRON">▾</div>
+                </button>
+                <div class="KMOB-CARD-BODY">
+                    <p class="KMOB-TEXT">Відкритий у 1702 р. — ще до завершення всього будівництва. Богослужіння розпочалися задовго до офіційної консекрації 1742 р. Інтер'єр оздоблений у стилі рококо: хрестові склепіння, різьблені вівтарі й скульптурний декор.</p>
+                    <p class="KMOB-TEXT">Головний образ вівтаря — св. Іоанна Хрестителя — роботи живописця Лукаша Хубля, що дивом вцілів у радянський час.</p>
+                </div>
+            </div>
+            <div class="KMOB-CARD">
+                <button class="KMOB-CARD-HDR" onclick="toggleKCard(this)">
+                    <div><span class="KMOB-LABEL">Втрачено 1945 р. ✝</span><div class="KMOB-TITLE">Венеційський вітраж</div></div>
+                    <div class="KMOB-CHEVRON">▾</div>
+                </button>
+                <div class="KMOB-CARD-BODY">
+                    <p class="KMOB-TEXT">Найцінніший елемент інтер'єру — вітраж, замовлений і виготовлений спеціально у Венеції. Унікальний для всього регіону Полісся. Знищений одразу після закриття костелу у 1945 р. Від нього не залишилося ані фрагментів, ані документальних зображень.</p>
+                </div>
+            </div>
+        </div>
 
         <!-- Stats -->
         <div class="KSTATS">
@@ -507,6 +623,12 @@
     </footer>
 
     <script>
+    // ── Accordion for mobile cards ──
+    function toggleKCard(btn) {
+        var card = btn.closest('.KMOB-CARD');
+        card.classList.toggle('open');
+    }
+
     // ═══════════════════════════════════════════════════
     // SECTION 1 — KOSTOL markers & arrows
     // ═══════════════════════════════════════════════════
@@ -550,6 +672,7 @@
         var colRect = col.getBoundingClientRect();
         var H = colRect.height;
         var Y0 = colRect.top;
+        if (H < 10) return; // not rendered yet
 
         markers.forEach(function(m) {
             var card = document.getElementById(m.cardId);
@@ -560,21 +683,17 @@
             var x1 = m.px, y1 = m.py;
             var x2 = (m.side === 'L') ? 0 : 100;
 
-            // Line from marker to edge, angled to card midpoint
             var line = document.createElementNS('http://www.w3.org/2000/svg','polyline');
             line.setAttribute('points', x1+'% '+y1+'%, '+x2+'% '+cardMidPy+'%');
             line.setAttribute('class','KL');
             svg.appendChild(line);
 
-            // Arrowhead — pointing AWAY from photo (outward)
             var arr = document.createElementNS('http://www.w3.org/2000/svg','polygon');
             var ax = x2, ay = cardMidPy, s = .75;
             var pts;
             if (m.side === 'L') {
-                // Arrow points LEFT (away from photo into left panel)
                 pts = (ax-s*1.7)+'% '+ay+'%, '+ax+'% '+(ay-s*.8)+'%, '+ax+'% '+(ay+s*.8)+'%';
             } else {
-                // Arrow points RIGHT (away from photo into right panel)
                 pts = (ax+s*1.7)+'% '+ay+'%, '+ax+'% '+(ay-s*.8)+'%, '+ax+'% '+(ay+s*.8)+'%';
             }
             arr.setAttribute('points', pts);
@@ -598,16 +717,28 @@
 
     var img1 = document.getElementById('KPHOTO-IMG-1');
     buildMarkers(MARKERS_1, 'KPINS-OVL-1');
-    img1.addEventListener('load', function() { syncStage1(); animateCards('#KSTAGE-1 .KCARD'); });
+
+    img1.addEventListener('load', function() {
+        syncStage1();
+        animateCards('#KSTAGE-1 .KCARD');
+    });
     window.addEventListener('resize', syncStage1);
-    if (img1.complete) { syncStage1(); animateCards('#KSTAGE-1 .KCARD'); }
-    setTimeout(function() { syncStage1(); animateCards('#KSTAGE-1 .KCARD'); }, 500);
+
+    // Multiple retries to ensure lines draw after full layout
+    if (img1.complete) {
+        syncStage1();
+        animateCards('#KSTAGE-1 .KCARD');
+    }
+    [200, 500, 900, 1500].forEach(function(t) {
+        setTimeout(syncStage1, t);
+    });
+    setTimeout(function() { animateCards('#KSTAGE-1 .KCARD'); }, 300);
 
     // ═══════════════════════════════════════════════════
     // Lightbox
     // ═══════════════════════════════════════════════════
     function openKLB(el) {
-        var img = el.querySelector ? el.querySelector('img') : el;
+        var img = el && el.querySelector ? el.querySelector('img') : el;
         if (!img) return;
         document.getElementById('KLB-I').src = img.src;
         document.getElementById('KLB').classList.add('on');

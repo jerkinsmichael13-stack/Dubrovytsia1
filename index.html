@@ -15,6 +15,123 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+
+<style>
+/* ════════════════════════════════════════════════════
+   LIGHT THEME OVERRIDES + MOBILE FIXES
+   Applied on top of section-specific dark styles.
+   Does NOT touch dark theme (data-theme="dark").
+════════════════════════════════════════════════════ */
+
+/* ── Aerial section (#AER) — already supports themes, minor mobile ── */
+@media (max-width: 480px) {
+    .AW { padding: 0 1rem; }
+    .AT { font-size: 1.6rem; }
+    .ABT { font-size: 1.05rem; }
+    .LEG { display: none; } /* legend hidden on very small, pins have tooltips */
+    .MBOX { max-height: 60vw; }
+}
+
+/* ── Comparison section (#CMP) — light theme ── */
+:root:not([data-theme="dark"]) #CMP {
+    background: #f4efe7;
+}
+:root:not([data-theme="dark"]) #CMP::before {
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201,162,39,.06) 0%, transparent 70%);
+}
+:root:not([data-theme="dark"]) .CT {
+    color: #1c1917;
+}
+:root:not([data-theme="dark"]) .CT em { color: #c9a227; }
+:root:not([data-theme="dark"]) .CS {
+    color: rgba(28,25,23,.4);
+}
+:root:not([data-theme="dark"]) .CYB .cy {
+    background: linear-gradient(135deg, #a8841c, #c9a227);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+:root:not([data-theme="dark"]) .CYB.yr .cy {
+    background: linear-gradient(135deg, #2d6daa, #4a9ad4);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+:root:not([data-theme="dark"]) .CYB .cl,
+:root:not([data-theme="dark"]) .CYB .cd { color: rgba(28,25,23,.4); }
+:root:not([data-theme="dark"]) .CYD { color: rgba(201,162,39,.4); }
+:root:not([data-theme="dark"]) .COBS {
+    background: rgba(0,0,0,.06);
+}
+:root:not([data-theme="dark"]) .COB {
+    background: #fff;
+}
+:root:not([data-theme="dark"]) .COB:hover { background: #fdf8f2; }
+:root:not([data-theme="dark"]) .COB:hover::before {
+    background: linear-gradient(90deg, transparent, rgba(201,162,39,.4), transparent);
+}
+:root:not([data-theme="dark"]) .COT { color: #2c1f06; }
+:root:not([data-theme="dark"]) .COD { color: rgba(44,40,36,.6); }
+:root:not([data-theme="dark"]) .CE span { color: #b8902a; }
+:root:not([data-theme="dark"]) .CE::before,
+:root:not([data-theme="dark"]) .CE::after {
+    background: linear-gradient(90deg, transparent, rgba(180,140,30,.4));
+}
+
+/* Mobile — CMP */
+@media (max-width: 640px) {
+    .CW { padding: 0 1rem; }
+    .CT { font-size: 1.7rem !important; }
+    .CYR { grid-template-columns: 1fr auto 1fr; gap: .6rem; }
+    .CYB .cy { font-size: 2rem; }
+    .CYB .cl { font-size: .55rem; }
+    .CYD { font-size: 1rem; }
+}
+
+/* ── Plater section (#PLTR) — light theme ── */
+:root:not([data-theme="dark"]) #PLTR {
+    background: #ede7db;
+}
+:root:not([data-theme="dark"]) #PLTR::before {
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201,162,39,.05) 0%, transparent 70%);
+}
+:root:not([data-theme="dark"]) .PH .CT { color: #1c1917; }
+:root:not([data-theme="dark"]) .PSB { color: rgba(28,25,23,.4); }
+:root:not([data-theme="dark"]) .PYR .cy {
+    background: linear-gradient(135deg, #a8841c, #c9a227);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+
+/* Mobile — PLTR */
+@media (max-width: 640px) {
+    .PW { padding: 0 1rem; }
+}
+
+/* ── Wide/Region comparison (#WMS or similar) — light ── */
+:root:not([data-theme="dark"]) #WM,
+:root:not([data-theme="dark"]) #WMAP {
+    background: #f4efe7;
+}
+:root:not([data-theme="dark"]) .WT { color: #1c1917; }
+:root:not([data-theme="dark"]) .WS { color: rgba(28,25,23,.4); }
+:root:not([data-theme="dark"]) .WOB { background: #fff; }
+:root:not([data-theme="dark"]) .WOT { color: #2c1f06; }
+:root:not([data-theme="dark"]) .WOD { color: rgba(44,40,36,.58); }
+
+/* Mobile — WM */
+@media (max-width: 640px) {
+    .WW { padding: 0 1rem; }
+    .WT { font-size: 1.7rem !important; }
+    .WOB { padding: 1.1rem 1rem; }
+}
+
+/* ── Universal mobile text readability ── */
+@media (max-width: 480px) {
+    .COD, .WOD, .POD { font-size: .72rem !important; line-height: 1.65 !important; }
+    .COI { font-size: 1.1rem; }
+    .COT, .WOT { font-size: .95rem; }
+    /* Prevent overflow on narrow screens */
+    .COBS, .WOBS, .POBS { gap: 0; }
+}
+</style>
 </head>
 <body>
     <!-- Header -->
@@ -32,7 +149,6 @@
                 <a href="index.html" class="nav-link active">Головна</a>
                 <a href="history.html" class="nav-link">Історія</a>
                 <a href="photo-archive.html" class="nav-link">Фотоархів</a>
-                <a href="architecture.html" class="nav-link">Пам'ятки</a>
                 <a href="metrychni-knyhy.html" class="nav-link">Метричні книги</a>
                 <a href="books.html" class="nav-link">Книги</a>
                 <a href="contacts.html" class="nav-link">Контакти</a>
