@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="uk" data-theme="light">
+<html lang="uk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Архітектурні пам'ятки — Дубровиця</title>
-    <script>!function(){var t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t)}()</script>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -95,7 +94,8 @@
 
     /* SVG connector lines — drawn by JS, horizontal only */
     .KARROWS { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; z-index: 5; }
-    .KL { stroke: rgba(201,162,39,.6); stroke-width: .2; fill: none; stroke-linecap: butt; stroke-dasharray: none; }
+    .KL { stroke: rgba(201,162,39,.5); stroke-width: .55; fill: none; stroke-linecap: butt; stroke-dasharray: none; }
+    .KA { fill: rgba(201,162,39,.55); }
 
     /* Side panels */
     .KPANEL { display: flex; flex-direction: column; padding-top: 2rem; }
@@ -523,6 +523,17 @@
                 <img src="https://i.imgur.com/Szn6vcH.jpeg" alt="Церква Різдва Пресвятої Богородиці"
                      style="width:100%;height:100%;object-fit:cover;display:block;filter:contrast(1.03) brightness(1.05) saturate(.85);">
             </div>
+            <!-- Two additional church photos -->
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:.75rem;">
+                <div class="KGAL-ITEM" style="height:320px;border-radius:3px;cursor:pointer;" onclick="openKLB(this)">
+                    <img src="https://i.imgur.com/IVQT6Ev.jpeg" alt="Церква Різдва Богородиці — інтер'єр"
+                         style="width:100%;height:100%;object-fit:cover;display:block;filter:contrast(1.02) brightness(1.04) saturate(.88);">
+                </div>
+                <div class="KGAL-ITEM" style="height:320px;border-radius:3px;cursor:pointer;" onclick="openKLB(this)">
+                    <img src="https://i.imgur.com/em8JcTg.jpeg" alt="Церква Різдва Богородиці — деталь"
+                         style="width:100%;height:100%;object-fit:cover;display:block;filter:contrast(1.02) brightness(1.04) saturate(.88);">
+                </div>
+            </div>
         </div>
 
         <!-- Two-column text: church history -->
@@ -595,10 +606,10 @@
             <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;">
                 <div>
                     <div class="KGAL-ITEM" style="height:240px;border-radius:3px;cursor:pointer;" onclick="openKLB(this)">
-                        <img src="https://i.imgur.com/3jJc4j7.jpeg" alt="Гробниця Юліанії у Лаврі" loading="lazy"
+                        <img src="https://i.imgur.com/3jJc4j7.jpeg" alt="Розпис ц. Іова Почаївського" loading="lazy"
                              style="width:100%;height:100%;object-fit:cover;filter:sepia(.35) contrast(1.04) brightness(1.06);">
                     </div>
-                    <p class="ygal-cap">Гробниця у Лаврі<br>рис. А. ван Вестерфельда · 1651 р.</p>
+                    <p class="ygal-cap">Розпис ц. Іова Почаївського<br>кін. ХIХ ст.</p>
                 </div>
                 <div>
                     <div class="KGAL-ITEM" style="height:240px;border-radius:3px;cursor:pointer;" onclick="openKLB(this)">
@@ -616,10 +627,10 @@
                 </div>
                 <div>
                     <div class="KGAL-ITEM" style="height:240px;border-radius:3px;cursor:pointer;" onclick="openKLB(this)">
-                        <img src="https://i.imgur.com/GuDy8u6.jpeg" alt="Розпис ц. Іова Почаївського" loading="lazy"
+                        <img src="https://i.imgur.com/GuDy8u6.jpeg" alt="Гробниця Юліанії у Лаврі" loading="lazy"
                              style="width:100%;height:100%;object-fit:cover;filter:sepia(.22) contrast(1.04) brightness(1.06);">
                     </div>
-                    <p class="ygal-cap">Розпис ц. Іова Почаївського<br>кін. ХIХ ст.</p>
+                    <p class="ygal-cap">Гробниця у Лаврі<br>рис. А. ван Вестерфельда · 1651 р.</p>
                 </div>
             </div>
 
@@ -720,6 +731,21 @@
             line.setAttribute('y2', my);
             line.setAttribute('class', 'KL');
             svg.appendChild(line);
+
+            // Small arrowhead pointing INTO the photo at the marker
+            var arr = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+            var s = 1.0;
+            var pts;
+            if (m.side === 'L') {
+                // arrow tip points right (toward marker)
+                pts = mx+','+my+' '+(mx-s*2)+','+(my-s*.8)+' '+(mx-s*2)+','+(my+s*.8);
+            } else {
+                // arrow tip points left (toward marker)
+                pts = mx+','+my+' '+(mx+s*2)+','+(my-s*.8)+' '+(mx+s*2)+','+(my+s*.8);
+            }
+            arr.setAttribute('points', pts);
+            arr.setAttribute('class', 'KA');
+            svg.appendChild(arr);
         });
     }
 
