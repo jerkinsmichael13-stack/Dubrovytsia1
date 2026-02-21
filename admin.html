@@ -646,7 +646,101 @@
                 </div>
             </div>
 
-        </div><!-- /mapEditorCard -->
+        <!-- ════ KOSTEL PIN EDITOR CARD ════ -->
+        <div class="admin-card" id="kostelEditorCard" style="margin-top:0;">
+            <h2 style="font-family:'Cormorant Garamond',serif;margin-bottom:0.5rem;">⛪ Редактор пінів — Костел Іоанна Хрестителя</h2>
+            <p style="font-size:0.85rem;color:var(--color-text-secondary);margin-bottom:1.5rem;">
+                Клікніть на фото костелу, щоб додати новий пін-анотацію. Вкажіть сторону (ліво/право), мітку, заголовок та текст. Піни збережуться у <code>kostel_pins.json</code> і автоматично з'являться на сторінці Пам'яток.
+            </p>
+
+            <!-- Editor area -->
+            <div id="kostelEditorWrap" style="position:relative;border-radius:10px;overflow:hidden;
+                 box-shadow:0 4px 20px rgba(0,0,0,0.12);border:2px solid var(--color-border);
+                 cursor:crosshair;user-select:none;background:#111;line-height:0;margin-bottom:1.25rem;">
+                <img id="kostelEditorImg" src="https://i.imgur.com/Ru7uTkK.jpeg"
+                     style="width:100%;height:auto;display:block;filter:contrast(1.04) brightness(.93) saturate(.82);pointer-events:none;">
+                <svg id="kostelEditorSVG" style="position:absolute;top:0;left:0;width:100%;height:100%;overflow:visible;pointer-events:all;"
+                     xmlns="http://www.w3.org/2000/svg">
+                </svg>
+                <div id="kostelEditorHint" style="position:absolute;top:10px;left:50%;transform:translateX(-50%);
+                     background:rgba(10,8,5,0.85);backdrop-filter:blur(8px);
+                     border:1px solid rgba(201,162,39,0.35);border-radius:8px;
+                     padding:6px 16px;font-family:'DM Sans',sans-serif;font-size:0.72rem;
+                     color:#c9a227;white-space:nowrap;pointer-events:none;">
+                    👆 Клік на фото — додати пін &nbsp;|&nbsp; Перетягнути пін — перемістити
+                </div>
+            </div>
+
+            <!-- Pin list -->
+            <div style="margin-bottom:1.25rem;">
+                <h3 style="font-size:0.95rem;font-weight:600;margin-bottom:0.75rem;color:var(--color-text);">Список пінів</h3>
+                <div id="kostelPinListWrap" style="display:flex;flex-direction:column;gap:0.5rem;max-height:360px;overflow-y:auto;"></div>
+                <div id="kostelPinListEmpty" style="text-align:center;padding:1.5rem;color:var(--color-text-secondary);font-size:0.875rem;">Пінів ще немає. Клікніть на фото, щоб додати.</div>
+            </div>
+
+            <!-- Actions -->
+            <div style="display:flex;gap:0.75rem;align-items:center;flex-wrap:wrap;">
+                <button id="kostelSaveBtn" class="btn btn-green" style="font-size:0.9rem;">💾 Зберегти піни на GitHub</button>
+                <button id="kostelClearBtn" class="btn btn-outline" style="font-size:0.875rem;color:#c0392b;border-color:#c0392b;">🗑️ Очистити всі піни</button>
+                <button id="kostelCopyJsonBtn" class="btn btn-outline" style="font-size:0.875rem;">📋 Скопіювати JSON</button>
+            </div>
+            <div id="kostelEditorStatus" class="notice" style="display:none;margin-top:1rem;"></div>
+
+            <!-- Modal for new pin -->
+            <div id="kostelPinModal" style="display:none;position:fixed;inset:0;z-index:10000;
+                 background:rgba(0,0,0,0.65);backdrop-filter:blur(5px);
+                 align-items:center;justify-content:center;">
+                <div style="background:var(--color-bg-card);border-radius:14px;padding:1.75rem;
+                     width:min(480px,94vw);box-shadow:0 20px 60px rgba(0,0,0,0.35);
+                     border:1px solid var(--color-border);max-height:92vh;overflow-y:auto;">
+                    <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;margin:0 0 1.2rem;color:var(--color-text);" id="kostelPinModalTitle">Новий пін</h3>
+
+                    <div class="field">
+                        <label style="font-size:0.8rem;font-weight:600;color:var(--color-text-secondary);">Сторона *</label>
+                        <div style="display:flex;gap:0.75rem;margin-top:0.35rem;">
+                            <label style="display:flex;align-items:center;gap:0.4rem;cursor:pointer;font-size:0.9rem;">
+                                <input type="radio" name="kostelPinSide" id="kostelSideL" value="L" checked> ◀ Ліворуч
+                            </label>
+                            <label style="display:flex;align-items:center;gap:0.4rem;cursor:pointer;font-size:0.9rem;">
+                                <input type="radio" name="kostelPinSide" id="kostelSideR" value="R"> Праворуч ▶
+                            </label>
+                        </div>
+                    </div>
+                    <div class="field" style="margin-top:0.75rem;">
+                        <label style="font-size:0.8rem;font-weight:600;color:var(--color-text-secondary);">Мітка (напр. "Будівництво · 1695–1742") *</label>
+                        <input id="kostelPinLabel" type="text" placeholder="Будівництво · 1695–1742"
+                            style="width:100%;padding:0.65rem 0.9rem;border:2px solid var(--color-border);
+                            border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.9rem;
+                            background:var(--color-bg);color:var(--color-text);box-sizing:border-box;">
+                    </div>
+                    <div class="field" style="margin-top:0.75rem;">
+                        <label style="font-size:0.8rem;font-weight:600;color:var(--color-text-secondary);">Заголовок картки *</label>
+                        <input id="kostelPinCardTitle" type="text" placeholder="Орден піарів"
+                            style="width:100%;padding:0.65rem 0.9rem;border:2px solid var(--color-border);
+                            border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.9rem;
+                            background:var(--color-bg);color:var(--color-text);box-sizing:border-box;">
+                    </div>
+                    <div class="field" style="margin-top:0.75rem;">
+                        <label style="font-size:0.8rem;font-weight:600;color:var(--color-text-secondary);">Текст (абзац 1)</label>
+                        <textarea id="kostelPinText1" rows="3" placeholder="Основний текст..."
+                            style="width:100%;padding:0.65rem 0.9rem;border:2px solid var(--color-border);
+                            border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.875rem;
+                            background:var(--color-bg);color:var(--color-text);box-sizing:border-box;resize:vertical;"></textarea>
+                    </div>
+                    <div class="field" style="margin-top:0.75rem;">
+                        <label style="font-size:0.8rem;font-weight:600;color:var(--color-text-secondary);">Текст (абзац 2, необов'язково)</label>
+                        <textarea id="kostelPinText2" rows="3" placeholder="Додатковий текст..."
+                            style="width:100%;padding:0.65rem 0.9rem;border:2px solid var(--color-border);
+                            border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.875rem;
+                            background:var(--color-bg);color:var(--color-text);box-sizing:border-box;resize:vertical;"></textarea>
+                    </div>
+                    <div style="display:flex;gap:0.75rem;margin-top:1.25rem;">
+                        <button id="kostelPinSaveBtn" class="btn btn-primary" style="flex:1;">✅ Зберегти пін</button>
+                        <button id="kostelPinCancelBtn" class="btn btn-outline" style="flex:1;">Скасувати</button>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /kostelEditorCard -->
 
     </div><!-- /adminContent -->
 </div>
@@ -1363,6 +1457,292 @@ async function renderMetricList(wrap) {
 }
 
 }); // end DOMContentLoaded
+</script>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// KOSTEL PIN EDITOR — Architecture page pin manager
+// ═══════════════════════════════════════════════════════════
+(function(){
+
+var KOSTEL_FILE = 'kostel_pins.json';
+var KOSTEL_REPO = 'jerkinsmichael13-stack/Dubrovytsia1';
+var KOSTEL_IMG_SRC = 'https://i.imgur.com/Ru7uTkK.jpeg';
+
+var kostelPins = [];
+var pendingKX = 0, pendingKY = 0;
+var dragKPin = null, dragKOffset = {x:0, y:0};
+var hasKDragged = false;
+var editingKPin = null;
+
+var kwrap  = document.getElementById('kostelEditorWrap');
+var kimg   = document.getElementById('kostelEditorImg');
+var ksvg   = document.getElementById('kostelEditorSVG');
+var kplist = document.getElementById('kostelPinListWrap');
+var kpempty= document.getElementById('kostelPinListEmpty');
+var kmodal = document.getElementById('kostelPinModal');
+var kst    = document.getElementById('kostelEditorStatus');
+
+// ── Init (called when admin logs in) ─────────────────────
+function kostelInit() {
+    loadKostelPins();
+
+    var mdX=0, mdY=0;
+    kwrap.addEventListener('mousedown', function(e){ mdX=e.clientX; mdY=e.clientY; hasKDragged=false; });
+    ksvg.addEventListener('mousedown', function(e){ mdX=e.clientX; mdY=e.clientY; });
+    document.addEventListener('mousemove', function(e){
+        if(Math.abs(e.clientX-mdX)>4 || Math.abs(e.clientY-mdY)>4) hasKDragged=true;
+    });
+
+    kwrap.addEventListener('click', function(e){
+        if(hasKDragged){ hasKDragged=false; return; }
+        if(e.target.closest('[data-kpin]')) return;
+        var r = kimg.getBoundingClientRect();
+        if(!r.width) return;
+        pendingKX = Math.round(((e.clientX-r.left)/r.width)*1000)/10;
+        pendingKY = Math.round(((e.clientY-r.top)/r.height)*1000)/10;
+        pendingKX = Math.max(0,Math.min(100,pendingKX));
+        pendingKY = Math.max(0,Math.min(100,pendingKY));
+        editingKPin = null;
+        openKModal();
+    });
+
+    // Drag
+    ksvg.addEventListener('mousedown', function(e){
+        var g = e.target.closest('[data-kpin]');
+        if(!g) return;
+        e.preventDefault();
+        dragKPin = g;
+        var pin = kostelPins.find(function(p){ return String(p.id)===g.dataset.kpin; });
+        if(!pin) return;
+        var r = kimg.getBoundingClientRect();
+        dragKOffset.x = e.clientX - r.left - pin.x/100*r.width;
+        dragKOffset.y = e.clientY - r.top  - pin.y/100*r.height;
+    });
+    document.addEventListener('mousemove', function(e){
+        if(!dragKPin) return;
+        hasKDragged = true;
+        var r = kimg.getBoundingClientRect();
+        if(!r.width) return;
+        var px = Math.round(Math.max(0,Math.min(100,(e.clientX-r.left-dragKOffset.x)/r.width*100))*10)/10;
+        var py = Math.round(Math.max(0,Math.min(100,(e.clientY-r.top-dragKOffset.y)/r.height*100))*10)/10;
+        var pin = kostelPins.find(function(p){ return String(p.id)===dragKPin.dataset.kpin; });
+        if(!pin) return;
+        pin.x = px; pin.y = py;
+        renderKSVG();
+    });
+    document.addEventListener('mouseup', function(){ if(dragKPin){ dragKPin=null; } });
+
+    document.getElementById('kostelPinSaveBtn').addEventListener('click', saveKModal);
+    document.getElementById('kostelPinCancelBtn').addEventListener('click', closeKModal);
+    kmodal.addEventListener('click', function(e){ if(e.target===kmodal) closeKModal(); });
+    document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeKModal(); });
+
+    document.getElementById('kostelSaveBtn').addEventListener('click', saveKostelToGH);
+    document.getElementById('kostelClearBtn').addEventListener('click', function(){
+        if(!confirm('Видалити всі піни костелу?')) return;
+        kostelPins = []; renderKEditor();
+    });
+    document.getElementById('kostelCopyJsonBtn').addEventListener('click', function(){
+        var j = JSON.stringify(kostelPins, null, 2);
+        navigator.clipboard.writeText(j).then(function(){ showKSt('📋 JSON скопійовано!','success'); })
+        .catch(function(){ showKSt(j,'info'); });
+    });
+}
+
+// ── Modal ─────────────────────────────────────────────────
+function openKModal(pin) {
+    document.getElementById('kostelPinModalTitle').textContent = pin ? 'Редагувати пін' : 'Новий пін';
+    document.getElementById('kostelSideL').checked = !pin || pin.side !== 'R';
+    document.getElementById('kostelSideR').checked = pin && pin.side === 'R';
+    document.getElementById('kostelPinLabel').value      = pin ? (pin.label || '') : '';
+    document.getElementById('kostelPinCardTitle').value  = pin ? (pin.cardTitle || '') : '';
+    document.getElementById('kostelPinText1').value      = pin ? (pin.text1 || '') : '';
+    document.getElementById('kostelPinText2').value      = pin ? (pin.text2 || '') : '';
+    kmodal.style.display = 'flex';
+    setTimeout(function(){ document.getElementById('kostelPinLabel').focus(); }, 50);
+}
+function closeKModal() {
+    kmodal.style.display = 'none';
+    editingKPin = null;
+}
+function saveKModal() {
+    var label = document.getElementById('kostelPinLabel').value.trim();
+    var cardTitle = document.getElementById('kostelPinCardTitle').value.trim();
+    if(!label || !cardTitle){ alert('Мітка та заголовок обов\'язкові'); return; }
+    var side = document.querySelector('input[name="kostelPinSide"]:checked').value;
+    var text1 = document.getElementById('kostelPinText1').value.trim();
+    var text2 = document.getElementById('kostelPinText2').value.trim();
+
+    if(editingKPin) {
+        editingKPin.side = side;
+        editingKPin.label = label;
+        editingKPin.cardTitle = cardTitle;
+        editingKPin.text1 = text1;
+        editingKPin.text2 = text2;
+    } else {
+        var maxId = kostelPins.length ? Math.max.apply(null, kostelPins.map(function(p){return p.id;})) : 0;
+        kostelPins.push({ id: maxId+1, x: pendingKX, y: pendingKY, side: side, label: label, cardTitle: cardTitle, text1: text1, text2: text2 });
+    }
+    closeKModal();
+    renderKEditor();
+}
+
+// ── Render ─────────────────────────────────────────────────
+function renderKEditor() { renderKSVG(); renderKList(); }
+
+function renderKSVG() {
+    var ns = 'http://www.w3.org/2000/svg';
+    while(ksvg.firstChild) ksvg.removeChild(ksvg.firstChild);
+    var wr = kwrap.getBoundingClientRect();
+    var ir = kimg.getBoundingClientRect();
+    var ox = ir.left - wr.left;
+    var oy = ir.top  - wr.top;
+
+    kostelPins.forEach(function(pin){
+        var px = pin.x/100 * ir.width  + ox;
+        var py = pin.y/100 * ir.height + oy;
+
+        var g = document.createElementNS(ns,'g');
+        g.setAttribute('data-kpin', String(pin.id));
+        g.style.cursor = 'move';
+        g.style.pointerEvents = 'all';
+
+        var ring = document.createElementNS(ns,'circle');
+        ring.setAttribute('cx',px); ring.setAttribute('cy',py);
+        ring.setAttribute('r','16'); ring.setAttribute('fill','none');
+        ring.setAttribute('stroke','rgba(201,162,39,0.45)'); ring.setAttribute('stroke-width','1.5');
+
+        var dot = document.createElementNS(ns,'circle');
+        dot.setAttribute('cx',px); dot.setAttribute('cy',py);
+        dot.setAttribute('r','10'); dot.setAttribute('fill','#c9a227');
+        dot.setAttribute('stroke','#fff'); dot.setAttribute('stroke-width','2');
+        dot.setAttribute('filter','drop-shadow(0 2px 6px rgba(0,0,0,.7))');
+
+        var txt = document.createElementNS(ns,'text');
+        txt.setAttribute('x',px); txt.setAttribute('y',py);
+        txt.setAttribute('text-anchor','middle');
+        txt.setAttribute('dominant-baseline','central');
+        txt.setAttribute('fill','#1a1000');
+        txt.setAttribute('font-size','10'); txt.setAttribute('font-weight','800');
+        txt.setAttribute('font-family','DM Sans,sans-serif');
+        txt.setAttribute('pointer-events','none');
+        txt.textContent = String(pin.id);
+
+        // Side label
+        var lbl = document.createElementNS(ns,'text');
+        lbl.setAttribute('x', pin.side==='L' ? px-20 : px+20);
+        lbl.setAttribute('y', py);
+        lbl.setAttribute('text-anchor', pin.side==='L' ? 'end' : 'start');
+        lbl.setAttribute('dominant-baseline','central');
+        lbl.setAttribute('fill','rgba(201,162,39,0.75)');
+        lbl.setAttribute('font-size','8');
+        lbl.setAttribute('font-family','DM Sans,sans-serif');
+        lbl.setAttribute('pointer-events','none');
+        lbl.textContent = pin.side==='L' ? '◀ L' : 'R ▶';
+
+        g.appendChild(ring); g.appendChild(dot); g.appendChild(txt); g.appendChild(lbl);
+        ksvg.appendChild(g);
+    });
+}
+
+function renderKList() {
+    kpempty.style.display = kostelPins.length ? 'none' : 'block';
+    kplist.innerHTML = '';
+    kostelPins.forEach(function(pin){
+        var row = document.createElement('div');
+        row.style.cssText = 'display:flex;align-items:flex-start;gap:0.6rem;padding:0.75rem;background:var(--color-bg);border:1px solid var(--color-border);border-radius:8px;';
+
+        row.innerHTML =
+            '<div style="min-width:26px;height:26px;border-radius:50%;background:#c9a227;color:#1a1000;font-size:0.65rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">'+pin.id+'</div>'+
+            '<div style="flex:1;min-width:0;">'+
+                '<div style="font-size:0.85rem;font-weight:700;color:var(--color-text);">'+escHtmlK(pin.cardTitle)+'</div>'+
+                '<div style="font-size:0.7rem;color:var(--color-text-secondary);margin-top:0.15rem;">'+
+                    '<span style="color:#c9a227;font-weight:600;">'+(pin.side==='L'?'◀ Ліво':'Право ▶')+'</span>'+
+                    ' · '+escHtmlK(pin.label)+
+                '</div>'+
+                '<div style="font-size:0.7rem;color:var(--color-text-secondary);font-family:monospace;margin-top:0.1rem;">x:'+pin.x+'% y:'+pin.y+'%</div>'+
+            '</div>'+
+            '<div style="display:flex;gap:0.3rem;flex-shrink:0;">'+
+                '<button class="kp-edit" data-id="'+pin.id+'" style="padding:.3rem .6rem;border:1px solid var(--color-border);border-radius:6px;background:transparent;color:var(--color-text-secondary);font-size:0.7rem;cursor:pointer;">✏️</button>'+
+                '<button class="kp-del" data-id="'+pin.id+'" style="padding:.3rem .6rem;border:1px solid #e0b0b0;border-radius:6px;background:transparent;color:#c0392b;font-size:0.7rem;cursor:pointer;">🗑️</button>'+
+            '</div>';
+
+        kplist.appendChild(row);
+    });
+
+    kplist.querySelectorAll('.kp-edit').forEach(function(btn){
+        btn.addEventListener('click', function(){
+            var pin = kostelPins.find(function(p){ return String(p.id)===btn.dataset.id; });
+            if(!pin) return;
+            editingKPin = pin;
+            openKModal(pin);
+        });
+    });
+    kplist.querySelectorAll('.kp-del').forEach(function(btn){
+        btn.addEventListener('click', function(){
+            var pin = kostelPins.find(function(p){ return String(p.id)===btn.dataset.id; });
+            if(!pin || !confirm('Видалити пін "'+pin.cardTitle+'"?')) return;
+            kostelPins = kostelPins.filter(function(p){ return String(p.id)!==btn.dataset.id; });
+            renderKEditor();
+        });
+    });
+}
+
+// ── GitHub save/load ───────────────────────────────────────
+async function saveKostelToGH() {
+    var tok = localStorage.getItem('gh_token_dubrovytsia') || '';
+    if(!tok){ showKSt('⚠️ Спочатку введіть GitHub токен вище','warn'); return; }
+    var json = JSON.stringify(kostelPins, null, 2);
+    showKSt('⏳ Збереження...','info');
+    try {
+        var sha = null;
+        var resp = await fetch('https://api.github.com/repos/'+KOSTEL_REPO+'/contents/'+KOSTEL_FILE, {
+            headers:{ Authorization:'token '+tok, Accept:'application/vnd.github.v3+json' }
+        });
+        if(resp.ok){ var d = await resp.json(); sha = d.sha; }
+        var body = { message:'Update kostel_pins.json via admin', content: btoa(unescape(encodeURIComponent(json))), branch:'main' };
+        if(sha) body.sha = sha;
+        var put = await fetch('https://api.github.com/repos/'+KOSTEL_REPO+'/contents/'+KOSTEL_FILE, {
+            method:'PUT', headers:{ Authorization:'token '+tok, Accept:'application/vnd.github.v3+json', 'Content-Type':'application/json' },
+            body: JSON.stringify(body)
+        });
+        if(put.ok) showKSt('✅ Піни костелу збережено на GitHub! Сторінка оновиться за ~1 хв.','success');
+        else { var e=await put.json(); showKSt('❌ '+(e.message||'Помилка'),'error'); }
+    } catch(err){ showKSt('❌ '+err.message,'error'); }
+}
+
+function loadKostelPins() {
+    fetch('https://raw.githubusercontent.com/'+KOSTEL_REPO+'/main/'+KOSTEL_FILE+'?v='+Date.now())
+        .then(function(r){ return r.ok ? r.json() : []; })
+        .then(function(data){ if(Array.isArray(data)){ kostelPins = data; renderKEditor(); } })
+        .catch(function(){});
+}
+
+function showKSt(msg, type) {
+    kst.className='notice notice-'+(type||'info');
+    kst.innerHTML=msg; kst.style.display='block';
+}
+function escHtmlK(s) {
+    return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// Boot: watch for admin login
+document.addEventListener('DOMContentLoaded', function(){
+    var obs = new MutationObserver(function(muts){
+        muts.forEach(function(m){
+            if(m.target.id==='adminContent' && m.target.style.display!=='none'){
+                if(kimg.complete) kostelInit();
+                else kimg.addEventListener('load', kostelInit, {once:true});
+                obs.disconnect();
+            }
+        });
+    });
+    obs.observe(document.getElementById('adminContent'), {attributes:true, attributeFilter:['style']});
+    window.addEventListener('resize', function(){ if(kostelPins.length) renderKSVG(); });
+});
+
+})();
 </script>
 </body>
 

@@ -536,30 +536,8 @@
 
         <div class="KSTAGE" id="KSTAGE">
 
-            <!-- ═══ LEFT PANEL ═══ -->
-            <div class="KPANEL KPANEL-L">
-
-                <div class="KCARD" id="card-A">
-                    <span class="KCARD-LABEL">Будівництво · 1695–1742</span>
-                    <div class="KCARD-TITLE">Орден піарів</div>
-                    <div class="KCARD-TEXT">Костел збудований орденом піарів — католицьким чернечим орденом, заснованим у Римі 1617 р. і присвяченим освіті бідних. Разом із костелом у Дубровиці орден заснував колегіум — один із небагатьох навчальних закладів тогочасного Полісся.</div>
-                    <div class="KCARD-TEXT">Будівництво тривало понад 40 років. Головним ктитором виступив Ян Кароль Дольський, який виділив 33 тис. злотих. Додаткові кошти надійшли від графів Плятерів та скарбника київського В. Прушеневського — ще 50 тис. злотих. Консекрований єпископом Франциском Кобельським у 1742 р.</div>
-                </div>
-
-                <div class="KCARD" id="card-B">
-                    <span class="KCARD-LABEL">1945 — Радянська окупація</span>
-                    <div class="KCARD-TITLE">Знищення та пограбування</div>
-                    <div class="KCARD-TEXT">Одразу після встановлення радянської влади у 1945 р. костел зачинили. Дзвони зняли і вивезли, орган розібрали й знищили. Срібне начиння, старовинні ікони та цінне церковне майно — розграбували або знищили.</div>
-                    <div class="KCARD-TEXT">Будівлю перефарбували з білого у червоний колір і пристосували під промисловий склад. Так тривало понад чотири десятиліття. Лише у 1992 р. костел було освячено повторно і повернуто католицькій громаді єпископом Маркіяном Трофим'яком.</div>
-                </div>
-
-                <div class="KCARD" id="card-C">
-                    <span class="KCARD-LABEL">Парафія · до 1945 р.</span>
-                    <div class="KCARD-TITLE">1 045 парафіян</div>
-                    <div class="KCARD-TEXT">У 1938 р. парафія налічувала 1 045 осіб і охоплювала понад 100 навколишніх сіл, зокрема Крупове, Острівці, Мочулище, Воробин та інші. Це була одна з найбільших католицьких громад на Рівненщині.</div>
-                    <div class="KCARD-TEXT">Перший дерев'яний костел, збудований тут у 1684 р., шведські війська спалили у 1709 р. під час відступу після Полтавської битви. Нинішня мурована споруда в стилі рококо — трьохнавна базиліка — зведена на її місці й стала єдиним нагадуванням про ту добу.</div>
-                </div>
-
+            <!-- ═══ LEFT PANEL — dynamically populated ═══ -->
+            <div class="KPANEL KPANEL-L" id="KPANEL-L">
             </div>
 
             <!-- ═══ PHOTO ═══ -->
@@ -580,23 +558,8 @@
                 </div>
             </div>
 
-            <!-- ═══ RIGHT PANEL ═══ -->
-            <div class="KPANEL KPANEL-R">
-
-                <div class="KCARD" id="card-D">
-                    <span class="KCARD-LABEL">Відкрито 1702 р.</span>
-                    <div class="KCARD-TITLE">Головний портал</div>
-                    <div class="KCARD-TEXT">Портал відкритий у 1702 р. — ще до завершення всього будівництва. Це свідчить про те, що богослужіння в костелі розпочалися задовго до офіційної консекрації 1742 р. Інтер'єр оздоблений у стилі рококо: хрестові склепіння нефу, різьблені вівтарі й скульптурний декор.</div>
-                    <div class="KCARD-TEXT">Підлога виконана з керамічних кахлів на вапняному розчині, гашеному сирими яйцями — традиційна технологія бароко, яка забезпечувала особливу міцність. Головний образ вівтаря — св. Іоанна Хрестителя — роботи живописця Лукаша Хубля, що дивом вцілів у радянський час.</div>
-                </div>
-
-                <div class="KCARD" id="card-E">
-                    <span class="KCARD-LABEL">Втрачено 1945 р. ✝</span>
-                    <div class="KCARD-TITLE">Венеційський вітраж</div>
-                    <div class="KCARD-TEXT">Найцінніший елемент інтер'єру — вітраж, замовлений і виготовлений спеціально у Венеції. Він вважався унікальним для всього регіону Полісся: жоден інший костел чи церква в окрузі не мали нічого подібного за художньою цінністю й майстерністю виконання.</div>
-                    <div class="KCARD-TEXT">Знищений радянською владою одразу після закриття костелу у 1945 р. Від нього не залишилося ані фрагментів, ані документальних зображень. Відновлення вітражу досі не відбулося.</div>
-                </div>
-
+            <!-- ═══ RIGHT PANEL — dynamically populated ═══ -->
+            <div class="KPANEL KPANEL-R" id="KPANEL-R">
             </div>
 
         </div><!-- /KSTAGE -->
@@ -714,183 +677,242 @@
 
     <script>
     // ═══════════════════════════════════════════════════════════
-    // Marker positions — % of photo width/height
+    // Loads pins from kostel_pins.json (managed via admin panel)
+    // Falls back to default built-in pins if JSON not found
     // ═══════════════════════════════════════════════════════════
-    var MARKERS = [
-        { px: 33, py:  4, side: 'L', cardId: 'card-A' },
-        { px: 22, py: 22, side: 'L', cardId: 'card-B' },
-        { px: 19, py: 50, side: 'L', cardId: 'card-C' },
-        { px: 34, py: 90, side: 'R', cardId: 'card-D' },
-        { px: 56, py: 63, side: 'R', cardId: 'card-E' },
+
+    var DEFAULT_PINS = [
+        { id:1, x:33, y:4, side:'L', label:'Будівництво · 1695–1742', cardTitle:'Орден піарів',
+          text1:'Костел збудований орденом піарів — католицьким чернечим орденом, заснованим у Римі 1617 р. і присвяченим освіті бідних. Разом із костелом у Дубровиці орден заснував колегіум — один із небагатьох навчальних закладів тогочасного Полісся.',
+          text2:'Будівництво тривало понад 40 років. Головним ктитором виступив Ян Кароль Дольський, який виділив 33 тис. злотих. Консекрований єпископом Франциском Кобельським у 1742 р.' },
+        { id:2, x:22, y:22, side:'L', label:'1945 — Радянська окупація', cardTitle:'Знищення та пограбування',
+          text1:'Одразу після встановлення радянської влади у 1945 р. костел зачинили. Дзвони зняли і вивезли, орган розібрали й знищили. Срібне начиння, старовинні ікони та цінне церковне майно — розграбували або знищили.',
+          text2:'Будівлю перефарбували з білого у червоний колір і пристосували під промисловий склад. Лише у 1992 р. костел було освячено повторно.' },
+        { id:3, x:19, y:50, side:'L', label:'Парафія · до 1945 р.', cardTitle:'1 045 парафіян',
+          text1:'У 1938 р. парафія налічувала 1 045 осіб і охоплювала понад 100 навколишніх сіл, зокрема Крупове, Острівці, Мочулище, Воробин та інші.',
+          text2:'Перший дерев\'яний костел, збудований тут у 1684 р., шведські війська спалили у 1709 р. Нинішня мурована споруда в стилі рококо — трьохнавна базиліка — зведена на його місці.' },
+        { id:4, x:34, y:90, side:'R', label:'Відкрито 1702 р.', cardTitle:'Головний портал',
+          text1:'Портал відкритий у 1702 р. — ще до завершення будівництва. Богослужіння розпочалися задовго до офіційної консекрації 1742 р. Інтер\'єр оздоблений у стилі рококо: хрестові склепіння нефу, різьблені вівтарі й скульптурний декор.',
+          text2:'Головний образ вівтаря — св. Іоанна Хрестителя роботи Лукаша Хубля, що дивом вцілів у радянський час.' },
+        { id:5, x:56, y:63, side:'R', label:'Втрачено 1945 р. ✝', cardTitle:'Венеційський вітраж',
+          text1:'Найцінніший елемент інтер\'єру — вітраж, замовлений і виготовлений спеціально у Венеції. Унікальний для всього регіону Полісся.',
+          text2:'Знищений радянською владою у 1945 р. Від нього не залишилося ані фрагментів, ані документальних зображень.' },
     ];
 
+    var PINS = [];
     var photoEl  = document.getElementById('KPHOTO-IMG');
     var ovlEl    = document.getElementById('KPINS-OVL');
     var svgEl    = document.getElementById('KARROWS-SVG');
     var wrapEl   = document.getElementById('KARROWS-WRAP');
 
-    // Build circle markers
-    MARKERS.forEach(function(m, i) {
-        var wrap = document.createElement('div');
-        wrap.className = 'KM';
-        wrap.style.left = m.px + '%';
-        wrap.style.top  = m.py + '%';
-        wrap.style.opacity = '0';
-        wrap.style.transition = 'opacity .5s ease';
+    // Load from JSON, fallback to defaults
+    fetch('kostel_pins.json?v=' + Date.now())
+        .then(function(r){ return r.ok ? r.json() : null; })
+        .then(function(data){ PINS = (Array.isArray(data) && data.length) ? data : DEFAULT_PINS; buildUI(); })
+        .catch(function(){ PINS = DEFAULT_PINS; buildUI(); });
 
-        var pulse = document.createElement('div');
-        pulse.className = 'KM-PULSE';
-        pulse.style.animationDelay = (i * 0.55) + 's';
+    function buildUI() {
+        buildCards();
+        buildMarkers();
+        if (photoEl.complete) { setTimeout(function(){ sync(); animateCards(); }, 200); }
+        else { photoEl.addEventListener('load', function(){ setTimeout(function(){ sync(); animateCards(); }, 200); }); }
+        setTimeout(function(){ sync(); animateCards(); }, 800);
+    }
 
-        var ring = document.createElement('div');
-        ring.className = 'KM-RING';
+    function escH(s) {
+        return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
 
-        var dot = document.createElement('div');
-        dot.className = 'KM-DOT';
+    // Build side panel cards dynamically
+    function buildCards() {
+        var leftPanel  = document.getElementById('KPANEL-L');
+        var rightPanel = document.getElementById('KPANEL-R');
+        if (!leftPanel || !rightPanel) return;
+        leftPanel.innerHTML = ''; rightPanel.innerHTML = '';
 
-        ring.appendChild(dot);
-        wrap.appendChild(pulse);
-        wrap.appendChild(ring);
-        ovlEl.appendChild(wrap);
+        PINS.forEach(function(pin) {
+            var card = document.createElement('div');
+            card.className = 'KCARD' + (pin.side === 'R' ? ' KCARD-R' : '');
+            card.id = 'card-' + pin.id;
+            card.innerHTML =
+                '<span class="KCARD-LABEL">' + escH(pin.label || '') + '</span>' +
+                '<div class="KCARD-TITLE">' + escH(pin.cardTitle || '') + '</div>' +
+                (pin.text1 ? '<div class="KCARD-TEXT">' + escH(pin.text1) + '</div>' : '') +
+                (pin.text2 ? '<div class="KCARD-TEXT">' + escH(pin.text2) + '</div>' : '');
+            (pin.side === 'R' ? rightPanel : leftPanel).appendChild(card);
+        });
+    }
 
-        setTimeout(function() { wrap.style.opacity = '1'; }, 500 + i * 150);
-    });
+    // Build pulsing markers on photo
+    function buildMarkers() {
+        ovlEl.innerHTML = '';
+        PINS.forEach(function(pin, i) {
+            var wrap = document.createElement('div');
+            wrap.className = 'KM';
+            wrap.style.left = pin.x + '%';
+            wrap.style.top  = pin.y + '%';
+            wrap.style.opacity = '0';
+            wrap.style.transition = 'opacity .5s ease';
 
-    // Build SVG lines using absolute pixel coords — lines from markers to cards
+            var pulse = document.createElement('div');
+            pulse.className = 'KM-PULSE';
+            pulse.style.animationDelay = (i * 0.55) + 's';
+
+            var ring = document.createElement('div');
+            ring.className = 'KM-RING';
+
+            var dot = document.createElement('div');
+            dot.className = 'KM-DOT';
+
+            ring.appendChild(dot);
+            wrap.appendChild(pulse);
+            wrap.appendChild(ring);
+            ovlEl.appendChild(wrap);
+
+            setTimeout(function() { wrap.style.opacity = '1'; }, 500 + i * 150);
+        });
+    }
+
+    // Build clean SVG bezier arrows with proper SVG marker arrowheads
     function buildLines() {
         if (window.innerWidth <= 1000) return;
         svgEl.innerHTML = '';
 
-        var photoColEl = document.getElementById('KPHOTO-COL');
-        var photoColRect = photoColEl.getBoundingClientRect();
-        var wrapRect = wrapEl.getBoundingClientRect();
+        var wrapRect     = wrapEl.getBoundingClientRect();
         var photoImgRect = photoEl.getBoundingClientRect();
-        var photoH = photoImgRect.height;
-        var photoW = photoImgRect.width;
-        var photoTop = photoImgRect.top - wrapRect.top;
-        var photoLeft = photoImgRect.left - wrapRect.left;
+        if (!wrapRect.width || !photoImgRect.width) return;
 
-        // SVG dimensions = wrap element
+        var pH = photoImgRect.height;
+        var pW = photoImgRect.width;
+        var pTop  = photoImgRect.top  - wrapRect.top;
+        var pLeft = photoImgRect.left - wrapRect.left;
+
         svgEl.setAttribute('viewBox', '0 0 ' + wrapRect.width + ' ' + wrapRect.height);
-        svgEl.setAttribute('width', wrapRect.width);
+        svgEl.setAttribute('width',  wrapRect.width);
         svgEl.setAttribute('height', wrapRect.height);
 
-        MARKERS.forEach(function(m, idx) {
-            var cardEl = document.getElementById(m.cardId);
-            if (!cardEl) return;
+        // SVG defs: arrowhead markers for both directions
+        var defs = document.createElementNS('http://www.w3.org/2000/svg','defs');
 
-            var cardRect = cardEl.getBoundingClientRect();
-            // Card connection point (right edge for L-side cards, left edge for R-side)
-            var cardX, cardY;
-            if (m.side === 'L') {
-                cardX = cardRect.right - wrapRect.left;
-                cardY = cardRect.top + cardRect.height / 2 - wrapRect.top;
+        // Right-pointing arrow (for right-side cards)
+        ['kAR','kAL'].forEach(function(id, isLeft) {
+            var mk = document.createElementNS('http://www.w3.org/2000/svg','marker');
+            mk.setAttribute('id', id);
+            mk.setAttribute('markerWidth','6');
+            mk.setAttribute('markerHeight','6');
+            mk.setAttribute('orient','auto');
+            mk.setAttribute('markerUnits','strokeWidth');
+            if (isLeft) {
+                // Arrow pointing left — placed at start
+                mk.setAttribute('refX','0'); mk.setAttribute('refY','3');
+                var poly = document.createElementNS('http://www.w3.org/2000/svg','path');
+                poly.setAttribute('d','M6,0 L0,3 L6,6 L4.5,3 Z');
+                poly.setAttribute('fill','rgba(201,162,39,0.5)');
+                mk.appendChild(poly);
             } else {
-                cardX = cardRect.left - wrapRect.left;
-                cardY = cardRect.top + cardRect.height / 2 - wrapRect.top;
+                // Arrow pointing right — placed at end
+                mk.setAttribute('refX','6'); mk.setAttribute('refY','3');
+                var poly = document.createElementNS('http://www.w3.org/2000/svg','path');
+                poly.setAttribute('d','M0,0 L6,3 L0,6 L1.5,3 Z');
+                poly.setAttribute('fill','rgba(201,162,39,0.5)');
+                mk.appendChild(poly);
+            }
+            defs.appendChild(mk);
+        });
+        svgEl.appendChild(defs);
+
+        PINS.forEach(function(m, idx) {
+            var cardEl = document.getElementById('card-' + m.id);
+            if (!cardEl) return;
+            var cardRect = cardEl.getBoundingClientRect();
+            if (!cardRect.width) return;
+
+            // Marker (pin) center on photo
+            var mkX = pLeft + (m.x / 100) * pW;
+            var mkY = pTop  + (m.y / 100) * pH;
+
+            // Photo edge exit point (line leaves photo horizontally)
+            var exitX = (m.side === 'L') ? pLeft : (pLeft + pW);
+            var exitY = mkY;
+
+            // Card target — where the arrowhead lands (on the card border edge)
+            var tX, tY;
+            if (m.side === 'L') {
+                tX = cardRect.right  - wrapRect.left;
+                tY = cardRect.top + cardRect.height * 0.38 - wrapRect.top;
+            } else {
+                tX = cardRect.left   - wrapRect.left;
+                tY = cardRect.top + cardRect.height * 0.38 - wrapRect.top;
             }
 
-            // Marker position in SVG coords
-            var mkX = photoLeft + (m.px / 100) * photoW;
-            var mkY = photoTop  + (m.py / 100) * photoH;
-
-            // Edge of photo (where line exits)
-            var edgeX = (m.side === 'L') ? photoLeft : (photoLeft + photoW);
-            var edgeY = mkY; // exit horizontally from marker first
-
-            // Draw: marker → horizontal to photo edge → angled to card center
-            // Use a cubic bezier for smooth curve
-            var dx = Math.abs(cardX - edgeX);
+            // Bezier control points
+            var span = Math.abs(tX - exitX);
             var cp1x, cp1y, cp2x, cp2y;
             if (m.side === 'L') {
-                cp1x = edgeX - dx * 0.4;
-                cp1y = edgeY;
-                cp2x = cardX + dx * 0.3;
-                cp2y = cardY;
+                cp1x = exitX - span * 0.55; cp1y = exitY;
+                cp2x = tX + span * 0.2;     cp2y = tY;
             } else {
-                cp1x = edgeX + dx * 0.4;
-                cp1y = edgeY;
-                cp2x = cardX - dx * 0.3;
-                cp2y = cardY;
+                cp1x = exitX + span * 0.55; cp1y = exitY;
+                cp2x = tX - span * 0.2;     cp2y = tY;
             }
 
-            // Path
-            var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-            var d = 'M' + mkX + ',' + mkY
-                  + ' L' + edgeX + ',' + edgeY
-                  + ' C' + cp1x + ',' + cp1y
-                  + ' ' + cp2x + ',' + cp2y
-                  + ' ' + cardX + ',' + cardY;
+            var d = 'M' + f(mkX) + ',' + f(mkY)
+                  + ' L' + f(exitX) + ',' + f(exitY)
+                  + ' C' + f(cp1x) + ',' + f(cp1y) + ' ' + f(cp2x) + ',' + f(cp2y)
+                  + ' ' + f(tX) + ',' + f(tY);
+
+            var path = document.createElementNS('http://www.w3.org/2000/svg','path');
             path.setAttribute('d', d);
             path.setAttribute('fill', 'none');
-            path.setAttribute('stroke', 'rgba(201,162,39,.3)');
-            path.setAttribute('stroke-width', '0.8');
+            path.setAttribute('stroke', 'rgba(201,162,39,0.28)');
+            path.setAttribute('stroke-width', '0.9');
             path.setAttribute('stroke-linecap', 'round');
             path.setAttribute('stroke-linejoin', 'round');
 
-            // Animate via stroke-dasharray
-            var length = 600;
-            path.setAttribute('stroke-dasharray', length);
-            path.setAttribute('stroke-dashoffset', length);
+            // Arrowhead at the card end (right for R-side, left-arrow for L-side)
+            if (m.side === 'L') {
+                path.setAttribute('marker-start', 'url(#kAL)');
+            } else {
+                path.setAttribute('marker-end', 'url(#kAR)');
+            }
+
+            // Animate draw
+            var len = 900;
+            path.style.strokeDasharray  = len;
+            path.style.strokeDashoffset = len;
             svgEl.appendChild(path);
 
-            // Arrowhead at card end
-            var angle;
-            if (m.side === 'L') {
-                angle = Math.atan2(cardY - cp2y, cardX - cp2x);
-            } else {
-                angle = Math.atan2(cardY - cp2y, cardX - cp2x);
-            }
-            var aSize = 6;
-            var ax1 = cardX - aSize * Math.cos(angle - 0.4);
-            var ay1 = cardY - aSize * Math.sin(angle - 0.4);
-            var ax2 = cardX - aSize * Math.cos(angle + 0.4);
-            var ay2 = cardY - aSize * Math.sin(angle + 0.4);
-            var arr = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-            arr.setAttribute('points', cardX+','+cardY+' '+ax1+','+ay1+' '+ax2+','+ay2);
-            arr.setAttribute('fill', 'rgba(201,162,39,.45)');
-            arr.setAttribute('opacity', '0');
-            svgEl.appendChild(arr);
+            // Dot at card connection
+            var cdot = document.createElementNS('http://www.w3.org/2000/svg','circle');
+            cdot.setAttribute('cx', f(tX)); cdot.setAttribute('cy', f(tY));
+            cdot.setAttribute('r','2.5'); cdot.setAttribute('fill','rgba(201,162,39,0.42)');
+            cdot.setAttribute('opacity','0');
+            svgEl.appendChild(cdot);
 
-            // Tiny dot at card connection point
-            var dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-            dot.setAttribute('cx', cardX);
-            dot.setAttribute('cy', cardY);
-            dot.setAttribute('r', '2.5');
-            dot.setAttribute('fill', 'rgba(201,162,39,.35)');
-            dot.setAttribute('opacity', '0');
-            svgEl.appendChild(dot);
-
-            // Animate with delay
-            (function(p, a, d2, delay) {
-                setTimeout(function() {
-                    p.style.transition = 'stroke-dashoffset 1s ease';
+            (function(p, cd, delay){
+                setTimeout(function(){
+                    p.style.transition = 'stroke-dashoffset 1.1s cubic-bezier(.4,0,.2,1)';
                     p.style.strokeDashoffset = '0';
-                    setTimeout(function() {
-                        a.setAttribute('opacity','1');
-                        d2.setAttribute('opacity','1');
-                    }, 900);
+                    setTimeout(function(){ cd.setAttribute('opacity','1'); }, 950);
                 }, delay);
-            })(path, arr, dot, 700 + idx * 200);
+            })(path, cdot, 550 + idx * 200);
         });
     }
 
+    function f(n) { return n.toFixed(1); }
+
     function animateCards() {
         document.querySelectorAll('.KCARD').forEach(function(c, i) {
-            setTimeout(function() { c.classList.add('vis'); }, 300 + i * 180);
+            setTimeout(function() { c.classList.add('vis'); }, 300 + i * 160);
         });
     }
 
     function sync() {
-        // Sync KPINS-OVL height to match image
         ovlEl.style.height = photoEl.offsetHeight + 'px';
         buildLines();
     }
 
-    photoEl.addEventListener('load', function() { setTimeout(function(){ sync(); animateCards(); }, 100); });
-    window.addEventListener('resize', function() { setTimeout(sync, 50); });
-    if (photoEl.complete) { setTimeout(function(){ sync(); animateCards(); }, 300); }
-    setTimeout(function() { sync(); animateCards(); }, 600);
+    window.addEventListener('resize', function() { setTimeout(sync, 80); });
 
     function openKLB(el) {
         document.getElementById('KLB-I').src = el.querySelector('img').src;
