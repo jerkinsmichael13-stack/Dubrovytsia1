@@ -158,7 +158,7 @@
     .KGAL-TITLE { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; font-weight: 300; font-style: italic; color: #e0d0a8; }
     .KGAL-GRID {
         display: grid; grid-template-columns: 1.65fr 1fr 1fr;
-        grid-template-rows: 1fr 1fr; gap: .5rem; height: 380px;
+        grid-template-rows: 1fr 1fr; gap: .5rem; height: 520px;
     }
     @media (max-width: 640px) { .KGAL-GRID { grid-template-columns: 1fr 1fr; grid-template-rows: auto; height: auto; } .KGAL-MAIN { grid-column: span 2; } }
     .KGAL-ITEM { position: relative; overflow: hidden; border-radius: 3px; background: #111; cursor: pointer; }
@@ -363,7 +363,7 @@
 
         <!-- Church photo — full width -->
         <div style="max-width:760px; margin:0 auto; padding:0 1.5rem;">
-            <div class="KGAL-ITEM" style="height:460px; border-radius:3px; cursor:pointer;" onclick="openKLB(this)">
+            <div class="KGAL-ITEM" style="height:520px; border-radius:3px; cursor:pointer;" onclick="openKLB(this)">
                 <img src="https://i.imgur.com/Szn6vcH.jpeg" alt="Церква Різдва Пресвятої Богородиці"
                      style="width:100%;height:100%;object-fit:cover;display:block;filter:contrast(1.03) brightness(1.05) saturate(.85);">
             </div>
@@ -419,7 +419,7 @@
             <div style="display:grid;grid-template-columns:220px 1fr;gap:2.8rem;align-items:start;margin-bottom:2rem;">
                 <!-- Icon — tall portrait -->
                 <div>
-                    <div class="KGAL-ITEM" style="height:300px;border-radius:3px;cursor:pointer;" onclick="openKLB(this)">
+                    <div class="KGAL-ITEM" style="height:380px;border-radius:3px;cursor:pointer;" onclick="openKLB(this)">
                         <img src="https://i.imgur.com/l1SHdOp.jpeg" alt="Ікона св. Юліанії Гольшанської" loading="lazy"
                              style="width:100%;height:100%;object-fit:cover;object-position:top;filter:sepia(.18) contrast(1.04) brightness(1.08);">
                     </div>
@@ -440,32 +440,32 @@
             <!-- Four image strip with captions -->
             <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;">
                 <div>
-                    <div class="KGAL-ITEM" style="height:180px;border-radius:3px;cursor:pointer;" onclick="openKLB(this)">
+                    <div class="KGAL-ITEM" style="height:240px;border-radius:3px;cursor:pointer;" onclick="openKLB(this)">
                         <img src="https://i.imgur.com/3jJc4j7.jpeg" alt="Гробниця Юліанії у Лаврі" loading="lazy"
                              style="width:100%;height:100%;object-fit:cover;filter:sepia(.35) contrast(1.04) brightness(1.06);">
                     </div>
                     <p style="font-size:.47rem;letter-spacing:.07em;color:rgba(240,230,200,.18);margin-top:.3rem;text-align:center;line-height:1.55;">Гробниця у Лаврі<br>рис. А. ван Вестерфельда · 1651 р.</p>
                 </div>
                 <div>
-                    <div class="KGAL-ITEM" style="height:180px;border-radius:3px;cursor:pointer;" onclick="openKLB(this)">
+                    <div class="KGAL-ITEM" style="height:240px;border-radius:3px;cursor:pointer;" onclick="openKLB(this)">
                         <img src="https://i.imgur.com/JiDsvMw.jpeg" alt="Літографія 1886 р." loading="lazy"
                              style="width:100%;height:100%;object-fit:cover;filter:sepia(.38) contrast(1.04) brightness(1.09);">
                     </div>
                     <p style="font-size:.47rem;letter-spacing:.07em;color:rgba(240,230,200,.18);margin-top:.3rem;text-align:center;line-height:1.55;">Літографія · 1886 р.</p>
                 </div>
                 <div>
-                    <div class="KGAL-ITEM" style="height:180px;border-radius:3px;cursor:pointer;" onclick="openKLB(this)">
-                        <img src="https://i.imgur.com/sUnxh3B.jpeg" alt="Розпис Почаївської лаври, кін. XIX ст." loading="lazy"
-                             style="width:100%;height:100%;object-fit:cover;filter:sepia(.22) contrast(1.04) brightness(1.06);">
-                    </div>
-                    <p style="font-size:.47rem;letter-spacing:.07em;color:rgba(240,230,200,.18);margin-top:.3rem;text-align:center;line-height:1.55;">Розпис ц. Іова Почаївського<br>кін. ХIХ ст.</p>
-                </div>
-                <div>
-                    <div class="KGAL-ITEM" style="height:180px;border-radius:3px;cursor:pointer;" onclick="openKLB(this)">
-                        <img src="https://i.imgur.com/GuDy8u6.jpeg" alt="Пам'ятник Юліанії у Дубровиці" loading="lazy"
+                    <div class="KGAL-ITEM" style="height:240px;border-radius:3px;cursor:pointer;" onclick="openKLB(this)">
+                        <img src="https://i.imgur.com/sUnxh3B.jpeg" alt="Пам'ятник Юліанії у Дубровиці" loading="lazy"
                              style="width:100%;height:100%;object-fit:cover;filter:contrast(1.03) brightness(1.09) saturate(.8);">
                     </div>
                     <p style="font-size:.47rem;letter-spacing:.07em;color:rgba(240,230,200,.18);margin-top:.3rem;text-align:center;line-height:1.55;">Пам'ятник у Дубровиці<br>відкрито 2005 р.</p>
+                </div>
+                <div>
+                    <div class="KGAL-ITEM" style="height:240px;border-radius:3px;cursor:pointer;" onclick="openKLB(this)">
+                        <img src="https://i.imgur.com/GuDy8u6.jpeg" alt="Розпис ц. Іова Почаївського" loading="lazy"
+                             style="width:100%;height:100%;object-fit:cover;filter:sepia(.22) contrast(1.04) brightness(1.06);">
+                    </div>
+                    <p style="font-size:.47rem;letter-spacing:.07em;color:rgba(240,230,200,.18);margin-top:.3rem;text-align:center;line-height:1.55;">Розпис ц. Іова Почаївського<br>кін. ХIХ ст.</p>
                 </div>
             </div>
 
