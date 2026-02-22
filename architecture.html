@@ -94,8 +94,7 @@
 
     /* SVG connector lines — drawn by JS, horizontal only */
     .KARROWS { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; z-index: 5; }
-    .KL { stroke: rgba(201,162,39,.5); stroke-width: .55; fill: none; stroke-linecap: butt; stroke-dasharray: none; }
-    .KA { fill: rgba(201,162,39,.55); }
+    .KL { stroke: rgba(201,162,39,.55); stroke-width: .18; fill: none; stroke-linecap: round; }
 
     /* Side panels */
     .KPANEL { display: flex; flex-direction: column; padding-top: 2rem; }
@@ -526,11 +525,11 @@
             <!-- Two additional church photos -->
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:.75rem;">
                 <div class="KGAL-ITEM" style="height:320px;border-radius:3px;cursor:pointer;" onclick="openKLB(this)">
-                    <img src="https://i.imgur.com/hrF5Mc6.jpeg" alt="Церква Різдва Богородиці — фото"
+                    <img src="https://i.imgur.com/IVQT6Ev.jpeg" alt="Церква Різдва Богородиці — фото"
                          style="width:100%;height:100%;object-fit:cover;display:block;filter:contrast(1.02) brightness(1.04) saturate(.88);">
                 </div>
                 <div class="KGAL-ITEM" style="height:320px;border-radius:3px;cursor:pointer;" onclick="openKLB(this)">
-                    <img src="https://i.imgur.com/em8JcTg.jpeg" alt="Церква Різдва Богородиці — деталь"
+                    <img src="https://i.imgur.com/hrF5Mc6.jpeg" alt="Церква Різдва Богородиці — деталь"
                          style="width:100%;height:100%;object-fit:cover;display:block;filter:contrast(1.02) brightness(1.04) saturate(.88);">
                 </div>
             </div>
@@ -718,12 +717,9 @@
         svg.innerHTML = '';
 
         markers.forEach(function(m) {
-            // marker dot position on photo (in SVG viewBox 0-100 units)
             var mx = m.px, my = m.py;
-            // photo edge (x=0 for left side, x=100 for right)
             var ex = (m.side === 'L') ? 0 : 100;
 
-            // Draw a horizontal line from photo edge to marker X at marker Y
             var line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
             line.setAttribute('x1', ex);
             line.setAttribute('y1', my);
@@ -731,21 +727,6 @@
             line.setAttribute('y2', my);
             line.setAttribute('class', 'KL');
             svg.appendChild(line);
-
-            // Small arrowhead pointing INTO the photo at the marker
-            var arr = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-            var s = 1.0;
-            var pts;
-            if (m.side === 'L') {
-                // arrow tip points right (toward marker)
-                pts = mx+','+my+' '+(mx-s*2)+','+(my-s*.8)+' '+(mx-s*2)+','+(my+s*.8);
-            } else {
-                // arrow tip points left (toward marker)
-                pts = mx+','+my+' '+(mx+s*2)+','+(my-s*.8)+' '+(mx+s*2)+','+(my+s*.8);
-            }
-            arr.setAttribute('points', pts);
-            arr.setAttribute('class', 'KA');
-            svg.appendChild(arr);
         });
     }
 
