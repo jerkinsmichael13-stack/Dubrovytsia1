@@ -1313,7 +1313,7 @@
         <p class="PGLH">Архівні фотографії маєтку</p>
         <div class="PGRID">
           <div class="PGITEM" onclick="openPLB(this)">
-            <img src="https://i.imgur.com/jpyssNA.jpeg" alt="Палац Плятерів 1925" loading="lazy">
+            <img src="https://i.imgur.com/jpyssNA.jpeg" alt="Палац Плятерів 1925" loading="lazy" style="object-position:top;">
             <div class="PGCAP">Палац в 1925 році</div>
           </div>
           <div class="PGITEM" onclick="openPLB(this)">
@@ -1414,13 +1414,14 @@
     .WYD{text-align:center;font-size:1.4rem;color:rgba(42,100,180,.4);}
     [data-theme="dark"] .WYD{color:rgba(42,100,180,.3);}
     /* slider */
-    .WSF{position:relative;width:100%;aspect-ratio:16/9;border-radius:3px;overflow:hidden;
+    .WSF{position:relative;width:100%;aspect-ratio:4/3;border-radius:3px;overflow:hidden;
          cursor:ew-resize;user-select:none;-webkit-user-select:none;
+         background:#06080a;
          box-shadow:0 0 0 1px rgba(42,100,180,.15),0 30px 80px rgba(0,0,0,.7);}
-    @media(max-width:600px){.WSF{aspect-ratio:3/2;}}
-    .WSF .wb{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;display:block;
+    @media(max-width:600px){.WSF{aspect-ratio:1/1;}}
+    .WSF .wb{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;pointer-events:none;display:block;
              filter:saturate(1.15) contrast(1.06) brightness(1.03);}
-    .WSF .wo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;display:block;
+    .WSF .wo{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;pointer-events:none;display:block;
              clip-path:inset(0 50% 0 0);will-change:clip-path;transform:translateZ(0);
              filter:contrast(1.12) brightness(1.06) saturate(0.05);}
     .WSF::after{content:'';position:absolute;inset:0;
