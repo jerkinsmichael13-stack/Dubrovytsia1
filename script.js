@@ -141,10 +141,10 @@ let currentCategory = 'all';
 let filteredPhotos = [];
 let currentPhotoIndex = 0;
 
-// Повертає 320px версію imgur-посилання для мініатюр у галереї (швидше завантаження)
+// Повертає 640px версію imgur-посилання для мініатюр у галереї
 function imgurThumb(url) {
     if (!url || !url.includes('i.imgur.com')) return url;
-    return url.replace(/\.(jpe?g|png|gif|webp)$/i, 'm.$1');
+    return url.replace(/\.(jpe?g|png|gif|webp)$/i, 'l.$1');
 }
 
 async function initPhotoGallery() {
@@ -183,7 +183,7 @@ function displayPhotos() {
     });
 
     if (filteredPhotos.length === 0) {
-        gallery.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:4rem 1rem;"><p style="font-family:var(--font-display);font-size:1.3rem;color:var(--color-text-secondary);">За обраними фільтрами нічого не знайдено</p></div>';
+        gallery.innerHTML = '<div style="grid-column:1/-1;width:100%;text-align:center;padding:4rem 1rem;"><p style="font-family:var(--font-display);font-size:1.3rem;color:var(--color-text-secondary);">За обраними фільтрами нічого не знайдено</p></div>';
         return;
     }
 
@@ -456,79 +456,23 @@ function initMetricFilters() {
 // ================================================
 // ADMIN (login only — heavy logic in admin.html)
 // ================================================
-// Password is compared using a simple hash to avoid plaintext in source
-const ADMIN_HASH = '3c4bf8f50a5a79a7'; // sha-like token, verified server-side against env
-
-async function hashPassword(pw) {
-    const enc = new TextEncoder().encode(pw + 'dubrovytsia_salt_2026');
-    const buf = await crypto.subtle.digest('SHA-256', enc);
-    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('').slice(0,16);
-}
-
-// Correct hash for admin2026 — generated once
-const CORRECT_HASH = (async () => hashPassword('admin2026'))();
+const ADMIN_PASSWORD = 'admin2026';
 
 function initAdmin() {
     const loginBtn = document.getElementById('adminLoginBtn');
     const password = document.getElementById('adminPassword');
-    if (!loginBtn || !password) return;
-
-    // Rate limiting: max 5 attempts, then 60s lockout
-    const RL_KEY = 'admin_rl';
-    function getRl() {
-        try { return JSON.parse(sessionStorage.getItem(RL_KEY) || '{"attempts":0,"lockedUntil":0}'); }
-        catch(e) { return {attempts:0, lockedUntil:0}; }
-    }
-    function setRl(obj) { sessionStorage.setItem(RL_KEY, JSON.stringify(obj)); }
-
-    function showError(msg) {
-        let err = document.getElementById('adminLoginError');
-        if (!err) {
-            err = document.createElement('p');
-            err.id = 'adminLoginError';
-            err.style.cssText = 'color:#c62828;font-size:0.85rem;margin-top:0.5rem;font-weight:500;';
-            loginBtn.insertAdjacentElement('afterend', err);
-        }
-        err.textContent = msg;
-    }
-
-    async function tryLogin() {
-        const rl = getRl();
-        const now = Date.now();
-
-        if (rl.lockedUntil > now) {
-            const secs = Math.ceil((rl.lockedUntil - now) / 1000);
-            showError(`⛔ Забагато спроб. Спробуйте через ${secs} с.`);
-            return;
-        }
-
-        const entered = password.value;
-        if (!entered) { showError('Введіть пароль.'); return; }
-
-        const hash = await hashPassword(entered);
-        const correct = await CORRECT_HASH;
-
-        if (hash === correct) {
-            setRl({attempts:0, lockedUntil:0});
-            document.getElementById('loginSection').style.display = 'none';
-            document.getElementById('adminContent').style.display = 'block';
-            sessionStorage.setItem('admin_auth', '1');
-        } else {
-            const attempts = rl.attempts + 1;
-            const lockedUntil = attempts >= 5 ? now + 60000 : 0;
-            setRl({attempts, lockedUntil});
-            password.value = '';
-            password.focus();
-            if (lockedUntil) {
-                showError('⛔ 5 невірних спроб. Панель заблоковано на 60 секунд.');
+    if (loginBtn && password) {
+        loginBtn.addEventListener('click', () => {
+            if (password.value === ADMIN_PASSWORD) {
+                document.getElementById('loginSection').style.display = 'none';
+                document.getElementById('adminContent').style.display = 'block';
             } else {
-                showError(`❌ Невірний пароль. Спроба ${attempts} з 5.`);
+                alert('❌ Невірний пароль!');
+                password.value = '';
             }
-        }
+        });
+        password.addEventListener('keypress', e => { if (e.key === 'Enter') loginBtn.click(); });
     }
-
-    loginBtn.addEventListener('click', tryLogin);
-    password.addEventListener('keypress', e => { if (e.key === 'Enter') tryLogin(); });
 }
 
 // ================================================
