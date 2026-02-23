@@ -1,0 +1,1211 @@
+/* ================================================================
+   ДУБРОВИЦЯ — ПРЕМІУМ ДИЗАЙН v7.0
+   Luxury enhancement layer — повна трансформація
+   ================================================================ */
+
+/* ================================================================
+   ОНОВЛЕНА КОЛЬОРОВА СИСТЕМА — глибша, розкішніша
+   ================================================================ */
+:root {
+    --color-primary:        #1e4d30;
+    --color-primary-hover:  #163824;
+    --color-primary-light:  #2d6b44;
+    --color-accent:         #c8981a;
+    --color-accent-light:   #e0b84a;
+    --color-accent-dark:    #a07815;
+    --color-accent-glow:    rgba(200, 152, 26, 0.2);
+
+    --color-bg:             #f9f6f0;
+    --color-bg-alt:         #f2ece1;
+    --color-bg-secondary:   #e9e0d0;
+    --color-bg-card:        #ffffff;
+    --color-bg-warm:        #f6f0e6;
+
+    --color-text:           #18160f;
+    --color-text-secondary: #3d3628;
+    --color-text-light:     #6e6050;
+    --color-text-muted:     #a89880;
+
+    --color-border:         #daced0b5;
+    --color-border-light:   #ece5d8;
+    --color-border-hover:   #c4a870;
+
+    /* Нові люксові тіні */
+    --shadow-xs:   0 1px 2px rgba(24, 16, 8, 0.05);
+    --shadow-sm:   0 2px 8px rgba(24, 16, 8, 0.07), 0 1px 3px rgba(24, 16, 8, 0.05);
+    --shadow-md:   0 4px 16px rgba(24, 16, 8, 0.09), 0 2px 6px rgba(24, 16, 8, 0.05);
+    --shadow-lg:   0 8px 32px rgba(24, 16, 8, 0.12), 0 4px 12px rgba(24, 16, 8, 0.06);
+    --shadow-xl:   0 16px 48px rgba(24, 16, 8, 0.14), 0 8px 20px rgba(24, 16, 8, 0.07);
+    --shadow-2xl:  0 32px 80px rgba(24, 16, 8, 0.18), 0 16px 36px rgba(24, 16, 8, 0.08);
+    --shadow-gold: 0 8px 32px rgba(200, 152, 26, 0.25);
+
+    /* Золотий гловен */
+    --glow-accent: 0 0 40px rgba(200, 152, 26, 0.15), 0 0 80px rgba(200, 152, 26, 0.08);
+
+    --radius-sm:   0.3rem;
+    --radius-md:   0.5rem;
+    --radius-lg:   0.875rem;
+    --radius-xl:   1.25rem;
+    --radius-2xl:  2rem;
+    --radius-full: 9999px;
+}
+
+[data-theme="dark"] {
+    --color-bg:             #0b0906;
+    --color-bg-alt:         #130f0a;
+    --color-bg-secondary:   #1c1610;
+    --color-bg-card:        #161108;
+    --color-bg-warm:        #17120c;
+
+    --color-text:           #f4ede0;
+    --color-text-secondary: #c0ad94;
+    --color-text-light:     #80705a;
+    --color-text-muted:     #50402e;
+
+    --color-border:         #2a2016;
+    --color-border-light:   #221a10;
+    --color-border-hover:   #4a3820;
+
+    --shadow-xs:   0 1px 2px rgba(0,0,0,0.5);
+    --shadow-sm:   0 2px 8px rgba(0,0,0,0.6);
+    --shadow-md:   0 4px 16px rgba(0,0,0,0.7);
+    --shadow-lg:   0 8px 32px rgba(0,0,0,0.75);
+    --shadow-xl:   0 16px 48px rgba(0,0,0,0.85);
+    --shadow-2xl:  0 32px 80px rgba(0,0,0,0.95);
+    --shadow-gold: 0 8px 32px rgba(200, 152, 26, 0.15);
+    --glow-accent: 0 0 60px rgba(200, 152, 26, 0.08);
+}
+
+/* ================================================================
+   ЗЕРНИСТИЙ ФОН — документальна текстура
+   ================================================================ */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+    opacity: 0.028;
+    mix-blend-mode: multiply;
+}
+[data-theme="dark"] body::before {
+    opacity: 0.04;
+    mix-blend-mode: screen;
+}
+
+/* ================================================================
+   ПРЕМІУМ HEADER — скло + золото
+   ================================================================ */
+.header {
+    background-color: rgba(249, 246, 240, 0.88) !important;
+    backdrop-filter: blur(32px) saturate(180%) brightness(1.02) !important;
+    -webkit-backdrop-filter: blur(32px) saturate(180%) !important;
+    border-bottom: 1px solid rgba(200, 152, 26, 0.12) !important;
+    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+[data-theme="dark"] .header {
+    background-color: rgba(11, 9, 6, 0.88) !important;
+    border-bottom-color: rgba(200, 152, 26, 0.08) !important;
+}
+.header.scrolled {
+    box-shadow: 0 4px 40px rgba(24, 16, 8, 0.12), 0 1px 0 rgba(200, 152, 26, 0.15) !important;
+}
+[data-theme="dark"] .header.scrolled {
+    box-shadow: 0 4px 40px rgba(0, 0, 0, 0.5), 0 1px 0 rgba(200, 152, 26, 0.1) !important;
+}
+
+.header-container {
+    height: 72px !important;
+}
+
+/* Логотип — мікро-анімація */
+.logo-city {
+    font-size: 1.45rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.02em !important;
+}
+.logo-subtitle {
+    letter-spacing: 0.18em !important;
+    font-size: 0.6rem !important;
+    color: var(--color-accent) !important;
+    font-weight: 600 !important;
+    opacity: 0.8;
+}
+.logo-img {
+    width: 36px !important;
+    height: 36px !important;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+.logo:hover .logo-img {
+    transform: rotate(-5deg) scale(1.1) !important;
+    animation: none !important;
+}
+
+/* Навігація — витончена */
+.nav-link {
+    font-size: 0.82rem !important;
+    letter-spacing: 0.06em !important;
+    text-transform: uppercase !important;
+    font-weight: 500 !important;
+    padding: 0.45rem 0.8rem !important;
+    color: var(--color-text-light) !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+}
+.nav-link::after {
+    height: 1px !important;
+    background: var(--color-accent) !important;
+    bottom: -2px !important;
+}
+.nav-link:hover {
+    color: var(--color-text) !important;
+    background: transparent !important;
+}
+.nav-link.active {
+    color: var(--color-accent) !important;
+}
+
+/* Theme toggle */
+.theme-toggle {
+    width: 38px !important;
+    height: 38px !important;
+    background: transparent !important;
+    border-color: var(--color-border) !important;
+}
+.theme-toggle:hover {
+    background: var(--color-accent) !important;
+    border-color: var(--color-accent) !important;
+    transform: rotate(20deg) scale(1.05) !important;
+}
+
+/* ================================================================
+   HERO SECTION — кінематографічний
+   ================================================================ */
+.hero {
+    min-height: 100svh !important;
+}
+
+.hero-bg {
+    transform: scale(1.05);
+    transition: transform 12s ease-out !important;
+}
+.hero-bg.loaded {
+    transform: scale(1) !important;
+}
+
+/* Оновлений оверлей — більш кінематографічний */
+.hero-overlay {
+    background: linear-gradient(
+        175deg,
+        rgba(6, 22, 12, 0.90) 0%,
+        rgba(20, 48, 30, 0.70) 45%,
+        rgba(120, 84, 10, 0.45) 85%,
+        rgba(200, 152, 26, 0.15) 100%
+    ) !important;
+}
+[data-theme="dark"] .hero-overlay {
+    background: linear-gradient(
+        175deg,
+        rgba(3, 3, 2, 0.96) 0%,
+        rgba(12, 25, 16, 0.85) 60%,
+        rgba(35, 22, 4, 0.60) 100%
+    ) !important;
+}
+
+.hero-content {
+    max-width: 920px !important;
+    padding: 0 var(--spacing-lg) !important;
+}
+
+/* Декоративна лінія */
+.hero-content::before {
+    width: 48px !important;
+    height: 1px !important;
+    margin-bottom: 2.5rem !important;
+    background: var(--color-accent) !important;
+    opacity: 1 !important;
+}
+
+/* Заголовок hero — максимальна розкіш */
+.hero-title {
+    font-size: clamp(3.8rem, 10vw, 7rem) !important;
+    font-weight: 300 !important;
+    letter-spacing: 0.12em !important;
+    line-height: 0.95 !important;
+    background: linear-gradient(
+        140deg,
+        #ffffff 0%,
+        rgba(255,255,255,0.9) 25%,
+        #f0d070 48%,
+        rgba(255,255,255,0.85) 72%,
+        #ffffff 100%
+    ) !important;
+    background-size: 250% auto !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    animation: heroShimmer 8s linear infinite !important;
+    text-shadow: none !important;
+    margin-bottom: 0.6rem !important;
+}
+
+@keyframes heroShimmer {
+    0% { background-position: -100% center; }
+    100% { background-position: 300% center; }
+}
+
+.hero-subtitle {
+    font-size: clamp(1.05rem, 2.4vw, 1.5rem) !important;
+    opacity: 0.82 !important;
+    letter-spacing: 0.04em !important;
+    margin-bottom: 2rem !important;
+    font-weight: 300 !important;
+}
+
+.hero-meta {
+    font-size: 0.75rem !important;
+    letter-spacing: 0.2em !important;
+    opacity: 0.6 !important;
+}
+
+/* Scroll indicator */
+.hero-scroll-hint {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0.45;
+    z-index: 2;
+    pointer-events: none;
+}
+.hero-scroll-hint span {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: white;
+    font-family: var(--font-body);
+    font-weight: 400;
+}
+.scroll-line {
+    width: 1px;
+    height: 48px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.6), transparent);
+    animation: scrollLine 2s ease-in-out infinite;
+}
+@keyframes scrollLine {
+    0% { transform: scaleY(0); transform-origin: top; }
+    50% { transform: scaleY(1); transform-origin: top; }
+    51% { transform: scaleY(1); transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+/* ================================================================
+   КАРТКИ — масивні люксові hover-ефекти
+   ================================================================ */
+.card {
+    border-radius: var(--radius-xl) !important;
+    border-color: var(--color-border-light) !important;
+    background: var(--color-bg-card) !important;
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+                box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+                border-color 0.3s ease !important;
+    overflow: hidden !important;
+}
+.card:hover {
+    transform: translateY(-10px) !important;
+    box-shadow: 0 40px 80px rgba(24, 16, 8, 0.18), 0 12px 30px rgba(24, 16, 8, 0.08), 0 0 0 1px rgba(200, 152, 26, 0.1) !important;
+    border-color: rgba(200, 152, 26, 0.2) !important;
+}
+[data-theme="dark"] .card:hover {
+    box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(200, 152, 26, 0.12) !important;
+}
+
+.card-image {
+    height: 240px !important;
+}
+.card-image img {
+    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+.card:hover .card-image img {
+    transform: scale(1.08) !important;
+}
+
+/* Золота рамка зверху при hover */
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: 1;
+}
+.card:hover::before { opacity: 1; }
+
+.card-title {
+    font-size: 1.7rem !important;
+    letter-spacing: 0.005em !important;
+    line-height: 1.15 !important;
+}
+
+.card-link {
+    color: var(--color-accent-dark) !important;
+    font-size: 0.8rem !important;
+    letter-spacing: 0.08em !important;
+}
+.card:hover .card-link {
+    color: var(--color-accent) !important;
+    gap: 0.75rem !important;
+}
+
+/* ================================================================
+   STATS — більш театральні
+   ================================================================ */
+.stats-section {
+    background: linear-gradient(
+        135deg,
+        #0f2418 0%,
+        #1a3d28 40%,
+        #162d1e 70%,
+        #0d1e14 100%
+    ) !important;
+    position: relative;
+    overflow: hidden;
+}
+.stats-section::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23c8981a' fill-opacity='0.03'%3E%3Cpath d='M40 0L80 40L40 80L0 40Z'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 80px 80px;
+    pointer-events: none;
+}
+
+.stat-item {
+    background: rgba(255, 255, 255, 0.04) !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1) !important;
+    position: relative;
+    overflow: hidden;
+}
+.stat-item::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(200, 152, 26, 0.4), transparent);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+.stat-item:hover {
+    background: rgba(255, 255, 255, 0.07) !important;
+    transform: translateY(-6px) !important;
+    border-color: rgba(200, 152, 26, 0.3) !important;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3) !important;
+}
+.stat-item:hover::before { opacity: 1; }
+
+.stat-number {
+    font-size: clamp(2.8rem, 5.5vw, 4rem) !important;
+    color: var(--color-accent-light) !important;
+    font-weight: 200 !important;
+}
+
+/* ================================================================
+   СЕКЦІЯ INTRO — більш елегантна
+   ================================================================ */
+.intro-section::before {
+    height: 80px !important;
+    opacity: 0.5 !important;
+}
+
+.intro-lead {
+    font-size: clamp(1.4rem, 2.5vw, 1.8rem) !important;
+    line-height: 1.7 !important;
+    font-weight: 300 !important;
+    letter-spacing: 0.01em !important;
+}
+
+/* ================================================================
+   SECTION TITLE — більш авторитетний
+   ================================================================ */
+.section-title {
+    font-size: clamp(2.2rem, 4.5vw, 3.2rem) !important;
+    font-weight: 300 !important;
+    letter-spacing: 0.03em !important;
+}
+.section-title::after {
+    width: 36px !important;
+    margin-top: 1.25rem !important;
+    background: linear-gradient(90deg, transparent, var(--color-accent), transparent) !important;
+    width: 80px !important;
+}
+
+/* ================================================================
+   PHOTO GALLERY — маsoнрі-стиль + преміум ефекти
+   ================================================================ */
+.gallery-section {
+    background: var(--color-bg) !important;
+    padding: var(--spacing-3xl) 0 !important;
+}
+
+/* Масонрі-layout для галереї */
+.gallery-grid {
+    columns: 4 280px !important;
+    column-gap: 1rem !important;
+    display: block !important;
+    grid-template-columns: unset !important;
+}
+
+@media (max-width: 1200px) {
+    .gallery-grid { columns: 3 240px !important; }
+}
+@media (max-width: 768px) {
+    .gallery-grid { columns: 2 160px !important; column-gap: 0.6rem !important; }
+}
+@media (max-width: 480px) {
+    .gallery-grid { columns: 2 120px !important; }
+}
+
+.photo-card {
+    break-inside: avoid !important;
+    display: block !important;
+    aspect-ratio: unset !important;
+    height: unset !important;
+    margin-bottom: 1rem !important;
+    border-radius: var(--radius-lg) !important;
+    overflow: hidden !important;
+    position: relative !important;
+    cursor: pointer !important;
+    border: 1px solid var(--color-border-light) !important;
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                border-color 0.3s ease !important;
+    background: var(--color-bg-secondary) !important;
+}
+
+.photo-card img {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 120px !important;
+    display: block !important;
+    object-fit: cover !important;
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+.photo-card:hover {
+    transform: translateY(-4px) scale(1.015) !important;
+    box-shadow: 0 24px 56px rgba(24, 16, 8, 0.22), 0 0 0 1px rgba(200, 152, 26, 0.12) !important;
+    border-color: rgba(200, 152, 26, 0.2) !important;
+    z-index: 2 !important;
+}
+
+.photo-card:hover img {
+    transform: scale(1.06) !important;
+}
+
+/* Overlay з кращим градієнтом */
+.photo-overlay {
+    background: linear-gradient(
+        to top,
+        rgba(8, 5, 2, 0.90) 0%,
+        rgba(8, 5, 2, 0.55) 40%,
+        rgba(8, 5, 2, 0.1) 65%,
+        transparent 100%
+    ) !important;
+    opacity: 0 !important;
+    transition: opacity 0.35s ease !important;
+    padding: 1.5rem 1.25rem 1.1rem !important;
+}
+.photo-card:hover .photo-overlay { opacity: 1 !important; }
+
+.photo-info h3 {
+    font-family: var(--font-display) !important;
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.01em !important;
+    line-height: 1.25 !important;
+    margin-bottom: 0.3rem !important;
+}
+.photo-info p {
+    font-size: 0.68rem !important;
+    opacity: 0.65 !important;
+    letter-spacing: 0.1em !important;
+}
+
+/* Золотий індикатор оригінала */
+.photo-original-badge {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    border: 1.5px solid rgba(255,255,255,0.9);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 3;
+}
+.photo-card:hover .photo-original-badge { opacity: 1; }
+
+/* Gallery header — більш драматичний */
+.gallery-header {
+    min-height: 380px !important;
+    background-image:
+        linear-gradient(to bottom, rgba(6, 15, 10, 0.92) 0%, rgba(20, 44, 28, 0.80) 60%, rgba(30, 55, 35, 0.70) 100%),
+        url('https://i.imgur.com/qcjgN1I.jpeg') !important;
+}
+
+/* Кнопки фільтрів — більш полірований вигляд */
+.filter-btn, .category-btn {
+    font-size: 0.75rem !important;
+    letter-spacing: 0.06em !important;
+    text-transform: uppercase !important;
+    padding: 0.42rem 1rem !important;
+    transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1) !important;
+    border-radius: var(--radius-full) !important;
+}
+.filter-btn.active, .category-btn.active {
+    background: var(--color-accent) !important;
+    color: #0f0a00 !important;
+    box-shadow: 0 4px 16px rgba(200, 152, 26, 0.4) !important;
+    font-weight: 700 !important;
+}
+.filter-btn:hover:not(.active), .category-btn:hover:not(.active) {
+    background: rgba(255, 255, 255, 0.18) !important;
+}
+
+/* ================================================================
+   LIGHTBOX — кінематографічний
+   ================================================================ */
+.lightbox {
+    background: rgba(4, 3, 2, 0.98) !important;
+    backdrop-filter: blur(30px) saturate(0.6) !important;
+    -webkit-backdrop-filter: blur(30px) saturate(0.6) !important;
+    padding: 2rem 5.5rem !important;
+}
+
+.lightbox.active {
+    animation: lightboxIn 0.35s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+@keyframes lightboxIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.lightbox-image {
+    max-height: 74vh !important;
+    border-radius: var(--radius-lg) !important;
+    box-shadow: 0 48px 100px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.06) !important;
+    animation: lightboxImageIn 0.3s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+@keyframes lightboxImageIn {
+    from { opacity: 0; transform: scale(0.96); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+.lightbox-close {
+    width: 46px !important;
+    height: 46px !important;
+    font-size: 1.3rem !important;
+    background: rgba(255,255,255,0.06) !important;
+    border-color: rgba(255,255,255,0.12) !important;
+    font-family: var(--font-body) !important;
+    transition: all 0.25s ease !important;
+}
+.lightbox-close:hover {
+    background: var(--color-accent) !important;
+    border-color: var(--color-accent) !important;
+    color: #0f0a00 !important;
+    transform: rotate(90deg) !important;
+}
+
+.lightbox-nav {
+    width: 52px !important;
+    height: 52px !important;
+    background: rgba(255,255,255,0.06) !important;
+    border-color: rgba(255,255,255,0.1) !important;
+    font-size: 1.6rem !important;
+    transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+.lightbox-nav:hover {
+    background: var(--color-accent) !important;
+    border-color: var(--color-accent) !important;
+    color: #0f0a00 !important;
+    transform: translateY(-50%) scale(1.12) !important;
+}
+
+.lightbox-caption {
+    font-family: var(--font-display) !important;
+    font-size: clamp(1.1rem, 2.5vw, 1.55rem) !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.015em !important;
+    margin-bottom: 0.4rem !important;
+}
+
+.lightbox-meta {
+    font-size: 0.72rem !important;
+    letter-spacing: 0.14em !important;
+    color: rgba(255,255,255,0.4) !important;
+}
+
+/* Плівка з фотографіями внизу */
+.lightbox-filmstrip {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0.5rem 0;
+}
+.filmstrip-thumb {
+    width: 52px;
+    height: 40px;
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 1.5px solid rgba(255,255,255,0.08);
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    opacity: 0.45;
+}
+.filmstrip-thumb.active {
+    border-color: var(--color-accent);
+    opacity: 1;
+    box-shadow: 0 0 12px rgba(200, 152, 26, 0.4);
+}
+.filmstrip-thumb:hover { opacity: 0.8; }
+.filmstrip-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ================================================================
+   TIMELINE — більш витончена
+   ================================================================ */
+.timeline {
+    max-width: 720px !important;
+    padding-left: 2rem !important;
+}
+.timeline::before {
+    background: linear-gradient(
+        to bottom,
+        transparent,
+        rgba(200, 152, 26, 0.3) 10%,
+        rgba(200, 152, 26, 0.3) 90%,
+        transparent
+    ) !important;
+    width: 1px !important;
+}
+.timeline-item::before {
+    background: var(--color-accent) !important;
+    width: 8px !important;
+    height: 8px !important;
+    border: 2px solid var(--color-bg) !important;
+    box-shadow: 0 0 0 2px var(--color-accent), 0 0 16px rgba(200, 152, 26, 0.3) !important;
+    animation: timelinePulse 4s ease-in-out infinite !important;
+}
+@keyframes timelinePulse {
+    0%, 100% { box-shadow: 0 0 0 2px var(--color-accent), 0 0 8px rgba(200, 152, 26, 0.2); }
+    50% { box-shadow: 0 0 0 2px var(--color-accent), 0 0 20px rgba(200, 152, 26, 0.5); }
+}
+
+.timeline-year {
+    background: transparent !important;
+    color: var(--color-accent) !important;
+    border-color: rgba(200, 152, 26, 0.25) !important;
+    font-size: 0.75rem !important;
+    letter-spacing: 0.1em !important;
+    text-transform: uppercase !important;
+    padding: 0.2rem 0.75rem !important;
+}
+[data-theme="dark"] .timeline-year {
+    background: transparent !important;
+    color: var(--color-accent-light) !important;
+}
+
+.timeline-content h3 {
+    font-size: 1.5rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.01em !important;
+}
+.timeline-content p {
+    font-size: 0.94rem !important;
+    line-height: 1.8 !important;
+    color: var(--color-text-light) !important;
+}
+
+/* ================================================================
+   SCROLL PROGRESS BAR — тонший та золотий
+   ================================================================ */
+.scroll-progress {
+    height: 1.5px !important;
+    background: linear-gradient(90deg, var(--color-accent-dark), var(--color-accent), var(--color-accent-light)) !important;
+    box-shadow: 0 0 6px rgba(200, 152, 26, 0.4) !important;
+}
+
+/* ================================================================
+   FOOTER — монументальний
+   ================================================================ */
+.footer {
+    background: linear-gradient(160deg, #0a1410 0%, #0c1610 50%, #10120a 100%) !important;
+    padding: 4rem 0 2rem !important;
+    border-top: 1px solid rgba(200, 152, 26, 0.12) !important;
+    position: relative;
+}
+.footer::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
+}
+
+.footer-title {
+    font-size: 1.25rem !important;
+    letter-spacing: 0.02em !important;
+    color: var(--color-accent-light) !important;
+    margin-bottom: 1.25rem !important;
+}
+.footer-text {
+    opacity: 0.55 !important;
+    font-size: 0.88rem !important;
+    line-height: 1.85 !important;
+}
+.footer-nav a {
+    font-size: 0.85rem !important;
+    letter-spacing: 0.03em !important;
+}
+.footer-bottom {
+    letter-spacing: 0.1em !important;
+    font-size: 0.75rem !important;
+}
+
+/* ================================================================
+   CATALOG (КНИГИ/МЕТРИЧНІ) — преміум карточки
+   ================================================================ */
+.catalog-item {
+    border-radius: var(--radius-xl) !important;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+                box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+                border-color 0.3s ease !important;
+    overflow: hidden !important;
+    position: relative;
+}
+.catalog-item::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: 1;
+}
+.catalog-item:hover {
+    transform: translateY(-6px) !important;
+    box-shadow: 0 32px 64px rgba(24, 16, 8, 0.14), 0 0 0 1px rgba(200, 152, 26, 0.12) !important;
+    border-color: rgba(200, 152, 26, 0.2) !important;
+}
+[data-theme="dark"] .catalog-item:hover {
+    box-shadow: 0 32px 64px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(200, 152, 26, 0.1) !important;
+}
+.catalog-item:hover::before { opacity: 1; }
+
+.book-info h3 {
+    font-size: 1.5rem !important;
+    line-height: 1.2 !important;
+    letter-spacing: 0.01em !important;
+}
+.catalog-filter-btn {
+    font-size: 0.75rem !important;
+    letter-spacing: 0.06em !important;
+    text-transform: uppercase !important;
+}
+.catalog-filter-btn.active {
+    background: var(--color-accent) !important;
+    color: #0f0a00 !important;
+    border-color: var(--color-accent) !important;
+    box-shadow: 0 4px 16px rgba(200, 152, 26, 0.35) !important;
+    font-weight: 700 !important;
+}
+
+/* ================================================================
+   ARTICLE / HISTORY СТОРІНКИ
+   ================================================================ */
+.article-header, .catalog-header, .gallery-header {
+    min-height: 360px !important;
+    padding: calc(var(--spacing-3xl) + 2rem) 0 var(--spacing-3xl) !important;
+}
+
+.article-title {
+    font-size: clamp(2.5rem, 5.5vw, 4.2rem) !important;
+    font-weight: 300 !important;
+    letter-spacing: 0.025em !important;
+    line-height: 1.1 !important;
+}
+.article-meta {
+    font-size: 1.1rem !important;
+    font-weight: 300 !important;
+    opacity: 0.82 !important;
+    letter-spacing: 0.02em !important;
+}
+
+.history-section h2 {
+    font-size: 2.5rem !important;
+    font-weight: 300 !important;
+    letter-spacing: 0.02em !important;
+}
+.history-section h3 {
+    font-size: 1.75rem !important;
+    font-weight: 400 !important;
+}
+.history-section p {
+    font-size: 1.05rem !important;
+    line-height: 1.9 !important;
+    color: var(--color-text-secondary) !important;
+}
+
+/* Фото в статті — більш витончені */
+.history-photo {
+    border-radius: var(--radius-lg) !important;
+    overflow: hidden !important;
+    border-color: var(--color-border) !important;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease !important;
+}
+.history-photo:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: var(--shadow-xl) !important;
+}
+.history-photo figcaption {
+    font-size: 0.8rem !important;
+    letter-spacing: 0.02em !important;
+    padding: 0.7rem 1rem !important;
+}
+
+/* ================================================================
+   SCROLL ANIMATIONS — більш мʼякі та елегантні
+   ================================================================ */
+@keyframes fadeInUpLux {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+        filter: blur(2px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
+}
+
+.fade-in-up.visible {
+    animation: fadeInUpLux 0.75s cubic-bezier(0.22, 1, 0.36, 1) both !important;
+}
+.fade-in-up.delay-1.visible { animation-delay: 0.1s !important; }
+.fade-in-up.delay-2.visible { animation-delay: 0.22s !important; }
+.fade-in-up.delay-3.visible { animation-delay: 0.34s !important; }
+.fade-in-up.delay-4.visible { animation-delay: 0.46s !important; }
+.fade-in-up.delay-5.visible { animation-delay: 0.58s !important; }
+
+/* ================================================================
+   SECTION ORNAMENT — більш красивий
+   ================================================================ */
+.section-ornament {
+    margin: 0.5rem 0 3rem !important;
+    gap: 1.25rem !important;
+}
+.section-ornament::before,
+.section-ornament::after {
+    width: 100px !important;
+    background: linear-gradient(90deg, transparent, rgba(200, 152, 26, 0.45), transparent) !important;
+}
+.section-ornament-icon {
+    width: 6px !important;
+    height: 6px !important;
+    background: var(--color-accent) !important;
+    opacity: 0.8 !important;
+    box-shadow: 0 0 8px rgba(200, 152, 26, 0.4) !important;
+}
+
+/* ================================================================
+   CUSTOM SCROLLBAR — розкішний
+   ================================================================ */
+::-webkit-scrollbar {
+    width: 5px !important;
+}
+::-webkit-scrollbar-track {
+    background: var(--color-bg) !important;
+}
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(var(--color-accent-dark), var(--color-accent)) !important;
+    border-radius: 999px !important;
+    opacity: 0.6;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-accent) !important;
+}
+
+/* ================================================================
+   TEXT SELECTION — золоте виділення
+   ================================================================ */
+::selection {
+    background: rgba(200, 152, 26, 0.22) !important;
+    color: var(--color-text) !important;
+}
+
+/* ================================================================
+   MOBILE TOGGLE — чистіший
+   ================================================================ */
+.mobile-toggle {
+    background: transparent !important;
+    border: none !important;
+    width: 40px !important;
+    height: 40px !important;
+}
+.mobile-toggle span {
+    background-color: var(--color-text) !important;
+    width: 20px !important;
+    height: 1.5px !important;
+}
+
+/* ================================================================
+   LOADING INDICATOR
+   ================================================================ */
+.spinner {
+    border: 2px solid var(--color-border) !important;
+    border-top-color: var(--color-accent) !important;
+    width: 36px !important;
+    height: 36px !important;
+}
+
+/* ================================================================
+   LIGHTBOX FILMSTRIP CONTAINER
+   ================================================================ */
+.lightbox-content {
+    gap: 1rem !important;
+}
+.lightbox-info {
+    padding: 0 2rem !important;
+}
+
+/* ================================================================
+   GALLERY HEADER FILTER ROW
+   ================================================================ */
+.gallery-header .gallery-filters:last-of-type {
+    margin-top: 0.75rem !important;
+}
+
+/* ================================================================
+   AERIAL MAP — покращений
+   ================================================================ */
+.aerial-map-container {
+    border-radius: var(--radius-xl) !important;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.3), 0 0 0 1px rgba(200, 152, 26, 0.1) !important;
+}
+[data-theme="dark"] .aerial-map-container {
+    box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(200, 152, 26, 0.08) !important;
+}
+
+.aerial-legend {
+    border-radius: var(--radius-xl) !important;
+    border-color: var(--color-border) !important;
+}
+
+.legend-item:hover, .legend-item.active {
+    border-color: rgba(200, 152, 26, 0.35) !important;
+}
+
+/* ================================================================
+   BOOK COVER HOVER
+   ================================================================ */
+.book-cover {
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+.catalog-item:hover .book-cover {
+    transform: scale(1.03) !important;
+}
+
+/* ================================================================
+   INTRO SECTION DECORATION
+   ================================================================ */
+.intro-section {
+    position: relative;
+    overflow: hidden;
+}
+
+/* ================================================================
+   HOVER IMAGE ZOOM INDICATOR
+   ================================================================ */
+.photo-card .zoom-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    width: 44px;
+    height: 44px;
+    background: rgba(200, 152, 26, 0.85);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 5;
+    pointer-events: none;
+}
+.photo-card:hover .zoom-icon {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* ================================================================
+   RESPONSIVE MOBILE IMPROVEMENTS
+   ================================================================ */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: clamp(3rem, 12vw, 5rem) !important;
+        letter-spacing: 0.08em !important;
+    }
+    .article-header, .catalog-header, .gallery-header {
+        min-height: 280px !important;
+        padding: calc(var(--spacing-2xl) + 2rem) 0 var(--spacing-2xl) !important;
+    }
+    .article-title {
+        font-size: clamp(2rem, 8vw, 3rem) !important;
+    }
+    .lightbox {
+        padding: 1rem 3rem !important;
+    }
+    .gallery-grid {
+        columns: 2 140px !important;
+        column-gap: 0.5rem !important;
+    }
+    .photo-card {
+        margin-bottom: 0.5rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: clamp(2.5rem, 14vw, 4rem) !important;
+    }
+    .gallery-grid {
+        columns: 2 120px !important;
+    }
+}
+
+/* ================================================================
+   СТАНИ ЗАВАНТАЖЕННЯ
+   ================================================================ */
+.photo-card {
+    animation: cardAppear 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes cardAppear {
+    from {
+        opacity: 0;
+        transform: translateY(16px) scale(0.97);
+        filter: blur(2px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
+}
+
+/* Stagger gallery items */
+.photo-card:nth-child(1)  { animation-delay: 0.02s; }
+.photo-card:nth-child(2)  { animation-delay: 0.06s; }
+.photo-card:nth-child(3)  { animation-delay: 0.10s; }
+.photo-card:nth-child(4)  { animation-delay: 0.14s; }
+.photo-card:nth-child(5)  { animation-delay: 0.18s; }
+.photo-card:nth-child(6)  { animation-delay: 0.22s; }
+.photo-card:nth-child(7)  { animation-delay: 0.26s; }
+.photo-card:nth-child(8)  { animation-delay: 0.30s; }
+.photo-card:nth-child(9)  { animation-delay: 0.34s; }
+.photo-card:nth-child(10) { animation-delay: 0.38s; }
+.photo-card:nth-child(n+11) { animation-delay: 0.42s; }
+
+/* ================================================================
+   UTILITY — плавне прокручування
+   ================================================================ */
+html {
+    scroll-behavior: smooth !important;
+    -webkit-font-smoothing: antialiased !important;
+}
+
+/* Image lazy loading blur */
+img[loading="lazy"] {
+    transition: filter 0.4s ease, opacity 0.4s ease;
+}
+
+/* ================================================================
+   REDUCED MOTION — без анімацій
+   ================================================================ */
+@media (prefers-reduced-motion: reduce) {
+    .hero-title { animation: none !important; }
+    .hero-bg { transition: none !important; }
+    .photo-card { animation: none !important; }
+    .scroll-line { animation: none !important; }
+}
+
+/* ================================================================
+   HERO BOTTOM FADE
+   ================================================================ */
+.hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 120px;
+    background: linear-gradient(to bottom, transparent, var(--color-bg));
+    z-index: 2;
+    pointer-events: none;
+}
+/* For sections with white bg below */
+body:not(.page-photo-archive) .hero::after {
+    background: linear-gradient(to bottom, transparent, var(--color-bg));
+}
+[data-theme="dark"] .hero::after {
+    background: linear-gradient(to bottom, transparent, var(--color-bg));
+}
+
+/* Hide hero bottom fade on pages where hero is not full-screen */
+.article-header::after,
+.catalog-header::after,
+.gallery-header::after {
+    display: none;
+}
+
+/* ================================================================
+   NAV DROPDOWN INDICATOR
+   ================================================================ */
+@media (min-width: 1025px) {
+    .nav-link:not(.active):hover::after {
+        width: 40% !important;
+    }
+    .nav-link.active::after {
+        width: 60% !important;
+    }
+}
