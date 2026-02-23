@@ -59,18 +59,8 @@
 :root:not([data-theme="dark"]) .CYB .cl,
 :root:not([data-theme="dark"]) .CYB .cd { color: rgba(28,25,23,.4); }
 :root:not([data-theme="dark"]) .CYD { color: rgba(201,162,39,.4); }
-:root:not([data-theme="dark"]) .COBS {
-    background: rgba(0,0,0,.06);
-}
-:root:not([data-theme="dark"]) .COB {
-    background: #fff;
-}
-:root:not([data-theme="dark"]) .COB:hover { background: #fdf8f2; }
-:root:not([data-theme="dark"]) .COB:hover::before {
-    background: linear-gradient(90deg, transparent, rgba(201,162,39,.4), transparent);
-}
-:root:not([data-theme="dark"]) .COT { color: #2c1f06; }
-:root:not([data-theme="dark"]) .COD { color: rgba(44,40,36,.6); }
+:root:not([data-theme="dark"]) .COT { color: #1c1917; }
+:root:not([data-theme="dark"]) .COD { color: rgba(44,40,36,.65); }
 :root:not([data-theme="dark"]) .CE span { color: #b8902a; }
 :root:not([data-theme="dark"]) .CE::before,
 :root:not([data-theme="dark"]) .CE::after {
@@ -103,13 +93,8 @@
     -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
 /* Plater fact cards — light theme */
-:root:not([data-theme="dark"]) .POB {
-    background: #ffffff;
-}
-:root:not([data-theme="dark"]) .POB:hover { background: #fdf8f2; }
-:root:not([data-theme="dark"]) .POT { color: #2c1f06; }
-:root:not([data-theme="dark"]) .POD { color: rgba(44,40,36,.6); }
-:root:not([data-theme="dark"]) .POBS { background: rgba(0,0,0,.06); }
+:root:not([data-theme="dark"]) .POT { color: #1c1917; }
+:root:not([data-theme="dark"]) .POD { color: rgba(44,40,36,.65); }
 :root:not([data-theme="dark"]) .PGLH { color: #2c1f06; }
 :root:not([data-theme="dark"]) .PGLH::after { background: rgba(0,0,0,.1); }
 
@@ -118,22 +103,23 @@
     .PW { padding: 0 1rem; }
 }
 
-/* ── Wide/Region comparison (#WMS or similar) — light ── */
+/* ── Wide/Region comparison — light ── */
 :root:not([data-theme="dark"]) #WM,
 :root:not([data-theme="dark"]) #WMAP {
     background: #f4efe7;
 }
 :root:not([data-theme="dark"]) .WT { color: #1c1917; }
 :root:not([data-theme="dark"]) .WS { color: rgba(28,25,23,.4); }
-:root:not([data-theme="dark"]) .WOB { background: #fff; }
-:root:not([data-theme="dark"]) .WOT { color: #2c1f06; }
-:root:not([data-theme="dark"]) .WOD { color: rgba(44,40,36,.58); }
+:root:not([data-theme="dark"]) .WOT { color: #1c1917; }
+:root:not([data-theme="dark"]) .WOD { color: rgba(44,40,36,.65); }
 
 /* Mobile — WM */
 @media (max-width: 640px) {
     .WW { padding: 0 1rem; }
     .WT { font-size: 1.7rem !important; }
-    .WOB { padding: 1.1rem 1rem; }
+    .WOB { padding: 1.6rem 1.2rem; }
+    .COB { padding: 1.6rem 1.2rem; }
+    .POB { padding: 1.6rem 1.2rem; }
 }
 
 /* ── Universal mobile text readability ── */
@@ -1013,9 +999,9 @@
 
       <div class="CSF" id="CSLIDER">
         <!-- Base: 2021 satellite (right side when slider is left) -->
-        <img class="ci-base" src="https://i.imgur.com/qFWUQmv.jpeg" alt="Дубровиця 2021" draggable="false" decoding="async">
+        <img class="ci-base" src="https://i.imgur.com/XsCK3nv.jpeg" alt="Дубровиця 2021" draggable="false" decoding="async">
         <!-- Overlay: 1944 aerial (left side, clips right) -->
-        <img class="ci-ov" id="COVI" src="https://i.imgur.com/qX7tAGI.jpeg" alt="Дубровиця 1944" draggable="false" decoding="async">
+        <img class="ci-ov" id="COVI" src="https://i.imgur.com/B0sTRZE.jpeg" alt="Дубровиця 1944" draggable="false" decoding="async">
 
         <div class="CDL" id="CDIV"></div>
 
@@ -1511,8 +1497,8 @@
     </div><!-- /WW —  slider is full-bleed -->
 
       <div class="WSF" id="WSLIDER">
-        <img class="wb" src="https://i.imgur.com/EOF4N4ph.jpeg" alt="Регіон 2021" draggable="false" decoding="async" loading="lazy">
-        <img class="wo" id="WOVI" src="https://i.imgur.com/E3GKeD5h.jpeg" alt="Регіон 1943" draggable="false" decoding="async" loading="lazy">
+        <img class="wb" src="https://i.imgur.com/qFWUQmv.jpeg" alt="Регіон 2021" draggable="false" decoding="async" loading="lazy">
+        <img class="wo" id="WOVI" src="https://i.imgur.com/qX7tAGI.jpeg" alt="Регіон 1943" draggable="false" decoding="async" loading="lazy">
         <div class="WDL" id="WDIV"></div>
         <div class="WDH" id="WHDL">
           <div class="WDISC">
