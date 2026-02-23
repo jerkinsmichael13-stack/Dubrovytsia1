@@ -138,9 +138,9 @@
 
 /* ── Universal mobile text readability ── */
 @media (max-width: 480px) {
-    .COD, .WOD, .POD { font-size: .72rem !important; line-height: 1.65 !important; }
-    .COI { font-size: 1.1rem; }
-    .COT, .WOT { font-size: .95rem; }
+    .COD, .WOD, .POD { font-size: .8rem !important; line-height: 1.75 !important; }
+    .COI, .POI, .WOI { font-size: 1.6rem; }
+    .COT, .WOT, .POT { font-size: 1.1rem !important; }
     /* Prevent overflow on narrow screens */
     .COBS, .WOBS, .POBS { gap: 0; }
 }
@@ -965,27 +965,29 @@
     .CSF.cmoved .CIP{opacity:0;}
 
     /* ── FACT CARDS ── */
-    .COBS{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:1px;
-          background:rgba(0,0,0,.06);border-radius:0 0 3px 3px;overflow:hidden;}
-    [data-theme="dark"] .COBS{background:rgba(255,255,255,.04);}
-    @media(max-width:900px){.COBS{grid-template-columns:repeat(2,1fr);}}
+    .COBS{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:3rem;}
+    [data-theme="dark"] .COBS{background:transparent;}
+    @media(max-width:900px){.COBS{grid-template-columns:repeat(2,1fr);gap:0;}}
     @media(max-width:500px){.COBS{grid-template-columns:1fr;}}
-    .COB{padding:1.6rem 1.4rem;background:#fff;position:relative;overflow:hidden;
-         transition:background .22s;}
-    [data-theme="dark"] .COB{background:#0d0b09;}
+    .COB{padding:2.4rem 2rem;background:transparent;position:relative;overflow:hidden;
+         transition:background .22s;border-top:1px solid rgba(0,0,0,.08);}
+    [data-theme="dark"] .COB{border-top-color:rgba(255,255,255,.07);}
+    .COB:not(:last-child){border-right:1px solid rgba(0,0,0,.08);}
+    [data-theme="dark"] .COB:not(:last-child){border-right-color:rgba(255,255,255,.07);}
+    @media(max-width:900px){.COB:nth-child(2){border-right:none;}.COB:nth-child(n+3){border-top:1px solid rgba(0,0,0,.08);}}
     .COB::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
                  background:linear-gradient(90deg,transparent,rgba(201,162,39,.0),transparent);
                  transition:background .22s;}
-    .COB:hover{background:#fdf8f2;}
-    [data-theme="dark"] .COB:hover{background:#131109;}
+    .COB:hover{background:rgba(201,162,39,.04);}
+    [data-theme="dark"] .COB:hover{background:rgba(201,162,39,.05);}
     .COB:hover::before{background:linear-gradient(90deg,transparent,rgba(201,162,39,.5),transparent);}
-    .COI{font-size:1.4rem;margin-bottom:.7rem;display:block;}
-    .COT{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:500;
-         color:#2c1f06;margin-bottom:.4rem;line-height:1.2;}
+    .COI{font-size:2rem;margin-bottom:1.1rem;display:block;}
+    .COT{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:500;
+         color:#1c1917;margin-bottom:.7rem;line-height:1.2;}
     [data-theme="dark"] .COT{color:#e8d8a8;}
-    .COD{font-size:.73rem;font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.7;
-         color:rgba(44,40,36,.6);}
-    [data-theme="dark"] .COD{color:rgba(240,230,200,.38);}
+    .COD{font-size:.85rem;font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.8;
+         color:rgba(44,40,36,.65);}
+    [data-theme="dark"] .COD{color:rgba(240,230,200,.45);}
     </style>
 
     <div class="CW">
@@ -1010,10 +1012,10 @@
       </div>
 
       <div class="CSF" id="CSLIDER">
-        <!-- Base: 1944 (right side when slider is left) -->
-        <img class="ci-base" src="https://i.imgur.com/cMQeU7Ph.jpeg" alt="Дубровиця 1944" draggable="false" decoding="async">
-        <!-- Overlay: 2021 (left side, clips right) -->
-        <img class="ci-ov" id="COVI" src="https://i.imgur.com/FfgAmadh.jpeg" alt="Дубровиця 2021" draggable="false" decoding="async">
+        <!-- Base: 2021 satellite (right side when slider is left) -->
+        <img class="ci-base" src="https://i.imgur.com/qFWUQmv.jpeg" alt="Дубровиця 2021" draggable="false" decoding="async">
+        <!-- Overlay: 1944 aerial (left side, clips right) -->
+        <img class="ci-ov" id="COVI" src="https://i.imgur.com/qX7tAGI.jpeg" alt="Дубровиця 1944" draggable="false" decoding="async">
 
         <div class="CDL" id="CDIV"></div>
 
@@ -1190,23 +1192,25 @@
     .PSF.pmoved .PIP{opacity:0;}
 
     /* fact cards */
-    .POBS{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:1px;
-          background:rgba(0,0,0,.06);border-radius:0 0 3px 3px;overflow:hidden;}
-    [data-theme="dark"] .POBS{background:rgba(255,255,255,.04);}
+    .POBS{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:3rem;}
+    [data-theme="dark"] .POBS{background:transparent;}
     @media(max-width:900px){.POBS{grid-template-columns:repeat(2,1fr);}}
     @media(max-width:500px){.POBS{grid-template-columns:1fr;}}
-    .POB{padding:1.6rem 1.4rem;background:#fff;position:relative;overflow:hidden;transition:background .22s;}
-    [data-theme="dark"] .POB{background:#0a0907;}
+    .POB{padding:2.4rem 2rem;background:transparent;position:relative;overflow:hidden;transition:background .22s;
+         border-top:1px solid rgba(0,0,0,.08);}
+    [data-theme="dark"] .POB{border-top-color:rgba(255,255,255,.07);}
+    .POB:not(:last-child){border-right:1px solid rgba(0,0,0,.08);}
+    [data-theme="dark"] .POB:not(:last-child){border-right-color:rgba(255,255,255,.07);}
     .POB::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
                  background:linear-gradient(90deg,transparent,rgba(200,146,74,.0),transparent);transition:background .22s;}
-    .POB:hover{background:#fdf8f2;}
-    [data-theme="dark"] .POB:hover{background:#110e08;}
+    .POB:hover{background:rgba(200,146,74,.04);}
+    [data-theme="dark"] .POB:hover{background:rgba(200,146,74,.05);}
     .POB:hover::before{background:linear-gradient(90deg,transparent,rgba(200,146,74,.5),transparent);}
-    .POI{font-size:1.4rem;margin-bottom:.7rem;display:block;}
-    .POT{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:500;color:#2c1f06;margin-bottom:.4rem;line-height:1.2;}
+    .POI{font-size:2rem;margin-bottom:1.1rem;display:block;}
+    .POT{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:500;color:#1c1917;margin-bottom:.7rem;line-height:1.2;}
     [data-theme="dark"] .POT{color:#e8c890;}
-    .POD{font-size:.73rem;font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.7;color:rgba(44,40,36,.6);}
-    [data-theme="dark"] .POD{color:rgba(240,230,200,.38);}
+    .POD{font-size:.85rem;font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.8;color:rgba(44,40,36,.65);}
+    [data-theme="dark"] .POD{color:rgba(240,230,200,.45);}
 
     /* photo gallery */
     .PGL{margin-top:3rem;}
@@ -1463,23 +1467,25 @@
     .WIP svg{width:14px;height:14px;opacity:.5;flex-shrink:0;}
     .WSF.wmoved .WIP{opacity:0;}
     /* cards */
-    .WOBS{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:1px;
-          background:rgba(0,0,0,.06);border-radius:0 0 3px 3px;overflow:hidden;}
-    [data-theme="dark"] .WOBS{background:rgba(255,255,255,.04);}
+    .WOBS{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:3rem;}
+    [data-theme="dark"] .WOBS{background:transparent;}
     @media(max-width:900px){.WOBS{grid-template-columns:repeat(2,1fr);}}
     @media(max-width:500px){.WOBS{grid-template-columns:1fr;}}
-    .WOB{padding:1.6rem 1.4rem;background:#fff;position:relative;overflow:hidden;transition:background .22s;}
-    [data-theme="dark"] .WOB{background:#080b0d;}
+    .WOB{padding:2.4rem 2rem;background:transparent;position:relative;overflow:hidden;transition:background .22s;
+         border-top:1px solid rgba(0,0,0,.08);}
+    [data-theme="dark"] .WOB{border-top-color:rgba(255,255,255,.07);}
+    .WOB:not(:last-child){border-right:1px solid rgba(0,0,0,.08);}
+    [data-theme="dark"] .WOB:not(:last-child){border-right-color:rgba(255,255,255,.07);}
     .WOB::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
                  background:linear-gradient(90deg,transparent,rgba(42,100,180,.0),transparent);transition:background .22s;}
-    .WOB:hover{background:#fdf8f2;}
-    [data-theme="dark"] .WOB:hover{background:#0c1018;}
+    .WOB:hover{background:rgba(42,100,180,.04);}
+    [data-theme="dark"] .WOB:hover{background:rgba(42,100,180,.05);}
     .WOB:hover::before{background:linear-gradient(90deg,transparent,rgba(42,100,180,.5),transparent);}
-    .WOI{font-size:1.4rem;margin-bottom:.7rem;display:block;}
-    .WOT{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:500;color:#2c1f06;margin-bottom:.4rem;line-height:1.2;}
+    .WOI{font-size:2rem;margin-bottom:1.1rem;display:block;}
+    .WOT{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:500;color:#1c1917;margin-bottom:.7rem;line-height:1.2;}
     [data-theme="dark"] .WOT{color:#b8d0f0;}
-    .WOD{font-size:.73rem;font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.7;color:rgba(44,40,36,.6);}
-    [data-theme="dark"] .WOD{color:rgba(240,230,200,.38);}
+    .WOD{font-size:.85rem;font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.8;color:rgba(44,40,36,.65);}
+    [data-theme="dark"] .WOD{color:rgba(240,230,200,.45);}
     </style>
 
     <div class="WW">
