@@ -1409,10 +1409,10 @@
     .WYD{text-align:center;font-size:1.4rem;color:rgba(42,100,180,.4);}
     [data-theme="dark"] .WYD{color:rgba(42,100,180,.3);}
     /* slider */
-    .WSF{position:relative;width:100%;aspect-ratio:16/9;max-height:70vh;border-radius:0;overflow:hidden;
+    .WSF{position:relative;width:100%;max-width:1160px;margin:0 auto;aspect-ratio:16/9;max-height:70vh;border-radius:12px;overflow:hidden;
          cursor:ew-resize;user-select:none;-webkit-user-select:none;
-         box-shadow:none;}
-    @media(max-width:600px){.WSF{aspect-ratio:16/9;max-height:55vw;cursor:default;}}
+         box-shadow:0 8px 40px rgba(0,0,0,0.18);}
+    @media(max-width:600px){.WSF{aspect-ratio:4/3;max-height:none;border-radius:6px;cursor:default;}}
     .WSF .wb{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;display:block;
              filter:saturate(1.15) contrast(1.06) brightness(1.03);}
     .WSF .wo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;display:block;
