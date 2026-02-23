@@ -2,11 +2,6 @@
 <html lang="uk" data-theme="light">
 <head>
     <meta charset="UTF-8">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="manifest" href="site.webmanifest">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Цифровий архів найдавнішого міста Рівненщини - Дубровиці. Історія від 1005 року, фотоархів, метричні книги">
     <meta name="keywords" content="Дубровиця, історія, архів, Рівненська область, Україна, Полісся">
@@ -1584,112 +1579,139 @@
     <!-- ═══ HORIZONTAL TIMELINE ═══ -->
     <section id="HTL">
     <style>
+    /* ════════════════════════════════════════
+       TIMELINE REDESIGN — Refined & Spacious
+    ════════════════════════════════════════ */
     #HTL {
-        padding: 5rem 0 0;
+        padding: 7rem 0 0;
         background: #faf7f2;
         position: relative;
+        overflow: hidden;
     }
     [data-theme="dark"] #HTL { background: #0d0b09; }
     #HTL * { box-sizing: border-box; }
 
+    /* Subtle grain texture overlay */
+    #HTL::before {
+        content: '';
+        position: absolute; inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+        pointer-events: none; z-index: 0; opacity: .6;
+    }
+
+    /* ── HEAD ── */
     .HTL-HEAD {
         text-align: center;
-        margin-bottom: 2.5rem;
+        margin-bottom: 4rem;
         padding: 0 2rem;
+        position: relative; z-index: 1;
     }
     .HTL-EYEBROW {
-        display: inline-flex; align-items: center; gap: .75rem; margin-bottom: .9rem;
+        display: inline-flex; align-items: center; gap: 1rem; margin-bottom: 1.2rem;
     }
     .HTL-EYEBROW::before, .HTL-EYEBROW::after {
-        content: ''; display: block; width: 32px; height: 1px;
+        content: ''; display: block; width: 48px; height: 1px;
     }
-    .HTL-EYEBROW::before { background: linear-gradient(90deg, transparent, rgba(201,162,39,.5)); }
-    .HTL-EYEBROW::after  { background: linear-gradient(90deg, rgba(201,162,39,.5), transparent); }
+    .HTL-EYEBROW::before { background: linear-gradient(90deg, transparent, rgba(201,162,39,.6)); }
+    .HTL-EYEBROW::after  { background: linear-gradient(90deg, rgba(201,162,39,.6), transparent); }
     .HTL-EYEBROW span {
-        font-family: 'DM Sans', sans-serif; font-size: .65rem;
-        letter-spacing: .28em; text-transform: uppercase; color: #c9a227;
+        font-family: 'DM Sans', sans-serif; font-size: .62rem;
+        letter-spacing: .34em; text-transform: uppercase; color: #c9a227;
     }
     .HTL-TITLE {
         font-family: 'Cormorant Garamond', Georgia, serif;
-        font-size: clamp(2rem, 4vw, 3rem); font-weight: 300;
-        color: #1c1917; line-height: 1.1; margin: 0 0 .5rem;
+        font-size: clamp(2.4rem, 4.5vw, 3.6rem); font-weight: 300;
+        color: #1c1917; line-height: 1.08; margin: 0 0 .75rem;
     }
     [data-theme="dark"] .HTL-TITLE { color: #f0e6c8; }
-    .HTL-TITLE em { font-style: italic; color: #c9a227; }
+    .HTL-TITLE em { font-style: italic; color: #c9a227; font-weight: 400; }
     .HTL-SUB {
-        font-family: 'DM Sans', sans-serif; font-size: .8rem;
-        letter-spacing: .1em; color: rgba(28,25,23,.45); margin: 0;
+        font-family: 'DM Sans', sans-serif; font-size: .78rem;
+        letter-spacing: .12em; color: rgba(28,25,23,.38); margin: 0;
     }
-    [data-theme="dark"] .HTL-SUB { color: rgba(240,230,200,.35); }
+    [data-theme="dark"] .HTL-SUB { color: rgba(240,230,200,.28); }
 
-    /* ── scrollable track ── */
+    /* ── TRACK ── */
     .HTL-TRACK {
         overflow-x: auto;
         overflow-y: hidden;
-        padding: 0 4vw 2.5rem;
+        padding: 0 6vw 3rem;
         cursor: grab;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: thin;
-        scrollbar-color: rgba(201,162,39,.35) transparent;
-        /* Fixed height: top-cards (160px) + gap(24px) + dot-row(20px) + gap(24px) + bottom-cards(160px) + text(90px) = ~560px total area */
+        scrollbar-color: rgba(201,162,39,.25) transparent;
+        position: relative; z-index: 1;
     }
     .HTL-TRACK:active { cursor: grabbing; }
-    .HTL-TRACK::-webkit-scrollbar { height: 3px; }
+    .HTL-TRACK::-webkit-scrollbar { height: 2px; }
     .HTL-TRACK::-webkit-scrollbar-track { background: transparent; }
-    .HTL-TRACK::-webkit-scrollbar-thumb { background: rgba(201,162,39,.3); border-radius: 2px; }
+    .HTL-TRACK::-webkit-scrollbar-thumb { background: rgba(201,162,39,.25); border-radius: 2px; }
 
-    /* ── inner row: fixed height, items absolutely positioned ── */
+    /* ── ROW ── */
     .HTL-ROW {
         display: inline-flex;
         align-items: stretch;
         position: relative;
-        /* total height = top-block(290px) + dot-zone(20px) + bottom-block(290px) = 600px */
-        height: 600px;
-        padding: 0 2rem;
+        height: 760px;
+        padding: 0 3rem;
         min-width: max-content;
+        gap: 0;
     }
 
-    /* ── horizontal spine through the middle ── */
+    /* ── SPINE ── */
     .HTL-SPINE {
         position: absolute;
-        top: 50%;
-        left: 0; right: 0;
+        top: 50%; left: 0; right: 0;
         height: 1px;
         transform: translateY(-50%);
         background: linear-gradient(90deg,
             transparent 0%,
-            rgba(201,162,39,.3) 2%,
-            rgba(201,162,39,.55) 15%,
-            rgba(201,162,39,.55) 85%,
-            rgba(201,162,39,.3) 98%,
+            rgba(201,162,39,.15) 1%,
+            rgba(201,162,39,.45) 8%,
+            rgba(201,162,39,.55) 50%,
+            rgba(201,162,39,.45) 92%,
+            rgba(201,162,39,.15) 99%,
             transparent 100%);
-        pointer-events: none;
-        z-index: 0;
+        pointer-events: none; z-index: 0;
+    }
+    /* Second glow line */
+    .HTL-SPINE::after {
+        content: '';
+        position: absolute; top: -1px; left: 0; right: 0; bottom: -1px;
+        background: inherit;
+        filter: blur(3px);
+        opacity: .5;
     }
 
-    /* ── single item column ── */
+    /* ── ITEM ── */
     .HTL-ITEM {
         position: relative;
-        width: 230px;
+        width: 290px;
         flex-shrink: 0;
         display: flex;
         flex-direction: column;
         align-items: center;
-        /* Items fill full height of row */
         height: 100%;
-        padding: 0 10px;
-        transition: transform .25s ease;
+        padding: 0 14px;
+        transition: transform .35s cubic-bezier(.25,.46,.45,.94);
+        opacity: 0;
+        transform: translateY(18px);
     }
-    .HTL-ITEM:hover { transform: translateY(-3px); }
+    .HTL-ITEM.htl-visible {
+        opacity: 1;
+        transform: translateY(0);
+        transition: opacity .6s ease, transform .6s cubic-bezier(.25,.46,.45,.94);
+    }
+    .HTL-ITEM:hover { transform: translateY(-5px) !important; }
 
-    /* ── TOP half: photo for ODD, text for EVEN ── */
+    /* ── TOP / BOTTOM halves ── */
     .HTL-TOP {
         height: 50%;
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: flex-end; /* push content down toward the spine */
-        padding-bottom: 20px;
+        justify-content: flex-end;
+        padding-bottom: 28px;
         width: 100%;
     }
     .HTL-BOTTOM {
@@ -1697,130 +1719,173 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: flex-start; /* push content up toward the spine */
-        padding-top: 20px;
+        justify-content: flex-start;
+        padding-top: 28px;
         width: 100%;
     }
 
-    /* ── dot on spine ── */
+    /* ── DOT ── */
     .HTL-DOT {
         position: absolute;
-        top: 50%;
-        left: 50%;
+        top: 50%; left: 50%;
         transform: translate(-50%, -50%);
-        width: 14px; height: 14px;
+        width: 16px; height: 16px;
         border-radius: 50%;
-        background: #c9a227;
-        border: 2px solid #faf7f2;
-        box-shadow: 0 0 0 3px rgba(201,162,39,.25), 0 2px 8px rgba(0,0,0,.25);
+        background: radial-gradient(circle at 35% 35%, #e8c84a, #c9a227);
+        border: 2.5px solid #faf7f2;
+        box-shadow:
+            0 0 0 4px rgba(201,162,39,.18),
+            0 0 0 7px rgba(201,162,39,.07),
+            0 3px 12px rgba(0,0,0,.22);
         z-index: 2;
-        transition: transform .25s ease, box-shadow .25s ease;
+        transition: transform .3s ease, box-shadow .3s ease;
     }
-    [data-theme="dark"] .HTL-DOT { border-color: #0d0b09; }
+    [data-theme="dark"] .HTL-DOT {
+        border-color: #0d0b09;
+        box-shadow: 0 0 0 4px rgba(201,162,39,.22), 0 0 0 8px rgba(201,162,39,.08), 0 3px 12px rgba(0,0,0,.5);
+    }
     .HTL-ITEM:hover .HTL-DOT {
-        transform: translate(-50%, -50%) scale(1.45);
-        box-shadow: 0 0 0 5px rgba(201,162,39,.2), 0 3px 12px rgba(0,0,0,.35);
+        transform: translate(-50%, -50%) scale(1.55);
+        box-shadow: 0 0 0 6px rgba(201,162,39,.25), 0 0 0 11px rgba(201,162,39,.1), 0 4px 16px rgba(0,0,0,.3);
     }
 
-    /* ── connector line from content to dot ── */
+    /* ── CONNECTOR LINES ── */
     .HTL-LINE-UP {
-        width: 1px;
-        flex: 1;
-        background: linear-gradient(to bottom, transparent, rgba(201,162,39,.35));
-        margin-top: 6px;
+        width: 1px; flex: 1;
+        background: linear-gradient(to bottom, transparent 0%, rgba(201,162,39,.4) 100%);
+        margin-top: 10px;
     }
     .HTL-LINE-DOWN {
-        width: 1px;
-        flex: 1;
-        background: linear-gradient(to top, transparent, rgba(201,162,39,.35));
-        margin-bottom: 6px;
+        width: 1px; flex: 1;
+        background: linear-gradient(to top, transparent 0%, rgba(201,162,39,.4) 100%);
+        margin-bottom: 10px;
     }
 
-    /* ── photo ── */
+    /* ── PHOTO ── */
     .HTL-PHOTO {
-        width: 190px;
-        height: 130px;
-        border-radius: 5px;
+        width: 168px;
+        height: 114px;
+        border-radius: 8px;
         overflow: hidden;
         position: relative;
-        box-shadow: 0 4px 18px rgba(0,0,0,.16);
+        box-shadow:
+            0 0 0 1px rgba(201,162,39,.18),
+            0 8px 32px rgba(0,0,0,.2),
+            0 2px 8px rgba(0,0,0,.12);
         background: #1a1208;
         flex-shrink: 0;
     }
     .HTL-PHOTO img {
         width: 100%; height: 100%; object-fit: cover;
-        filter: sepia(.18) contrast(1.04);
-        transition: transform .45s ease, filter .45s ease;
+        filter: sepia(.22) contrast(1.05) brightness(.97);
+        transition: transform .55s cubic-bezier(.25,.46,.45,.94), filter .55s ease;
         display: block;
     }
     .HTL-ITEM:hover .HTL-PHOTO img {
-        transform: scale(1.06);
-        filter: sepia(.04) contrast(1.08);
+        transform: scale(1.07);
+        filter: sepia(.05) contrast(1.1) brightness(1.02);
     }
+    /* gradient overlay on photo */
     .HTL-PHOTO::after {
         content: '';
         position: absolute; inset: 0;
-        background: linear-gradient(to top, rgba(0,0,0,.4) 0%, transparent 55%);
+        background: linear-gradient(to top, rgba(0,0,0,.45) 0%, rgba(0,0,0,.05) 50%, transparent 100%);
         pointer-events: none;
     }
-    /* placeholder when no photo */
+    /* gold top edge accent */
+    .HTL-PHOTO::before {
+        content: '';
+        position: absolute; top: 0; left: 0; right: 0; height: 2px;
+        background: linear-gradient(90deg, transparent, rgba(201,162,39,.6), transparent);
+        z-index: 2; pointer-events: none;
+    }
+
+    /* ── NO-IMG placeholder ── */
     .HTL-PHOTO.no-img {
-        background: linear-gradient(135deg, rgba(201,162,39,.07), rgba(201,162,39,.02));
-        border: 1px solid rgba(201,162,39,.15);
+        background: linear-gradient(145deg,
+            rgba(201,162,39,.09) 0%,
+            rgba(201,162,39,.03) 50%,
+            rgba(180,140,30,.07) 100%);
+        border: 1px solid rgba(201,162,39,.18);
         display: flex; align-items: center; justify-content: center;
-        font-size: 2.4rem;
+        font-size: 2.6rem;
+        backdrop-filter: blur(4px);
+    }
+    [data-theme="dark"] .HTL-PHOTO.no-img {
+        background: linear-gradient(145deg, rgba(201,162,39,.1), rgba(201,162,39,.04));
+        border-color: rgba(201,162,39,.2);
     }
     .HTL-PHOTO.no-img img { display: none; }
+    .HTL-PHOTO.no-img::after { display: none; }
+    .HTL-PHOTO.no-img::before { display: none; }
 
-    /* ── text block ── */
+    /* ── TEXT BLOCK ── */
     .HTL-TEXT {
         text-align: center;
-        max-width: 200px;
+        max-width: 220px;
+        padding: 0 4px;
     }
     .HTL-YEAR {
         font-family: 'Cormorant Garamond', serif;
-        font-size: 1.5rem; font-weight: 500; line-height: 1;
-        background: linear-gradient(135deg, #c9a227, #e8b840);
+        font-size: 1.85rem; font-weight: 500; line-height: 1;
+        background: linear-gradient(135deg, #b8891e 0%, #ddb830 45%, #c9a227 100%);
         -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         background-clip: text;
-        display: block; margin-bottom: .3rem;
+        display: block; margin-bottom: .45rem;
+        letter-spacing: -.01em;
     }
     .HTL-ETITLE {
         font-family: 'Cormorant Garamond', serif;
-        font-size: .95rem; font-weight: 600;
-        color: #1c1917; line-height: 1.3; margin: 0 0 .3rem;
+        font-size: 1.05rem; font-weight: 600;
+        color: #1c1917; line-height: 1.32; margin: 0 0 .45rem;
+        letter-spacing: .01em;
     }
     [data-theme="dark"] .HTL-ETITLE { color: #e8d8b8; }
     .HTL-EDESC {
         font-family: 'DM Sans', sans-serif;
-        font-size: .7rem; font-weight: 300;
-        line-height: 1.6; color: rgba(44,40,36,.58);
+        font-size: .72rem; font-weight: 400;
+        line-height: 1.65; color: rgba(44,40,36,.52);
+        letter-spacing: .01em;
     }
-    [data-theme="dark"] .HTL-EDESC { color: rgba(240,230,200,.42); }
+    [data-theme="dark"] .HTL-EDESC { color: rgba(240,230,200,.38); }
 
     /* ── CTA ── */
     .HTL-CTA {
         text-align: center;
-        padding: 1.5rem 0 4rem;
+        padding: 2rem 0 5rem;
+        position: relative; z-index: 1;
     }
     .HTL-CTA a {
-        display: inline-flex; align-items: center; gap: .55rem;
-        font-family: 'DM Sans', sans-serif; font-size: .72rem;
-        letter-spacing: .18em; text-transform: uppercase;
+        display: inline-flex; align-items: center; gap: .6rem;
+        font-family: 'DM Sans', sans-serif; font-size: .68rem;
+        letter-spacing: .22em; text-transform: uppercase;
         color: #c9a227; text-decoration: none;
-        padding: .7rem 1.8rem;
-        border: 1px solid rgba(201,162,39,.4);
+        padding: .8rem 2.2rem;
+        border: 1px solid rgba(201,162,39,.35);
         border-radius: 2px;
-        transition: background .2s, color .2s, border-color .2s;
+        transition: background .25s ease, color .25s ease, border-color .25s ease, box-shadow .25s ease;
+        position: relative;
     }
-    .HTL-CTA a:hover { background: #c9a227; color: #0f0a00; border-color: #c9a227; }
+    .HTL-CTA a::before {
+        content: '';
+        position: absolute; inset: 0;
+        background: rgba(201,162,39,.04);
+        border-radius: 2px;
+    }
+    .HTL-CTA a:hover {
+        background: #c9a227; color: #0f0a00;
+        border-color: #c9a227;
+        box-shadow: 0 4px 24px rgba(201,162,39,.3);
+    }
     .HTL-CTA a svg { width: 13px; height: 13px; }
 
     @media (max-width: 600px) {
-        .HTL-ROW { height: 480px; }
-        .HTL-PHOTO { width: 155px; height: 105px; }
-        .HTL-ITEM { width: 185px; }
-        .HTL-YEAR { font-size: 1.2rem; }
+        .HTL-ROW { height: 600px; }
+        .HTL-ITEM { width: 230px; }
+        .HTL-PHOTO { width: 138px; height: 94px; }
+        .HTL-YEAR { font-size: 1.5rem; }
+        .HTL-HEAD { margin-bottom: 2.5rem; }
+        #HTL { padding: 4rem 0 0; }
     }
     </style>
 
@@ -1834,7 +1899,7 @@
       <div class="HTL-ROW">
         <div class="HTL-SPINE"></div>
 
-        <!-- 1: 1005 — photo TOP, text BOTTOM -->
+        <!-- 1: 1005 -->
         <div class="HTL-ITEM">
           <div class="HTL-TOP">
             <div class="HTL-PHOTO"><img src="https://i.imgur.com/ZKkcU77t.jpeg" alt="" loading="lazy"></div>
@@ -1842,7 +1907,6 @@
           </div>
           <div class="HTL-DOT"></div>
           <div class="HTL-BOTTOM">
-            <div class="HTL-LINE-DOWN" style="display:none"></div>
             <div class="HTL-TEXT">
               <span class="HTL-YEAR">1005</span>
               <p class="HTL-ETITLE">Перша писемна згадка</p>
@@ -1851,7 +1915,7 @@
           </div>
         </div>
 
-        <!-- 2: XII — text TOP, photo BOTTOM -->
+        <!-- 2: XII ст. -->
         <div class="HTL-ITEM">
           <div class="HTL-TOP">
             <div class="HTL-TEXT">
@@ -1867,7 +1931,7 @@
           </div>
         </div>
 
-        <!-- 3: 1240 — photo TOP, text BOTTOM -->
+        <!-- 3: 1240 -->
         <div class="HTL-ITEM">
           <div class="HTL-TOP">
             <div class="HTL-PHOTO no-img">🔥</div>
@@ -1883,7 +1947,7 @@
           </div>
         </div>
 
-        <!-- 4: 1571 — text TOP, photo BOTTOM -->
+        <!-- 4: 1571 -->
         <div class="HTL-ITEM">
           <div class="HTL-TOP">
             <div class="HTL-TEXT">
@@ -1899,7 +1963,7 @@
           </div>
         </div>
 
-        <!-- 5: 1695 — photo TOP, text BOTTOM -->
+        <!-- 5: 1695–1702 -->
         <div class="HTL-ITEM">
           <div class="HTL-TOP">
             <div class="HTL-PHOTO"><img src="https://i.imgur.com/n74FSvKt.jpeg" alt="" loading="lazy"></div>
@@ -1915,7 +1979,7 @@
           </div>
         </div>
 
-        <!-- 6: 1795 — text TOP, photo BOTTOM -->
+        <!-- 6: 1795 -->
         <div class="HTL-ITEM">
           <div class="HTL-TOP">
             <div class="HTL-TEXT">
@@ -1931,7 +1995,7 @@
           </div>
         </div>
 
-        <!-- 7: 1862 — photo TOP, text BOTTOM -->
+        <!-- 7: 1862 -->
         <div class="HTL-ITEM">
           <div class="HTL-TOP">
             <div class="HTL-PHOTO"><img src="https://i.imgur.com/0HyroRqt.jpeg" alt="" loading="lazy"></div>
@@ -1947,7 +2011,7 @@
           </div>
         </div>
 
-        <!-- 8: 1920-1939 — text TOP, photo BOTTOM -->
+        <!-- 8: 1920–1939 -->
         <div class="HTL-ITEM">
           <div class="HTL-TOP">
             <div class="HTL-TEXT">
@@ -1963,7 +2027,7 @@
           </div>
         </div>
 
-        <!-- 9: 1940 — photo TOP, text BOTTOM -->
+        <!-- 9: 1940 -->
         <div class="HTL-ITEM">
           <div class="HTL-TOP">
             <div class="HTL-PHOTO"><img src="https://i.imgur.com/WzMH0hht.jpeg" alt="" loading="lazy"></div>
@@ -1979,13 +2043,13 @@
           </div>
         </div>
 
-        <!-- 10: 1943 — text TOP, photo BOTTOM -->
+        <!-- 10: 1943 -->
         <div class="HTL-ITEM">
           <div class="HTL-TOP">
             <div class="HTL-TEXT">
               <span class="HTL-YEAR">1943</span>
               <p class="HTL-ETITLE">Дубровиця під контролем УПА</p>
-              <p class="HTL-EDESC">Навесні підрозділи УПА атакували нацистський гарнізон. На нетривалий час місто перейшло під контроль повстанців</p>
+              <p class="HTL-EDESC">Навесні підрозділи УПА атакували нацистський гарнізон. Місто перейшло під контроль повстанців</p>
             </div>
             <div class="HTL-LINE-UP"></div>
           </div>
@@ -1995,7 +2059,7 @@
           </div>
         </div>
 
-        <!-- 11: 1944 — photo TOP, text BOTTOM -->
+        <!-- 11: 1944 -->
         <div class="HTL-ITEM">
           <div class="HTL-TOP">
             <div class="HTL-PHOTO"><img src="https://i.imgur.com/CImFE7St.jpeg" alt="" loading="lazy"></div>
@@ -2011,7 +2075,7 @@
           </div>
         </div>
 
-        <!-- 12: 1945 — text TOP, photo BOTTOM -->
+        <!-- 12: 1945 -->
         <div class="HTL-ITEM">
           <div class="HTL-TOP">
             <div class="HTL-TEXT">
@@ -2027,7 +2091,7 @@
           </div>
         </div>
 
-        <!-- 13: 1960-80 — photo TOP, text BOTTOM -->
+        <!-- 13: 1960–80-ті -->
         <div class="HTL-ITEM">
           <div class="HTL-TOP">
             <div class="HTL-PHOTO"><img src="https://i.imgur.com/irxrwBot.jpeg" alt="" loading="lazy"></div>
@@ -2043,7 +2107,7 @@
           </div>
         </div>
 
-        <!-- 14: 1991 — text TOP, photo BOTTOM -->
+        <!-- 14: 1991 -->
         <div class="HTL-ITEM">
           <div class="HTL-TOP">
             <div class="HTL-TEXT">
@@ -2059,7 +2123,7 @@
           </div>
         </div>
 
-        <!-- 15: 2005 — photo TOP, text BOTTOM -->
+        <!-- 15: 2005 -->
         <div class="HTL-ITEM">
           <div class="HTL-TOP">
             <div class="HTL-PHOTO no-img">🎉</div>
@@ -2075,8 +2139,8 @@
           </div>
         </div>
 
-        <!-- 16: 2020 — text TOP, photo BOTTOM (last) -->
-        <div class="HTL-ITEM" style="margin-right: 2rem;">
+        <!-- 16: 2020 -->
+        <div class="HTL-ITEM" style="margin-right:3rem;">
           <div class="HTL-TOP">
             <div class="HTL-TEXT">
               <span class="HTL-YEAR">2020</span>
@@ -2105,24 +2169,42 @@
     (function(){
       var track = document.getElementById('htlTrack');
       if (!track) return;
+
+      // ── drag to scroll ──
       var isDown = false, startX = 0, scrollLeft = 0;
       track.addEventListener('mousedown', function(e) {
-        isDown = true;
-        startX = e.pageX - track.offsetLeft;
-        scrollLeft = track.scrollLeft;
+        isDown = true; startX = e.pageX - track.offsetLeft; scrollLeft = track.scrollLeft;
       });
       document.addEventListener('mouseup', function() { isDown = false; });
       document.addEventListener('mousemove', function(e) {
-        if (!isDown) return;
-        e.preventDefault();
+        if (!isDown) return; e.preventDefault();
         track.scrollLeft = scrollLeft - (e.pageX - track.offsetLeft - startX);
       });
-      // gentle hint animation
+
+      // ── scroll-in animation for items ──
+      var items = track.querySelectorAll('.HTL-ITEM');
+      if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry, idx) {
+            if (entry.isIntersecting) {
+              setTimeout(function() {
+                entry.target.classList.add('htl-visible');
+              }, 60);
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.15 });
+        items.forEach(function(item) { io.observe(item); });
+      } else {
+        items.forEach(function(item) { item.classList.add('htl-visible'); });
+      }
+
+      // ── gentle hint scroll on load ──
       setTimeout(function() {
         var max = track.scrollWidth - track.clientWidth;
         if (max <= 0) return;
-        var dist = Math.min(180, max * 0.15);
-        var start = null, dur = 1600;
+        var dist = Math.min(200, max * 0.14);
+        var start = null, dur = 1800;
         function step(ts) {
           if (!start) start = ts;
           var p = (ts - start) / dur;
@@ -2132,7 +2214,7 @@
           requestAnimationFrame(step);
         }
         requestAnimationFrame(step);
-      }, 1000);
+      }, 1200);
     })();
     </script>
     </section>
