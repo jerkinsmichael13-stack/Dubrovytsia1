@@ -1576,41 +1576,565 @@
     </script>
     </section>
     <!-- ═══ END WIDE AREA COMPARISON ═══ -->
-    <section class="timeline-section">
-        <div class="container">
-            <h2 class="section-title fade-in-up">Ключові моменти історії</h2>
-            <div class="timeline">
-                <div class="timeline-item fade-in-up">
-                    <div class="timeline-year">1005</div>
-                    <div class="timeline-content">
-                        <h3>Перша згадка</h3>
-                        <p>Володимир Великий засновує єпископську кафедру в Турові, Дубровиця згадується серед міст єпархії</p>
+    <!-- ═══ HORIZONTAL TIMELINE ═══ -->
+    <section id="HTL">
+    <style>
+    #HTL {
+        padding: 5rem 0 0;
+        background: #faf7f2;
+        position: relative;
+        overflow: hidden;
+    }
+    [data-theme="dark"] #HTL { background: #0d0b09; }
+    #HTL * { box-sizing: border-box; }
+
+    .HTL-HEAD {
+        text-align: center;
+        margin-bottom: 3rem;
+        padding: 0 2rem;
+    }
+    .HTL-EYEBROW {
+        display: inline-flex; align-items: center; gap: .75rem; margin-bottom: 1rem;
+    }
+    .HTL-EYEBROW::before, .HTL-EYEBROW::after {
+        content: ''; display: block; width: 32px; height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(201,162,39,.5));
+    }
+    .HTL-EYEBROW::after { background: linear-gradient(90deg, rgba(201,162,39,.5), transparent); }
+    .HTL-EYEBROW span {
+        font-family: 'DM Sans', sans-serif; font-size: .65rem;
+        letter-spacing: .28em; text-transform: uppercase; color: #c9a227;
+    }
+    .HTL-TITLE {
+        font-family: 'Cormorant Garamond', Georgia, serif;
+        font-size: clamp(2rem, 4vw, 3rem); font-weight: 300;
+        color: #1c1917; line-height: 1.1; margin: 0 0 .5rem;
+    }
+    [data-theme="dark"] .HTL-TITLE { color: #f0e6c8; }
+    .HTL-TITLE em { font-style: italic; color: #c9a227; }
+    .HTL-SUB {
+        font-family: 'DM Sans', sans-serif; font-size: .8rem;
+        letter-spacing: .1em; color: rgba(28,25,23,.45); margin: 0;
+    }
+    [data-theme="dark"] .HTL-SUB { color: rgba(240,230,200,.35); }
+
+    /* ── scroll hint arrows ── */
+    .HTL-SCROLL-HINT {
+        display: flex; align-items: center; justify-content: center; gap: 1.2rem;
+        margin-bottom: 2.5rem; opacity: .6;
+    }
+    .HTL-SCROLL-HINT span {
+        font-family: 'DM Sans', sans-serif; font-size: .65rem;
+        letter-spacing: .2em; text-transform: uppercase; color: #a09080;
+    }
+    .HTL-SCROLL-HINT svg { width: 16px; height: 16px; color: #c9a227; }
+
+    /* ── outer container: full width, clips scroll ── */
+    .HTL-OUTER {
+        position: relative; width: 100%;
+        padding-bottom: 4rem; /* space for scrollbar + bottom row */
+    }
+
+    /* ── track wrapper: scrollable ── */
+    .HTL-TRACK {
+        overflow-x: auto; overflow-y: visible;
+        padding: 0 4vw 2rem;
+        scroll-snap-type: x proximity;
+        cursor: grab;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(201,162,39,.4) transparent;
+    }
+    .HTL-TRACK:active { cursor: grabbing; }
+    .HTL-TRACK::-webkit-scrollbar { height: 4px; }
+    .HTL-TRACK::-webkit-scrollbar-track { background: transparent; }
+    .HTL-TRACK::-webkit-scrollbar-thumb { background: rgba(201,162,39,.35); border-radius: 2px; }
+
+    /* ── inner flex row ── */
+    .HTL-ROW {
+        display: inline-flex;
+        align-items: flex-start;
+        padding: 0 2rem;
+        position: relative;
+        min-width: max-content;
+    }
+
+    /* ── spine line ── */
+    .HTL-SPINE {
+        position: absolute;
+        /* vertically centered at the dot row — we place dots at top:230px from card top */
+        top: 254px;
+        left: 0; right: 0;
+        height: 1px;
+        background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(201,162,39,.25) 3%,
+            rgba(201,162,39,.5) 20%,
+            rgba(201,162,39,.5) 80%,
+            rgba(201,162,39,.25) 97%,
+            transparent 100%);
+        pointer-events: none;
+    }
+
+    /* ── single event card ── */
+    .HTL-ITEM {
+        position: relative;
+        width: 260px;
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        scroll-snap-align: center;
+        padding: 0 1rem;
+        transition: transform .3s ease;
+    }
+    .HTL-ITEM:hover { transform: translateY(-4px); }
+
+    /* alternating up/down: odd items have image above line, even below */
+    .HTL-ITEM.htl-up { flex-direction: column; }
+    .HTL-ITEM.htl-down { flex-direction: column-reverse; }
+
+    /* ── photo card ── */
+    .HTL-PHOTO {
+        width: 200px; height: 140px;
+        border-radius: 6px; overflow: hidden;
+        position: relative;
+        box-shadow: 0 4px 20px rgba(0,0,0,.18);
+        background: #1a1208;
+        flex-shrink: 0;
+    }
+    .HTL-PHOTO img {
+        width: 100%; height: 100%; object-fit: cover;
+        filter: sepia(.15) contrast(1.05);
+        transition: transform .5s ease, filter .5s ease;
+    }
+    .HTL-ITEM:hover .HTL-PHOTO img {
+        transform: scale(1.06);
+        filter: sepia(.05) contrast(1.08);
+    }
+    .HTL-PHOTO-OVERLAY {
+        position: absolute; inset: 0;
+        background: linear-gradient(to top, rgba(0,0,0,.5) 0%, transparent 60%);
+        pointer-events: none;
+    }
+    /* no-photo placeholder */
+    .HTL-PHOTO.htl-nophoto {
+        background: linear-gradient(135deg, rgba(201,162,39,.08), rgba(201,162,39,.03));
+        border: 1px solid rgba(201,162,39,.15);
+        display: flex; align-items: center; justify-content: center;
+    }
+    .HTL-PHOTO.htl-nophoto::after {
+        content: attr(data-icon);
+        font-size: 2.5rem; opacity: .4;
+    }
+
+    /* ── connector from photo to spine ── */
+    .HTL-CONNECTOR {
+        width: 1px; flex-shrink: 0;
+        background: linear-gradient(to bottom, rgba(201,162,39,.4), rgba(201,162,39,.15));
+        position: relative;
+    }
+    .HTL-ITEM.htl-up .HTL-CONNECTOR { height: 32px; }
+    .HTL-ITEM.htl-down .HTL-CONNECTOR {
+        height: 32px;
+        background: linear-gradient(to top, rgba(201,162,39,.4), rgba(201,162,39,.15));
+    }
+
+    /* ── dot on spine ── */
+    .HTL-DOT {
+        width: 14px; height: 14px; border-radius: 50%;
+        background: #c9a227;
+        border: 2px solid rgba(255,255,255,.9);
+        box-shadow: 0 0 0 3px rgba(201,162,39,.2), 0 2px 8px rgba(0,0,0,.3);
+        flex-shrink: 0;
+        position: relative; z-index: 2;
+        transition: transform .3s ease, box-shadow .3s ease;
+    }
+    .HTL-ITEM:hover .HTL-DOT {
+        transform: scale(1.35);
+        box-shadow: 0 0 0 5px rgba(201,162,39,.25), 0 3px 12px rgba(0,0,0,.4);
+    }
+
+    /* ── text below/above ── */
+    .HTL-TEXT {
+        padding: .9rem .5rem 0;
+        text-align: center;
+        flex-shrink: 0;
+    }
+    .HTL-ITEM.htl-down .HTL-TEXT {
+        padding: 0 .5rem .9rem;
+    }
+    .HTL-YEAR {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.55rem; font-weight: 500; line-height: 1;
+        background: linear-gradient(135deg, #c9a227, #e8b840);
+        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        background-clip: text;
+        display: block; margin-bottom: .35rem;
+    }
+    .HTL-EVENT-TITLE {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: .97rem; font-weight: 600;
+        color: #1c1917; line-height: 1.3; margin: 0 0 .35rem;
+    }
+    [data-theme="dark"] .HTL-EVENT-TITLE { color: #e8d8b8; }
+    .HTL-EVENT-DESC {
+        font-family: 'DM Sans', sans-serif;
+        font-size: .72rem; font-weight: 300;
+        line-height: 1.65; color: rgba(44,40,36,.6);
+        max-width: 200px; margin: 0 auto;
+    }
+    [data-theme="dark"] .HTL-EVENT-DESC { color: rgba(240,230,200,.45); }
+
+    /* ── "view full history" CTA ── */
+    .HTL-CTA {
+        text-align: center;
+        padding: 2.5rem 0 4rem;
+    }
+    .HTL-CTA a {
+        display: inline-flex; align-items: center; gap: .6rem;
+        font-family: 'DM Sans', sans-serif; font-size: .75rem;
+        letter-spacing: .18em; text-transform: uppercase;
+        color: #c9a227; text-decoration: none;
+        padding: .75rem 2rem;
+        border: 1px solid rgba(201,162,39,.4);
+        border-radius: 2px;
+        transition: background .2s, color .2s, border-color .2s;
+    }
+    .HTL-CTA a:hover {
+        background: #c9a227; color: #0f0a00;
+        border-color: #c9a227;
+    }
+    .HTL-CTA a svg { width: 14px; height: 14px; }
+
+    /* mobile */
+    @media (max-width: 640px) {
+        .HTL-ITEM { width: 200px; }
+        .HTL-PHOTO { width: 160px; height: 110px; }
+        .HTL-YEAR { font-size: 1.25rem; }
+        .HTL-EVENT-TITLE { font-size: .88rem; }
+        .HTL-EVENT-DESC { font-size: .67rem; }
+        .HTL-SPINE { top: 196px; }
+    }
+    </style>
+
+    <div class="HTL-HEAD">
+        <div class="HTL-EYEBROW"><span>1005 — сьогодення</span></div>
+        <h2 class="HTL-TITLE">Ключові моменти <em>історії</em></h2>
+        <p class="HTL-SUB">Понад тисяча років живої пам'яті — гортайте вправо</p>
+    </div>
+
+    <div class="HTL-OUTER">
+        <!-- spine line sits inside HTL-ROW, absolutely positioned -->
+        <div class="HTL-TRACK" id="htlTrack">
+            <div class="HTL-ROW" id="htlRow">
+                <div class="HTL-SPINE" id="htlSpine"></div>
+
+                <!-- 1: 1005 — UP -->
+                <div class="HTL-ITEM htl-up">
+                    <div class="HTL-PHOTO">
+                        <img src="https://i.imgur.com/ZKkcU77.jpeg" alt="Дубровиця" loading="lazy">
+                        <div class="HTL-PHOTO-OVERLAY"></div>
+                    </div>
+                    <div class="HTL-CONNECTOR"></div>
+                    <div class="HTL-DOT"></div>
+                    <div class="HTL-TEXT">
+                        <span class="HTL-YEAR">1005</span>
+                        <p class="HTL-EVENT-TITLE">Перша писемна згадка</p>
+                        <p class="HTL-EVENT-DESC">Дубровиця в переліку міст Турівської єпархії за часів Володимира Великого</p>
                     </div>
                 </div>
-                <div class="timeline-item fade-in-up delay-1">
-                    <div class="timeline-year">XII ст.</div>
-                    <div class="timeline-content">
-                        <h3>Столиця князівства</h3>
-                        <p>Дубровиця стає центром окремого удільного князівства</p>
+
+                <!-- 2: XII ст. — DOWN -->
+                <div class="HTL-ITEM htl-down">
+                    <div class="HTL-TEXT">
+                        <span class="HTL-YEAR">XII ст.</span>
+                        <p class="HTL-EVENT-TITLE">Столиця удільного князівства</p>
+                        <p class="HTL-EVENT-DESC">Дубровиця стає центром окремого Дубровицького удільного князівства</p>
+                    </div>
+                    <div class="HTL-DOT"></div>
+                    <div class="HTL-CONNECTOR"></div>
+                    <div class="HTL-PHOTO htl-nophoto" data-icon="⚔️"></div>
+                </div>
+
+                <!-- 3: 1183 — UP -->
+                <div class="HTL-ITEM htl-up">
+                    <div class="HTL-PHOTO htl-nophoto" data-icon="🏹"></div>
+                    <div class="HTL-CONNECTOR"></div>
+                    <div class="HTL-DOT"></div>
+                    <div class="HTL-TEXT">
+                        <span class="HTL-YEAR">1183</span>
+                        <p class="HTL-EVENT-TITLE">Похід проти половців</p>
+                        <p class="HTL-EVENT-DESC">Князь Гліб Юрійович бере участь у переможному поході Святослава на половців</p>
                     </div>
                 </div>
-                <div class="timeline-item fade-in-up delay-2">
-                    <div class="timeline-year">1695-1702</div>
-                    <div class="timeline-content">
-                        <h3>Костел Іоана Хрестителя</h3>
-                        <p>Спорудження костелу та колегіуму ордена піярів</p>
+
+                <!-- 4: 1224 — DOWN -->
+                <div class="HTL-ITEM htl-down">
+                    <div class="HTL-TEXT">
+                        <span class="HTL-YEAR">1224</span>
+                        <p class="HTL-EVENT-TITLE">Битва на Калці</p>
+                        <p class="HTL-EVENT-DESC">Дубровицький князь Олександр загинув у битві проти монголо-татар</p>
+                    </div>
+                    <div class="HTL-DOT"></div>
+                    <div class="HTL-CONNECTOR"></div>
+                    <div class="HTL-PHOTO htl-nophoto" data-icon="🗡️"></div>
+                </div>
+
+                <!-- 5: 1240 — UP -->
+                <div class="HTL-ITEM htl-up">
+                    <div class="HTL-PHOTO htl-nophoto" data-icon="🔥"></div>
+                    <div class="HTL-CONNECTOR"></div>
+                    <div class="HTL-DOT"></div>
+                    <div class="HTL-TEXT">
+                        <span class="HTL-YEAR">1240</span>
+                        <p class="HTL-EVENT-TITLE">Монгольська навала</p>
+                        <p class="HTL-EVENT-DESC">Орда Батия зруйнувала місто. Кінець Дубровицького удільного князівства</p>
                     </div>
                 </div>
-                <div class="timeline-item fade-in-up delay-3">
-                    <div class="timeline-year">1940</div>
-                    <div class="timeline-content">
-                        <h3>Статус міста</h3>
-                        <p>Дубровиця офіційно стає містом та районним центром</p>
+
+                <!-- 6: 1571 — DOWN -->
+                <div class="HTL-ITEM htl-down">
+                    <div class="HTL-TEXT">
+                        <span class="HTL-YEAR">1571</span>
+                        <p class="HTL-EVENT-TITLE">Андрій Курбський — власник Дубровиці</p>
+                        <p class="HTL-EVENT-DESC">Російський князь-емігрант одержує місто як придане від дубровицької княгині</p>
+                    </div>
+                    <div class="HTL-DOT"></div>
+                    <div class="HTL-CONNECTOR"></div>
+                    <div class="HTL-PHOTO htl-nophoto" data-icon="👑"></div>
+                </div>
+
+                <!-- 7: 1695-1702 — UP -->
+                <div class="HTL-ITEM htl-up">
+                    <div class="HTL-PHOTO">
+                        <img src="https://i.imgur.com/n74FSvK.jpeg" alt="Костел Іоана Хрестителя" loading="lazy">
+                        <div class="HTL-PHOTO-OVERLAY"></div>
+                    </div>
+                    <div class="HTL-CONNECTOR"></div>
+                    <div class="HTL-DOT"></div>
+                    <div class="HTL-TEXT">
+                        <span class="HTL-YEAR">1695–1702</span>
+                        <p class="HTL-EVENT-TITLE">Костел Іоана Хрестителя</p>
+                        <p class="HTL-EVENT-DESC">Зведення барочного костелу та колегіуму піярів — пам'ятки національного значення</p>
                     </div>
                 </div>
+
+                <!-- 8: 1795 — DOWN -->
+                <div class="HTL-ITEM htl-down">
+                    <div class="HTL-TEXT">
+                        <span class="HTL-YEAR">1795</span>
+                        <p class="HTL-EVENT-TITLE">Включення до Російської імперії</p>
+                        <p class="HTL-EVENT-DESC">Після поділу Польщі — центр Домбровицького повіту Волинської губернії</p>
+                    </div>
+                    <div class="HTL-DOT"></div>
+                    <div class="HTL-CONNECTOR"></div>
+                    <div class="HTL-PHOTO htl-nophoto" data-icon="🦅"></div>
+                </div>
+
+                <!-- 9: 1862 — UP -->
+                <div class="HTL-ITEM htl-up">
+                    <div class="HTL-PHOTO">
+                        <img src="https://i.imgur.com/0HyroRq.jpeg" alt="Церква Різдва Богородиці" loading="lazy">
+                        <div class="HTL-PHOTO-OVERLAY"></div>
+                    </div>
+                    <div class="HTL-CONNECTOR"></div>
+                    <div class="HTL-DOT"></div>
+                    <div class="HTL-TEXT">
+                        <span class="HTL-YEAR">1862</span>
+                        <p class="HTL-EVENT-TITLE">Церква Різдва Богородиці</p>
+                        <p class="HTL-EVENT-DESC">Зведення православного храму — нині пам'ятка архітектури та культури</p>
+                    </div>
+                </div>
+
+                <!-- 10: 1920–1939 — DOWN -->
+                <div class="HTL-ITEM htl-down">
+                    <div class="HTL-TEXT">
+                        <span class="HTL-YEAR">1920–1939</span>
+                        <p class="HTL-EVENT-TITLE">У складі Польщі</p>
+                        <p class="HTL-EVENT-DESC">Дубровиця у Сарненському повіті Волинського воєводства — регіональний центр</p>
+                    </div>
+                    <div class="HTL-DOT"></div>
+                    <div class="HTL-CONNECTOR"></div>
+                    <div class="HTL-PHOTO">
+                        <img src="https://i.imgur.com/qcjgN1I.jpeg" alt="Центр міста, 1920-1939" loading="lazy">
+                        <div class="HTL-PHOTO-OVERLAY"></div>
+                    </div>
+                </div>
+
+                <!-- 11: 1940 — UP -->
+                <div class="HTL-ITEM htl-up">
+                    <div class="HTL-PHOTO">
+                        <img src="https://i.imgur.com/WzMH0hh.jpeg" alt="Дубровиця 1929" loading="lazy">
+                        <div class="HTL-PHOTO-OVERLAY"></div>
+                    </div>
+                    <div class="HTL-CONNECTOR"></div>
+                    <div class="HTL-DOT"></div>
+                    <div class="HTL-TEXT">
+                        <span class="HTL-YEAR">1940</span>
+                        <p class="HTL-EVENT-TITLE">Офіційний статус міста</p>
+                        <p class="HTL-EVENT-DESC">Дубровиця отримує статус міста та стає центром Дубровицького району</p>
+                    </div>
+                </div>
+
+                <!-- 12: 1943 — DOWN -->
+                <div class="HTL-ITEM htl-down">
+                    <div class="HTL-TEXT">
+                        <span class="HTL-YEAR">1943</span>
+                        <p class="HTL-EVENT-TITLE">УПА визволяє Дубровицю</p>
+                        <p class="HTL-EVENT-DESC">Навесні підрозділи УПА атакують нацистський гарнізон. Дубровиця переходить під контроль повстанців</p>
+                    </div>
+                    <div class="HTL-DOT"></div>
+                    <div class="HTL-CONNECTOR"></div>
+                    <div class="HTL-PHOTO">
+                        <img src="https://i.imgur.com/zef8WRy.jpeg" alt="Аерофотознімок 1943" loading="lazy">
+                        <div class="HTL-PHOTO-OVERLAY"></div>
+                    </div>
+                </div>
+
+                <!-- 13: 1944 — UP -->
+                <div class="HTL-ITEM htl-up">
+                    <div class="HTL-PHOTO">
+                        <img src="https://i.imgur.com/CImFE7S.jpeg" alt="Аерофотознімок 1944" loading="lazy">
+                        <div class="HTL-PHOTO-OVERLAY"></div>
+                    </div>
+                    <div class="HTL-CONNECTOR"></div>
+                    <div class="HTL-DOT"></div>
+                    <div class="HTL-TEXT">
+                        <span class="HTL-YEAR">1944</span>
+                        <p class="HTL-EVENT-TITLE">Повторна окупація та репресії</p>
+                        <p class="HTL-EVENT-DESC">10 січня — вхід Червоної армії. 15 серпня — місто отримує сучасну назву Дубровиця</p>
+                    </div>
+                </div>
+
+                <!-- 14: 1945 — DOWN -->
+                <div class="HTL-ITEM htl-down">
+                    <div class="HTL-TEXT">
+                        <span class="HTL-YEAR">1945</span>
+                        <p class="HTL-EVENT-TITLE">Повоєнна відбудова</p>
+                        <p class="HTL-EVENT-DESC">Зведено 412-метровий дерев'яний міст через Горинь — один з найбільших в Україні</p>
+                    </div>
+                    <div class="HTL-DOT"></div>
+                    <div class="HTL-CONNECTOR"></div>
+                    <div class="HTL-PHOTO htl-nophoto" data-icon="🏗️"></div>
+                </div>
+
+                <!-- 15: 1960-1980 — UP -->
+                <div class="HTL-ITEM htl-up">
+                    <div class="HTL-PHOTO">
+                        <img src="https://i.imgur.com/irxrwBo.jpeg" alt="Радянська доба" loading="lazy">
+                        <div class="HTL-PHOTO-OVERLAY"></div>
+                    </div>
+                    <div class="HTL-CONNECTOR"></div>
+                    <div class="HTL-DOT"></div>
+                    <div class="HTL-TEXT">
+                        <span class="HTL-YEAR">1960–80-ті</span>
+                        <p class="HTL-EVENT-TITLE">Радянська доба</p>
+                        <p class="HTL-EVENT-DESC">Розвиток промисловості та соціальної інфраструктури. «Велика Дубровиця» — укрупнений район</p>
+                    </div>
+                </div>
+
+                <!-- 16: 1991 — DOWN -->
+                <div class="HTL-ITEM htl-down">
+                    <div class="HTL-TEXT">
+                        <span class="HTL-YEAR">1991</span>
+                        <p class="HTL-EVENT-TITLE">Незалежна Україна</p>
+                        <p class="HTL-EVENT-DESC">Початок нового розділу. Відновлення храмів, реформування самоврядування</p>
+                    </div>
+                    <div class="HTL-DOT"></div>
+                    <div class="HTL-CONNECTOR"></div>
+                    <div class="HTL-PHOTO htl-nophoto" data-icon="🇺🇦"></div>
+                </div>
+
+                <!-- 17: 2005 — UP -->
+                <div class="HTL-ITEM htl-up">
+                    <div class="HTL-PHOTO htl-nophoto" data-icon="🎉"></div>
+                    <div class="HTL-CONNECTOR"></div>
+                    <div class="HTL-DOT"></div>
+                    <div class="HTL-TEXT">
+                        <span class="HTL-YEAR">2005</span>
+                        <p class="HTL-EVENT-TITLE">1000-ліття Дубровиці</p>
+                        <p class="HTL-EVENT-DESC">Державне святкування тисячолітнього ювілею міста</p>
+                    </div>
+                </div>
+
+                <!-- 18: 2020 — DOWN -->
+                <div class="HTL-ITEM htl-down" style="margin-right: 3rem;">
+                    <div class="HTL-TEXT">
+                        <span class="HTL-YEAR">2020</span>
+                        <p class="HTL-EVENT-TITLE">Адміністративна реформа</p>
+                        <p class="HTL-EVENT-DESC">Ліквідація Дубровицького району. Утворення Дубровицької міської громади в Сарненському районі</p>
+                    </div>
+                    <div class="HTL-DOT"></div>
+                    <div class="HTL-CONNECTOR"></div>
+                    <div class="HTL-PHOTO htl-nophoto" data-icon="🏛️"></div>
+                </div>
+
             </div>
         </div>
+    </div>
+
+    <div class="HTL-CTA">
+        <a href="history.html">
+            Повна історія міста
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5l7 7-7 7"/></svg>
+        </a>
+    </div>
+
+    <script>
+    (function(){
+        var track = document.getElementById('htlTrack');
+        var row = document.getElementById('htlRow');
+        if (!track || !row) return;
+
+        // Drag to scroll
+        var isDown = false, startX = 0, scrollLeft = 0;
+        track.addEventListener('mousedown', function(e) {
+            if (e.target.closest('a')) return;
+            isDown = true;
+            startX = e.pageX - track.offsetLeft;
+            scrollLeft = track.scrollLeft;
+        });
+        document.addEventListener('mouseup', function() { isDown = false; });
+        document.addEventListener('mousemove', function(e) {
+            if (!isDown) return;
+            e.preventDefault();
+            var x = e.pageX - track.offsetLeft;
+            track.scrollLeft = scrollLeft - (x - startX);
+        });
+
+        // Auto-scroll hint animation on load
+        setTimeout(function() {
+            var max = track.scrollWidth - track.clientWidth;
+            if (max <= 0) return;
+            var start = null;
+            var dur = 1800;
+            var dist = Math.min(220, max * 0.18);
+            function step(ts) {
+                if (!start) start = ts;
+                var p = Math.min((ts - start) / dur, 1);
+                // ease in-out then back
+                var v = p < .5 ? 2*p*p : -1+(4-2*p)*p;
+                if (p < .75) {
+                    track.scrollLeft = dist * (v / 0.75);
+                } else {
+                    track.scrollLeft = dist * (1 - (p - .75) / .25);
+                    if (p >= 1) { track.scrollLeft = 0; return; }
+                }
+                requestAnimationFrame(step);
+            }
+            requestAnimationFrame(step);
+        }, 900);
+
+        // Sync spine width to row inner width
+        var spine = document.getElementById('htlSpine');
+        if (spine) {
+            spine.style.width = row.scrollWidth + 'px';
+        }
+    })();
+    </script>
     </section>
+    <!-- ═══ END HORIZONTAL TIMELINE ═══ -->
 
     <!-- Footer -->
     <footer class="footer">
