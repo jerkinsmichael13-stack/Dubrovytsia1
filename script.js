@@ -143,8 +143,16 @@ let currentPhotoIndex = 0;
 
 // Повертає 640px версію imgur-посилання для мініатюр у галереї
 function imgurThumb(url) {
-    if (!url || !url.includes('i.imgur.com')) return url;
-    return url.replace(/\.(jpe?g|png|gif|webp)$/i, 'l.$1');
+    if (!url) return url;
+    // Imgur: add 'l' suffix (640px thumbnail)
+    if (url.includes('i.imgur.com')) {
+        return url.replace(/\.(jpe?g|png|gif|webp)$/i, 'l.$1');
+    }
+    // imgchest: already serves direct URLs, return as-is
+    if (url.includes('imgchest.com') || url.includes('cdn.imgchest.com')) {
+        return url;
+    }
+    return url;
 }
 
 async function initPhotoGallery() {
@@ -183,12 +191,12 @@ function displayPhotos() {
     });
 
     if (filteredPhotos.length === 0) {
-        gallery.style.display = 'block';
-        gallery.innerHTML = '<div style="text-align:center;padding:5rem 1rem;"><p style="font-family:var(--font-display);font-size:1.3rem;color:var(--color-text-secondary);">За обраними фільтрами нічого не знайдено</p></div>';
+        gallery.style.cssText = 'display:flex;justify-content:center;align-items:center;min-height:300px;column-count:unset;';
+        gallery.innerHTML = '<p style="font-family:var(--font-display);font-size:1.3rem;color:var(--color-text-secondary);text-align:center;">За обраними фільтрами нічого не знайдено</p>';
         return;
     }
 
-    gallery.style.display = '';
+    gallery.style.cssText = '';
     gallery.innerHTML = filteredPhotos.map((photo, index) => `
         <div class="photo-card" onclick="openLightbox(${index})">
             <img src="${imgurThumb(photo.imageUrl)}" alt="${photo.title}" loading="lazy">

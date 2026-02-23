@@ -607,6 +607,8 @@
                     <div id="statusMsgPin" class="notice" style="display:none;margin-top:1rem;"></div>
                 </div>
 
+            </div><!-- /tab-add panel -->
+
             <!-- ══════════ TAB: LIST ══════════ -->
             <div class="tab-panel" id="tab-list">
                 <div id="photoListWrap">
@@ -1240,7 +1242,6 @@ async function publishPin() {
 }
 async function renderList() {
     const wrap = document.getElementById('photoListWrap');
-    // Reading is done via raw GitHub (public) — no token needed
 
     wrap.innerHTML = '<p style="color:var(--color-text-secondary);">⏳ Завантаження...</p>';
 
@@ -1318,8 +1319,9 @@ function openEditModal(fieldsHtml, onSave) {
 
 // ─── Render Photo List ────────────────────────────────────────────────
 async function renderPhotoList(wrap) {
-    // Load via public raw URL — no token needed for reading
-    const rawResp = await fetch('https://raw.githubusercontent.com/jerkinsmichael13-stack/Dubrovytsia1/main/photos.json?v=' + Date.now());
+    // Use public raw URL - no token needed for reading
+    const rawUrl = `https://raw.githubusercontent.com/${GITHUB_REPO}/main/${PHOTOS_FILE}?v=${Date.now()}`;
+    const rawResp = await fetch(rawUrl);
     const photos = rawResp.ok ? await rawResp.json() : [];
     if (!photos.length) { wrap.innerHTML = '<p style="color:var(--color-text-secondary);">Фотографій ще немає</p>'; return; }
 
