@@ -1240,11 +1240,7 @@ async function publishPin() {
 }
 async function renderList() {
     const wrap = document.getElementById('photoListWrap');
-
-    if (!getToken()) {
-        wrap.innerHTML = '<div class="notice notice-warn">Збережіть GitHub Token вище, щоб побачити список.</div>';
-        return;
-    }
+    // Reading is done via raw GitHub (public) — no token needed
 
     wrap.innerHTML = '<p style="color:var(--color-text-secondary);">⏳ Завантаження...</p>';
 
@@ -1322,7 +1318,9 @@ function openEditModal(fieldsHtml, onSave) {
 
 // ─── Render Photo List ────────────────────────────────────────────────
 async function renderPhotoList(wrap) {
-    const { items: photos } = await loadJsonFromGH(PHOTOS_FILE);
+    // Load via public raw URL — no token needed for reading
+    const rawResp = await fetch('https://raw.githubusercontent.com/jerkinsmichael13-stack/Dubrovytsia1/main/photos.json?v=' + Date.now());
+    const photos = rawResp.ok ? await rawResp.json() : [];
     if (!photos.length) { wrap.innerHTML = '<p style="color:var(--color-text-secondary);">Фотографій ще немає</p>'; return; }
 
     wrap.innerHTML = `<p style="color:var(--color-text-secondary);margin-bottom:1rem;">Всього: <strong>${photos.length}</strong> фото</p><div class="photo-list" id="pList"></div>`;

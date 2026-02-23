@@ -183,10 +183,12 @@ function displayPhotos() {
     });
 
     if (filteredPhotos.length === 0) {
-        gallery.innerHTML = '<div style="grid-column:1/-1;width:100%;text-align:center;padding:4rem 1rem;"><p style="font-family:var(--font-display);font-size:1.3rem;color:var(--color-text-secondary);">За обраними фільтрами нічого не знайдено</p></div>';
+        gallery.style.display = 'block';
+        gallery.innerHTML = '<div style="text-align:center;padding:5rem 1rem;"><p style="font-family:var(--font-display);font-size:1.3rem;color:var(--color-text-secondary);">За обраними фільтрами нічого не знайдено</p></div>';
         return;
     }
 
+    gallery.style.display = '';
     gallery.innerHTML = filteredPhotos.map((photo, index) => `
         <div class="photo-card" onclick="openLightbox(${index})">
             <img src="${imgurThumb(photo.imageUrl)}" alt="${photo.title}" loading="lazy">
