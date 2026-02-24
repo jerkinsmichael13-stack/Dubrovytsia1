@@ -849,12 +849,9 @@
     ═══════════════════════════════════════════ */
     #TOPO{padding:6rem 0 5rem;background:#f0ebe0;position:relative;overflow:hidden;border-top:1px solid rgba(180,150,80,.15);}
     [data-theme="dark"] #TOPO{background:#0c0a07;border-color:rgba(201,162,39,.08);}
-    #TOPO::before{
-      content:'';position:absolute;inset:0;pointer-events:none;
-      background:
-        radial-gradient(ellipse 70% 50% at 50% -10%, rgba(201,162,39,.08) 0%, transparent 60%),
-        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a227' fill-opacity='0.025'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    }
+    #TOPO::before{content:'';position:absolute;inset:0;pointer-events:none;
+      background:radial-gradient(ellipse 70% 50% at 50% -10%, rgba(201,162,39,.08) 0%, transparent 60%),
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a227' fill-opacity='0.025'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");}
     #TOPO *{box-sizing:border-box;}
     .TPW{max-width:1260px;margin:0 auto;padding:0 2rem;}
 
@@ -865,8 +862,7 @@
     .TPE::before{background:linear-gradient(90deg,transparent,rgba(201,162,39,.6));}
     .TPE::after{background:linear-gradient(90deg,rgba(201,162,39,.6),transparent);}
     .TPE span{font-family:'DM Sans',sans-serif;font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:#c9a227;}
-    .TPT{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(2rem,3.8vw,3rem);font-weight:400;
-         color:#1c1917;line-height:1.1;margin:0 0 .5rem;}
+    .TPT{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(2rem,3.8vw,3rem);font-weight:400;color:#1c1917;line-height:1.1;margin:0 0 .5rem;}
     [data-theme="dark"] .TPT{color:#f0e6c8;}
     .TPT em{font-style:italic;color:#c9a227;}
     .TPS{font-family:'DM Sans',sans-serif;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(28,25,23,.4);margin:0;}
@@ -877,92 +873,97 @@
     @media(max-width:900px){.TPG{grid-template-columns:1fr;}}
 
     /* ── MAP WRAPPER ── */
-    .TPMBOX{
-      position:relative;border-radius:4px;overflow:hidden;
-      box-shadow:
-        0 0 0 1px rgba(201,162,39,.18),
-        0 2px 8px rgba(0,0,0,.06),
-        0 12px 40px rgba(0,0,0,.16),
-        0 40px 100px rgba(0,0,0,.12);
-      background:#1a1206;
-      cursor:grab;user-select:none;
-    }
+    .TPMBOX{position:relative;border-radius:4px;overflow:hidden;
+      box-shadow:0 0 0 1px rgba(201,162,39,.18),0 2px 8px rgba(0,0,0,.06),0 12px 40px rgba(0,0,0,.16);
+      background:#1a1206;cursor:grab;user-select:none;}
     .TPMBOX:active{cursor:grabbing;}
     .TPMIMG{display:block;width:100%;height:auto;transform-origin:0 0;will-change:transform;max-height:68vh;object-fit:cover;}
+    .TPMBOX::before,.TPMBOX::after{content:'';position:absolute;width:28px;height:28px;z-index:6;pointer-events:none;}
+    .TPMBOX::before{top:10px;left:10px;border-top:1.5px solid rgba(201,162,39,.5);border-left:1.5px solid rgba(201,162,39,.5);}
+    .TPMBOX::after{bottom:10px;right:10px;border-bottom:1.5px solid rgba(201,162,39,.5);border-right:1.5px solid rgba(201,162,39,.5);}
 
-    /* decorative corner ornaments */
-    .TPMBOX::before,.TPMBOX::after{
-      content:'';position:absolute;width:28px;height:28px;z-index:6;pointer-events:none;
-    }
-    .TPMBOX::before{top:10px;left:10px;
-      border-top:1.5px solid rgba(201,162,39,.5);border-left:1.5px solid rgba(201,162,39,.5);}
-    .TPMBOX::after{bottom:10px;right:10px;
-      border-bottom:1.5px solid rgba(201,162,39,.5);border-right:1.5px solid rgba(201,162,39,.5);}
+    /* PIN layer */
+    .TPLAY{position:absolute;inset:0;pointer-events:none;z-index:4;}
 
-    /* ── MAP CONTROLS (bottom-left) ── */
+    /* PIN dot */
+    .TPPIN{position:absolute;transform:translate(-50%,-50%);cursor:pointer;pointer-events:all;z-index:5;}
+    .TPPIN .TPPring{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+      width:28px;height:28px;border-radius:50%;border:1.5px solid rgba(201,162,39,.45);
+      animation:tpPulse 2.2s ease-out infinite;pointer-events:none;}
+    .TPPIN .TPPdot{width:22px;height:22px;border-radius:50%;background:#c9a227;border:2px solid #fff;
+      box-shadow:0 1px 6px rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;
+      font-family:'DM Sans',sans-serif;font-size:.58rem;font-weight:800;color:#1a1000;
+      transition:transform .14s,background .14s;}
+    .TPPIN:hover .TPPdot,.TPPIN.act .TPPdot{background:#f0c840;transform:scale(1.2);}
+    @keyframes tpPulse{0%{transform:translate(-50%,-50%) scale(.9);opacity:.7}70%{transform:translate(-50%,-50%) scale(1.6);opacity:0}100%{transform:translate(-50%,-50%) scale(1.6);opacity:0}}
+
+    /* PIN tooltip */
+    .TPMTTIP{position:absolute;z-index:50;background:rgba(8,6,4,.94);backdrop-filter:blur(14px);
+      border:1px solid rgba(201,162,39,.36);border-radius:10px;padding:11px 14px 12px;width:220px;
+      max-width:calc(100% - 24px);pointer-events:auto;opacity:0;transform:translateY(4px);
+      transition:opacity .18s,transform .18s;visibility:hidden;box-shadow:0 8px 30px rgba(0,0,0,.55);}
+    .TPMTTIP.show{opacity:1;transform:translateY(0);visibility:visible;}
+    .TPTTX{position:absolute;top:7px;right:8px;width:18px;height:18px;border-radius:50%;
+      background:rgba(255,255,255,.09);border:none;color:#7a6a5a;cursor:pointer;font-size:.7rem;
+      display:flex;align-items:center;justify-content:center;transition:background .14s;}
+    .TPTTX:hover{background:rgba(255,255,255,.22);color:#fff;}
+    .TPTTR{display:flex;align-items:center;gap:7px;margin-bottom:4px;}
+    .TPTTNUM{flex-shrink:0;width:20px;height:20px;border-radius:50%;background:#c9a227;
+      color:#1a1000;font-size:.6rem;font-weight:800;font-family:'DM Sans',sans-serif;
+      display:flex;align-items:center;justify-content:center;}
+    .TPTTTIT{font-family:'Cormorant Garamond',serif;font-size:.92rem;font-weight:600;color:#f0e6c8;line-height:1.2;}
+    .TPTTDSC{font-family:'DM Sans',sans-serif;font-size:.68rem;color:#9e9080;line-height:1.5;display:block;margin-top:2px;}
+
+    /* ── MAP CONTROLS ── */
     .TPZW{position:absolute;bottom:14px;left:14px;display:flex;flex-direction:column;gap:5px;z-index:10;}
-    .TPZB{
-      width:34px;height:34px;
-      background:rgba(8,5,2,.88);backdrop-filter:blur(10px);
-      border:1px solid rgba(201,162,39,.32);border-radius:8px;
-      color:#c9a227;font-size:1.1rem;font-weight:700;
-      cursor:pointer;display:flex;align-items:center;justify-content:center;
-      font-family:monospace;transition:background .14s,transform .1s;
-    }
+    .TPZB{width:34px;height:34px;background:rgba(8,5,2,.88);backdrop-filter:blur(10px);
+      border:1px solid rgba(201,162,39,.32);border-radius:8px;color:#c9a227;font-size:1.1rem;font-weight:700;
+      cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:monospace;
+      transition:background .14s,transform .1s;}
     .TPZB:hover{background:rgba(201,162,39,.22);transform:scale(1.06);}
-
-    /* ── FULLSCREEN BTN (bottom-right) ── */
-    .TPFSB{
-      position:absolute;bottom:14px;right:14px;z-index:10;
-      width:34px;height:34px;
-      background:rgba(8,5,2,.88);backdrop-filter:blur(10px);
-      border:1px solid rgba(201,162,39,.32);border-radius:8px;
-      color:#c9a227;cursor:pointer;
-      display:flex;align-items:center;justify-content:center;
-      transition:background .14s,transform .1s;
-    }
+    .TPFSB{position:absolute;bottom:14px;right:14px;z-index:10;width:34px;height:34px;
+      background:rgba(8,5,2,.88);backdrop-filter:blur(10px);border:1px solid rgba(201,162,39,.32);
+      border-radius:8px;color:#c9a227;cursor:pointer;display:flex;align-items:center;justify-content:center;
+      transition:background .14s,transform .1s;}
     .TPFSB:hover{background:rgba(201,162,39,.22);transform:scale(1.06);}
     .TPFSB svg{width:16px;height:16px;}
-
-    /* ── BADGE (top-right) ── */
-    .TPBADGE{
-      position:absolute;top:14px;right:14px;z-index:5;
-      background:rgba(8,5,2,.88);backdrop-filter:blur(12px);
-      border:1px solid rgba(201,162,39,.3);border-radius:8px;
-      padding:6px 12px;pointer-events:none;line-height:1.4;
-    }
+    .TPBADGE{position:absolute;top:14px;right:14px;z-index:5;background:rgba(8,5,2,.88);
+      backdrop-filter:blur(12px);border:1px solid rgba(201,162,39,.3);border-radius:8px;
+      padding:6px 12px;pointer-events:none;line-height:1.4;}
     .TPBADGE .bl{display:block;font-family:'DM Sans',sans-serif;font-size:.48rem;letter-spacing:.2em;text-transform:uppercase;color:#5a4a2e;}
     .TPBADGE .bd{display:block;font-family:'Cormorant Garamond',serif;font-size:.95rem;color:#c9a227;font-weight:500;letter-spacing:.04em;}
-
-    /* hint overlay on map */
-    .TPHINT{
-      position:absolute;bottom:14px;left:50%;transform:translateX(-50%);
-      background:rgba(8,5,2,.72);backdrop-filter:blur(10px);
-      border:1px solid rgba(255,255,255,.07);border-radius:100px;
-      padding:.4rem 1.2rem;
-      font-family:'DM Sans',sans-serif;font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;
-      color:rgba(255,255,255,.4);pointer-events:none;white-space:nowrap;
-      transition:opacity .5s;z-index:8;
-    }
+    .TPHINT{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);background:rgba(8,5,2,.72);
+      backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.07);border-radius:100px;
+      padding:.4rem 1.2rem;font-family:'DM Sans',sans-serif;font-size:.6rem;letter-spacing:.15em;
+      text-transform:uppercase;color:rgba(255,255,255,.4);pointer-events:none;white-space:nowrap;
+      transition:opacity .5s;z-index:8;}
     .TPMBOX.moved .TPHINT{opacity:0;}
 
-    /* ── SIDEBAR PANEL ── */
+    /* ── SIDEBAR ── */
     .TPSB{display:flex;flex-direction:column;gap:1.2rem;position:sticky;top:90px;}
-
-    /* info card */
-    .TPCARD{
-      background:#fff;border:1px solid #e8e0d0;border-radius:12px;
-      padding:1.4rem 1.3rem;
-      box-shadow:0 2px 8px rgba(0,0,0,.04),0 6px 24px rgba(0,0,0,.05);
-    }
+    .TPCARD{background:#fff;border:1px solid #e8e0d0;border-radius:12px;padding:1.4rem 1.3rem;
+      box-shadow:0 2px 8px rgba(0,0,0,.04),0 6px 24px rgba(0,0,0,.05);}
     [data-theme="dark"] .TPCARD{background:#161210;border-color:#2a2218;}
-    .TPCARDH{
-      font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:600;
-      color:#1c1917;margin:0 0 .8rem;padding-bottom:.7rem;
-      border-bottom:1px solid #ede5d5;display:flex;align-items:center;gap:.5rem;
-    }
+    .TPCARDH{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:600;color:#1c1917;
+      margin:0 0 .8rem;padding-bottom:.7rem;border-bottom:1px solid #ede5d5;display:flex;align-items:center;gap:.5rem;}
     [data-theme="dark"] .TPCARDH{color:#e0d4b8;border-color:#2a2218;}
     .TPCARDH svg{width:16px;height:16px;color:#c9a227;flex-shrink:0;}
+
+    /* pin legend list */
+    .TPLEGLIST{display:flex;flex-direction:column;gap:2px;margin-bottom:.5rem;}
+    .TPLEGLI{display:flex;align-items:center;gap:8px;padding:5px 7px;border-radius:6px;
+      cursor:pointer;border:1px solid transparent;transition:background .13s;
+      font-family:'DM Sans',sans-serif;font-size:.72rem;color:#44403c;}
+    [data-theme="dark"] .TPLEGLI{color:#a09080;}
+    .TPLEGLI:hover{background:#f4efe7;}
+    .TPLEGLI.act{background:#fdf5e0;border-color:rgba(201,162,39,.45);}
+    .TPLEGN{flex-shrink:0;width:20px;height:20px;border-radius:50%;background:#c9a227;
+      color:#1a1000;font-size:.58rem;font-weight:800;font-family:'DM Sans',sans-serif;
+      display:flex;align-items:center;justify-content:center;transition:transform .13s;}
+    .TPLEGLI:hover .TPLEGN,.TPLEGLI.act .TPLEGN{transform:scale(1.12);}
+    .TPLEGMT{font-family:'DM Sans',sans-serif;font-size:.6rem;font-style:italic;color:#b0a080;line-height:1.5;
+      border-top:1px solid #ede5d5;padding-top:.6rem;margin-top:.4rem;}
+    [data-theme="dark"] .TPLEGMT{color:#4e4530;border-color:#2a2218;}
 
     /* stat rows */
     .TPSTAT{display:flex;flex-direction:column;gap:.55rem;}
@@ -974,164 +975,112 @@
     [data-theme="dark"] .TPRV{color:#d4c8a8;}
 
     /* legend image card */
-    .TPLEGCARD{
-      background:#fff;border:1px solid #e8e0d0;border-radius:12px;overflow:hidden;
-      box-shadow:0 2px 8px rgba(0,0,0,.04),0 6px 24px rgba(0,0,0,.05);
-    }
+    .TPLEGCARD{background:#fff;border:1px solid #e8e0d0;border-radius:12px;overflow:hidden;
+      box-shadow:0 2px 8px rgba(0,0,0,.04),0 6px 24px rgba(0,0,0,.05);}
     [data-theme="dark"] .TPLEGCARD{background:#161210;border-color:#2a2218;}
-    .TPLEGHEAD{
-      padding:.9rem 1.3rem .75rem;display:flex;align-items:center;justify-content:space-between;
-      border-bottom:1px solid #ede5d5;
-    }
+    .TPLEGHEAD{padding:.9rem 1.3rem .75rem;border-bottom:1px solid #ede5d5;}
     [data-theme="dark"] .TPLEGHEAD{border-color:#2a2218;}
     .TPLEGHT{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:#1c1917;margin:0;}
     [data-theme="dark"] .TPLEGHT{color:#e0d4b8;}
-    .TPLEGEXP{
-      display:flex;align-items:center;gap:.35rem;
-      font-family:'DM Sans',sans-serif;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;
-      color:#c9a227;cursor:pointer;background:none;border:none;padding:.2rem .5rem;
-      border-radius:4px;transition:background .14s;
-    }
-    .TPLEGEXP:hover{background:rgba(201,162,39,.1);}
-    .TPLEGEXP svg{width:11px;height:11px;}
-
-    .TPLEGBODY{padding:.8rem;position:relative;overflow:hidden;max-height:180px;transition:max-height .4s cubic-bezier(.22,1,.36,1);}
-    .TPLEGBODY.expanded{max-height:600px;}
-    .TPLEGBODY::after{
-      content:'';position:absolute;bottom:0;left:0;right:0;height:40px;
-      background:linear-gradient(transparent, #fff);pointer-events:none;
-      transition:opacity .3s;
-    }
-    [data-theme="dark"] .TPLEGBODY::after{background:linear-gradient(transparent, #161210);}
-    .TPLEGBODY.expanded::after{opacity:0;}
-
-    .TPLEGIMG{width:100%;border-radius:6px;display:block;cursor:zoom-in;}
-    .TPLEGFOOTER{padding:.5rem 1rem .8rem;font-family:'DM Sans',sans-serif;font-size:.62rem;color:#a09070;font-style:italic;line-height:1.5;text-align:center;}
+    .TPLEGBODY{padding:.8rem;}
+    .TPLEGIMG{width:100%;border-radius:6px;display:block;cursor:zoom-in;transition:transform .2s;}
+    .TPLEGIMG:hover{transform:scale(1.02);}
+    .TPLEGFOOTER{padding:.2rem 1rem .8rem;font-family:'DM Sans',sans-serif;font-size:.62rem;color:#a09070;font-style:italic;line-height:1.5;text-align:center;}
     [data-theme="dark"] .TPLEGFOOTER{color:#5a4a30;}
 
-    /* description card */
-    .TPDESC{
-      font-family:'DM Sans',sans-serif;font-size:.78rem;line-height:1.75;
-      color:rgba(44,36,28,.7);
-    }
-    [data-theme="dark"] .TPDESC{color:rgba(200,180,140,.6);}
-    .TPDESC p{margin:0 0 .6rem;}
-    .TPDESC p:last-child{margin:0;}
-
     /* ── FULLSCREEN OVERLAY ── */
-    #TPFSO{
-      position:fixed;inset:0;z-index:99999;
-      background:rgba(4,3,1,.97);backdrop-filter:blur(20px);
-      display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;
-      opacity:0;pointer-events:none;transition:opacity .28s ease;
-    }
+    #TPFSO{position:fixed;inset:0;z-index:99999;background:rgba(4,3,1,.97);backdrop-filter:blur(20px);
+      display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.75rem;
+      opacity:0;pointer-events:none;transition:opacity .28s ease;}
     #TPFSO.open{opacity:1;pointer-events:all;}
-
-    #TPFSC{
-      position:fixed;top:1.2rem;right:1.2rem;z-index:100001;
-      width:44px;height:44px;
+    #TPFSC{position:fixed;top:1.2rem;right:1.2rem;z-index:100001;width:44px;height:44px;
       background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:50%;
-      color:rgba(255,255,255,.8);cursor:pointer;font-size:1.1rem;
-      display:flex;align-items:center;justify-content:center;
-      transition:background .2s,transform .2s;
-    }
+      color:rgba(255,255,255,.8);cursor:pointer;display:flex;align-items:center;justify-content:center;
+      transition:background .2s,transform .2s;}
     #TPFSC svg{width:18px;height:18px;}
     #TPFSC:hover{background:#c9a227;border-color:#c9a227;color:#0f0a00;transform:rotate(90deg);}
+    #TPFSTITLE{font-family:'Cormorant Garamond',serif;font-size:clamp(.8rem,2vw,1rem);font-weight:300;
+      letter-spacing:.08em;color:rgba(240,220,160,.4);text-align:center;pointer-events:none;max-width:600px;padding:0 1rem;}
 
-    #TPFSTITLE{
-      font-family:'Cormorant Garamond',serif;font-size:clamp(.85rem,2vw,1.1rem);font-weight:300;
-      letter-spacing:.08em;color:rgba(240,220,160,.45);text-align:center;pointer-events:none;
-      max-width:600px;padding:0 1rem;
-    }
+    /* Fullscreen image with pan+zoom */
+    #TPFSFRAME{position:relative;width:min(96vw,1400px);height:min(82vh,900px);border-radius:4px;overflow:hidden;
+      box-shadow:0 0 0 1px rgba(201,162,39,.2),0 40px 100px rgba(0,0,0,.8);cursor:grab;user-select:none;}
+    #TPFSFRAME:active{cursor:grabbing;}
+    #TPFSFRAME::before,#TPFSFRAME::after{content:'';position:absolute;width:28px;height:28px;z-index:5;pointer-events:none;}
+    #TPFSFRAME::before{top:10px;left:10px;border-top:1px solid rgba(201,162,39,.4);border-left:1px solid rgba(201,162,39,.4);}
+    #TPFSFRAME::after{bottom:10px;right:10px;border-bottom:1px solid rgba(201,162,39,.4);border-right:1px solid rgba(201,162,39,.4);}
+    #TPFSIMG{display:block;width:100%;height:100%;object-fit:contain;transform-origin:0 0;will-change:transform;}
 
-    #TPFSFRAME{
-      position:relative;max-width:min(96vw,1400px);max-height:86vh;
-      border-radius:4px;overflow:hidden;
-      box-shadow:0 0 0 1px rgba(201,162,39,.2),0 40px 100px rgba(0,0,0,.8);
-    }
-    #TPFSIMG{
-      display:block;max-width:100%;max-height:86vh;
-      object-fit:contain;border-radius:4px;
-    }
+    /* Fullscreen zoom controls */
+    #TPFSZW{position:absolute;bottom:14px;left:14px;display:flex;flex-direction:column;gap:4px;z-index:20;}
+    .TPFSZB{width:34px;height:34px;background:rgba(8,5,2,.88);backdrop-filter:blur(10px);
+      border:1px solid rgba(201,162,39,.32);border-radius:8px;color:#c9a227;font-size:1.1rem;font-weight:700;
+      cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:monospace;
+      transition:background .14s,transform .1s;}
+    .TPFSZB:hover{background:rgba(201,162,39,.22);transform:scale(1.06);}
+    #TPFSHINT{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);
+      background:rgba(8,5,2,.72);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.07);
+      border-radius:100px;padding:.4rem 1.2rem;font-family:'DM Sans',sans-serif;font-size:.6rem;
+      letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.4);pointer-events:none;
+      white-space:nowrap;transition:opacity .5s;z-index:18;}
+    #TPFSFRAME.fsmoved #TPFSHINT{opacity:0;}
 
-    /* decorative corners on fullscreen */
-    #TPFSFRAME::before,#TPFSFRAME::after{
-      content:'';position:absolute;width:32px;height:32px;z-index:5;pointer-events:none;
-    }
-    #TPFSFRAME::before{top:12px;left:12px;border-top:1px solid rgba(201,162,39,.4);border-left:1px solid rgba(201,162,39,.4);}
-    #TPFSFRAME::after{bottom:12px;right:12px;border-bottom:1px solid rgba(201,162,39,.4);border-right:1px solid rgba(201,162,39,.4);}
-
-    #TPFSMETA{
-      display:flex;gap:2rem;align-items:center;justify-content:center;flex-wrap:wrap;
-      padding:0 1rem;pointer-events:none;
-    }
-    .TPFSMT{font-family:'DM Sans',sans-serif;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;}
+    #TPFSMETA{display:flex;gap:2rem;align-items:center;justify-content:center;flex-wrap:wrap;padding:0 1rem;pointer-events:none;}
+    .TPFSMT{font-family:'DM Sans',sans-serif;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;}
     .TPFSMT .label{color:rgba(201,162,39,.5);display:block;margin-bottom:.2rem;}
     .TPFSMT .val{color:rgba(240,220,160,.7);}
 
-    /* ── BOTTOM DESCRIPTION BAR ── */
-    .TPBOTTOM{
-      margin-top:2.5rem;
-      background:#fff;border:1px solid #e8e0d0;border-radius:12px;
-      padding:1.5rem 2rem;
-      display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;
-      box-shadow:0 2px 8px rgba(0,0,0,.03),0 6px 24px rgba(0,0,0,.04);
-    }
+    /* ── BOTTOM BAR ── */
+    .TPBOTTOM{margin-top:2.5rem;background:#fff;border:1px solid #e8e0d0;border-radius:12px;
+      padding:1.5rem 2rem;display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;
+      box-shadow:0 2px 8px rgba(0,0,0,.03),0 6px 24px rgba(0,0,0,.04);}
     [data-theme="dark"] .TPBOTTOM{background:#161210;border-color:#2a2218;}
     @media(max-width:640px){.TPBOTTOM{grid-template-columns:1fr;gap:1.2rem;}}
     .TPBITEM{display:flex;flex-direction:column;gap:.4rem;}
     .TPBICO{width:32px;height:32px;border-radius:8px;background:rgba(201,162,39,.1);
-            display:flex;align-items:center;justify-content:center;margin-bottom:.3rem;}
+      display:flex;align-items:center;justify-content:center;margin-bottom:.3rem;}
     .TPBICO svg{width:16px;height:16px;color:#c9a227;}
     .TPBTH{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:#1c1917;}
     [data-theme="dark"] .TPBTH{color:#e0d4b8;}
     .TPBTD{font-family:'DM Sans',sans-serif;font-size:.72rem;color:rgba(44,36,28,.6);line-height:1.65;}
     [data-theme="dark"] .TPBTD{color:rgba(180,160,120,.5);}
 
-    /* responsive */
-    @media(max-width:640px){
-      .TPZW{bottom:10px;left:10px;}
-      .TPBADGE{top:10px;right:10px;}
-      .TPFSB{bottom:10px;right:10px;}
-      .TPT{font-size:1.7rem;}
-    }
+    @media(max-width:640px){.TPZW{bottom:10px;left:10px;}.TPBADGE{top:10px;right:10px;}.TPFSB{bottom:10px;right:10px;}.TPT{font-size:1.7rem;}}
+    @media(max-width:600px){#TPFSFRAME{width:98vw;height:65vw;}}
     </style>
 
     <div class="TPW">
-      <!-- Section Header -->
       <div class="TPH">
         <div class="TPE"><span>Топографічний план</span></div>
         <h2 class="TPT">План міста <em>Дубровиці</em></h2>
         <p class="TPS">Рукописна карта · 1855 рік</p>
       </div>
 
-      <!-- Section label -->
       <p style="font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:600;color:#1c1917;margin:0 0 1.2rem;display:flex;align-items:center;gap:.8rem;" class="TPBL">
         <span style="display:inline-block;width:4px;height:22px;background:#c9a227;border-radius:2px;flex-shrink:0;"></span>
         Топографічний план забудови міста, 1855 рік
       </p>
       <style>[data-theme="dark"] .TPBL{color:#e0d4b8!important;}</style>
 
-      <!-- Main grid: map + sidebar -->
       <div class="TPG">
-
         <!-- MAP -->
         <div class="TPMBOX" id="TPMAP">
-          <img class="TPMIMG" id="TPIMG"
-               src="https://i.imgur.com/R4FTjy1.jpeg"
-               alt="Топографічний план Дубровиці 1855 р."
-               draggable="false" loading="eager">
-
-          <!-- Controls -->
+          <img class="TPMIMG" id="TPIMG" src="https://i.imgur.com/R4FTjy1.jpeg" alt="Топографічний план Дубровиці 1855 р." draggable="false" loading="eager">
+          <div class="TPLAY" id="TPLAY">
+            <!-- Tooltip -->
+            <div class="TPMTTIP" id="TPTTIP">
+              <button class="TPTTX" id="TPTTX">&#x2715;</button>
+              <div class="TPTTR"><span class="TPTTNUM" id="TPTTNUM"></span><span class="TPTTTIT" id="TPTTTIT"></span></div>
+              <span class="TPTTDSC" id="TPTTDSC"></span>
+            </div>
+          </div>
           <div class="TPZW">
             <button class="TPZB" id="tpzp" title="Збільшити">+</button>
             <button class="TPZB" id="tpzm" title="Зменшити">&#8722;</button>
             <button class="TPZB" id="tpzr" title="Скинути" style="font-size:.75rem">&#8962;</button>
           </div>
-          <button class="TPFSB" id="tpfsb" title="Відкрити у повному розмірі">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-              <path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/>
-            </svg>
+          <button class="TPFSB" id="tpfsb" title="Повний розмір">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg>
           </button>
           <div class="TPBADGE"><span class="bl">Топографічний план</span><span class="bd">Дубровиця · 1855 р.</span></div>
           <div class="TPHINT" id="TPHINT">Тягніть для переміщення · Scroll для збільшення</div>
@@ -1139,48 +1088,42 @@
 
         <!-- SIDEBAR -->
         <div class="TPSB">
+          <!-- Pins legend card -->
+          <div class="TPCARD">
+            <h4 class="TPCARDH">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0112 2a8 8 0 018 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+              Позначення пінів
+            </h4>
+            <ul class="TPLEGLIST" id="TPLEGLIST">
+              <li style="font-size:.72rem;color:#a09080;font-family:'DM Sans',sans-serif;padding:.4rem .25rem">Завантаження...</li>
+            </ul>
+            <p class="TPLEGMT">Натисніть маркер або пункт · Scroll для збільшення</p>
+          </div>
 
-          <!-- Info card -->
+          <!-- Map info card -->
           <div class="TPCARD">
             <h4 class="TPCARDH">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-1.447-.894L15 9m0 8V9m0 0L9 7"/></svg>
-              Позначення на плані
+              Про карту
             </h4>
             <div class="TPSTAT">
-              <div class="TPROW"><span class="TPRL">Рік складання</span><span class="TPRV">1855</span></div>
+              <div class="TPROW"><span class="TPRL">Рік</span><span class="TPRV">1855</span></div>
               <div class="TPROW"><span class="TPRL">Масштаб</span><span class="TPRV">30 саженів / дюйм</span></div>
-              <div class="TPROW"><span class="TPRL">Тип</span><span class="TPRV">Рукописна карта</span></div>
               <div class="TPROW"><span class="TPRL">Губернія</span><span class="TPRV">Волинська</span></div>
-              <div class="TPROW"><span class="TPRL">Повіт</span><span class="TPRV">Рівненський</span></div>
               <div class="TPROW"><span class="TPRL">Власник</span><span class="TPRV">Граф Ф. Платер</span></div>
             </div>
-            <p style="margin-top:.9rem;font-family:'DM Sans',sans-serif;font-size:.62rem;font-style:italic;color:#b0a080;line-height:1.5;">
-              Натисніть маркер або пункт · Scroll для збільшення
-            </p>
           </div>
 
-          <!-- Legend card -->
+          <!-- Legend image card -->
           <div class="TPLEGCARD">
-            <div class="TPLEGHEAD">
-              <h4 class="TPLEGHT">Пояснення кольорів</h4>
-              <button class="TPLEGEXP" id="tplegexp">
-                <svg id="tplegexpico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 8l8 8 8-8"/></svg>
-                <span id="tplegexptxt">Розгорнути</span>
-              </button>
+            <div class="TPLEGHEAD"><h4 class="TPLEGHT">Пояснення кольорів</h4></div>
+            <div class="TPLEGBODY">
+              <img class="TPLEGIMG" id="tplegimg" src="https://i.imgur.com/NDtjFcH.jpeg" alt="Легенда топографічного плану Дубровиці" loading="lazy">
             </div>
-            <div class="TPLEGBODY" id="tplegbody">
-              <img class="TPLEGIMG" id="tplegimg"
-                   src="https://i.imgur.com/NDtjFcH.jpeg"
-                   alt="Легенда топографічного плану Дубровиці"
-                   loading="lazy">
-            </div>
-            <div class="TPLEGFOOTER">
-              «Изъяснение Красокъ» — оригінальна легенда<br>рукописного плану міста
-            </div>
+            <div class="TPLEGFOOTER">«Изъяснение Красокъ» — оригінальна легенда рукописного плану міста</div>
           </div>
-
-        </div><!-- /TPSB -->
-      </div><!-- /TPG -->
+        </div>
+      </div>
 
       <!-- Bottom info bar -->
       <div class="TPBOTTOM">
@@ -1192,27 +1135,28 @@
         <div class="TPBITEM">
           <div class="TPBICO"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
           <div class="TPBTH">Історичний контекст</div>
-          <div class="TPBTD">У 1855 році Дубровиця входила до складу Волинської губернії Російської імперії. Місто належало графу Ф. Платеру. На плані добре видно розташування річки Горинь та головних вулиць міста.</div>
+          <div class="TPBTD">У 1855 році Дубровиця входила до складу Волинської губернії Російської імперії. Місто належало графу Ф. Платеру. На плані видно річку Горинь та головні вулиці.</div>
         </div>
         <div class="TPBITEM">
           <div class="TPBICO"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0112 2a8 8 0 018 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg></div>
           <div class="TPBTH">Топографічна точність</div>
-          <div class="TPBTD">Масштаб плану — 30 саженів в одному дюймі (бл. 1:2 500). Рукописна карта складена за традиціями Російського Генерального штабу і відображає реальне планування міста середини XIX ст.</div>
+          <div class="TPBTD">Масштаб — 30 саженів в одному дюймі (бл. 1:2 500). Карта складена за традиціями Російського Генерального штабу і відображає планування міста середини XIX ст.</div>
         </div>
       </div>
+    </div>
 
-    </div><!-- /TPW -->
-
-    <!-- FULLSCREEN OVERLAY -->
+    <!-- FULLSCREEN OVERLAY with pan+zoom -->
     <div id="TPFSO">
-      <button id="TPFSC">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M18 6L6 18M6 6l12 12"/>
-        </svg>
-      </button>
-      <div id="TPFSTITLE">Топографічний план міста Дубровиці · Рукописна карта · 1855 рік</div>
+      <button id="TPFSC"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+      <div id="TPFSTITLE">Топографічний план міста Дубровиці · 1855 рік</div>
       <div id="TPFSFRAME">
-        <img id="TPFSIMG" src="" alt="Топографічний план Дубровиці 1855 р. — повний розмір">
+        <img id="TPFSIMG" src="" alt="Топографічний план Дубровиці 1855 р.">
+        <div id="TPFSZW">
+          <button class="TPFSZB" id="tpfszp">+</button>
+          <button class="TPFSZB" id="tpfszm">&#8722;</button>
+          <button class="TPFSZB" id="tpfszr" style="font-size:.75rem">&#8962;</button>
+        </div>
+        <div id="TPFSHINT">Тягніть · Scroll для збільшення</div>
       </div>
       <div id="TPFSMETA">
         <div class="TPFSMT"><span class="label">Рік</span><span class="val">1855</span></div>
@@ -1225,152 +1169,262 @@
     <script>
     (function() {
       var FULLRES = 'https://i.imgur.com/RCmzgIa.jpeg';
-      var img = document.getElementById('TPIMG');
-      var box = document.getElementById('TPMAP');
-      var hint = document.getElementById('TPHINT');
-      var st = { sc: 1, tx: 0, ty: 0 };
-      var dragging = false, startX = 0, startY = 0;
+      var GH_FILE = 'topo_pins_1855.json';
+      var GH_RAW  = 'https://raw.githubusercontent.com/jerkinsmichael13-stack/Dubrovytsia1/main/';
 
+      var img  = document.getElementById('TPIMG');
+      var box  = document.getElementById('TPMAP');
+      var play = document.getElementById('TPLAY');
+      var tip  = document.getElementById('TPTTIP');
+      var hint = document.getElementById('TPHINT');
+      var st   = { sc: 1, tx: 0, ty: 0 };
+      var dragging = false, startX = 0, startY = 0;
+      var pins = [];
+      var activePin = null;
+
+      // ── CLAMP & APPLY TRANSFORM ──────────────────────────────
       function clampSt() {
         var iw = img.offsetWidth * st.sc, ih = img.offsetHeight * st.sc;
         var bw = box.offsetWidth, bh = box.offsetHeight;
         st.tx = Math.min(0, Math.max(bw - iw, st.tx));
         st.ty = Math.min(0, Math.max(bh - ih, st.ty));
       }
-
       function applyTr(anim) {
         img.style.transition = anim ? 'transform .28s cubic-bezier(.25,.46,.45,.94)' : 'none';
-        img.style.transform = 'translate('+st.tx+'px,'+st.ty+'px) scale('+st.sc+')';
+        img.style.transform  = 'translate('+st.tx+'px,'+st.ty+'px) scale('+st.sc+')';
+        updatePinPositions();
+        if (activePin !== null) repositionTooltip(activePin);
       }
-
       function doZoom(factor, px, py) {
         var bw = box.offsetWidth, bh = box.offsetHeight;
-        px = px !== undefined ? px : bw / 2;
-        py = py !== undefined ? py : bh / 2;
+        px = (px !== undefined) ? px : bw/2;
+        py = (py !== undefined) ? py : bh/2;
         var old = st.sc;
         st.sc = Math.min(8, Math.max(1, old * factor));
         if (st.sc === old) return;
         var r = st.sc / old;
-        st.tx = px - (px - st.tx) * r;
-        st.ty = py - (py - st.ty) * r;
+        st.tx = px - (px - st.tx)*r; st.ty = py - (py - st.ty)*r;
         clampSt(); applyTr(true);
-        box.classList.add('moved');
-        if (hint) hint.style.opacity = '0';
+        box.classList.add('moved'); hint.style.opacity = '0';
       }
-
       function doReset() {
-        st = { sc: 1, tx: 0, ty: 0 };
-        applyTr(true);
-        box.classList.remove('moved');
-        if (hint) hint.style.opacity = '1';
+        st = { sc:1, tx:0, ty:0 }; applyTr(true);
+        box.classList.remove('moved'); hint.style.opacity = '1';
+        hideTip();
       }
 
-      // Buttons
+      // ── DRAG ────────────────────────────────────────────────
+      box.addEventListener('mousedown', function(e) {
+        if (e.button !== 0) return;
+        if (e.target.closest('.TPZB,.TPFSB,.TPPIN,.TPMTTIP')) return;
+        dragging = true; startX = e.clientX - st.tx; startY = e.clientY - st.ty;
+      });
+      document.addEventListener('mousemove', function(e) {
+        if (!dragging) return;
+        st.tx = e.clientX - startX; st.ty = e.clientY - startY;
+        clampSt(); applyTr(false);
+        box.classList.add('moved'); hint.style.opacity = '0';
+      });
+      document.addEventListener('mouseup', function() { dragging = false; });
+
+      // ── WHEEL ───────────────────────────────────────────────
+      box.addEventListener('wheel', function(e) {
+        e.preventDefault();
+        var rect = box.getBoundingClientRect();
+        doZoom(Math.pow(0.998, e.deltaY), e.clientX - rect.left, e.clientY - rect.top);
+      }, { passive: false });
+
+      // ── TOUCH ───────────────────────────────────────────────
+      var lastDist = 0, tdrag = false, tsx = 0, tsy = 0;
+      box.addEventListener('touchstart', function(e) {
+        if (e.touches.length === 1) { tdrag=true; tsx=e.touches[0].clientX-st.tx; tsy=e.touches[0].clientY-st.ty; }
+        else if (e.touches.length === 2) { tdrag=false; lastDist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY); }
+      }, { passive:true });
+      box.addEventListener('touchmove', function(e) {
+        e.preventDefault();
+        if (e.touches.length===1 && tdrag) { st.tx=e.touches[0].clientX-tsx; st.ty=e.touches[0].clientY-tsy; clampSt(); applyTr(false); }
+        else if (e.touches.length===2) {
+          var d = Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+          if (lastDist>0) { var rect=box.getBoundingClientRect(); doZoom(d/lastDist,((e.touches[0].clientX+e.touches[1].clientX)/2)-rect.left,((e.touches[0].clientY+e.touches[1].clientY)/2)-rect.top); }
+          lastDist=d;
+        }
+      }, { passive:false });
+      box.addEventListener('touchend', function(e) {
+        if (e.touches.length<2) lastDist=0;
+        if (e.touches.length===0) tdrag=false;
+        else { tsx=e.touches[0].clientX-st.tx; tsy=e.touches[0].clientY-st.ty; tdrag=true; }
+      }, { passive:true });
+
+      // ── BUTTONS ─────────────────────────────────────────────
       document.getElementById('tpzp').addEventListener('click', function(e){ e.stopPropagation(); doZoom(1.5); });
       document.getElementById('tpzm').addEventListener('click', function(e){ e.stopPropagation(); doZoom(1/1.5); });
       document.getElementById('tpzr').addEventListener('click', function(e){ e.stopPropagation(); doReset(); });
 
-      // Drag
-      box.addEventListener('mousedown', function(e) {
-        if (e.button !== 0) return;
-        if (e.target.closest('.TPZB,.TPFSB')) return;
-        dragging = true;
-        startX = e.clientX - st.tx;
-        startY = e.clientY - st.ty;
-      });
-      document.addEventListener('mousemove', function(e) {
-        if (!dragging) return;
-        st.tx = e.clientX - startX;
-        st.ty = e.clientY - startY;
-        clampSt(); applyTr(false);
-        box.classList.add('moved');
-        if (hint) hint.style.opacity = '0';
-      });
-      document.addEventListener('mouseup', function() { dragging = false; });
+      // ── PINS ────────────────────────────────────────────────
+      function buildPins() {
+        // Remove old pin els (keep tooltip)
+        play.querySelectorAll('.TPPIN').forEach(function(el){ el.remove(); });
+        pins.forEach(function(p) {
+          var el = document.createElement('div');
+          el.className = 'TPPIN'; el.id = 'TPPIN_'+p.id;
+          el.innerHTML = '<div class="TPPring"></div><div class="TPPdot">'+p.id+'</div>';
+          el.addEventListener('click', function(e){ e.stopPropagation(); togglePin(p); });
+          play.appendChild(el);
+        });
+        updatePinPositions();
+      }
 
-      // Wheel
-      box.addEventListener('wheel', function(e) {
-        e.preventDefault();
-        var rect = box.getBoundingClientRect();
-        var factor = Math.pow(0.998, e.deltaY);
-        doZoom(factor, e.clientX - rect.left, e.clientY - rect.top);
-      }, { passive: false });
+      function updatePinPositions() {
+        var w = img.offsetWidth, h = img.offsetHeight;
+        if (!w || !h) return;
+        pins.forEach(function(p) {
+          var el = document.getElementById('TPPIN_'+p.id); if (!el) return;
+          var nx = st.tx + (p.x/100 * w) * st.sc;
+          var ny = st.ty + (p.y/100 * h) * st.sc;
+          el.style.left = nx+'px'; el.style.top = ny+'px';
+          var vis = nx>-20 && nx<box.offsetWidth+20 && ny>-20 && ny<box.offsetHeight+20;
+          el.style.opacity = vis ? '1' : '0';
+          el.style.pointerEvents = vis ? '' : 'none';
+        });
+      }
 
-      // Touch
-      var lastDist = 0, tdrag = false, tsx = 0, tsy = 0;
-      box.addEventListener('touchstart', function(e) {
-        if (e.touches.length === 1) {
-          tdrag = true; tsx = e.touches[0].clientX - st.tx; tsy = e.touches[0].clientY - st.ty;
-        } else if (e.touches.length === 2) {
-          tdrag = false;
-          lastDist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+      function buildLegend() {
+        var ul = document.getElementById('TPLEGLIST'); ul.innerHTML = '';
+        if (!pins.length) {
+          ul.innerHTML = '<li style="font-size:.72rem;color:#a09080;font-family:\'DM Sans\',sans-serif;padding:.4rem .25rem">Позначень ще немає</li>';
+          return;
         }
-      }, { passive: true });
-      box.addEventListener('touchmove', function(e) {
-        e.preventDefault();
-        if (e.touches.length === 1 && tdrag) {
-          st.tx = e.touches[0].clientX - tsx; st.ty = e.touches[0].clientY - tsy;
-          clampSt(); applyTr(false);
-        } else if (e.touches.length === 2) {
-          var d = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
-          if (lastDist > 0) {
-            var rect = box.getBoundingClientRect();
-            doZoom(d / lastDist, ((e.touches[0].clientX + e.touches[1].clientX)/2) - rect.left, ((e.touches[0].clientY + e.touches[1].clientY)/2) - rect.top);
-          }
-          lastDist = d;
-        }
-      }, { passive: false });
-      box.addEventListener('touchend', function(e) {
-        if (e.touches.length < 2) lastDist = 0;
-        if (e.touches.length === 0) tdrag = false;
-        else { tsx = e.touches[0].clientX - st.tx; tsy = e.touches[0].clientY - st.ty; tdrag = true; }
-      }, { passive: true });
+        pins.forEach(function(p) {
+          var li = document.createElement('li'); li.className = 'TPLEGLI'; li.id = 'TPLEG_'+p.id;
+          li.innerHTML = '<span class="TPLEGN">'+p.id+'</span>'+escHtml(p.title);
+          li.addEventListener('click', function(e){ e.stopPropagation(); togglePin(p); });
+          ul.appendChild(li);
+        });
+      }
 
-      // Fullscreen
+      function escHtml(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+      function togglePin(p) {
+        if (activePin === p.id) { hideTip(); return; }
+        hideTip(); activePin = p.id;
+        document.getElementById('TPPIN_'+p.id)?.classList.add('act');
+        document.getElementById('TPLEG_'+p.id)?.classList.add('act');
+        document.getElementById('TPTTNUM').textContent = p.id;
+        document.getElementById('TPTTTIT').textContent = p.title;
+        document.getElementById('TPTTDSC').textContent = p.desc || '';
+        repositionTooltip(p.id);
+        tip.classList.add('show');
+      }
+
+      function hideTip() {
+        tip.classList.remove('show');
+        if (activePin !== null) {
+          document.getElementById('TPPIN_'+activePin)?.classList.remove('act');
+          document.getElementById('TPLEG_'+activePin)?.classList.remove('act');
+        }
+        activePin = null;
+      }
+
+      function repositionTooltip(pinId) {
+        var p = pins.find(function(x){ return x.id === pinId; }); if (!p) return;
+        var w = img.offsetWidth, h = img.offsetHeight;
+        var pinX = st.tx + (p.x/100 * w) * st.sc;
+        var pinY = st.ty + (p.y/100 * h) * st.sc;
+        var bw = box.offsetWidth, bh = box.offsetHeight;
+        // show hidden to measure
+        tip.style.visibility = 'hidden'; tip.classList.add('show');
+        var tw = tip.offsetWidth, th = tip.offsetHeight;
+        tip.style.visibility = '';
+        var GAP=14, MAR=8;
+        var left = pinX+GAP;
+        if (left+tw > bw-MAR) left = pinX-tw-GAP;
+        var top = pinY - th/2;
+        left = Math.max(MAR, Math.min(bw-tw-MAR, left));
+        top  = Math.max(MAR, Math.min(bh-th-MAR, top));
+        tip.style.left = left+'px'; tip.style.top = top+'px';
+      }
+
+      document.getElementById('TPTTX').addEventListener('click', function(e){ e.stopPropagation(); hideTip(); });
+      box.addEventListener('click', function(e){ if (!e.target.closest('.TPPIN,.TPMTTIP')) hideTip(); });
+
+      // ── LOAD PINS ────────────────────────────────────────────
+      fetch(GH_RAW + GH_FILE + '?v=' + Date.now())
+        .then(function(r){ return r.ok ? r.json() : []; })
+        .then(function(data) {
+          if (!Array.isArray(data)) return;
+          pins = data.map(function(p){ return { id:p.id||p.n||1, x:parseFloat(p.x)||0, y:parseFloat(p.y)||0, title:p.title||p.t||'', desc:p.desc||p.d||'' }; });
+          buildPins(); buildLegend();
+        })
+        .catch(function() {
+          document.getElementById('TPLEGLIST').innerHTML = '<li style="font-size:.72rem;color:#a09080;font-family:\'DM Sans\',sans-serif;padding:.4rem .25rem">Позначень ще немає</li>';
+        });
+
+      // ── FULLSCREEN (map) ─────────────────────────────────────
+      var fsst = { sc:1, tx:0, ty:0 };
+      var fsdrag = false, fsx = 0, fsy = 0;
+      var fsFrame = document.getElementById('TPFSFRAME');
+      var fsImg   = document.getElementById('TPFSIMG');
+
+      function fsClamp() {
+        var iw = fsImg.offsetWidth * fsst.sc, ih = fsImg.offsetHeight * fsst.sc;
+        var bw = fsFrame.offsetWidth, bh = fsFrame.offsetHeight;
+        fsst.tx = Math.min(0, Math.max(bw-iw, fsst.tx));
+        fsst.ty = Math.min(0, Math.max(bh-ih, fsst.ty));
+      }
+      function fsApply(anim) {
+        fsImg.style.transition = anim ? 'transform .28s cubic-bezier(.25,.46,.45,.94)' : 'none';
+        fsImg.style.transform  = 'translate('+fsst.tx+'px,'+fsst.ty+'px) scale('+fsst.sc+')';
+      }
+      function fsZoom(factor, px, py) {
+        px = px!==undefined ? px : fsFrame.offsetWidth/2;
+        py = py!==undefined ? py : fsFrame.offsetHeight/2;
+        var old = fsst.sc;
+        fsst.sc = Math.min(10, Math.max(1, old*factor));
+        if (fsst.sc===old) return;
+        var r = fsst.sc/old;
+        fsst.tx = px-(px-fsst.tx)*r; fsst.ty = py-(py-fsst.ty)*r;
+        fsClamp(); fsApply(true);
+        fsFrame.classList.add('fsmoved');
+      }
+      function fsReset() { fsst={sc:1,tx:0,ty:0}; fsApply(true); fsFrame.classList.remove('fsmoved'); }
+
+      document.getElementById('tpfszp').addEventListener('click', function(e){ e.stopPropagation(); fsZoom(1.5); });
+      document.getElementById('tpfszm').addEventListener('click', function(e){ e.stopPropagation(); fsZoom(1/1.5); });
+      document.getElementById('tpfszr').addEventListener('click', function(e){ e.stopPropagation(); fsReset(); });
+
+      fsFrame.addEventListener('mousedown', function(e){ if(e.button!==0) return; if(e.target.closest('.TPFSZB')) return; fsdrag=true; fsx=e.clientX-fsst.tx; fsy=e.clientY-fsst.ty; });
+      document.addEventListener('mousemove', function(e){ if(!fsdrag) return; fsst.tx=e.clientX-fsx; fsst.ty=e.clientY-fsy; fsClamp(); fsApply(false); fsFrame.classList.add('fsmoved'); });
+      document.addEventListener('mouseup', function(){ fsdrag=false; });
+      fsFrame.addEventListener('wheel', function(e){ e.preventDefault(); var r=fsFrame.getBoundingClientRect(); fsZoom(Math.pow(0.998,e.deltaY),e.clientX-r.left,e.clientY-r.top); }, { passive:false });
+
       document.getElementById('tpfsb').addEventListener('click', function(e) {
         e.stopPropagation();
-        document.getElementById('TPFSIMG').src = FULLRES;
+        fsReset();
+        fsImg.src = FULLRES;
         document.getElementById('TPFSO').classList.add('open');
         document.body.style.overflow = 'hidden';
       });
       document.getElementById('TPFSC').addEventListener('click', function() {
         document.getElementById('TPFSO').classList.remove('open');
         document.body.style.overflow = '';
+        fsReset();
       });
       document.getElementById('TPFSO').addEventListener('click', function(e) {
-        if (e.target === this) { this.classList.remove('open'); document.body.style.overflow = ''; }
+        if (e.target===this) { this.classList.remove('open'); document.body.style.overflow=''; fsReset(); }
       });
 
-      // Legend expand
-      var legBody = document.getElementById('tplegbody');
-      var legBtn = document.getElementById('tplegexp');
-      var legIco = document.getElementById('tplegexpico');
-      var legTxt = document.getElementById('tplegexptxt');
-      var legImg = document.getElementById('tplegimg');
-      var expanded = false;
-      legBtn.addEventListener('click', function() {
-        expanded = !expanded;
-        legBody.classList.toggle('expanded', expanded);
-        legIco.style.transform = expanded ? 'rotate(180deg)' : '';
-        legTxt.textContent = expanded ? 'Згорнути' : 'Розгорнути';
-      });
-      // Click legend image -> open fullscreen legend
-      legImg.addEventListener('click', function() {
-        document.getElementById('TPFSIMG').src = this.src;
+      // Click legend image -> fullscreen
+      document.getElementById('tplegimg').addEventListener('click', function() {
+        fsReset(); fsImg.src = this.src;
         document.getElementById('TPFSTITLE').textContent = 'Легенда топографічного плану · «Изъяснение Красокъ» · 1855 рік';
-        document.getElementById('TPFSO').classList.add('open');
-        document.body.style.overflow = 'hidden';
+        document.getElementById('TPFSO').classList.add('open'); document.body.style.overflow='hidden';
       });
 
-      // Escape key
       document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-          document.getElementById('TPFSO').classList.remove('open');
-          document.body.style.overflow = '';
-        }
+        if (e.key==='Escape') { document.getElementById('TPFSO').classList.remove('open'); document.body.style.overflow=''; hideTip(); fsReset(); }
       });
 
-      window.addEventListener('resize', function() { clampSt(); applyTr(false); });
+      window.addEventListener('resize', function(){ clampSt(); applyTr(false); if(document.getElementById('TPFSO').classList.contains('open')) fsClamp(); });
     })();
     </script>
     </section>

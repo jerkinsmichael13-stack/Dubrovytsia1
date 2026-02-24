@@ -801,6 +801,287 @@
             </div>
         </div><!-- /kostelEditorCard -->
 
+        <!-- ════ TOPO MAP PIN EDITOR ════ -->
+        <div class="admin-card" id="topoEditorCard" style="margin-top:0;">
+            <h2 style="font-family:'Cormorant Garamond',serif;margin-bottom:0.5rem;">🗺️ Редактор пінів — Топографічний план 1855 р.</h2>
+            <p style="font-size:0.85rem;color:var(--color-text-secondary);margin-bottom:1.5rem;">
+                Клікніть на план міста, щоб додати новий пін з назвою та описом. Піни збережуться у <code>topo_pins_1855.json</code> і з'являться на головній сторінці поруч із картою.
+            </p>
+
+            <!-- Editor area -->
+            <div id="topoEditorWrap" style="position:relative;border-radius:10px;overflow:hidden;
+                 box-shadow:0 4px 20px rgba(0,0,0,0.12);border:2px solid var(--color-border);
+                 cursor:crosshair;user-select:none;background:#111;line-height:0;margin-bottom:1.25rem;">
+                <img id="topoEditorImg" src="https://i.imgur.com/R4FTjy1.jpeg"
+                     style="width:100%;height:auto;display:block;pointer-events:none;">
+                <svg id="topoEditorSVG" style="position:absolute;top:0;left:0;width:100%;height:100%;overflow:visible;pointer-events:all;"
+                     xmlns="http://www.w3.org/2000/svg"></svg>
+                <div style="position:absolute;top:10px;left:50%;transform:translateX(-50%);
+                     background:rgba(10,8,5,0.85);backdrop-filter:blur(8px);
+                     border:1px solid rgba(201,162,39,0.35);border-radius:8px;
+                     padding:6px 16px;font-family:'DM Sans',sans-serif;font-size:0.72rem;
+                     color:#c9a227;white-space:nowrap;pointer-events:none;">
+                    👆 Клік на карту — додати пін &nbsp;|&nbsp; Перетягнути пін — перемістити
+                </div>
+            </div>
+
+            <!-- Pin list -->
+            <div style="margin-bottom:1.25rem;">
+                <h3 style="font-size:0.95rem;font-weight:600;margin-bottom:0.75rem;color:var(--color-text);">Список пінів</h3>
+                <div id="topoPinListWrap" style="display:flex;flex-direction:column;gap:0.5rem;max-height:320px;overflow-y:auto;"></div>
+                <div id="topoPinListEmpty" style="text-align:center;padding:1.5rem;color:var(--color-text-secondary);font-size:0.875rem;">Пінів ще немає. Клікніть на карті, щоб додати.</div>
+            </div>
+
+            <!-- Actions -->
+            <div style="display:flex;gap:0.75rem;align-items:center;flex-wrap:wrap;">
+                <button id="topoSaveBtn" class="btn btn-green" style="font-size:0.9rem;">💾 Зберегти піни на GitHub</button>
+                <button id="topoClearBtn" class="btn btn-outline" style="font-size:0.875rem;color:#c0392b;border-color:#c0392b;">🗑️ Видалити всі піни</button>
+                <button id="topoCopyJsonBtn" class="btn btn-outline" style="font-size:0.875rem;">📋 Скопіювати JSON</button>
+            </div>
+            <div id="topoEditorStatus" class="notice" style="display:none;margin-top:1rem;"></div>
+
+            <!-- Modal -->
+            <div id="topoPinModal" style="display:none;position:fixed;inset:0;z-index:10000;
+                 background:rgba(0,0,0,0.65);backdrop-filter:blur(5px);
+                 align-items:center;justify-content:center;">
+                <div style="background:var(--color-bg-card);border-radius:14px;padding:1.75rem;
+                     width:min(420px,94vw);box-shadow:0 20px 60px rgba(0,0,0,0.35);border:1px solid var(--color-border);">
+                    <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;margin:0 0 1.2rem;color:var(--color-text);" id="topoPinModalHeader">Новий пін</h3>
+                    <div class="field">
+                        <label style="font-size:0.8rem;font-weight:600;color:var(--color-text-secondary);">Назва *</label>
+                        <input id="topoPinTitle" type="text" placeholder="Ринкова площа"
+                            style="width:100%;padding:0.65rem 0.9rem;border:2px solid var(--color-border);
+                            border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.9rem;
+                            background:var(--color-bg);color:var(--color-text);box-sizing:border-box;">
+                    </div>
+                    <div class="field" style="margin-top:0.75rem;">
+                        <label style="font-size:0.8rem;font-weight:600;color:var(--color-text-secondary);">Опис (необов'язково)</label>
+                        <textarea id="topoPinDesc" rows="3" placeholder="Короткий опис місця або об'єкта..."
+                            style="width:100%;padding:0.65rem 0.9rem;border:2px solid var(--color-border);
+                            border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.875rem;
+                            background:var(--color-bg);color:var(--color-text);box-sizing:border-box;resize:vertical;"></textarea>
+                    </div>
+                    <div style="display:flex;gap:0.75rem;margin-top:1.25rem;">
+                        <button id="topoPinSave" class="btn btn-primary" style="flex:1;">✅ Додати пін</button>
+                        <button id="topoPinCancel" class="btn btn-outline" style="flex:1;">Скасувати</button>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /topoEditorCard -->
+
+        <script>
+        // ═══════════════════════════════════════════════════════
+        // TOPO MAP PIN EDITOR
+        // ═══════════════════════════════════════════════════════
+        (function() {
+            var TOPO_FILE = 'topo_pins_1855.json';
+            var GH_REPO   = 'jerkinsmichael13-stack/Dubrovytsia1';
+            var BRANCH    = 'main';
+            var GH_RAW    = 'https://raw.githubusercontent.com/'+GH_REPO+'/main/';
+
+            var topoPins     = [];
+            var topoPendingX = 0, topoPendingY = 0;
+            var topoEditId   = null;
+
+            var editorWrap = document.getElementById('topoEditorWrap');
+            var editorImg  = document.getElementById('topoEditorImg');
+            var editorSVG  = document.getElementById('topoEditorSVG');
+            var pinListWrap  = document.getElementById('topoPinListWrap');
+            var pinListEmpty = document.getElementById('topoPinListEmpty');
+            var modal       = document.getElementById('topoPinModal');
+            var modalHeader = document.getElementById('topoPinModalHeader');
+            var modalTitle  = document.getElementById('topoPinTitle');
+            var modalDesc   = document.getElementById('topoPinDesc');
+            var edStatus    = document.getElementById('topoEditorStatus');
+
+            function escH(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+            function showSt(msg,type){ edStatus.className='notice notice-'+(type||'info'); edStatus.innerHTML=msg; edStatus.style.display='block'; }
+
+            // ── RENDER ─────────────────────────────────────────
+            function renderEditor() { renderSVG(); renderList(); }
+
+            function renderSVG() {
+                editorSVG.innerHTML = '';
+                var ns = 'http://www.w3.org/2000/svg';
+                var wRect = editorWrap.getBoundingClientRect();
+                var iRect = editorImg.getBoundingClientRect();
+                var offX = iRect.left - wRect.left, offY = iRect.top - wRect.top;
+                topoPins.forEach(function(pin) {
+                    var px = pin.x/100 * iRect.width + offX;
+                    var py = pin.y/100 * iRect.height + offY;
+                    var g = document.createElementNS(ns,'g');
+                    g.setAttribute('data-pin-id', pin.id); g.style.cursor='move'; g.style.pointerEvents='all';
+                    var ring = document.createElementNS(ns,'circle');
+                    ring.setAttribute('cx',px); ring.setAttribute('cy',py);
+                    ring.setAttribute('r','14'); ring.setAttribute('fill','none');
+                    ring.setAttribute('stroke','rgba(201,162,39,0.5)'); ring.setAttribute('stroke-width','1.5');
+                    var circ = document.createElementNS(ns,'circle');
+                    circ.setAttribute('cx',px); circ.setAttribute('cy',py); circ.setAttribute('r','10');
+                    circ.setAttribute('fill','#c9a227'); circ.setAttribute('stroke','#fff'); circ.setAttribute('stroke-width','2');
+                    circ.setAttribute('filter','drop-shadow(0 2px 5px rgba(0,0,0,.6))');
+                    var txt = document.createElementNS(ns,'text');
+                    txt.setAttribute('x',px); txt.setAttribute('y',py);
+                    txt.setAttribute('text-anchor','middle'); txt.setAttribute('dominant-baseline','central');
+                    txt.setAttribute('fill','#1a1000'); txt.setAttribute('font-size','10');
+                    txt.setAttribute('font-weight','800'); txt.setAttribute('font-family','DM Sans,sans-serif');
+                    txt.setAttribute('pointer-events','none'); txt.textContent = pin.id;
+                    g.appendChild(ring); g.appendChild(circ); g.appendChild(txt);
+                    editorSVG.appendChild(g);
+                    // drag
+                    addPinDrag(g, pin);
+                });
+            }
+
+            function addPinDrag(g, pin) {
+                var dragging = false, ox = 0, oy = 0;
+                g.addEventListener('mousedown', function(e) {
+                    e.stopPropagation(); dragging = true;
+                    ox = e.clientX; oy = e.clientY;
+                    document.addEventListener('mousemove', onMove);
+                    document.addEventListener('mouseup', onUp);
+                });
+                function onMove(e) {
+                    if (!dragging) return;
+                    var iRect = editorImg.getBoundingClientRect();
+                    var wRect = editorWrap.getBoundingClientRect();
+                    var nx = Math.min(100, Math.max(0, (e.clientX - iRect.left) / iRect.width * 100));
+                    var ny = Math.min(100, Math.max(0, (e.clientY - iRect.top)  / iRect.height * 100));
+                    pin.x = parseFloat(nx.toFixed(2)); pin.y = parseFloat(ny.toFixed(2));
+                    renderEditor();
+                    // Update coord display
+                    var el = document.getElementById('tpcoord-'+pin.id);
+                    if (el) el.textContent = 'x:'+pin.x+'% y:'+pin.y+'%';
+                }
+                function onUp() {
+                    dragging = false;
+                    document.removeEventListener('mousemove', onMove);
+                    document.removeEventListener('mouseup', onUp);
+                }
+            }
+
+            function renderList() {
+                pinListEmpty.style.display = topoPins.length ? 'none' : 'block';
+                pinListWrap.innerHTML = '';
+                topoPins.forEach(function(pin) {
+                    var row = document.createElement('div');
+                    row.style.cssText = 'display:flex;align-items:center;gap:0.6rem;padding:0.55rem 0.75rem;background:var(--color-bg);border:1px solid var(--color-border);border-radius:8px;';
+                    var num = document.createElement('span');
+                    num.style.cssText = 'min-width:22px;height:22px;border-radius:50%;background:#c9a227;color:#1a1000;font-size:0.6rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;';
+                    num.textContent = pin.id;
+                    var info = document.createElement('div');
+                    info.style.cssText = 'flex:1;min-width:0;';
+                    info.innerHTML = '<div style="font-size:0.8rem;font-weight:600;color:var(--color-text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+escH(pin.title)+'</div>'+
+                        '<div id="tpcoord-'+pin.id+'" style="font-size:0.65rem;color:var(--color-text-secondary);font-family:monospace;">x:'+pin.x+'% y:'+pin.y+'%</div>';
+                    var editBtn = document.createElement('button');
+                    editBtn.style.cssText = 'padding:0.3rem 0.6rem;border:1px solid var(--color-border);border-radius:6px;background:transparent;color:var(--color-text-secondary);font-size:0.7rem;cursor:pointer;flex-shrink:0;';
+                    editBtn.textContent = '✏️'; editBtn.title = 'Редагувати';
+                    editBtn.addEventListener('click', (function(p){ return function(){ openEditModal(p); }; })(pin));
+                    var delBtn = document.createElement('button');
+                    delBtn.style.cssText = 'padding:0.3rem 0.6rem;border:1px solid #e0b0b0;border-radius:6px;background:transparent;color:#c0392b;font-size:0.7rem;cursor:pointer;flex-shrink:0;';
+                    delBtn.textContent = '🗑️'; delBtn.title = 'Видалити';
+                    delBtn.addEventListener('click', (function(id){ return function(){
+                        topoPins = topoPins.filter(function(p){ return p.id!==id; }); renderEditor();
+                    }; })(pin.id));
+                    row.appendChild(num); row.appendChild(info); row.appendChild(editBtn); row.appendChild(delBtn);
+                    pinListWrap.appendChild(row);
+                });
+            }
+
+            // ── CLICK TO ADD ─────────────────────────────────────
+            editorSVG.addEventListener('click', function(e) {
+                if (e.target.closest('g[data-pin-id]')) return;
+                var iRect = editorImg.getBoundingClientRect();
+                topoPendingX = parseFloat(((e.clientX - iRect.left) / iRect.width * 100).toFixed(2));
+                topoPendingY = parseFloat(((e.clientY - iRect.top)  / iRect.height * 100).toFixed(2));
+                topoEditId = null;
+                modalHeader.textContent = 'Новий пін';
+                modalTitle.value = ''; modalDesc.value = '';
+                modal.style.display = 'flex';
+                setTimeout(function(){ modalTitle.focus(); }, 50);
+            });
+
+            // ── MODALS ───────────────────────────────────────────
+            function openEditModal(pin) {
+                topoEditId = pin.id;
+                topoPendingX = pin.x; topoPendingY = pin.y;
+                modalHeader.textContent = 'Редагувати пін #'+pin.id;
+                modalTitle.value = pin.title; modalDesc.value = pin.desc || '';
+                modal.style.display = 'flex';
+                setTimeout(function(){ modalTitle.focus(); }, 50);
+            }
+
+            document.getElementById('topoPinSave').addEventListener('click', function() {
+                var title = modalTitle.value.trim();
+                if (!title) { modalTitle.style.borderColor='#c62828'; modalTitle.focus(); return; }
+                modalTitle.style.borderColor = '';
+                if (topoEditId !== null) {
+                    var p = topoPins.find(function(x){ return x.id===topoEditId; });
+                    if (p) { p.title=title; p.desc=modalDesc.value.trim(); }
+                } else {
+                    var newId = topoPins.length ? Math.max.apply(null, topoPins.map(function(p){ return p.id; })) + 1 : 1;
+                    topoPins.push({ id:newId, x:topoPendingX, y:topoPendingY, title:title, desc:modalDesc.value.trim() });
+                }
+                modal.style.display='none'; renderEditor();
+            });
+            document.getElementById('topoPinCancel').addEventListener('click', function(){ modal.style.display='none'; });
+            modal.addEventListener('click', function(e){ if(e.target===this) modal.style.display='none'; });
+            document.addEventListener('keydown', function(e){ if(e.key==='Escape' && modal.style.display==='flex') modal.style.display='none'; });
+            modalTitle.addEventListener('keydown', function(e){ if(e.key==='Enter') document.getElementById('topoPinSave').click(); });
+
+            // ── SAVE TO GITHUB ───────────────────────────────────
+            document.getElementById('topoSaveBtn').addEventListener('click', async function() {
+                var tok = localStorage.getItem('gh_token_dubrovytsia') || '';
+                if (!tok) { showSt('⚠️ Спочатку введіть GitHub токен у розділі налаштувань вище', 'warn'); return; }
+                var json = JSON.stringify(topoPins, null, 2);
+                showSt('⏳ Збереження...','info');
+                try {
+                    var sha = null;
+                    var resp = await fetch('https://api.github.com/repos/'+GH_REPO+'/contents/'+TOPO_FILE,{
+                        headers:{ Authorization:'token '+tok, Accept:'application/vnd.github.v3+json' }
+                    });
+                    if (resp.ok){ var d=await resp.json(); sha=d.sha; }
+                    var body = { message:'Update '+TOPO_FILE+' via admin', content:btoa(unescape(encodeURIComponent(json))), branch:BRANCH };
+                    if (sha) body.sha = sha;
+                    var put = await fetch('https://api.github.com/repos/'+GH_REPO+'/contents/'+TOPO_FILE,{
+                        method:'PUT', headers:{ Authorization:'token '+tok, Accept:'application/vnd.github.v3+json','Content-Type':'application/json' },
+                        body: JSON.stringify(body)
+                    });
+                    if (put.ok) showSt('✅ Піни збережено на GitHub! Сайт оновиться за ~1 хв.','success');
+                    else { var err=await put.json(); showSt('❌ '+(err.message||'Помилка'),'error'); }
+                } catch(e){ showSt('❌ '+e.message,'error'); }
+            });
+
+            // ── CLEAR & COPY ─────────────────────────────────────
+            document.getElementById('topoClearBtn').addEventListener('click', function(){
+                if (confirm('Видалити всі піни?')) { topoPins=[]; renderEditor(); }
+            });
+            document.getElementById('topoCopyJsonBtn').addEventListener('click', function(){
+                navigator.clipboard.writeText(JSON.stringify(topoPins,null,2)).then(function(){
+                    showSt('📋 JSON скопійовано в буфер обміну','success');
+                });
+            });
+
+            // ── LOAD FROM GITHUB ─────────────────────────────────
+            function init() {
+                fetch(GH_RAW + TOPO_FILE + '?v=' + Date.now())
+                    .then(function(r){ return r.ok ? r.json() : []; })
+                    .then(function(data){
+                        if (!Array.isArray(data)) return;
+                        topoPins = data.map(function(p){ return { id:p.id||1, x:parseFloat(p.x)||0, y:parseFloat(p.y)||0, title:p.title||'', desc:p.desc||'' }; });
+                        renderEditor();
+                    })
+                    .catch(function(){});
+            }
+
+            // Wait for img to load
+            if (editorImg.complete) init();
+            else editorImg.addEventListener('load', init, { once:true });
+
+            window.addEventListener('resize', function(){ renderEditor(); });
+
+        })();
+        </script>
+
     </div><!-- /adminContent -->
 </div>
 
