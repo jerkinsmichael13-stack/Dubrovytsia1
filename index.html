@@ -888,14 +888,14 @@
     /* PIN dot */
     .TPPIN{position:absolute;transform:translate(-50%,-50%);cursor:pointer;pointer-events:all;z-index:5;}
     .TPPIN .TPPring{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-      width:28px;height:28px;border-radius:50%;border:1.5px solid rgba(201,162,39,.45);
+      width:10px;height:10px;border-radius:50%;border:1px solid rgba(201,162,39,.45);
       animation:tpPulse 2.2s ease-out infinite;pointer-events:none;}
-    .TPPIN .TPPdot{width:22px;height:22px;border-radius:50%;background:#c9a227;border:2px solid #fff;
-      box-shadow:0 1px 6px rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;
-      font-family:'DM Sans',sans-serif;font-size:.58rem;font-weight:800;color:#1a1000;
+    .TPPIN .TPPdot{width:8px;height:8px;border-radius:50%;background:#c9a227;border:1.5px solid #fff;
+      box-shadow:0 1px 4px rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;
+      font-family:'DM Sans',sans-serif;font-size:.3rem;font-weight:800;color:#1a1000;
       transition:transform .14s,background .14s;}
     .TPPIN:hover .TPPdot,.TPPIN.act .TPPdot{background:#f0c840;transform:scale(1.2);}
-    @keyframes tpPulse{0%{transform:translate(-50%,-50%) scale(.9);opacity:.7}70%{transform:translate(-50%,-50%) scale(1.6);opacity:0}100%{transform:translate(-50%,-50%) scale(1.6);opacity:0}}
+    @keyframes tpPulse{0%{transform:translate(-50%,-50%) scale(.9);opacity:.7}70%{transform:translate(-50%,-50%) scale(2.2);opacity:0}100%{transform:translate(-50%,-50%) scale(2.2);opacity:0}}
 
     /* PIN tooltip */
     .TPMTTIP{position:absolute;z-index:50;background:rgba(8,6,4,.94);backdrop-filter:blur(14px);
