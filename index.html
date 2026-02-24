@@ -888,14 +888,14 @@
     /* PIN dot */
     .TPPIN{position:absolute;transform:translate(-50%,-50%);cursor:pointer;pointer-events:all;z-index:5;}
     .TPPIN .TPPring{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-      width:10px;height:10px;border-radius:50%;border:1px solid rgba(201,162,39,.45);
+      width:18px;height:18px;border-radius:50%;border:1.5px solid rgba(201,162,39,.45);
       animation:tpPulse 2.2s ease-out infinite;pointer-events:none;}
-    .TPPIN .TPPdot{width:8px;height:8px;border-radius:50%;background:#c9a227;border:1.5px solid #fff;
-      box-shadow:0 1px 4px rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;
-      font-family:'DM Sans',sans-serif;font-size:.3rem;font-weight:800;color:#1a1000;
+    .TPPIN .TPPdot{width:12px;height:12px;border-radius:50%;background:#c9a227;border:1.5px solid #fff;
+      box-shadow:0 1px 5px rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;
+      font-family:'DM Sans',sans-serif;font-size:.38rem;font-weight:800;color:#1a1000;
       transition:transform .14s,background .14s;}
     .TPPIN:hover .TPPdot,.TPPIN.act .TPPdot{background:#f0c840;transform:scale(1.2);}
-    @keyframes tpPulse{0%{transform:translate(-50%,-50%) scale(.9);opacity:.7}70%{transform:translate(-50%,-50%) scale(2.2);opacity:0}100%{transform:translate(-50%,-50%) scale(2.2);opacity:0}}
+    @keyframes tpPulse{0%{transform:translate(-50%,-50%) scale(.9);opacity:.7}70%{transform:translate(-50%,-50%) scale(2);opacity:0}100%{transform:translate(-50%,-50%) scale(2);opacity:0}}
 
     /* PIN tooltip */
     .TPMTTIP{position:absolute;z-index:50;background:rgba(8,6,4,.94);backdrop-filter:blur(14px);
@@ -1106,12 +1106,16 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-1.447-.894L15 9m0 8V9m0 0L9 7"/></svg>
               Про карту
             </h4>
-            <div class="TPSTAT">
-              <div class="TPROW"><span class="TPRL">Рік</span><span class="TPRV">1855</span></div>
-              <div class="TPROW"><span class="TPRL">Масштаб</span><span class="TPRV">30 саженів / дюйм</span></div>
-              <div class="TPROW"><span class="TPRL">Губернія</span><span class="TPRV">Волинська</span></div>
-              <div class="TPROW"><span class="TPRL">Власник</span><span class="TPRV">Граф Ф. Платер</span></div>
-            </div>
+            <p style="font-family:'DM Sans',sans-serif;font-size:.75rem;line-height:1.75;color:rgba(44,36,28,.72);margin:0 0 .6rem;">
+              Рукописна топографічна карта міста Дубровиці 1855 року, складена в часи Волинської губернії Російської імперії. Масштаб — 30 саженів у дюймі (близько 1:2 500). Власник міста на той час — граф Ф. Платер.
+            </p>
+            <p style="font-family:'DM Sans',sans-serif;font-size:.75rem;line-height:1.75;color:rgba(44,36,28,.72);margin:0 0 .7rem;">
+              На плані позначено вулиці, церкви, єврейські будинки, поміщицькі та казенні будівлі, річку Горинь і її притоки.
+            </p>
+            <p style="font-family:'DM Sans',sans-serif;font-size:.65rem;line-height:1.6;color:rgba(44,36,28,.45);margin:0;padding-top:.6rem;border-top:1px solid #ede5d5;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:11px;height:11px;display:inline;vertical-align:middle;margin-right:3px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              Зображення тут у зниженій якості. Для перегляду у повному розмірі та повній якості — натисніть кнопку <strong style="color:#c9a227;">⤢</strong> у куті карти.
+            </p>
           </div>
 
           <!-- Legend image card -->
@@ -1610,6 +1614,15 @@
           <span class="ccs">Супутниковий знімок</span>
         </div>
 
+        <div style="position:absolute;bottom:1rem;left:50%;transform:translateX(-50%);z-index:16;pointer-events:none;
+          display:inline-flex;align-items:center;gap:.4rem;padding:.3rem .8rem;
+          background:rgba(8,6,4,.72);backdrop-filter:blur(8px);
+          border:1px solid rgba(201,162,39,.2);border-radius:100px;
+          font-family:'DM Sans',sans-serif;font-size:.58rem;letter-spacing:.06em;color:rgba(255,255,255,.45);white-space:nowrap;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:11px;height:11px;flex-shrink:0;color:#c9a227;opacity:.7;"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          Аерофото колоризоване за допомогою ШІ
+        </div>
+
         <div class="CIP" id="CHINT">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 19l-7-7 7-7"/></svg>
           Тягніть для порівняння
@@ -1897,6 +1910,10 @@
       <!-- Photo Gallery -->
       <div class="PGL">
         <p class="PGLH">Архівні фотографії маєтку</p>
+        <div style="display:inline-flex;align-items:center;gap:.5rem;padding:.4rem .85rem;background:rgba(201,162,39,.08);border:1px solid rgba(201,162,39,.22);border-radius:100px;margin-bottom:1rem;font-family:'DM Sans',sans-serif;font-size:.65rem;color:rgba(28,25,23,.55);letter-spacing:.04em;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:13px;height:13px;flex-shrink:0;color:#c9a227;"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          Деякі фотографії колоризовані за допомогою ШІ
+        </div>
         <div class="PGRID">
           <div class="PGITEM" onclick="openPLB(this)">
             <img src="https://i.imgur.com/jpyssNA.jpeg" alt="Палац Плятерів 1925" loading="lazy" style="object-position:top;">
