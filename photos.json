@@ -1,5 +1,12 @@
 [
     {
+        "imageUrl": "https://i.imgur.com/fUKwHFo.jpeg",
+        "title": "Будинок культури",
+        "period": "1945-1991",
+        "category": "architecture",
+        "date": "2026"
+    },
+    {
         "imageUrl": "https://i.imgur.com/60SSg7B.jpeg",
         "title": "Святкова демонстрація",
         "period": "1900-1939",
