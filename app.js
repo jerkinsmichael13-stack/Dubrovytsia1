@@ -242,26 +242,13 @@ function initImageReveal() {
 }
 
 // ================================================
-// КАРТКИ: 3D-нахил при наведенні
+// КАРТКИ: плавний hover (без mousemove — не лагає)
 // ================================================
 
 function initMagneticCards() {
-    if (window.matchMedia('(hover: none)').matches) return;
-    document.querySelectorAll('.card, .catalog-item, .photo-card').forEach(card => {
-        card.addEventListener('mouseenter', () => {
-            card.style.transition = 'transform 0.15s ease, box-shadow 0.4s ease, border-color 0.3s ease';
-        });
-        card.addEventListener('mousemove', e => {
-            const r = card.getBoundingClientRect();
-            const x = (e.clientX - r.left) / r.width - 0.5;
-            const y = (e.clientY - r.top) / r.height - 0.5;
-            card.style.transform = `translateY(-8px) perspective(1000px) rotateX(${y * -2.5}deg) rotateY(${x * 2.5}deg)`;
-        });
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = '';
-            card.style.transition = 'transform 0.6s cubic-bezier(0.22,1,0.36,1), box-shadow 0.5s ease, border-color 0.3s ease';
-        });
-    });
+    // Навмисно порожньо — 3D-нахил через mousemove
+    // спричиняв лаг на сторінках з великою кількістю карток
+    // Hover-ефекти реалізовані через CSS
 }
 
 // ================================================
