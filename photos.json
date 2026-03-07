@@ -1,5 +1,12 @@
 [
     {
+        "imageUrl": "https://i.imgur.com/SIiSYZf.jpeg",
+        "title": "Вулиці міста",
+        "period": "1945-1991",
+        "category": "streets",
+        "date": "2026"
+    },
+    {
         "imageUrl": "https://i.imgur.com/FckBe6G.jpeg",
         "title": "Панорама міста",
         "period": "after-1991",
