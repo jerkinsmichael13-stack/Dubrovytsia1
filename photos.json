@@ -1,5 +1,12 @@
 [
     {
+        "imageUrl": "https://i.imgur.com/z6rnZ1h.jpeg",
+        "title": "Будинок пошти",
+        "period": "1945-1991",
+        "category": "architecture",
+        "date": "2026"
+    },
+    {
         "imageUrl": "https://i.imgur.com/fUKwHFo.jpeg",
         "title": "Будинок культури",
         "period": "1945-1991",
