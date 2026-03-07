@@ -1,5 +1,12 @@
 [
     {
+        "imageUrl": "https://i.imgur.com/csirjoF.jpeg",
+        "title": "План міста",
+        "period": "before-1900",
+        "category": "aerial",
+        "date": "1855"
+    },
+    {
         "imageUrl": "https://i.imgur.com/I0bdUdp.jpeg",
         "title": "План станції Дубровиця",
         "period": "1900-1939",
