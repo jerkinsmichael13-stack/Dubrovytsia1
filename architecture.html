@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="uk" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
@@ -8,7 +8,12 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="manifest" href="site.webmanifest">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Архітектурні пам'ятки Дубровиці — Костел Іоанна Хрестителя, Церква Різдва Богородиці та інші пам'ятки національного значення">
+    <meta property="og:title" content="Архітектурні пам'ятки — Дубровиця">
+    <meta property="og:description" content="Сакральна архітектура та пам'ятки національного значення міста Дубровиця">
+    <meta property="og:type" content="website">
     <title>Архітектурні пам'ятки — Дубровиця</title>
+    <script>!function(){var t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t)}()</script>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -108,32 +113,50 @@
 
     .KCARD {
         width: 100%;
-        padding: .8rem 0 .8rem 1rem;
-        border-left: 2px solid rgba(201,162,39,.2);
-        margin-bottom: 2.2rem;
-        opacity: 0; transform: translateX(-8px);
-        transition: opacity .55s ease, transform .55s ease;
+        padding: 1rem 1rem 1rem 1.2rem;
+        background: var(--color-bg-card, #fff);
+        border: 1px solid rgba(201,162,39,.12);
+        border-left: 3px solid rgba(201,162,39,.35);
+        border-radius: 0 8px 8px 0;
+        margin-bottom: 1.4rem;
+        opacity: 0; transform: translateX(-12px);
+        transition: opacity .55s ease, transform .55s ease, box-shadow .3s ease, border-color .3s ease;
         position: relative;
+        box-shadow: 0 2px 8px rgba(0,0,0,.04), 0 6px 20px rgba(0,0,0,.05);
     }
+    .KCARD:hover {
+        border-left-color: #c9a227;
+        box-shadow: 0 4px 16px rgba(0,0,0,.08), 0 12px 32px rgba(201,162,39,.08);
+    }
+    [data-theme="dark"] .KCARD { background: #1a1610; border-color: rgba(201,162,39,.1); border-left-color: rgba(201,162,39,.35); }
+    [data-theme="dark"] .KCARD:hover { border-left-color: #c9a227; }
     .KPANEL-R .KCARD {
-        border-left: none; border-right: 2px solid rgba(201,162,39,.2);
-        padding: .8rem 1rem .8rem 0; text-align: right;
-        transform: translateX(8px);
+        border-left: 1px solid rgba(201,162,39,.12);
+        border-right: 3px solid rgba(201,162,39,.35);
+        border-radius: 8px 0 0 8px;
+        padding: 1rem 1.2rem 1rem 1rem; text-align: right;
+        transform: translateX(12px);
     }
+    .KPANEL-R .KCARD:hover { border-right-color: #c9a227; }
     .KCARD.vis { opacity: 1; transform: translateX(0); }
     .KCARD-LABEL {
-        font-size: .5rem; letter-spacing: .24em; text-transform: uppercase;
-        color: #b8902a; margin-bottom: .4rem; display: block;
+        font-size: .48rem; letter-spacing: .26em; text-transform: uppercase;
+        color: #b8902a; margin-bottom: .45rem; display: block;
+        background: rgba(201,162,39,.08); padding: .2rem .5rem;
+        border-radius: 100px; width: fit-content; 
     }
+    .KPANEL-R .KCARD-LABEL { margin-left: auto; }
     .KCARD-TITLE {
-        font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 500;
+        font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 600;
         color: var(--color-text, #1c1917); line-height: 1.25; margin-bottom: .5rem;
     }
+    [data-theme="dark"] .KCARD-TITLE { color: #e8d8b0; }
     .KCARD-TEXT {
-        font-size: .67rem; font-weight: 300; line-height: 1.82;
-        color: var(--color-text-secondary, #44403c);
+        font-size: .68rem; font-weight: 300; line-height: 1.85;
+        color: var(--color-text-secondary, #5a5248);
     }
-    .KCARD-TEXT + .KCARD-TEXT { margin-top: .4rem; }
+    [data-theme="dark"] .KCARD-TEXT { color: rgba(200,185,155,.6); }
+    .KCARD-TEXT + .KCARD-TEXT { margin-top: .5rem; }
 
     /* ── Hide panels + arrows on mobile, show accordion instead ── */
     @media (max-width: 1100px) {
@@ -208,15 +231,17 @@
         display: grid; grid-template-columns: repeat(4,1fr);
         gap: 1px; background: var(--color-border, #ddd5c8);
         max-width: 1060px; margin: 3.5rem auto 0;
+        border-radius: 12px; overflow: hidden;
+        box-shadow: 0 4px 16px rgba(0,0,0,.06);
     }
     @media (max-width: 640px) { .KSTATS { grid-template-columns: repeat(2,1fr); } }
     .KST {
         background: var(--color-bg-card, #fff);
-        padding: 1.6rem 1.3rem; position: relative; transition: background .22s; overflow: hidden;
+        padding: 1.8rem 1.4rem; position: relative; transition: background .22s; overflow: hidden;
     }
     .KST::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: transparent; transition: background .25s; }
     .KST:hover { background: var(--color-bg-alt, #f4efe7); }
-    .KST:hover::before { background: linear-gradient(90deg, transparent, rgba(201,162,39,.5), transparent); }
+    .KST:hover::before { background: linear-gradient(90deg, transparent, rgba(201,162,39,.7), transparent); }
     .KST-V {
         font-family: 'Cormorant Garamond', serif; font-size: 2.4rem; font-weight: 300; line-height: 1;
         background: linear-gradient(135deg, #a8841c, #c9a227);
@@ -359,7 +384,7 @@
                     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
                 </svg>
             </button>
-            <button class="mobile-toggle" id="mobileToggle" aria-label="Відкрити меню">
+            <button class="mobile-toggle" id="mobileToggle" aria-label="Відкрити меню" aria-expanded="false">
                 <span></span><span></span><span></span>
             </button>
         </div>

@@ -10,8 +10,8 @@
     <meta property="og:type" content="website">
     <title>Дубровиця — Історія та спадщина</title>
     <script>!function(){var t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t)}()</script>
-    <link rel="preload" as="image" href="https://i.imgur.com/FfgAmadh.jpeg">
-    <link rel="preload" as="image" href="https://i.imgur.com/cMQeU7Ph.jpeg">
+    <link rel="preload" as="image" href="https://i.imgur.com/FfgAmadh.jpeg" media="(min-width: 768px)">
+    <link rel="preload" as="image" href="https://i.imgur.com/cMQeU7Ph.jpeg" media="(min-width: 768px)">
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -172,7 +172,7 @@
                 </svg>
             </button>
 
-            <button class="mobile-toggle" id="mobileToggle" aria-label="Відкрити меню">
+            <button class="mobile-toggle" id="mobileToggle" aria-label="Відкрити меню" aria-expanded="false">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -293,7 +293,7 @@
                     <div class="stat-label">Років історії</div>
                 </div>
                 <div class="stat-item fade-in-up delay-1">
-                    <div class="stat-number" data-target="500">0</div>
+                    <div class="stat-number" id="photoCountStat" data-target="43">0</div>
                     <div class="stat-label">Історичних фотографій</div>
                 </div>
                 <div class="stat-item fade-in-up delay-2">
@@ -303,6 +303,183 @@
             </div>
         </div>
     </section>
+
+    <!-- ═══ HISTORICAL TIMELINE SECTION ═══ -->
+    <section id="TIMELINE">
+    <style>
+    #TIMELINE{padding:6rem 0 5rem;background:#f4efe7;border-top:1px solid rgba(201,162,39,.1);position:relative;overflow:hidden;}
+    [data-theme="dark"] #TIMELINE{background:#0c0a08;border-color:rgba(201,162,39,.08);}
+    #TIMELINE::before{content:'';position:absolute;inset:0;pointer-events:none;
+      background:radial-gradient(ellipse 60% 50% at 50% 0%,rgba(201,162,39,.06) 0%,transparent 65%);}
+    .TLW{max-width:1100px;margin:0 auto;padding:0 2rem;}
+    .TLH{text-align:center;margin-bottom:4rem;}
+    .TLE{display:inline-flex;align-items:center;gap:.8rem;margin-bottom:1rem;}
+    .TLE::before,.TLE::after{content:'';display:block;width:36px;height:1px;}
+    .TLE::before{background:linear-gradient(90deg,transparent,rgba(201,162,39,.5));}
+    .TLE::after{background:linear-gradient(90deg,rgba(201,162,39,.5),transparent);}
+    .TLE span{font-size:.58rem;letter-spacing:.28em;text-transform:uppercase;color:#c9a227;font-family:'DM Sans',sans-serif;}
+    .TLT{font-family:'Cormorant Garamond',serif;font-size:clamp(1.9rem,3.5vw,2.9rem);font-weight:400;color:#1c1917;margin:0 0 .4rem;line-height:1.1;}
+    [data-theme="dark"] .TLT{color:#f0e6c8;}
+    .TLS{font-family:'DM Sans',sans-serif;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(28,25,23,.35);margin:0;}
+    [data-theme="dark"] .TLS{color:rgba(240,230,200,.3);}
+
+    /* The actual timeline */
+    .TL{position:relative;padding:0 0 2rem;}
+    .TL::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:1px;
+      background:linear-gradient(to bottom,transparent 0%,rgba(201,162,39,.25) 5%,rgba(201,162,39,.25) 95%,transparent 100%);
+      transform:translateX(-50%);}
+    @media(max-width:700px){.TL::before{left:20px;}}
+
+    .TL-ITEM{display:grid;grid-template-columns:1fr 40px 1fr;gap:0;margin-bottom:2.5rem;position:relative;}
+    @media(max-width:700px){.TL-ITEM{grid-template-columns:52px 1fr;}}
+
+    .TL-LEFT{text-align:right;padding-right:2rem;padding-top:.4rem;}
+    .TL-RIGHT{text-align:left;padding-left:2rem;padding-top:.4rem;}
+    .TL-LEFT.empty,.TL-RIGHT.empty{opacity:0;pointer-events:none;}
+    @media(max-width:700px){.TL-LEFT{display:none;}.TL-RIGHT{padding-left:1.2rem;text-align:left;}}
+
+    .TL-DOT{display:flex;align-items:flex-start;justify-content:center;padding-top:.3rem;}
+    .TL-DOT-INNER{width:12px;height:12px;border-radius:50%;background:#c9a227;
+      border:2px solid var(--color-bg-alt,#f4efe7);
+      box-shadow:0 0 0 3px rgba(201,162,39,.2);
+      flex-shrink:0;margin-top:.35rem;}
+    [data-theme="dark"] .TL-DOT-INNER{border-color:#0c0a08;}
+
+    .TL-YEAR{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:300;
+      color:#c9a227;line-height:1;margin-bottom:.25rem;letter-spacing:.02em;}
+    .TL-CARD-TITLE{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;
+      color:#1c1917;line-height:1.3;margin-bottom:.35rem;}
+    [data-theme="dark"] .TL-CARD-TITLE{color:#e0d4b0;}
+    .TL-CARD-TEXT{font-family:'DM Sans',sans-serif;font-size:.7rem;line-height:1.8;
+      color:rgba(44,40,36,.65);font-weight:300;}
+    [data-theme="dark"] .TL-CARD-TEXT{color:rgba(200,185,155,.55);}
+    .TL-ERA{display:inline-block;font-size:.45rem;letter-spacing:.22em;text-transform:uppercase;
+      color:#b8902a;background:rgba(201,162,39,.1);padding:.15rem .55rem;
+      border-radius:100px;margin-bottom:.4rem;}
+    </style>
+
+    <div class="TLW">
+      <div class="TLH">
+        <div class="TLE"><span>Хронологія</span></div>
+        <h2 class="TLT">Ключові події <em style="color:#c9a227;font-style:italic;">Дубровиці</em></h2>
+        <p class="TLS">1005 — XXI століття</p>
+      </div>
+
+      <div class="TL">
+        <!-- 1005 -->
+        <div class="TL-ITEM fade-in-up">
+          <div class="TL-LEFT">
+            <div class="TL-ERA">Давньоруська доба</div>
+            <div class="TL-YEAR">1005</div>
+            <div class="TL-CARD-TITLE">Перша письмова згадка</div>
+            <div class="TL-CARD-TEXT">Найдавніша згадка про Дубровицю — у давньоруських літописах. Місто стає одним із найстаріших поселень Волинського Полісся.</div>
+          </div>
+          <div class="TL-DOT"><div class="TL-DOT-INNER"></div></div>
+          <div class="TL-RIGHT empty"></div>
+        </div>
+        <!-- 1576 -->
+        <div class="TL-ITEM fade-in-up">
+          <div class="TL-LEFT empty"></div>
+          <div class="TL-DOT"><div class="TL-DOT-INNER"></div></div>
+          <div class="TL-RIGHT">
+            <div class="TL-ERA">Епоха князів</div>
+            <div class="TL-YEAR">1576</div>
+            <div class="TL-CARD-TITLE">Заповіт Марії Курбської</div>
+            <div class="TL-CARD-TEXT">У заповіті Марії Гольшанської-Курбської згадується Пречистенська церква — перша документальна згадка про православний храм у Дубровиці.</div>
+          </div>
+        </div>
+        <!-- 1684 -->
+        <div class="TL-ITEM fade-in-up">
+          <div class="TL-LEFT">
+            <div class="TL-ERA">Польська доба</div>
+            <div class="TL-YEAR">1684</div>
+            <div class="TL-CARD-TITLE">Перший костел</div>
+            <div class="TL-CARD-TEXT">Побудовано перший дерев'яний католицький костел коштом Яна Кароля Дольського. Разом з ним засновано колегіум ордену піарів — рідкісний освітній заклад на Поліссі.</div>
+          </div>
+          <div class="TL-DOT"><div class="TL-DOT-INNER"></div></div>
+          <div class="TL-RIGHT empty"></div>
+        </div>
+        <!-- 1709 -->
+        <div class="TL-ITEM fade-in-up">
+          <div class="TL-LEFT empty"></div>
+          <div class="TL-DOT"><div class="TL-DOT-INNER"></div></div>
+          <div class="TL-RIGHT">
+            <div class="TL-ERA">Північна війна</div>
+            <div class="TL-YEAR">1709</div>
+            <div class="TL-CARD-TITLE">Спалення шведами</div>
+            <div class="TL-CARD-TEXT">Після Полтавської битви шведські війська під час відступу спалюють дерев'яний костел. Місто зазнає значних руйнувань.</div>
+          </div>
+        </div>
+        <!-- 1742 -->
+        <div class="TL-ITEM fade-in-up">
+          <div class="TL-LEFT">
+            <div class="TL-ERA">Рококо</div>
+            <div class="TL-YEAR">1742</div>
+            <div class="TL-CARD-TITLE">Консекрація мурованого костелу</div>
+            <div class="TL-CARD-TEXT">Єпископ Франциск Кобельський освячує новий мурований костел Іоанна Хрестителя. Споруда в стилі рококо — трьохнавна базиліка — стане головним архітектурним символом міста.</div>
+          </div>
+          <div class="TL-DOT"><div class="TL-DOT-INNER"></div></div>
+          <div class="TL-RIGHT empty"></div>
+        </div>
+        <!-- 1855 -->
+        <div class="TL-ITEM fade-in-up">
+          <div class="TL-LEFT empty"></div>
+          <div class="TL-DOT"><div class="TL-DOT-INNER"></div></div>
+          <div class="TL-RIGHT">
+            <div class="TL-ERA">Російська імперія</div>
+            <div class="TL-YEAR">1855</div>
+            <div class="TL-CARD-TITLE">Топографічний план міста</div>
+            <div class="TL-CARD-TEXT">Укладено рукописний топографічний план Дубровиці в масштабі 30 саженів у дюймі. Власник міста — граф Ф. Платер. План зберігся до наших днів і доступний у цьому архіві.</div>
+          </div>
+        </div>
+        <!-- 1861 -->
+        <div class="TL-ITEM fade-in-up">
+          <div class="TL-LEFT">
+            <div class="TL-ERA">XIX ст.</div>
+            <div class="TL-YEAR">1861</div>
+            <div class="TL-CARD-TITLE">Мурована церква Різдва</div>
+            <div class="TL-CARD-TEXT">Граф Ігнатій Броель-Плятер фінансує будівництво мурованої церкви Різдва Пресвятої Богородиці — трьохкупольної базиліки у стилі пізнього бароко.</div>
+          </div>
+          <div class="TL-DOT"><div class="TL-DOT-INNER"></div></div>
+          <div class="TL-RIGHT empty"></div>
+        </div>
+        <!-- 1916 -->
+        <div class="TL-ITEM fade-in-up">
+          <div class="TL-LEFT empty"></div>
+          <div class="TL-DOT"><div class="TL-DOT-INNER"></div></div>
+          <div class="TL-RIGHT">
+            <div class="TL-ERA">Перша світова</div>
+            <div class="TL-YEAR">1916</div>
+            <div class="TL-CARD-TITLE">Миловарний завод і фронт</div>
+            <div class="TL-CARD-TEXT">У Дубровиці діє завод Комітету Всеросійського земського союзу Південно-Захід­ного фронту. Унікальні фотографії 1916 року зберігаються в архіві.</div>
+          </div>
+        </div>
+        <!-- 1945 -->
+        <div class="TL-ITEM fade-in-up">
+          <div class="TL-LEFT">
+            <div class="TL-ERA">Радянська окупація</div>
+            <div class="TL-YEAR">1945</div>
+            <div class="TL-CARD-TITLE">Знищення сакральних пам'яток</div>
+            <div class="TL-CARD-TEXT">Костел і церква закриваються, дзвони та орган знищені. Унікальний венеційський вітраж костелу безслідно зникає. Обидві пам'ятки перетворюються на склади.</div>
+          </div>
+          <div class="TL-DOT"><div class="TL-DOT-INNER"></div></div>
+          <div class="TL-RIGHT empty"></div>
+        </div>
+        <!-- 1992 -->
+        <div class="TL-ITEM fade-in-up">
+          <div class="TL-LEFT empty"></div>
+          <div class="TL-DOT"><div class="TL-DOT-INNER"></div></div>
+          <div class="TL-RIGHT">
+            <div class="TL-ERA">Незалежна Україна</div>
+            <div class="TL-YEAR">1992</div>
+            <div class="TL-CARD-TITLE">Відродження храмів</div>
+            <div class="TL-CARD-TEXT">Костел освячено повторно єпископом Маркіяном Трофим'яком. Православна церква Різдва Богородиці повертається громаді. Починається епоха відновлення культурної спадщини.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </section>
+    <!-- ═══ END TIMELINE ═══ -->
 
     <!-- ═══ AERIAL MAPS SECTION ═══ -->
     <section id="AER">
@@ -877,7 +1054,7 @@
       box-shadow:0 0 0 1px rgba(201,162,39,.18),0 2px 8px rgba(0,0,0,.06),0 12px 40px rgba(0,0,0,.16);
       background:#1a1206;cursor:grab;user-select:none;}
     .TPMBOX:active{cursor:grabbing;}
-    .TPMIMG{display:block;width:100%;height:auto;transform-origin:0 0;will-change:transform;max-height:68vh;object-fit:cover;}
+    .TPMIMG{display:block;width:100%;height:auto;transform-origin:0 0;will-change:transform;}
     .TPMBOX::before,.TPMBOX::after{content:'';position:absolute;width:28px;height:28px;z-index:6;pointer-events:none;}
     .TPMBOX::before{top:10px;left:10px;border-top:1.5px solid rgba(201,162,39,.5);border-left:1.5px solid rgba(201,162,39,.5);}
     .TPMBOX::after{bottom:10px;right:10px;border-bottom:1.5px solid rgba(201,162,39,.5);border-right:1.5px solid rgba(201,162,39,.5);}
@@ -1031,18 +1208,22 @@
     .TPFSMT .val{color:rgba(240,220,160,.7);}
 
     /* ── BOTTOM BAR ── */
-    .TPBOTTOM{margin-top:2.5rem;background:#fff;border:1px solid #e8e0d0;border-radius:12px;
-      padding:1.5rem 2rem;display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;
-      box-shadow:0 2px 8px rgba(0,0,0,.03),0 6px 24px rgba(0,0,0,.04);}
-    [data-theme="dark"] .TPBOTTOM{background:#161210;border-color:#2a2218;}
-    @media(max-width:640px){.TPBOTTOM{grid-template-columns:1fr;gap:1.2rem;}}
-    .TPBITEM{display:flex;flex-direction:column;gap:.4rem;}
-    .TPBICO{width:32px;height:32px;border-radius:8px;background:rgba(201,162,39,.1);
-      display:flex;align-items:center;justify-content:center;margin-bottom:.3rem;}
-    .TPBICO svg{width:16px;height:16px;color:#c9a227;}
-    .TPBTH{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:#1c1917;}
+    .TPBOTTOM{margin-top:2.5rem;display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;
+      box-sizing:border-box;}
+    @media(max-width:640px){.TPBOTTOM{grid-template-columns:1fr;gap:.75rem;}}
+    .TPBITEM{display:flex;flex-direction:column;gap:.4rem;
+      background:#fff;border:1px solid #e8e0d0;border-radius:12px;padding:1.5rem 1.6rem;
+      box-shadow:0 2px 8px rgba(0,0,0,.03),0 6px 24px rgba(0,0,0,.04);
+      transition:box-shadow .3s ease,border-color .3s ease;}
+    .TPBITEM:hover{box-shadow:0 4px 16px rgba(0,0,0,.07),0 12px 36px rgba(201,162,39,.07);border-color:rgba(201,162,39,.25);}
+    [data-theme="dark"] .TPBITEM{background:#161210;border-color:#2a2218;}
+    [data-theme="dark"] .TPBITEM:hover{border-color:rgba(201,162,39,.2);}
+    .TPBICO{width:36px;height:36px;border-radius:10px;background:rgba(201,162,39,.1);
+      display:flex;align-items:center;justify-content:center;margin-bottom:.5rem;}
+    .TPBICO svg{width:17px;height:17px;color:#c9a227;}
+    .TPBTH{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:600;color:#1c1917;}
     [data-theme="dark"] .TPBTH{color:#e0d4b8;}
-    .TPBTD{font-family:'DM Sans',sans-serif;font-size:.72rem;color:rgba(44,36,28,.6);line-height:1.65;}
+    .TPBTD{font-family:'DM Sans',sans-serif;font-size:.72rem;color:rgba(44,36,28,.62);line-height:1.7;}
     [data-theme="dark"] .TPBTD{color:rgba(180,160,120,.5);}
 
     @media(max-width:640px){.TPZW{bottom:10px;left:10px;}.TPBADGE{top:10px;right:10px;}.TPFSB{bottom:10px;right:10px;}.TPT{font-size:1.7rem;}}

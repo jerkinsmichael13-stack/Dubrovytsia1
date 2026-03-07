@@ -36,8 +36,7 @@ const CATEGORY_NAMES = {
 function initTheme() {
     const themeToggle = document.getElementById('themeToggle');
     if (!themeToggle) return;
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    document.documentElement.setAttribute('data-theme', savedTheme);
+    // Theme is already applied by the inline script in <head> — just wire up the toggle
     themeToggle.addEventListener('click', function() {
         const current = document.documentElement.getAttribute('data-theme');
         const newTheme = current === 'dark' ? 'light' : 'dark';
@@ -51,13 +50,17 @@ function initMobileNav() {
     const nav = document.querySelector('.nav');
     if (!menuToggle || !nav) return;
     menuToggle.addEventListener('click', function() {
-        nav.classList.toggle('active');
+        const isOpen = nav.classList.toggle('active');
         this.classList.toggle('active');
+        this.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        this.setAttribute('aria-label', isOpen ? 'Закрити меню' : 'Відкрити меню');
     });
     document.querySelectorAll('.nav a').forEach(link => {
         link.addEventListener('click', () => {
             nav.classList.remove('active');
             menuToggle.classList.remove('active');
+            menuToggle.setAttribute('aria-expanded', 'false');
+            menuToggle.setAttribute('aria-label', 'Відкрити меню');
         });
     });
 }
@@ -127,7 +130,10 @@ function initCounters() {
             }
         };
         const observer = new IntersectionObserver(entries => {
-            if (entries[0].isIntersecting && current === 0) updateCounter();
+            if (entries[0].isIntersecting && current === 0) {
+                updateCounter();
+                observer.unobserve(counter);
+            }
         });
         observer.observe(counter);
     });
@@ -500,6 +506,23 @@ document.addEventListener('DOMContentLoaded', () => {
     if (document.getElementById('booksGrid')) initBooksPage();
     if (document.getElementById('metricsGrid')) initMetricsPage();
     if (document.getElementById('adminLoginBtn')) initAdmin();
+
+    // Dynamic photo count stat on homepage
+    const photoCountStat = document.getElementById('photoCountStat');
+    if (photoCountStat) {
+        fetch(GITHUB_RAW + 'photos.json?v=' + Date.now())
+            .then(r => r.ok ? r.json() : null)
+            .then(data => {
+                if (data && data.length) {
+                    photoCountStat.setAttribute('data-target', data.length);
+                    // Re-run counter if already animated
+                    if (photoCountStat.textContent !== '0') {
+                        photoCountStat.textContent = data.length.toLocaleString('uk-UA');
+                    }
+                }
+            })
+            .catch(() => {});
+    }
 
     // Premium enhancements
     initScrollProgress();
