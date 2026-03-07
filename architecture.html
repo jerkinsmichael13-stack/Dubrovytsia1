@@ -267,8 +267,10 @@
     }
     .KGAL-ITEM { position: relative; overflow: hidden; border-radius: 4px; background: var(--color-bg-secondary, #ede7db); cursor: pointer; }
     .KGAL-MAIN { grid-row: span 2; }
-    .KGAL-ITEM img { width: 100%; height: 100%; object-fit: cover; display: block; filter: contrast(1.02) brightness(1.05) saturate(.88); transition: transform .5s ease, filter .5s ease; }
-    .KGAL-ITEM:hover img { transform: scale(1.04); filter: contrast(1.04) brightness(1.1) saturate(.92); }
+    .KGAL-ITEM img { width: 100%; height: 100%; object-fit: cover; display: block; filter: contrast(1.02) brightness(1.05) saturate(.88); transition: transform 0.65s cubic-bezier(0.22,1,0.36,1), filter 0.65s ease; }
+    .KGAL-ITEM:hover img { transform: scale(1.05); filter: contrast(1.04) brightness(1.08) saturate(.92); }
+    .KGAL-ITEM::after { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0); transition: background 0.45s ease; pointer-events: none; }
+    .KGAL-ITEM:hover::after { background: rgba(0,0,0,0.06); }
 
     /* Text block (Tserkva + Yuliania) */
     .KTXT-BLOCK { max-width: 1060px; margin: 0 auto; padding: 0 1.5rem; }
@@ -525,15 +527,64 @@
         <!-- Gallery -->
         <div class="KGAL">
             <div class="KGAL-HDR"><div class="KGAL-TITLE">Інтер'єр костелу</div></div>
-            <div style="display:inline-flex;align-items:center;gap:.5rem;padding:.4rem .85rem;background:rgba(201,162,39,.07);border:1px solid rgba(201,162,39,.2);border-radius:100px;margin-bottom:1rem;font-family:'DM Sans',sans-serif;font-size:.65rem;color:rgba(28,25,23,.55);letter-spacing:.04em;">
+            <div style="display:inline-flex;align-items:center;gap:.5rem;padding:.4rem .85rem;background:rgba(201,162,39,.07);border:1px solid rgba(201,162,39,.2);border-radius:100px;margin-bottom:1.5rem;font-family:'DM Sans',sans-serif;font-size:.65rem;color:rgba(28,25,23,.55);letter-spacing:.04em;">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:12px;height:12px;flex-shrink:0;color:#c9a227;"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
               Деякі фотографії колоризовані за допомогою ШІ
             </div>
-            <div class="KGAL-GRID">
-                <div class="KGAL-ITEM KGAL-MAIN" onclick="openKLB(this)"><img src="https://i.imgur.com/u6vHC49.jpeg" alt="Інтер'єр" loading="lazy"></div>
-                <div class="KGAL-ITEM" onclick="openKLB(this)"><img src="https://i.imgur.com/pcuoEmD.jpeg" alt="Інтер'єр" loading="lazy"></div>
-                <div class="KGAL-ITEM" onclick="openKLB(this)"><img src="https://i.imgur.com/JM3Qg4Z.jpeg" alt="Інтер'єр" loading="lazy"></div>
-                <div class="KGAL-ITEM" onclick="openKLB(this)"><img src="https://i.imgur.com/dHKnHPp.jpeg" alt="Інтер'єр" loading="lazy"></div>
+
+            <!-- Hero row: large + 2 stacked -->
+            <div style="display:grid;grid-template-columns:1.65fr 1fr;grid-template-rows:1fr 1fr;gap:.5rem;height:560px;margin-bottom:.5rem;">
+                <div class="KGAL-ITEM KGAL-MAIN" onclick="openKLB(this)" style="grid-row:span 2;">
+                    <img src="https://i.imgur.com/u6vHC49.jpeg" alt="Інтер'єр — головна нава" loading="lazy">
+                </div>
+                <div class="KGAL-ITEM" onclick="openKLB(this)">
+                    <img src="https://i.imgur.com/pcuoEmD.jpeg" alt="Інтер'єр — деталь" loading="lazy">
+                </div>
+                <div class="KGAL-ITEM" onclick="openKLB(this)">
+                    <img src="https://i.imgur.com/JM3Qg4Z.jpeg" alt="Інтер'єр — деталь" loading="lazy">
+                </div>
+            </div>
+
+            <!-- Second row: 3 equal -->
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.5rem;height:300px;margin-bottom:.5rem;">
+                <div class="KGAL-ITEM" onclick="openKLB(this)">
+                    <img src="https://i.imgur.com/dHKnHPp.jpeg" alt="Інтер'єр — вхідні двері" loading="lazy">
+                </div>
+                <div class="KGAL-ITEM" onclick="openKLB(this)">
+                    <img src="https://i.imgur.com/3bLmxz5.jpeg" alt="Інтер'єр костелу" loading="lazy">
+                </div>
+                <div class="KGAL-ITEM" onclick="openKLB(this)">
+                    <img src="https://i.imgur.com/zbKrwKN.jpeg" alt="Інтер'єр костелу" loading="lazy">
+                </div>
+            </div>
+
+            <!-- Third row: wide + narrow -->
+            <div style="display:grid;grid-template-columns:1fr 1.4fr 1fr;gap:.5rem;height:300px;margin-bottom:.5rem;">
+                <div class="KGAL-ITEM" onclick="openKLB(this)">
+                    <img src="https://i.imgur.com/0igOEVC.jpeg" alt="Інтер'єр — боковий вівтар" loading="lazy">
+                </div>
+                <div class="KGAL-ITEM" onclick="openKLB(this)">
+                    <img src="https://i.imgur.com/gnTjNCA.jpeg" alt="Інтер'єр — головний вівтар" loading="lazy">
+                </div>
+                <div class="KGAL-ITEM" onclick="openKLB(this)">
+                    <img src="https://i.imgur.com/q3SmLO9.jpeg" alt="Інтер'єр — деталь декору" loading="lazy">
+                </div>
+            </div>
+
+            <!-- Fourth row: 4 equal -->
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:.5rem;height:240px;">
+                <div class="KGAL-ITEM" onclick="openKLB(this)">
+                    <img src="https://i.imgur.com/tOUTvDh.jpeg" alt="Інтер'єр — склепіння" loading="lazy">
+                </div>
+                <div class="KGAL-ITEM" onclick="openKLB(this)">
+                    <img src="https://i.imgur.com/LbvFW0Z.jpeg" alt="Інтер'єр — орнамент" loading="lazy">
+                </div>
+                <div class="KGAL-ITEM" onclick="openKLB(this)">
+                    <img src="https://i.imgur.com/3SPjwUS.jpeg" alt="Інтер'єр — деталь" loading="lazy">
+                </div>
+                <div class="KGAL-ITEM" onclick="openKLB(this)">
+                    <img src="https://i.imgur.com/r24PUh2.jpeg" alt="Інтер'єр — вид збоку" loading="lazy">
+                </div>
             </div>
         </div>
 

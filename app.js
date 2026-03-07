@@ -19,6 +19,8 @@ let currentFilter       = 'all';
 let currentCategory     = 'all';
 let filteredPhotos       = [];
 let currentPhotoIndex   = 0;
+let currentGalleryPage  = 1;
+const PHOTOS_PER_PAGE   = 12;
 let activeBookFilter    = 'all';
 let activeMetricConfession = 'all';
 let activeMetricType    = 'all';
@@ -314,9 +316,10 @@ async function initPhotoGallery() {
     initLightbox();
 }
 
-function displayPhotos() {
+function displayPhotos(resetPage) {
     const gallery = document.getElementById('photoGallery');
     if (!gallery) return;
+    if (resetPage) currentGalleryPage = 1;
     filteredPhotos = ALL_PHOTOS.filter(p =>
         (currentFilter === 'all' || p.period === currentFilter) &&
         (currentCategory === 'all' || p.category === currentCategory)
@@ -324,12 +327,17 @@ function displayPhotos() {
     if (!filteredPhotos.length) {
         gallery.style.cssText = 'display:flex;justify-content:center;align-items:center;min-height:300px;column-count:unset';
         gallery.innerHTML = '<p style="font-family:var(--font-display);font-size:1.3rem;color:var(--color-text-secondary);text-align:center">За обраними фільтрами нічого не знайдено</p>';
+        renderPagination(0);
         return;
     }
+    const totalPages = Math.ceil(filteredPhotos.length / PHOTOS_PER_PAGE);
+    if (currentGalleryPage > totalPages) currentGalleryPage = totalPages;
+    const start = (currentGalleryPage - 1) * PHOTOS_PER_PAGE;
+    const pagePhotos = filteredPhotos.slice(start, start + PHOTOS_PER_PAGE);
     gallery.style.cssText = '';
-    gallery.innerHTML = filteredPhotos.map((p, i) => `
-        <div class="photo-card" onclick="openLightbox(${i})">
-            <img src="${imgurThumb(p.imageUrl)}" alt="${p.title}" loading="lazy">
+    gallery.innerHTML = pagePhotos.map((p, i) => `
+        <div class="photo-card" onclick="openLightbox(${start + i})">
+            <img src="${imgurThumb(p.imageUrl)}" alt="${p.title}" loading="lazy" decoding="async">
             <div class="photo-overlay">
                 <div class="photo-info">
                     <h3>${p.title}</h3>
@@ -341,6 +349,43 @@ function displayPhotos() {
     `).join('');
     enhancePhotoCards();
     initImageReveal();
+    renderPagination(totalPages);
+}
+
+function renderPagination(totalPages) {
+    let pg = document.getElementById('galleryPagination');
+    if (!pg) {
+        pg = document.createElement('div');
+        pg.id = 'galleryPagination';
+        const section = document.querySelector('.gallery-section .container');
+        if (section) section.appendChild(pg);
+    }
+    if (totalPages <= 1) { pg.innerHTML = ''; return; }
+    let html = '<div class="gallery-pagination">';
+    // Prev
+    html += `<button class="pg-btn${currentGalleryPage === 1 ? ' pg-disabled' : ''}" onclick="goToGalleryPage(${currentGalleryPage - 1})">‹</button>`;
+    // Page numbers
+    for (let i = 1; i <= totalPages; i++) {
+        if (i === 1 || i === totalPages || Math.abs(i - currentGalleryPage) <= 1) {
+            html += `<button class="pg-btn${i === currentGalleryPage ? ' pg-active' : ''}" onclick="goToGalleryPage(${i})">${i}</button>`;
+        } else if (Math.abs(i - currentGalleryPage) === 2) {
+            html += `<span class="pg-ellipsis">…</span>`;
+        }
+    }
+    // Next
+    html += `<button class="pg-btn${currentGalleryPage === totalPages ? ' pg-disabled' : ''}" onclick="goToGalleryPage(${currentGalleryPage + 1})">›</button>`;
+    html += '</div>';
+    pg.innerHTML = html;
+}
+
+function goToGalleryPage(page) {
+    const totalPages = Math.ceil(filteredPhotos.length / PHOTOS_PER_PAGE);
+    if (page < 1 || page > totalPages) return;
+    currentGalleryPage = page;
+    displayPhotos(false);
+    // Scroll to gallery top
+    const galSection = document.querySelector('.gallery-section');
+    if (galSection) galSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function initGalleryFilters() {
@@ -349,7 +394,7 @@ function initGalleryFilters() {
             document.querySelectorAll(sel).forEach(x => x.classList.remove('active'));
             this.classList.add('active');
             window[prop] = this.dataset[setter];
-            displayPhotos();
+            displayPhotos(true);
         });
     });
     bind('.filter-btn',   'currentFilter',   'filter');

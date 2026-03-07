@@ -869,12 +869,14 @@
     .TPS{font-family:'DM Sans',sans-serif;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(28,25,23,.4);margin:0;}
     [data-theme="dark"] .TPS{color:rgba(240,230,200,.3);}
 
-    /* ── MAIN GRID ── */
-    .TPG{display:grid;grid-template-columns:1fr 300px;gap:2rem;align-items:start;}
-    @media(max-width:900px){.TPG{grid-template-columns:1fr;}}
+    /* ── MAIN GRID — map takes full width, sidebar below ── */
+    .TPG{display:grid;grid-template-columns:1fr;gap:2rem;align-items:start;}
+    .TPSB{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin-top:1.5rem;}
+    @media(max-width:900px){.TPSB{grid-template-columns:1fr;}}
+    @media(max-width:640px){.TPSB{grid-template-columns:1fr;}}
 
     /* ── MAP WRAPPER ── */
-    .TPMBOX{position:relative;border-radius:4px;overflow:hidden;
+    .TPMBOX{position:relative;border-radius:4px;overflow:hidden;max-height:80vh;
       box-shadow:0 0 0 1px rgba(201,162,39,.18),0 2px 8px rgba(0,0,0,.06),0 12px 40px rgba(0,0,0,.16);
       background:#1a1206;cursor:grab;user-select:none;}
     .TPMBOX:active{cursor:grabbing;}
@@ -940,8 +942,7 @@
       transition:opacity .5s;z-index:8;}
     .TPMBOX.moved .TPHINT{opacity:0;}
 
-    /* ── SIDEBAR ── */
-    .TPSB{display:flex;flex-direction:column;gap:1.2rem;position:sticky;top:90px;}
+    /* ── SIDEBAR / INFO CARDS ── */
     .TPCARD{background:#fff;border:1px solid #e8e0d0;border-radius:12px;padding:1.4rem 1.3rem;
       box-shadow:0 2px 8px rgba(0,0,0,.04),0 6px 24px rgba(0,0,0,.05);}
     [data-theme="dark"] .TPCARD{background:#161210;border-color:#2a2218;}
@@ -2285,7 +2286,7 @@
     cursor: grab;
     user-select: none;
     -webkit-overflow-scrolling: touch;
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
     padding: 2rem 0 3rem;
     z-index: 1;
     
@@ -2480,16 +2481,12 @@
     opacity: .3;
 }
 
-/* Gold accent edge on top */
+/* Gold accent edge on top — removed */
 .HTL-PHOTO::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, transparent, rgba(201,162,39,.7), transparent);
-    z-index: 2;
+    top: 0; left: 0; right: 0;
+    height: 0;
     pointer-events: none;
 }
 
@@ -2651,7 +2648,7 @@
     <!-- 1: 1005 — Перша згадка -->
     <div class="HTL-ITEM">
       <div class="HTL-TOP">
-        <div class="HTL-PHOTO"><img src="https://i.imgur.com/ZKkcU77.jpeg" alt="Дубровиця 1920-і" loading="lazy"></div>
+        <div class="HTL-PHOTO"><img src="https://i.imgur.com/ZKkcU77m.jpeg" alt="Дубровиця 1920-і" loading="lazy" decoding="async" width="200" height="140"></div>
         <div class="HTL-LINE-UP"></div>
       </div>
       <div class="HTL-DOT"></div>
@@ -2719,7 +2716,7 @@
     <!-- 5: 1695–1702 — Костел -->
     <div class="HTL-ITEM">
       <div class="HTL-TOP">
-        <div class="HTL-PHOTO"><img src="https://i.imgur.com/n74FSvK.jpeg" alt="Костел Іоанна Хрестителя" loading="lazy"></div>
+        <div class="HTL-PHOTO"><img src="https://i.imgur.com/n74FSvKm.jpeg" alt="Костел Іоанна Хрестителя" loading="lazy" decoding="async" width="200" height="140"></div>
         <div class="HTL-LINE-UP"></div>
       </div>
       <div class="HTL-DOT"></div>
@@ -2753,7 +2750,7 @@
     <!-- 7: 1862 — Церква Різдва -->
     <div class="HTL-ITEM">
       <div class="HTL-TOP">
-        <div class="HTL-PHOTO"><img src="https://i.imgur.com/0HyroRq.jpeg" alt="Церква Різдва Богородиці" loading="lazy"></div>
+        <div class="HTL-PHOTO"><img src="https://i.imgur.com/0HyroRqm.jpeg" alt="Церква Різдва Богородиці" loading="lazy" decoding="async" width="200" height="140"></div>
         <div class="HTL-LINE-UP"></div>
       </div>
       <div class="HTL-DOT"></div>
@@ -2780,14 +2777,14 @@
       <div class="HTL-DOT"></div>
       <div class="HTL-BOTTOM">
         <div class="HTL-LINE-DOWN"></div>
-        <div class="HTL-PHOTO"><img src="https://i.imgur.com/PrOxw4k.png" alt="Миловарний завод 1916" loading="lazy"></div>
+        <div class="HTL-PHOTO"><img src="https://i.imgur.com/PrOxw4km.png" alt="Миловарний завод 1916" loading="lazy" decoding="async" width="200" height="140"></div>
       </div>
     </div>
 
     <!-- 9: 1920–1939 — Польща -->
     <div class="HTL-ITEM">
       <div class="HTL-TOP">
-        <div class="HTL-PHOTO"><img src="https://i.imgur.com/qcjgN1I.jpeg" alt="Дубровиця міжвоєнна" loading="lazy"></div>
+        <div class="HTL-PHOTO"><img src="https://i.imgur.com/qcjgN1Im.jpeg" alt="Дубровиця міжвоєнна" loading="lazy" decoding="async" width="200" height="140"></div>
         <div class="HTL-LINE-UP"></div>
       </div>
       <div class="HTL-DOT"></div>
@@ -2814,14 +2811,14 @@
       <div class="HTL-DOT"></div>
       <div class="HTL-BOTTOM">
         <div class="HTL-LINE-DOWN"></div>
-        <div class="HTL-PHOTO"><img src="https://i.imgur.com/trildJW.jpeg" alt="Костел вхідна брама 1929" loading="lazy"></div>
+        <div class="HTL-PHOTO"><img src="https://i.imgur.com/trildJWm.jpeg" alt="Костел вхідна брама 1929" loading="lazy" decoding="async" width="200" height="140"></div>
       </div>
     </div>
 
     <!-- 11: 1940 — Статус міста -->
     <div class="HTL-ITEM">
       <div class="HTL-TOP">
-        <div class="HTL-PHOTO"><img src="https://i.imgur.com/WzMH0hh.jpeg" alt="Будівлі Дубровиці" loading="lazy"></div>
+        <div class="HTL-PHOTO"><img src="https://i.imgur.com/WzMH0hhm.jpeg" alt="Будівлі Дубровиці" loading="lazy" decoding="async" width="200" height="140"></div>
         <div class="HTL-LINE-UP"></div>
       </div>
       <div class="HTL-DOT"></div>
@@ -2848,14 +2845,14 @@
       <div class="HTL-DOT"></div>
       <div class="HTL-BOTTOM">
         <div class="HTL-LINE-DOWN"></div>
-        <div class="HTL-PHOTO"><img src="https://i.imgur.com/zef8WRy.jpeg" alt="Аерофото 1943" loading="lazy"></div>
+        <div class="HTL-PHOTO"><img src="https://i.imgur.com/zef8WRym.jpeg" alt="Аерофото 1943" loading="lazy" decoding="async" width="200" height="140"></div>
       </div>
     </div>
 
     <!-- 13: 1944 — Червона армія -->
     <div class="HTL-ITEM">
       <div class="HTL-TOP">
-        <div class="HTL-PHOTO"><img src="https://i.imgur.com/CImFE7S.jpeg" alt="Аерофото 1944" loading="lazy"></div>
+        <div class="HTL-PHOTO"><img src="https://i.imgur.com/CImFE7Sm.jpeg" alt="Аерофото 1944" loading="lazy" decoding="async" width="200" height="140"></div>
         <div class="HTL-LINE-UP"></div>
       </div>
       <div class="HTL-DOT"></div>
@@ -2889,7 +2886,7 @@
     <!-- 15: 1960–80-ті — Радянська доба -->
     <div class="HTL-ITEM">
       <div class="HTL-TOP">
-        <div class="HTL-PHOTO"><img src="https://i.imgur.com/irxrwBo.jpeg" alt="Пам'ятник Щанкіна" loading="lazy"></div>
+        <div class="HTL-PHOTO"><img src="https://i.imgur.com/irxrwBom.jpeg" alt="Пам'ятник Щанкіна" loading="lazy" decoding="async" width="200" height="140"></div>
         <div class="HTL-LINE-UP"></div>
       </div>
       <div class="HTL-DOT"></div>
@@ -2916,7 +2913,7 @@
       <div class="HTL-DOT"></div>
       <div class="HTL-BOTTOM">
         <div class="HTL-LINE-DOWN"></div>
-        <div class="HTL-PHOTO"><img src="https://i.imgur.com/71NjCcc.jpeg" alt="Церква Різдва 1977" loading="lazy"></div>
+        <div class="HTL-PHOTO"><img src="https://i.imgur.com/71NjCccm.jpeg" alt="Церква Різдва 1977" loading="lazy" decoding="async" width="200" height="140"></div>
       </div>
     </div>
 
