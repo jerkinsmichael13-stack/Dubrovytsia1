@@ -380,22 +380,30 @@ function goToGalleryPage(page) {
 }
 
 function initGalleryFilters() {
-    document.querySelectorAll('.filter-btn').forEach(b => {
-        b.addEventListener('click', function() {
-            document.querySelectorAll('.filter-btn').forEach(x => x.classList.remove('active'));
-            this.classList.add('active');
-            currentFilter = this.dataset.filter;
-            displayPhotos(true);
+    function attachFilter() {
+        document.querySelectorAll('.filter-btn').forEach(b => {
+            // Remove old listeners by cloning
+            const nb = b.cloneNode(true);
+            b.parentNode.replaceChild(nb, b);
+            nb.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(x => x.classList.remove('active'));
+                this.classList.add('active');
+                currentFilter = this.dataset.filter;
+                displayPhotos(true);
+            });
         });
-    });
-    document.querySelectorAll('.category-btn').forEach(b => {
-        b.addEventListener('click', function() {
-            document.querySelectorAll('.category-btn').forEach(x => x.classList.remove('active'));
-            this.classList.add('active');
-            currentCategory = this.dataset.category;
-            displayPhotos(true);
+        document.querySelectorAll('.category-btn').forEach(b => {
+            const nb = b.cloneNode(true);
+            b.parentNode.replaceChild(nb, b);
+            nb.addEventListener('click', function() {
+                document.querySelectorAll('.category-btn').forEach(x => x.classList.remove('active'));
+                this.classList.add('active');
+                currentCategory = this.dataset.category;
+                displayPhotos(true);
+            });
         });
-    });
+    }
+    attachFilter();
 }
 
 // ── Lightbox zoom+pan state ──
@@ -874,12 +882,35 @@ document.addEventListener('DOMContentLoaded', () => {
     if (document.getElementById('adminLoginBtn')) initAdmin();
     if (document.getElementById('aerialMap'))     initAerialMap();
 
-    // Динамічний лічильник фото на головній
+    // Динамічний лічильник фото на головній — завжди анімує до реального числа
     const stat = document.getElementById('photoCountStat');
-    if (stat) {
+    const heroNum = document.getElementById('heroLiveNum');
+    if (stat || heroNum) {
         fetch(GITHUB_RAW + 'photos.json?v=' + Date.now())
             .then(r => r.ok ? r.json() : null)
-            .then(d => { if (d?.length) { stat.setAttribute('data-target', d.length); if (stat.textContent !== '0') stat.textContent = d.length.toLocaleString('uk-UA'); } })
+            .then(d => {
+                if (!d?.length) return;
+                const realCount = d.length;
+                // Update hero badge immediately
+                if (heroNum) heroNum.textContent = realCount;
+                // Animate main stat counter
+                if (stat) {
+                    stat.setAttribute('data-target', realCount);
+                    let cur = 0;
+                    const step = realCount / 60;
+                    const tick = () => {
+                        if (cur < realCount) {
+                            cur += step;
+                            stat.textContent = Math.floor(cur).toLocaleString('uk-UA');
+                            requestAnimationFrame(tick);
+                        } else {
+                            stat.textContent = realCount.toLocaleString('uk-UA');
+                        }
+                    };
+                    stat.textContent = '0';
+                    tick();
+                }
+            })
             .catch(() => {});
     }
 

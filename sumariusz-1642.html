@@ -1,0 +1,1584 @@
+<!DOCTYPE html>
+<html lang="uk" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="manifest" href="site.webmanifest">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сумаріуш маєтку Дубровиця 1642 — Цифровий архів</title>
+    <script>!function(){var t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t)}()</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="app.css">
+
+<style>
+/* ══════════════════════════════════════════════════════
+   SUMARIUSZ 1642 — ARCHIVAL CODEX AESTHETIC
+   ══════════════════════════════════════════════════════ */
+
+:root {
+    --parchment: #f5eed8;
+    --parchment-dark: #ede3c4;
+    --ink: #1c160a;
+    --ink-faded: #3d3420;
+    --sepia: #8b6f3e;
+    --sepia-light: #c9a553;
+    --sepia-pale: rgba(139,111,62,.12);
+    --ruling: rgba(139,111,62,.18);
+}
+[data-theme="dark"] {
+    --parchment: #130f07;
+    --parchment-dark: #1a1408;
+    --ink: #e8dbb5;
+    --ink-faded: #b8a880;
+    --sepia: #c9a553;
+    --sepia-light: #e5c87a;
+    --sepia-pale: rgba(201,165,83,.08);
+    --ruling: rgba(201,165,83,.12);
+}
+
+/* ── Page wrapper ── */
+.smr-page {
+    background: var(--parchment);
+    min-height: 100vh;
+}
+
+/* ── Hero / Document Header ── */
+.smr-hero {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(160deg, #1a1408 0%, #2a1e0a 50%, #1c1509 100%);
+    padding: 7rem 2rem 5rem;
+    text-align: center;
+    color: white;
+}
+.smr-hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+        radial-gradient(ellipse 60% 80% at 50% 100%, rgba(201,165,83,.15) 0%, transparent 60%),
+        url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23c9a553' fill-opacity='0.03'%3E%3Cpath d='M50 0L52 48 100 50 52 52 50 100 48 52 0 50 48 48z'/%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+}
+.smr-hero-seal {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 72px; height: 72px;
+    border: 1px solid rgba(201,165,83,.3);
+    border-radius: 50%;
+    margin-bottom: 2rem;
+    position: relative; z-index: 1;
+    animation: sealIn 0.8s ease both;
+}
+.smr-hero-seal::before {
+    content: '';
+    position: absolute; inset: 4px;
+    border: 1px solid rgba(201,165,83,.15);
+    border-radius: 50%;
+}
+.smr-hero-seal svg { width: 32px; height: 32px; stroke: #c9a553; }
+@keyframes sealIn { from { opacity:0; transform:scale(.7) rotate(-20deg); } to { opacity:1; transform:scale(1) rotate(0); } }
+
+.smr-hero-eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .58rem; letter-spacing: .3em; text-transform: uppercase;
+    color: rgba(201,165,83,.65);
+    margin-bottom: 1.4rem;
+    display: flex; align-items: center; justify-content: center; gap: 1rem;
+    position: relative; z-index: 1;
+    animation: fadeIn .6s ease .2s both;
+}
+.smr-hero-eyebrow::before, .smr-hero-eyebrow::after {
+    content: '';
+    display: block; width: 40px; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201,165,83,.4));
+}
+.smr-hero-eyebrow::after { background: linear-gradient(90deg, rgba(201,165,83,.4), transparent); }
+
+.smr-hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-weight: 300; line-height: 1.1;
+    color: #f0e4b8;
+    margin-bottom: .5rem;
+    position: relative; z-index: 1;
+    animation: fadeIn .7s ease .3s both;
+}
+.smr-hero-title em { font-style: italic; color: #c9a553; }
+
+.smr-hero-subtitle {
+    font-family: 'IM Fell English', serif;
+    font-size: 1.05rem; font-style: italic;
+    color: rgba(240,228,184,.55);
+    margin-bottom: 2rem;
+    position: relative; z-index: 1;
+    animation: fadeIn .7s ease .4s both;
+}
+
+.smr-hero-meta {
+    display: flex; align-items: center; justify-content: center;
+    gap: 1.5rem; flex-wrap: wrap;
+    position: relative; z-index: 1;
+    animation: fadeIn .7s ease .55s both;
+}
+.smr-hero-meta-item {
+    display: flex; flex-direction: column; align-items: center; gap: .3rem;
+    padding: .75rem 1.25rem;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(201,165,83,.15);
+    border-radius: 10px;
+    backdrop-filter: blur(6px);
+}
+.smr-hero-meta-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem; font-weight: 300; color: #c9a553; line-height: 1;
+}
+.smr-hero-meta-key {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .55rem; letter-spacing: .18em; text-transform: uppercase;
+    color: rgba(255,255,255,.35);
+}
+
+.smr-hero-bottom {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 80px;
+    background: linear-gradient(to bottom, transparent, var(--parchment));
+    pointer-events: none;
+}
+
+/* ── Content wrapper ── */
+.smr-body {
+    max-width: 1280px; margin: 0 auto;
+    padding: 3rem 2rem 6rem;
+}
+
+/* ── Section label / ornament ── */
+.smr-section-eyebrow {
+    display: flex; align-items: center; gap: 1rem;
+    margin-bottom: 2rem;
+}
+.smr-section-eyebrow span {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .55rem; letter-spacing: .28em; text-transform: uppercase;
+    color: var(--sepia); white-space: nowrap;
+}
+.smr-section-eyebrow::before, .smr-section-eyebrow::after {
+    content: ''; flex: 1; height: 1px;
+    background: var(--ruling);
+}
+
+/* ── Tabs ── */
+.smr-tabs {
+    display: flex; gap: 0;
+    border: 1px solid var(--ruling);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 3rem;
+    background: var(--parchment);
+}
+.smr-tab {
+    flex: 1; padding: .85rem 1.2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .72rem; font-weight: 400;
+    letter-spacing: .06em; text-transform: uppercase;
+    color: var(--ink-faded);
+    background: transparent;
+    border: none; cursor: pointer;
+    transition: all .25s ease;
+    display: flex; align-items: center; justify-content: center; gap: .5rem;
+    border-right: 1px solid var(--ruling);
+    position: relative;
+}
+.smr-tab:last-child { border-right: none; }
+.smr-tab svg { width: 14px; height: 14px; opacity: .7; }
+.smr-tab.active {
+    background: var(--ink);
+    color: var(--parchment);
+    font-weight: 500;
+}
+[data-theme="dark"] .smr-tab.active { background: var(--sepia); color: #1c160a; }
+.smr-tab:not(.active):hover { background: var(--sepia-pale); color: var(--ink); }
+
+.smr-tab-panel { display: none; }
+.smr-tab-panel.active { display: block; animation: panelIn .35s ease; }
+@keyframes panelIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
+
+/* ── Scans grid ── */
+.smr-scans-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+@media (max-width: 768px) { .smr-scans-grid { grid-template-columns: 1fr; } }
+
+.smr-scan-card {
+    position: relative; overflow: hidden;
+    border-radius: 8px;
+    border: 1px solid var(--ruling);
+    cursor: pointer;
+    background: var(--parchment-dark);
+    transition: box-shadow .4s ease, border-color .4s ease;
+    box-shadow: 0 2px 12px rgba(0,0,0,.06);
+}
+.smr-scan-card:hover {
+    box-shadow: 0 8px 32px rgba(0,0,0,.14);
+    border-color: rgba(201,165,83,.4);
+}
+.smr-scan-img {
+    width: 100%; aspect-ratio: 3/4;
+    object-fit: cover;
+    display: block;
+    filter: sepia(.35) contrast(.95) brightness(.95);
+    transition: filter .6s ease;
+}
+.smr-scan-card:hover .smr-scan-img {
+    filter: sepia(.15) contrast(.98) brightness(.98);
+}
+.smr-scan-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(28,22,10,.85) 0%, rgba(28,22,10,.3) 40%, transparent 65%);
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 1.2rem;
+    pointer-events: none;
+}
+.smr-scan-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem; font-weight: 300;
+    color: rgba(201,165,83,.6);
+    line-height: 1; margin-bottom: .25rem;
+}
+.smr-scan-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .6rem; letter-spacing: .15em; text-transform: uppercase;
+    color: rgba(240,228,184,.65);
+}
+.smr-scan-zoom {
+    position: absolute; top: .75rem; right: .75rem;
+    width: 32px; height: 32px;
+    background: rgba(28,22,10,.7);
+    border: 1px solid rgba(201,165,83,.3);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity .3s ease;
+    pointer-events: none;
+}
+.smr-scan-card:hover .smr-scan-zoom { opacity: 1; }
+.smr-scan-zoom svg { width: 14px; height: 14px; stroke: #c9a553; }
+
+/* ── Transcript layout ── */
+.smr-transcript {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+}
+@media (max-width: 900px) { .smr-transcript { grid-template-columns: 1fr; } }
+
+.smr-col-header {
+    display: flex; align-items: center; gap: .75rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: .75rem;
+    border-bottom: 1px solid var(--ruling);
+}
+.smr-col-badge {
+    width: 28px; height: 28px;
+    background: var(--ink);
+    color: var(--parchment);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .55rem; letter-spacing: .1em; font-weight: 500;
+}
+[data-theme="dark"] .smr-col-badge { background: var(--sepia); color: #1c160a; }
+.smr-col-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .62rem; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--sepia);
+}
+
+.smr-page-block {
+    margin-bottom: 2.5rem;
+}
+.smr-page-label {
+    display: inline-flex; align-items: center; gap: .5rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .52rem; letter-spacing: .22em; text-transform: uppercase;
+    color: var(--sepia-light);
+    margin-bottom: 1rem;
+    padding: .3rem .8rem;
+    border: 1px solid var(--ruling);
+    border-radius: 100px;
+}
+
+/* Original polish text */
+.smr-original {
+    font-family: 'IM Fell English', serif;
+    font-size: .88rem; line-height: 2;
+    color: var(--ink-faded);
+    white-space: pre-wrap;
+}
+.smr-original strong {
+    font-weight: 700; color: var(--ink);
+    letter-spacing: .02em;
+}
+.smr-original em { font-style: italic; }
+.smr-sum-line {
+    border-top: 1px solid var(--ruling);
+    padding-top: .5rem; margin-top: .5rem;
+    font-weight: 600; color: var(--ink);
+}
+
+/* Ukrainian translation */
+.smr-translation {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .84rem; line-height: 1.95;
+    color: var(--ink-faded);
+    white-space: pre-wrap;
+}
+.smr-translation strong { font-weight: 500; color: var(--ink); }
+
+/* ── Finance table ── */
+.smr-finance {
+    background: var(--parchment-dark);
+    border: 1px solid var(--ruling);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+.smr-finance-head {
+    background: var(--ink);
+    color: var(--parchment);
+    padding: .8rem 1.4rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .6rem; letter-spacing: .2em; text-transform: uppercase;
+}
+[data-theme="dark"] .smr-finance-head { background: rgba(201,165,83,.15); color: var(--sepia); }
+.smr-finance-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+    padding: .65rem 1.4rem;
+    border-bottom: 1px solid var(--ruling);
+    font-family: 'DM Sans', sans-serif;
+    font-size: .8rem;
+    color: var(--ink-faded);
+    transition: background .2s;
+}
+.smr-finance-row:last-child { border-bottom: none; }
+.smr-finance-row:hover { background: var(--sepia-pale); }
+.smr-finance-row.total {
+    font-weight: 500; color: var(--ink);
+    background: rgba(201,165,83,.06);
+    border-top: 1px solid var(--ruling);
+}
+.smr-finance-amount {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem; font-weight: 400;
+    color: var(--sepia); white-space: nowrap;
+}
+.smr-finance-row.total .smr-finance-amount { color: var(--ink); font-weight: 500; }
+
+/* ── Glossary ── */
+.smr-glossary {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--ruling);
+    border: 1px solid var(--ruling);
+    border-radius: 10px;
+    overflow: hidden;
+}
+@media (max-width: 700px) { .smr-glossary { grid-template-columns: 1fr; } }
+
+.smr-gloss-item {
+    background: var(--parchment);
+    padding: 1.25rem 1.4rem;
+    transition: background .2s;
+}
+[data-theme="dark"] .smr-gloss-item { background: var(--parchment-dark); }
+.smr-gloss-item:hover { background: var(--sepia-pale); }
+
+.smr-gloss-term {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem; font-weight: 400;
+    color: var(--ink); margin-bottom: .35rem;
+    display: flex; align-items: center; gap: .5rem;
+}
+.smr-gloss-term::before {
+    content: '';
+    width: 4px; height: 4px; border-radius: 50%;
+    background: var(--sepia); flex-shrink: 0;
+}
+.smr-gloss-def {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .78rem; line-height: 1.7;
+    color: var(--ink-faded);
+}
+
+/* ── Context section ── */
+.smr-context-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+@media (max-width: 768px) { .smr-context-grid { grid-template-columns: 1fr; } }
+
+.smr-context-card {
+    padding: 1.6rem;
+    border: 1px solid var(--ruling);
+    border-radius: 10px;
+    background: var(--parchment);
+    position: relative; overflow: hidden;
+}
+[data-theme="dark"] .smr-context-card { background: var(--parchment-dark); }
+.smr-context-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--sepia-light), transparent);
+    opacity: .5;
+}
+.smr-context-head {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem; font-weight: 400; font-style: italic;
+    color: var(--ink); margin-bottom: .9rem;
+    display: flex; align-items: center; gap: .75rem;
+}
+.smr-context-head svg { width: 18px; height: 18px; stroke: var(--sepia); flex-shrink: 0; }
+.smr-context-body {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .8rem; line-height: 1.85;
+    color: var(--ink-faded);
+}
+.smr-context-body strong { color: var(--ink); font-weight: 500; }
+
+/* ── Lightbox ── */
+.smr-lb {
+    position: fixed; inset: 0;
+    background: rgba(10,8,4,.97);
+    backdrop-filter: blur(20px);
+    z-index: 9999;
+    display: none;
+    align-items: center; justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 2rem;
+}
+.smr-lb.on { display: flex; animation: fadeIn .2s ease; }
+.smr-lb-img {
+    max-width: min(900px, 90vw);
+    max-height: 82vh;
+    object-fit: contain;
+    border-radius: 4px;
+    box-shadow: 0 32px 80px rgba(0,0,0,.7);
+    cursor: zoom-in;
+}
+.smr-lb-close {
+    position: fixed; top: 1.2rem; right: 1.2rem;
+    width: 42px; height: 42px;
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem; color: rgba(255,255,255,.8);
+    cursor: pointer; transition: all .2s;
+}
+.smr-lb-close:hover { background: var(--sepia); color: #1c160a; }
+.smr-lb-caption {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .65rem; letter-spacing: .15em; text-transform: uppercase;
+    color: rgba(201,165,83,.6);
+    text-align: center;
+}
+.smr-lb-nav {
+    position: fixed; top: 50%; transform: translateY(-50%);
+    width: 44px; height: 44px;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; color: rgba(255,255,255,.7);
+    cursor: pointer; transition: all .2s;
+}
+.smr-lb-nav:hover { background: var(--sepia); color: #1c160a; }
+.smr-lb-prev { left: 1rem; }
+.smr-lb-next { right: 1rem; }
+
+/* ── Summary box ── */
+.smr-summary-box {
+    background: linear-gradient(135deg, #1a1408, #2a1e0a);
+    border-radius: 12px;
+    padding: 2.5rem;
+    color: white;
+    position: relative; overflow: hidden;
+    margin-top: 2.5rem;
+}
+.smr-summary-box::before {
+    content: '₂'; /* decorative */
+    position: absolute; right: 1.5rem; bottom: -2rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12rem; font-weight: 300; line-height: 1;
+    color: rgba(201,165,83,.06);
+    pointer-events: none;
+}
+.smr-summary-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 300;
+    color: #f0e4b8; margin-bottom: 1.2rem;
+}
+.smr-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+@media (max-width: 600px) { .smr-summary-grid { grid-template-columns: 1fr 1fr; } }
+.smr-sum-stat {
+    text-align: center;
+    padding: 1rem;
+    border: 1px solid rgba(201,165,83,.15);
+    border-radius: 8px;
+    background: rgba(255,255,255,.03);
+}
+.smr-sum-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem; font-weight: 300;
+    color: #c9a553; line-height: 1; margin-bottom: .3rem;
+}
+.smr-sum-key {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .58rem; letter-spacing: .12em; text-transform: uppercase;
+    color: rgba(255,255,255,.4); line-height: 1.4;
+}
+
+/* ── Scroll fade in ── */
+.smr-reveal {
+    opacity: 0; transform: translateY(16px);
+    transition: opacity .6s ease, transform .6s ease;
+}
+.smr-reveal.vis { opacity: 1; transform: none; }
+</style>
+</head>
+<body class="smr-page">
+
+    <!-- Shared header -->
+    <header class="header">
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <img src="https://i.imgur.com/mXCrjjG.png" alt="Герб" class="logo-img">
+                <div class="logo-text">
+                    <span class="logo-city">Дубровиця</span>
+                    <span class="logo-subtitle">Цифровий архів</span>
+                </div>
+            </a>
+            <nav class="nav" id="mainNav">
+                <a href="index.html" class="nav-link">Головна</a>
+                <a href="history.html" class="nav-link">Історія</a>
+                <a href="photo-archive.html" class="nav-link">Фотоархів</a>
+                <a href="architecture.html" class="nav-link">Пам'ятки</a>
+                <a href="metrychni-knyhy.html" class="nav-link active">Метричні книги</a>
+                <a href="books.html" class="nav-link">Книги</a>
+                <a href="contacts.html" class="nav-link">Контакти</a>
+            </nav>
+            <button class="theme-toggle" id="themeToggle" aria-label="Перемкнути тему">
+                <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                <svg class="theme-icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+            <button class="mobile-toggle" id="mobileToggle" aria-label="Відкрити меню"><span></span><span></span><span></span></button>
+        </div>
+    </header>
+
+    <!-- ══ HERO ══ -->
+    <div class="smr-hero">
+        <div class="smr-hero-seal">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.4"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <div class="smr-hero-eyebrow">Архівний документ · Річ Посполита</div>
+        <h1 class="smr-hero-title">
+            Сумаріуш маєтку<br><em>Дубровиця</em>
+        </h1>
+        <p class="smr-hero-subtitle">Sumariusz Maietności Dąbrowice, Anno 1642 Decemb.</p>
+
+        <div class="smr-hero-meta">
+            <div class="smr-hero-meta-item">
+                <div class="smr-hero-meta-val">1642</div>
+                <div class="smr-hero-meta-key">Рік складання</div>
+            </div>
+            <div class="smr-hero-meta-item">
+                <div class="smr-hero-meta-val">11&nbsp;586</div>
+                <div class="smr-hero-meta-key">Злотих доходу</div>
+            </div>
+            <div class="smr-hero-meta-item">
+                <div class="smr-hero-meta-val">3</div>
+                <div class="smr-hero-meta-key">Сторінки документу</div>
+            </div>
+            <div class="smr-hero-meta-item">
+                <div class="smr-hero-meta-val">9</div>
+                <div class="smr-hero-meta-key">Фільварків</div>
+            </div>
+        </div>
+        <div class="smr-hero-bottom"></div>
+    </div>
+
+    <!-- ══ BODY ══ -->
+    <div class="smr-body">
+
+        <!-- Breadcrumb -->
+        <div style="display:flex;align-items:center;gap:.5rem;font-family:'DM Sans',sans-serif;font-size:.72rem;color:var(--sepia);margin-bottom:2.5rem;opacity:.7;">
+            <a href="metrychni-knyhy.html" style="color:inherit;text-decoration:none;">Метричні книги</a>
+            <span>›</span>
+            <span>Сумаріуш 1642</span>
+        </div>
+
+        <!-- ══ TABS ══ -->
+        <div class="smr-tabs" role="tablist">
+            <button class="smr-tab active" data-panel="scans" role="tab">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                Скани документу
+            </button>
+            <button class="smr-tab" data-panel="transcript" role="tab">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                Транскрипція
+            </button>
+            <button class="smr-tab" data-panel="translation" role="tab">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 8l6 6"/><path d="M4 14l6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="M22 22l-5-10-5 10"/><path d="M14 18h6"/></svg>
+                Переклад
+            </button>
+            <button class="smr-tab" data-panel="finances" role="tab">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+                Фінанси
+            </button>
+            <button class="smr-tab" data-panel="glossary" role="tab">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+                Глосарій
+            </button>
+            <button class="smr-tab" data-panel="context" role="tab">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                Контекст
+            </button>
+        </div>
+
+        <!-- ══ TAB PANEL: SCANS ══ -->
+        <div class="smr-tab-panel active" id="panel-scans">
+            <div class="smr-section-eyebrow smr-reveal"><span>Оригінальні скани · 3 сторінки</span></div>
+            <p style="font-family:'DM Sans',sans-serif;font-size:.82rem;line-height:1.8;color:var(--ink-faded);margin-bottom:2rem;max-width:680px;" class="smr-reveal">
+                Нижче представлені оригінальні скани рукописного документу 1642 року. Натисніть на зображення для перегляду у повному розмірі. Документ написаний старопольською мовою з характерним почерком XVII ст.
+            </p>
+            <div class="smr-scans-grid smr-reveal">
+                <div class="smr-scan-card" onclick="openScanLB(0)" data-src="https://i.imgur.com/eCkmrb3.jpeg">
+                    <img class="smr-scan-img" src="https://i.imgur.com/eCkmrb3m.jpeg" alt="Сумаріуш Дубровиця 1642 — сторінка 1">
+                    <div class="smr-scan-overlay">
+                        <div class="smr-scan-num">01</div>
+                        <div class="smr-scan-label">Сторінка 1 · Грошові доходи</div>
+                    </div>
+                    <div class="smr-scan-zoom"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+                </div>
+                <div class="smr-scan-card" onclick="openScanLB(1)" data-src="https://i.imgur.com/UPFx3Gp.jpeg">
+                    <img class="smr-scan-img" src="https://i.imgur.com/UPFx3Gpm.jpeg" alt="Сумаріуш Дубровиця 1642 — сторінка 2">
+                    <div class="smr-scan-overlay">
+                        <div class="smr-scan-num">02</div>
+                        <div class="smr-scan-label">Сторінка 2 · Промисловий потенціал</div>
+                    </div>
+                    <div class="smr-scan-zoom"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+                </div>
+                <div class="smr-scan-card" onclick="openScanLB(2)" data-src="https://i.imgur.com/gseULFj.jpeg">
+                    <img class="smr-scan-img" src="https://i.imgur.com/gseULFjm.jpeg" alt="Сумаріуш Дубровиця 1642 — сторінка 3">
+                    <div class="smr-scan-overlay">
+                        <div class="smr-scan-num">03</div>
+                        <div class="smr-scan-label">Сторінка 3 · Замок та підсумок</div>
+                    </div>
+                    <div class="smr-scan-zoom"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+                </div>
+            </div>
+
+            <!-- Quick-read note -->
+            <div style="margin-top:2rem;padding:1.4rem 1.6rem;background:var(--sepia-pale);border:1px solid var(--ruling);border-radius:10px;display:flex;gap:1rem;align-items:flex-start;" class="smr-reveal">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:18px;height:18px;stroke:#c9a553;flex-shrink:0;margin-top:2px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <div>
+                    <div style="font-family:'DM Sans',sans-serif;font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--sepia);margin-bottom:.4rem;">Довідка про документ</div>
+                    <p style="font-family:'DM Sans',sans-serif;font-size:.8rem;line-height:1.75;color:var(--ink-faded);margin:0;">
+                        Документ складений у грудні 1642 року (Anno 1642 Decemb.) як звіт про поточні та потенційні доходи маєтку Дубровиця. 
+                        Зберігається у приватному архіві. Є одним із найдавніших збережених господарських документів, що стосуються Дубровиці.
+                        Містить унікальні відомості про економіку міста, навколишні рудні, пущу, замок і річкову навігацію на Горині та Случі.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══ TAB PANEL: TRANSCRIPT ══ -->
+        <div class="smr-tab-panel" id="panel-transcript">
+            <div class="smr-section-eyebrow smr-reveal"><span>Оригінальний текст · Старопольська мова · XVII ст.</span></div>
+
+            <div class="smr-transcript smr-reveal">
+                <div>
+                    <div class="smr-col-header">
+                        <div class="smr-col-badge">PL</div>
+                        <div class="smr-col-title">Оригінал — Старопольська</div>
+                    </div>
+
+                    <div class="smr-page-block">
+                        <div class="smr-page-label">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:11px;height:11px;stroke:var(--sepia-light)"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+                            Сторінка 1
+                        </div>
+                        <div class="smr-original"><strong>Anno 1642 Decemb.</strong>
+
+<strong>Sumariusz Maietności Dąbrowice,</strong>
+<em>iako teraz Prowent Jey Maietności idzie.</em>
+Naprzod.
+
+Czynszu od Mieszczan y Poddanych
+według Inwentarza — zł 1167/28/6
+
+Za Jałowice Wieprze y Barany
+Piniędzmi płacą — zł 150/23/1
+
+Arędy z Młynów y Karczem — zł 650.
+Arędy z Rudy Jutorskiey — zł 300.
+Arędy z Rudy Korpiłowskiey — zł 150.
+Oczkowego od Pszczół — zł 35.
+
+<strong class="smr-sum-line">Summa gotowego grosza: zł 2453/21/7</strong>
+
+<em>Dalsze podatki w tey Maietności</em>
+
+Żyta Osepnego od poddanych Mac 24½
+po zł 5 Iac — zł 120/18/6
+
+Owsa Osepnego Mac 120⅓
+po zł 2/15 Iac — zł 300/25
+
+Miodu Dannego od poddanych Wiader 86½
+Miodu Dwornego z Pustych Ziem
+jako y Dwornych Barci Wiader 63¾
+Wiadro po zł 6 czyni — zł 900.
+
+Gęsi Czynszowych 65½ po gr 7½ — zł 16/11/7
+Kur Dannych ściągłych Włók № 255½
+po gr 3 — zł 25/10/7
+Jaiec z ciągłych włók: Kop 42/45
+po gr 7½ — zł 10/20/2
+
+Przedziwa konopnego Łokci 817. Iona Niewody
+Grzybów 1600. Ryb Suchych 80.
+Jezior wszystkich w tey Maietności № 20
+Stawów 5. Namniey — zł 300.
+Bobrowe gony Ktorych namniey bywa № 30
+— zł 50.
+Dziesięcina Świnia — zł 60.
+
+Podwód Dorocznych z ciągłych Służeb
+№ 123¾ Ktorych powinność za mil kilkadziesiąt
+w Podwodę, lubo gdy się trafi Potas wieść
+do Brześcia, gdy niemasz Powozu
+płacą z włóki po zł 2/15 — zł 309/17/4
+
+Służeb pustych № 14⅓
+Włók zaś pustych 12⅓
+czynszu z Służby po gr 10
+а z włóki pustey po gr 5 — zł 7/10.
+
+<strong class="smr-sum-line">Summa za te dalsze podatki: zł 2303/13/2</strong></div>
+                    </div>
+
+                    <div class="smr-page-block">
+                        <div class="smr-page-label">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:11px;height:11px;stroke:var(--sepia-light)"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+                            Сторінка 2
+                        </div>
+                        <div class="smr-original">Względem crescentiy Robocizna się kładzie
+Nierachując Mieszczan Ktorych Powinność
+Oziminę wszystkę także Sianożęci Dworne
+sprzątnąć powinni. Także Ogrodnikow Miejskich
+y Sielskich. Samey Ciągłych Służeb y Włók
+robociznę odprawujących № 123¾.
+Wytrąciwszy Zwyczajne Niedzielne także
+y Poniedziałkowe dni, Osobliwie na Uroczyste
+Święta dni 12. Zostaje do Roboty dni 248.
+Nadzień po gr 3 — zł 3071/2.
+
+<strong class="smr-sum-line">Summa Summarum czyni ta Maiętność:
+zł 8828/7/18</strong>
+
+<em>Dalsze Pożytki w tey Maietności
+ktore w Inwentarzu nie są Specificowane
+Gospodarzowi dobremu do okazania.</em>
+<strong>NAPRZOD.</strong>
+
+Grunty miedzy Poddanymi niemierzone gdzie
+siła przerobkow w Dąbrowicach maią,
+gdy to przemierzą siła do powinności
+przybędzie namniey na — zł 300.
+
+Puszcza ktora zgodna do robienia Szmalcugi
+y Potaszow ktorey może bydź na Latt 20.
+Do czego iest porządnie Buda zbudowana
+ze wszystkimi korytami. A Lasy takowe są
+iż robiąc przez latt 20, znowu robić może.
+Gdyż Młodzież zaraz się puszcza y sporo roście.
+
+Smoła bez uszczerbku Puszczy,
+z Krzakow palić może, także y Dziegieć.
+
+Huta z Brzeziny ktorey iest wielki dostatek,
+robić się może.
+
+Rudy w tey Maietności na wielu mieyscach
+dostatek wielki. W Rudni Jutorskiey groblą
+podwyższąc a Młyn Potocki na przerobienie
+obrocić, Łacnym Sowity pożytek Rudnie
+przybędzie lub mniey — zł 150.
+
+Niżej Paniey Sołomiereckiey Rudnie na teyze
+Rzece iest grobla dawna, Młyn kiedyś bywał
+Ponowiwszy tey groblie Rudnia mogłaby być,
+a do tego w Puszczy z ktorey namniey
+pożytku — zł 400.
+
+Rzek Portowych dwie, to iest <strong>Stucz y Horyń</strong>
+złączają się w tey Maietności, gdzie Nawigacye
+z Wołynia do Litwy Sposobnie się odprawują.
+Baydaki, Komiegi, Sotny w Puszczy tameczney
+robią. Z czego Gospodarze pożytek maią
+namniey Kładzie się — zł 200.
+
+<strong>ARENDA</strong> w tey Maietności natenczas tylko zł 650.
+A to dla tego, iż niektorzy z Obywatelow
+tamecznych Gorzałki w domach Kurzą
+y one po rozniu przedaią. Zaczym Arędzie
+przeszkoda, iż gdyby się to uięło namniey
+Arędy danoby zł 2000. Przybyło by tedy — zł 350.
+
+Boiarowie Ktorych iest Służeb 9 ktorzy natenczas
+posługę listową odprawują, Maią pod sobą
+Ziemie niebartne y poddanych na gruntach Swych,
+z tych pożytku nic się nie mianowało,
+co uczyniłoby — zł 200.</div>
+                    </div>
+
+                    <div class="smr-page-block">
+                        <div class="smr-page-label">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:11px;height:11px;stroke:var(--sepia-light)"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+                            Сторінка 3
+                        </div>
+                        <div class="smr-original">Winy Przesady zgonne namniey — zł 300.
+Zwierz w Puszczy wszelaki iest namniey
+pożytku — zł 60.
+
+Uczyniłoby to wszystko zł 2760.
+
+Z osobna Pobór gdy z Sejmu uchwalony bywa
+namniey Reszty do Skarbu Złotych Pięciuset.
+Poselszczyzny y Jey Reszty zostaje złotych Sto.
+Konie zawżdy w nich gdyby się w nich
+wyprzątnęły Sowity by pożytek przynieśli.
+
+W tey Maietności nad Rzeką Horynią
+<strong>ZAMEK</strong> porządnie zbudowany, z Budowaniem wnym,
+w Inwentarzu opisany.
+Do tego Zamku Folwarkow zbudowaniem
+Dwornym Gumiennym, Obornym z Ogrodami,
+z Sianożęciami spolmi Oranymi do nich <strong>№ 9.</strong>
+
+Zniósłszy wszystko tak gotowiznę iako i co
+pokazano do Pożytku oproc Reszty Poborowy
+y Poselszczyzny gdy nie w każdym Roku
+uchwalono bywa, Czyni in Summa —
+
+<strong class="smr-sum-line" style="font-size:1.1rem;">zł 11 586 / 7 / 18</strong></div>
+                    </div>
+                </div>
+
+                <!-- RIGHT COL: page-by-page note -->
+                <div>
+                    <div class="smr-col-header">
+                        <div class="smr-col-badge" style="background:var(--sepia);color:#1c160a;">UK</div>
+                        <div class="smr-col-title">Коментар до тексту</div>
+                    </div>
+
+                    <div style="padding:1.4rem;background:var(--sepia-pale);border:1px solid var(--ruling);border-radius:10px;margin-bottom:1.5rem;">
+                        <p style="font-family:'DM Sans',sans-serif;font-size:.8rem;line-height:1.85;color:var(--ink-faded);">
+                            Документ є <strong style="color:var(--ink)">«сумаріушем»</strong> — звітом-резюме, який складався управителем або ревізором маєтку. 
+                            На відміну від детального інвентарю, сумаріуш підсумовував доходи по категоріях і зазначав невикористаний потенціал.
+                        </p>
+                    </div>
+
+                    <div style="padding:1.4rem;background:var(--sepia-pale);border:1px solid var(--ruling);border-radius:10px;margin-bottom:1.5rem;">
+                        <div style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:400;font-style:italic;color:var(--ink);margin-bottom:.6rem;">Система запису сум</div>
+                        <p style="font-family:'DM Sans',sans-serif;font-size:.78rem;line-height:1.85;color:var(--ink-faded);">
+                            Суми записані у форматі <strong style="color:var(--ink)">злоті / гроші / денарії</strong>.<br>
+                            1 злотий (zł) = 30 грошів (gr)<br>
+                            1 грош = 18 денаріїв (d)<br><br>
+                            Наприклад, <code style="font-size:.78rem;background:rgba(0,0,0,.06);padding:.1rem .4rem;border-radius:3px;">zł 1167/28/6</code> — це 1167 злотих, 28 грошів та 6 денаріїв.
+                        </p>
+                    </div>
+
+                    <div style="padding:1.4rem;background:var(--sepia-pale);border:1px solid var(--ruling);border-radius:10px;margin-bottom:1.5rem;">
+                        <div style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:400;font-style:italic;color:var(--ink);margin-bottom:.6rem;">Про «підводи»</div>
+                        <p style="font-family:'DM Sans',sans-serif;font-size:.78rem;line-height:1.85;color:var(--ink-faded);">
+                            Запис <strong style="color:var(--ink)">«płacą z włóki po zł 2/15»</strong> вказує на грошовий еквівалент транспортної повинності — 2 злоті 15 грошів з волоки. 
+                            Математично підтверджується підсумком: 123¾ × 2.5 зл ≈ 309 зл.
+                        </p>
+                    </div>
+
+                    <div style="padding:1.4rem;background:var(--sepia-pale);border:1px solid var(--ruling);border-radius:10px;margin-bottom:1.5rem;">
+                        <div style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:400;font-style:italic;color:var(--ink);margin-bottom:.6rem;">«潛在» прибутки</div>
+                        <p style="font-family:'DM Sans',sans-serif;font-size:.78rem;line-height:1.85;color:var(--ink-faded);">
+                            Друга сторінка унікальна тим, що автор описує не лише реальний дохід, а й <strong style="color:var(--ink)">«невикористаний потенціал»</strong>. 
+                            Наприклад, якщо заборонити міщанам гнати горілку вдома — орендний дохід зросте з 650 до 2000 зл (приріст 350 зл).
+                        </p>
+                    </div>
+
+                    <div style="padding:1.4rem;background:var(--sepia-pale);border:1px solid var(--ruling);border-radius:10px;">
+                        <div style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:400;font-style:italic;color:var(--ink);margin-bottom:.6rem;">Замок над Горинню</div>
+                        <p style="font-family:'DM Sans',sans-serif;font-size:.78rem;line-height:1.85;color:var(--ink-faded);">
+                            Документ підтверджує існування <strong style="color:var(--ink)">замку</strong> над річкою Горинь у 1642 році. 
+                            До замку належали 9 фільварків (панських господарств). Це важлива пам'ятка для дослідників фортифікаційної спадщини Дубровиці.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══ TAB PANEL: TRANSLATION ══ -->
+        <div class="smr-tab-panel" id="panel-translation">
+            <div class="smr-section-eyebrow smr-reveal"><span>Переклад сучасною українською</span></div>
+
+            <div class="smr-transcript smr-reveal">
+                <div>
+                    <div class="smr-col-header">
+                        <div class="smr-col-badge">UK</div>
+                        <div class="smr-col-title">Переклад — Сучасна українська</div>
+                    </div>
+
+                    <div class="smr-page-block">
+                        <div class="smr-page-label">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:11px;height:11px;stroke:var(--sepia-light)"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+                            Сторінка 1 · Грошові та натуральні доходи
+                        </div>
+                        <div class="smr-translation"><strong>Грудень 1642 року.</strong>
+
+<strong>Звіт (Сумаріуш) маєтку Дубровиця,</strong>
+<em>про те, який нині дохід цього маєтку є.</em>
+Передусім.
+
+Чинш (грошовий податок) від міщан та підданих
+згідно з інвентарем — 1 167 зл. 28 гр. 6 ден.
+
+За телиць, кнурів та баранів грошима платять
+— 150 зл. 23 гр. 1 ден.
+
+Оренда млинів та корчем — 650 зл.
+Оренда Юторської рудні — 300 зл.
+Оренда Корпиловської рудні — 150 зл.
+«Очкове» від бджіл (податок на вулики) — 35 зл.
+
+<strong class="smr-sum-line">Сума готівки: 2 453 зл. 21 гр. 7 ден.</strong>
+
+<em>Подальші податки в цьому маєтку</em>
+
+Осеп (данина) житом від підданих — 24½ маци
+по 5 зл. — 120 зл. 18 гр. 6 ден.
+
+Осеп вівсом — 120⅓ маці
+по 2 зл. 15 гр. — 300 зл.
+
+Медова данина від підданих — 86½ відер
+Панський мед з порожніх земель та дворних
+вуликів — 63¾ відер
+Відро по 6 зл. — разом 900 зл.
+
+Чиншових гусей 65½ по 7½ гр. — 16 зл.
+Курей данних з волок № 255½ по 3 гр. — 25 зл.
+Яєць з волок: 42 копи 45 штук по 7½ гр. — 10 зл.
+
+Конопляного волокна — 817 ліктів. Льняних тканин.
+Грибів — 1600. Сушеної риби — 80 штук.
+Озер у маєтку — 20. Ставів — 5. Щонайменше 300 зл.
+Боброві гони, яких мінімум 30 — 50 зл.
+Свиняча десятина — 60 зл.
+
+Річні підводи (транспортна повинність):
+123¾ служб, зобов'язання перевозити вантажі
+на кілька миль або возити поташ до Брестя,
+платять з волоки по 2 зл. 15 гр. — 309 зл.
+
+Порожніх служб № 14⅓, порожніх волок 12⅓
+чиншу зі служби по 10 гр.
+а з порожньої волоки по 5 гр. — 7 зл.
+
+<strong class="smr-sum-line">Сума додаткових податків: 2 303 зл. 13 гр. 2 ден.</strong></div>
+                    </div>
+
+                    <div class="smr-page-block">
+                        <div class="smr-page-label">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:11px;height:11px;stroke:var(--sepia-light)"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+                            Сторінка 2 · Панщина та потенційні доходи
+                        </div>
+                        <div class="smr-translation">Щодо зростання — панщина тут не враховує
+міщан, які зобов'язані зібрати весь озимий
+хліб та прибрати панські сіножаті. Також
+міських та сільських городників, котрі
+теж відпрацьовують повинність.
+Самих тяглих служб та волок — 123¾.
+Відрахувавши звичайні неділі, понеділки та
+12 урочистих свят — залишається 248 робочих днів.
+По 3 гр. за день — 3 071 зл.
+
+<strong class="smr-sum-line">Загальна сума маєтку: 8 828 зл. 7 гр. 18 ден.</strong>
+
+<em>Подальші прибутки в цьому маєтку,
+які не вказані в інвентарі,
+але хорошому господарю варто знати.</em>
+
+Землі між підданими не обміряні, а там
+чимало угідь у Дубровиці — як обміряють,
+значно додасться до повинностей,
+щонайменше — 300 зл.
+
+Пуща, придатна для виготовлення смальцуги та
+поташу, вистачить на 20 років. Для цього
+вже збудована «Буда» (лісовий завод) з усіма
+коритами. Ліси такі, що через 20 років,
+покинувши, можна рубати знову —
+молодняк швидко росте.
+
+Смолу можна без шкоди для пущі палити
+з кущів, також і дьоготь.
+
+Гуту з берези, якої тут великий достаток,
+теж можна збудувати.
+
+Руди в цьому маєтку на багатьох місцях
+є вдосталь. В Юторській рудні, підвищивши
+греблю і переробивши млин Поточний
+на рудну обробку, додасться щонайменше — 150 зл.
+
+Нижче рудні пані Соломерецької на тій же
+річці є стара гребля, колись був млин —
+відновивши греблю, можна було б поставити
+рудню, де одразу є і руда, і пуща:
+щонайменше — 400 зл.
+
+Дві <strong>судноплавні річки — Случ та Горинь</strong>
+з'єднуються в цьому маєтку, де навігація
+з Волині до Литви зручно здійснюється.
+Байдаки, комяги, сотні будують у тутешній
+пущі. Господарям приносить щонайменше — 200 зл.
+
+<strong>Оренда</strong> в маєтку нині лише 650 зл.,
+бо деякі мешканці гонять горілку вдома
+і продають по закутках — через це
+оренді шкода. Якби це припинити — оренда
+сягала б 2 000 зл. Приріст — 350 зл.
+
+Бояри — 9 служб, які несуть поштову службу.
+Мають землі без бортних угідь та підданих на
+своїх ґрунтах — з них нічого не мінували,
+а могло б бути — 200 зл.</div>
+                    </div>
+
+                    <div class="smr-page-block">
+                        <div class="smr-page-label">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:11px;height:11px;stroke:var(--sepia-light)"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+                            Сторінка 3 · Замок та підсумок
+                        </div>
+                        <div class="smr-translation">Судові штрафи та збори — щонайменше 300 зл.
+Звірина в пущі всілякої — щонайменше 60 зл.
+
+Усе це разом склало б — 2 760 зл.
+
+Окремо: коли Сейм ухвалить «побір» (воєнний
+податок) — до скарбниці залишається
+щонайменше 500 злотих.
+Від «посольського» збору залишається 100 зл.
+Коні завжди там є — якби ними правильно
+розпорядитися, приносили б великий прибуток.
+
+В цьому маєтку над річкою Горинню стоїть
+<strong>ЗАМОК</strong>, належним чином збудований,
+з усіма будівлями, описаний в інвентарі.
+До цього Замку належать 9 фільварків
+з панськими, гуменними та стайними
+будівлями, з городами, сіножатями і
+пріорними полями.
+
+Склавши все — готівку та показані прибутки,
+окрім рештки від «побору» та посольщини,
+що не кожного року бувають, <strong>разом становить:</strong>
+
+<strong class="smr-sum-line" style="font-size:1.1rem;">11 586 злотих, 7 грошів, 18 денаріїв</strong></div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="smr-col-header">
+                        <div class="smr-col-badge" style="background:var(--sepia);color:#1c160a;">!</div>
+                        <div class="smr-col-title">Важливі спостереження</div>
+                    </div>
+
+                    <div style="display:flex;flex-direction:column;gap:1rem;">
+                        <div style="padding:1.2rem 1.4rem;background:var(--sepia-pale);border-left:3px solid var(--sepia);border-radius:0 8px 8px 0;">
+                            <div style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;color:var(--ink);margin-bottom:.5rem;">Мед — основний натуральний продукт</div>
+                            <p style="font-family:'DM Sans',sans-serif;font-size:.78rem;line-height:1.75;color:var(--ink-faded);margin:0;">
+                                150 відер меду щорічно (86½ від підданих + 63¾ дворного) свідчить про розвинене бортництво. При ціні 6 злотих за відро — це 900 злотих, третина всіх «натуральних» зборів.
+                            </p>
+                        </div>
+                        <div style="padding:1.2rem 1.4rem;background:var(--sepia-pale);border-left:3px solid var(--sepia);border-radius:0 8px 8px 0;">
+                            <div style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;color:var(--ink);margin-bottom:.5rem;">Поташ — стратегічний товар</div>
+                            <p style="font-family:'DM Sans',sans-serif;font-size:.78rem;line-height:1.75;color:var(--ink-faded);margin:0;">
+                                Дубровицька пуща мала запаси на 20 років виробництва поташу — цінного експортного товару для Голландії та Англії (виробництво мила і скла).
+                            </p>
+                        </div>
+                        <div style="padding:1.2rem 1.4rem;background:var(--sepia-pale);border-left:3px solid var(--sepia);border-radius:0 8px 8px 0;">
+                            <div style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;color:var(--ink);margin-bottom:.5rem;">Горинь та Случ — торгові артерії</div>
+                            <p style="font-family:'DM Sans',sans-serif;font-size:.78rem;line-height:1.75;color:var(--ink-faded);margin:0;">
+                                Злиття двох судноплавних річок у Дубровиці давало доступ до торгових шляхів з Волині до Литви і далі — до Гданська. У пущі будували байдаки та комяги для цього транспорту.
+                            </p>
+                        </div>
+                        <div style="padding:1.2rem 1.4rem;background:var(--sepia-pale);border-left:3px solid var(--sepia);border-radius:0 8px 8px 0;">
+                            <div style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;color:var(--ink);margin-bottom:.5rem;">Горілчана «тіньова економіка»</div>
+                            <p style="font-family:'DM Sans',sans-serif;font-size:.78rem;line-height:1.75;color:var(--ink-faded);margin:0;">
+                                Автор прямо скаржиться: місцеві жителі підпільно гонять горілку, заважаючи офіційній оренді. Потенційний дохід від оренди корчем — 2000 зл. замість реальних 650 зл.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══ TAB PANEL: FINANCES ══ -->
+        <div class="smr-tab-panel" id="panel-finances">
+            <div class="smr-section-eyebrow smr-reveal"><span>Фінансовий звіт · 1642 рік</span></div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;" class="smr-reveal">
+
+                <!-- Left: actual income -->
+                <div>
+                    <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:300;font-style:italic;color:var(--ink);margin-bottom:1.2rem;">Реальні доходи</h3>
+
+                    <div class="smr-finance" style="margin-bottom:1.5rem;">
+                        <div class="smr-finance-head">Готівкові надходження (Grosz Gotowy)</div>
+                        <div class="smr-finance-row">
+                            <span>Чинш від міщан та підданих</span>
+                            <span class="smr-finance-amount">1 167 зл.</span>
+                        </div>
+                        <div class="smr-finance-row">
+                            <span>Телиці, свині, барани (грошима)</span>
+                            <span class="smr-finance-amount">150 зл.</span>
+                        </div>
+                        <div class="smr-finance-row">
+                            <span>Оренда млинів та корчем</span>
+                            <span class="smr-finance-amount">650 зл.</span>
+                        </div>
+                        <div class="smr-finance-row">
+                            <span>Оренда Юторської рудні</span>
+                            <span class="smr-finance-amount">300 зл.</span>
+                        </div>
+                        <div class="smr-finance-row">
+                            <span>Оренда Корпиловської рудні</span>
+                            <span class="smr-finance-amount">150 зл.</span>
+                        </div>
+                        <div class="smr-finance-row">
+                            <span>Очкове від бджіл</span>
+                            <span class="smr-finance-amount">35 зл.</span>
+                        </div>
+                        <div class="smr-finance-row total">
+                            <span>Разом готівкою</span>
+                            <span class="smr-finance-amount">2 453 зл.</span>
+                        </div>
+                    </div>
+
+                    <div class="smr-finance" style="margin-bottom:1.5rem;">
+                        <div class="smr-finance-head">Натуральні та відробіткові надходження</div>
+                        <div class="smr-finance-row">
+                            <span>Осеп житом (24½ маці × 5 зл.)</span>
+                            <span class="smr-finance-amount">120 зл.</span>
+                        </div>
+                        <div class="smr-finance-row">
+                            <span>Осеп вівсом (120⅓ маці × 2.5 зл.)</span>
+                            <span class="smr-finance-amount">300 зл.</span>
+                        </div>
+                        <div class="smr-finance-row">
+                            <span>Мед (150¼ відра × 6 зл.)</span>
+                            <span class="smr-finance-amount">900 зл.</span>
+                        </div>
+                        <div class="smr-finance-row">
+                            <span>Гуси, кури, яйця</span>
+                            <span class="smr-finance-amount">~52 зл.</span>
+                        </div>
+                        <div class="smr-finance-row">
+                            <span>Озера, бобри, свинина</span>
+                            <span class="smr-finance-amount">410 зл.</span>
+                        </div>
+                        <div class="smr-finance-row">
+                            <span>Підводи (123¾ служби)</span>
+                            <span class="smr-finance-amount">309 зл.</span>
+                        </div>
+                        <div class="smr-finance-row total">
+                            <span>Разом натурою</span>
+                            <span class="smr-finance-amount">2 303 зл.</span>
+                        </div>
+                    </div>
+
+                    <div class="smr-finance">
+                        <div class="smr-finance-head">Панщина (Robocizna)</div>
+                        <div class="smr-finance-row">
+                            <span>123¾ служби × 248 днів × 3 гр.</span>
+                            <span class="smr-finance-amount">3 071 зл.</span>
+                        </div>
+                        <div class="smr-finance-row total">
+                            <span><strong>Підсумок (Summa Summarum)</strong></span>
+                            <span class="smr-finance-amount" style="font-size:1.2rem;"><strong>8 828 зл.</strong></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: potential income -->
+                <div>
+                    <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:300;font-style:italic;color:var(--ink);margin-bottom:1.2rem;">Потенційні доходи</h3>
+
+                    <div class="smr-finance" style="margin-bottom:1.5rem;">
+                        <div class="smr-finance-head">Невикористані ресурси</div>
+                        <div class="smr-finance-row">
+                            <span>Немиряні землі підданих</span>
+                            <span class="smr-finance-amount">300 зл.</span>
+                        </div>
+                        <div class="smr-finance-row">
+                            <span>Пуща (поташ та смальцуга)</span>
+                            <span class="smr-finance-amount">300 зл.</span>
+                        </div>
+                        <div class="smr-finance-row">
+                            <span>Розширення Юторської рудні</span>
+                            <span class="smr-finance-amount">150 зл.</span>
+                        </div>
+                        <div class="smr-finance-row">
+                            <span>Нова рудня (р. Горинь)</span>
+                            <span class="smr-finance-amount">400 зл.</span>
+                        </div>
+                        <div class="smr-finance-row">
+                            <span>Річкова навігація (Горинь+Случ)</span>
+                            <span class="smr-finance-amount">200 зл.</span>
+                        </div>
+                        <div class="smr-finance-row">
+                            <span>Заборона домашньої горілки</span>
+                            <span class="smr-finance-amount">350 зл.</span>
+                        </div>
+                        <div class="smr-finance-row">
+                            <span>Боярські землі</span>
+                            <span class="smr-finance-amount">200 зл.</span>
+                        </div>
+                        <div class="smr-finance-row">
+                            <span>Судові штрафи та збори</span>
+                            <span class="smr-finance-amount">300 зл.</span>
+                        </div>
+                        <div class="smr-finance-row">
+                            <span>Мисливство у пущі</span>
+                            <span class="smr-finance-amount">60 зл.</span>
+                        </div>
+                        <div class="smr-finance-row total">
+                            <span>Разом потенційно</span>
+                            <span class="smr-finance-amount">2 760 зл.</span>
+                        </div>
+                    </div>
+
+                    <div class="smr-summary-box">
+                        <div class="smr-summary-title">Загальна сума 1642 року</div>
+                        <div class="smr-summary-grid">
+                            <div class="smr-sum-stat">
+                                <div class="smr-sum-num">8 828</div>
+                                <div class="smr-sum-key">Реальний дохід (зл.)</div>
+                            </div>
+                            <div class="smr-sum-stat">
+                                <div class="smr-sum-num">2 760</div>
+                                <div class="smr-sum-key">Потенційний приріст (зл.)</div>
+                            </div>
+                            <div class="smr-sum-stat" style="background:rgba(201,165,83,.1);border-color:rgba(201,165,83,.3);">
+                                <div class="smr-sum-num" style="font-size:2.2rem;">11 586</div>
+                                <div class="smr-sum-key">Разом (зл. 7 гр. 18 ден.)</div>
+                            </div>
+                        </div>
+                        <p style="font-family:'DM Sans',sans-serif;font-size:.72rem;line-height:1.7;color:rgba(240,228,184,.45);margin-top:1.4rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,.06);">
+                            Для порівняння: у 1640-х роках корова коштувала ~10–15 зл., бойовий кінь — 100–200 зл., 
+                            а річний заробіток простого ремісника становив ~40–60 зл.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══ TAB PANEL: GLOSSARY ══ -->
+        <div class="smr-tab-panel" id="panel-glossary">
+            <div class="smr-section-eyebrow smr-reveal"><span>Тлумачення архаїзмів та термінів XVII ст.</span></div>
+
+            <p style="font-family:'DM Sans',sans-serif;font-size:.82rem;line-height:1.8;color:var(--ink-faded);margin-bottom:2rem;max-width:680px;" class="smr-reveal">
+                Документ насичений термінами господарського права Речі Посполитої, архаїчними польськими словами та специфічними поліськими назвами. Нижче — детальний глосарій.
+            </p>
+
+            <div class="smr-glossary smr-reveal">
+                <div class="smr-gloss-item">
+                    <div class="smr-gloss-term">Сумаріуш (Sumariusz)</div>
+                    <div class="smr-gloss-def">Стислий звіт-резюме маєтку, який фіксував реальні й потенційні доходи. Складався управителем або ревізором. Відрізнявся від детального інвентарю коротким описом по категоріях.</div>
+                </div>
+                <div class="smr-gloss-item">
+                    <div class="smr-gloss-term">Аренда (Aręda)</div>
+                    <div class="smr-gloss-def">Виключне право пана на продаж алкоголю в маєтку (пропінація). Пан здавав це право орендарю — найчастіше єврейському корчмарю — за фіксовану суму. Основне джерело готівки.</div>
+                </div>
+                <div class="smr-gloss-item">
+                    <div class="smr-gloss-term">Осеп (Osep)</div>
+                    <div class="smr-gloss-def">Натуральна данина зерном — жито та овес. Назва походить від «осипати» — міру, яку «осипали» зерном при зважуванні. Оцінювалася у злотих для зведення підсумків.</div>
+                </div>
+                <div class="smr-gloss-item">
+                    <div class="smr-gloss-term">Очкове (Oczkowe)</div>
+                    <div class="smr-gloss-def">Щорічний податок на кожну бджолину сім'ю («вічко» — отвір у вулику). Збір стягував власник маєтку з усіх бортників — і підданих, і вільних людей.</div>
+                </div>
+                <div class="smr-gloss-item">
+                    <div class="smr-gloss-term">Поташ / Смальцуга</div>
+                    <div class="smr-gloss-def">Продукт спалювання деревної золи. Поташ (вищий сорт) відправляли в Гданськ, звідти — до Голландії та Англії для виробництва мила, скла та пороху. Головний «експортний товар» Полісся XVII ст.</div>
+                </div>
+                <div class="smr-gloss-item">
+                    <div class="smr-gloss-term">Рудня (Rudnia)</div>
+                    <div class="smr-gloss-def">Мануфактура для виплавки заліза з болотної руди. Полісся було багате на таку руду. Рудня будувалась на річці для гідравлічного привода хутра та молота.</div>
+                </div>
+                <div class="smr-gloss-item">
+                    <div class="smr-gloss-term">Буда (Buda)</div>
+                    <div class="smr-gloss-def">Лісовий завод. Тимчасове поселення в пущі, де жили робітники та переробляли дерево на вугілля, смолу, дьоготь або поташ. Мала «корита» (чани) для хімічної обробки.</div>
+                </div>
+                <div class="smr-gloss-item">
+                    <div class="smr-gloss-term">Боброві гони (Bobrowe gony)</div>
+                    <div class="smr-gloss-def">Ділянки річок, де мешкали бобри. Право відлову бобрів і торгівлі хутром та «бобровою стружкою» (секрет залоз, цінна пахощева речовина) належало виключно власнику маєтку.</div>
+                </div>
+                <div class="smr-gloss-item">
+                    <div class="smr-gloss-term">Волока (Włóka)</div>
+                    <div class="smr-gloss-def">Земельна ділянка площею 16–21 гектар. Основна одиниця оподаткування в Речі Посполитій. «Служба» (Służba) — кілька волок, що становили одне господарство.</div>
+                </div>
+                <div class="smr-gloss-item">
+                    <div class="smr-gloss-term">Байдак / Комяга (Baydak / Komiega)</div>
+                    <div class="smr-gloss-def">Великі вантажні річкові судна. Байдак — швидший, з кількома щоглами. Комяга — плоскодонка об'ємом до 200 тонн. Будувалися в пущах і сплавлялися Горинню до Прип'яті, далі — до Гданська.</div>
+                </div>
+                <div class="smr-gloss-item">
+                    <div class="smr-gloss-term">Бояри (Boiarowie)</div>
+                    <div class="smr-gloss-def">На Поліссі — особлива категорія служилих людей, не селян. Мали землі в обмін на службу. «Листова служба» (posługa listowa) — кур'єрська: розвозити накази та пошту власника.</div>
+                </div>
+                <div class="smr-gloss-item">
+                    <div class="smr-gloss-term">Підводи (Podwody)</div>
+                    <div class="smr-gloss-def">Обов'язкова транспортна повинність: підданий мусив надати коней і вози для перевезення панських вантажів на кілька миль. Грошовий еквівалент — 2 зл. 15 гр. з волоки.</div>
+                </div>
+                <div class="smr-gloss-item">
+                    <div class="smr-gloss-term">Чинш (Czynsz)</div>
+                    <div class="smr-gloss-def">Основний грошовий (або натуральний) платіж за право користування землею. Збирався щорічно «за інвентарем» — тобто за відомістю, де були перераховані всі платники.</div>
+                </div>
+                <div class="smr-gloss-item">
+                    <div class="smr-gloss-term">Панщина (Robocizna)</div>
+                    <div class="smr-gloss-def">Відробіткова повинність — безоплатна праця на полях і в господарстві пана. У 1642 р. залишалось 248 робочих днів після відрахування неділь, понеділків та 12 свят. Оцінювалася по 3 гр./день.</div>
+                </div>
+                <div class="smr-gloss-item">
+                    <div class="smr-gloss-term">Фільварок (Folwark)</div>
+                    <div class="smr-gloss-def">Великий панський маєток із повним господарством: двір, гамора, стайня, сад, сіножаті та орні поля. Дубровицький замок мав 9 таких фільварків у підпорядкуванні.</div>
+                </div>
+                <div class="smr-gloss-item">
+                    <div class="smr-gloss-term">Маца (Mac)</div>
+                    <div class="smr-gloss-def">Стара міра об'єму зерна, що відрізнялась у різних регіонах (зазвичай 50–100 л). Для жита в 1642 р. ціна була 5 зл./маца, для вівса — 2 зл. 15 гр./маца.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══ TAB PANEL: CONTEXT ══ -->
+        <div class="smr-tab-panel" id="panel-context">
+            <div class="smr-section-eyebrow smr-reveal"><span>Економіка Полісся XVII ст. · Контекст та значення документу</span></div>
+
+            <div class="smr-context-grid smr-reveal">
+                <div class="smr-context-card">
+                    <div class="smr-context-head">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                        Замок над Горинню
+                    </div>
+                    <div class="smr-context-body">
+                        Документ підтверджує існування <strong>замку у Дубровиці в 1642 році</strong> — він описаний як «порядньо збудований над річкою Горинню» і є центром усієї маєткової системи з 9 фільварків. 
+                        На жаль, замок не зберігся до наших днів. Він ймовірно був дерево-земляним укріпленням, 
+                        характерним для поліської архітектури того часу.
+                    </div>
+                </div>
+
+                <div class="smr-context-card">
+                    <div class="smr-context-head">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                        Масштаб доходів
+                    </div>
+                    <div class="smr-context-body">
+                        Загальний дохід у <strong>11 586 злотих</strong> — це значний маєток. Для порівняння: 
+                        корова коштувала 10–15 зл., бойовий кінь — 100–200 зл., 
+                        а кваліфікований ремісник заробляв 40–60 зл. на рік. 
+                        Дубровиця приносила своєму власнику еквівалент зарплат близько 200 ремісників щорічно.
+                    </div>
+                </div>
+
+                <div class="smr-context-card">
+                    <div class="smr-context-head">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M12 22V12M12 12C12 7 7 3 2 3v9c5 0 10 4 10 10zM12 12c0-5 5-9 10-9v9c-5 0-10 4-10 10z"/></svg>
+                        Ліс як основний ресурс
+                    </div>
+                    <div class="smr-context-body">
+                        Поліська пуща навколо Дубровиці описана як невичерпний ресурс на <strong>20 років виробництва поташу</strong>. 
+                        Вже існувала «Буда» з усім обладнанням. Крім поташу — смола, дьоготь, деревне вугілля та судна. 
+                        Ліс був для Полісся тим, чим нафта є сьогодні для Перської затоки.
+                    </div>
+                </div>
+
+                <div class="smr-context-card">
+                    <div class="smr-context-head">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg>
+                        Залізна промисловість
+                    </div>
+                    <div class="smr-context-body">
+                        У маєтку вже функціонували <strong>два залізоробних підприємства</strong> — Юторська та Корпиловська рудні. 
+                        Болотна руда Полісся була легкодоступна, а деревне вугілля — поруч. 
+                        Автор описує конкретні плани розширення: підняти греблю, перебудувати млин у третю рудню.
+                    </div>
+                </div>
+
+                <div class="smr-context-card">
+                    <div class="smr-context-head">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 13.5a19.79 19.79 0 01-3.07-8.7A2 2 0 012.18 2.72h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 9.36a16 16 0 006 6l.41-.41a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                        Річкові торговельні шляхи
+                    </div>
+                    <div class="smr-context-body">
+                        Злиття <strong>Горині та Случі</strong> у Дубровиці — стратегічна торгова точка. 
+                        Саме тут формувалися каравани байдаків і комяг, які везли зерно, поташ та ліс 
+                        до Прип'яті, далі — до Дніпра або Бугу і через Вісту до Гданська. 
+                        Це пояснює важливість Дубровиці в регіональній економіці.
+                    </div>
+                </div>
+
+                <div class="smr-context-card">
+                    <div class="smr-context-head">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                        Соціальна структура
+                    </div>
+                    <div class="smr-context-body">
+                        Документ відображає <strong>три соціальні верстви</strong>: 
+                        міщани (платять чинш і відробляють міські служби), 
+                        підданих-кріпаків (платять осеп, мед, несуть панщину та підводи) 
+                        та бояр (9 служб, несуть кур'єрську «листову» службу замість грошового чиншу). 
+                        Єврейська громада не згадана прямо, але очевидно є орендарями корчем.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Final quote block -->
+            <div style="background:linear-gradient(135deg,#1a1408,#2a1e0a);border-radius:12px;padding:2.5rem;color:white;position:relative;overflow:hidden;margin-top:1rem;" class="smr-reveal">
+                <div style="position:absolute;top:-1rem;left:1.5rem;font-family:'Cormorant Garamond',serif;font-size:10rem;font-weight:300;line-height:1;color:rgba(201,165,83,.07);pointer-events:none;">"</div>
+                <p style="font-family:'IM Fell English',serif;font-size:1.15rem;font-style:italic;line-height:1.8;color:rgba(240,228,184,.85);max-width:700px;margin-bottom:1rem;position:relative;z-index:1;">
+                    «В тей Маетності над Ріжкою Горинею ЗАМОК порядно збудований, з будованням вним, 
+                    в Інвентарю описаний. До того Замку Фольварків збудованням Дворним Гуменним, 
+                    Обірним з Огородами, з Сіножатями — числом 9.»
+                </p>
+                <div style="font-family:'DM Sans',sans-serif;font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(201,165,83,.5);">
+                    Сумаріуш маєтку Дубровиця · Грудень 1642 р.
+                </div>
+            </div>
+        </div>
+
+    </div><!-- /smr-body -->
+
+    <!-- ══ SCAN LIGHTBOX ══ -->
+    <div class="smr-lb" id="SMR-LB">
+        <button class="smr-lb-close" onclick="closeScanLB()">×</button>
+        <button class="smr-lb-nav smr-lb-prev" onclick="navScanLB(-1)">‹</button>
+        <button class="smr-lb-nav smr-lb-next" onclick="navScanLB(1)">›</button>
+        <img class="smr-lb-img" id="SMR-LB-IMG" src="" alt="">
+        <div class="smr-lb-caption" id="SMR-LB-CAP"></div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4 class="footer-title">Дубровиця</h4>
+                    <p class="footer-text">Цифровий архів історичної спадщини міста Дубровиця, Рівненська область, Україна.</p>
+                </div>
+                <div class="footer-section">
+                    <h4 class="footer-title">Навігація</h4>
+                    <nav class="footer-nav">
+                        <a href="history.html">Історія</a>
+                        <a href="photo-archive.html">Фотоархів</a>
+                        <a href="metrychni-knyhy.html">Метричні книги</a>
+                        <a href="books.html">Книги</a>
+                    </nav>
+                </div>
+                <div class="footer-section">
+                    <h4 class="footer-title">Контакти</h4>
+                    <p class="footer-text">Маєте матеріали або пропозиції?<br><a href="contacts.html" class="footer-link">Зв'яжіться з нами</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom"><p>&copy; 2026 Дубровиця. Цифровий архів.</p></div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+    <script>
+    // ── TAB SYSTEM ──
+    document.querySelectorAll('.smr-tab').forEach(tab => {
+        tab.addEventListener('click', function() {
+            const panel = this.dataset.panel;
+            document.querySelectorAll('.smr-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.smr-tab-panel').forEach(p => p.classList.remove('active'));
+            this.classList.add('active');
+            document.getElementById('panel-' + panel).classList.add('active');
+            // Trigger reveal animations for newly shown panel
+            setTimeout(revealVisible, 50);
+        });
+    });
+
+    // ── SCAN LIGHTBOX ──
+    const SCANS = [
+        { src: 'https://i.imgur.com/eCkmrb3.jpeg',  cap: 'Сторінка 1 · Грошові та натуральні доходи · Anno 1642 Decemb.' },
+        { src: 'https://i.imgur.com/UPFx3Gp.jpeg',  cap: 'Сторінка 2 · Промисловий потенціал маєтку Дубровиця' },
+        { src: 'https://i.imgur.com/gseULFj.jpeg',  cap: 'Сторінка 3 · Замок над Горинню та підсумок — зł 11 586' },
+    ];
+    let curScan = 0;
+    function openScanLB(i) {
+        curScan = i;
+        document.getElementById('SMR-LB-IMG').src = SCANS[i].src;
+        document.getElementById('SMR-LB-CAP').textContent = SCANS[i].cap;
+        document.getElementById('SMR-LB').classList.add('on');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeScanLB() {
+        document.getElementById('SMR-LB').classList.remove('on');
+        document.body.style.overflow = '';
+    }
+    function navScanLB(dir) {
+        curScan = (curScan + dir + SCANS.length) % SCANS.length;
+        const img = document.getElementById('SMR-LB-IMG');
+        img.style.opacity = '0';
+        setTimeout(() => {
+            img.src = SCANS[curScan].src;
+            document.getElementById('SMR-LB-CAP').textContent = SCANS[curScan].cap;
+            img.style.transition = 'opacity .3s ease';
+            img.style.opacity = '1';
+        }, 150);
+    }
+    document.getElementById('SMR-LB').addEventListener('click', e => {
+        if (e.target === document.getElementById('SMR-LB')) closeScanLB();
+    });
+    document.addEventListener('keydown', e => {
+        if (!document.getElementById('SMR-LB').classList.contains('on')) return;
+        if (e.key === 'ArrowLeft')  navScanLB(-1);
+        if (e.key === 'ArrowRight') navScanLB(1);
+        if (e.key === 'Escape')     closeScanLB();
+    });
+
+    // ── SCROLL REVEAL ──
+    function revealVisible() {
+        document.querySelectorAll('.smr-reveal:not(.vis)').forEach(el => {
+            const r = el.getBoundingClientRect();
+            if (r.top < window.innerHeight * 0.92) el.classList.add('vis');
+        });
+    }
+    window.addEventListener('scroll', revealVisible, { passive: true });
+    setTimeout(revealVisible, 100);
+    </script>
+</body>
+</html>
