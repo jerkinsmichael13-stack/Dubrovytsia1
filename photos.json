@@ -1,5 +1,12 @@
 [
     {
+        "imageUrl": "https://i.imgur.com/faIkqmZ.jpeg",
+        "title": "Міський парк, центр",
+        "period": "1900-1939",
+        "category": "streets",
+        "date": "2026"
+    },
+    {
         "imageUrl": "https://i.imgur.com/SIiSYZf.jpeg",
         "title": "Вулиці міста",
         "period": "1945-1991",
