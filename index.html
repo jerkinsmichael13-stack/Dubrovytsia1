@@ -12,7 +12,7 @@
     <script>!function(){var t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t)}()</script>
     <link rel="preload" as="image" href="https://i.imgur.com/FfgAmadh.jpeg" media="(min-width: 768px)">
     <link rel="preload" as="image" href="https://i.imgur.com/cMQeU7Ph.jpeg" media="(min-width: 768px)">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="app.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -131,8 +131,6 @@
     .COBS, .WOBS, .POBS { gap: 0; }
 }
 </style>
-    <link rel="stylesheet" href="style_premium.css">
-<link rel="stylesheet" href="style_v9.css">
 </head>
 <body>
     <!-- Header -->
@@ -820,7 +818,7 @@
           .then(function(r) { return r.ok ? r.json() : []; })
           .then(function(data) {
             if (!Array.isArray(data) || !data.length) {
-              if (leg) leg.innerHTML = '<li style="padding:.7rem .5rem;border-radius:8px;background:rgba(201,162,39,.05);border:1px solid rgba(201,162,39,.12);"><span style="font-family:'DM Sans',sans-serif;font-size:.7rem;color:#a09080;line-height:1.6;">Маркери будуть додані через адмін-панель.</span></li>';
+              if (leg) leg.innerHTML = '<li style="font-size:.72rem;color:#a09080;font-family:\'DM Sans\',sans-serif;padding:.4rem .25rem">Позначень ще немає</li>';
               return;
             }
             DATA[mid] = data.map(normalizePin).filter(function(p){ return !isNaN(p.x)&&!isNaN(p.y); });
@@ -1302,7 +1300,7 @@
       function buildLegend() {
         var ul = document.getElementById('TPLEGLIST'); ul.innerHTML = '';
         if (!pins.length) {
-          ul.innerHTML = '<li style="padding:.7rem .5rem;border-radius:8px;background:rgba(201,162,39,.05);border:1px solid rgba(201,162,39,.12);"><span style="font-family:'DM Sans',sans-serif;font-size:.7rem;color:#a09080;line-height:1.6;">Маркери будуть додані через адмін-панель.</span></li>';
+          ul.innerHTML = '<li style="font-size:.72rem;color:#a09080;font-family:\'DM Sans\',sans-serif;padding:.4rem .25rem">Позначень ще немає</li>';
           return;
         }
         pins.forEach(function(p) {
@@ -1367,7 +1365,7 @@
           buildPins(); buildLegend();
         })
         .catch(function() {
-          document.getElementById('TPLEGLIST').innerHTML = '<li style="padding:.8rem .5rem;border-radius:8px;background:rgba(201,162,39,.06);border:1px solid rgba(201,162,39,.15);margin-bottom:.4rem;"><p style="font-family:\'DM Sans\',sans-serif;font-size:.72rem;line-height:1.65;color:#a09080;">Інтерактивні маркери об\'єктів на цьому плані ще в процесі розробки.</p><p style="font-family:\'DM Sans\',sans-serif;font-size:.68rem;color:rgba(201,162,39,.65);margin-top:.4rem;">Рукописний план 1855 р. розробки — тягніть та збільшуйте карту для деталей.</p></li>';
+          document.getElementById('TPLEGLIST').innerHTML = '<li style="font-size:.72rem;color:#a09080;font-family:\'DM Sans\',sans-serif;padding:.4rem .25rem">Позначень ще немає</li>';
         });
 
       // ── FULLSCREEN (map) ─────────────────────────────────────
@@ -3084,7 +3082,7 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="app.js"></script>
 
     <!-- FULLSCREEN SLIDER OVERLAY -->
     <div id="SFS-OVERLAY">
@@ -3280,6 +3278,5 @@
       if (e.target === this) closeSliderFS();
     });
     </script>
-<script src="script_v9.js"></script>
 </body>
 </html>
