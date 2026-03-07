@@ -335,17 +335,30 @@ function renderBooks() {
     }
     if (emptyMsg) emptyMsg.style.display = 'none';
 
-    grid.innerHTML = filtered.map(book => `
-        <div class="catalog-item book-item fade-in-up">
-            ${book.coverUrl
-                ? `<img src="${book.coverUrl}" alt="${book.title}" class="book-cover" loading="lazy">`
-                : `<div class="book-cover-placeholder">📚</div>`}
-            <div class="book-info">
-                <h3>${book.title}</h3>
-                <p class="book-meta">Автор: ${book.author}${book.year ? ' · Рік: ' + book.year : ''}</p>
-                <p class="book-description">${book.description}</p>
-                ${book.location ? `<p><strong>Місце зберігання:</strong> ${book.location}</p>` : ''}
-                ${book.downloadUrl ? `<a href="${book.downloadUrl}" target="_blank" rel="noopener" class="catalog-link">📥 Завантажити / переглянути →</a>` : ''}
+    const CATEGORY_LABELS = {
+        'history': 'Історія',
+        'culture': 'Культура',
+        'war': 'Друга світова',
+        'religion': 'Релігія',
+        'people': 'Постаті',
+        'documents': 'Документи',
+        'folklore': 'Фольклор'
+    };
+
+    grid.innerHTML = filtered.map((book, i) => `
+        <div class="book-card fade-in-up" style="animation-delay:${i*0.07}s">
+            <div class="book-card-cover">
+                ${book.coverUrl
+                    ? `<img src="${book.coverUrl}" alt="${book.title}" loading="lazy">`
+                    : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:4rem;background:linear-gradient(145deg,rgba(201,162,39,.1),rgba(201,162,39,.03));">📚</div>`}
+                ${book.category ? `<span class="book-card-category">${CATEGORY_LABELS[book.category] || book.category}</span>` : ''}
+            </div>
+            <div class="book-card-body">
+                <h3 class="book-card-title">${book.title}</h3>
+                ${book.author ? `<p class="book-card-author">${book.author}</p>` : ''}
+                ${book.year ? `<p class="book-card-year">${book.year}</p>` : ''}
+                <p class="book-card-desc">${book.description || ''}</p>
+                ${book.location ? `<a href="${book.location}" target="_blank" rel="noopener" class="book-card-link">Переглянути <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>` : ''}
             </div>
         </div>
     `).join('');
