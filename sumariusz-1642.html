@@ -576,25 +576,11 @@
 }
 
 /* ── Scroll fade in ── */
-.smr-reveal {
+.{
     opacity: 0; transform: translateY(16px);
     transition: opacity .6s ease, transform .6s ease;
 }
-.smr-reveal.vis { opacity: 1; transform: none; }
-/* ── Tab panel content always visible (no scroll-reveal dependency) ── */
-.smr-tab-panel .smr-reveal {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
-}
-
-/* ── Tab panel reveal fix: content inside panels is always visible ── */
-.smr-tab-panel .smr-reveal {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
-}
-
+..vis { opacity: 1; transform: none; }
 </style>
 </head>
 <body class="smr-page">
@@ -698,11 +684,11 @@
 
         <!-- ══ TAB PANEL: SCANS ══ -->
         <div class="smr-tab-panel active" id="panel-scans">
-            <div class="smr-section-eyebrow smr-reveal"><span>Оригінальні скани · 3 сторінки</span></div>
-            <p style="font-family:'DM Sans',sans-serif;font-size:.82rem;line-height:1.8;color:var(--ink-faded);margin-bottom:2rem;max-width:680px;" class="smr-reveal">
+            <div class="smr-section-eyebrow "><span>Оригінальні скани · 3 сторінки</span></div>
+            <p style="font-family:'DM Sans',sans-serif;font-size:.82rem;line-height:1.8;color:var(--ink-faded);margin-bottom:2rem;max-width:680px;" class="">
                 Нижче представлені оригінальні скани рукописного документу 1642 року. Натисніть на зображення для перегляду у повному розмірі. Документ написаний старопольською мовою з характерним почерком XVII ст.
             </p>
-            <div class="smr-scans-grid smr-reveal">
+            <div class="smr-scans-grid ">
                 <div class="smr-scan-card" onclick="openScanLB(0)" data-src="https://i.imgur.com/eCkmrb3.jpeg">
                     <img class="smr-scan-img" src="https://i.imgur.com/eCkmrb3l.jpeg" alt="Сумаріуш Дубровиця 1642 — сторінка 1">
                     <div class="smr-scan-overlay">
@@ -730,7 +716,7 @@
             </div>
 
             <!-- Quick-read note -->
-            <div style="margin-top:2rem;padding:1.4rem 1.6rem;background:var(--sepia-pale);border:1px solid var(--ruling);border-radius:10px;display:flex;gap:1rem;align-items:flex-start;" class="smr-reveal">
+            <div style="margin-top:2rem;padding:1.4rem 1.6rem;background:var(--sepia-pale);border:1px solid var(--ruling);border-radius:10px;display:flex;gap:1rem;align-items:flex-start;" class="">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:18px;height:18px;stroke:#c9a553;flex-shrink:0;margin-top:2px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                 <div>
                     <div style="font-family:'DM Sans',sans-serif;font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--sepia);margin-bottom:.4rem;">Довідка про документ</div>
@@ -746,9 +732,9 @@
 
         <!-- ══ TAB PANEL: TRANSCRIPT ══ -->
         <div class="smr-tab-panel" id="panel-transcript">
-            <div class="smr-section-eyebrow smr-reveal"><span>Оригінальний текст · Старопольська мова · XVII ст.</span></div>
+            <div class="smr-section-eyebrow "><span>Оригінальний текст · Старопольська мова · XVII ст.</span></div>
 
-            <div class="smr-transcript smr-reveal">
+            <div class="smr-transcript ">
                 <div>
                     <div class="smr-col-header">
                         <div class="smr-col-badge">PL</div>
@@ -981,9 +967,9 @@ uchwalono bywa, Czyni in Summa —
 
         <!-- ══ TAB PANEL: TRANSLATION ══ -->
         <div class="smr-tab-panel" id="panel-translation">
-            <div class="smr-section-eyebrow smr-reveal"><span>Переклад сучасною українською</span></div>
+            <div class="smr-section-eyebrow "><span>Переклад сучасною українською</span></div>
 
-            <div class="smr-transcript smr-reveal">
+            <div class="smr-transcript ">
                 <div>
                     <div class="smr-col-header">
                         <div class="smr-col-badge">UK</div>
@@ -1188,9 +1174,9 @@ uchwalono bywa, Czyni in Summa —
 
         <!-- ══ TAB PANEL: FINANCES ══ -->
         <div class="smr-tab-panel" id="panel-finances">
-            <div class="smr-section-eyebrow smr-reveal"><span>Фінансовий звіт · 1642 рік</span></div>
+            <div class="smr-section-eyebrow "><span>Фінансовий звіт · 1642 рік</span></div>
 
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;" class="smr-reveal">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;" class="">
 
                 <!-- Left: actual income -->
                 <div>
@@ -1348,13 +1334,13 @@ uchwalono bywa, Czyni in Summa —
 
         <!-- ══ TAB PANEL: GLOSSARY ══ -->
         <div class="smr-tab-panel" id="panel-glossary">
-            <div class="smr-section-eyebrow smr-reveal"><span>Тлумачення архаїзмів та термінів XVII ст.</span></div>
+            <div class="smr-section-eyebrow "><span>Тлумачення архаїзмів та термінів XVII ст.</span></div>
 
-            <p style="font-family:'DM Sans',sans-serif;font-size:.82rem;line-height:1.8;color:var(--ink-faded);margin-bottom:2rem;max-width:680px;" class="smr-reveal">
+            <p style="font-family:'DM Sans',sans-serif;font-size:.82rem;line-height:1.8;color:var(--ink-faded);margin-bottom:2rem;max-width:680px;" class="">
                 Документ насичений термінами господарського права Речі Посполитої, архаїчними польськими словами та специфічними поліськими назвами. Нижче — детальний глосарій.
             </p>
 
-            <div class="smr-glossary smr-reveal">
+            <div class="smr-glossary ">
                 <div class="smr-gloss-item">
                     <div class="smr-gloss-term">Сумаріуш (Sumariusz)</div>
                     <div class="smr-gloss-def">Стислий звіт-резюме маєтку, який фіксував реальні й потенційні доходи. Складався управителем або ревізором. Відрізнявся від детального інвентарю коротким описом по категоріях.</div>
@@ -1424,9 +1410,9 @@ uchwalono bywa, Czyni in Summa —
 
         <!-- ══ TAB PANEL: CONTEXT ══ -->
         <div class="smr-tab-panel" id="panel-context">
-            <div class="smr-section-eyebrow smr-reveal"><span>Економіка Полісся XVII ст. · Контекст та значення документу</span></div>
+            <div class="smr-section-eyebrow "><span>Економіка Полісся XVII ст. · Контекст та значення документу</span></div>
 
-            <div class="smr-context-grid smr-reveal">
+            <div class="smr-context-grid ">
                 <div class="smr-context-card">
                     <div class="smr-context-head">
                         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
@@ -1499,7 +1485,7 @@ uchwalono bywa, Czyni in Summa —
             </div>
 
             <!-- ══ RESEARCH NOTE: № 9 ══ -->
-            <div style="margin-top:2rem;" class="smr-reveal">
+            <div style="margin-top:2rem;" class="">
                 <div class="smr-section-eyebrow"><span>Дослідницька нотатка · Дискусійне питання</span></div>
 
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem;">
@@ -1558,7 +1544,7 @@ uchwalono bywa, Czyni in Summa —
             </div>
 
             <!-- ══ ВИСНОВКИ ══ -->
-            <div style="margin-top:3rem;" class="smr-reveal">
+            <div style="margin-top:3rem;" class="">
                 <div class="smr-section-eyebrow"><span>Висновки · Що розповідає документ про Дубровицю 1642 року</span></div>
 
                 <style>
@@ -1921,15 +1907,6 @@ uchwalono bywa, Czyni in Summa —
         if (e.key==='0') lbReset(true);
     });
 
-    // ── SCROLL REVEAL ──
-    function revealVisible() {
-        document.querySelectorAll('.smr-reveal:not(.vis)').forEach(el => {
-            const r = el.getBoundingClientRect();
-            if (r.top < window.innerHeight * 0.92) el.classList.add('vis');
-        });
-    }
-    window.addEventListener('scroll', revealVisible, { passive: true });
-    setTimeout(revealVisible, 100);
 
     </script>
 </body>
