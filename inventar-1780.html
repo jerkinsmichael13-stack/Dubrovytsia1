@@ -1588,6 +1588,8 @@ Przedmiescie worobinskie na Trakcie Litewskim z przyjazdu od Stolina y Wysocka l
 
     <script src="app.js"></script>
     <script>
+document.addEventListener("DOMContentLoaded", function() {
+
     // ── TAB SYSTEM ──
     document.querySelectorAll('.smr-tab').forEach(tab => {
         tab.addEventListener('click', function() {
@@ -1605,7 +1607,7 @@ Przedmiescie worobinskie na Trakcie Litewskim z przyjazdu od Stolina y Wysocka l
     let lbDragging = false, lbDragStartX = 0, lbDragStartY = 0, lbDragOriginX = 0, lbDragOriginY = 0;
     let lbPinchDist = 0;
 
-    function lbApplyTransform(animate) {
+    function invLbApplyTransform(animate) {
         const img = document.getElementById('SMR-LB-IMG');
         if (!img) return;
         if (animate) img.classList.add('animating');
@@ -1636,10 +1638,10 @@ Przedmiescie worobinskie na Trakcie Litewskim z przyjazdu od Stolina y Wysocka l
 
     function lbReset(animate) {
         const img = document.getElementById('SMR-LB-IMG');
-        if (!img || !img.naturalWidth) { lbScale=1; lbX=0; lbY=0; lbApplyTransform(false); return; }
+        if (!img || !img.naturalWidth) { lbScale=1; lbX=0; lbY=0; invLbApplyTransform(false); return; }
         lbScale = lbFitScale();
         lbX = 0; lbY = 0;
-        lbApplyTransform(!!animate);
+        invLbApplyTransform(!!animate);
     }
 
     function lbZoomBy(delta, cx, cy) {
@@ -1656,7 +1658,7 @@ Przedmiescie worobinskie na Trakcie Litewskim z przyjazdu od Stolina y Wysocka l
         }
         lbScale = newScale;
         lbClampPan();
-        lbApplyTransform(true);
+        invLbApplyTransform(true);
         document.getElementById('SMR-LB').classList.add('interacted');
     }
 
@@ -1708,7 +1710,7 @@ Przedmiescie worobinskie na Trakcie Litewskim z przyjazdu od Stolina y Wysocka l
             if (!lbDragging) return;
             lbX = lbDragOriginX + (e.clientX - lbDragStartX);
             lbY = lbDragOriginY + (e.clientY - lbDragStartY);
-            lbClampPan(); lbApplyTransform(false);
+            lbClampPan(); invLbApplyTransform(false);
         });
         document.addEventListener('mouseup', () => { lbDragging = false; VP.classList.remove('dragging'); });
         VP.addEventListener('wheel', e => {
@@ -1731,7 +1733,7 @@ Przedmiescie worobinskie na Trakcie Litewskim z przyjazdu od Stolina y Wysocka l
             if (e.touches.length === 1 && lbDragging) {
                 lbX = lbDragOriginX + (e.touches[0].clientX - lbDragStartX);
                 lbY = lbDragOriginY + (e.touches[0].clientY - lbDragStartY);
-                lbClampPan(); lbApplyTransform(false);
+                lbClampPan(); invLbApplyTransform(false);
             } else if (e.touches.length === 2) {
                 const d = Math.hypot(e.touches[0].clientX-e.touches[1].clientX, e.touches[0].clientY-e.touches[1].clientY);
                 const cx = (e.touches[0].clientX+e.touches[1].clientX)/2;
@@ -1763,6 +1765,8 @@ Przedmiescie worobinskie na Trakcie Litewskim z przyjazdu od Stolina y Wysocka l
     }
     window.addEventListener('scroll', revealVisible, { passive: true });
     setTimeout(revealVisible, 100);
-    </script>
+    
+});
+</script>
 </body>
 </html>
