@@ -1733,6 +1733,11 @@ uchwalono bywa, Czyni in Summa —
     <script src="app.js"></script>
     <script>
 (function() {
+var SCANS = [
+    { src: 'https://i.imgur.com/eCkmrb3.jpeg', cap: 'Сторінка 1 · Грошові доходи' },
+    { src: 'https://i.imgur.com/UPFx3Gp.jpeg', cap: 'Сторінка 2 · Промисловий потенціал' },
+    { src: 'https://i.imgur.com/gseULFj.jpeg', cap: 'Сторінка 3 · Замок та підсумок' },
+];
 
     // ── TAB SYSTEM ──
     document.querySelectorAll('.smr-tab').forEach(tab => {
@@ -1746,11 +1751,6 @@ uchwalono bywa, Czyni in Summa —
     });
 
         // ══════════ LIGHTBOX WITH PAN + ZOOM ══════════
-    const SCANS = [
-        { src: 'https://i.imgur.com/eCkmrb3.jpeg',  cap: 'Сторінка 1 · Грошові та натуральні доходи · Anno 1642 Decemb.' },
-        { src: 'https://i.imgur.com/UPFx3Gp.jpeg',  cap: 'Сторінка 2 · Промисловий потенціал маєтку Дубровиця' },
-        { src: 'https://i.imgur.com/gseULFj.jpeg',  cap: 'Сторінка 3 · Замок над Горинню та підсумок — zł 11 586' },
-    ];
     var curScan = 0;
     var lbScale = 1, lbX = 0, lbY = 0;
     var lbDragging = false, lbDragStartX = 0, lbDragStartY = 0, lbDragOriginX = 0, lbDragOriginY = 0;
