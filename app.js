@@ -885,6 +885,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Динамічний лічильник фото на головній — завжди анімує до реального числа
     const stat = document.getElementById('photoCountStat');
     const heroNum = document.getElementById('heroLiveNum');
+    if (stat) stat.textContent = '0';
     if (stat || heroNum) {
         fetch(GITHUB_RAW + 'photos.json?v=' + Date.now())
             .then(r => r.ok ? r.json() : null)
@@ -893,25 +894,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 const realCount = d.length;
                 // Update hero badge immediately
                 if (heroNum) heroNum.textContent = realCount;
-                // Animate main stat counter
+                // Animate main stat counter from 0
                 if (stat) {
-                    stat.setAttribute('data-target', realCount);
                     let cur = 0;
-                    const step = realCount / 60;
+                    const step = Math.max(1, realCount / 55);
                     const tick = () => {
                         if (cur < realCount) {
                             cur += step;
-                            stat.textContent = Math.floor(cur).toLocaleString('uk-UA');
+                            stat.textContent = Math.floor(Math.min(cur, realCount)).toLocaleString('uk-UA');
                             requestAnimationFrame(tick);
                         } else {
                             stat.textContent = realCount.toLocaleString('uk-UA');
                         }
                     };
-                    stat.textContent = '0';
                     tick();
                 }
             })
-            .catch(() => {});
+            .catch(() => { if (stat) stat.textContent = '44'; });
     }
 
     // Repeat after dynamic loads

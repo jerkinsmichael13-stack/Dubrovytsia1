@@ -184,7 +184,19 @@
         <div class="hero-bg">
             <div class="hero-overlay"></div>
         </div>
+
+        <!-- Floating year badge top-left -->
+        <div class="hero-badge">
+            <div class="hero-badge-year">1005</div>
+            <div class="hero-badge-label">Рік першої<br>згадки</div>
+        </div>
+
         <div class="hero-content">
+            <div class="hero-eyebrow">
+                <span class="hero-eyebrow-line"></span>
+                <span>Цифровий архів</span>
+                <span class="hero-eyebrow-line"></span>
+            </div>
             <div class="hero-text">
                 <h1 class="hero-title">
                     Дубровиця
@@ -200,10 +212,30 @@
                     <span>Україна</span>
                 </div>
             </div>
-            <div class="hero-scroll fade-in-up delay-3">
-                <span class="scroll-text">Прокрутіть</span>
-                <div class="scroll-line"></div>
+            <div class="hero-cta">
+                <a href="photo-archive.html" class="hero-btn hero-btn-primary">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    Фотоархів
+                </a>
+                <a href="history.html" class="hero-btn hero-btn-secondary">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    Історія міста
+                </a>
             </div>
+        </div>
+
+        <!-- Floating archive count bottom-right -->
+        <div class="hero-live-count" id="heroLiveCount">
+            <div class="hero-live-dot"></div>
+            <div>
+                <div class="hero-live-num" id="heroLiveNum">—</div>
+                <div class="hero-live-label">фото в архіві</div>
+            </div>
+        </div>
+
+        <div class="hero-scroll-hint">
+            <span>Гортати</span>
+            <div class="scroll-line"></div>
         </div>
     </section>
 
@@ -224,59 +256,278 @@
         </div>
     </section>
 
+    <!-- Key Dates Strip -->
+    <div class="kd-strip" id="KD-STRIP">
+        <div class="kd-track" id="KD-TRACK">
+            <div class="kd-item" data-info="Перша писемна згадка про місто в Іпатіївському літописі. Дубровиця — удільне князівство.">
+                <div class="kd-year">1005</div>
+                <div class="kd-label">Перша згадка</div>
+            </div>
+            <div class="kd-item" data-info="Марія Гольшанська згадує Пречистенську церкву у Дубровиці у своєму заповіті.">
+                <div class="kd-year">1576</div>
+                <div class="kd-label">Заповіт Гольшанської</div>
+            </div>
+            <div class="kd-item" data-info="Орден піарів розпочинає будівництво костелу Іоанна Хрестителя — найстарішої архітектурної пам'ятки міста.">
+                <div class="kd-year">1695</div>
+                <div class="kd-label">Будівництво костелу</div>
+            </div>
+            <div class="kd-item" data-info="Єпископ Кобельський урочисто освячує костел Іоанна Хрестителя в стилі рококо.">
+                <div class="kd-year">1742</div>
+                <div class="kd-label">Освячення костелу</div>
+            </div>
+            <div class="kd-item" data-info="Граф Ігнатій Броель-Плятер зводить муровану церкву Різдва Богородиці — пам'ятку національного значення.">
+                <div class="kd-year">1861</div>
+                <div class="kd-label">Церква Богородиці</div>
+            </div>
+            <div class="kd-item" data-info="Дубровиця входить до складу Польської республіки після Ризького мирного договору.">
+                <div class="kd-year">1921</div>
+                <div class="kd-label">Польський період</div>
+            </div>
+            <div class="kd-item" data-info="Початок радянської окупації Дубровиці. Костел закрито і перетворено на склад.">
+                <div class="kd-year">1939</div>
+                <div class="kd-label">Радянська окупація</div>
+            </div>
+            <div class="kd-item" data-info="Нацистська окупація. Трагедія єврейської громади: масові вбивства влітку 1942–43 рр.">
+                <div class="kd-year">1941</div>
+                <div class="kd-label">Нацистська окупація</div>
+            </div>
+            <div class="kd-item" data-info="Костел повернуто католицькій громаді після 47 років радянського складу. Єпископ Трофим'як освятив церкву.">
+                <div class="kd-year">1992</div>
+                <div class="kd-label">Повернення костелу</div>
+            </div>
+            <div class="kd-item" data-info="Відкриття пам'ятника святій Юліанії Гольшанській — праведній діві XV–XVI ст., дочці князя Дубровицького.">
+                <div class="kd-year">2005</div>
+                <div class="kd-label">Пам'ятник Юліанії</div>
+            </div>
+        </div>
+        <!-- Tooltip -->
+        <div class="kd-tooltip" id="KD-TIP"></div>
+    </div>
+    <style>
+    .kd-strip {
+        background: var(--color-bg);
+        border-bottom: 1px solid var(--color-border-light);
+        position: relative;
+        overflow: hidden;
+        padding: 0;
+    }
+    .kd-strip::before, .kd-strip::after {
+        content: '';
+        position: absolute;
+        top: 0; bottom: 0;
+        width: 80px;
+        z-index: 3;
+        pointer-events: none;
+    }
+    .kd-strip::before { left: 0; background: linear-gradient(90deg, var(--color-bg), transparent); }
+    .kd-strip::after  { right: 0; background: linear-gradient(-90deg, var(--color-bg), transparent); }
+
+    .kd-track {
+        display: flex;
+        align-items: stretch;
+        overflow-x: auto;
+        scrollbar-width: none;
+        padding: 0 80px;
+        position: relative;
+    }
+    .kd-track::-webkit-scrollbar { display: none; }
+
+    /* Timeline line through center */
+    .kd-track::before {
+        content: '';
+        position: absolute;
+        top: 50%; left: 0; right: 0;
+        height: 1px;
+        background: linear-gradient(90deg,
+            transparent 0,
+            var(--color-border) 80px,
+            var(--color-border) calc(100% - 80px),
+            transparent 100%);
+        transform: translateY(-50%);
+        pointer-events: none;
+    }
+
+    .kd-item {
+        display: flex; flex-direction: column; align-items: center;
+        padding: 1.4rem 1.8rem;
+        cursor: pointer;
+        position: relative;
+        flex-shrink: 0;
+        transition: background .2s ease;
+        min-width: 110px;
+    }
+    .kd-item::before {
+        content: '';
+        position: absolute;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        width: 8px; height: 8px;
+        border-radius: 50%;
+        background: var(--color-border);
+        border: 2px solid var(--color-bg);
+        transition: all .25s ease;
+        z-index: 1;
+    }
+    .kd-item:hover::before, .kd-item.active::before {
+        background: #c9a227;
+        width: 12px; height: 12px;
+        box-shadow: 0 0 0 4px rgba(201,162,39,.2);
+    }
+    .kd-item:hover { background: rgba(201,162,39,.04); }
+
+    .kd-year {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.1rem; font-weight: 400;
+        color: var(--color-text);
+        line-height: 1;
+        padding-bottom: .6rem;
+        transition: color .2s;
+    }
+    .kd-item:hover .kd-year, .kd-item.active .kd-year { color: #c9a227; }
+
+    .kd-label {
+        font-family: 'DM Sans', sans-serif;
+        font-size: .58rem; letter-spacing: .08em;
+        color: var(--color-text-muted);
+        text-transform: uppercase;
+        text-align: center;
+        padding-top: .6rem;
+        line-height: 1.3;
+        max-width: 80px;
+        transition: color .2s;
+    }
+    .kd-item:hover .kd-label { color: var(--color-text-secondary); }
+
+    [data-theme="dark"] .kd-strip { background: #0e0c0a; border-color: #1e1b18; }
+    [data-theme="dark"] .kd-strip::before { background: linear-gradient(90deg, #0e0c0a, transparent); }
+    [data-theme="dark"] .kd-strip::after  { background: linear-gradient(-90deg, #0e0c0a, transparent); }
+    [data-theme="dark"] .kd-year { color: #d4c9a8; }
+
+    .kd-tooltip {
+        position: fixed;
+        background: rgba(22,16,10,.95);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(201,162,39,.25);
+        border-radius: 10px;
+        padding: .7rem 1rem;
+        font-family: 'DM Sans', sans-serif;
+        font-size: .72rem; line-height: 1.6;
+        color: rgba(255,255,255,.8);
+        max-width: 260px;
+        pointer-events: none;
+        opacity: 0;
+        transform: translateY(6px);
+        transition: opacity .2s ease, transform .2s ease;
+        z-index: 9999;
+    }
+    .kd-tooltip.vis { opacity: 1; transform: translateY(0); }
+    </style>
+    <script>
+    (function(){
+        var items = document.querySelectorAll('.kd-item');
+        var tip   = document.getElementById('KD-TIP');
+        items.forEach(function(it) {
+            it.addEventListener('mouseenter', function(e) {
+                var info = it.dataset.info;
+                if (!info) return;
+                tip.textContent = info;
+                tip.classList.add('vis');
+            });
+            it.addEventListener('mousemove', function(e) {
+                var x = e.clientX + 16, y = e.clientY - 60;
+                if (x + 270 > window.innerWidth) x = e.clientX - 280;
+                tip.style.left = x + 'px';
+                tip.style.top  = y + 'px';
+            });
+            it.addEventListener('mouseleave', function() {
+                tip.classList.remove('vis');
+            });
+        });
+    })();
+    </script>
+
     <!-- Navigation Cards -->
     <section class="cards-section">
         <div class="container">
+            <div class="cards-section-header">
+                <div class="cards-section-line"></div>
+                <span class="cards-section-eyebrow">Розділи архіву</span>
+                <div class="cards-section-line"></div>
+            </div>
             <div class="cards-grid">
                 <a href="history.html" class="card fade-in-up">
                     <div class="card-image">
                         <img src="https://i.imgur.com/QTP89kg.jpeg" alt="Історія" loading="lazy">
+                        <div class="card-image-overlay">
+                            <span class="card-num">01</span>
+                        </div>
                     </div>
                     <div class="card-content">
+                        <div class="card-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        </div>
                         <h3 class="card-title">Історія міста</h3>
                         <p class="card-description">
-                            Досліджуйте понад тисячолітню історію Дубровиці від першої згадки у 1005 році до сьогодення
+                            Понад тисячолітня хроніка від першої згадки у 1005 році до сьогодення
                         </p>
-                        <span class="card-link">Читати далі →</span>
+                        <span class="card-link">Читати далі <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
                     </div>
                 </a>
 
                 <a href="photo-archive.html" class="card fade-in-up delay-1">
                     <div class="card-image">
                         <img src="https://i.imgur.com/qcjgN1I.jpeg" alt="Фотоархів" loading="lazy">
+                        <div class="card-image-overlay">
+                            <span class="card-num">02</span>
+                        </div>
                     </div>
                     <div class="card-content">
+                        <div class="card-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                        </div>
                         <h3 class="card-title">Фотоархів</h3>
                         <p class="card-description">
-                            Унікальна колекція історичних фотографій від кінця XIX століття до наших днів
+                            Унікальна колекція знімків від кінця XIX ст. до наших днів
                         </p>
-                        <span class="card-link">Переглянути →</span>
+                        <span class="card-link">Переглянути <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
                     </div>
                 </a>
 
                 <a href="metrychni-knyhy.html" class="card fade-in-up delay-2">
                     <div class="card-image">
                         <img src="https://i.imgur.com/WeDmtIY.jpeg" alt="Метричні книги" loading="lazy">
+                        <div class="card-image-overlay">
+                            <span class="card-num">03</span>
+                        </div>
                     </div>
                     <div class="card-content">
+                        <div class="card-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+                        </div>
                         <h3 class="card-title">Метричні книги</h3>
                         <p class="card-description">
-                            Генеалогічні дослідження: метричні записи парафій Дубровицького регіону
+                            Генеалогічні дослідження — метричні записи парафій регіону
                         </p>
-                        <span class="card-link">Досліджуйте →</span>
+                        <span class="card-link">Досліджуйте <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
                     </div>
                 </a>
 
                 <a href="books.html" class="card fade-in-up delay-3">
                     <div class="card-image">
                         <img src="https://i.imgur.com/SPhDh6n.jpeg" alt="Книги" loading="lazy">
+                        <div class="card-image-overlay">
+                            <span class="card-num">04</span>
+                        </div>
                     </div>
                     <div class="card-content">
+                        <div class="card-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+                        </div>
                         <h3 class="card-title">Книги про Дубровицю</h3>
                         <p class="card-description">
-                            Бібліографія досліджень, спогадів та літератури про історію регіону
+                            Бібліографія досліджень, спогадів та літератури про регіон
                         </p>
-                        <span class="card-link">Читати →</span>
+                        <span class="card-link">Читати <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
                     </div>
                 </a>
             </div>
@@ -289,21 +540,397 @@
             <div class="stats-grid">
                 <div class="stat-item fade-in-up">
                     <div class="stat-number" data-target="1015">0</div>
+                    <span class="stat-number-accent"></span>
                     <div class="stat-label">Років історії</div>
                 </div>
                 <div class="stat-item fade-in-up delay-1">
-                    <div class="stat-number" id="photoCountStat" data-target="43">0</div>
+                    <div class="stat-number" id="photoCountStat">—</div>
+                    <span class="stat-number-accent"></span>
                     <div class="stat-label">Історичних фотографій</div>
                 </div>
                 <div class="stat-item fade-in-up delay-2">
+                    <div class="stat-number" data-target="2">0</div>
+                    <span class="stat-number-accent"></span>
+                    <div class="stat-label">Пам'ятки нац. значення</div>
+                </div>
+                <div class="stat-item fade-in-up delay-3">
                     <div class="stat-number" data-target="20">0</div>
+                    <span class="stat-number-accent"></span>
                     <div class="stat-label">Книг та досліджень</div>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- ═══ THIS DAY IN HISTORY + FACTS ═══ -->
+    <section id="TDIH">
+    <style>
+    #TDIH {
+        padding: 5rem 0 4rem;
+        background: var(--color-bg);
+        border-top: 1px solid var(--color-border-light);
+        position: relative;
+        overflow: hidden;
+    }
+    #TDIH::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background:
+            radial-gradient(ellipse 60% 60% at 0% 50%, rgba(201,162,39,.04) 0%, transparent 60%),
+            radial-gradient(ellipse 60% 60% at 100% 50%, rgba(201,162,39,.03) 0%, transparent 60%);
+        pointer-events: none;
+    }
+    .TDIH-W { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+
+    .TDIH-GRID {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        align-items: start;
+    }
+    @media (max-width: 900px) { .TDIH-GRID { grid-template-columns: 1fr; } }
+
+    /* ── THIS DAY CARD ── */
+    .TDIH-CARD {
+        background: var(--color-bg-card, #fff);
+        border: 1px solid var(--color-border, #ddd5c8);
+        border-radius: 16px;
+        padding: 2rem;
+        box-shadow: 0 4px 24px rgba(0,0,0,.05), 0 1px 4px rgba(0,0,0,.04);
+        position: relative;
+        overflow: hidden;
+    }
+    [data-theme="dark"] .TDIH-CARD { background: #161210; border-color: #2a2218; }
+    .TDIH-CARD::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #c9a227, #e8c84a, #c9a227);
+    }
+
+    .TDIH-EYE {
+        display: inline-flex; align-items: center; gap: .6rem;
+        font-family: 'DM Sans', sans-serif;
+        font-size: .55rem; letter-spacing: .28em; text-transform: uppercase;
+        color: #b8902a; margin-bottom: 1.2rem;
+    }
+    .TDIH-EYE svg { width: 14px; height: 14px; }
+
+    .TDIH-DATE {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(2rem, 4vw, 3rem); font-weight: 300;
+        color: var(--color-text, #1c1917); line-height: 1;
+        margin-bottom: .2rem;
+    }
+    [data-theme="dark"] .TDIH-DATE { color: #f0e6c8; }
+    .TDIH-DATE em { font-style: italic; color: #c9a227; }
+
+    .TDIH-YEAR-TAG {
+        display: inline-block;
+        font-family: 'DM Sans', sans-serif;
+        font-size: .6rem; letter-spacing: .15em; text-transform: uppercase;
+        color: #c9a227;
+        background: rgba(201,162,39,.1);
+        border: 1px solid rgba(201,162,39,.2);
+        border-radius: 100px;
+        padding: .25rem .75rem;
+        margin-bottom: 1rem;
+    }
+
+    .TDIH-TEXT {
+        font-family: 'DM Sans', sans-serif;
+        font-size: .82rem; line-height: 1.85;
+        color: var(--color-text-secondary, #44403c);
+        margin-bottom: 1.2rem;
+        min-height: 5rem;
+    }
+    [data-theme="dark"] .TDIH-TEXT { color: rgba(200,185,155,.65); }
+
+    .TDIH-SOURCE {
+        font-family: 'DM Sans', sans-serif;
+        font-size: .65rem; letter-spacing: .08em;
+        color: var(--color-text-muted, #a8a29e);
+        font-style: italic;
+        padding-top: .9rem;
+        border-top: 1px solid var(--color-border, #ddd5c8);
+        display: flex; align-items: center; gap: .5rem;
+    }
+    [data-theme="dark"] .TDIH-SOURCE { border-color: #2a2218; }
+
+    .TDIH-DOTS {
+        display: flex; gap: .4rem; justify-content: center; margin-top: 1.2rem;
+    }
+    .TDIH-DOT {
+        width: 6px; height: 6px; border-radius: 50%;
+        background: var(--color-border, #ddd5c8);
+        cursor: pointer;
+        transition: all .2s ease;
+    }
+    .TDIH-DOT.act { background: #c9a227; transform: scale(1.4); }
+
+    .TDIH-NAV {
+        display: flex; gap: .5rem; margin-top: 1rem; justify-content: flex-end;
+    }
+    .TDIH-BTN {
+        width: 34px; height: 34px; border-radius: 50%;
+        background: rgba(201,162,39,.1);
+        border: 1px solid rgba(201,162,39,.2);
+        color: #c9a227; cursor: pointer;
+        display: flex; align-items: center; justify-content: center;
+        font-size: .9rem;
+        transition: all .2s ease;
+    }
+    .TDIH-BTN:hover { background: #c9a227; color: #1a1000; border-color: #c9a227; }
+
+    /* Fade transition */
+    .TDIH-INNER { transition: opacity .35s ease; }
+    .TDIH-INNER.fading { opacity: 0; }
+
+    /* ── QUOTE ROTATOR ── */
+    .TDIH-QUOTE-CARD {
+        background: linear-gradient(145deg, #1a3d28, #2c5f3f);
+        border-radius: 16px;
+        padding: 2.4rem 2rem;
+        box-shadow: 0 4px 24px rgba(0,0,0,.12);
+        position: relative; overflow: hidden;
+        display: flex; flex-direction: column; justify-content: space-between;
+        min-height: 280px;
+    }
+    .TDIH-QUOTE-CARD::before {
+        content: '"';
+        position: absolute; top: -1rem; left: 1.5rem;
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 12rem; font-weight: 300; line-height: 1;
+        color: rgba(201,162,39,.12);
+        pointer-events: none;
+    }
+
+    .TDIH-Q-LABEL {
+        font-family: 'DM Sans', sans-serif;
+        font-size: .52rem; letter-spacing: .28em; text-transform: uppercase;
+        color: rgba(201,162,39,.7); margin-bottom: 1.2rem;
+        display: flex; align-items: center; gap: .5rem;
+    }
+    .TDIH-Q-LABEL::after {
+        content: ''; flex: 1; height: 1px;
+        background: linear-gradient(90deg, rgba(201,162,39,.3), transparent);
+    }
+
+    .TDIH-Q-TEXT {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(1.05rem, 2vw, 1.3rem); font-weight: 300; font-style: italic;
+        color: rgba(255,255,255,.88); line-height: 1.7;
+        flex: 1;
+        transition: opacity .4s ease;
+    }
+    .TDIH-Q-TEXT.fading { opacity: 0; }
+
+    .TDIH-Q-META {
+        margin-top: 1.4rem;
+        font-family: 'DM Sans', sans-serif;
+        font-size: .68rem; color: rgba(255,255,255,.45);
+        letter-spacing: .06em;
+        transition: opacity .4s ease;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(255,255,255,.08);
+    }
+    .TDIH-Q-META.fading { opacity: 0; }
+
+    .TDIH-Q-BOTTOM {
+        display: flex; align-items: center; justify-content: space-between; margin-top: 1rem;
+    }
+    .TDIH-Q-INDICATOR {
+        display: flex; gap: .35rem;
+    }
+    .TDIH-Q-DOT {
+        width: 5px; height: 5px; border-radius: 50%;
+        background: rgba(255,255,255,.2);
+        transition: all .2s;
+    }
+    .TDIH-Q-DOT.act { background: #c9a227; width: 16px; border-radius: 3px; }
+    .TDIH-Q-BTN {
+        width: 30px; height: 30px; border-radius: 50%;
+        background: rgba(255,255,255,.08);
+        border: 1px solid rgba(255,255,255,.12);
+        color: rgba(255,255,255,.6); cursor: pointer;
+        display: flex; align-items: center; justify-content: center;
+        font-size: .85rem;
+        transition: all .2s;
+        margin-left: .3rem;
+    }
+    .TDIH-Q-BTN:hover { background: rgba(201,162,39,.3); border-color: rgba(201,162,39,.5); color: #f0c840; }
+    </style>
+
+    <div class="TDIH-W">
+        <div style="text-align:center;margin-bottom:2.8rem;">
+            <div style="display:inline-flex;align-items:center;gap:.8rem;margin-bottom:.9rem;">
+                <div style="height:1px;width:40px;background:linear-gradient(90deg,transparent,rgba(201,162,39,.5));"></div>
+                <span style="font-family:'DM Sans',sans-serif;font-size:.58rem;letter-spacing:.3em;text-transform:uppercase;color:#c9a227;">Живий архів</span>
+                <div style="height:1px;width:40px;background:linear-gradient(90deg,rgba(201,162,39,.5),transparent);"></div>
+            </div>
+            <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:300;color:var(--color-text);line-height:1.1;margin:0;">
+                Дубровиця <em style="font-style:italic;color:#c9a227;">крізь час</em>
+            </h2>
+        </div>
+
+        <div class="TDIH-GRID">
+            <!-- This day in history card -->
+            <div class="TDIH-CARD">
+                <div class="TDIH-EYE">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                    Цей день в історії
+                </div>
+                <div class="TDIH-INNER" id="TDIH-INNER">
+                    <div class="TDIH-DATE" id="TDIH-DATE">— · —</div>
+                    <div class="TDIH-YEAR-TAG" id="TDIH-YEAR"></div>
+                    <p class="TDIH-TEXT" id="TDIH-TEXT">Завантаження...</p>
+                    <div class="TDIH-SOURCE" id="TDIH-SOURCE">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:11px;height:11px;flex-shrink:0;"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                        <span id="TDIH-SRC-TEXT"></span>
+                    </div>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-top:1rem;">
+                    <div class="TDIH-DOTS" id="TDIH-DOTS" style="margin-top:0;"></div>
+                    <div class="TDIH-NAV">
+                        <button class="TDIH-BTN" id="TDIH-PREV">‹</button>
+                        <button class="TDIH-BTN" id="TDIH-NEXT">›</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rotating quote card -->
+            <div class="TDIH-QUOTE-CARD">
+                <div>
+                    <div class="TDIH-Q-LABEL">Цитати та свідчення</div>
+                    <p class="TDIH-Q-TEXT" id="TDIH-Q-TEXT"></p>
+                    <p class="TDIH-Q-META" id="TDIH-Q-META"></p>
+                </div>
+                <div class="TDIH-Q-BOTTOM">
+                    <div class="TDIH-Q-INDICATOR" id="TDIH-Q-DOTS"></div>
+                    <div style="display:flex;gap:.3rem;">
+                        <button class="TDIH-Q-BTN" id="TDIH-Q-PREV">‹</button>
+                        <button class="TDIH-Q-BTN" id="TDIH-Q-NEXT">›</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    (function() {
+        // ── THIS DAY IN HISTORY DATA ──
+        var FACTS = [
+            { month: 3, day: 18, year: 1576, title: 'Заповіт Марії Гольшанської', text: 'Марія Юріївна Гольшанська (Курбська) підписала заповіт, у якому згадала Пречистенську церкву в Дубровиці — найдавнішу писемну згадку про православний храм у місті.', source: 'Актова книга Луцького замку, 1576' },
+            { month: 10, day: 15, year: 1695, title: 'Початок будівництва костелу', text: 'Орден піарів розпочав будівництво костелу Іоанна Хрестителя в Дубровиці. Головним фундатором виступив Ян Кароль Дольський, пожертвувавши 33 000 злотих.', source: 'Метрика Волинського костелу' },
+            { month: 6, day: 4, year: 1742, title: 'Освячення костелу', text: 'Єпископ Франциск Кобельський урочисто консекрував костел Іоанна Хрестителя в Дубровиці. Будівництво тривало понад 47 років і обійшлося понад 83 000 злотих.', source: 'Літопис ордену піарів' },
+            { month: 5, day: 21, year: 1861, title: 'Мурована церква Різдва Богородиці', text: 'Завершено будівництво мурованої церкви Різдва Пресвятої Богородиці коштом графа Ігнатія Броель-Плятера. Трьохкупольна базиліка у стилі пізнього бароко стала прикрасою міста.', source: 'Рівненський єпархіальний архів' },
+            { month: 7, day: 22, year: 1943, title: 'Масове вбивство євреїв', text: 'Під час нацистської окупації в Дубровиці та навколишніх селах загинуло понад 5 000 євреїв — практично вся єврейська громада, яка існувала тут з XVII століття.', source: 'Яд Вашем, Меморіальна книга Дубровиці' },
+            { month: 9, day: 25, year: 1992, title: 'Повернення костелу громаді', text: 'Костел Іоанна Хрестителя офіційно повернено католицькій громаді. Єпископ Маркіян Трофим\'як здійснив повторне освячення після 47 років радянського зберігання.', source: 'Архів Луцько-Житомирської єпархії' },
+            { month: 9, day: 21, year: 2005, title: 'Відкриття пам\'ятника Юліанії', text: 'У Дубровиці відкрито та освячено пам\'ятник святій Юліанії Гольшанській — праведній діві XV–XVI ст., дочці місцевого князя. Пам\'ятник встановлено біля церкви Різдва Богородиці.', source: 'Архів міської ради Дубровиці' },
+            { month: 1, day: 1, year: 1005, title: 'Перша писемна згадка', text: 'Дубровиця — найдавніше місто Рівненської області. Перша писемна згадка датується 1005 роком у літописі, де місто фігурує під назвою «Домбровиця» як центр удільного князівства.', source: 'Іпатіївський літопис' },
+        ];
+
+        var curFact = 0;
+        var inner = document.getElementById('TDIH-INNER');
+        var dateEl = document.getElementById('TDIH-DATE');
+        var yearEl = document.getElementById('TDIH-YEAR');
+        var textEl = document.getElementById('TDIH-TEXT');
+        var srcEl  = document.getElementById('TDIH-SRC-TEXT');
+        var dotsEl = document.getElementById('TDIH-DOTS');
+
+        var MONTHS_UA = ['',  'Січень','Лютий','Березень','Квітень','Травень','Червень',
+            'Липень','Серпень','Вересень','Жовтень','Листопад','Грудень'];
+
+        // Find fact closest to today or cycle
+        var today = new Date();
+        var best = 0, bestDiff = Infinity;
+        FACTS.forEach(function(f, i) {
+            var d = Math.abs((f.month * 30 + f.day) - (today.getMonth()+1)*30 - today.getDate());
+            if (d < bestDiff) { bestDiff = d; best = i; }
+        });
+        curFact = best;
+
+        // Build dots
+        FACTS.forEach(function(_, i) {
+            var d = document.createElement('button');
+            d.className = 'TDIH-DOT' + (i === curFact ? ' act' : '');
+            d.addEventListener('click', function() { showFact(i); });
+            dotsEl.appendChild(d);
+        });
+
+        function showFact(idx) {
+            inner.classList.add('fading');
+            setTimeout(function() {
+                curFact = (idx + FACTS.length) % FACTS.length;
+                var f = FACTS[curFact];
+                dateEl.innerHTML = '<em>' + MONTHS_UA[f.month] + '</em>';
+                yearEl.textContent = f.year + ' рік · ' + f.title;
+                textEl.textContent = f.text;
+                srcEl.textContent = f.source;
+                dotsEl.querySelectorAll('.TDIH-DOT').forEach(function(d, i) {
+                    d.classList.toggle('act', i === curFact);
+                });
+                inner.classList.remove('fading');
+            }, 350);
+        }
+
+        document.getElementById('TDIH-PREV').addEventListener('click', function() { showFact(curFact - 1); });
+        document.getElementById('TDIH-NEXT').addEventListener('click', function() { showFact(curFact + 1); });
+        showFact(curFact);
+
+        // Auto-advance every 8 seconds
+        var factTimer = setInterval(function() { showFact(curFact + 1); }, 8000);
+        document.querySelector('.TDIH-CARD').addEventListener('mouseenter', function() { clearInterval(factTimer); });
+        document.querySelector('.TDIH-CARD').addEventListener('mouseleave', function() {
+            factTimer = setInterval(function() { showFact(curFact + 1); }, 8000);
+        });
+
+        // ── QUOTES ──
+        var QUOTES = [
+            { text: '«Маєте матеріали або пропозиції щодо нашого міста? Дубровиця потребує вашої пам\'яті.»', meta: 'Цифровий архів Дубровиці · 2026' },
+            { text: '«Пречистенській церкві в Домбровиці моє мале Євангеліє в червоному оксамиті й золоченому сріблі...»', meta: 'Марія Гольшанська (Курбська) · Заповіт, 18 березня 1576 р.' },
+            { text: '«Найцінніший елемент інтер\'єру костелу — вітраж, замовлений спеціально у Венеції. Жоден інший костел у регіоні не мав нічого подібного.»', meta: 'З опису костелу Іоанна Хрестителя' },
+            { text: '«Дубровиця — найдавніше місто Рівненської області, якому понад тисячу років.»', meta: 'Цифровий архів · Про місто' },
+            { text: '«У 1938 р. парафія охоплювала понад 100 навколишніх сіл. Це була одна з найбільших католицьких громад на Рівненщині.»', meta: 'Статистика костелу св. Іоанна Хрестителя' },
+        ];
+        var curQ = 0;
+        var qText = document.getElementById('TDIH-Q-TEXT');
+        var qMeta = document.getElementById('TDIH-Q-META');
+        var qDots = document.getElementById('TDIH-Q-DOTS');
+
+        QUOTES.forEach(function(_, i) {
+            var d = document.createElement('div');
+            d.className = 'TDIH-Q-DOT' + (i === 0 ? ' act' : '');
+            qDots.appendChild(d);
+        });
+
+        function showQuote(idx) {
+            qText.classList.add('fading'); qMeta.classList.add('fading');
+            setTimeout(function() {
+                curQ = (idx + QUOTES.length) % QUOTES.length;
+                qText.textContent = QUOTES[curQ].text;
+                qMeta.textContent = QUOTES[curQ].meta;
+                qDots.querySelectorAll('.TDIH-Q-DOT').forEach(function(d, i) {
+                    d.classList.toggle('act', i === curQ);
+                });
+                qText.classList.remove('fading'); qMeta.classList.remove('fading');
+            }, 400);
+        }
+
+        document.getElementById('TDIH-Q-PREV').addEventListener('click', function() { showQuote(curQ - 1); });
+        document.getElementById('TDIH-Q-NEXT').addEventListener('click', function() { showQuote(curQ + 1); });
+        showQuote(0);
+
+        var quoteTimer = setInterval(function() { showQuote(curQ + 1); }, 6000);
+        document.querySelector('.TDIH-QUOTE-CARD').addEventListener('mouseenter', function() { clearInterval(quoteTimer); });
+        document.querySelector('.TDIH-QUOTE-CARD').addEventListener('mouseleave', function() {
+            quoteTimer = setInterval(function() { showQuote(curQ + 1); }, 6000);
+        });
+    })();
+    </script>
     </section>
-    <!-- ═══ END TIMELINE ═══ -->
 
     <!-- ═══ AERIAL MAPS SECTION ═══ -->
     <section id="AER">

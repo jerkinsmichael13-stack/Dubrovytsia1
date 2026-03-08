@@ -931,7 +931,7 @@ html[data-theme="dark"] .moon-icon { display: none; }
     font-weight: 300;
     color: #f0c840;
     line-height: 1;
-    margin-bottom: .5rem;
+    margin-bottom: .6rem;
     letter-spacing: -0.02em;
 }
 .stat-number::after {
@@ -941,7 +941,7 @@ html[data-theme="dark"] .moon-icon { display: none; }
     margin-left: 2px;
     opacity: 0.5;
 }
-/* No "+" for the 2 landmarks stat */
+/* No "+" for the landmarks stat */
 .stat-item:nth-child(3) .stat-number::after { content: ''; }
 
 .stat-label {
@@ -951,16 +951,22 @@ html[data-theme="dark"] .moon-icon { display: none; }
     letter-spacing: 0.12em;
     text-transform: uppercase;
     line-height: 1.4;
+    min-height: 2.2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-/* Decorative accent under number */
-.stat-item::after {
-    content: '';
+/* Decorative accent under number, above label */
+.stat-number-accent {
     display: block;
     width: 24px; height: 1px;
     background: rgba(201,162,39,.4);
-    margin: .8rem auto 0;
+    margin: .5rem auto .8rem;
 }
+
+/* Remove old ::after from stat-item */
+.stat-item::after { display: none; }
 
 
 /* ================================================================
