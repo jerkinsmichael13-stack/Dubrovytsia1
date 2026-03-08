@@ -587,7 +587,7 @@
 .concl-text strong { color: var(--ink); font-weight: 500; }
 
 /* ── Scroll reveal ── */
-.{ opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
+.{ opacity: 1; transform: none; transition: opacity .6s ease, transform .6s ease; }
 ..vis { opacity: 1; transform: none; }
 
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -1588,7 +1588,7 @@ Przedmiescie worobinskie na Trakcie Litewskim z przyjazdu od Stolina y Wysocka l
 
     <script src="app.js"></script>
     <script>
-document.addEventListener("DOMContentLoaded", function() {
+(function() {
 
     // ── TAB SYSTEM ──
     document.querySelectorAll('.smr-tab').forEach(tab => {
@@ -1602,12 +1602,12 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
         // ══════════ LIGHTBOX WITH PAN + ZOOM ══════════
-    let curScan = 0;
-    let lbScale = 1, lbX = 0, lbY = 0;
-    let lbDragging = false, lbDragStartX = 0, lbDragStartY = 0, lbDragOriginX = 0, lbDragOriginY = 0;
-    let lbPinchDist = 0;
+    var curScan = 0;
+    var lbScale = 1, lbX = 0, lbY = 0;
+    var lbDragging = false, lbDragStartX = 0, lbDragStartY = 0, lbDragOriginX = 0, lbDragOriginY = 0;
+    var lbPinchDist = 0;
 
-    function invLbApplyTransform(animate) {
+    function lbApplyTransform(animate) {
         const img = document.getElementById('SMR-LB-IMG');
         if (!img) return;
         if (animate) img.classList.add('animating');
@@ -1638,10 +1638,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function lbReset(animate) {
         const img = document.getElementById('SMR-LB-IMG');
-        if (!img || !img.naturalWidth) { lbScale=1; lbX=0; lbY=0; invLbApplyTransform(false); return; }
+        if (!img || !img.naturalWidth) { lbScale=1; lbX=0; lbY=0; lbApplyTransform(false); return; }
         lbScale = lbFitScale();
         lbX = 0; lbY = 0;
-        invLbApplyTransform(!!animate);
+        lbApplyTransform(!!animate);
     }
 
     function lbZoomBy(delta, cx, cy) {
@@ -1658,7 +1658,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
         lbScale = newScale;
         lbClampPan();
-        invLbApplyTransform(true);
+        lbApplyTransform(true);
         document.getElementById('SMR-LB').classList.add('interacted');
     }
 
@@ -1710,7 +1710,7 @@ document.addEventListener("DOMContentLoaded", function() {
             if (!lbDragging) return;
             lbX = lbDragOriginX + (e.clientX - lbDragStartX);
             lbY = lbDragOriginY + (e.clientY - lbDragStartY);
-            lbClampPan(); invLbApplyTransform(false);
+            lbClampPan(); lbApplyTransform(false);
         });
         document.addEventListener('mouseup', () => { lbDragging = false; VP.classList.remove('dragging'); });
         VP.addEventListener('wheel', e => {
@@ -1733,7 +1733,7 @@ document.addEventListener("DOMContentLoaded", function() {
             if (e.touches.length === 1 && lbDragging) {
                 lbX = lbDragOriginX + (e.touches[0].clientX - lbDragStartX);
                 lbY = lbDragOriginY + (e.touches[0].clientY - lbDragStartY);
-                lbClampPan(); invLbApplyTransform(false);
+                lbClampPan(); lbApplyTransform(false);
             } else if (e.touches.length === 2) {
                 const d = Math.hypot(e.touches[0].clientX-e.touches[1].clientX, e.touches[0].clientY-e.touches[1].clientY);
                 const cx = (e.touches[0].clientX+e.touches[1].clientX)/2;
@@ -1761,12 +1761,12 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     // ── SCROLL REVEAL ──
-    function revealVisible() {});
+    function revealVisible() {
     }
     window.addEventListener('scroll', revealVisible, { passive: true });
     setTimeout(revealVisible, 100);
     
-});
+})();
 </script>
 </body>
 </html>
