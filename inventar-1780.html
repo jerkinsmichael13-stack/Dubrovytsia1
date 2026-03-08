@@ -321,29 +321,68 @@
     font-family: 'DM Sans', sans-serif; font-size: .78rem; line-height: 1.8; color: var(--ink-faded);
 }
 
-/* ── Stone markers ── */
-.smr-stones { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 1.5rem 0; }
-@media (max-width: 700px) { .smr-stones { grid-template-columns: 1fr; } }
+/* ── Stone markers — enhanced connected chain ── */
+.smr-stones { 
+    display: grid; 
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 0;
+    position: relative;
+    margin: 1.5rem 0 2rem;
+}
+@media (max-width: 900px) { .smr-stones { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 500px) { .smr-stones { grid-template-columns: 1fr; } }
+
 .smr-stone {
-    border: 1px solid var(--ruling); border-radius: 10px;
-    padding: 1.2rem; background: var(--parchment); text-align: center;
-    transition: box-shadow .3s;
+    border: 1px solid var(--ruling);
+    border-right: none;
+    padding: 1.4rem 1.2rem 1.2rem;
+    background: var(--parchment);
+    text-align: center;
+    position: relative;
+    transition: background .3s, box-shadow .3s;
+}
+.smr-stone:last-child { border-right: 1px solid var(--ruling); }
+@media (max-width: 900px) {
+    .smr-stone:nth-child(2) { border-right: 1px solid var(--ruling); }
+    .smr-stone:nth-child(3) { border-right: none; border-top: none; }
+    .smr-stone:nth-child(4) { border-right: 1px solid var(--ruling); border-top: none; }
+    .smr-stone:nth-child(5) { border-right: none; border-top: none; }
+    .smr-stone:nth-child(6) { border-right: 1px solid var(--ruling); border-top: none; }
+    .smr-stone:nth-child(7) { border-right: 1px solid var(--ruling); border-top: none; }
+}
+.smr-stone:first-child { border-radius: 10px 0 0 10px; }
+.smr-stone:last-child { border-radius: 0 10px 10px 0; }
+@media (max-width: 900px) {
+    .smr-stone:first-child { border-radius: 10px 0 0 0; }
+    .smr-stone:nth-child(2) { border-radius: 0 10px 0 0; }
+    .smr-stone:last-child { border-radius: 0 0 10px 0; }
+    .smr-stone:nth-child(6) { border-radius: 0 0 0 10px; }
 }
 [data-theme="dark"] .smr-stone { background: var(--parchment-dark); }
-.smr-stone:hover { box-shadow: 0 4px 20px rgba(139,111,62,.2); }
+.smr-stone:hover { background: var(--sepia-pale); box-shadow: inset 0 0 0 1px rgba(201,165,83,.25); }
+
+/* connector arrow between stones */
+.smr-stone:not(:last-child)::after {
+    content: '›';
+    position: absolute; right: -0.7rem; top: 50%; transform: translateY(-50%);
+    font-size: 1.1rem; color: var(--sepia-light); opacity: .5;
+    z-index: 2; pointer-events: none;
+}
+@media (max-width: 900px) { .smr-stone::after { display: none; } }
+
 .smr-stone-letter {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 2.5rem; font-weight: 300; color: var(--sepia); line-height: 1;
-    margin-bottom: .5rem;
+    font-size: 2.2rem; font-weight: 300; color: var(--sepia); line-height: 1;
+    margin-bottom: .35rem;
 }
 .smr-stone-name {
     font-family: 'DM Sans', sans-serif;
-    font-size: .65rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase;
-    color: var(--ink); margin-bottom: .5rem;
+    font-size: .6rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--ink); margin-bottom: .45rem;
 }
 .smr-stone-desc {
     font-family: 'DM Sans', sans-serif;
-    font-size: .74rem; line-height: 1.7; color: var(--ink-faded);
+    font-size: .72rem; line-height: 1.65; color: var(--ink-faded); text-align: left;
 }
 
 /* ── Register table ── */
@@ -587,7 +626,7 @@
             </button>
             <button class="smr-tab" data-panel="context">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                Аналіз
+                Власники
             </button>
         </div>
 
@@ -596,46 +635,68 @@
             <div class="smr-section-eyebrow smr-reveal">
                 <span>Оригінальні скани документів</span>
             </div>
-            <div class="smr-scans-grid smr-reveal">
-                <div class="smr-scan-card" onclick="openScanLB(0)">
-                    <img src="https://i.imgur.com/r6LODUt.jpeg" alt="Титульна сторінка" class="smr-scan-img">
+
+            <!-- Document overview strip -->
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--ruling);border:1px solid var(--ruling);border-radius:10px;overflow:hidden;margin-bottom:2rem;" class="smr-reveal">
+                <div style="background:var(--parchment);padding:1.1rem 1.2rem;">
+                    <div style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:300;color:var(--sepia);line-height:1;margin-bottom:.3rem;">200+</div>
+                    <div style="font-family:'DM Sans',sans-serif;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faded);">Сторінок у документі</div>
+                </div>
+                <div style="background:var(--parchment);padding:1.1rem 1.2rem;">
+                    <div style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:300;color:var(--sepia);line-height:1;margin-bottom:.3rem;">1780–1820</div>
+                    <div style="font-family:'DM Sans',sans-serif;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faded);">Приблизні роки</div>
+                </div>
+                <div style="background:var(--parchment);padding:1.1rem 1.2rem;">
+                    <div style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:300;color:var(--sepia);line-height:1;margin-bottom:.3rem;">Старопольська</div>
+                    <div style="font-family:'DM Sans',sans-serif;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faded);">Мова документу</div>
+                </div>
+                <div style="background:var(--parchment);padding:1.1rem 1.2rem;">
+                    <div style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:300;color:var(--sepia);line-height:1;margin-bottom:.3rem;">Плятери</div>
+                    <div style="font-family:'DM Sans',sans-serif;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faded);">Власники на час складання</div>
+                </div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto;gap:1.5rem;" class="smr-reveal">
+                <div class="smr-scan-card" onclick="openScanLB(0)" style="grid-column:1;grid-row:1;">
+                    <img src="https://i.imgur.com/r6LODUt.jpeg" alt="Титульна сторінка" class="smr-scan-img" style="aspect-ratio:4/3;">
                     <div class="smr-scan-overlay">
                         <div class="smr-scan-num">I</div>
                         <div class="smr-scan-label">Документ 00009318-7 · Титульна сторінка</div>
                     </div>
                     <div class="smr-scan-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
                 </div>
-                <div class="smr-scan-card" onclick="openScanLB(1)">
-                    <img src="https://i.imgur.com/fq9QEd3.jpeg" alt="Опис вулиць" class="smr-scan-img">
+                <div class="smr-scan-card" onclick="openScanLB(1)" style="grid-column:2;grid-row:1;">
+                    <img src="https://i.imgur.com/fq9QEd3.jpeg" alt="Опис вулиць" class="smr-scan-img" style="aspect-ratio:4/3;">
                     <div class="smr-scan-overlay">
                         <div class="smr-scan-num">II</div>
                         <div class="smr-scan-label">Документ 00009318-47 · Опис міста та вулиць</div>
                     </div>
                     <div class="smr-scan-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
                 </div>
-                <div class="smr-scan-card" onclick="openScanLB(2)">
-                    <img src="https://i.imgur.com/bGkfvuT.jpeg" alt="Володіння Піарів" class="smr-scan-img">
+                <div class="smr-scan-card" onclick="openScanLB(2)" style="grid-column:1;grid-row:2;">
+                    <img src="https://i.imgur.com/bGkfvuT.jpeg" alt="Землі Піарів" class="smr-scan-img" style="aspect-ratio:4/3;">
                     <div class="smr-scan-overlay">
                         <div class="smr-scan-num">III</div>
-                        <div class="smr-scan-label">Документ 00009318-48 · Землі отців Піарів та межові камені</div>
+                        <div class="smr-scan-label">Документ 00009318-48 · Землі Піарів та 7 каменів 1776 р.</div>
                     </div>
                     <div class="smr-scan-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
                 </div>
-                <div class="smr-scan-card" onclick="openScanLB(3)">
-                    <img src="https://i.imgur.com/5gR14At.jpeg" alt="Передмістя" class="smr-scan-img">
-                    <div class="smr-scan-overlay">
-                        <div class="smr-scan-num">IV</div>
-                        <div class="smr-scan-label">Документ 00009318-49 · Передмістя та церкви</div>
+                <div style="display:grid;grid-template-rows:1fr 1fr;gap:1.5rem;">
+                    <div class="smr-scan-card" onclick="openScanLB(3)">
+                        <img src="https://i.imgur.com/5gR14At.jpeg" alt="Передмістя" class="smr-scan-img" style="aspect-ratio:unset;height:100%;min-height:120px;">
+                        <div class="smr-scan-overlay">
+                            <div class="smr-scan-num" style="font-size:1.3rem;">IV</div>
+                            <div class="smr-scan-label">00009318-49 · Передмістя та церкви</div>
+                        </div>
+                        <div class="smr-scan-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
                     </div>
-                    <div class="smr-scan-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
-                </div>
-                <div class="smr-scan-card" onclick="openScanLB(4)">
-                    <img src="https://i.imgur.com/uIUoLrQ.jpeg" alt="Реєстр мешканців" class="smr-scan-img">
-                    <div class="smr-scan-overlay">
-                        <div class="smr-scan-num">V</div>
-                        <div class="smr-scan-label">Документ 00009318-9 · Ринок та реєстр мешканців</div>
+                    <div class="smr-scan-card" onclick="openScanLB(4)">
+                        <img src="https://i.imgur.com/uIUoLrQ.jpeg" alt="Реєстр мешканців" class="smr-scan-img" style="aspect-ratio:unset;height:100%;min-height:120px;">
+                        <div class="smr-scan-overlay">
+                            <div class="smr-scan-num" style="font-size:1.3rem;">V</div>
+                            <div class="smr-scan-label">00009318-9 · Реєстр мешканців ринку</div>
+                        </div>
+                        <div class="smr-scan-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
                     </div>
-                    <div class="smr-scan-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
                 </div>
             </div>
 
@@ -716,7 +777,7 @@ Obwod klasztoru XX Piarow Dombrowickich poczowszy od uliczki zamkowey y drogi z 
                         <div class="smr-page-label">Переклад</div>
                         <div class="smr-translation">Місця Їхмостей Отців Піарів Дубровицьких, розташовані в місті
 
-Межа монастиря Отців Піарів Дубровицьких починається від Замкової вулички і дороги від ринку до річки й млинів, у куті ринкових площ. Тут під позначкою <strong>«А»</strong> вкопаний великий плаский камінь, на обох боках якого вирізьблені написи: з одного боку — імена, прізвища та титули ясновельможних власників міста Михайла Казимира Бжостовського, великого підскарбія Великого Князівства Литовського, з іншого — ім'я <em>MARYA</em> та рік <strong>1776</strong>.</div>
+Межа монастиря Отців Піарів Дубровицьких починається від Замкової вулички і дороги від ринку до річки й млинів, у куті ринкових площ. Тут під позначкою <strong>«А»</strong> вкопаний великий плаский камінь, на обох боках якого вирізьблені написи: з одного боку — імена, прізвища та титули ясновельможного Михайла Казимира Бжостовського, великого підскарбія Великого Князівства Литовського (тогочасного власника у рік межування), з іншого — ім'я <em>MARYA</em> та рік <strong>1776</strong>.</div>
                     </div>
                 </div>
             </div>
@@ -883,14 +944,14 @@ Przedmiescie worobinskie na Trakcie Litewskim z przyjazdu od Stolina y Wysocka l
 
             <div class="smr-caveat smr-reveal">
                 <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                <p>У 1776 році власники міста Бжостовські разом із монастирем Піарів встановили <strong>сім великих пласких каменів</strong> із вирізьбленими написами, щоб назавжди зафіксувати межі між міськими землями та монастирськими угіддями. Це була юридично обов'язкова процедура, аналог сучасного кадастрового межування. Маршрут каменів можна частково відновити за описами інвентарю.</p>
+                <p>У 1776 році, за часів власника міста <strong>Михайла Казимира Бжостовського</strong> (великого підскарбія ВКЛ), разом із монастирем Піарів було встановлено <strong>сім великих пласких каменів</strong> із вирізьбленими написами — щоб назавжди зафіксувати межі між міськими землями та монастирськими угіддями. Вже у <strong>1777 р. місто перейшло до Плятерів</strong>, проте межові камені залишились і діяли далі. Маршрут каменів можна частково відновити за описами інвентарю.</p>
             </div>
 
             <div class="smr-stones smr-reveal">
                 <div class="smr-stone">
                     <div class="smr-stone-letter">A</div>
                     <div class="smr-stone-name">Камінь Перший</div>
-                    <div class="smr-stone-desc">На розі ринкових площ та Замкової вулички. Найголовніший: з одного боку — імена та титули власників Михайла Казимира Бжостовського (великого підскарбія ВКЛ), з іншого — ім'я <em>MARYA</em> та рік 1776. Слугував стартовою точкою межі.</div>
+                    <div class="smr-stone-desc">На розі ринкових площ та Замкової вулички. Найголовніший: з одного боку — імена та титули тогочасного власника Михайла Казимира Бжостовського (великого підскарбія ВКЛ), встановленого в рік межування, з іншого — ім'я <em>MARYA</em> та рік 1776. Слугував стартовою точкою межі.</div>
                 </div>
                 <div class="smr-stone">
                     <div class="smr-stone-letter">B</div>
@@ -940,7 +1001,7 @@ Przedmiescie worobinskie na Trakcie Litewskim z przyjazdu od Stolina y Wysocka l
                 <div class="smr-context-body">
                     Книга пам'яті єврейської громади Дубровиці зберегла унікальне свідчення: <strong>на північ від міста, в провулку біля лазні</strong>, стирчала скеля заввишки близько півтора метра з вирізьбленими написами та цифрами, що починались з «17…». Жодного офіційного пояснення цьому каменю не було залишено.
                     <br><br>
-                    З огляду на інвентарний опис 1776 року, це <strong>майже напевно один із семи межових каменів</strong> Піарів. Воробинський провулок (де документ фіксує один із каменів) розташований якраз на північ від ринку, і «лазня» (баня) цілком могла існувати поряд. Цифри «17…» точно відповідають даті встановлення — <strong>1776</strong>. Написи, що «ніколи не були розшифровані» — це, вірогідно, латинські ініціали власників (Michał Kazimierz Brzostowski) та ім'я MARYA, що без знання контексту виглядали б загадково. Кілька каменів, за описом, були «nieco wkopany» — частково вкопані в землю, а значить їхня висота над поверхнею могла відповідати описаним «приблизно півтора метра».
+                    З огляду на інвентарний опис 1776 року, це <strong>майже напевно один із семи межових каменів</strong> Піарів. Воробинський провулок (де документ фіксує один із каменів) розташований якраз на північ від ринку, і «лазня» (баня) цілком могла існувати поряд. Цифри «17…» точно відповідають даті встановлення — <strong>1776</strong>. Написи, що «ніколи не були розшифровані» — це, вірогідно, латинські ініціали та титули тогочасного власника Бжостовського та ім'я MARYA, що без знання контексту виглядали б загадково. Кілька каменів, за описом, були «nieco wkopany» — частково вкопані в землю, а значить їхня висота над поверхнею цілком могла відповідати описаним «приблизно півтора метра».
                     <br><br>
                     Якщо це справді один із каменів 1776 року, він зберігся щонайменше до середини XX ст. — і може існувати досі, просто не впізнаний.
                 </div>
@@ -1137,7 +1198,7 @@ Przedmiescie worobinskie na Trakcie Litewskim z przyjazdu od Stolina y Wysocka l
                 </div>
                 <div class="smr-gloss-item">
                     <div class="smr-gloss-term">JWW / WXa Litewskiego</div>
-                    <div class="smr-gloss-def"><em>Jaśnie Wielmożni</em> — «Ясновельможні» (титул найвищої шляхти). <em>Wielkiego Xięstwa Litewskiego</em> — «Великого Князівства Литовського». Михайло Казимир Бжостовський — великий підскарбій ВКЛ, один із власників Дубровиці.</div>
+                    <div class="smr-gloss-def"><em>Jaśnie Wielmożni</em> — «Ясновельможні» (титул найвищої шляхти). <em>Wielkiego Xięstwa Litewskiego</em> — «Великого Князівства Литовського». Михайло Казимир Бжостовський — великий підскарбій ВКЛ, чиє ім'я викарбуване на межовому камені «А» як власника міста у рік межування (1776). З 1777 р. Дубровиця перейшла до Плятерів.</div>
                 </div>
                 <div class="smr-gloss-item">
                     <div class="smr-gloss-term">Sub Litt A–G</div>
@@ -1149,26 +1210,197 @@ Przedmiescie worobinskie na Trakcie Litewskim z przyjazdu od Stolina y Wysocka l
         <!-- ══════════ CONTEXT PANEL ══════════ -->
         <div class="smr-tab-panel" id="panel-context">
             <div class="smr-section-eyebrow smr-reveal">
-                <span>Аналіз та висновки</span>
+                <span>Власники міста та хронологія</span>
+            </div>
+
+            <!-- OWNER TIMELINE -->
+            <style>
+            .smr-timeline {
+                position: relative; margin-bottom: 3rem;
+                padding-left: 2rem;
+            }
+            .smr-timeline::before {
+                content: '';
+                position: absolute; left: 0; top: .6rem; bottom: .6rem;
+                width: 1px;
+                background: linear-gradient(to bottom, transparent, var(--sepia-light) 10%, var(--sepia-light) 90%, transparent);
+                opacity: .4;
+            }
+            .smr-tl-item {
+                position: relative; padding: 0 0 2.2rem 1.8rem;
+            }
+            .smr-tl-item:last-child { padding-bottom: 0; }
+            .smr-tl-dot {
+                position: absolute; left: -2rem;
+                width: 14px; height: 14px; border-radius: 50%;
+                background: var(--parchment);
+                border: 2px solid var(--sepia);
+                top: .35rem;
+                transition: border-color .3s, background .3s;
+            }
+            .smr-tl-item.active .smr-tl-dot {
+                background: var(--sepia); border-color: var(--sepia-light);
+                box-shadow: 0 0 0 4px var(--sepia-pale);
+            }
+            .smr-tl-year {
+                font-family: 'Cormorant Garamond', serif;
+                font-size: 1rem; font-weight: 300; color: var(--sepia-light);
+                letter-spacing: .05em; margin-bottom: .3rem;
+            }
+            .smr-tl-name {
+                font-family: 'Cormorant Garamond', serif;
+                font-size: 1.25rem; font-weight: 400; color: var(--ink);
+                margin-bottom: .4rem; line-height: 1.2;
+            }
+            .smr-tl-name em { font-style: italic; color: var(--sepia); }
+            .smr-tl-desc {
+                font-family: 'DM Sans', sans-serif;
+                font-size: .78rem; line-height: 1.75; color: var(--ink-faded);
+            }
+            .smr-tl-desc strong { color: var(--ink); font-weight: 500; }
+            .smr-tl-badge {
+                display: inline-block; margin-top: .5rem;
+                padding: .25rem .7rem;
+                background: var(--sepia-pale);
+                border: 1px solid var(--ruling);
+                border-radius: 100px;
+                font-family: 'DM Sans', sans-serif;
+                font-size: .58rem; letter-spacing: .14em; text-transform: uppercase;
+                color: var(--sepia);
+            }
+            /* Plater highlight card */
+            .smr-plater-card {
+                background: linear-gradient(135deg, #1a1408 0%, #2c1e0a 100%);
+                border-radius: 14px; padding: 2.5rem;
+                display: grid; grid-template-columns: 1fr 1fr;
+                gap: 2rem; margin-bottom: 3rem; position: relative; overflow: hidden;
+            }
+            @media (max-width: 700px) { .smr-plater-card { grid-template-columns: 1fr; } }
+            .smr-plater-card::before {
+                content: 'PLATER';
+                position: absolute; right: -1rem; bottom: -2rem;
+                font-family: 'Cormorant Garamond', serif;
+                font-size: 8rem; font-weight: 300; line-height: 1;
+                color: rgba(201,165,83,.05); pointer-events: none; letter-spacing: .1em;
+            }
+            .smr-plater-title {
+                font-family: 'Cormorant Garamond', serif;
+                font-size: 1.6rem; font-weight: 300; color: #f0e4b8;
+                margin-bottom: .8rem; line-height: 1.2;
+            }
+            .smr-plater-title em { color: #c9a553; font-style: italic; }
+            .smr-plater-body {
+                font-family: 'DM Sans', sans-serif;
+                font-size: .8rem; line-height: 1.85;
+                color: rgba(240,228,184,.55);
+            }
+            .smr-plater-body strong { color: rgba(240,228,184,.85); font-weight: 500; }
+            .smr-plater-stats {
+                display: flex; flex-direction: column; gap: 1rem; justify-content: center;
+            }
+            .smr-plater-stat {
+                padding: 1rem 1.2rem;
+                background: rgba(255,255,255,.04);
+                border: 1px solid rgba(201,165,83,.15);
+                border-radius: 10px;
+            }
+            .smr-plater-stat-num {
+                font-family: 'Cormorant Garamond', serif;
+                font-size: 1.6rem; font-weight: 300; color: #c9a553; line-height: 1;
+                margin-bottom: .25rem;
+            }
+            .smr-plater-stat-key {
+                font-family: 'DM Sans', sans-serif;
+                font-size: .58rem; letter-spacing: .14em; text-transform: uppercase;
+                color: rgba(255,255,255,.3);
+            }
+            </style>
+
+            <!-- Timeline -->
+            <div class="smr-timeline smr-reveal">
+                <div class="smr-tl-item">
+                    <div class="smr-tl-dot"></div>
+                    <div class="smr-tl-year">до XVIII ст.</div>
+                    <div class="smr-tl-name">Сапіги — останні магнати перед Плятерами</div>
+                    <div class="smr-tl-desc">Дубровиця належала литовсько-польській магнатській родині Сапігів. У 1701 р. литовські війська спустошили місто через суперечки в межах Сапізького табору.</div>
+                    <span class="smr-tl-badge">Магнатське місто</span>
+                </div>
+                <div class="smr-tl-item">
+                    <div class="smr-tl-dot"></div>
+                    <div class="smr-tl-year">~1760–1777</div>
+                    <div class="smr-tl-name"><em>Михайло Казимир Бжостовський</em></div>
+                    <div class="smr-tl-desc">За деякими даними — власник або орендодавець частини дубровицьких земель. Великий підскарбій Великого Князівства Литовського. <strong>1776 р.</strong> — за його часів проведено межування монастирських угідь, встановлено 7 каменів з його ім'ям та написом MARYA.</div>
+                    <span class="smr-tl-badge">Межування 1776 р.</span>
+                </div>
+                <div class="smr-tl-item active">
+                    <div class="smr-tl-dot"></div>
+                    <div class="smr-tl-year">1777 — поч. XX ст.</div>
+                    <div class="smr-tl-name"><em>Графи Плятери</em> — власники Дубровиці</div>
+                    <div class="smr-tl-desc">З <strong>1777 р.</strong> місто переходить до роду Плятерів. Першим власником із цього роду став <strong>Юзеф Антоній Плятер (1750–1832)</strong> — голова Цивільної судової палати на Волині, засновник дубровицької гілки. Наприкінці XVIII ст. Плятери збудували палац у Воробині. Місто при них зростало: суконна мануфактура (1809), гуральня, розробка бурштину. <strong>Інвентар 1780–1820 рр. складався вже за Плятерів.</strong></div>
+                    <span class="smr-tl-badge">Час складання інвентарю</span>
+                </div>
+                <div class="smr-tl-item">
+                    <div class="smr-tl-dot"></div>
+                    <div class="smr-tl-year">1795</div>
+                    <div class="smr-tl-name">Третій поділ Польщі — Дубровиця в Російській імперії</div>
+                    <div class="smr-tl-desc">5 липня 1795 р. місто отримало статус містечка. Ввійшло до Домбровицького округу Волинського намісництва, з 1797 р. — Рівненського повіту Волинської губернії. Плятери зберегли власність на місто і при новій владі.</div>
+                    <span class="smr-tl-badge">Новий адміністративний устрій</span>
+                </div>
+                <div class="smr-tl-item">
+                    <div class="smr-tl-dot"></div>
+                    <div class="smr-tl-year">1918</div>
+                    <div class="smr-tl-name">Кінець епохи Плятерів</div>
+                    <div class="smr-tl-desc">5 грудня 1918 р. маєток у Воробині захоплено. Власників Ігнатія та Антонія Плятерів вбито. Палац підпалено. Вцілілий Вітольд Плятер відбудував маєток, але більше не жив у ньому.</div>
+                    <span class="smr-tl-badge">Кінець приватного міста</span>
+                </div>
+            </div>
+
+            <!-- Plater highlight -->
+            <div class="smr-plater-card smr-reveal">
+                <div>
+                    <div style="font-family:'DM Sans',sans-serif;font-size:.55rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(201,165,83,.5);margin-bottom:1rem;">Власники · 1777–1918</div>
+                    <div class="smr-plater-title">Графи <em>Плятери</em><br>та їхня Дубровиця</div>
+                    <div class="smr-plater-body">
+                        Рід Плятерів (De Broël Plater) — польсько-литовська магнатська родина. На Дубровиці вони правили понад <strong>140 років</strong> — найдовший період безперервного одновласницького управління в нові часи. При них місто отримало суконну мануфактуру, гуральню та палац у Воробині (нині — медичні заклади). Герб Дубровиці досі містить <strong>три чорні балки Плятерів</strong> поряд із кентавром Гольшанських.
+                    </div>
+                </div>
+                <div class="smr-plater-stats">
+                    <div class="smr-plater-stat">
+                        <div class="smr-plater-stat-num">1777</div>
+                        <div class="smr-plater-stat-key">Рік переходу до Плятерів</div>
+                    </div>
+                    <div class="smr-plater-stat">
+                        <div class="smr-plater-stat-num">140+</div>
+                        <div class="smr-plater-stat-key">Років у власності роду</div>
+                    </div>
+                    <div class="smr-plater-stat">
+                        <div class="smr-plater-stat-num">1809</div>
+                        <div class="smr-plater-stat-key">Рік заснування мануфактури</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="smr-section-eyebrow smr-reveal">
+                <span>Що розповідає інвентар</span>
             </div>
 
             <div class="smr-context-grid smr-reveal">
-                <div class="smr-context-card">
-                    <div class="smr-context-head">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                        Час та авторство
-                    </div>
-                    <div class="smr-context-body">
-                        Точне датування інвентарю ускладнюється відсутністю титульного аркуша з датою. Орієнтовно документ укладено між <strong>1780 та 1820 роками</strong> — після встановлення межових каменів (1776) і до включення регіону до складу Російської імперії. Власники міста Бжостовські (Michał Kazimierz Brzostowski, великий підскарбій ВКЛ) — відомі реформатори та меценати доби пізньої Речі Посполитої.
-                    </div>
-                </div>
                 <div class="smr-context-card">
                     <div class="smr-context-head">
                         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
                         Структура міста
                     </div>
                     <div class="smr-context-body">
-                        Документ фіксує <strong>класичну польсько-волинську структуру</strong> приватного містечка: центральний ринок із крамницями та шпихлірями, радіальна мережа вулиць, два «виїзних» тракти (литовський і волинський), два передмістя та монастирська юридика. Природні умови — розташування між Горинню та Случчю — формували окремий острівний характер центру.
+                        Документ фіксує <strong>класичну польсько-волинську структуру</strong> приватного містечка: центральний ринок із крамницями та шпихлірями, радіальна мережа вулиць, два «виїзних» тракти (литовський і волинський), два передмістя та монастирська юридика. Місто розташоване на <strong>березі річки Горинь</strong> — неподалік від місця, де вона зближується зі Случчю, що зумовлювало його роль вузлового торгового пункту на водному шляху до Литви.
+                    </div>
+                </div>
+                <div class="smr-context-card">
+                    <div class="smr-context-head">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+                        Датування документу
+                    </div>
+                    <div class="smr-context-body">
+                        Точне датування ускладнюється відсутністю титульного аркуша. Орієнтовно інвентар складено між <strong>1780 та 1820 роками</strong> — тобто вже при Плятерах і в умовах Російської імперії. На межовому камені 1776 р. зафіксовано ім'я Бжостовського — попереднього власника. Сам інвентар відображає реалії вже <strong>плятерівського</strong> міста.
                     </div>
                 </div>
             </div>
@@ -1179,7 +1411,7 @@ Przedmiescie worobinskie na Trakcie Litewskim z przyjazdu od Stolina y Wysocka l
                     <div>
                         <div class="concl-tag">Торгівля</div>
                         <div class="concl-head">Дубровиця — транзитний вузол на шляху Волинь—Литва</div>
-                        <p class="concl-text">Злиття Горині та Случі перетворювало місто на ключовий вузол між Волинню і Литвою. Інвентар прямо вказує: мешканці «відправляли сіль та інші товари до різних міст Литовських» водою. Ринок з 273 прутами вільної площі та власними шпихлірями — це не просто торгівля для місцевих потреб, а транзитна інфраструктура регіонального масштабу.</p>
+                        <p class="concl-text">Горинь та Случ дозволяли відправляти товари водним шляхом до Литви. Інвентар прямо вказує: мешканці «відправляли сіль та інші товари до різних міст Литовських» водою. Ринок з власними шпихлірями — це не лише місцева торгівля, а транзитна інфраструктура регіонального масштабу.</p>
                     </div>
                 </div>
                 <div class="concl-item">
@@ -1187,7 +1419,7 @@ Przedmiescie worobinskie na Trakcie Litewskim z przyjazdu od Stolina y Wysocka l
                     <div>
                         <div class="concl-tag">Релігія та освіта</div>
                         <div class="concl-head">Піари як культурний центр Дубровиці</div>
-                        <p class="concl-text">Монастир Піарів займав <strong>величезну площу</strong> в центрі міста — від Замкової вулиці до острова між рукавами Горині. Їхній колегіум був одним із небагатьох навчальних закладів у цій частині Полісся. Вулиця Шкільна отримала назву саме від цієї установи. Юридична самостійність монастиря (юридика) означала, що в серці Дубровиці існував фактично автономний анклав.</p>
+                        <p class="concl-text">Монастир Піарів, заснований у <strong>1695 р.</strong>, займав величезну площу в центрі міста. Їхній колегіум був одним із небагатьох навчальних закладів у цій частині Полісся. Вулиця Шкільна отримала назву саме від цієї установи. Юридична самостійність монастиря означала, що в серці Дубровиці існував фактично автономний анклав, що й породило потребу у межовому документі 1776 р.</p>
                     </div>
                 </div>
                 <div class="concl-item">
@@ -1195,7 +1427,7 @@ Przedmiescie worobinskie na Trakcie Litewskim z przyjazdu od Stolina y Wysocka l
                     <div>
                         <div class="concl-tag">Демографія</div>
                         <div class="concl-head">Єврейська громада як рушій торгівлі</div>
-                        <p class="concl-text">Реєстр ринкових ділянок показує, що <strong>переважна більшість крамниць та шпихлірів</strong> була у єврейській власності. Це типова картина для приватних міст Речі Посполитої: пани надавали євреям права торгівлі в обмін на орендну плату, формуючи взаємовигідну економічну модель. Серед зафіксованих прізвищ — Хаймовичі, Ароновичі, Давидовичі, Гіршовичі.</p>
+                        <p class="concl-text">Реєстр ринкових ділянок показує, що <strong>переважна більшість крамниць та шпихлірів</strong> була у єврейській власності — типова картина для приватних міст. У <strong>1766 р.</strong> в Дубровиці проживало 404 євреї; на початку XIX ст. їх було вже значно більше. Серед зафіксованих прізвищ — Хаймовичі, Ароновичі, Давидовичі, Гіршовичі.</p>
                     </div>
                 </div>
                 <div class="concl-item">
@@ -1203,7 +1435,7 @@ Przedmiescie worobinskie na Trakcie Litewskim z przyjazdu od Stolina y Wysocka l
                     <div>
                         <div class="concl-tag">Архівістика</div>
                         <div class="concl-head">Втрачена карта та збережений інвентар</div>
-                        <p class="concl-text">Оригінальна карта, до якої посилається інвентар, <strong>не збереглася</strong>. Однак сам інвентар (200+ сторінок) є надзвичайно детальним замісником: він перераховує вулиці, провулки, площі, межі, церкви, монастирські угіддя та власників із точними розмірами ділянок. У поєднанні з топографічним планом 1855 р. можна приблизно відтворити вигляд міста кінця XVIII ст.</p>
+                        <p class="concl-text">Оригінальна карта, до якої посилається інвентар, <strong>не збереглася</strong>. Однак сам інвентар (200+ сторінок) є надзвичайно детальним замісником: вулиці, провулки, площі, межі, церкви, монастирські угіддя та власники з точними розмірами ділянок. У поєднанні з топографічним планом 1855 р. можна приблизно відтворити вигляд плятерівської Дубровиці кінця XVIII ст.</p>
                     </div>
                 </div>
                 <div class="concl-item">
@@ -1211,7 +1443,7 @@ Przedmiescie worobinskie na Trakcie Litewskim z przyjazdu od Stolina y Wysocka l
                     <div>
                         <div class="concl-tag">Церкви</div>
                         <div class="concl-head">Дві православні церкви в зоні ринку</div>
-                        <p class="concl-text">Документ фіксує <strong>церкву Святого Миколая</strong> наприкінці Замкової (Миколаївської) вулиці та заплановану <strong>церкву Різдва Пресвятої Богородиці</strong> на Воробинському передмісті, де для неї була виділена нова ділянка і ділянка для священника. Це свідчить про активне православне / греко-католицьке парафіяльне життя поряд із домінуючою католицькою інфраструктурою Піарів.</p>
+                        <p class="concl-text">Документ фіксує <strong>церкву Святого Миколая</strong> наприкінці Замкової (Миколаївської) вулиці та заплановану <strong>церкву Різдва Пресвятої Богородиці</strong> на Воробинському передмісті. Це свідчить про активне православне парафіяльне життя поряд із домінуючою католицькою інфраструктурою Піарів.</p>
                     </div>
                 </div>
                 <div class="concl-item">
@@ -1219,7 +1451,7 @@ Przedmiescie worobinskie na Trakcie Litewskim z przyjazdu od Stolina y Wysocka l
                     <div>
                         <div class="concl-tag">Містобудування</div>
                         <div class="concl-head">Протипожежна реформа: виведення стодол на окраїни</div>
-                        <p class="concl-text">Документ спеціально згадує <strong>Гумниська</strong> — нові ділянки на окраїні Воробинського передмістя для перенесення стодол із центру. Це типова міська реформа другої половини XVIII ст. під впливом ідей Просвітництва: відділення вогненебезпечних господарських споруд від житлових кварталів. Аналогічні реформи проводились у цей час у десятках польських і литовських міст.</p>
+                        <p class="concl-text">Документ спеціально згадує <strong>Гумниська</strong> — нові ділянки на окраїні Воробинського передмістя для перенесення стодол із центру. Це типова реформа XVIII ст. під впливом ідей Просвітництва: відділення вогненебезпечних споруд від житлових кварталів. Аналогічні реформи проводились тоді в десятках польських і литовських міст.</p>
                     </div>
                 </div>
             </div>
@@ -1231,7 +1463,7 @@ Przedmiescie worobinskie na Trakcie Litewskim z przyjazdu od Stolina y Wysocka l
                     «…od tego Kamienia udaiac sie na pulnoc Uliczka przedkoscielna nazwana y dzielac po lewey rece uliczki Place mieskie Rynkowe a po prawey place pro primo JXX Piarow…»
                 </p>
                 <p style="font-family:'DM Sans',sans-serif;font-size:.76rem;line-height:1.75;color:rgba(240,228,184,.4);max-width:620px;position:relative;z-index:1;">
-                    «…від цього каменя, прямуючи на північ Передкостельною вулицею, — ліворуч від неї ринкові міські площі, праворуч — насамперед ділянки Отців Піарів…» Ця фраза точно описує центр тогочасної Дубровиці: ринок — з одного боку, монастир — з іншого, і між ними — доріжка з межовим каменем 1776 року.
+                    «…від цього каменя, прямуючи на північ Передкостельною вулицею, — ліворуч від неї ринкові міські площі, праворуч — насамперед ділянки Отців Піарів…» Ця фраза точно описує центр тогочасної Дубровиці: ринок — з одного боку, монастир — з іншого.
                 </p>
             </div>
         </div>
