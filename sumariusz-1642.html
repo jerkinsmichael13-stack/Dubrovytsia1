@@ -1739,9 +1739,11 @@ uchwalono bywa, Czyni in Summa —
             document.querySelectorAll('.smr-tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.smr-tab-panel').forEach(p => p.classList.remove('active'));
             this.classList.add('active');
-            document.getElementById('panel-' + panel).classList.add('active');
-            // Trigger reveal animations for newly shown panel
-            setTimeout(revealVisible, 50);
+            const activePanel = document.getElementById('panel-' + panel);
+            activePanel.classList.add('active');
+            // Force-reveal all smr-reveal elements inside the newly shown panel
+            activePanel.querySelectorAll('.smr-reveal:not(.vis)').forEach(el => el.classList.add('vis'));
+            setTimeout(revealVisible, 80);
         });
     });
 
