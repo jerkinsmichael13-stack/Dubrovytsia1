@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="uk" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="manifest" href="site.webmanifest">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Інвентар маєтку Дубровиця 1780–1820 — Цифровий архів</title>
+    <script>!function(){var t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t)}()</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="app.css">
+
+<style>
+/* ══════════════════════════════════════════════════════
+   ІНВЕНТАР 1780 — ARCHIVAL CODEX AESTHETIC
+   ══════════════════════════════════════════════════════ */
+
+:root {
+    --parchment: #f5eed8;
+    --parchment-dark: #ede3c4;
+    --ink: #1c160a;
+    --ink-faded: #3d3420;
+    --sepia: #8b6f3e;
+    --sepia-light: #c9a553;
+    --sepia-pale: rgba(139,111,62,.12);
+    --ruling: rgba(139,111,62,.18);
+}
+[data-theme="dark"] {
+    --parchment: #130f07;
+    --parchment-dark: #1a1408;
+    --ink: #e8dbb5;
+    --ink-faded: #b8a880;
+    --sepia: #c9a553;
+    --sepia-light: #e5c87a;
+    --sepia-pale: rgba(201,165,83,.08);
+    --ruling: rgba(201,165,83,.12);
+}
+
+.smr-page { background: var(--parchment); min-height: 100vh; }
+
+/* ── Hero ── */
+.smr-hero {
+    position: relative; overflow: hidden;
+    background: linear-gradient(160deg, #1a1408 0%, #2a1e0a 50%, #1c1509 100%);
+    padding: 7rem 2rem 5rem; text-align: center; color: white;
+}
+.smr-hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+        radial-gradient(ellipse 60% 80% at 50% 100%, rgba(201,165,83,.15) 0%, transparent 60%),
+        url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23c9a553' fill-opacity='0.03'%3E%3Cpath d='M50 0L52 48 100 50 52 52 50 100 48 52 0 50 48 48z'/%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+}
+.smr-hero-seal {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 72px; height: 72px;
+    border: 1px solid rgba(201,165,83,.3); border-radius: 50%;
+    margin-bottom: 2rem; position: relative; z-index: 1;
+    animation: sealIn 0.8s ease both;
+}
+.smr-hero-seal::before {
+    content: ''; position: absolute; inset: 4px;
+    border: 1px solid rgba(201,165,83,.15); border-radius: 50%;
+}
+.smr-hero-seal svg { width: 32px; height: 32px; stroke: #c9a553; }
+@keyframes sealIn { from { opacity:0; transform:scale(.7) rotate(-20deg); } to { opacity:1; transform:scale(1) rotate(0); } }
+
+.smr-hero-eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .58rem; letter-spacing: .3em; text-transform: uppercase;
+    color: rgba(201,165,83,.65); margin-bottom: 1.4rem;
+    display: flex; align-items: center; justify-content: center; gap: 1rem;
+    position: relative; z-index: 1; animation: fadeIn .6s ease .2s both;
+}
+.smr-hero-eyebrow::before, .smr-hero-eyebrow::after {
+    content: ''; display: block; width: 40px; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201,165,83,.4));
+}
+.smr-hero-eyebrow::after { background: linear-gradient(90deg, rgba(201,165,83,.4), transparent); }
+
+.smr-hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-weight: 300; line-height: 1.1; color: #f0e4b8;
+    margin-bottom: .5rem; position: relative; z-index: 1;
+    animation: fadeIn .7s ease .3s both;
+}
+.smr-hero-title em { font-style: italic; color: #c9a553; }
+
+.smr-hero-subtitle {
+    font-family: 'IM Fell English', serif;
+    font-size: 1.05rem; font-style: italic;
+    color: rgba(240,228,184,.55); margin-bottom: 2rem;
+    position: relative; z-index: 1; animation: fadeIn .7s ease .4s both;
+}
+
+.smr-hero-meta {
+    display: flex; align-items: center; justify-content: center;
+    gap: 1.5rem; flex-wrap: wrap;
+    position: relative; z-index: 1; animation: fadeIn .7s ease .55s both;
+}
+.smr-hero-meta-item {
+    display: flex; flex-direction: column; align-items: center; gap: .3rem;
+    padding: .75rem 1.25rem;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(201,165,83,.15);
+    border-radius: 10px; backdrop-filter: blur(6px);
+}
+.smr-hero-meta-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem; font-weight: 300; color: #c9a553; line-height: 1;
+}
+.smr-hero-meta-key {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .55rem; letter-spacing: .18em; text-transform: uppercase;
+    color: rgba(255,255,255,.35);
+}
+.smr-hero-bottom {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 80px;
+    background: linear-gradient(to bottom, transparent, var(--parchment));
+    pointer-events: none;
+}
+
+/* ── Body ── */
+.smr-body { max-width: 1280px; margin: 0 auto; padding: 3rem 2rem 6rem; }
+
+/* ── Section eyebrow ── */
+.smr-section-eyebrow {
+    display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;
+}
+.smr-section-eyebrow span {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .55rem; letter-spacing: .28em; text-transform: uppercase;
+    color: var(--sepia); white-space: nowrap;
+}
+.smr-section-eyebrow::before, .smr-section-eyebrow::after {
+    content: ''; flex: 1; height: 1px; background: var(--ruling);
+}
+
+/* ── Tabs ── */
+.smr-tabs {
+    display: flex; gap: 0; border: 1px solid var(--ruling);
+    border-radius: 10px; overflow: hidden; margin-bottom: 3rem;
+    background: var(--parchment);
+}
+.smr-tab {
+    flex: 1; padding: .85rem 1.2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .72rem; font-weight: 400;
+    letter-spacing: .06em; text-transform: uppercase;
+    color: var(--ink-faded); background: transparent;
+    border: none; cursor: pointer; transition: all .25s ease;
+    display: flex; align-items: center; justify-content: center; gap: .5rem;
+    border-right: 1px solid var(--ruling); position: relative;
+}
+.smr-tab:last-child { border-right: none; }
+.smr-tab svg { width: 14px; height: 14px; opacity: .7; }
+.smr-tab.active { background: var(--ink); color: var(--parchment); font-weight: 500; }
+[data-theme="dark"] .smr-tab.active { background: var(--sepia); color: #1c160a; }
+.smr-tab:not(.active):hover { background: var(--sepia-pale); color: var(--ink); }
+.smr-tab-panel { display: none; }
+.smr-tab-panel.active { display: block; animation: panelIn .35s ease; }
+@keyframes panelIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
+
+/* ── Scans grid ── */
+.smr-scans-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+@media (max-width: 768px) { .smr-scans-grid { grid-template-columns: 1fr; } }
+
+.smr-scan-card {
+    position: relative; overflow: hidden; border-radius: 8px;
+    border: 1px solid var(--ruling); cursor: pointer;
+    background: var(--parchment-dark); transition: box-shadow .4s ease, border-color .4s ease;
+    box-shadow: 0 2px 12px rgba(0,0,0,.06);
+}
+.smr-scan-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,.14); border-color: rgba(201,165,83,.4); }
+.smr-scan-img {
+    width: 100%; aspect-ratio: 3/4; object-fit: cover; object-position: top; display: block;
+    filter: sepia(.15) contrast(1.04) brightness(.95);
+    transition: filter .7s ease, transform .8s cubic-bezier(.16,1,.3,1);
+}
+.smr-scan-card:hover .smr-scan-img { filter: sepia(.05) contrast(1.07) brightness(.99); transform: scale(1.015); }
+.smr-scan-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(28,22,10,.85) 0%, rgba(28,22,10,.3) 40%, transparent 65%);
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 1.2rem; pointer-events: none;
+}
+.smr-scan-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem; font-weight: 300; color: rgba(201,165,83,.6); line-height: 1; margin-bottom: .25rem;
+}
+.smr-scan-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .6rem; letter-spacing: .15em; text-transform: uppercase; color: rgba(240,228,184,.65);
+}
+.smr-scan-zoom {
+    position: absolute; top: .75rem; right: .75rem; width: 32px; height: 32px;
+    background: rgba(28,22,10,.7); border: 1px solid rgba(201,165,83,.3);
+    border-radius: 6px; display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity .3s ease; pointer-events: none;
+}
+.smr-scan-card:hover .smr-scan-zoom { opacity: 1; }
+.smr-scan-zoom svg { width: 14px; height: 14px; stroke: #c9a553; }
+
+/* ── Transcript layout ── */
+.smr-transcript { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+@media (max-width: 900px) { .smr-transcript { grid-template-columns: 1fr; } }
+
+.smr-col-header {
+    display: flex; align-items: center; gap: .75rem; margin-bottom: 1.5rem;
+    padding-bottom: .75rem; border-bottom: 1px solid var(--ruling);
+}
+.smr-col-badge {
+    width: 28px; height: 28px; background: var(--ink); color: var(--parchment);
+    border-radius: 6px; display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Sans', sans-serif; font-size: .55rem; letter-spacing: .1em; font-weight: 500;
+}
+[data-theme="dark"] .smr-col-badge { background: var(--sepia); color: #1c160a; }
+.smr-col-title { font-family: 'DM Sans', sans-serif; font-size: .62rem; letter-spacing: .2em; text-transform: uppercase; color: var(--sepia); }
+
+.smr-page-block { margin-bottom: 2.5rem; }
+.smr-page-label {
+    display: inline-flex; align-items: center; gap: .5rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .52rem; letter-spacing: .22em; text-transform: uppercase;
+    color: var(--sepia-light); margin-bottom: 1rem; padding: .3rem .8rem;
+    border: 1px solid var(--ruling); border-radius: 100px;
+}
+
+.smr-original {
+    font-family: 'IM Fell English', serif;
+    font-size: .88rem; line-height: 2; color: var(--ink-faded); white-space: pre-wrap;
+}
+.smr-original strong { font-weight: 700; color: var(--ink); letter-spacing: .02em; }
+.smr-original em { font-style: italic; }
+
+.smr-translation {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .84rem; line-height: 1.95; color: var(--ink-faded); white-space: pre-wrap;
+}
+.smr-translation strong { font-weight: 500; color: var(--ink); }
+
+/* ── Glossary ── */
+.smr-glossary {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 1px; background: var(--ruling);
+    border: 1px solid var(--ruling); border-radius: 10px; overflow: hidden;
+}
+@media (max-width: 700px) { .smr-glossary { grid-template-columns: 1fr; } }
+.smr-gloss-item {
+    background: var(--parchment); padding: 1.25rem 1.4rem; transition: background .2s;
+}
+[data-theme="dark"] .smr-gloss-item { background: var(--parchment-dark); }
+.smr-gloss-item:hover { background: var(--sepia-pale); }
+.smr-gloss-term {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem; font-weight: 400; color: var(--ink); margin-bottom: .35rem;
+    display: flex; align-items: center; gap: .5rem;
+}
+.smr-gloss-term::before { content: ''; width: 4px; height: 4px; border-radius: 50%; background: var(--sepia); flex-shrink: 0; }
+.smr-gloss-def { font-family: 'DM Sans', sans-serif; font-size: .78rem; line-height: 1.7; color: var(--ink-faded); }
+
+/* ── Context grid ── */
+.smr-context-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+@media (max-width: 768px) { .smr-context-grid { grid-template-columns: 1fr; } }
+.smr-context-card {
+    padding: 1.6rem; border: 1px solid var(--ruling); border-radius: 10px;
+    background: var(--parchment); position: relative; overflow: hidden;
+}
+[data-theme="dark"] .smr-context-card { background: var(--parchment-dark); }
+.smr-context-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--sepia-light), transparent); opacity: .5;
+}
+.smr-context-head {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem; font-weight: 400; font-style: italic;
+    color: var(--ink); margin-bottom: .9rem;
+    display: flex; align-items: center; gap: .75rem;
+}
+.smr-context-head svg { width: 18px; height: 18px; stroke: var(--sepia); flex-shrink: 0; }
+.smr-context-body { font-family: 'DM Sans', sans-serif; font-size: .8rem; line-height: 1.85; color: var(--ink-faded); }
+.smr-context-body strong { color: var(--ink); font-weight: 500; }
+
+/* ── Streets map / landmark system ── */
+.smr-streets { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-bottom: 2rem; }
+@media (max-width: 768px) { .smr-streets { grid-template-columns: 1fr; } }
+
+.smr-street-card {
+    border: 1px solid var(--ruling); border-radius: 10px; overflow: hidden;
+    background: var(--parchment);
+}
+[data-theme="dark"] .smr-street-card { background: var(--parchment-dark); }
+.smr-street-head {
+    padding: .8rem 1.2rem;
+    background: var(--sepia-pale);
+    border-bottom: 1px solid var(--ruling);
+    display: flex; align-items: center; gap: .6rem;
+}
+.smr-street-num {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--ink); color: var(--parchment);
+    font-family: 'DM Sans', sans-serif; font-size: .6rem; font-weight: 500;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+[data-theme="dark"] .smr-street-num { background: var(--sepia); color: #1c160a; }
+.smr-street-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem; font-weight: 400; color: var(--ink);
+}
+.smr-street-orig {
+    font-family: 'IM Fell English', serif;
+    font-size: .75rem; font-style: italic; color: var(--sepia); margin-left: auto;
+}
+.smr-street-body {
+    padding: 1rem 1.2rem;
+    font-family: 'DM Sans', sans-serif; font-size: .78rem; line-height: 1.8; color: var(--ink-faded);
+}
+
+/* ── Stone markers ── */
+.smr-stones { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 1.5rem 0; }
+@media (max-width: 700px) { .smr-stones { grid-template-columns: 1fr; } }
+.smr-stone {
+    border: 1px solid var(--ruling); border-radius: 10px;
+    padding: 1.2rem; background: var(--parchment); text-align: center;
+    transition: box-shadow .3s;
+}
+[data-theme="dark"] .smr-stone { background: var(--parchment-dark); }
+.smr-stone:hover { box-shadow: 0 4px 20px rgba(139,111,62,.2); }
+.smr-stone-letter {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem; font-weight: 300; color: var(--sepia); line-height: 1;
+    margin-bottom: .5rem;
+}
+.smr-stone-name {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .65rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--ink); margin-bottom: .5rem;
+}
+.smr-stone-desc {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .74rem; line-height: 1.7; color: var(--ink-faded);
+}
+
+/* ── Register table ── */
+.smr-register {
+    border: 1px solid var(--ruling); border-radius: 10px; overflow: hidden; margin-bottom: 2rem;
+}
+.smr-register-head {
+    background: var(--ink); color: var(--parchment); padding: .8rem 1.4rem;
+    font-family: 'DM Sans', sans-serif; font-size: .6rem; letter-spacing: .2em; text-transform: uppercase;
+    display: grid; grid-template-columns: 2rem 1fr 2fr auto;
+    gap: 1rem; align-items: center;
+}
+[data-theme="dark"] .smr-register-head { background: rgba(201,165,83,.15); color: var(--sepia); }
+.smr-register-row {
+    display: grid; grid-template-columns: 2rem 1fr 2fr auto;
+    gap: 1rem; padding: .65rem 1.4rem; border-bottom: 1px solid var(--ruling);
+    font-family: 'DM Sans', sans-serif; font-size: .78rem; color: var(--ink-faded);
+    align-items: start; transition: background .2s;
+}
+.smr-register-row:last-child { border-bottom: none; }
+.smr-register-row:hover { background: var(--sepia-pale); }
+.smr-register-n {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem; font-weight: 300; color: var(--sepia); text-align: center;
+}
+.smr-register-name { font-weight: 500; color: var(--ink); }
+.smr-register-note { font-size: .72rem; line-height: 1.6; }
+.smr-register-prets {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: .9rem; color: var(--sepia); white-space: nowrap;
+}
+
+/* ── Warning banner ── */
+.smr-caveat {
+    display: flex; gap: 1rem; align-items: flex-start;
+    padding: 1.2rem 1.4rem; margin-bottom: 2rem;
+    background: rgba(201,165,83,.07); border: 1px solid rgba(201,165,83,.25);
+    border-radius: 10px;
+}
+.smr-caveat svg { width: 18px; height: 18px; stroke: var(--sepia-light); flex-shrink: 0; margin-top: .15rem; }
+.smr-caveat p {
+    font-family: 'DM Sans', sans-serif; font-size: .78rem; line-height: 1.75; color: var(--ink-faded); margin: 0;
+}
+.smr-caveat strong { color: var(--ink); font-weight: 500; }
+
+/* ── Highlight quote box ── */
+.smr-quote {
+    background: linear-gradient(135deg, #1a1408, #2a1e0a);
+    border-radius: 12px; padding: 2.5rem; color: white;
+    position: relative; overflow: hidden; margin: 2rem 0;
+}
+.smr-quote::before {
+    content: '"'; position: absolute; top: -2rem; left: 1.5rem;
+    font-family: 'Cormorant Garamond', serif; font-size: 11rem; font-weight: 300; line-height: 1;
+    color: rgba(201,165,83,.06); pointer-events: none;
+}
+.smr-quote-text {
+    font-family: 'IM Fell English', serif; font-size: 1.05rem; font-style: italic;
+    line-height: 1.9; color: rgba(240,228,184,.82); max-width: 720px;
+    margin-bottom: 1rem; position: relative; z-index: 1;
+}
+.smr-quote-source {
+    font-family: 'DM Sans', sans-serif; font-size: .72rem; letter-spacing: .15em;
+    text-transform: uppercase; color: rgba(201,165,83,.5);
+    position: relative; z-index: 1;
+}
+
+/* ── Lightbox ── */
+.smr-lb {
+    position: fixed; inset: 0; background: rgba(10,8,4,.97); backdrop-filter: blur(20px);
+    z-index: 9999; display: none; align-items: center; justify-content: center;
+    flex-direction: column; gap: 1rem; padding: 2rem;
+}
+.smr-lb.on { display: flex; animation: fadeIn .2s ease; }
+.smr-lb-img {
+    max-width: min(900px, 90vw); max-height: 82vh; object-fit: contain;
+    border-radius: 4px; box-shadow: 0 32px 80px rgba(0,0,0,.7); cursor: zoom-in;
+}
+.smr-lb-close {
+    position: fixed; top: 1.2rem; right: 1.2rem;
+    width: 42px; height: 42px; background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.15); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem; color: rgba(255,255,255,.8); cursor: pointer; transition: all .2s;
+}
+.smr-lb-close:hover { background: var(--sepia); color: #1c160a; }
+.smr-lb-caption {
+    font-family: 'DM Sans', sans-serif; font-size: .65rem; letter-spacing: .15em;
+    text-transform: uppercase; color: rgba(201,165,83,.6); text-align: center;
+}
+.smr-lb-nav {
+    position: fixed; top: 50%; transform: translateY(-50%);
+    width: 44px; height: 44px; background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.12); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; color: rgba(255,255,255,.7); cursor: pointer; transition: all .2s;
+}
+.smr-lb-nav:hover { background: var(--sepia); color: #1c160a; }
+.smr-lb-prev { left: 1rem; }
+.smr-lb-next { right: 1rem; }
+
+/* ── Conclusions ── */
+.concl-list { display: flex; flex-direction: column; gap: 1.5rem; }
+.concl-item {
+    display: grid; grid-template-columns: 2.5rem 1fr;
+    gap: 1.25rem; align-items: start;
+    padding: 1.5rem; border: 1px solid var(--ruling); border-radius: 10px;
+    background: var(--parchment); transition: box-shadow .3s;
+}
+[data-theme="dark"] .concl-item { background: var(--parchment-dark); }
+.concl-item:hover { box-shadow: 0 4px 24px rgba(0,0,0,.08); }
+.concl-num {
+    width: 38px; height: 38px; border-radius: 8px;
+    background: var(--ink); color: var(--parchment);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 300; flex-shrink: 0;
+}
+[data-theme="dark"] .concl-num { background: var(--sepia); color: #1c160a; }
+.concl-tag {
+    font-family: 'DM Sans', sans-serif; font-size: .54rem; letter-spacing: .22em;
+    text-transform: uppercase; color: var(--sepia); margin-bottom: .4rem;
+}
+.concl-head {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 400;
+    color: var(--ink); margin-bottom: .6rem;
+}
+.concl-text {
+    font-family: 'DM Sans', sans-serif; font-size: .78rem; line-height: 1.85; color: var(--ink-faded);
+}
+.concl-text strong { color: var(--ink); font-weight: 500; }
+
+/* ── Scroll reveal ── */
+.smr-reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
+.smr-reveal.vis { opacity: 1; transform: none; }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+</style>
+</head>
+<body class="smr-page">
+
+    <header class="header">
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <img src="https://i.imgur.com/mXCrjjG.png" alt="Герб" class="logo-img">
+                <div class="logo-text">
+                    <span class="logo-city">Дубровиця</span>
+                    <span class="logo-subtitle">Цифровий архів</span>
+                </div>
+            </a>
+            <nav class="nav" id="mainNav">
+                <a href="index.html" class="nav-link">Головна</a>
+                <a href="history.html" class="nav-link">Історія</a>
+                <a href="photo-archive.html" class="nav-link">Фотоархів</a>
+                <a href="architecture.html" class="nav-link">Пам'ятки</a>
+                <a href="metrychni-knyhy.html" class="nav-link active">Метричні книги</a>
+                <a href="books.html" class="nav-link">Книги</a>
+                <a href="contacts.html" class="nav-link">Контакти</a>
+            </nav>
+            <button class="theme-toggle" id="themeToggle" aria-label="Перемкнути тему">
+                <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                <svg class="theme-icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+            <button class="mobile-toggle" id="mobileToggle" aria-label="Відкрити меню"><span></span><span></span><span></span></button>
+        </div>
+    </header>
+
+    <!-- ══ HERO ══ -->
+    <div class="smr-hero">
+        <div class="smr-hero-seal">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.4">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                <polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+        </div>
+        <div class="smr-hero-eyebrow">Архівний документ · Річ Посполита / Російська імперія</div>
+        <h1 class="smr-hero-title">
+            Інвентар маєтку<br><em>Дубровиця</em>
+        </h1>
+        <p class="smr-hero-subtitle">Folwark Worobin z Miastem Dombrowicą — опис міста, вулиць та мешканців</p>
+        <div class="smr-hero-meta">
+            <div class="smr-hero-meta-item">
+                <span class="smr-hero-meta-val">1780–1820</span>
+                <span class="smr-hero-meta-key">приблизні роки</span>
+            </div>
+            <div class="smr-hero-meta-item">
+                <span class="smr-hero-meta-val">200+</span>
+                <span class="smr-hero-meta-key">сторінок документу</span>
+            </div>
+            <div class="smr-hero-meta-item">
+                <span class="smr-hero-meta-val">5</span>
+                <span class="smr-hero-meta-key">сканів опубліковано</span>
+            </div>
+            <div class="smr-hero-meta-item">
+                <span class="smr-hero-meta-val">~1776</span>
+                <span class="smr-hero-meta-key">рік межування міста</span>
+            </div>
+        </div>
+        <div style="margin-top:1.8rem;display:inline-flex;align-items:center;gap:.6rem;padding:.45rem 1.1rem;background:rgba(201,165,83,.1);border:1px solid rgba(201,165,83,.25);border-radius:100px;position:relative;z-index:1;animation:fadeIn .7s ease .7s both;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#c9a553" stroke-width="1.8" style="width:13px;height:13px;flex-shrink:0;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <span style="font-family:'DM Sans',sans-serif;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(201,165,83,.75);">Публікується поступово — по мірі перекладу нових сторінок</span>
+        </div>
+        <div class="smr-hero-bottom"></div>
+    </div>
+
+    <!-- ══ BODY ══ -->
+    <div class="smr-body">
+
+        <!-- WARNING CAVEAT -->
+        <div class="smr-caveat smr-reveal">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <p>
+                <strong>Про документ.</strong> Цей інвентар налічує понад 200 сторінок і написаний <strong>старопольською мовою</strong> з вкрапленнями місцевих українських слів та діалектизмів кінця XVIII — початку XIX ст. Через специфіку тогочасного скоропису, архаїчну орфографію та вставлені слова місцевого вжитку частина тексту піддається лише наближеному прочитанню. Деякі власні назви, розміри ділянок та прізвища мешканців відтворені з певними застереженнями — там, де читання спірне, це зазначено окремо. Представлені скани є фрагментами загального корпусу.
+            </p>
+        </div>
+
+        <!-- ══ TABS ══ -->
+        <div class="smr-tabs smr-reveal">
+            <button class="smr-tab active" data-panel="scans">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+                Скани
+            </button>
+            <button class="smr-tab" data-panel="transcript">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                Транскрипція
+            </button>
+            <button class="smr-tab" data-panel="streets">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+                Вулиці
+            </button>
+            <button class="smr-tab" data-panel="stones">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                Межові камені
+            </button>
+            <button class="smr-tab" data-panel="residents">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                Мешканці
+            </button>
+            <button class="smr-tab" data-panel="glossary">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                Глосарій
+            </button>
+            <button class="smr-tab" data-panel="context">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                Аналіз
+            </button>
+        </div>
+
+        <!-- ══════════ SCANS PANEL ══════════ -->
+        <div class="smr-tab-panel active" id="panel-scans">
+            <div class="smr-section-eyebrow smr-reveal">
+                <span>Оригінальні скани документів</span>
+            </div>
+            <div class="smr-scans-grid smr-reveal">
+                <div class="smr-scan-card" onclick="openScanLB(0)">
+                    <img src="https://i.imgur.com/r6LODUt.jpeg" alt="Титульна сторінка" class="smr-scan-img">
+                    <div class="smr-scan-overlay">
+                        <div class="smr-scan-num">I</div>
+                        <div class="smr-scan-label">Документ 00009318-7 · Титульна сторінка</div>
+                    </div>
+                    <div class="smr-scan-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+                </div>
+                <div class="smr-scan-card" onclick="openScanLB(1)">
+                    <img src="https://i.imgur.com/fq9QEd3.jpeg" alt="Опис вулиць" class="smr-scan-img">
+                    <div class="smr-scan-overlay">
+                        <div class="smr-scan-num">II</div>
+                        <div class="smr-scan-label">Документ 00009318-47 · Опис міста та вулиць</div>
+                    </div>
+                    <div class="smr-scan-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+                </div>
+                <div class="smr-scan-card" onclick="openScanLB(2)">
+                    <img src="https://i.imgur.com/bGkfvuT.jpeg" alt="Володіння Піарів" class="smr-scan-img">
+                    <div class="smr-scan-overlay">
+                        <div class="smr-scan-num">III</div>
+                        <div class="smr-scan-label">Документ 00009318-48 · Землі отців Піарів та межові камені</div>
+                    </div>
+                    <div class="smr-scan-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+                </div>
+                <div class="smr-scan-card" onclick="openScanLB(3)">
+                    <img src="https://i.imgur.com/5gR14At.jpeg" alt="Передмістя" class="smr-scan-img">
+                    <div class="smr-scan-overlay">
+                        <div class="smr-scan-num">IV</div>
+                        <div class="smr-scan-label">Документ 00009318-49 · Передмістя та церкви</div>
+                    </div>
+                    <div class="smr-scan-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+                </div>
+                <div class="smr-scan-card" onclick="openScanLB(4)">
+                    <img src="https://i.imgur.com/uIUoLrQ.jpeg" alt="Реєстр мешканців" class="smr-scan-img">
+                    <div class="smr-scan-overlay">
+                        <div class="smr-scan-num">V</div>
+                        <div class="smr-scan-label">Документ 00009318-9 · Ринок та реєстр мешканців</div>
+                    </div>
+                    <div class="smr-scan-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+                </div>
+            </div>
+
+            <div class="smr-quote smr-reveal">
+                <p class="smr-quote-text">
+                    «Folwark Worobin z Miastem Dombrowicą, Wsiami do tegoż należącemi: Jidcem, Lutynskiem, Orwanicą, Beresciem, Ploską, Jutowszczyzną y Jasieńcem»
+                </p>
+                <div class="smr-quote-source">Документ 00009318-7 · Титульна сторінка інвентарю · «Фільварк Воробин з містом Домбровиця і приписаними селами»</div>
+            </div>
+        </div>
+
+        <!-- ══════════ TRANSCRIPT PANEL ══════════ -->
+        <div class="smr-tab-panel" id="panel-transcript">
+            <div class="smr-section-eyebrow smr-reveal">
+                <span>Оригінальний текст та переклад</span>
+            </div>
+
+            <!-- Doc 47 -->
+            <div class="smr-transcript smr-reveal" style="margin-bottom:3rem;">
+                <div>
+                    <div class="smr-col-header">
+                        <div class="smr-col-badge">PL</div>
+                        <div class="smr-col-title">Оригінал · Старопольська</div>
+                    </div>
+                    <div class="smr-page-block">
+                        <div class="smr-page-label">№ 00009318-47 · Загальний опис міста</div>
+                        <div class="smr-original">Opisanie Mappy z wyniesieniem gatunkow gruntu oraz położenia miasta
+
+Tez miasto w pozycyi wyniosley na gruntach dobrych nad rzeka Horyniem a Sluczą w tym że Hrabowie taczaco sie krami obywale handle solowe utrzymania y inemi do roznych miast litewskich splawiaja. Takoz przy traktach ladowych z wolynia y Ukrainy do Litwy idacych polozone.
+
+Rynek poszrod miasta zalozony na ktorym szpichrze y kramy pobudowane.
+
+Blancie wolnych pretow rynkowych <strong>273</strong>
+Pod zabudowaniem kramow 10
+Pod szpichrzami pret 9</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="smr-col-header">
+                        <div class="smr-col-badge">УА</div>
+                        <div class="smr-col-title">Переклад · Українська</div>
+                    </div>
+                    <div class="smr-page-block">
+                        <div class="smr-page-label">Переклад та пояснення</div>
+                        <div class="smr-translation">Опис карти з виміром ґатунків ґрунту та розташування міста
+
+Місто розташоване на підвищеному місці, на добрих ґрунтах, над річкою Горинню та Случчю, де, в тому ж Графстві (Hrabowie), мешканці, займаючись солоною торгівлею та іншим промислом, відправляють вантажі до різних міст литовських. Місто розташоване також на сухопутних трактах, що сполучають Волинь та Україну з Литвою.
+
+Ринок закладений посеред міста, на якому збудовані шпихлірі та крамниці.
+
+<strong>273</strong> вільних прутів ринкової площі
+Під будівлями крамниць — 10 прутів
+Під шпихлірями — 9 прутів</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Doc 48 -->
+            <div class="smr-transcript smr-reveal" style="margin-bottom:3rem;">
+                <div>
+                    <div class="smr-col-header">
+                        <div class="smr-col-badge">PL</div>
+                        <div class="smr-col-title">Оригінал · № 00009318-48</div>
+                    </div>
+                    <div class="smr-page-block">
+                        <div class="smr-page-label">Землі та межі монастиря Піарів</div>
+                        <div class="smr-original">Place Ichmew XX Piarow Dombrowickich w Miescie sytuowane
+
+Obwod klasztoru XX Piarow Dombrowickich poczowszy od uliczki zamkowey y drogi z rynku do rzeki y mlynow idacey w rogu konczoncych sie placow rynkowych <strong>Sub Litt A:</strong> wkopany nieco stoiacy Kamień wielki plaski z literami na obudwu stronach wyrytemi z jedney ku rynkowych placow oznaczaiacy imiona przezwisko y Honor JWW Dziedzicow Michał Kaziemierza Brzostowscy Pod skarbowie wielcy WXa Litewskiego z drugiey strony Imie <em>MARYA</em> ku ulicy y placow JXX Piarow pod Rokiem <strong>1776</strong> adnotowanym…</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="smr-col-header">
+                        <div class="smr-col-badge">УА</div>
+                        <div class="smr-col-title">Переклад та пояснення</div>
+                    </div>
+                    <div class="smr-page-block">
+                        <div class="smr-page-label">Переклад</div>
+                        <div class="smr-translation">Місця Їхмостей Отців Піарів Дубровицьких, розташовані в місті
+
+Межа монастиря Отців Піарів Дубровицьких починається від Замкової вулички і дороги від ринку до річки й млинів, у куті ринкових площ. Тут під позначкою <strong>«А»</strong> вкопаний великий плаский камінь, на обох боках якого вирізьблені написи: з одного боку — імена, прізвища та титули ясновельможних власників міста Михайла Казимира Бжостовського, великого підскарбія Великого Князівства Литовського, з іншого — ім'я <em>MARYA</em> та рік <strong>1776</strong>.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Doc 49 -->
+            <div class="smr-transcript smr-reveal">
+                <div>
+                    <div class="smr-col-header">
+                        <div class="smr-col-badge">PL</div>
+                        <div class="smr-col-title">Оригінал · № 00009318-49</div>
+                    </div>
+                    <div class="smr-page-block">
+                        <div class="smr-page-label">Передмістя та церкви</div>
+                        <div class="smr-original">Przedmieście Bereżnieckie na Trakcie Ukrainskim y Wolynskim z przyiazdu od Bereznicy lezace jedna strona z zaulkiem krzywym od rzeki horynia druga strona od ogrodow y morgow Golowych Rudnicki Rog zwnych poczyna sie od Parowow y Ulicy dzielacey od miasta a konczy sie po Sciane od gruntow Cerkiewnych.
+
+Przedmiescie worobinskie na Trakcie Litewskim z przyjazdu od Stolina y Wysocka lezace jedna strona od Gumniskich Placow drugą biorac z Zaulkiem Krzywym po ogrody y sianożeci zawarte poczyna sie od walow y sciany JXX Piarow, konczy sie po scianke rozdielaiaca tez przedmiescie z zasciankiem za okopiskiem zydowskim.</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="smr-col-header">
+                        <div class="smr-col-badge">УА</div>
+                        <div class="smr-col-title">Переклад та пояснення</div>
+                    </div>
+                    <div class="smr-page-block">
+                        <div class="smr-page-label">Переклад</div>
+                        <div class="smr-translation">Бережницьке передмістя на Українському та Волинському тракті, з в'їзду від Бережного — з одного боку з Кривим провулком від річки Горині, з іншого — від городів та моргів у місцевості Голові, Рудницький Ріг. Починається від рову й вулиці, що відділяє від міста, закінчується при стіні від церковних ґрунтів.
+
+Воробинське передмістя на Литовському тракті, з в'їзду від Століна й Висоцька — з одного боку від гумнищних ділянок, з іншого — з Кривим провулком по садки й сінокоси. Починається від валів та мурів Отців Піарів, закінчується при розділовій стіні між передмістям і містечком за єврейським цвинтарем (окописьком).</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══════════ STREETS PANEL ══════════ -->
+        <div class="smr-tab-panel" id="panel-streets">
+            <div class="smr-section-eyebrow smr-reveal">
+                <span>Вулиці та провулки міста · кінець XVIII ст.</span>
+            </div>
+
+            <div class="smr-context-card smr-reveal" style="margin-bottom:2rem;">
+                <div class="smr-context-head">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+                    Карта та топографічний план
+                </div>
+                <div class="smr-context-body">
+                    Оригінальна карта, до якої відносяться всі описи вулиць інвентарю, <strong>на жаль, втрачена</strong>. Проте на сайті архіву присутній топографічний план Дубровиці <strong>1855 року</strong> — він складений приблизно через покоління після укладання інвентарю і дозволяє приблизно ідентифікувати згадані в документі вулиці та квартали. Орієнтиром слугують незмінні природні об'єкти: Горинь, Случ, острів між рукавами річки, а також церкви — їх розташування зафіксоване незалежно від карти.
+                </div>
+            </div>
+
+            <div class="smr-streets smr-reveal">
+                <div class="smr-street-card">
+                    <div class="smr-street-head">
+                        <div class="smr-street-num">1</div>
+                        <div class="smr-street-name">Вулиця Воробинська</div>
+                        <div class="smr-street-orig">ul. Worobińska</div>
+                    </div>
+                    <div class="smr-street-body">
+                        Головна артерія Воробинського передмістя, що пролягала <strong>Литовським трактом</strong> у напрямку Століна та Висоцька. Одна сторона примикала до Передкостельного провулку Піарів, інша — до Ринкового завулку. Починалась від ринкових площ і закінчувалась при валу, що відділяв передмістя від міста. Це була основна вулиця північної частини Дубровиці, через яку йшла вся транзитна торгівля з Литвою.
+                    </div>
+                </div>
+                <div class="smr-street-card">
+                    <div class="smr-street-head">
+                        <div class="smr-street-num">2</div>
+                        <div class="smr-street-name">Завулок Ринковий</div>
+                        <div class="smr-street-orig">Zaułek Rynkowy</div>
+                    </div>
+                    <div class="smr-street-body">
+                        Провулок між Воробинською вулицею та Монковським завулком. Починався від ринкових площ і закінчувався при валу Воробинського передмістя. Паралельний до вулиць, що оточували ринок, відіграв роль сполучної ланки між торговим центром і передмістям.
+                    </div>
+                </div>
+                <div class="smr-street-card">
+                    <div class="smr-street-head">
+                        <div class="smr-street-num">3</div>
+                        <div class="smr-street-name">Завулок Монковський</div>
+                        <div class="smr-street-orig">Zaułek Mońkowski</div>
+                    </div>
+                    <div class="smr-street-body">
+                        Розташований між Ринковим і Передвальним завулками. Починався від ринкових площ, закінчувався при валу Воробинського передмістя. Назва, вірогідно, походить від прізвища одного зі значних мешканців або власника ділянки.
+                    </div>
+                </div>
+                <div class="smr-street-card">
+                    <div class="smr-street-head">
+                        <div class="smr-street-num">4</div>
+                        <div class="smr-street-name">Завулок Передвальний</div>
+                        <div class="smr-street-orig">Zaułek Przedwalny</div>
+                    </div>
+                    <div class="smr-street-body">
+                        Пролягав між Монковським завулком та валами із гумнищами. Починався від вулиці й валу між Воробинським передмістям і містом, закінчувався при дорозі до Мочилищ (сучасне с. Мочилище). Фактично це була крайня межа між забудованим містом і господарською зоною.
+                    </div>
+                </div>
+                <div class="smr-street-card">
+                    <div class="smr-street-head">
+                        <div class="smr-street-num">5</div>
+                        <div class="smr-street-name">Вулиця Шкільна</div>
+                        <div class="smr-street-orig">ul. Szkolna</div>
+                    </div>
+                    <div class="smr-street-body">
+                        Назва, очевидно, пов'язана зі школою (колегіумом) Отців Піарів. Вулиця пролягала між ринковими площами та Бережницькою вулицею, огинаючи вали та Завальну вулицю. Починалась від дороги до Мочилищ і закінчувалась при вулиці, що відділяла місто від Бережницького передмістя.
+                    </div>
+                </div>
+                <div class="smr-street-card">
+                    <div class="smr-street-head">
+                        <div class="smr-street-num">6</div>
+                        <div class="smr-street-name">Вулиця Завальна</div>
+                        <div class="smr-street-orig">ul. Zawalna</div>
+                    </div>
+                    <div class="smr-street-body">
+                        «Завальна» — від «за валом», тобто вулиця за міськими оборонними валами. Перша її сторона примикала до Шкільної вулиці, друга — до садків. Починалась від Нівецької дороги і закінчувалась при Бережницькому передмісті, включаючи гумна. Тут же за новим планом були відведені <strong>Виноградні (Вінничні) площі</strong>.
+                    </div>
+                </div>
+                <div class="smr-street-card">
+                    <div class="smr-street-head">
+                        <div class="smr-street-num">7</div>
+                        <div class="smr-street-name">Вулиця Бережницька</div>
+                        <div class="smr-street-orig">ul. Bereznicka</div>
+                    </div>
+                    <div class="smr-street-body">
+                        Головна вулиця, що вела до Бережного. Починалась від ринкових площ і закінчувалась при вулиці, що відокремлювала Бережницьке передмістя. Одна сторона — від площ Замкової вулиці, інша — від Шкільної. Це був основний тракт, через який місто сполучалось із <strong>Волинню та Україною</strong>.
+                    </div>
+                </div>
+                <div class="smr-street-card">
+                    <div class="smr-street-head">
+                        <div class="smr-street-num">8</div>
+                        <div class="smr-street-name">Вулиця Замкова (Миколаївська)</div>
+                        <div class="smr-street-orig">ul. Zamkowa Mikołajska</div>
+                    </div>
+                    <div class="smr-street-body">
+                        Перша сторона — від замкового валу та «Топи» (заплавної низини). Друга — від ділянок Бережницької вулиці. Вулиця починалась від ринкових площ і закінчувалась при рівчаках (парових) Бережницького передмістя. Свою другу назву вона отримала від <strong>церкви Святого Миколая</strong>, що стояла наприкінці першого ряду, біля рівчаків.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Suburbs section -->
+            <div class="smr-section-eyebrow smr-reveal" style="margin-top:3rem;">
+                <span>Передмістя</span>
+            </div>
+            <div class="smr-context-grid smr-reveal">
+                <div class="smr-context-card">
+                    <div class="smr-context-head">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M3 12l9-9 9 9M5 10v9a1 1 0 001 1h4v-5h4v5h4a1 1 0 001-1v-9"/></svg>
+                        Воробинське передмістя
+                    </div>
+                    <div class="smr-context-body">
+                        Розташоване на <strong>Литовському тракті</strong> з боку Століна та Висоцька. Починалось від монастирських валів Піарів і закінчувалось за єврейським цвинтарем. Тут документ фіксує <strong>Гумниська</strong> — спеціально відведені місця для стодол, перенесених із центру міста, щоб зменшити ризик пожеж. Також тут планувалось звести нову ділянку для православного священника й <strong>церкви Різдва Пресвятої Богородиці</strong>. В провулку Кривому серед ділянок передмістя значилась ділянка Піарів розміром 35 прутів.
+                    </div>
+                </div>
+                <div class="smr-context-card">
+                    <div class="smr-context-head">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M3 12l9-9 9 9M5 10v9a1 1 0 001 1h4v-5h4v5h4a1 1 0 001-1v-9"/></svg>
+                        Бережницьке передмістя
+                    </div>
+                    <div class="smr-context-body">
+                        Розташоване на <strong>Українському та Волинському трактах</strong> з боку Бережного. Одна сторона — із Кривим провулком від річки Горині, інша — від городів та моргів (земельних ділянок) у місцевості Голові та Рудницький Ріг. Закінчувалось при церковних землях. Це передмістя було воротами міста для торгівлі з Волинню та Поліссям.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══════════ STONES PANEL ══════════ -->
+        <div class="smr-tab-panel" id="panel-stones">
+            <div class="smr-section-eyebrow smr-reveal">
+                <span>Сім межових каменів · 1776 рік</span>
+            </div>
+
+            <div class="smr-caveat smr-reveal">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                <p>У 1776 році власники міста Бжостовські разом із монастирем Піарів встановили <strong>сім великих пласких каменів</strong> із вирізьбленими написами, щоб назавжди зафіксувати межі між міськими землями та монастирськими угіддями. Це була юридично обов'язкова процедура, аналог сучасного кадастрового межування. Маршрут каменів можна частково відновити за описами інвентарю.</p>
+            </div>
+
+            <div class="smr-stones smr-reveal">
+                <div class="smr-stone">
+                    <div class="smr-stone-letter">A</div>
+                    <div class="smr-stone-name">Камінь Перший</div>
+                    <div class="smr-stone-desc">На розі ринкових площ та Замкової вулички. Найголовніший: з одного боку — імена та титули власників Михайла Казимира Бжостовського (великого підскарбія ВКЛ), з іншого — ім'я <em>MARYA</em> та рік 1776. Слугував стартовою точкою межі.</div>
+                </div>
+                <div class="smr-stone">
+                    <div class="smr-stone-letter">B</div>
+                    <div class="smr-stone-name">Камінь Другий</div>
+                    <div class="smr-stone-desc">Встановлений на розі самого валу, на відстані приблизно 8 шнурів від першого каменя. Мав такі самі написи. Позначав поворот межі від лінії Передкостельного провулку до сходу, в бік річки.</div>
+                </div>
+                <div class="smr-stone">
+                    <div class="smr-stone-letter">G</div>
+                    <div class="smr-stone-name">Камінь Третій</div>
+                    <div class="smr-stone-desc">Розміщений над самою <strong>протокою Горині</strong>, на відстані 8 шнурів на схід. Позначав межу монастирських угідь безпосередньо на березі річки. Звідси межа пролягала вздовж протоки до місця злиття з руслом.</div>
+                </div>
+                <div class="smr-stone">
+                    <div class="smr-stone-letter">D</div>
+                    <div class="smr-stone-name">Камінь Четвертий</div>
+                    <div class="smr-stone-desc">Встановлений у місці, де стара Горинь зливалась із протокою (Прервою). Це вузлова точка: далі межа повертала на південь уздовж старого русла річки.</div>
+                </div>
+                <div class="smr-stone">
+                    <div class="smr-stone-letter">E</div>
+                    <div class="smr-stone-name">Камінь П'ятий</div>
+                    <div class="smr-stone-desc">Закопаний і вставлений уздовж берега <strong>старої Горині</strong>, трохи вище за течією на схід. Відділяв міські луки від монастирських заростей на острові між рукавами річки.</div>
+                </div>
+                <div class="smr-stone">
+                    <div class="smr-stone-letter">F</div>
+                    <div class="smr-stone-name">Камінь Шостий</div>
+                    <div class="smr-stone-desc">Розміщений у низинах, серед заростей, над протокою. Ліворуч від нього — Миколаївські угіддя, праворуч — монастирські зарості. Від цього каменя межа знову переходила через протоку.</div>
+                </div>
+                <div class="smr-stone">
+                    <div class="smr-stone-letter">G</div>
+                    <div class="smr-stone-name">Камінь Сьомий</div>
+                    <div class="smr-stone-desc">Вкопаний на повороті Замкової вулички, дороги від ринку до річки. Від нього межа поверталась уздовж юридичного саду й ділянок монастиря назад до першого каменя, замикаючи кільце.</div>
+                </div>
+            </div>
+
+            <!-- The mystery quote -->
+            <div class="smr-quote smr-reveal">
+                <p class="smr-quote-text">
+                    «На північ від міста, в провулку біля лазні, стирчала скеля заввишки приблизно півтора метра, на якій були вирізьблені кілька нечітких слів, а також кілька цифр, що починалися з 17…; слова та цифри ніколи не були розшифровані.»
+                </p>
+                <div class="smr-quote-source">Книга єврейської громади Дубровиці · XX ст. · Свідчення про невідомий камінь у північній частині міста</div>
+            </div>
+
+            <div class="smr-context-card smr-reveal">
+                <div class="smr-context-head">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    Можлива ідентифікація: загадковий камінь з книги єврейської громади
+                </div>
+                <div class="smr-context-body">
+                    Книга пам'яті єврейської громади Дубровиці зберегла унікальне свідчення: <strong>на північ від міста, в провулку біля лазні</strong>, стирчала скеля заввишки близько півтора метра з вирізьбленими написами та цифрами, що починались з «17…». Жодного офіційного пояснення цьому каменю не було залишено.
+                    <br><br>
+                    З огляду на інвентарний опис 1776 року, це <strong>майже напевно один із семи межових каменів</strong> Піарів. Воробинський провулок (де документ фіксує один із каменів) розташований якраз на північ від ринку, і «лазня» (баня) цілком могла існувати поряд. Цифри «17…» точно відповідають даті встановлення — <strong>1776</strong>. Написи, що «ніколи не були розшифровані» — це, вірогідно, латинські ініціали власників (Michał Kazimierz Brzostowski) та ім'я MARYA, що без знання контексту виглядали б загадково. Кілька каменів, за описом, були «nieco wkopany» — частково вкопані в землю, а значить їхня висота над поверхнею могла відповідати описаним «приблизно півтора метра».
+                    <br><br>
+                    Якщо це справді один із каменів 1776 року, він зберігся щонайменше до середини XX ст. — і може існувати досі, просто не впізнаний.
+                </div>
+            </div>
+        </div>
+
+        <!-- ══════════ RESIDENTS PANEL ══════════ -->
+        <div class="smr-tab-panel" id="panel-residents">
+            <div class="smr-section-eyebrow smr-reveal">
+                <span>Реєстр мешканців ринку · Документ 00009318-9</span>
+            </div>
+
+            <div class="smr-context-card smr-reveal" style="margin-bottom:2rem;">
+                <div class="smr-context-head">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                    Про реєстр
+                </div>
+                <div class="smr-context-body">
+                    Документ 00009318-9 є частиною загального реєстру ринкових ділянок. Він містить таблицю з іменами власників крамниць, шпихлірів та вільних ділянок. <strong>Переважна більшість прізвищ — єврейські</strong>, що цілком відповідає загальному укладу польських та волинських містечок тієї доби: ринкова торгівля зосереджувалась у руках єврейської громади. Прочитання деяких прізвищ є наближеним через специфіку скоропису.
+                </div>
+            </div>
+
+            <div class="smr-register smr-reveal">
+                <div class="smr-register-head">
+                    <span>#</span>
+                    <span>Ім'я та прізвище</span>
+                    <span>Опис ділянки</span>
+                    <span>Прути</span>
+                </div>
+                <div class="smr-register-row">
+                    <div class="smr-register-n">1</div>
+                    <div><div class="smr-register-name">Ізраель Хаймович</div></div>
+                    <div class="smr-register-note">Кутова ділянка (rogowy); муровані крамниці та вільні крамниці; шпихлір</div>
+                    <div class="smr-register-prets">21</div>
+                </div>
+                <div class="smr-register-row">
+                    <div class="smr-register-n">2</div>
+                    <div><div class="smr-register-name">Зельман Аронович</div></div>
+                    <div class="smr-register-note">Ділянка на ринку</div>
+                    <div class="smr-register-prets">17</div>
+                </div>
+                <div class="smr-register-row">
+                    <div class="smr-register-n">3</div>
+                    <div><div class="smr-register-name">Хаїм Йонашович</div></div>
+                    <div class="smr-register-note">Ділянка на ринку</div>
+                    <div class="smr-register-prets">26</div>
+                </div>
+                <div class="smr-register-row">
+                    <div class="smr-register-n">6</div>
+                    <div><div class="smr-register-name">Tenże (він же)</div></div>
+                    <div class="smr-register-note">Місце під шпихлір біля Люботина; 2-га пієржея вулиці Замкової</div>
+                    <div class="smr-register-prets">22</div>
+                </div>
+                <div class="smr-register-row">
+                    <div class="smr-register-n">9–10</div>
+                    <div><div class="smr-register-name">Давидович Гімпелович</div></div>
+                    <div class="smr-register-note">Кутова ділянка; 3-тя пієржея (ряд забудови)</div>
+                    <div class="smr-register-prets">17</div>
+                </div>
+                <div class="smr-register-row">
+                    <div class="smr-register-n">12</div>
+                    <div><div class="smr-register-name">Міхель Абрамович</div></div>
+                    <div class="smr-register-note">Ділянка на Завалі (na Zawale), під крамницею</div>
+                    <div class="smr-register-prets">10</div>
+                </div>
+                <div class="smr-register-row">
+                    <div class="smr-register-n">13</div>
+                    <div><div class="smr-register-name">Юда (Tenże)</div></div>
+                    <div class="smr-register-note">Ділянка під крамницею</div>
+                    <div class="smr-register-prets">10</div>
+                </div>
+                <div class="smr-register-row">
+                    <div class="smr-register-n">14–15</div>
+                    <div><div class="smr-register-name">Лейба Шейнович</div></div>
+                    <div class="smr-register-note">Дві ділянки; Янович Шейнер</div>
+                    <div class="smr-register-prets">2</div>
+                </div>
+                <div class="smr-register-row">
+                    <div class="smr-register-n">18–20</div>
+                    <div><div class="smr-register-name">Мошка Ошермович</div></div>
+                    <div class="smr-register-note">Під крамницями; Юдка Абрамович; місце на Шкільній вулиці; під брамою; шпихлір</div>
+                    <div class="smr-register-prets">16 / 20 / 7</div>
+                </div>
+                <div class="smr-register-row">
+                    <div class="smr-register-n">21–22</div>
+                    <div><div class="smr-register-name">Янкель Гіршович · Шибер Висоцький</div></div>
+                    <div class="smr-register-note">Ділянки на Вуличному провулку</div>
+                    <div class="smr-register-prets">20 / 29</div>
+                </div>
+                <div class="smr-register-row">
+                    <div class="smr-register-n">25–26</div>
+                    <div><div class="smr-register-name">Мендель Аронович</div></div>
+                    <div class="smr-register-note">Навпроти Воробинської вулиці; під крамницею; Мордух Аронович (кутовий); Ленус Фацир</div>
+                    <div class="smr-register-prets">51 / 60</div>
+                </div>
+                <div class="smr-register-row">
+                    <div class="smr-register-n">27–30</div>
+                    <div><div class="smr-register-name">Арон Бейсахович · Фреймалкіс</div></div>
+                    <div class="smr-register-note">Подальший перелік (Dalsza osiadłość); Ітела Юдкова, вдова; місце під крамницями</div>
+                    <div class="smr-register-prets">—</div>
+                </div>
+                <div class="smr-register-row">
+                    <div class="smr-register-n">—</div>
+                    <div><div class="smr-register-name">Абрам Буська, кравець</div></div>
+                    <div class="smr-register-note">Вул. Воробинська, 1-й ряд; орна земля у три зміни на Підгайці</div>
+                    <div class="smr-register-prets">—</div>
+                </div>
+                <div class="smr-register-row">
+                    <div class="smr-register-n">—</div>
+                    <div><div class="smr-register-name">Антип Мартинюк · Копель Гіршович</div></div>
+                    <div class="smr-register-note">Друга сторона Ринкового завулку; Монковський завулок від ринкових площ</div>
+                    <div class="smr-register-prets">—</div>
+                </div>
+                <div class="smr-register-row">
+                    <div class="smr-register-n">50</div>
+                    <div><div class="smr-register-name">Давид Давидович</div></div>
+                    <div class="smr-register-note">Монковський завулок; місце під міськими ятками (jatki)</div>
+                    <div class="smr-register-prets">—</div>
+                </div>
+            </div>
+
+            <div class="smr-context-card smr-reveal">
+                <div class="smr-context-head">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    Ономастика: що кажуть прізвища
+                </div>
+                <div class="smr-context-body">
+                    Реєстр фіксує переважно <strong>єврейські патронімічні прізвища</strong> (Хаймович — «син Хаїма», Аронович — «син Арона»). Поряд зустрічаються і <strong>українські прізвища</strong> — зокрема Антип Мартинюк та Абрам Буська-кравець, що вказує на змішаний склад торговців. Система позначень <em>«Tenże»</em> («він же») є типовою бухгалтерською практикою, щоб не повторювати прізвища при суміжних ділянках. Запис <em>«Latus Facit»</em> — латинський підсумковий рядок: «Разом становить», звичний для бухгалтерії Речі Посполитої.
+                </div>
+            </div>
+        </div>
+
+        <!-- ══════════ GLOSSARY PANEL ══════════ -->
+        <div class="smr-tab-panel" id="panel-glossary">
+            <div class="smr-section-eyebrow smr-reveal">
+                <span>Глосарій архівних термінів</span>
+            </div>
+            <div class="smr-glossary smr-reveal">
+                <div class="smr-gloss-item">
+                    <div class="smr-gloss-term">JXX / J.X.X.</div>
+                    <div class="smr-gloss-def">Скорочення від польськ. <em>Jegomości Xięża</em> — «Їхмості Ксьондзи». Шанобливе звертання до католицьких священників або ченців; у даному контексті — до отців Піарів.</div>
+                </div>
+                <div class="smr-gloss-item">
+                    <div class="smr-gloss-term">Piarowie (Піари)</div>
+                    <div class="smr-gloss-def">Католицький чернечий орден <em>Clerici Regulares Pauperes Matris Dei Scholarum Piarum</em>, заснований у Римі 1617 р. Спеціалізувались на безкоштовній освіті молоді. В Дубровиці утримували колегіум — одну з небагатьох шкіл у регіоні.</div>
+                </div>
+                <div class="smr-gloss-item">
+                    <div class="smr-gloss-term">Pręt (Прут)</div>
+                    <div class="smr-gloss-def">Стара польська одиниця довжини — від 4,3 до 4,8 м залежно від регіону. У даному документі використовується також як міра площі (квадратний прут). 273 прути вільної ринкової площі — значний незабудований простір.</div>
+                </div>
+                <div class="smr-gloss-item">
+                    <div class="smr-gloss-term">Sznur (Шнур)</div>
+                    <div class="smr-gloss-def">Міра довжини, що дорівнювала 10 прутам — приблизно 45–48 м. Використовувалась для вимірювання відстаней між межовими каменями.</div>
+                </div>
+                <div class="smr-gloss-item">
+                    <div class="smr-gloss-term">Szpichlerz (Шпихлір)</div>
+                    <div class="smr-gloss-def">Велика комора для зберігання зерна, солі та інших товарів. Присутність шпихлірів просто на ринку свідчить про активну транзитну торгівлю — Дубровиця стояла на водному шляху через Горинь та Прип'ять до Балтики.</div>
+                </div>
+                <div class="smr-gloss-item">
+                    <div class="smr-gloss-term">Pierzeja (Пєржея)</div>
+                    <div class="smr-gloss-def">Ряд будівель або ділянок вздовж однієї сторони вулиці чи площі. Документ розрізняє «1-шу», «2-гу», «3-тю» пєржеї ринку — фактично, чотири сторони ринкової площі.</div>
+                </div>
+                <div class="smr-gloss-item">
+                    <div class="smr-gloss-term">Gumniska (Гумниська)</div>
+                    <div class="smr-gloss-def">Місця для гумен, стодол та токів для молотьби зерна. Вивід стодол із центру на окраїни — типова міська реформа XVIII ст., спрямована проти пожеж.</div>
+                </div>
+                <div class="smr-gloss-item">
+                    <div class="smr-gloss-term">Okopisko (Окописько)</div>
+                    <div class="smr-gloss-def">Місцева назва єврейського цвинтаря (кіркуту). Етимологія — від «окопати» (обкопати ровом), бо такі цвинтарі часто обгороджувались земляним валом чи ровом.</div>
+                </div>
+                <div class="smr-gloss-item">
+                    <div class="smr-gloss-term">Presviter (Пресвітер)</div>
+                    <div class="smr-gloss-def">Православний або греко-католицький священник; настоятель парафії. Документ фіксує плани виділення ділянки для «пресвітера» і церкви Різдва на Воробинському передмісті.</div>
+                </div>
+                <div class="smr-gloss-item">
+                    <div class="smr-gloss-term">Jurydyka (Юридика)</div>
+                    <div class="smr-gloss-def">Частина міста, виведена з-під юрисдикції міського суду та самоврядування — підпорядкована безпосередньо монастирю або магнату. Монастирська юридика Піарів у Дубровиці охоплювала значну площу.</div>
+                </div>
+                <div class="smr-gloss-item">
+                    <div class="smr-gloss-term">Topa (Топа)</div>
+                    <div class="smr-gloss-def">Ймовірно, місцевий топонім — низинна заплавна ділянка чи заболочений рукав річки поблизу замкового пагорба. Зустрічається у формулі «Wał y Topa Zamkowa».</div>
+                </div>
+                <div class="smr-gloss-item">
+                    <div class="smr-gloss-term">Rogowy (Роговий)</div>
+                    <div class="smr-gloss-def">Кутова ділянка або будинок, що стоїть на розі вулиць. Ринкові кути були найдорожчими місцями — максимальна видимість, зручний доступ з двох сторін.</div>
+                </div>
+                <div class="smr-gloss-item">
+                    <div class="smr-gloss-term">Tenże (Тенже)</div>
+                    <div class="smr-gloss-def">«Він же» — юридичний та бухгалтерський прийом уникнення повтору: якщо той самий власник має кілька суміжних ділянок, після першого запису використовується <em>Tenże</em>.</div>
+                </div>
+                <div class="smr-gloss-item">
+                    <div class="smr-gloss-term">Latus Facit</div>
+                    <div class="smr-gloss-def">Латинськ. «Разом становить» або «Підсумок». Стандартна бухгалтерська позначка в документах Речі Посполитої для підбиття підсумку колонки цифр.</div>
+                </div>
+                <div class="smr-gloss-item">
+                    <div class="smr-gloss-term">JWW / WXa Litewskiego</div>
+                    <div class="smr-gloss-def"><em>Jaśnie Wielmożni</em> — «Ясновельможні» (титул найвищої шляхти). <em>Wielkiego Xięstwa Litewskiego</em> — «Великого Князівства Литовського». Михайло Казимир Бжостовський — великий підскарбій ВКЛ, один із власників Дубровиці.</div>
+                </div>
+                <div class="smr-gloss-item">
+                    <div class="smr-gloss-term">Sub Litt A–G</div>
+                    <div class="smr-gloss-def">Латинськ. <em>Sub Littera</em> — «Під літерою». Позначення межових каменів за літерами латинського алфавіту — A, B, D, E, F, G (літера C у документі пропущена або позначена G двічі).</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══════════ CONTEXT PANEL ══════════ -->
+        <div class="smr-tab-panel" id="panel-context">
+            <div class="smr-section-eyebrow smr-reveal">
+                <span>Аналіз та висновки</span>
+            </div>
+
+            <div class="smr-context-grid smr-reveal">
+                <div class="smr-context-card">
+                    <div class="smr-context-head">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        Час та авторство
+                    </div>
+                    <div class="smr-context-body">
+                        Точне датування інвентарю ускладнюється відсутністю титульного аркуша з датою. Орієнтовно документ укладено між <strong>1780 та 1820 роками</strong> — після встановлення межових каменів (1776) і до включення регіону до складу Російської імперії. Власники міста Бжостовські (Michał Kazimierz Brzostowski, великий підскарбій ВКЛ) — відомі реформатори та меценати доби пізньої Речі Посполитої.
+                    </div>
+                </div>
+                <div class="smr-context-card">
+                    <div class="smr-context-head">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+                        Структура міста
+                    </div>
+                    <div class="smr-context-body">
+                        Документ фіксує <strong>класичну польсько-волинську структуру</strong> приватного містечка: центральний ринок із крамницями та шпихлірями, радіальна мережа вулиць, два «виїзних» тракти (литовський і волинський), два передмістя та монастирська юридика. Природні умови — розташування між Горинню та Случчю — формували окремий острівний характер центру.
+                    </div>
+                </div>
+            </div>
+
+            <div class="concl-list smr-reveal">
+                <div class="concl-item">
+                    <div class="concl-num">1</div>
+                    <div>
+                        <div class="concl-tag">Торгівля</div>
+                        <div class="concl-head">Дубровиця — транзитний вузол на шляху Волинь—Литва</div>
+                        <p class="concl-text">Злиття Горині та Случі перетворювало місто на ключовий вузол між Волинню і Литвою. Інвентар прямо вказує: мешканці «відправляли сіль та інші товари до різних міст Литовських» водою. Ринок з 273 прутами вільної площі та власними шпихлірями — це не просто торгівля для місцевих потреб, а транзитна інфраструктура регіонального масштабу.</p>
+                    </div>
+                </div>
+                <div class="concl-item">
+                    <div class="concl-num">2</div>
+                    <div>
+                        <div class="concl-tag">Релігія та освіта</div>
+                        <div class="concl-head">Піари як культурний центр Дубровиці</div>
+                        <p class="concl-text">Монастир Піарів займав <strong>величезну площу</strong> в центрі міста — від Замкової вулиці до острова між рукавами Горині. Їхній колегіум був одним із небагатьох навчальних закладів у цій частині Полісся. Вулиця Шкільна отримала назву саме від цієї установи. Юридична самостійність монастиря (юридика) означала, що в серці Дубровиці існував фактично автономний анклав.</p>
+                    </div>
+                </div>
+                <div class="concl-item">
+                    <div class="concl-num">3</div>
+                    <div>
+                        <div class="concl-tag">Демографія</div>
+                        <div class="concl-head">Єврейська громада як рушій торгівлі</div>
+                        <p class="concl-text">Реєстр ринкових ділянок показує, що <strong>переважна більшість крамниць та шпихлірів</strong> була у єврейській власності. Це типова картина для приватних міст Речі Посполитої: пани надавали євреям права торгівлі в обмін на орендну плату, формуючи взаємовигідну економічну модель. Серед зафіксованих прізвищ — Хаймовичі, Ароновичі, Давидовичі, Гіршовичі.</p>
+                    </div>
+                </div>
+                <div class="concl-item">
+                    <div class="concl-num">4</div>
+                    <div>
+                        <div class="concl-tag">Архівістика</div>
+                        <div class="concl-head">Втрачена карта та збережений інвентар</div>
+                        <p class="concl-text">Оригінальна карта, до якої посилається інвентар, <strong>не збереглася</strong>. Однак сам інвентар (200+ сторінок) є надзвичайно детальним замісником: він перераховує вулиці, провулки, площі, межі, церкви, монастирські угіддя та власників із точними розмірами ділянок. У поєднанні з топографічним планом 1855 р. можна приблизно відтворити вигляд міста кінця XVIII ст.</p>
+                    </div>
+                </div>
+                <div class="concl-item">
+                    <div class="concl-num">5</div>
+                    <div>
+                        <div class="concl-tag">Церкви</div>
+                        <div class="concl-head">Дві православні церкви в зоні ринку</div>
+                        <p class="concl-text">Документ фіксує <strong>церкву Святого Миколая</strong> наприкінці Замкової (Миколаївської) вулиці та заплановану <strong>церкву Різдва Пресвятої Богородиці</strong> на Воробинському передмісті, де для неї була виділена нова ділянка і ділянка для священника. Це свідчить про активне православне / греко-католицьке парафіяльне життя поряд із домінуючою католицькою інфраструктурою Піарів.</p>
+                    </div>
+                </div>
+                <div class="concl-item">
+                    <div class="concl-num">6</div>
+                    <div>
+                        <div class="concl-tag">Містобудування</div>
+                        <div class="concl-head">Протипожежна реформа: виведення стодол на окраїни</div>
+                        <p class="concl-text">Документ спеціально згадує <strong>Гумниська</strong> — нові ділянки на окраїні Воробинського передмістя для перенесення стодол із центру. Це типова міська реформа другої половини XVIII ст. під впливом ідей Просвітництва: відділення вогненебезпечних господарських споруд від житлових кварталів. Аналогічні реформи проводились у цей час у десятках польських і литовських міст.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background:linear-gradient(135deg,#1a1408,#2a1e0a);border-radius:12px;padding:2.8rem;color:white;position:relative;overflow:hidden;margin-top:2rem;" class="smr-reveal">
+                <div style="position:absolute;top:-1rem;left:1.5rem;font-family:'Cormorant Garamond',serif;font-size:11rem;font-weight:300;line-height:1;color:rgba(201,165,83,.06);pointer-events:none;">"</div>
+                <div style="position:absolute;bottom:1rem;right:1.5rem;font-family:'DM Sans',sans-serif;font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(201,165,83,.25);">Інвентар · Домбровиця · 1776</div>
+                <p style="font-family:'IM Fell English',serif;font-size:1.1rem;font-style:italic;line-height:1.9;color:rgba(240,228,184,.82);max-width:720px;margin-bottom:1.2rem;position:relative;z-index:1;">
+                    «…od tego Kamienia udaiac sie na pulnoc Uliczka przedkoscielna nazwana y dzielac po lewey rece uliczki Place mieskie Rynkowe a po prawey place pro primo JXX Piarow…»
+                </p>
+                <p style="font-family:'DM Sans',sans-serif;font-size:.76rem;line-height:1.75;color:rgba(240,228,184,.4);max-width:620px;position:relative;z-index:1;">
+                    «…від цього каменя, прямуючи на північ Передкостельною вулицею, — ліворуч від неї ринкові міські площі, праворуч — насамперед ділянки Отців Піарів…» Ця фраза точно описує центр тогочасної Дубровиці: ринок — з одного боку, монастир — з іншого, і між ними — доріжка з межовим каменем 1776 року.
+                </p>
+            </div>
+        </div>
+
+    </div><!-- /smr-body -->
+
+    <!-- ══ SCAN LIGHTBOX ══ -->
+    <div class="smr-lb" id="SMR-LB">
+        <button class="smr-lb-close" onclick="closeScanLB()">×</button>
+        <button class="smr-lb-nav smr-lb-prev" onclick="navScanLB(-1)">‹</button>
+        <button class="smr-lb-nav smr-lb-next" onclick="navScanLB(1)">›</button>
+        <img class="smr-lb-img" id="SMR-LB-IMG" src="" alt="">
+        <div class="smr-lb-caption" id="SMR-LB-CAP"></div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4 class="footer-title">Дубровиця</h4>
+                    <p class="footer-text">Цифровий архів історичної спадщини міста Дубровиця, Рівненська область, Україна.</p>
+                </div>
+                <div class="footer-section">
+                    <h4 class="footer-title">Навігація</h4>
+                    <nav class="footer-nav">
+                        <a href="history.html">Історія</a>
+                        <a href="photo-archive.html">Фотоархів</a>
+                        <a href="metrychni-knyhy.html">Метричні книги</a>
+                        <a href="books.html">Книги</a>
+                    </nav>
+                </div>
+                <div class="footer-section">
+                    <h4 class="footer-title">Контакти</h4>
+                    <p class="footer-text">Маєте матеріали або пропозиції?<br><a href="contacts.html" class="footer-link">Зв'яжіться з нами</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom"><p>&copy; 2026 Дубровиця. Цифровий архів.</p></div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+    <script>
+    // ── TAB SYSTEM ──
+    document.querySelectorAll('.smr-tab').forEach(tab => {
+        tab.addEventListener('click', function() {
+            const panel = this.dataset.panel;
+            document.querySelectorAll('.smr-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.smr-tab-panel').forEach(p => p.classList.remove('active'));
+            this.classList.add('active');
+            document.getElementById('panel-' + panel).classList.add('active');
+            setTimeout(revealVisible, 50);
+        });
+    });
+
+    // ── SCAN LIGHTBOX ──
+    const SCANS = [
+        { src: 'https://i.imgur.com/r6LODUt.jpeg', cap: 'Документ 00009318-7 · Титульна сторінка · «Folwark Worobin z Miastem Dombrowicą»' },
+        { src: 'https://i.imgur.com/fq9QEd3.jpeg', cap: 'Документ 00009318-47 · Опис міста та вулиць · «Opisanie Mappy z wyniesieniem gatunkow gruntu»' },
+        { src: 'https://i.imgur.com/bGkfvuT.jpeg', cap: 'Документ 00009318-48 · Землі Піарів та сім межових каменів 1776 р.' },
+        { src: 'https://i.imgur.com/5gR14At.jpeg', cap: 'Документ 00009318-49 · Передмістя Бережницьке та Воробинське, церкви' },
+        { src: 'https://i.imgur.com/uIUoLrQ.jpeg', cap: 'Документ 00009318-9 · Ринок · Реєстр власників крамниць та ділянок' },
+    ];
+    let curScan = 0;
+    function openScanLB(i) {
+        curScan = i;
+        document.getElementById('SMR-LB-IMG').src = SCANS[i].src;
+        document.getElementById('SMR-LB-CAP').textContent = SCANS[i].cap;
+        document.getElementById('SMR-LB').classList.add('on');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeScanLB() {
+        document.getElementById('SMR-LB').classList.remove('on');
+        document.body.style.overflow = '';
+    }
+    function navScanLB(dir) {
+        curScan = (curScan + dir + SCANS.length) % SCANS.length;
+        const img = document.getElementById('SMR-LB-IMG');
+        img.style.opacity = '0';
+        setTimeout(() => {
+            img.src = SCANS[curScan].src;
+            document.getElementById('SMR-LB-CAP').textContent = SCANS[curScan].cap;
+            img.style.transition = 'opacity .3s ease';
+            img.style.opacity = '1';
+        }, 150);
+    }
+    document.getElementById('SMR-LB').addEventListener('click', e => {
+        if (e.target === document.getElementById('SMR-LB')) closeScanLB();
+    });
+    document.addEventListener('keydown', e => {
+        if (!document.getElementById('SMR-LB').classList.contains('on')) return;
+        if (e.key === 'ArrowLeft')  navScanLB(-1);
+        if (e.key === 'ArrowRight') navScanLB(1);
+        if (e.key === 'Escape')     closeScanLB();
+    });
+
+    // ── SCROLL REVEAL ──
+    function revealVisible() {
+        document.querySelectorAll('.smr-reveal:not(.vis)').forEach(el => {
+            const r = el.getBoundingClientRect();
+            if (r.top < window.innerHeight * 0.92) el.classList.add('vis');
+        });
+    }
+    window.addEventListener('scroll', revealVisible, { passive: true });
+    setTimeout(revealVisible, 100);
+    </script>
+</body>
+</html>
