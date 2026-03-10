@@ -899,15 +899,7 @@ Przedmiescie worobinskie na Trakcie Litewskim z przyjazdu od Stolina y Wysocka l
                 <span>Вулиці та провулки міста · кінець XVIII ст.</span>
             </div>
 
-            <div class="smr-context-card" style="margin-bottom:2rem;">
-                <div class="smr-context-head">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
-                    Карта та топографічний план
-                </div>
-                <div class="smr-context-body">
-                    Оригінальна карта, до якої відносяться всі описи вулиць інвентарю, <strong>на жаль, втрачена</strong>. Проте на сайті архіву присутній топографічний план Дубровиці <strong>1855 року</strong> — він складений приблизно через покоління після укладання інвентарю і дозволяє приблизно ідентифікувати згадані в документі вулиці та квартали. Орієнтиром слугують незмінні природні об'єкти: Горинь, Случ, острів між рукавами річки, а також церкви — їх розташування зафіксоване незалежно від карти.
-                </div>
-            </div>
+
 
             <div class="smr-streets">
                 <div class="smr-street-card">
@@ -1589,7 +1581,7 @@ Przedmiescie worobinskie na Trakcie Litewskim z przyjazdu od Stolina y Wysocka l
     <script src="app.js"></script>
     <script>
 (function() {
-var SCANS = [
+    var SCANS = [
     { src: 'https://i.imgur.com/nkoLQ6R.jpeg', cap: 'План міста Домбровиця з околицями · кін. XVIII–XIX ст.' },
     { src: 'https://i.imgur.com/r6LODUt.jpeg', cap: '00009318-7 · Титульна сторінка' },
     { src: 'https://i.imgur.com/fq9QEd3.jpeg', cap: '00009318-47 · Місто та вулиці' },
@@ -1599,181 +1591,73 @@ var SCANS = [
 ];
 
     // ── TAB SYSTEM ──
-    document.querySelectorAll('.smr-tab').forEach(tab => {
+    document.querySelectorAll('.smr-tab').forEach(function(tab) {
         tab.addEventListener('click', function() {
-            const panel = this.dataset.panel;
-            document.querySelectorAll('.smr-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.smr-tab-panel').forEach(p => p.classList.remove('active'));
+            var panel = this.dataset.panel;
+            document.querySelectorAll('.smr-tab').forEach(function(t) { t.classList.remove('active'); });
+            document.querySelectorAll('.smr-tab-panel').forEach(function(p) { p.classList.remove('active'); });
             this.classList.add('active');
             document.getElementById('panel-' + panel).classList.add('active');
         });
     });
 
-        // ══════════ LIGHTBOX WITH PAN + ZOOM ══════════
-    var curScan = 0;
-    var lbScale = 1, lbX = 0, lbY = 0;
-    var lbDragging = false, lbDragStartX = 0, lbDragStartY = 0, lbDragOriginX = 0, lbDragOriginY = 0;
-    var lbPinchDist = 0;
-
-    function lbApplyTransform(animate) {
-        const img = document.getElementById('SMR-LB-IMG');
-        if (!img) return;
-        if (animate) img.classList.add('animating');
-        else img.classList.remove('animating');
-        img.style.transform = `translate(${lbX}px,${lbY}px) scale(${lbScale})`;
-        const zv = document.getElementById('SMR-LB-ZVAL');
-        if (zv) zv.textContent = lbScale.toFixed(1) + '×';
-    }
-
-    function lbClampPan() {
-        const vp = document.getElementById('SMR-LB-VP');
-        const img = document.getElementById('SMR-LB-IMG');
-        if (!vp || !img) return;
-        const vw = vp.clientWidth, vh = vp.clientHeight;
-        const iw = img.naturalWidth || 900, ih = img.naturalHeight || 700;
-        const maxX = Math.max(0, (iw * lbScale - vw) / 2);
-        const maxY = Math.max(0, (ih * lbScale - vh) / 2);
-        lbX = Math.min(maxX, Math.max(-maxX, lbX));
-        lbY = Math.min(maxY, Math.max(-maxY, lbY));
-    }
-
-    function lbFitScale() {
-        const vp = document.getElementById('SMR-LB-VP');
-        const img = document.getElementById('SMR-LB-IMG');
-        if (!vp || !img || !img.naturalWidth) return 1;
-        return Math.min(vp.clientWidth * 0.92 / img.naturalWidth, vp.clientHeight * 0.88 / img.naturalHeight, 1);
-    }
-
-    function lbReset(animate) {
-        const img = document.getElementById('SMR-LB-IMG');
-        if (!img || !img.naturalWidth) { lbScale=1; lbX=0; lbY=0; lbApplyTransform(false); return; }
-        lbScale = lbFitScale();
-        lbX = 0; lbY = 0;
-        lbApplyTransform(!!animate);
-    }
-
-    function lbZoomBy(delta, cx, cy) {
-        const vp = document.getElementById('SMR-LB-VP');
-        if (!vp) return;
-        const minS = lbFitScale() * 0.9;
-        const newScale = Math.min(10, Math.max(minS, lbScale + delta));
-        if (cx !== undefined) {
-            const rect = vp.getBoundingClientRect();
-            const ox = cx - rect.left - rect.width/2;
-            const oy = cy - rect.top - rect.height/2;
-            lbX += (ox - lbX) * (1 - newScale/lbScale);
-            lbY += (oy - lbY) * (1 - newScale/lbScale);
-        }
-        lbScale = newScale;
-        lbClampPan();
-        lbApplyTransform(true);
-        document.getElementById('SMR-LB').classList.add('interacted');
-    }
-
+    // ── LIGHTBOX ──
     function openScanLB(i) {
-        curScan = i;
-        const lb = document.getElementById('SMR-LB');
-        const img = document.getElementById('SMR-LB-IMG');
-        lbScale = 1; lbX = 0; lbY = 0;
-        img.style.transform = '';
-        img.classList.remove('animating');
+        var lb  = document.getElementById('SMR-LB');
+        var img = document.getElementById('SMR-LB-IMG');
+        var cap = document.getElementById('SMR-LB-CAP');
+        if (!lb || !img || !SCANS[i]) return;
         img.src = SCANS[i].src;
-        img.onload = () => lbReset(false);
-        document.getElementById('SMR-LB-CAP').textContent = SCANS[i].cap;
+        if (cap) cap.textContent = SCANS[i].cap;
         lb.classList.add('on');
-        lb.classList.remove('interacted');
         document.body.style.overflow = 'hidden';
     }
 
     function closeScanLB() {
-        document.getElementById('SMR-LB').classList.remove('on');
+        var lb = document.getElementById('SMR-LB');
+        if (!lb) return;
+        lb.classList.remove('on');
         document.body.style.overflow = '';
     }
 
     function navScanLB(dir) {
-        curScan = (curScan + dir + SCANS.length) % SCANS.length;
-        const img = document.getElementById('SMR-LB-IMG');
-        img.style.opacity = '0';
-        lbScale = 1; lbX = 0; lbY = 0;
-        setTimeout(() => {
-            img.src = SCANS[curScan].src;
-            img.onload = () => { lbReset(false); img.style.transition='opacity .25s'; img.style.opacity='1'; };
-            document.getElementById('SMR-LB-CAP').textContent = SCANS[curScan].cap;
-        }, 140);
+        var lb  = document.getElementById('SMR-LB');
+        var img = document.getElementById('SMR-LB-IMG');
+        var cap = document.getElementById('SMR-LB-CAP');
+        if (!lb || !img) return;
+        var cur = parseInt(lb.dataset.cur || '0');
+        cur = (cur + dir + SCANS.length) % SCANS.length;
+        lb.dataset.cur = cur;
+        img.src = SCANS[cur].src;
+        if (cap) cap.textContent = SCANS[cur].cap;
     }
 
-    // Pointer events
-    (function(){
-        const VP = document.getElementById('SMR-LB-VP');
-        if (!VP) return;
-        VP.addEventListener('mousedown', e => {
-            if (e.button !== 0) return;
-            lbDragging = true;
-            lbDragStartX = e.clientX; lbDragStartY = e.clientY;
-            lbDragOriginX = lbX; lbDragOriginY = lbY;
-            VP.classList.add('dragging');
-            document.getElementById('SMR-LB').classList.add('interacted');
-        });
-        document.addEventListener('mousemove', e => {
-            if (!lbDragging) return;
-            lbX = lbDragOriginX + (e.clientX - lbDragStartX);
-            lbY = lbDragOriginY + (e.clientY - lbDragStartY);
-            lbClampPan(); lbApplyTransform(false);
-        });
-        document.addEventListener('mouseup', () => { lbDragging = false; VP.classList.remove('dragging'); });
-        VP.addEventListener('wheel', e => {
-            e.preventDefault();
-            lbZoomBy(e.deltaY < 0 ? 0.4 : -0.4, e.clientX, e.clientY);
-        }, { passive: false });
-        VP.addEventListener('touchstart', e => {
-            if (e.touches.length === 1) {
-                lbDragging = true;
-                lbDragStartX = e.touches[0].clientX; lbDragStartY = e.touches[0].clientY;
-                lbDragOriginX = lbX; lbDragOriginY = lbY;
-                document.getElementById('SMR-LB').classList.add('interacted');
-            } else if (e.touches.length === 2) {
-                lbDragging = false;
-                lbPinchDist = Math.hypot(e.touches[0].clientX-e.touches[1].clientX, e.touches[0].clientY-e.touches[1].clientY);
-            }
-        }, { passive: true });
-        VP.addEventListener('touchmove', e => {
-            e.preventDefault();
-            if (e.touches.length === 1 && lbDragging) {
-                lbX = lbDragOriginX + (e.touches[0].clientX - lbDragStartX);
-                lbY = lbDragOriginY + (e.touches[0].clientY - lbDragStartY);
-                lbClampPan(); lbApplyTransform(false);
-            } else if (e.touches.length === 2) {
-                const d = Math.hypot(e.touches[0].clientX-e.touches[1].clientX, e.touches[0].clientY-e.touches[1].clientY);
-                const cx = (e.touches[0].clientX+e.touches[1].clientX)/2;
-                const cy = (e.touches[0].clientY+e.touches[1].clientY)/2;
-                lbZoomBy((d - lbPinchDist)*0.009, cx, cy);
-                lbPinchDist = d;
-            }
-        }, { passive: false });
-        VP.addEventListener('touchend', () => { lbDragging = false; });
-        VP.addEventListener('dblclick', e => {
-            const fitS = lbFitScale();
-            if (lbScale > fitS * 1.4) lbReset(true);
-            else lbZoomBy(lbScale, e.clientX, e.clientY);
-        });
-    })();
-
-    document.addEventListener('keydown', e => {
-        if (!document.getElementById('SMR-LB').classList.contains('on')) return;
-        if (e.key==='ArrowLeft')  navScanLB(-1);
-        if (e.key==='ArrowRight') navScanLB(1);
-        if (e.key==='Escape')     closeScanLB();
-        if (e.key==='+' || e.key==='=') lbZoomBy(0.4);
-        if (e.key==='-') lbZoomBy(-0.4);
-        if (e.key==='0') lbReset(true);
+    // Закрити по кліку на фон
+    document.addEventListener('click', function(e) {
+        var lb = document.getElementById('SMR-LB');
+        if (lb && e.target === lb) closeScanLB();
     });
 
-    // ── SCROLL REVEAL ──
-    function revealVisible() {
-    }
-    window.addEventListener('scroll', revealVisible, { passive: true });
-    setTimeout(revealVisible, 100);
-    
+    // Клавіатура
+    document.addEventListener('keydown', function(e) {
+        var lb = document.getElementById('SMR-LB');
+        if (!lb || !lb.classList.contains('on')) return;
+        if (e.key === 'ArrowLeft')  navScanLB(-1);
+        if (e.key === 'ArrowRight') navScanLB(1);
+        if (e.key === 'Escape')     closeScanLB();
+    });
+
+    // Відстежити поточний індекс при відкритті
+    var _origOpen = openScanLB;
+    openScanLB = function(i) {
+        var lb = document.getElementById('SMR-LB');
+        if (lb) lb.dataset.cur = i;
+        _origOpen(i);
+    };
+
+    window.openScanLB  = openScanLB;
+    window.closeScanLB = closeScanLB;
+    window.navScanLB   = navScanLB;
 })();
 </script>
 </body>
