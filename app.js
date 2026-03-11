@@ -558,7 +558,51 @@ function initLightbox() {
         if (e.key === 'ArrowRight' && !lbZoomed) navigateLightbox('next');
         if (e.key === 'Escape') closeLightbox();
         if (e.key === 'z' || e.key === 'Z') document.getElementById('lightboxZoomBtn')?.click();
+        if (e.key === '+' || e.key === '=') { lbZoomed=true; lbScale=Math.min(8,lbScale*1.35); lbClamp(); lbApplyTransform(true); }
+        if (e.key === '-') { lbScale=Math.max(1,lbScale/1.35); if(lbScale<=1){lbResetZoom();} else {lbClamp();lbApplyTransform(true);} }
+        if (e.key === '0') lbResetZoom();
     });
+
+    // Wheel zoom on lightbox frame
+    if (frame) {
+        frame.addEventListener('wheel', e => {
+            if (!lb.classList.contains('active')) return;
+            e.preventDefault();
+            const rect = frame.getBoundingClientRect();
+            const px = e.clientX - rect.left - frame.clientWidth/2;
+            const py = e.clientY - rect.top - frame.clientHeight/2;
+            const factor = e.deltaY < 0 ? 1.15 : 1/1.15;
+            const newS = Math.min(8, Math.max(1, lbScale * factor));
+            if (newS <= 1) { lbResetZoom(); return; }
+            const ratio = newS / lbScale;
+            lbTx = px - (px - lbTx) * ratio;
+            lbTy = py - (py - lbTy) * ratio;
+            lbScale = newS; lbZoomed = true;
+            const btn = document.getElementById('lightboxZoomBtn');
+            if (btn) { btn.classList.add('zoomed'); btn.innerHTML = \`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg>\`; }
+            if (frame) frame.classList.add('is-zoomed');
+            lbClamp(); lbApplyTransform(false);
+        }, { passive: false });
+
+        // Double-click to zoom in/out
+        frame.addEventListener('dblclick', e => {
+            if (lbZoomed && lbScale > 1.5) { lbResetZoom(); }
+            else {
+                const rect = frame.getBoundingClientRect();
+                const px = e.clientX - rect.left - frame.clientWidth/2;
+                const py = e.clientY - rect.top - frame.clientHeight/2;
+                const newS = Math.min(8, lbScale * 2.5);
+                const ratio = newS / lbScale;
+                lbTx = px - (px - lbTx) * ratio;
+                lbTy = py - (py - lbTy) * ratio;
+                lbScale = newS; lbZoomed = true;
+                const btn = document.getElementById('lightboxZoomBtn');
+                if (btn) { btn.classList.add('zoomed'); btn.innerHTML = \`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg>\`; }
+                if (frame) frame.classList.add('is-zoomed');
+                lbClamp(); lbApplyTransform(true);
+            }
+        });
+    }
 }
 
 

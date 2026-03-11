@@ -308,11 +308,22 @@
         }
     }
 
-    /* Lightbox */
-    #KLB { position: fixed; inset: 0; z-index: 99999; background: rgba(4,2,8,.97); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity .22s; }
+    /* Lightbox pan+zoom */
+    #KLB { position: fixed; inset: 0; z-index: 99999; background: rgba(4,2,8,.97); display: flex; flex-direction: column; align-items: stretch; justify-content: stretch; opacity: 0; pointer-events: none; transition: opacity .22s; }
     #KLB.on { opacity: 1; pointer-events: all; }
-    #KLB img { max-width: 94vw; max-height: 90vh; object-fit: contain; border-radius: 4px; }
-    .KLB-X { position: absolute; top: 1.2rem; right: 1.4rem; width: 42px; height: 42px; border-radius: 50%; background: rgba(255,255,255,.15); border: none; color: #fff; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background .15s; }
+    #KLB-VP { flex: 1; overflow: hidden; cursor: grab; display: flex; align-items: center; justify-content: center; }
+    #KLB-VP.dragging { cursor: grabbing; }
+    #KLB-IMG { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 4px; user-select: none; -webkit-user-drag: none; will-change: transform; }
+    #KLB-IMG.animating { transition: transform .22s cubic-bezier(.16,1,.3,1), opacity .25s ease; }
+    #KLB-BAR { display: flex; align-items: center; justify-content: center; gap: .35rem; padding: .6rem 1rem; background: rgba(8,6,12,.85); backdrop-filter: blur(8px); flex-shrink: 0; }
+    .KLB-BTN { width: 36px; height: 36px; border-radius: 8px; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.07); color: rgba(255,255,255,.8); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background .15s; flex-shrink: 0; }
+    .KLB-BTN:hover { background: rgba(255,255,255,.18); }
+    .KLB-BTN svg { width: 16px; height: 16px; }
+    .KLB-SEP { width: 1px; height: 20px; background: rgba(255,255,255,.1); margin: 0 .2rem; flex-shrink: 0; }
+    #KLB-ZVAL { font-family: 'DM Sans', sans-serif; font-size: .7rem; color: rgba(255,255,255,.6); min-width: 3em; text-align: center; }
+    .KLB-HINT { position: fixed; top: 1rem; left: 50%; transform: translateX(-50%); background: rgba(8,6,12,.8); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,.1); border-radius: 100px; padding: .4rem 1rem; font-family: 'DM Sans', sans-serif; font-size: .6rem; letter-spacing: .06em; color: rgba(255,255,255,.5); pointer-events: none; transition: opacity .4s; white-space: nowrap; }
+    #KLB.interacted .KLB-HINT { opacity: 0; }
+    .KLB-X { position: absolute; top: 1.2rem; right: 1.4rem; width: 42px; height: 42px; border-radius: 50%; background: rgba(255,255,255,.15); border: none; color: #fff; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background .15s; z-index: 2; }
     /* Yuliania block — theme-aware */
     .yuliania-block {
         background: var(--color-bg-secondary, #ede7db);
@@ -352,6 +363,7 @@
     [data-theme="dark"] .ygal-cap { color: rgba(240,230,200,.3); }
 
     .KLB-X:hover { background: rgba(255,255,255,.3); }
+
     </style>
 </head>
 <body>
@@ -684,8 +696,25 @@
     </div><!-- /#KP -->
 
     <div id="KLB">
-        <button class="KLB-X" onclick="document.getElementById('KLB').classList.remove('on')">&#x2715;</button>
-        <img id="KLB-I" src="" alt="">
+        <button class="KLB-X" onclick="closeKLB()" title="Закрити (Esc)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+        <div id="KLB-VP">
+            <img id="KLB-IMG" src="" alt="" draggable="false">
+        </div>
+        <div id="KLB-BAR">
+            <button class="KLB-BTN" onclick="klbZoomOut()" title="Зменшити (-)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+            </button>
+            <span id="KLB-ZVAL">1.0×</span>
+            <button class="KLB-BTN" onclick="klbZoomIn()" title="Збільшити (+)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+            </button>
+            <button class="KLB-BTN" onclick="klbZoomReset()" title="Скинути (0)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+            </button>
+        </div>
+        <div class="KLB-HINT">Прокрутка — зум · Перетяг — пан · Esc — закрити</div>
     </div>
 
     <footer class="footer">
@@ -742,20 +771,106 @@
     setTimeout(function() { animateCards('#KSTAGE-1 .KCARD'); }, 300);
 
     // ═══════════════════════════════════════════════════
-    // Lightbox
+    // Lightbox pan+zoom
     // ═══════════════════════════════════════════════════
-    function openKLB(el) {
-        var img = el && el.querySelector ? el.querySelector('img') : el;
-        if (!img) return;
-        document.getElementById('KLB-I').src = img.src;
-        document.getElementById('KLB').classList.add('on');
-    }
-    document.getElementById('KLB').addEventListener('click', function(e) {
-        if (e.target === this) this.classList.remove('on');
-    });
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') document.getElementById('KLB').classList.remove('on');
-    });
+    (function() {
+        var klbS = 1, klbX = 0, klbY = 0;
+        var dragging = false, dragX = 0, dragY = 0, originX = 0, originY = 0;
+        var pinchDist0 = 0, pinchS0 = 1;
+
+        function klbEl(id) { return document.getElementById(id); }
+
+        function klbApply(animate) {
+            var img = klbEl('KLB-IMG'); if (!img) return;
+            if (animate) img.classList.add('animating'); else img.classList.remove('animating');
+            img.style.transform = 'translate('+klbX+'px,'+klbY+'px) scale('+klbS+')';
+            var zv = klbEl('KLB-ZVAL'); if (zv) zv.textContent = klbS.toFixed(1)+'×';
+        }
+
+        function klbClamp() {
+            var vp = klbEl('KLB-VP'), img = klbEl('KLB-IMG'); if (!vp||!img) return;
+            var vw=vp.clientWidth, vh=vp.clientHeight;
+            var iw=(img.naturalWidth||800)*klbS, ih=(img.naturalHeight||600)*klbS;
+            var maxX=Math.max(0,(iw-vw)/2), maxY=Math.max(0,(ih-vh)/2);
+            klbX=Math.min(maxX,Math.max(-maxX,klbX)); klbY=Math.min(maxY,Math.max(-maxY,klbY));
+        }
+
+        function klbFit() {
+            var vp = klbEl('KLB-VP'), img = klbEl('KLB-IMG'); if(!vp||!img||!img.naturalWidth) return 1;
+            return Math.min(vp.clientWidth/img.naturalWidth, vp.clientHeight/img.naturalHeight, 1);
+        }
+
+        function klbReset(animate) { klbS=klbFit(); klbX=0; klbY=0; klbApply(animate); }
+
+        function klbZoomAt(factor, cx, cy) {
+            var vp = klbEl('KLB-VP'); if(!vp) return;
+            var rect = vp.getBoundingClientRect();
+            var px=(cx-rect.left)-vp.clientWidth/2, py=(cy-rect.top)-vp.clientHeight/2;
+            var newS=Math.min(8,Math.max(klbFit()*0.9,klbS*factor));
+            var ratio=newS/klbS; klbX=px-(px-klbX)*ratio; klbY=py-(py-klbY)*ratio; klbS=newS;
+            klbClamp(); klbApply(false);
+            var lb=klbEl('KLB'); if(lb) lb.classList.add('interacted');
+        }
+
+        window.klbZoomIn  = function(){ klbZoomAt(1.35,window.innerWidth/2,window.innerHeight/2); };
+        window.klbZoomOut = function(){ klbZoomAt(1/1.35,window.innerWidth/2,window.innerHeight/2); };
+        window.klbZoomReset = function(){ klbReset(true); };
+
+        window.openKLB = function(el) {
+            var img = el&&el.querySelector ? el.querySelector('img') : el; if(!img) return;
+            var lb=klbEl('KLB'), lbImg=klbEl('KLB-IMG'); if(!lb||!lbImg) return;
+            lbImg.style.opacity='0';
+            lbImg.src=img.src;
+            lb.classList.add('on'); lb.classList.remove('interacted');
+            document.body.style.overflow='hidden';
+            lbImg.onload=function(){ klbReset(false); lbImg.style.transition='opacity .3s ease'; lbImg.style.opacity='1'; };
+        };
+
+        window.closeKLB = function() {
+            var lb=klbEl('KLB'); if(lb){ lb.classList.remove('on'); document.body.style.overflow=''; }
+        };
+
+        document.addEventListener('DOMContentLoaded', function(){
+            var vp = klbEl('KLB-VP'); if(!vp) return;
+            vp.addEventListener('mousedown', function(e){
+                if(e.button!==0) return; dragging=true;
+                dragX=e.clientX; dragY=e.clientY; originX=klbX; originY=klbY;
+                vp.classList.add('dragging');
+                var lb=klbEl('KLB'); if(lb) lb.classList.add('interacted');
+                e.preventDefault();
+            });
+            document.addEventListener('mousemove', function(e){
+                if(!dragging) return;
+                klbX=originX+(e.clientX-dragX); klbY=originY+(e.clientY-dragY);
+                klbClamp(); klbApply(false);
+            });
+            document.addEventListener('mouseup', function(){ dragging=false; var v=klbEl('KLB-VP'); if(v) v.classList.remove('dragging'); });
+            vp.addEventListener('wheel', function(e){
+                e.preventDefault(); klbZoomAt(e.deltaY<0?1.15:1/1.15,e.clientX,e.clientY);
+            },{passive:false});
+            vp.addEventListener('touchstart', function(e){
+                if(e.touches.length===1){ dragging=true; dragX=e.touches[0].clientX; dragY=e.touches[0].clientY; originX=klbX; originY=klbY; }
+                else if(e.touches.length===2){ dragging=false; pinchDist0=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY); pinchS0=klbS; }
+                var lb=klbEl('KLB'); if(lb) lb.classList.add('interacted');
+            },{passive:true});
+            vp.addEventListener('touchmove', function(e){
+                e.preventDefault();
+                if(e.touches.length===1&&dragging){ klbX=originX+(e.touches[0].clientX-dragX); klbY=originY+(e.touches[0].clientY-dragY); klbClamp(); klbApply(false); }
+                else if(e.touches.length===2){ var d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY); klbS=Math.min(8,Math.max(0.3,pinchS0*(d/pinchDist0))); klbClamp(); klbApply(false); }
+            },{passive:false});
+            vp.addEventListener('touchend', function(){ dragging=false; });
+            vp.addEventListener('dblclick', function(e){ var fit=klbFit(); if(klbS>fit*1.5) klbReset(true); else klbZoomAt(2,e.clientX,e.clientY); });
+        });
+
+        document.addEventListener('click', function(e){ var lb=klbEl('KLB'); if(lb&&e.target===klbEl('KLB-VP')) closeKLB(); });
+        document.addEventListener('keydown', function(e){
+            var lb=klbEl('KLB'); if(!lb||!lb.classList.contains('on')) return;
+            if(e.key==='Escape') closeKLB();
+            if(e.key==='+'||e.key==='=') klbZoomIn();
+            if(e.key==='-') klbZoomOut();
+            if(e.key==='0') klbZoomReset();
+        });
+    })();
     </script>
     <script src="app.js"></script>
 </body>
