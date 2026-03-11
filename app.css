@@ -2026,30 +2026,32 @@ html[data-theme="dark"] .moon-icon { display: none; }
 .lightbox-img-frame {
     position: relative;
     overflow: hidden;
+    width: 100%;
     max-width: 100%;
-    max-height: 72vh;
+    max-height: 74vh;
+    min-height: 200px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: var(--radius-lg);
-    cursor: default;
+    cursor: grab;
+    touch-action: none;
 }
-.lightbox-img-frame.is-zoomed { cursor: grab; }
-.lightbox-img-frame.is-dragging { cursor: grabbing; }
+.lightbox-img-frame:active { cursor: grabbing; }
 
 .lightbox-image {
     max-width: 100%;
-    max-height: 72vh;
+    max-height: 74vh;
     width: auto; height: auto;
     border-radius: var(--radius-lg);
     box-shadow: 0 32px 80px rgba(0,0,0,0.7);
     display: block;
     object-fit: contain;
-    transition: opacity 0.2s ease, transform 0.1s ease;
     transform-origin: center center;
     user-select: none;
     -webkit-user-drag: none;
     pointer-events: none;
+    will-change: transform;
 }
 
 .lightbox-info { text-align: center; color: white; }

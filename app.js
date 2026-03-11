@@ -406,92 +406,24 @@ function initGalleryFilters() {
     attachFilter();
 }
 
-// ── Lightbox zoom+pan state ──
-let lbZoomed = false;
-let lbScale = 1;
-let lbTx = 0, lbTy = 0;
-let lbDragging = false, lbStartX = 0, lbStartY = 0;
-let lbPinchDist0 = 0, lbPinchScale0 = 1;
-
-function lbResetZoom() {
-    lbZoomed = false; lbScale = 1; lbTx = 0; lbTy = 0;
-    const img = document.getElementById('lightboxImage');
-    const frame = document.getElementById('lightboxImgFrame');
-    const btn = document.getElementById('lightboxZoomBtn');
-    if (img) { img.style.transform = 'translate(0,0) scale(1)'; img.style.transition = 'transform 0.3s ease'; }
-    if (frame) { frame.classList.remove('is-zoomed','is-dragging'); }
-    if (btn) {
-        btn.classList.remove('zoomed');
-        btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>`;
-    }
-}
-
-function lbApplyTransform(animated) {
-    const img = document.getElementById('lightboxImage');
-    if (!img) return;
-    img.style.transition = animated ? 'transform 0.25s ease' : 'none';
-    img.style.transform = `translate(${lbTx}px, ${lbTy}px) scale(${lbScale})`;
-    // update zoom button state
-    const btn = document.getElementById('lightboxZoomBtn');
-    const frame = document.getElementById('lightboxImgFrame');
-    if (lbScale > 1.05) {
-        lbZoomed = true;
-        if (btn) { btn.classList.add('zoomed'); btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg>`; }
-        if (frame) frame.classList.add('is-zoomed');
-    } else {
-        lbZoomed = false;
-        if (btn) { btn.classList.remove('zoomed'); btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>`; }
-        if (frame) frame.classList.remove('is-zoomed');
-    }
-}
-
-function lbClamp() {
-    const frame = document.getElementById('lightboxImgFrame');
-    const img = document.getElementById('lightboxImage');
-    if (!frame || !img) return;
-    const fw = frame.offsetWidth, fh = frame.offsetHeight;
-    const iw = img.offsetWidth * lbScale, ih = img.offsetHeight * lbScale;
-    const maxX = Math.max(0, (iw - fw) / 2);
-    const maxY = Math.max(0, (ih - fh) / 2);
-    lbTx = Math.max(-maxX, Math.min(maxX, lbTx));
-    lbTy = Math.max(-maxY, Math.min(maxY, lbTy));
-}
-
-function lbZoomAt(factor, cx, cy) {
-    const frame = document.getElementById('lightboxImgFrame');
-    if (!frame) return;
-    const rect = frame.getBoundingClientRect();
-    const px = (cx - rect.left) - frame.clientWidth / 2;
-    const py = (cy - rect.top) - frame.clientHeight / 2;
-    const newS = Math.min(8, Math.max(1, lbScale * factor));
-    const ratio = newS / lbScale;
-    lbTx = px - (px - lbTx) * ratio;
-    lbTy = py - (py - lbTy) * ratio;
-    lbScale = newS;
-    lbClamp();
-    lbApplyTransform(false);
-}
-
+// ── Lightbox — uses ULB universal system ──
 function openLightbox(index) {
     currentPhotoIndex = index;
-    const p  = filteredPhotos[index];
-    const lb = document.getElementById('lightbox');
-    const img = document.getElementById('lightboxImage');
-    if (!lb || !img) return;
-    lbResetZoom();
-    img.src = p.imageUrl; img.alt = p.title;
-    img.style.animation = 'none';
-    requestAnimationFrame(() => { img.style.animation = 'lightboxImageIn 0.3s cubic-bezier(0.22,1,0.36,1) both'; });
+    const p = filteredPhotos[index];
+    if (!p) return;
+
     const cap = document.getElementById('lightboxCaption');
     const meta = document.getElementById('lightboxMeta');
-    const dl = document.getElementById('lightboxDownloadContainer');
-    if (cap)  cap.textContent = p.title;
-    if (meta) meta.textContent = `${PERIOD_NAMES[p.period] || p.period} · ${CATEGORY_NAMES[p.category] || p.category}${p.date ? ' · ' + p.date : ''}`;
-    if (dl)   dl.innerHTML = p.originalUrl?.startsWith('http')
+    const dl   = document.getElementById('lightboxDownloadContainer');
+    if (cap)  cap.textContent  = p.title;
+    if (meta) meta.textContent = (PERIOD_NAMES[p.period]||p.period)+' · '+(CATEGORY_NAMES[p.category]||p.category)+(p.date?' · '+p.date:'');
+    if (dl)   dl.innerHTML     = p.originalUrl?.startsWith('http')
         ? `<a href="${p.originalUrl}" target="_blank" rel="noopener" class="lightbox-download">📥 Переглянути / завантажити оригінал</a>` : '';
+
+    // Build scan list for ULB
+    const items = filteredPhotos.map(ph => ({ src: ph.imageUrl, cap: ph.title }));
+    ULB.open(items, index);
     buildFilmstrip(filteredPhotos, index);
-    lb.classList.add('active');
-    document.body.style.overflow = 'hidden';
 }
 
 function navigateLightbox(dir) {
@@ -502,119 +434,14 @@ function navigateLightbox(dir) {
     openLightbox(currentPhotoIndex);
 }
 
-function closeLightbox() {
-    const lb = document.getElementById('lightbox');
-    if (lb) { lb.classList.remove('active'); document.body.style.overflow = ''; }
-    lbResetZoom();
-}
+function closeLightbox() { ULB.close(); }
 
 function initLightbox() {
-    const lb = document.getElementById('lightbox');
-    if (!lb) return;
-    lb.querySelector('.lightbox-close')?.addEventListener('click', closeLightbox);
-    lb.querySelector('.lightbox-prev')?.addEventListener('click', e => { e.stopPropagation(); if(!lbZoomed) navigateLightbox('prev'); });
-    lb.querySelector('.lightbox-next')?.addEventListener('click', e => { e.stopPropagation(); if(!lbZoomed) navigateLightbox('next'); });
-    lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
-
-    // Zoom toggle button — click to zoom 2.5x / reset
-    const zoomBtn = document.getElementById('lightboxZoomBtn');
-    if (zoomBtn) {
-        zoomBtn.addEventListener('click', e => {
-            e.stopPropagation();
-            if (lbZoomed) {
-                lbResetZoom();
-            } else {
-                lbScale = 2.5; lbTx = 0; lbTy = 0;
-                lbApplyTransform(true);
-            }
-        });
-    }
-
-    const frame = document.getElementById('lightboxImgFrame');
-    if (frame) {
-        // ── Mouse drag (always, not only when zoomed) ──
-        frame.addEventListener('mousedown', e => {
-            if (e.button !== 0) return;
-            e.preventDefault();
-            lbDragging = true;
-            lbStartX = e.clientX - lbTx;
-            lbStartY = e.clientY - lbTy;
-            frame.classList.add('is-dragging');
-        });
-        document.addEventListener('mousemove', e => {
-            if (!lbDragging) return;
-            lbTx = e.clientX - lbStartX;
-            lbTy = e.clientY - lbStartY;
-            lbClamp();
-            lbApplyTransform(false);
-        });
-        document.addEventListener('mouseup', () => {
-            if (lbDragging) {
-                lbDragging = false;
-                frame.classList.remove('is-dragging');
-            }
-        });
-
-        // ── Wheel zoom toward cursor ──
-        frame.addEventListener('wheel', e => {
-            e.preventDefault();
-            lbZoomAt(e.deltaY < 0 ? 1.15 : 1 / 1.15, e.clientX, e.clientY);
-        }, { passive: false });
-
-        // ── Double-click zoom in / reset ──
-        frame.addEventListener('dblclick', e => {
-            if (lbScale > 1.5) {
-                lbResetZoom();
-            } else {
-                lbZoomAt(2.5, e.clientX, e.clientY);
-            }
-        });
-
-        // ── Touch: pinch-to-zoom + pan ──
-        let tStartX = 0, tStartY = 0, tOrigX = 0, tOrigY = 0;
-        frame.addEventListener('touchstart', e => {
-            if (e.touches.length === 1) {
-                lbDragging = true;
-                tStartX = e.touches[0].clientX; tStartY = e.touches[0].clientY;
-                tOrigX = lbTx; tOrigY = lbTy;
-            } else if (e.touches.length === 2) {
-                lbDragging = false;
-                lbPinchDist0 = Math.hypot(
-                    e.touches[0].clientX - e.touches[1].clientX,
-                    e.touches[0].clientY - e.touches[1].clientY
-                );
-                lbPinchScale0 = lbScale;
-            }
-        }, { passive: true });
-
-        frame.addEventListener('touchmove', e => {
-            e.preventDefault();
-            if (e.touches.length === 1 && lbDragging) {
-                lbTx = tOrigX + (e.touches[0].clientX - tStartX);
-                lbTy = tOrigY + (e.touches[0].clientY - tStartY);
-                lbClamp(); lbApplyTransform(false);
-            } else if (e.touches.length === 2) {
-                const d = Math.hypot(
-                    e.touches[0].clientX - e.touches[1].clientX,
-                    e.touches[0].clientY - e.touches[1].clientY
-                );
-                lbScale = Math.min(8, Math.max(1, lbPinchScale0 * (d / lbPinchDist0)));
-                lbClamp(); lbApplyTransform(false);
-            }
-        }, { passive: false });
-
-        frame.addEventListener('touchend', () => { lbDragging = false; });
-    }
-
-    // ── Keyboard ──
+    // ULB handles everything — just wire up nav buttons for filmstrip/extra info
     document.addEventListener('keydown', e => {
-        if (!lb.classList.contains('active')) return;
-        if (e.key === 'ArrowLeft'  && !lbZoomed) navigateLightbox('prev');
-        if (e.key === 'ArrowRight' && !lbZoomed) navigateLightbox('next');
-        if (e.key === 'Escape') closeLightbox();
-        if (e.key === '+' || e.key === '=') lbZoomAt(1.3, window.innerWidth/2, window.innerHeight/2);
-        if (e.key === '-') lbZoomAt(1/1.3, window.innerWidth/2, window.innerHeight/2);
-        if (e.key === '0') lbResetZoom();
+        const lb = document.getElementById('ULB');
+        if (!lb || !lb.classList.contains('on')) return;
+        // arrow nav handled by ULB; just keep filmstrip in sync
     });
 }
 

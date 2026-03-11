@@ -454,158 +454,114 @@
 }
 .smr-context-body strong { color: var(--ink); font-weight: 500; }
 
-/* ── Lightbox з pan & zoom ── */
-.smr-lb {
-    position: fixed; inset: 0;
-    background: rgba(6,4,2,.97);
-    backdrop-filter: blur(24px);
-    z-index: 9999;
-    display: none;
-    flex-direction: column;
-    align-items: center; justify-content: center;
-    overflow: hidden;
-    touch-action: none;
+/* SMR-LB replaced by ULB */
+</style>
+<style>
+/* ═══════════════════════════════════════════════════
+   ULB — Universal LightBox CSS
+   ═══════════════════════════════════════════════════ */
+#ULB {
+    position: fixed; inset: 0; z-index: 99999;
+    background: rgba(4,3,2,.97);
+    display: none; flex-direction: column;
+    align-items: stretch; justify-content: stretch;
 }
-.smr-lb.on { display: flex; animation: fadeIn .2s ease; }
+#ULB.on { display: flex; animation: ulbIn .18s ease; }
+@keyframes ulbIn { from { opacity:0; } to { opacity:1; } }
 
-.smr-lb-viewport {
-    position: relative;
-    width: 100vw;
-    flex: 1;
+/* viewport — fills all space, handles events */
+#ULB-VP {
+    flex: 1; overflow: hidden;
     display: flex; align-items: center; justify-content: center;
-    overflow: hidden;
-    cursor: grab;
+    cursor: grab; touch-action: none; user-select: none;
 }
-.smr-lb-viewport.dragging { cursor: grabbing; }
+#ULB-VP:active { cursor: grabbing; }
 
-.smr-lb-img {
-    max-width: none; max-height: none; display: block;
-    border-radius: 3px;
-    box-shadow: 0 40px 100px rgba(0,0,0,.8);
-    transform-origin: center center;
+/* image */
+#ULB-IMG {
+    max-width: 100%; max-height: 100%;
+    object-fit: contain; display: block;
+    border-radius: 4px;
     user-select: none; -webkit-user-drag: none;
-    pointer-events: none;
-    will-change: transform;
-    transition: opacity .25s ease;
+    pointer-events: none; will-change: transform;
+    box-shadow: 0 24px 80px rgba(0,0,0,.7);
 }
-.smr-lb-img.animating { transition: transform .22s cubic-bezier(.16,1,.3,1), opacity .25s ease; }
 
-.smr-lb-bar {
-    flex-shrink: 0;
-    display: flex; align-items: center; gap: .4rem;
-    background: rgba(10,8,4,.9); backdrop-filter: blur(14px);
+/* bottom bar */
+#ULB-BAR {
+    display: flex; align-items: center; justify-content: center;
+    gap: .35rem; padding: .55rem .8rem; flex-shrink: 0;
+    background: rgba(8,6,12,.9); backdrop-filter: blur(10px);
     border-top: 1px solid rgba(255,255,255,.07);
-    padding: .6rem 1rem;
-    width: 100%;
-    box-sizing: border-box;
-    z-index: 10001;
 }
-.smr-lb-btn {
-    width: 34px; height: 34px; border-radius: 8px;
-    background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12);
-    color: rgba(255,255,255,.75);
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer; transition: background .18s, color .18s; flex-shrink: 0;
+.ulb-btn {
+    width: 36px; height: 36px; flex-shrink: 0;
+    border-radius: 8px; border: 1px solid rgba(255,255,255,.13);
+    background: rgba(255,255,255,.07); color: rgba(255,255,255,.8);
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background .15s, border-color .15s;
 }
-.smr-lb-btn:hover { background: var(--sepia-light); color: #1c160a; border-color: transparent; }
-.smr-lb-btn svg { width: 16px; height: 16px; }
-.smr-lb-sep { width: 1px; height: 20px; background: rgba(255,255,255,.1); margin: 0 .2rem; flex-shrink: 0; }
-.smr-lb-caption-bar {
-    font-family: 'DM Sans', sans-serif;
-    font-size: .58rem; letter-spacing: .1em; text-transform: uppercase;
-    color: rgba(201,165,83,.7);
-    flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+.ulb-btn:hover { background: rgba(255,255,255,.18); border-color: rgba(255,255,255,.25); }
+.ulb-btn svg { width: 16px; height: 16px; pointer-events: none; }
+#ULB-ZVAL {
+    font-family: 'DM Sans', sans-serif; font-size: .72rem;
+    color: rgba(255,255,255,.55); min-width: 3.2em; text-align: center;
+}
+#ULB-CAP {
+    font-family: 'DM Sans', sans-serif; font-size: .72rem;
+    color: rgba(255,255,255,.5); flex: 1; text-align: center;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     padding: 0 .5rem;
-    text-align: center;
 }
-.smr-lb-zoom-val {
-    font-family: 'DM Sans', sans-serif;
-    font-size: .6rem; color: rgba(255,255,255,.5);
-    min-width: 3.5ch; text-align: center; flex-shrink: 0;
-}
-.smr-lb-close {
-    position: fixed; top: 1rem; right: 1rem;
-    width: 40px; height: 40px;
-    background: rgba(255,255,255,.08);
-    border: 1px solid rgba(255,255,255,.15); border-radius: 8px;
+.ulb-sep { width: 1px; height: 20px; background: rgba(255,255,255,.1); flex-shrink: 0; }
+
+/* close button */
+#ULB-CLOSE {
+    position: absolute; top: .9rem; right: 1rem;
+    width: 40px; height: 40px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.2);
+    background: rgba(255,255,255,.1); backdrop-filter: blur(8px);
+    color: rgba(255,255,255,.85); cursor: pointer;
     display: flex; align-items: center; justify-content: center;
-    color: rgba(255,255,255,.8);
-    cursor: pointer; transition: all .2s; z-index: 10002;
+    transition: background .15s; z-index: 2;
 }
-.smr-lb-close:hover { background: rgba(255,255,255,.15); }
-.smr-lb-close svg { width: 18px; height: 18px; }
-.smr-lb-hint {
-    position: fixed; top: 1rem; left: 50%; transform: translateX(-50%);
-    background: rgba(10,8,4,.75); backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,.08); border-radius: 100px;
-    padding: .3rem .9rem;
-    font-family: 'DM Sans', sans-serif;
-    font-size: .55rem; letter-spacing: .1em; text-transform: uppercase;
-    color: rgba(255,255,255,.3); pointer-events: none; z-index: 10001;
-    white-space: nowrap; transition: opacity .5s;
-}
-.smr-lb.interacted .smr-lb-hint { opacity: 0; }
+#ULB-CLOSE:hover { background: rgba(255,255,255,.25); }
+#ULB-CLOSE svg { width: 18px; height: 18px; pointer-events: none; }
 
-/* ── Summary box ── */
-.smr-summary-box {
-    background: linear-gradient(135deg, #1a1408, #2a1e0a);
-    border-radius: 12px;
-    padding: 2.5rem;
-    color: white;
-    position: relative; overflow: hidden;
-    margin-top: 2.5rem;
+/* prev/next */
+.ulb-nav {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 44px; height: 44px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.15);
+    background: rgba(255,255,255,.08); backdrop-filter: blur(8px);
+    color: rgba(255,255,255,.8); cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .15s; z-index: 2; font-size: 1.3rem;
 }
-.smr-summary-box::before {
-    content: '₂'; /* decorative */
-    position: absolute; right: 1.5rem; bottom: -2rem;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 12rem; font-weight: 300; line-height: 1;
-    color: rgba(201,165,83,.06);
-    pointer-events: none;
+.ulb-nav:hover { background: rgba(255,255,255,.22); }
+#ULB-PREV { left: .8rem; }
+#ULB-NEXT { right: .8rem; }
+
+/* hint */
+#ULB-HINT {
+    position: absolute; top: .9rem; left: 50%; transform: translateX(-50%);
+    background: rgba(8,6,12,.8); backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,.1); border-radius: 100px;
+    padding: .35rem 1rem;
+    font-family: 'DM Sans', sans-serif; font-size: .58rem;
+    letter-spacing: .06em; color: rgba(255,255,255,.45);
+    pointer-events: none; white-space: nowrap;
+    transition: opacity .5s; z-index: 2;
 }
-.smr-summary-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.5rem; font-weight: 300;
-    color: #f0e4b8; margin-bottom: 1.2rem;
-}
-.smr-summary-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-}
-@media (max-width: 600px) { .smr-summary-grid { grid-template-columns: 1fr 1fr; }
-/* ── МОБІЛЬНІ ВКЛАДКИ ── */
-@media (max-width: 768px) {
-    .smr-tabs { overflow-x: auto; flex-wrap: nowrap; scrollbar-width: none; }
-    .smr-tabs::-webkit-scrollbar { display: none; }
-    .smr-tab { flex-shrink: 0; font-size: .62rem; padding: .7rem .9rem; }
-    .smr-body { padding: 1.5rem 1rem; }
-}
- }
-.smr-sum-stat {
-    text-align: center;
-    padding: 1rem;
-    border: 1px solid rgba(201,165,83,.15);
-    border-radius: 8px;
-    background: rgba(255,255,255,.03);
-}
-.smr-sum-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.8rem; font-weight: 300;
-    color: #c9a553; line-height: 1; margin-bottom: .3rem;
-}
-.smr-sum-key {
-    font-family: 'DM Sans', sans-serif;
-    font-size: .58rem; letter-spacing: .12em; text-transform: uppercase;
-    color: rgba(255,255,255,.4); line-height: 1.4;
+#ULB.interacted #ULB-HINT { opacity: 0; }
+
+@media (max-width: 480px) {
+    .ulb-nav { width: 36px; height: 36px; font-size: 1rem; }
+    #ULB-PREV { left: .4rem; }
+    #ULB-NEXT { right: .4rem; }
+    #ULB-HINT { display: none; }
 }
 
-/* ── Scroll fade in ── */
-.{
-    opacity: 1; transform: none;
-    transition: opacity .6s ease, transform .6s ease;
-}
-..vis { opacity: 1; transform: none; }
 </style>
 </head>
 <body class="smr-page">
@@ -1721,57 +1677,7 @@ uchwalono bywa, Czyni in Summa —
     </div><!-- /smr-body -->
 
     <!-- ══ SCAN LIGHTBOX ══ -->
-    <div class="smr-lb" id="SMR-LB">
-        <!-- Close -->
-        <button class="smr-lb-close" onclick="closeScanLB()" title="Закрити (Esc)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        </button>
-        <!-- Viewport для pan/zoom -->
-        <div class="smr-lb-viewport" id="SMR-LB-VP">
-            <img class="smr-lb-img" id="SMR-LB-IMG" src="" alt="" draggable="false">
-        </div>
-        <!-- Нижня панель -->
-        <div class="smr-lb-bar">
-            <button class="smr-lb-btn" onclick="navScanLB(-1)" title="Попереднє">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
-            </button>
-            <button class="smr-lb-btn" onclick="lbZoomOut()" title="Зменшити (-)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
-            </button>
-            <span class="smr-lb-zoom-val" id="SMR-LB-ZVAL">1.0×</span>
-            <button class="smr-lb-btn" onclick="lbZoomIn()" title="Збільшити (+)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
-            </button>
-            <button class="smr-lb-btn" onclick="lbZoomReset()" title="Скинути (0)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
-            </button>
-            <div class="smr-lb-sep"></div>
-            <div class="smr-lb-caption-bar" id="SMR-LB-CAP"></div>
-            <div class="smr-lb-sep"></div>
-            <button class="smr-lb-btn" onclick="navScanLB(1)" title="Наступне">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-            </button>
-        </div>
-        <div class="smr-lb-hint" id="SMR-LB-HINT">Прокрутка — зум · Перетяг — пан · Esc — закрити</div>
-    </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4 class="footer-title">Дубровиця</h4>
-                    <p class="footer-text">Цифровий архів історичної спадщини міста Дубровиця, Рівненська область, Україна.</p>
-                </div>
-                <div class="footer-section">
-                    <h4 class="footer-title">Навігація</h4>
-                    <nav class="footer-nav">
-                        <a href="history.html">Історія</a>
-                        <a href="photo-archive.html">Фотоархів</a>
-                        <a href="metrychni-knyhy.html">Метричні книги</a>
-                        <a href="books.html">Книги</a>
-                    </nav>
-                </div>
                 <div class="footer-section">
                     <h4 class="footer-title">Контакти</h4>
                     <p class="footer-text">Маєте матеріали або пропозиції?<br><a href="contacts.html" class="footer-link">Зв'яжіться з нами</a></p>
@@ -1783,14 +1689,15 @@ uchwalono bywa, Czyni in Summa —
 
     <script src="app.js"></script>
     <script>
-(function() {
+<script>
+    (function() {
     var SCANS = [
     { src: 'https://i.imgur.com/eCkmrb3.jpeg', cap: 'Сторінка 1 · Грошові доходи' },
     { src: 'https://i.imgur.com/UPFx3Gp.jpeg', cap: 'Сторінка 2 · Промисловий потенціал' },
     { src: 'https://i.imgur.com/gseULFj.jpeg', cap: 'Сторінка 3 · Замок та підсумок' },
 ];
 
-    // ── TAB SYSTEM ──
+    // Tab system
     document.querySelectorAll('.smr-tab').forEach(function(tab) {
         tab.addEventListener('click', function() {
             var panel = this.dataset.panel;
@@ -1801,215 +1708,225 @@ uchwalono bywa, Czyni in Summa —
         });
     });
 
-    // ── LIGHTBOX: PAN + ZOOM ──
-    var LB_IDX = 0;
-    var lbS = 1, lbX = 0, lbY = 0;        // scale, translate
-    var dragging = false, dragX = 0, dragY = 0, originX = 0, originY = 0;
-    var pinchDist0 = 0, pinchS0 = 1;
+    // Open scan in ULB
+    window.openScanLB = function(i) {
+        ULB.open(SCANS, i);
+    };
 
-    function lbEl(id) { return document.getElementById(id); }
+    })();
+</script>
+<script>
+/* ═══════════════════════════════════════════════════════════
+   ULB — Universal LightBox  (pan + pinch-zoom + wheel-zoom)
+   Підключається в app.js і окремо в кожну HTML-сторінку
+   ═══════════════════════════════════════════════════════════ */
+(function(global) {
+    'use strict';
 
-    function lbApply(animate) {
-        var img = lbEl('SMR-LB-IMG');
-        if (!img) return;
-        if (animate) img.classList.add('animating');
-        else img.classList.remove('animating');
-        img.style.transform = 'translate(' + lbX + 'px,' + lbY + 'px) scale(' + lbS + ')';
-        var zv = lbEl('SMR-LB-ZVAL');
-        if (zv) zv.textContent = lbS.toFixed(1) + '×';
+    var s = 1, tx = 0, ty = 0;
+    var dragging = false, dx = 0, dy = 0, ox = 0, oy = 0;
+    var pinchD0 = 0, pinchS0 = 1;
+    var scans = [], idx = 0;
+    var onClose = null;
+
+    /* ── helpers ── */
+    function gel(id) { return document.getElementById(id); }
+    function vp()    { return gel('ULB-VP'); }
+    function img()   { return gel('ULB-IMG'); }
+
+    function apply(anim) {
+        var i = img(); if (!i) return;
+        i.style.transition = anim ? 'transform .2s ease' : 'none';
+        i.style.transform = 'translate('+tx+'px,'+ty+'px) scale('+s+')';
+        var zv = gel('ULB-ZVAL');
+        if (zv) zv.textContent = s.toFixed(1) + '×';
     }
 
-    function lbClamp() {
-        var vp = lbEl('SMR-LB-VP');
-        var img = lbEl('SMR-LB-IMG');
-        if (!vp || !img) return;
-        var vw = vp.clientWidth, vh = vp.clientHeight;
-        var iw = (img.naturalWidth || 800) * lbS;
-        var ih = (img.naturalHeight || 600) * lbS;
-        var maxX = Math.max(0, (iw - vw) / 2);
-        var maxY = Math.max(0, (ih - vh) / 2);
-        lbX = Math.min(maxX, Math.max(-maxX, lbX));
-        lbY = Math.min(maxY, Math.max(-maxY, lbY));
+    function clamp() {
+        var v = vp(), i = img(); if (!v || !i) return;
+        var vw = v.clientWidth, vh = v.clientHeight;
+        var iw = i.offsetWidth * s, ih = i.offsetHeight * s;
+        var mx = Math.max(0, (iw - vw) / 2);
+        var my = Math.max(0, (ih - vh) / 2);
+        tx = Math.min(mx, Math.max(-mx, tx));
+        ty = Math.min(my, Math.max(-my, ty));
     }
 
-    function lbFit() {
-        var vp = lbEl('SMR-LB-VP');
-        var img = lbEl('SMR-LB-IMG');
-        if (!vp || !img || !img.naturalWidth) return 1;
-        return Math.min(vp.clientWidth / img.naturalWidth, vp.clientHeight / img.naturalHeight, 1);
+    function reset(anim) { s = 1; tx = 0; ty = 0; apply(anim); }
+
+    function zoomAt(factor, cx, cy) {
+        var v = vp(); if (!v) return;
+        var r = v.getBoundingClientRect();
+        var px = cx - r.left - v.clientWidth  / 2;
+        var py = cy - r.top  - v.clientHeight / 2;
+        var ns = Math.min(8, Math.max(1, s * factor));
+        var ratio = ns / s;
+        tx = px - (px - tx) * ratio;
+        ty = py - (py - ty) * ratio;
+        s = ns;
+        clamp(); apply(false);
     }
 
-    function lbReset(animate) {
-        lbS = lbFit();
-        lbX = 0; lbY = 0;
-        lbApply(animate);
-    }
-
-    function lbZoomAt(factor, cx, cy) {
-        var vp = lbEl('SMR-LB-VP');
-        if (!vp) return;
-        var rect = vp.getBoundingClientRect();
-        var px = (cx - rect.left) - vp.clientWidth / 2;
-        var py = (cy - rect.top) - vp.clientHeight / 2;
-        var newS = Math.min(8, Math.max(lbFit() * 0.9, lbS * factor));
-        var ratio = newS / lbS;
-        lbX = px - (px - lbX) * ratio;
-        lbY = py - (py - lbY) * ratio;
-        lbS = newS;
-        lbClamp();
-        lbApply(false);
-        var lb = lbEl('SMR-LB'); if (lb) lb.classList.add('interacted');
-    }
-
-    window.lbZoomIn  = function() { lbZoomAt(1.35, window.innerWidth/2, window.innerHeight/2); };
-    window.lbZoomOut = function() { lbZoomAt(1/1.35, window.innerWidth/2, window.innerHeight/2); };
-    window.lbZoomReset = function() { lbReset(true); };
-
-    // ── ВІДКРИТИ ──
-    function openScanLB(i) {
-        LB_IDX = i;
-        var lb  = lbEl('SMR-LB');
-        var img = lbEl('SMR-LB-IMG');
-        var cap = lbEl('SMR-LB-CAP');
-        if (!lb || !img || !SCANS[i]) return;
-        img.style.opacity = '0';
-        img.src = SCANS[i].src;
-        if (cap) cap.textContent = SCANS[i].cap;
-        lb.dataset.cur = i;
-        lb.classList.add('on');
-        lb.classList.remove('interacted');
-        document.body.style.overflow = 'hidden';
-        img.onload = function() {
-            lbS = 1; lbX = 0; lbY = 0;
-            lbReset(false);
-            img.style.transition = 'opacity .3s ease';
-            img.style.opacity = '1';
+    function loadImage(url, cap, anim) {
+        var i = img(); if (!i) return;
+        i.style.opacity = '0';
+        i.src = url;
+        var c = gel('ULB-CAP'); if (c) c.textContent = cap || '';
+        i.onload = function() {
+            reset(false);
+            i.style.transition = 'opacity .25s ease';
+            i.style.opacity = '1';
         };
+        if (!anim) { i.style.transition = 'none'; }
     }
 
-    function closeScanLB() {
-        var lb = lbEl('SMR-LB');
-        if (!lb) return;
+    /* ── public API ── */
+    function open(items, startIdx) {
+        scans = Array.isArray(items) ? items : [items];
+        idx = startIdx || 0;
+        var lb = gel('ULB'); if (!lb) return;
+        lb.classList.add('on');
+        document.body.style.overflow = 'hidden';
+        loadImage(scans[idx].src, scans[idx].cap);
+        updateNav();
+    }
+
+    function close() {
+        var lb = gel('ULB'); if (!lb) return;
         lb.classList.remove('on');
         document.body.style.overflow = '';
+        reset(false);
+        if (onClose) onClose();
     }
 
-    function navScanLB(dir) {
-        var lb  = lbEl('SMR-LB');
-        var img = lbEl('SMR-LB-IMG');
-        var cap = lbEl('SMR-LB-CAP');
-        if (!lb || !img) return;
-        LB_IDX = (LB_IDX + dir + SCANS.length) % SCANS.length;
-        lb.dataset.cur = LB_IDX;
-        img.style.opacity = '0';
-        img.src = SCANS[LB_IDX].src;
-        if (cap) cap.textContent = SCANS[LB_IDX].cap;
-        lbS = 1; lbX = 0; lbY = 0;
-        img.onload = function() {
-            lbReset(false);
-            img.style.transition = 'opacity .25s ease';
-            img.style.opacity = '1';
-        };
+    function nav(dir) {
+        if (!scans.length) return;
+        idx = (idx + dir + scans.length) % scans.length;
+        loadImage(scans[idx].src, scans[idx].cap, true);
+        updateNav();
     }
 
-    // ── MOUSE EVENTS ──
-    document.addEventListener('DOMContentLoaded', function() {
-        var vp = lbEl('SMR-LB-VP');
-        if (!vp) return;
+    function updateNav() {
+        var prev = gel('ULB-PREV'), next = gel('ULB-NEXT');
+        var show = scans.length > 1;
+        if (prev) prev.style.display = show ? '' : 'none';
+        if (next) next.style.display = show ? '' : 'none';
+    }
 
-        vp.addEventListener('mousedown', function(e) {
+    /* ── init events (once DOM ready) ── */
+    function initEvents() {
+        var v = vp(); if (!v) return;
+
+        /* mouse drag */
+        v.addEventListener('mousedown', function(e) {
             if (e.button !== 0) return;
-            dragging = true;
-            dragX = e.clientX; dragY = e.clientY;
-            originX = lbX; originY = lbY;
-            vp.classList.add('dragging');
-            var lb = lbEl('SMR-LB'); if (lb) lb.classList.add('interacted');
-            e.preventDefault();
+            dragging = true; dx = e.clientX; dy = e.clientY; ox = tx; oy = ty;
+            v.style.cursor = 'grabbing'; e.preventDefault();
         });
         document.addEventListener('mousemove', function(e) {
             if (!dragging) return;
-            lbX = originX + (e.clientX - dragX);
-            lbY = originY + (e.clientY - dragY);
-            lbClamp(); lbApply(false);
+            tx = ox + (e.clientX - dx); ty = oy + (e.clientY - dy);
+            clamp(); apply(false);
         });
         document.addEventListener('mouseup', function() {
-            dragging = false;
-            var vp2 = lbEl('SMR-LB-VP'); if (vp2) vp2.classList.remove('dragging');
+            if (!dragging) return;
+            dragging = false; var vv = vp(); if (vv) vv.style.cursor = 'grab';
         });
 
-        // Wheel zoom
-        vp.addEventListener('wheel', function(e) {
+        /* wheel zoom */
+        v.addEventListener('wheel', function(e) {
             e.preventDefault();
-            lbZoomAt(e.deltaY < 0 ? 1.15 : 1/1.15, e.clientX, e.clientY);
+            zoomAt(e.deltaY < 0 ? 1.15 : 1/1.15, e.clientX, e.clientY);
         }, { passive: false });
 
-        // Touch pan
-        vp.addEventListener('touchstart', function(e) {
+        /* double-click */
+        v.addEventListener('dblclick', function(e) {
+            if (s > 1.5) reset(true); else zoomAt(2.5, e.clientX, e.clientY);
+        });
+
+        /* touch pinch + pan */
+        v.addEventListener('touchstart', function(e) {
             if (e.touches.length === 1) {
                 dragging = true;
-                dragX = e.touches[0].clientX; dragY = e.touches[0].clientY;
-                originX = lbX; originY = lbY;
+                dx = e.touches[0].clientX; dy = e.touches[0].clientY; ox = tx; oy = ty;
             } else if (e.touches.length === 2) {
                 dragging = false;
-                pinchDist0 = Math.hypot(
-                    e.touches[0].clientX - e.touches[1].clientX,
-                    e.touches[0].clientY - e.touches[1].clientY
-                );
-                pinchS0 = lbS;
+                pinchD0 = Math.hypot(e.touches[0].clientX - e.touches[1].clientX,
+                                     e.touches[0].clientY - e.touches[1].clientY);
+                pinchS0 = s;
             }
-            var lb = lbEl('SMR-LB'); if (lb) lb.classList.add('interacted');
         }, { passive: true });
-
-        vp.addEventListener('touchmove', function(e) {
+        v.addEventListener('touchmove', function(e) {
             e.preventDefault();
             if (e.touches.length === 1 && dragging) {
-                lbX = originX + (e.touches[0].clientX - dragX);
-                lbY = originY + (e.touches[0].clientY - dragY);
-                lbClamp(); lbApply(false);
+                tx = ox + (e.touches[0].clientX - dx);
+                ty = oy + (e.touches[0].clientY - dy);
+                clamp(); apply(false);
             } else if (e.touches.length === 2) {
-                var d = Math.hypot(
-                    e.touches[0].clientX - e.touches[1].clientX,
-                    e.touches[0].clientY - e.touches[1].clientY
-                );
-                var cx = (e.touches[0].clientX + e.touches[1].clientX) / 2;
-                var cy = (e.touches[0].clientY + e.touches[1].clientY) / 2;
-                lbS = Math.min(8, Math.max(0.3, pinchS0 * (d / pinchDist0)));
-                lbClamp(); lbApply(false);
+                var d = Math.hypot(e.touches[0].clientX - e.touches[1].clientX,
+                                   e.touches[0].clientY - e.touches[1].clientY);
+                s = Math.min(8, Math.max(1, pinchS0 * (d / pinchD0)));
+                clamp(); apply(false);
             }
         }, { passive: false });
+        v.addEventListener('touchend', function() { dragging = false; });
 
-        vp.addEventListener('touchend', function() { dragging = false; });
+        /* close on backdrop click */
+        var lb = gel('ULB');
+        if (lb) lb.addEventListener('click', function(e) { if (e.target === lb) close(); });
 
-        // Подвійний клік — зум
-        vp.addEventListener('dblclick', function(e) {
-            var fit = lbFit();
-            if (lbS > fit * 1.5) lbReset(true);
-            else lbZoomAt(2, e.clientX, e.clientY);
+        /* keyboard */
+        document.addEventListener('keydown', function(e) {
+            var lb = gel('ULB'); if (!lb || !lb.classList.contains('on')) return;
+            if (e.key === 'Escape')              close();
+            if (e.key === 'ArrowLeft'  && s<=1)  nav(-1);
+            if (e.key === 'ArrowRight' && s<=1)  nav(1);
+            if (e.key === '+' || e.key === '=')  zoomAt(1.3, window.innerWidth/2, window.innerHeight/2);
+            if (e.key === '-')                   zoomAt(1/1.3, window.innerWidth/2, window.innerHeight/2);
+            if (e.key === '0')                   reset(true);
         });
-    });
+    }
 
-    // Клавіатура
-    document.addEventListener('keydown', function(e) {
-        var lb = lbEl('SMR-LB');
-        if (!lb || !lb.classList.contains('on')) return;
-        if (e.key === 'ArrowLeft')  navScanLB(-1);
-        if (e.key === 'ArrowRight') navScanLB(1);
-        if (e.key === 'Escape')     closeScanLB();
-        if (e.key === '+' || e.key === '=') lbZoomIn();
-        if (e.key === '-') lbZoomOut();
-        if (e.key === '0') lbZoomReset();
-    });
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initEvents);
+    } else {
+        initEvents();
+    }
 
-    // Закрити по кліку на фон
-    document.addEventListener('click', function(e) {
-        var lb = lbEl('SMR-LB');
-        if (lb && e.target === lb) closeScanLB();
-    });
+    global.ULB = { open: open, close: close, nav: nav,
+                   zoomIn:  function() { zoomAt(1.3, window.innerWidth/2, window.innerHeight/2); },
+                   zoomOut: function() { zoomAt(1/1.3, window.innerWidth/2, window.innerHeight/2); },
+                   reset:   function() { reset(true); } };
 
-    window.openScanLB  = openScanLB;
-    window.closeScanLB = closeScanLB;
-    window.navScanLB   = navScanLB;
-})();
+})(window);
+
 </script>
+    <!-- ULB — Universal LightBox -->
+    <div id="ULB">
+        <button id="ULB-CLOSE" onclick="ULB.close()" title="Закрити (Esc)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+        <div id="ULB-HINT">Прокрутка — зум · Перетяг — пан · Esc — закрити</div>
+        <button class="ulb-nav" id="ULB-PREV" onclick="ULB.nav(-1)" title="Попереднє">‹</button>
+        <button class="ulb-nav" id="ULB-NEXT" onclick="ULB.nav(1)" title="Наступне">›</button>
+        <div id="ULB-VP">
+            <img id="ULB-IMG" src="" alt="" draggable="false">
+        </div>
+        <div id="ULB-BAR">
+            <button class="ulb-btn" onclick="ULB.zoomOut()" title="Зменшити (-)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+            </button>
+            <span id="ULB-ZVAL">1.0×</span>
+            <button class="ulb-btn" onclick="ULB.zoomIn()" title="Збільшити (+)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+            </button>
+            <button class="ulb-btn" onclick="ULB.reset()" title="Скинути (0)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+            </button>
+            <div class="ulb-sep"></div>
+            <span id="ULB-CAP"></span>
+        </div>
+    </div>
+
 </body>
 </html>
