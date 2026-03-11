@@ -2,6 +2,11 @@
 <html lang="uk" data-theme="light">
 <head>
     <meta charset="UTF-8">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="manifest" href="site.webmanifest">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Цифровий архів найдавнішого міста Рівненщини - Дубровиці. Історія від 1005 року, фотоархів, метричні книги">
     <meta name="keywords" content="Дубровиця, історія, архів, Рівненська область, Україна, Полісся">
@@ -1914,7 +1919,7 @@
     .CSF{position:relative;width:100%;aspect-ratio:16/9;border-radius:3px;overflow:hidden;
          cursor:ew-resize;user-select:none;-webkit-user-select:none;
          box-shadow:0 0 0 1px rgba(201,162,39,.12),0 30px 80px rgba(0,0,0,.7),0 8px 24px rgba(0,0,0,.4);}
-    @media(max-width:600px){.CSF{aspect-ratio:3/2;cursor:default;} .CCLB .ccy{font-size:1.1rem;} .CCLB .ccs{font-size:.48rem;letter-spacing:.06em;}}
+    @media(max-width:600px){.CSF{aspect-ratio:3/2;cursor:default;} .CCLB .ccy{font-size:1.1rem;} .CCLB .ccs{font-size:.46rem;letter-spacing:.05em;}}
 
     /* images */
     .CSF .ci-base{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
@@ -2178,7 +2183,7 @@
     .PSF{position:relative;width:100%;aspect-ratio:16/9;border-radius:3px;overflow:hidden;
          cursor:ew-resize;user-select:none;-webkit-user-select:none;
          box-shadow:0 0 0 1px rgba(200,146,74,.12),0 30px 80px rgba(0,0,0,.7);}
-    @media(max-width:600px){.PSF{aspect-ratio:3/2; .PCLB .pcy{font-size:1.1rem;} .PCLB .pcs{font-size:.48rem;letter-spacing:.06em;}}}
+    @media(max-width:600px){.PSF{aspect-ratio:3/2;} .PCLB .pcy{font-size:1.1rem;} .PCLB .pcs{font-size:.46rem;letter-spacing:.05em;}}
     .PSF .pb{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;display:block;
              filter:saturate(1.1) contrast(1.05) brightness(1.02);}
     .PSF .po{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;display:block;
@@ -2265,19 +2270,20 @@
 
     /* lightbox */
     #PLB{position:fixed;inset:0;z-index:99999;background:rgba(4,3,2,.96);
-         display:flex;align-items:center;justify-content:center;
+         display:flex;flex-direction:column;align-items:stretch;
          opacity:0;pointer-events:none;transition:opacity .24s;}
     #PLB.open{opacity:1;pointer-events:all;}
-    #PLB img{max-width:92vw;max-height:88vh;object-fit:contain;border-radius:3px;}
+    #PLB-VP{flex:1;overflow:hidden;cursor:grab;display:flex;align-items:center;justify-content:center;}
+    #PLB-VP.dragging{cursor:grabbing;}
+    #PLBI{max-width:100%;max-height:100%;object-fit:contain;border-radius:3px;user-select:none;-webkit-user-drag:none;will-change:transform;}
+    #PLB-BAR{display:flex;align-items:center;justify-content:center;gap:.3rem;padding:.5rem .8rem;background:rgba(8,6,12,.85);backdrop-filter:blur(8px);flex-shrink:0;}
+    .plb-btn{width:34px;height:34px;border-radius:7px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.07);color:rgba(255,255,255,.8);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s;}
+    .plb-btn:hover{background:rgba(255,255,255,.18);}
     #PLB .plbc{position:absolute;top:1.2rem;right:1.4rem;width:40px;height:40px;
-               background:rgba(255,255,255,.1);border:none;border-radius:50%;
-               color:#fff;font-size:1.2rem;cursor:pointer;
-               display:flex;align-items:center;justify-content:center;transition:background .15s;}
+        border-radius:50%;background:rgba(255,255,255,.15);border:none;color:#fff;
+        font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s;z-index:2;}
     #PLB .plbc:hover{background:rgba(255,255,255,.22);}
-    #PLB .plbcap{position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);
-                 font-family:'DM Sans',sans-serif;font-size:.72rem;letter-spacing:.1em;
-                 color:rgba(255,255,255,.4);white-space:nowrap;}
-    </style>
+    #PLB .plbcap{position:absolute;bottom:4.2rem;left:50%;transform:translateX(-50%);    </style>
 
     <div class="PW">
       <div class="PH">
@@ -2370,8 +2376,16 @@
 
     <!-- Lightbox -->
     <div id="PLB">
-      <button class="plbc" onclick="document.getElementById('PLB').classList.remove('open')">&#x2715;</button>
-      <img id="PLBI" src="" alt="">
+      <button class="plbc" onclick="closePLB()" title="Закрити (Esc)">&#x2715;</button>
+      <div id="PLB-VP">
+        <img id="PLBI" src="" alt="" draggable="false">
+      </div>
+      <div id="PLB-BAR">
+        <button class="plb-btn" onclick="plbZoomOut()" title="Зменшити"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg></button>
+        <span id="PLB-ZVAL" style="font-family:'DM Sans',sans-serif;font-size:.7rem;color:rgba(255,255,255,.6);min-width:3em;text-align:center">1.0×</span>
+        <button class="plb-btn" onclick="plbZoomIn()" title="Збільшити"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></button>
+        <button class="plb-btn" onclick="plbZoomReset()" title="Скинути"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg></button>
+      </div>
       <div class="plbcap" id="PLBCAP"></div>
     </div>
 
@@ -2402,18 +2416,121 @@
     })();
 
     /* Lightbox */
-    function openPLB(el){
-      var img=el.querySelector('img'), cap=el.querySelector('.PGCAP');
-      document.getElementById('PLBI').src=img.src;
-      document.getElementById('PLBCAP').textContent=cap?cap.textContent:'';
-      document.getElementById('PLB').classList.add('open');
-    }
-    document.getElementById('PLB').addEventListener('click',function(e){
-      if(e.target===this)this.classList.remove('open');
-    });
-    document.addEventListener('keydown',function(e){
-      if(e.key==='Escape')document.getElementById('PLB').classList.remove('open');
-    });
+    (function(){
+      var plbS=1,plbX=0,plbY=0,dragging=false,dragX=0,dragY=0,origX=0,origY=0,pinchD0=0,pinchS0=1;
+      function gel(id){return document.getElementById(id);}
+      function plbApply(a){
+        var img=gel('PLBI');if(!img)return;
+        img.style.transition=a?'transform .22s ease':'none';
+        img.style.transform='translate('+plbX+'px,'+plbY+'px) scale('+plbS+')';
+        var zv=gel('PLB-ZVAL');if(zv)zv.textContent=plbS.toFixed(1)+'×';
+      }
+      function plbClamp(){
+        var vp=gel('PLB-VP'),img=gel('PLBI');if(!vp||!img)return;
+        var vw=vp.clientWidth,vh=vp.clientHeight;
+        var iw=(img.naturalWidth||800)*plbS,ih=(img.naturalHeight||600)*plbS;
+        var mx=Math.max(0,(iw-vw)/2),my=Math.max(0,(ih-vh)/2);
+        plbX=Math.min(mx,Math.max(-mx,plbX));
+        plbY=Math.min(my,Math.max(-my,plbY));
+      }
+      function plbFit(){
+        var vp=gel('PLB-VP'),img=gel('PLBI');
+        if(!vp||!img||!img.naturalWidth)return 1;
+        return Math.min(vp.clientWidth/img.naturalWidth,vp.clientHeight/img.naturalHeight,1);
+      }
+      function plbReset(a){plbS=plbFit();plbX=0;plbY=0;plbApply(a);}
+      function plbZoomAt(f,cx,cy){
+        var vp=gel('PLB-VP');if(!vp)return;
+        var r=vp.getBoundingClientRect();
+        var px=(cx-r.left)-vp.clientWidth/2,py=(cy-r.top)-vp.clientHeight/2;
+        var ns=Math.min(8,Math.max(plbFit()*0.9,plbS*f));
+        var ratio=ns/plbS;
+        plbX=px-(px-plbX)*ratio;plbY=py-(py-plbY)*ratio;plbS=ns;
+        plbClamp();plbApply(false);
+      }
+      window.plbZoomIn=function(){plbZoomAt(1.35,window.innerWidth/2,window.innerHeight/2);};
+      window.plbZoomOut=function(){plbZoomAt(1/1.35,window.innerWidth/2,window.innerHeight/2);};
+      window.plbZoomReset=function(){plbReset(true);};
+      window.closePLB=function(){
+        var lb=gel('PLB');if(lb){lb.classList.remove('open');document.body.style.overflow='';}
+      };
+      window.openPLB=function(el){
+        var img=el.querySelector('img'),cap=el.querySelector('.PGCAP');
+        var lb=gel('PLB'),lbImg=gel('PLBI');if(!lb||!lbImg)return;
+        lbImg.style.opacity='0';
+        lbImg.src=img.src;
+        gel('PLBCAP').textContent=cap?cap.textContent:'';
+        lb.classList.add('open');
+        document.body.style.overflow='hidden';
+        lbImg.onload=function(){
+          plbReset(false);
+          lbImg.style.transition='opacity .3s ease';
+          lbImg.style.opacity='1';
+        };
+      };
+      document.addEventListener('DOMContentLoaded',function(){
+        var vp=gel('PLB-VP');if(!vp)return;
+        // Mouse drag
+        vp.addEventListener('mousedown',function(e){
+          if(e.button!==0)return;
+          dragging=true;dragX=e.clientX;dragY=e.clientY;origX=plbX;origY=plbY;
+          vp.classList.add('dragging');e.preventDefault();
+        });
+        document.addEventListener('mousemove',function(e){
+          if(!dragging)return;
+          plbX=origX+(e.clientX-dragX);plbY=origY+(e.clientY-dragY);
+          plbClamp();plbApply(false);
+        });
+        document.addEventListener('mouseup',function(){
+          dragging=false;var v=gel('PLB-VP');if(v)v.classList.remove('dragging');
+        });
+        // Wheel zoom
+        vp.addEventListener('wheel',function(e){
+          e.preventDefault();
+          plbZoomAt(e.deltaY<0?1.15:1/1.15,e.clientX,e.clientY);
+        },{passive:false});
+        // Touch pinch+pan
+        vp.addEventListener('touchstart',function(e){
+          if(e.touches.length===1){
+            dragging=true;dragX=e.touches[0].clientX;dragY=e.touches[0].clientY;origX=plbX;origY=plbY;
+          } else if(e.touches.length===2){
+            dragging=false;
+            pinchD0=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+            pinchS0=plbS;
+          }
+        },{passive:true});
+        vp.addEventListener('touchmove',function(e){
+          e.preventDefault();
+          if(e.touches.length===1&&dragging){
+            plbX=origX+(e.touches[0].clientX-dragX);plbY=origY+(e.touches[0].clientY-dragY);
+            plbClamp();plbApply(false);
+          } else if(e.touches.length===2){
+            var d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+            plbS=Math.min(8,Math.max(0.3,pinchS0*(d/pinchD0)));
+            plbClamp();plbApply(false);
+          }
+        },{passive:false});
+        vp.addEventListener('touchend',function(){dragging=false;});
+        // Double-click zoom
+        vp.addEventListener('dblclick',function(e){
+          var fit=plbFit();
+          if(plbS>fit*1.5)plbReset(true);
+          else plbZoomAt(2.5,e.clientX,e.clientY);
+        });
+        // Click backdrop to close
+        gel('PLB').addEventListener('click',function(e){
+          if(e.target===gel('PLB-VP'))closePLB();
+        });
+        // Keyboard
+        document.addEventListener('keydown',function(e){
+          if(!gel('PLB').classList.contains('open'))return;
+          if(e.key==='Escape')closePLB();
+          if(e.key==='+'||e.key==='=')plbZoomIn();
+          if(e.key==='-')plbZoomOut();
+          if(e.key==='0')plbZoomReset();
+        });
+      });
+    })();
     </script>
     </section>
     <!-- ═══ END PLATER SECTION ═══ -->
@@ -2462,7 +2579,7 @@
     .WSF{position:relative;width:100%;max-width:1160px;margin:0 auto;aspect-ratio:16/9;max-height:70vh;border-radius:12px;overflow:hidden;
          cursor:ew-resize;user-select:none;-webkit-user-select:none;
          box-shadow:0 8px 40px rgba(0,0,0,0.18);}
-    @media(max-width:600px){.WSF{aspect-ratio:4/3;max-height:none;border-radius:6px;cursor:default; .WCLB .wcy{font-size:1.1rem;} .WCLB .wcs{font-size:.48rem;letter-spacing:.06em;}}}
+    @media(max-width:600px){.WSF{aspect-ratio:4/3;max-height:none;border-radius:6px;cursor:default; .WCLB .wcy{font-size:1.1rem;} .WCLB .wcs{font-size:.46rem;letter-spacing:.05em;}}}
     .WSF .wb{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;display:block;
              filter:saturate(1.15) contrast(1.06) brightness(1.03);}
     .WSF .wo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;display:block;

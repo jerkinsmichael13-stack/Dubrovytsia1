@@ -411,6 +411,7 @@ let lbZoomed = false;
 let lbScale = 1;
 let lbTx = 0, lbTy = 0;
 let lbDragging = false, lbStartX = 0, lbStartY = 0;
+let lbPinchDist0 = 0, lbPinchScale0 = 1;
 
 function lbResetZoom() {
     lbZoomed = false; lbScale = 1; lbTx = 0; lbTy = 0;
@@ -419,7 +420,10 @@ function lbResetZoom() {
     const btn = document.getElementById('lightboxZoomBtn');
     if (img) { img.style.transform = 'translate(0,0) scale(1)'; img.style.transition = 'transform 0.3s ease'; }
     if (frame) { frame.classList.remove('is-zoomed','is-dragging'); }
-    if (btn) btn.classList.remove('zoomed');
+    if (btn) {
+        btn.classList.remove('zoomed');
+        btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>`;
+    }
 }
 
 function lbApplyTransform(animated) {
@@ -427,6 +431,18 @@ function lbApplyTransform(animated) {
     if (!img) return;
     img.style.transition = animated ? 'transform 0.25s ease' : 'none';
     img.style.transform = `translate(${lbTx}px, ${lbTy}px) scale(${lbScale})`;
+    // update zoom button state
+    const btn = document.getElementById('lightboxZoomBtn');
+    const frame = document.getElementById('lightboxImgFrame');
+    if (lbScale > 1.05) {
+        lbZoomed = true;
+        if (btn) { btn.classList.add('zoomed'); btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg>`; }
+        if (frame) frame.classList.add('is-zoomed');
+    } else {
+        lbZoomed = false;
+        if (btn) { btn.classList.remove('zoomed'); btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>`; }
+        if (frame) frame.classList.remove('is-zoomed');
+    }
 }
 
 function lbClamp() {
@@ -439,6 +455,21 @@ function lbClamp() {
     const maxY = Math.max(0, (ih - fh) / 2);
     lbTx = Math.max(-maxX, Math.min(maxX, lbTx));
     lbTy = Math.max(-maxY, Math.min(maxY, lbTy));
+}
+
+function lbZoomAt(factor, cx, cy) {
+    const frame = document.getElementById('lightboxImgFrame');
+    if (!frame) return;
+    const rect = frame.getBoundingClientRect();
+    const px = (cx - rect.left) - frame.clientWidth / 2;
+    const py = (cy - rect.top) - frame.clientHeight / 2;
+    const newS = Math.min(8, Math.max(1, lbScale * factor));
+    const ratio = newS / lbScale;
+    lbTx = px - (px - lbTx) * ratio;
+    lbTy = py - (py - lbTy) * ratio;
+    lbScale = newS;
+    lbClamp();
+    lbApplyTransform(false);
 }
 
 function openLightbox(index) {
@@ -485,7 +516,7 @@ function initLightbox() {
     lb.querySelector('.lightbox-next')?.addEventListener('click', e => { e.stopPropagation(); if(!lbZoomed) navigateLightbox('next'); });
     lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
 
-    // Zoom toggle button
+    // Zoom toggle button — click to zoom 2.5x / reset
     const zoomBtn = document.getElementById('lightboxZoomBtn');
     if (zoomBtn) {
         zoomBtn.addEventListener('click', e => {
@@ -493,28 +524,17 @@ function initLightbox() {
             if (lbZoomed) {
                 lbResetZoom();
             } else {
-                lbZoomed = true;
-                lbScale = 2.2;
-                lbTx = 0; lbTy = 0;
-                const frame = document.getElementById('lightboxImgFrame');
-                if (frame) frame.classList.add('is-zoomed');
-                zoomBtn.classList.add('zoomed');
-                // Change icon to minus
-                zoomBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg>`;
+                lbScale = 2.5; lbTx = 0; lbTy = 0;
                 lbApplyTransform(true);
-            }
-            // Reset zoom icon when not zoomed
-            if (!lbZoomed) {
-                zoomBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>`;
             }
         });
     }
 
-    // Pan (drag) when zoomed
     const frame = document.getElementById('lightboxImgFrame');
     if (frame) {
+        // ── Mouse drag (always, not only when zoomed) ──
         frame.addEventListener('mousedown', e => {
-            if (!lbZoomed) return;
+            if (e.button !== 0) return;
             e.preventDefault();
             lbDragging = true;
             lbStartX = e.clientX - lbTx;
@@ -531,78 +551,71 @@ function initLightbox() {
         document.addEventListener('mouseup', () => {
             if (lbDragging) {
                 lbDragging = false;
-                if (frame) frame.classList.remove('is-dragging');
+                frame.classList.remove('is-dragging');
             }
         });
 
-        // Touch pan
-        let touchStartX = 0, touchStartY = 0;
-        frame.addEventListener('touchstart', e => {
-            if (!lbZoomed || e.touches.length !== 1) return;
-            touchStartX = e.touches[0].clientX - lbTx;
-            touchStartY = e.touches[0].clientY - lbTy;
-        }, { passive: true });
-        frame.addEventListener('touchmove', e => {
-            if (!lbZoomed || e.touches.length !== 1) return;
+        // ── Wheel zoom toward cursor ──
+        frame.addEventListener('wheel', e => {
             e.preventDefault();
-            lbTx = e.touches[0].clientX - touchStartX;
-            lbTy = e.touches[0].clientY - touchStartY;
-            lbClamp();
-            lbApplyTransform(false);
+            lbZoomAt(e.deltaY < 0 ? 1.15 : 1 / 1.15, e.clientX, e.clientY);
         }, { passive: false });
+
+        // ── Double-click zoom in / reset ──
+        frame.addEventListener('dblclick', e => {
+            if (lbScale > 1.5) {
+                lbResetZoom();
+            } else {
+                lbZoomAt(2.5, e.clientX, e.clientY);
+            }
+        });
+
+        // ── Touch: pinch-to-zoom + pan ──
+        let tStartX = 0, tStartY = 0, tOrigX = 0, tOrigY = 0;
+        frame.addEventListener('touchstart', e => {
+            if (e.touches.length === 1) {
+                lbDragging = true;
+                tStartX = e.touches[0].clientX; tStartY = e.touches[0].clientY;
+                tOrigX = lbTx; tOrigY = lbTy;
+            } else if (e.touches.length === 2) {
+                lbDragging = false;
+                lbPinchDist0 = Math.hypot(
+                    e.touches[0].clientX - e.touches[1].clientX,
+                    e.touches[0].clientY - e.touches[1].clientY
+                );
+                lbPinchScale0 = lbScale;
+            }
+        }, { passive: true });
+
+        frame.addEventListener('touchmove', e => {
+            e.preventDefault();
+            if (e.touches.length === 1 && lbDragging) {
+                lbTx = tOrigX + (e.touches[0].clientX - tStartX);
+                lbTy = tOrigY + (e.touches[0].clientY - tStartY);
+                lbClamp(); lbApplyTransform(false);
+            } else if (e.touches.length === 2) {
+                const d = Math.hypot(
+                    e.touches[0].clientX - e.touches[1].clientX,
+                    e.touches[0].clientY - e.touches[1].clientY
+                );
+                lbScale = Math.min(8, Math.max(1, lbPinchScale0 * (d / lbPinchDist0)));
+                lbClamp(); lbApplyTransform(false);
+            }
+        }, { passive: false });
+
+        frame.addEventListener('touchend', () => { lbDragging = false; });
     }
 
+    // ── Keyboard ──
     document.addEventListener('keydown', e => {
         if (!lb.classList.contains('active')) return;
         if (e.key === 'ArrowLeft'  && !lbZoomed) navigateLightbox('prev');
         if (e.key === 'ArrowRight' && !lbZoomed) navigateLightbox('next');
         if (e.key === 'Escape') closeLightbox();
-        if (e.key === 'z' || e.key === 'Z') document.getElementById('lightboxZoomBtn')?.click();
-        if (e.key === '+' || e.key === '=') { lbZoomed=true; lbScale=Math.min(8,lbScale*1.35); lbClamp(); lbApplyTransform(true); }
-        if (e.key === '-') { lbScale=Math.max(1,lbScale/1.35); if(lbScale<=1){lbResetZoom();} else {lbClamp();lbApplyTransform(true);} }
+        if (e.key === '+' || e.key === '=') lbZoomAt(1.3, window.innerWidth/2, window.innerHeight/2);
+        if (e.key === '-') lbZoomAt(1/1.3, window.innerWidth/2, window.innerHeight/2);
         if (e.key === '0') lbResetZoom();
     });
-
-    // Wheel zoom on lightbox frame
-    if (frame) {
-        frame.addEventListener('wheel', e => {
-            if (!lb.classList.contains('active')) return;
-            e.preventDefault();
-            const rect = frame.getBoundingClientRect();
-            const px = e.clientX - rect.left - frame.clientWidth/2;
-            const py = e.clientY - rect.top - frame.clientHeight/2;
-            const factor = e.deltaY < 0 ? 1.15 : 1/1.15;
-            const newS = Math.min(8, Math.max(1, lbScale * factor));
-            if (newS <= 1) { lbResetZoom(); return; }
-            const ratio = newS / lbScale;
-            lbTx = px - (px - lbTx) * ratio;
-            lbTy = py - (py - lbTy) * ratio;
-            lbScale = newS; lbZoomed = true;
-            const btn = document.getElementById('lightboxZoomBtn');
-            if (btn) { btn.classList.add('zoomed'); btn.innerHTML = \`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg>\`; }
-            if (frame) frame.classList.add('is-zoomed');
-            lbClamp(); lbApplyTransform(false);
-        }, { passive: false });
-
-        // Double-click to zoom in/out
-        frame.addEventListener('dblclick', e => {
-            if (lbZoomed && lbScale > 1.5) { lbResetZoom(); }
-            else {
-                const rect = frame.getBoundingClientRect();
-                const px = e.clientX - rect.left - frame.clientWidth/2;
-                const py = e.clientY - rect.top - frame.clientHeight/2;
-                const newS = Math.min(8, lbScale * 2.5);
-                const ratio = newS / lbScale;
-                lbTx = px - (px - lbTx) * ratio;
-                lbTy = py - (py - lbTy) * ratio;
-                lbScale = newS; lbZoomed = true;
-                const btn = document.getElementById('lightboxZoomBtn');
-                if (btn) { btn.classList.add('zoomed'); btn.innerHTML = \`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg>\`; }
-                if (frame) frame.classList.add('is-zoomed');
-                lbClamp(); lbApplyTransform(true);
-            }
-        });
-    }
 }
 
 
