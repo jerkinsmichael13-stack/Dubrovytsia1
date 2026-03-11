@@ -1,188 +1,3 @@
-/* ═══════════════════════════════════════════════════════════
-   ULB — Universal LightBox  (pan + pinch-zoom + wheel-zoom)
-   Підключається в app.js і окремо в кожну HTML-сторінку
-   ═══════════════════════════════════════════════════════════ */
-(function(global) {
-    'use strict';
-
-    var s = 1, tx = 0, ty = 0;
-    var dragging = false, dx = 0, dy = 0, ox = 0, oy = 0;
-    var pinchD0 = 0, pinchS0 = 1;
-    var scans = [], idx = 0;
-    var onClose = null;
-
-    /* ── helpers ── */
-    function gel(id) { return document.getElementById(id); }
-    function vp()    { return gel('ULB-VP'); }
-    function img()   { return gel('ULB-IMG'); }
-
-    function apply(anim) {
-        var i = img(); if (!i) return;
-        i.style.transition = anim ? 'transform .2s ease' : 'none';
-        i.style.transform = 'translate('+tx+'px,'+ty+'px) scale('+s+')';
-        var zv = gel('ULB-ZVAL');
-        if (zv) zv.textContent = s.toFixed(1) + '×';
-    }
-
-    function clamp() {
-        var v = vp(), i = img(); if (!v || !i) return;
-        var vw = v.clientWidth, vh = v.clientHeight;
-        var iw = i.offsetWidth * s, ih = i.offsetHeight * s;
-        var mx = Math.max(0, (iw - vw) / 2);
-        var my = Math.max(0, (ih - vh) / 2);
-        tx = Math.min(mx, Math.max(-mx, tx));
-        ty = Math.min(my, Math.max(-my, ty));
-    }
-
-    function reset(anim) { s = 1; tx = 0; ty = 0; apply(anim); }
-
-    function zoomAt(factor, cx, cy) {
-        var v = vp(); if (!v) return;
-        var r = v.getBoundingClientRect();
-        var px = cx - r.left - v.clientWidth  / 2;
-        var py = cy - r.top  - v.clientHeight / 2;
-        var ns = Math.min(8, Math.max(1, s * factor));
-        var ratio = ns / s;
-        tx = px - (px - tx) * ratio;
-        ty = py - (py - ty) * ratio;
-        s = ns;
-        clamp(); apply(false);
-    }
-
-    function loadImage(url, cap, anim) {
-        var i = img(); if (!i) return;
-        i.style.opacity = '0';
-        i.src = url;
-        var c = gel('ULB-CAP'); if (c) c.textContent = cap || '';
-        i.onload = function() {
-            reset(false);
-            i.style.transition = 'opacity .25s ease';
-            i.style.opacity = '1';
-        };
-        if (!anim) { i.style.transition = 'none'; }
-    }
-
-    /* ── public API ── */
-    function open(items, startIdx) {
-        scans = Array.isArray(items) ? items : [items];
-        idx = startIdx || 0;
-        var lb = gel('ULB'); if (!lb) return;
-        lb.classList.add('on');
-        document.body.style.overflow = 'hidden';
-        loadImage(scans[idx].src, scans[idx].cap);
-        updateNav();
-    }
-
-    function close() {
-        var lb = gel('ULB'); if (!lb) return;
-        lb.classList.remove('on');
-        document.body.style.overflow = '';
-        reset(false);
-        if (onClose) onClose();
-    }
-
-    function nav(dir) {
-        if (!scans.length) return;
-        idx = (idx + dir + scans.length) % scans.length;
-        loadImage(scans[idx].src, scans[idx].cap, true);
-        updateNav();
-    }
-
-    function updateNav() {
-        var prev = gel('ULB-PREV'), next = gel('ULB-NEXT');
-        var show = scans.length > 1;
-        if (prev) prev.style.display = show ? '' : 'none';
-        if (next) next.style.display = show ? '' : 'none';
-    }
-
-    /* ── init events (once DOM ready) ── */
-    function initEvents() {
-        var v = vp(); if (!v) return;
-
-        /* mouse drag */
-        v.addEventListener('mousedown', function(e) {
-            if (e.button !== 0) return;
-            dragging = true; dx = e.clientX; dy = e.clientY; ox = tx; oy = ty;
-            v.style.cursor = 'grabbing'; e.preventDefault();
-        });
-        document.addEventListener('mousemove', function(e) {
-            if (!dragging) return;
-            tx = ox + (e.clientX - dx); ty = oy + (e.clientY - dy);
-            clamp(); apply(false);
-        });
-        document.addEventListener('mouseup', function() {
-            if (!dragging) return;
-            dragging = false; var vv = vp(); if (vv) vv.style.cursor = 'grab';
-        });
-
-        /* wheel zoom */
-        v.addEventListener('wheel', function(e) {
-            e.preventDefault();
-            zoomAt(e.deltaY < 0 ? 1.15 : 1/1.15, e.clientX, e.clientY);
-        }, { passive: false });
-
-        /* double-click */
-        v.addEventListener('dblclick', function(e) {
-            if (s > 1.5) reset(true); else zoomAt(2.5, e.clientX, e.clientY);
-        });
-
-        /* touch pinch + pan */
-        v.addEventListener('touchstart', function(e) {
-            if (e.touches.length === 1) {
-                dragging = true;
-                dx = e.touches[0].clientX; dy = e.touches[0].clientY; ox = tx; oy = ty;
-            } else if (e.touches.length === 2) {
-                dragging = false;
-                pinchD0 = Math.hypot(e.touches[0].clientX - e.touches[1].clientX,
-                                     e.touches[0].clientY - e.touches[1].clientY);
-                pinchS0 = s;
-            }
-        }, { passive: true });
-        v.addEventListener('touchmove', function(e) {
-            e.preventDefault();
-            if (e.touches.length === 1 && dragging) {
-                tx = ox + (e.touches[0].clientX - dx);
-                ty = oy + (e.touches[0].clientY - dy);
-                clamp(); apply(false);
-            } else if (e.touches.length === 2) {
-                var d = Math.hypot(e.touches[0].clientX - e.touches[1].clientX,
-                                   e.touches[0].clientY - e.touches[1].clientY);
-                s = Math.min(8, Math.max(1, pinchS0 * (d / pinchD0)));
-                clamp(); apply(false);
-            }
-        }, { passive: false });
-        v.addEventListener('touchend', function() { dragging = false; });
-
-        /* close on backdrop click */
-        var lb = gel('ULB');
-        if (lb) lb.addEventListener('click', function(e) { if (e.target === lb) close(); });
-
-        /* keyboard */
-        document.addEventListener('keydown', function(e) {
-            var lb = gel('ULB'); if (!lb || !lb.classList.contains('on')) return;
-            if (e.key === 'Escape')              close();
-            if (e.key === 'ArrowLeft'  && s<=1)  nav(-1);
-            if (e.key === 'ArrowRight' && s<=1)  nav(1);
-            if (e.key === '+' || e.key === '=')  zoomAt(1.3, window.innerWidth/2, window.innerHeight/2);
-            if (e.key === '-')                   zoomAt(1/1.3, window.innerWidth/2, window.innerHeight/2);
-            if (e.key === '0')                   reset(true);
-        });
-    }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initEvents);
-    } else {
-        initEvents();
-    }
-
-    global.ULB = { open: open, close: close, nav: nav,
-                   zoomIn:  function() { zoomAt(1.3, window.innerWidth/2, window.innerHeight/2); },
-                   zoomOut: function() { zoomAt(1/1.3, window.innerWidth/2, window.innerHeight/2); },
-                   reset:   function() { reset(true); } };
-
-})(window);
-
-
 // ⚡ Застосувати тему ДО рендеру — без блимання
 (function(){
     var t = localStorage.getItem('theme') || 'light';
@@ -591,15 +406,22 @@ function initGalleryFilters() {
     attachFilter();
 }
 
-// ── Lightbox — ULB universal system ──
+// ── Lightbox → ULB ──
 function openLightbox(index) {
     currentPhotoIndex = index;
     const p = filteredPhotos[index];
     if (!p) return;
-    const items = filteredPhotos.map(ph => ({ src: ph.imageUrl, cap: ph.title }));
-    ULB.open(items, index);
+    const cap  = document.getElementById('lightboxCaption');
+    const meta = document.getElementById('lightboxMeta');
+    const dl   = document.getElementById('lightboxDownloadContainer');
+    if (cap)  cap.textContent  = p.title || '';
+    if (meta) meta.textContent = [PERIOD_NAMES[p.period]||p.period, CATEGORY_NAMES[p.category]||p.category, p.date||''].filter(Boolean).join(' · ');
+    if (dl) dl.innerHTML = p.originalUrl?.startsWith('http')
+        ? `<a href="${p.originalUrl}" target="_blank" rel="noopener" class="lightbox-download">📥 Переглянути оригінал</a>` : '';
+    const arr = filteredPhotos.map(ph => ({ src: ph.imageUrl, cap: ph.title || '' }));
+    ULB.open(arr, index);
+    buildFilmstrip(filteredPhotos, index);
 }
-
 function navigateLightbox(dir) {
     if (!filteredPhotos.length) return;
     currentPhotoIndex = dir === 'next'
@@ -607,9 +429,8 @@ function navigateLightbox(dir) {
         : (currentPhotoIndex - 1 + filteredPhotos.length) % filteredPhotos.length;
     openLightbox(currentPhotoIndex);
 }
-
 function closeLightbox() { ULB.close(); }
-function initLightbox() { /* handled by ULB */ }
+function initLightbox() {}
 
 
 // FILMSTRIP для lightbox

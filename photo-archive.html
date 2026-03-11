@@ -16,111 +16,28 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-/* ═══════════════════════════════════════════════════
-   ULB — Universal LightBox CSS
-   ═══════════════════════════════════════════════════ */
-#ULB {
-    position: fixed; inset: 0; z-index: 99999;
-    background: rgba(4,3,2,.97);
-    display: none; flex-direction: column;
-    align-items: stretch; justify-content: stretch;
-}
-#ULB.on { display: flex; animation: ulbIn .18s ease; }
-@keyframes ulbIn { from { opacity:0; } to { opacity:1; } }
-
-/* viewport — fills all space, handles events */
-#ULB-VP {
-    flex: 1; overflow: hidden;
-    display: flex; align-items: center; justify-content: center;
-    cursor: grab; touch-action: none; user-select: none;
-}
-#ULB-VP:active { cursor: grabbing; }
-
-/* image */
-#ULB-IMG {
-    max-width: 100%; max-height: 100%;
-    object-fit: contain; display: block;
-    border-radius: 4px;
-    user-select: none; -webkit-user-drag: none;
-    pointer-events: none; will-change: transform;
-    box-shadow: 0 24px 80px rgba(0,0,0,.7);
-}
-
-/* bottom bar */
-#ULB-BAR {
-    display: flex; align-items: center; justify-content: center;
-    gap: .35rem; padding: .55rem .8rem; flex-shrink: 0;
-    background: rgba(8,6,12,.9); backdrop-filter: blur(10px);
-    border-top: 1px solid rgba(255,255,255,.07);
-}
-.ulb-btn {
-    width: 36px; height: 36px; flex-shrink: 0;
-    border-radius: 8px; border: 1px solid rgba(255,255,255,.13);
-    background: rgba(255,255,255,.07); color: rgba(255,255,255,.8);
-    cursor: pointer; display: flex; align-items: center; justify-content: center;
-    transition: background .15s, border-color .15s;
-}
-.ulb-btn:hover { background: rgba(255,255,255,.18); border-color: rgba(255,255,255,.25); }
-.ulb-btn svg { width: 16px; height: 16px; pointer-events: none; }
-#ULB-ZVAL {
-    font-family: 'DM Sans', sans-serif; font-size: .72rem;
-    color: rgba(255,255,255,.55); min-width: 3.2em; text-align: center;
-}
-#ULB-CAP {
-    font-family: 'DM Sans', sans-serif; font-size: .72rem;
-    color: rgba(255,255,255,.5); flex: 1; text-align: center;
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    padding: 0 .5rem;
-}
-.ulb-sep { width: 1px; height: 20px; background: rgba(255,255,255,.1); flex-shrink: 0; }
-
-/* close button */
-#ULB-CLOSE {
-    position: absolute; top: .9rem; right: 1rem;
-    width: 40px; height: 40px; border-radius: 50%;
-    border: 1px solid rgba(255,255,255,.2);
-    background: rgba(255,255,255,.1); backdrop-filter: blur(8px);
-    color: rgba(255,255,255,.85); cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    transition: background .15s; z-index: 2;
-}
-#ULB-CLOSE:hover { background: rgba(255,255,255,.25); }
-#ULB-CLOSE svg { width: 18px; height: 18px; pointer-events: none; }
-
-/* prev/next */
-.ulb-nav {
-    position: absolute; top: 50%; transform: translateY(-50%);
-    width: 44px; height: 44px; border-radius: 50%;
-    border: 1px solid rgba(255,255,255,.15);
-    background: rgba(255,255,255,.08); backdrop-filter: blur(8px);
-    color: rgba(255,255,255,.8); cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    transition: background .15s; z-index: 2; font-size: 1.3rem;
-}
-.ulb-nav:hover { background: rgba(255,255,255,.22); }
-#ULB-PREV { left: .8rem; }
-#ULB-NEXT { right: .8rem; }
-
-/* hint */
-#ULB-HINT {
-    position: absolute; top: .9rem; left: 50%; transform: translateX(-50%);
-    background: rgba(8,6,12,.8); backdrop-filter: blur(8px);
-    border: 1px solid rgba(255,255,255,.1); border-radius: 100px;
-    padding: .35rem 1rem;
-    font-family: 'DM Sans', sans-serif; font-size: .58rem;
-    letter-spacing: .06em; color: rgba(255,255,255,.45);
-    pointer-events: none; white-space: nowrap;
-    transition: opacity .5s; z-index: 2;
-}
-#ULB.interacted #ULB-HINT { opacity: 0; }
-
-@media (max-width: 480px) {
-    .ulb-nav { width: 36px; height: 36px; font-size: 1rem; }
-    #ULB-PREV { left: .4rem; }
-    #ULB-NEXT { right: .4rem; }
-    #ULB-HINT { display: none; }
-}
-
+/* ── ULB ── */
+#ULB{position:fixed;inset:0;z-index:99999;background:rgba(4,3,2,.97);display:none;flex-direction:column;align-items:stretch;}
+#ULB.on{display:flex;animation:_ulbIn .18s ease;}
+@keyframes _ulbIn{from{opacity:0}to{opacity:1}}
+#ULB-VP{flex:1;overflow:hidden;display:flex;align-items:center;justify-content:center;cursor:grab;touch-action:none;user-select:none;}
+#ULB-VP:active{cursor:grabbing;}
+#ULB-IMG{max-width:100%;max-height:100%;object-fit:contain;display:block;border-radius:4px;user-select:none;-webkit-user-drag:none;pointer-events:none;will-change:transform;box-shadow:0 24px 80px rgba(0,0,0,.7);}
+#ULB-BAR{display:flex;align-items:center;justify-content:center;gap:.35rem;padding:.55rem .8rem;flex-shrink:0;background:rgba(8,6,12,.9);backdrop-filter:blur(10px);border-top:1px solid rgba(255,255,255,.07);}
+.ulb-btn{width:36px;height:36px;flex-shrink:0;border-radius:8px;border:1px solid rgba(255,255,255,.13);background:rgba(255,255,255,.07);color:rgba(255,255,255,.8);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s;padding:0;}
+.ulb-btn:hover{background:rgba(255,255,255,.2);}
+.ulb-btn svg{width:16px;height:16px;pointer-events:none;}
+#ULB-ZVAL{font-family:'DM Sans',sans-serif;font-size:.72rem;color:rgba(255,255,255,.55);min-width:3.2em;text-align:center;}
+#ULB-CAP{font-family:'DM Sans',sans-serif;font-size:.72rem;color:rgba(255,255,255,.5);flex:1;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 .5rem;}
+.ulb-sep{width:1px;height:20px;background:rgba(255,255,255,.1);flex-shrink:0;}
+#ULB-CLOSE{position:absolute;top:.9rem;right:1rem;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.1);backdrop-filter:blur(8px);color:rgba(255,255,255,.85);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s;z-index:2;padding:0;}
+#ULB-CLOSE:hover{background:rgba(255,255,255,.25);}
+#ULB-CLOSE svg,.ulb-nav svg,#ULB-CLOSE svg path,#ULB-CLOSE svg line{pointer-events:none;}
+.ulb-nav{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.08);backdrop-filter:blur(8px);color:rgba(255,255,255,.8);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s;z-index:2;font-size:1.3rem;line-height:1;padding:0;}
+.ulb-nav:hover{background:rgba(255,255,255,.22);}
+#ULB-PREV{left:.8rem;}#ULB-NEXT{right:.8rem;}
+#ULB-HINT{position:absolute;top:.9rem;left:50%;transform:translateX(-50%);background:rgba(8,6,12,.8);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.1);border-radius:100px;padding:.35rem 1rem;font-family:'DM Sans',sans-serif;font-size:.58rem;letter-spacing:.06em;color:rgba(255,255,255,.45);pointer-events:none;white-space:nowrap;z-index:2;}
+@media(max-width:480px){.ulb-nav{width:36px;height:36px;font-size:1rem;}#ULB-PREV{left:.4rem;}#ULB-NEXT{right:.4rem;}#ULB-HINT{display:none;}}
 </style>
 </head>
 <body>
@@ -222,32 +139,23 @@
         </div>
     </section>
 
-
-
-        <!-- ULB — Universal LightBox -->
-    <div id="ULB">
-        <button id="ULB-CLOSE" onclick="ULB.close()" title="Закрити (Esc)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        </button>
-        <div id="ULB-HINT">Прокрутка — зум · Перетяг — пан · Esc — закрити</div>
-        <button class="ulb-nav" id="ULB-PREV" onclick="ULB.nav(-1)" title="Попереднє">‹</button>
-        <button class="ulb-nav" id="ULB-NEXT" onclick="ULB.nav(1)" title="Наступне">›</button>
-        <div id="ULB-VP">
-            <img id="ULB-IMG" src="" alt="" draggable="false">
-        </div>
-        <div id="ULB-BAR">
-            <button class="ulb-btn" onclick="ULB.zoomOut()" title="Зменшити (-)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
-            </button>
-            <span id="ULB-ZVAL">1.0×</span>
-            <button class="ulb-btn" onclick="ULB.zoomIn()" title="Збільшити (+)">
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <span class="lightbox-close">×</span>
+            <button class="lightbox-zoom-btn" id="lightboxZoomBtn" title="Збільшити / зменшити">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
             </button>
-            <button class="ulb-btn" onclick="ULB.reset()" title="Скинути (0)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
-            </button>
-            <div class="ulb-sep"></div>
-            <span id="ULB-CAP"></span>
+            <button class="lightbox-nav lightbox-prev" aria-label="Попереднє">‹</button>
+            <button class="lightbox-nav lightbox-next" aria-label="Наступне">›</button>
+            <div class="lightbox-img-frame" id="lightboxImgFrame">
+                <img src="" alt="" class="lightbox-image" id="lightboxImage">
+            </div>
+            <div class="lightbox-info">
+                <p class="lightbox-caption" id="lightboxCaption"></p>
+                <p class="lightbox-meta" id="lightboxMeta"></p>
+                <div id="lightboxDownloadContainer"></div>
+            </div>
         </div>
     </div>
 
@@ -285,5 +193,123 @@
     </footer>
 
     <script src="app.js"></script>
+    <div id="ULB">
+        <button id="ULB-CLOSE" onclick="ULB.close()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+        <div id="ULB-HINT">Прокрутка — зум · Перетяг — пан · Esc — закрити</div>
+        <button class="ulb-nav" id="ULB-PREV" onclick="ULB.nav(-1)">&#8249;</button>
+        <button class="ulb-nav" id="ULB-NEXT" onclick="ULB.nav(1)">&#8250;</button>
+        <div id="ULB-VP"><img id="ULB-IMG" src="" alt="" draggable="false"></div>
+        <div id="ULB-BAR">
+            <button class="ulb-btn" onclick="ULB.zoomOut()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg></button>
+            <span id="ULB-ZVAL">1.0&times;</span>
+            <button class="ulb-btn" onclick="ULB.zoomIn()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></button>
+            <button class="ulb-btn" onclick="ULB.reset()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg></button>
+            <div class="ulb-sep"></div>
+            <span id="ULB-CAP"></span>
+        </div>
+    </div>
+    <!-- kept for app.js -->
+    <div style="display:none">
+        <p id="lightboxCaption"></p><p id="lightboxMeta"></p>
+        <div id="lightboxDownloadContainer"></div>
+    </div>
+    <script>
+(function(g){'use strict';
+var s=1,tx=0,ty=0,drag=false,dx=0,dy=0,ox=0,oy=0,pd0=0,ps0=1,items=[],cur=0;
+function gel(id){return document.getElementById(id);}
+function applyT(anim){
+  var i=gel('ULB-IMG');if(!i)return;
+  i.style.transition=anim?'transform .2s ease':'none';
+  i.style.transform='translate('+tx+'px,'+ty+'px) scale('+s+')';
+  var z=gel('ULB-ZVAL');if(z)z.textContent=s.toFixed(1)+'×';
+}
+function clamp(){
+  var v=gel('ULB-VP'),i=gel('ULB-IMG');if(!v||!i)return;
+  var mx=Math.max(0,(i.offsetWidth*s-v.clientWidth)/2);
+  var my=Math.max(0,(i.offsetHeight*s-v.clientHeight)/2);
+  tx=Math.min(mx,Math.max(-mx,tx));ty=Math.min(my,Math.max(-my,ty));
+}
+function reset(anim){s=1;tx=0;ty=0;applyT(anim);}
+function zoomAt(f,cx,cy){
+  var v=gel('ULB-VP');if(!v)return;
+  var r=v.getBoundingClientRect();
+  var px=cx-r.left-v.clientWidth/2,py=cy-r.top-v.clientHeight/2;
+  var ns=Math.min(8,Math.max(1,s*f)),ratio=ns/s;
+  tx=px-(px-tx)*ratio;ty=py-(py-ty)*ratio;s=ns;
+  clamp();applyT(false);
+}
+function loadItem(i2){
+  var i=gel('ULB-IMG'),c2=gel('ULB-CAP');if(!i)return;
+  cur=i2;reset(false);
+  i.style.opacity='0';i.src=items[i2].src;
+  if(c2)c2.textContent=items[i2].cap||'';
+  i.onload=function(){i.style.transition='opacity .25s';i.style.opacity='1';};
+  var p=gel('ULB-PREV'),n=gel('ULB-NEXT');
+  if(p)p.style.display=items.length>1?'':'none';
+  if(n)n.style.display=items.length>1?'':'none';
+}
+function open(arr,i2){
+  items=arr;cur=i2||0;
+  var lb=gel('ULB');if(!lb)return;
+  lb.classList.add('on');document.body.style.overflow='hidden';
+  loadItem(cur);
+}
+function close(){
+  var lb=gel('ULB');if(!lb)return;
+  lb.classList.remove('on');document.body.style.overflow='';reset(false);
+}
+function nav(dir){
+  if(!items.length)return;
+  cur=(cur+dir+items.length)%items.length;loadItem(cur);
+}
+function init(){
+  var v=gel('ULB-VP');if(!v)return;
+  v.addEventListener('mousedown',function(e){
+    if(e.button!==0)return;drag=true;dx=e.clientX;dy=e.clientY;ox=tx;oy=ty;
+    v.style.cursor='grabbing';e.preventDefault();
+  });
+  document.addEventListener('mousemove',function(e){
+    if(!drag)return;tx=ox+(e.clientX-dx);ty=oy+(e.clientY-dy);clamp();applyT(false);
+  });
+  document.addEventListener('mouseup',function(){
+    if(!drag)return;drag=false;var vv=gel('ULB-VP');if(vv)vv.style.cursor='grab';
+  });
+  v.addEventListener('wheel',function(e){
+    e.preventDefault();zoomAt(e.deltaY<0?1.15:1/1.15,e.clientX,e.clientY);
+  },{passive:false});
+  v.addEventListener('dblclick',function(e){
+    if(s>1.5)reset(true);else zoomAt(2.5,e.clientX,e.clientY);
+  });
+  v.addEventListener('touchstart',function(e){
+    if(e.touches.length===1){drag=true;dx=e.touches[0].clientX;dy=e.touches[0].clientY;ox=tx;oy=ty;}
+    else if(e.touches.length===2){drag=false;pd0=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);ps0=s;}
+  },{passive:true});
+  v.addEventListener('touchmove',function(e){
+    e.preventDefault();
+    if(e.touches.length===1&&drag){tx=ox+(e.touches[0].clientX-dx);ty=oy+(e.touches[0].clientY-dy);clamp();applyT(false);}
+    else if(e.touches.length===2){var d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);s=Math.min(8,Math.max(1,ps0*(d/pd0)));clamp();applyT(false);}
+  },{passive:false});
+  v.addEventListener('touchend',function(){drag=false;});
+  var lb=gel('ULB');
+  if(lb)lb.addEventListener('click',function(e){if(e.target===lb||e.target===v)close();});
+  document.addEventListener('keydown',function(e){
+    var lb2=gel('ULB');if(!lb2||!lb2.classList.contains('on'))return;
+    if(e.key==='Escape')close();
+    if(e.key==='+'||e.key==='=')zoomAt(1.3,window.innerWidth/2,window.innerHeight/2);
+    if(e.key==='-')zoomAt(1/1.3,window.innerWidth/2,window.innerHeight/2);
+    if(e.key==='0')reset(true);
+    if(e.key==='ArrowLeft'&&s<=1)nav(-1);
+    if(e.key==='ArrowRight'&&s<=1)nav(1);
+  });
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init);}else{setTimeout(init,0);}
+g.ULB={open:open,close:close,nav:nav,
+  zoomIn:function(){zoomAt(1.3,window.innerWidth/2,window.innerHeight/2);},
+  zoomOut:function(){zoomAt(1/1.3,window.innerWidth/2,window.innerHeight/2);},
+  reset:function(){reset(true);}};
+})(window);
+    </script>
 </body>
 </html>
