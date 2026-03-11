@@ -454,7 +454,158 @@
 }
 .smr-context-body strong { color: var(--ink); font-weight: 500; }
 
-/* SMR-LB replaced by ULB */
+/* ── Lightbox з pan & zoom ── */
+.smr-lb {
+    position: fixed; inset: 0;
+    background: rgba(6,4,2,.97);
+    backdrop-filter: blur(24px);
+    z-index: 9999;
+    display: none;
+    flex-direction: column;
+    align-items: center; justify-content: center;
+    overflow: hidden;
+    touch-action: none;
+}
+.smr-lb.on { display: flex; animation: fadeIn .2s ease; }
+
+.smr-lb-viewport {
+    position: relative;
+    width: 100vw;
+    flex: 1;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+    cursor: grab;
+}
+.smr-lb-viewport.dragging { cursor: grabbing; }
+
+.smr-lb-img {
+    max-width: none; max-height: none; display: block;
+    border-radius: 3px;
+    box-shadow: 0 40px 100px rgba(0,0,0,.8);
+    transform-origin: center center;
+    user-select: none; -webkit-user-drag: none;
+    pointer-events: none;
+    will-change: transform;
+    transition: opacity .25s ease;
+}
+.smr-lb-img.animating { transition: transform .22s cubic-bezier(.16,1,.3,1), opacity .25s ease; }
+
+.smr-lb-bar {
+    flex-shrink: 0;
+    display: flex; align-items: center; gap: .4rem;
+    background: rgba(10,8,4,.9); backdrop-filter: blur(14px);
+    border-top: 1px solid rgba(255,255,255,.07);
+    padding: .6rem 1rem;
+    width: 100%;
+    box-sizing: border-box;
+    z-index: 10001;
+}
+.smr-lb-btn {
+    width: 34px; height: 34px; border-radius: 8px;
+    background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12);
+    color: rgba(255,255,255,.75);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: background .18s, color .18s; flex-shrink: 0;
+}
+.smr-lb-btn:hover { background: var(--sepia-light); color: #1c160a; border-color: transparent; }
+.smr-lb-btn svg { width: 16px; height: 16px; }
+.smr-lb-sep { width: 1px; height: 20px; background: rgba(255,255,255,.1); margin: 0 .2rem; flex-shrink: 0; }
+.smr-lb-caption-bar {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .58rem; letter-spacing: .1em; text-transform: uppercase;
+    color: rgba(201,165,83,.7);
+    flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    padding: 0 .5rem;
+    text-align: center;
+}
+.smr-lb-zoom-val {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .6rem; color: rgba(255,255,255,.5);
+    min-width: 3.5ch; text-align: center; flex-shrink: 0;
+}
+.smr-lb-close {
+    position: fixed; top: 1rem; right: 1rem;
+    width: 40px; height: 40px;
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.15); border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,.8);
+    cursor: pointer; transition: all .2s; z-index: 10002;
+}
+.smr-lb-close:hover { background: rgba(255,255,255,.15); }
+.smr-lb-close svg { width: 18px; height: 18px; }
+.smr-lb-hint {
+    position: fixed; top: 1rem; left: 50%; transform: translateX(-50%);
+    background: rgba(10,8,4,.75); backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,.08); border-radius: 100px;
+    padding: .3rem .9rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .55rem; letter-spacing: .1em; text-transform: uppercase;
+    color: rgba(255,255,255,.3); pointer-events: none; z-index: 10001;
+    white-space: nowrap; transition: opacity .5s;
+}
+.smr-lb.interacted .smr-lb-hint { opacity: 0; }
+
+/* ── Summary box ── */
+.smr-summary-box {
+    background: linear-gradient(135deg, #1a1408, #2a1e0a);
+    border-radius: 12px;
+    padding: 2.5rem;
+    color: white;
+    position: relative; overflow: hidden;
+    margin-top: 2.5rem;
+}
+.smr-summary-box::before {
+    content: '₂'; /* decorative */
+    position: absolute; right: 1.5rem; bottom: -2rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12rem; font-weight: 300; line-height: 1;
+    color: rgba(201,165,83,.06);
+    pointer-events: none;
+}
+.smr-summary-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 300;
+    color: #f0e4b8; margin-bottom: 1.2rem;
+}
+.smr-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+@media (max-width: 600px) { .smr-summary-grid { grid-template-columns: 1fr 1fr; }
+/* ── МОБІЛЬНІ ВКЛАДКИ ── */
+@media (max-width: 768px) {
+    .smr-tabs { overflow-x: auto; flex-wrap: nowrap; scrollbar-width: none; }
+    .smr-tabs::-webkit-scrollbar { display: none; }
+    .smr-tab { flex-shrink: 0; font-size: .62rem; padding: .7rem .9rem; }
+    .smr-body { padding: 1.5rem 1rem; }
+}
+ }
+.smr-sum-stat {
+    text-align: center;
+    padding: 1rem;
+    border: 1px solid rgba(201,165,83,.15);
+    border-radius: 8px;
+    background: rgba(255,255,255,.03);
+}
+.smr-sum-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem; font-weight: 300;
+    color: #c9a553; line-height: 1; margin-bottom: .3rem;
+}
+.smr-sum-key {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .58rem; letter-spacing: .12em; text-transform: uppercase;
+    color: rgba(255,255,255,.4); line-height: 1.4;
+}
+
+/* ── Scroll fade in ── */
+.{
+    opacity: 1; transform: none;
+    transition: opacity .6s ease, transform .6s ease;
+}
+..vis { opacity: 1; transform: none; }
 </style>
 <style>
 /* ═══════════════════════════════════════════════════
@@ -1678,230 +1829,9 @@ uchwalono bywa, Czyni in Summa —
 
     <!-- ══ SCAN LIGHTBOX ══ -->
 
-                <div class="footer-section">
-                    <h4 class="footer-title">Контакти</h4>
-                    <p class="footer-text">Маєте матеріали або пропозиції?<br><a href="contacts.html" class="footer-link">Зв'яжіться з нами</a></p>
-                </div>
-            </div>
-            <div class="footer-bottom"><p>&copy; 2026 Дубровиця. Цифровий архів.</p></div>
-        </div>
-    </footer>
 
-    <script src="app.js"></script>
-    <script>
-<script>
-    (function() {
-    var SCANS = [
-    { src: 'https://i.imgur.com/eCkmrb3.jpeg', cap: 'Сторінка 1 · Грошові доходи' },
-    { src: 'https://i.imgur.com/UPFx3Gp.jpeg', cap: 'Сторінка 2 · Промисловий потенціал' },
-    { src: 'https://i.imgur.com/gseULFj.jpeg', cap: 'Сторінка 3 · Замок та підсумок' },
-];
-
-    // Tab system
-    document.querySelectorAll('.smr-tab').forEach(function(tab) {
-        tab.addEventListener('click', function() {
-            var panel = this.dataset.panel;
-            document.querySelectorAll('.smr-tab').forEach(function(t) { t.classList.remove('active'); });
-            document.querySelectorAll('.smr-tab-panel').forEach(function(p) { p.classList.remove('active'); });
-            this.classList.add('active');
-            document.getElementById('panel-' + panel).classList.add('active');
-        });
-    });
-
-    // Open scan in ULB
-    window.openScanLB = function(i) {
-        ULB.open(SCANS, i);
-    };
-
-    })();
-</script>
-<script>
-/* ═══════════════════════════════════════════════════════════
-   ULB — Universal LightBox  (pan + pinch-zoom + wheel-zoom)
-   Підключається в app.js і окремо в кожну HTML-сторінку
-   ═══════════════════════════════════════════════════════════ */
-(function(global) {
-    'use strict';
-
-    var s = 1, tx = 0, ty = 0;
-    var dragging = false, dx = 0, dy = 0, ox = 0, oy = 0;
-    var pinchD0 = 0, pinchS0 = 1;
-    var scans = [], idx = 0;
-    var onClose = null;
-
-    /* ── helpers ── */
-    function gel(id) { return document.getElementById(id); }
-    function vp()    { return gel('ULB-VP'); }
-    function img()   { return gel('ULB-IMG'); }
-
-    function apply(anim) {
-        var i = img(); if (!i) return;
-        i.style.transition = anim ? 'transform .2s ease' : 'none';
-        i.style.transform = 'translate('+tx+'px,'+ty+'px) scale('+s+')';
-        var zv = gel('ULB-ZVAL');
-        if (zv) zv.textContent = s.toFixed(1) + '×';
-    }
-
-    function clamp() {
-        var v = vp(), i = img(); if (!v || !i) return;
-        var vw = v.clientWidth, vh = v.clientHeight;
-        var iw = i.offsetWidth * s, ih = i.offsetHeight * s;
-        var mx = Math.max(0, (iw - vw) / 2);
-        var my = Math.max(0, (ih - vh) / 2);
-        tx = Math.min(mx, Math.max(-mx, tx));
-        ty = Math.min(my, Math.max(-my, ty));
-    }
-
-    function reset(anim) { s = 1; tx = 0; ty = 0; apply(anim); }
-
-    function zoomAt(factor, cx, cy) {
-        var v = vp(); if (!v) return;
-        var r = v.getBoundingClientRect();
-        var px = cx - r.left - v.clientWidth  / 2;
-        var py = cy - r.top  - v.clientHeight / 2;
-        var ns = Math.min(8, Math.max(1, s * factor));
-        var ratio = ns / s;
-        tx = px - (px - tx) * ratio;
-        ty = py - (py - ty) * ratio;
-        s = ns;
-        clamp(); apply(false);
-    }
-
-    function loadImage(url, cap, anim) {
-        var i = img(); if (!i) return;
-        i.style.opacity = '0';
-        i.src = url;
-        var c = gel('ULB-CAP'); if (c) c.textContent = cap || '';
-        i.onload = function() {
-            reset(false);
-            i.style.transition = 'opacity .25s ease';
-            i.style.opacity = '1';
-        };
-        if (!anim) { i.style.transition = 'none'; }
-    }
-
-    /* ── public API ── */
-    function open(items, startIdx) {
-        scans = Array.isArray(items) ? items : [items];
-        idx = startIdx || 0;
-        var lb = gel('ULB'); if (!lb) return;
-        lb.classList.add('on');
-        document.body.style.overflow = 'hidden';
-        loadImage(scans[idx].src, scans[idx].cap);
-        updateNav();
-    }
-
-    function close() {
-        var lb = gel('ULB'); if (!lb) return;
-        lb.classList.remove('on');
-        document.body.style.overflow = '';
-        reset(false);
-        if (onClose) onClose();
-    }
-
-    function nav(dir) {
-        if (!scans.length) return;
-        idx = (idx + dir + scans.length) % scans.length;
-        loadImage(scans[idx].src, scans[idx].cap, true);
-        updateNav();
-    }
-
-    function updateNav() {
-        var prev = gel('ULB-PREV'), next = gel('ULB-NEXT');
-        var show = scans.length > 1;
-        if (prev) prev.style.display = show ? '' : 'none';
-        if (next) next.style.display = show ? '' : 'none';
-    }
-
-    /* ── init events (once DOM ready) ── */
-    function initEvents() {
-        var v = vp(); if (!v) return;
-
-        /* mouse drag */
-        v.addEventListener('mousedown', function(e) {
-            if (e.button !== 0) return;
-            dragging = true; dx = e.clientX; dy = e.clientY; ox = tx; oy = ty;
-            v.style.cursor = 'grabbing'; e.preventDefault();
-        });
-        document.addEventListener('mousemove', function(e) {
-            if (!dragging) return;
-            tx = ox + (e.clientX - dx); ty = oy + (e.clientY - dy);
-            clamp(); apply(false);
-        });
-        document.addEventListener('mouseup', function() {
-            if (!dragging) return;
-            dragging = false; var vv = vp(); if (vv) vv.style.cursor = 'grab';
-        });
-
-        /* wheel zoom */
-        v.addEventListener('wheel', function(e) {
-            e.preventDefault();
-            zoomAt(e.deltaY < 0 ? 1.15 : 1/1.15, e.clientX, e.clientY);
-        }, { passive: false });
-
-        /* double-click */
-        v.addEventListener('dblclick', function(e) {
-            if (s > 1.5) reset(true); else zoomAt(2.5, e.clientX, e.clientY);
-        });
-
-        /* touch pinch + pan */
-        v.addEventListener('touchstart', function(e) {
-            if (e.touches.length === 1) {
-                dragging = true;
-                dx = e.touches[0].clientX; dy = e.touches[0].clientY; ox = tx; oy = ty;
-            } else if (e.touches.length === 2) {
-                dragging = false;
-                pinchD0 = Math.hypot(e.touches[0].clientX - e.touches[1].clientX,
-                                     e.touches[0].clientY - e.touches[1].clientY);
-                pinchS0 = s;
-            }
-        }, { passive: true });
-        v.addEventListener('touchmove', function(e) {
-            e.preventDefault();
-            if (e.touches.length === 1 && dragging) {
-                tx = ox + (e.touches[0].clientX - dx);
-                ty = oy + (e.touches[0].clientY - dy);
-                clamp(); apply(false);
-            } else if (e.touches.length === 2) {
-                var d = Math.hypot(e.touches[0].clientX - e.touches[1].clientX,
-                                   e.touches[0].clientY - e.touches[1].clientY);
-                s = Math.min(8, Math.max(1, pinchS0 * (d / pinchD0)));
-                clamp(); apply(false);
-            }
-        }, { passive: false });
-        v.addEventListener('touchend', function() { dragging = false; });
-
-        /* close on backdrop click */
-        var lb = gel('ULB');
-        if (lb) lb.addEventListener('click', function(e) { if (e.target === lb) close(); });
-
-        /* keyboard */
-        document.addEventListener('keydown', function(e) {
-            var lb = gel('ULB'); if (!lb || !lb.classList.contains('on')) return;
-            if (e.key === 'Escape')              close();
-            if (e.key === 'ArrowLeft'  && s<=1)  nav(-1);
-            if (e.key === 'ArrowRight' && s<=1)  nav(1);
-            if (e.key === '+' || e.key === '=')  zoomAt(1.3, window.innerWidth/2, window.innerHeight/2);
-            if (e.key === '-')                   zoomAt(1/1.3, window.innerWidth/2, window.innerHeight/2);
-            if (e.key === '0')                   reset(true);
-        });
-    }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initEvents);
-    } else {
-        initEvents();
-    }
-
-    global.ULB = { open: open, close: close, nav: nav,
-                   zoomIn:  function() { zoomAt(1.3, window.innerWidth/2, window.innerHeight/2); },
-                   zoomOut: function() { zoomAt(1/1.3, window.innerWidth/2, window.innerHeight/2); },
-                   reset:   function() { reset(true); } };
-
-})(window);
-
-</script>
-    <!-- ULB — Universal LightBox -->
+    <!-- Footer -->
+        <!-- ULB — Universal LightBox -->
     <div id="ULB">
         <button id="ULB-CLOSE" onclick="ULB.close()" title="Закрити (Esc)">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -1928,5 +1858,53 @@ uchwalono bywa, Czyni in Summa —
         </div>
     </div>
 
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4 class="footer-title">Дубровиця</h4>
+                    <p class="footer-text">Цифровий архів історичної спадщини міста Дубровиця, Рівненська область, Україна.</p>
+                </div>
+                <div class="footer-section">
+                    <h4 class="footer-title">Навігація</h4>
+                    <nav class="footer-nav">
+                        <a href="history.html">Історія</a>
+                        <a href="photo-archive.html">Фотоархів</a>
+                        <a href="metrychni-knyhy.html">Метричні книги</a>
+                        <a href="books.html">Книги</a>
+                    </nav>
+                </div>
+                <div class="footer-section">
+                    <h4 class="footer-title">Контакти</h4>
+                    <p class="footer-text">Маєте матеріали або пропозиції?<br><a href="contacts.html" class="footer-link">Зв'яжіться з нами</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom"><p>&copy; 2026 Дубровиця. Цифровий архів.</p></div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+    <script>
+<script>
+(function(){
+    var SCANS = [
+    { src: 'https://i.imgur.com/eCkmrb3.jpeg', cap: 'Сторінка 1 · Грошові доходи' },
+    { src: 'https://i.imgur.com/UPFx3Gp.jpeg', cap: 'Сторінка 2 · Промисловий потенціал' },
+    { src: 'https://i.imgur.com/gseULFj.jpeg', cap: 'Сторінка 3 · Замок та підсумок' },
+];
+
+    document.querySelectorAll('.smr-tab').forEach(function(tab) {
+        tab.addEventListener('click', function() {
+            var panel = this.dataset.panel;
+            document.querySelectorAll('.smr-tab').forEach(function(t){t.classList.remove('active');});
+            document.querySelectorAll('.smr-tab-panel').forEach(function(p){p.classList.remove('active');});
+            this.classList.add('active');
+            document.getElementById('panel-'+panel).classList.add('active');
+        });
+    });
+
+    window.openScanLB = function(i) { ULB.open(SCANS, i); };
+})();
+</script>
 </body>
 </html>
