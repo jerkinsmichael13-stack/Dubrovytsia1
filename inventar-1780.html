@@ -156,6 +156,7 @@
     border: none; cursor: pointer; transition: all .25s ease;
     display: flex; align-items: center; justify-content: center; gap: .5rem;
     border-right: 1px solid var(--ruling); position: relative;
+    white-space: nowrap;
 }
 .smr-tab:last-child { border-right: none; }
 .smr-tab svg { width: 14px; height: 14px; opacity: .7; }
@@ -504,7 +505,8 @@
     .smr-hero-meta { gap: 1rem; flex-wrap: wrap; }
 }
 @media (max-width: 480px) {
-    .smr-tab { padding: .6rem .75rem; font-size: .58rem; }
+    .smr-tab { padding: .55rem .65rem; font-size: .52rem; letter-spacing: .03em; gap: .2rem; }
+    .smr-tab svg { display: none; }
 }
 
 }
