@@ -1418,7 +1418,7 @@ html[data-theme="dark"] .moon-icon { display: none; }
     overflow: hidden;
     box-shadow: var(--shadow-sm);
     border: 1px solid var(--color-border-light);
-    transition: transform 0.65s cubic-bezier(0.16,1,0.3,1), box-shadow 0.65s cubic-bezier(0.16,1,0.3,1), border-color 0.5s ease;
+    transition: box-shadow 0.9s cubic-bezier(0.16,1,0.3,1), border-color 0.9s ease;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -1735,14 +1735,11 @@ html[data-theme="dark"] .moon-icon { display: none; }
     border-color: rgba(200,152,26,0.18);
     z-index: 2;
 }
-.photo-card:hover img {
-    transform: scale(1.025);
-    filter: contrast(1.01) brightness(1.03) saturate(0.96);
-}
+.photo-card:hover img { transform: scale(1.025); filter: contrast(1.01) brightness(1.03) saturate(0.96); }
 
 .photo-overlay {
     position: absolute; inset: 0;
-    background: linear-gradient(to top, rgba(8,5,2,0.75) 0%, rgba(8,5,2,0.25) 35%, transparent 60%);
+    background: linear-gradient(to top, rgba(8,5,2,0.90) 0%, rgba(8,5,2,0.55) 40%, rgba(8,5,2,0.1) 65%, transparent 100%);
     display: flex; flex-direction: column; justify-content: flex-end;
     padding: 1.5rem 1.25rem 1.1rem;
     opacity: 0.55;
@@ -2433,12 +2430,11 @@ select.admin-input { cursor: pointer; }
    DARK THEME — header, nav, scrolled
    ================================================================ */
 
-[data-theme="dark"] .header { background-color: #0e0c0a; border-bottom-color: transparent; }
-[data-theme="dark"] .header.scrolled { box-shadow: none; border-bottom-color: transparent; }
+[data-theme="dark"] .header { background-color: rgba(14,12,10,0.92); }
+[data-theme="dark"] .header.scrolled { box-shadow: 0 4px 24px rgba(0,0,0,0.5); }
 [data-theme="dark"] .nav { background-color: var(--color-bg-card); }
 [data-theme="dark"] .nav-link { color: rgba(180,170,155,0.65); }
 [data-theme="dark"] .nav-link:hover { color: rgba(240,230,210,0.9); background: rgba(255,255,255,0.04); }
-[data-theme="dark"] .nav-link.active { color: var(--color-accent); }
 [data-theme="dark"] .nav-link.active { color: var(--color-accent); }
 
 /* ================================================================
