@@ -220,8 +220,8 @@ input, textarea, select { font-family: var(--font-body); font-size: 1rem; }
 }
 
 [data-theme="dark"] .header {
-    background-color: rgba(14, 12, 10, 0.92);
-    border-bottom-color: var(--color-border);
+    background-color: #0e0c0a;
+    border-bottom-color: transparent;
 }
 
 .header.scrolled {
