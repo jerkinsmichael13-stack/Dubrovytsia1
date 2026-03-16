@@ -534,6 +534,76 @@
 #ULB-HINT{position:absolute;top:.9rem;left:50%;transform:translateX(-50%);background:rgba(8,6,12,.8);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.1);border-radius:100px;padding:.35rem 1rem;font-family:'DM Sans',sans-serif;font-size:.58rem;letter-spacing:.06em;color:rgba(255,255,255,.45);pointer-events:none;white-space:nowrap;z-index:2;}
 @media(max-width:480px){.ulb-nav{width:36px;height:36px;font-size:1rem;}#ULB-PREV{left:.4rem;}#ULB-NEXT{right:.4rem;}#ULB-HINT{display:none;}}
 
+
+/* ══════════════════════════════════════════════
+   SMR-LB — Scan Lightbox styles
+══════════════════════════════════════════════ */
+.smr-lb {
+    position: fixed; inset: 0; z-index: 99999;
+    background: rgba(4,3,2,.97);
+    display: none; flex-direction: column; align-items: stretch;
+}
+.smr-lb.open { display: flex; animation: smrLbIn .2s ease; }
+@keyframes smrLbIn { from { opacity:0 } to { opacity:1 } }
+.smr-lb-close {
+    position: absolute; top: .9rem; right: 1rem;
+    width: 40px; height: 40px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.2);
+    background: rgba(255,255,255,.1); backdrop-filter: blur(8px);
+    color: rgba(255,255,255,.85); cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .15s; z-index: 2; padding: 0;
+}
+.smr-lb-close:hover { background: rgba(255,255,255,.25); }
+.smr-lb-close svg { width: 18px; height: 18px; pointer-events: none; }
+.smr-lb-viewport {
+    flex: 1; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    cursor: grab; touch-action: none; user-select: none;
+}
+.smr-lb-viewport:active { cursor: grabbing; }
+.smr-lb-img {
+    max-width: 100%; max-height: 100%;
+    object-fit: contain; display: block; border-radius: 3px;
+    user-select: none; -webkit-user-drag: none; pointer-events: none;
+    will-change: transform; box-shadow: 0 24px 80px rgba(0,0,0,.7);
+}
+.smr-lb-bar {
+    display: flex; align-items: center; justify-content: center;
+    gap: .35rem; padding: .6rem .8rem; flex-shrink: 0;
+    background: rgba(8,6,12,.92); backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255,255,255,.07);
+}
+.smr-lb-btn {
+    width: 34px; height: 34px; flex-shrink: 0; border-radius: 7px;
+    border: 1px solid rgba(255,255,255,.13);
+    background: rgba(255,255,255,.07); color: rgba(255,255,255,.8);
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background .15s; padding: 0;
+}
+.smr-lb-btn:hover { background: rgba(255,255,255,.2); }
+.smr-lb-btn svg { width: 15px; height: 15px; pointer-events: none; }
+.smr-lb-zoom-val {
+    font-family: 'DM Sans', sans-serif; font-size: .72rem;
+    color: rgba(255,255,255,.5); min-width: 3.2em; text-align: center;
+}
+.smr-lb-sep { width: 1px; height: 20px; background: rgba(255,255,255,.1); flex-shrink: 0; }
+.smr-lb-caption-bar {
+    font-family: 'DM Sans', sans-serif; font-size: .74rem; font-weight: 400;
+    color: rgba(255,255,255,.62); flex: 1; text-align: center;
+    white-space: normal; overflow: hidden;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+    padding: 0 1rem; line-height: 1.45; letter-spacing: .01em;
+}
+.smr-lb-hint {
+    position: absolute; top: .9rem; left: 50%; transform: translateX(-50%);
+    background: rgba(8,6,12,.8); backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,.1); border-radius: 100px;
+    padding: .35rem 1rem; font-family: 'DM Sans', sans-serif;
+    font-size: .57rem; letter-spacing: .06em; color: rgba(255,255,255,.42);
+    pointer-events: none; white-space: nowrap; z-index: 2;
+}
+@media (max-width: 480px) { .smr-lb-hint { display: none; } }
 </style>
 </head>
 <body class="smr-page">
@@ -1504,7 +1574,8 @@ Przedmiescie worobinskie na Trakcie Litewskim z przyjazdu od Stolina y Wysocka l
             <div class="ulb-sep"></div>
             <span id="ULB-CAP"></span>
         </div>
-    </div>iv class="smr-lb" id="SMR-LB">
+    </div>
+    <div class="smr-lb" id="SMR-LB">
         <!-- Close -->
         <button class="smr-lb-close" onclick="closeScanLB()" title="Закрити (Esc)">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>

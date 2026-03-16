@@ -326,18 +326,23 @@ function displayPhotos(resetPage) {
     const start = (currentGalleryPage - 1) * PHOTOS_PER_PAGE;
     const pagePhotos = filteredPhotos.slice(start, start + PHOTOS_PER_PAGE);
     gallery.style.cssText = '';
-    gallery.innerHTML = pagePhotos.map((p, i) => `
+    gallery.innerHTML = pagePhotos.map((p, i) => {
+        const meta = [
+            p.date || '',
+            CATEGORY_NAMES[p.category] || p.category || ''
+        ].filter(Boolean).join(' · ');
+        return `
         <div class="photo-card" onclick="openLightbox(${start + i})">
             <img src="${imgurThumb(p.imageUrl)}" alt="${p.title}" loading="lazy" decoding="async">
             <div class="photo-overlay">
                 <div class="photo-info">
                     <h3>${p.title}</h3>
-                    <p>${PERIOD_NAMES[p.period] || p.period} · ${CATEGORY_NAMES[p.category] || p.category}</p>
-                    ${p.originalUrl ? '<p style="font-size:0.7rem;opacity:0.75;margin-top:0.25rem">📥 Є оригінал</p>' : ''}
+                    ${meta ? `<p class="photo-meta">${meta}</p>` : ''}
+                    ${p.originalUrl ? '<span class="photo-orig">📥 Оригінал</span>' : ''}
                 </div>
             </div>
-        </div>
-    `).join('');
+        </div>`;
+    }).join('');
     enhancePhotoCards();
     initImageReveal();
     renderPagination(totalPages);

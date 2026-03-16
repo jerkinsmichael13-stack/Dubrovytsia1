@@ -267,8 +267,8 @@
     }
     .KGAL-ITEM { position: relative; overflow: hidden; border-radius: 4px; background: var(--color-bg-secondary, #ede7db); cursor: pointer; }
     .KGAL-MAIN { grid-row: span 2; }
-    .KGAL-ITEM img { width: 100%; height: 100%; object-fit: cover; display: block; filter: contrast(1.01) brightness(1.02) saturate(.88); transition: transform 1.1s cubic-bezier(0.16,1,0.3,1), filter 0.9s ease; }
-    .KGAL-ITEM:hover img { transform: scale(1.025); filter: contrast(1.01) brightness(1.03) saturate(.93); }
+    .KGAL-ITEM img { width: 100%; height: 100%; object-fit: cover; display: block; filter: contrast(1.01) brightness(1.02) saturate(.88); transition: transform 1.1s cubic-bezier(0.16,1,0.3,1), filter 0.9s ease !important; transform: scale(1) translateZ(0) !important; will-change: transform; }
+    .KGAL-ITEM:hover img { transform: scale(1.04) translateZ(0) !important; filter: contrast(1.02) brightness(1.04) saturate(.93) !important; }
     .KGAL-ITEM::after { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0); transition: background 0.6s ease; pointer-events: none; }
     .KGAL-ITEM:hover::after { background: rgba(0,0,0,0.04); }
 
@@ -322,7 +322,7 @@
 .ulb-btn:hover{background:rgba(255,255,255,.2);}
 .ulb-btn svg{width:16px;height:16px;pointer-events:none;}
 #ULB-ZVAL{font-family:'DM Sans',sans-serif;font-size:.72rem;color:rgba(255,255,255,.55);min-width:3.2em;text-align:center;}
-#ULB-CAP{font-family:'DM Sans',sans-serif;font-size:.74rem;font-weight:400;color:rgba(255,255,255,.62);flex:1;text-align:center;white-space:normal;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;padding:0 1rem;line-height:1.45;letter-spacing:.01em;}
+#ULB-CAP{font-family:'DM Sans',sans-serif;font-size:.72rem;color:rgba(255,255,255,.5);flex:1;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 .5rem;}
 .ulb-sep{width:1px;height:20px;background:rgba(255,255,255,.1);flex-shrink:0;}
 #ULB-CLOSE{position:absolute;top:.9rem;right:1rem;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.1);backdrop-filter:blur(8px);color:rgba(255,255,255,.85);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s;z-index:2;padding:0;}
 #ULB-CLOSE:hover{background:rgba(255,255,255,.25);}
@@ -336,7 +336,7 @@
 
     .yuliania-name {
         font-family: 'Cormorant Garamond', serif;
-        font-size: clamp(1.8rem,3.5vw,2.8rem); font-weight: 300;
+        font-size: clamp(2rem,4vw,3.2rem); font-weight: 300;
         color: var(--color-text, #1c1917); line-height: 1.1; margin-bottom: .35rem;
     }
     [data-theme="dark"] .yuliania-name { color: #f0e8d0; }
@@ -350,17 +350,18 @@
 
     .yuliania-block blockquote {
         font-family: 'Cormorant Garamond', serif;
-        font-size: 1.05rem; font-weight: 300; font-style: italic;
+        font-size: 1.12rem; font-weight: 300; font-style: italic;
         color: var(--color-text-light, #78716c);
-        line-height: 1.72; border-left: 1px solid rgba(201,162,39,.35);
-        padding-left: 1.1rem; margin-bottom: 1.3rem;
+        line-height: 1.78; border-left: 2px solid rgba(201,162,39,.5);
+        padding: .2rem 0 .2rem 1.2rem; margin-bottom: 1.5rem;
+        background: rgba(201,162,39,.03); border-radius: 0 4px 4px 0;
     }
     [data-theme="dark"] .yuliania-block blockquote { color: rgba(240,230,200,.45); }
 
     .ygal-cap {
-        font-size: .47rem; letter-spacing: .07em;
+        font-size: .58rem; letter-spacing: .06em;
         color: var(--color-text-muted, #a8a29e);
-        margin-top: .3rem; text-align: center; line-height: 1.55;
+        margin-top: .45rem; text-align: center; line-height: 1.6;
     }
     [data-theme="dark"] .ygal-cap { color: rgba(240,230,200,.3); }
 
@@ -637,10 +638,10 @@
             </div>
 
             <!-- Main layout: large icon left + text right -->
-            <div style="display:grid;grid-template-columns:220px 1fr;gap:2.8rem;align-items:start;margin-bottom:2rem;">
+            <div style="display:grid;grid-template-columns:260px 1fr;gap:3.2rem;align-items:start;margin-bottom:2.5rem;">
                 <!-- Icon — tall portrait -->
                 <div>
-                    <div class="KGAL-ITEM" style="height:380px;border-radius:3px;cursor:pointer;" onclick="openKLB(this)">
+                    <div class="KGAL-ITEM" style="height:440px;border-radius:6px;cursor:pointer;box-shadow:0 8px 32px rgba(0,0,0,.15);" onclick="openKLB(this)">
                         <img src="https://i.imgur.com/l1SHdOp.jpeg" alt="Ікона св. Юліанії Гольшанської" loading="lazy"
                              style="width:100%;height:100%;object-fit:cover;object-position:top;filter:sepia(.18) contrast(1.04) brightness(1.08);">
                     </div>
@@ -661,28 +662,28 @@
             <!-- Four image strip with captions -->
             <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;">
                 <div>
-                    <div class="KGAL-ITEM" style="height:240px;border-radius:3px;cursor:pointer;" onclick="openKLB(this)">
+                    <div class="KGAL-ITEM" style="height:260px;border-radius:5px;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.1);" onclick="openKLB(this)">
                         <img src="https://i.imgur.com/3jJc4j7.jpeg" alt="Розпис ц. Іова Почаївського" loading="lazy"
                              style="width:100%;height:100%;object-fit:cover;filter:sepia(.35) contrast(1.04) brightness(1.06);">
                     </div>
                     <p class="ygal-cap">Розпис ц. Іова Почаївського<br>кін. ХIХ ст.</p>
                 </div>
                 <div>
-                    <div class="KGAL-ITEM" style="height:240px;border-radius:3px;cursor:pointer;" onclick="openKLB(this)">
+                    <div class="KGAL-ITEM" style="height:260px;border-radius:5px;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.1);" onclick="openKLB(this)">
                         <img src="https://i.imgur.com/JiDsvMw.jpeg" alt="Літографія 1886 р." loading="lazy"
                              style="width:100%;height:100%;object-fit:cover;filter:sepia(.38) contrast(1.04) brightness(1.09);">
                     </div>
                     <p class="ygal-cap">Літографія · 1886 р.</p>
                 </div>
                 <div>
-                    <div class="KGAL-ITEM" style="height:240px;border-radius:3px;cursor:pointer;" onclick="openKLB(this)">
+                    <div class="KGAL-ITEM" style="height:260px;border-radius:5px;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.1);" onclick="openKLB(this)">
                         <img src="https://i.imgur.com/sUnxh3B.jpeg" alt="Пам'ятник Юліанії у Дубровиці" loading="lazy"
                              style="width:100%;height:100%;object-fit:cover;filter:contrast(1.03) brightness(1.09) saturate(.8);">
                     </div>
                     <p class="ygal-cap">Пам'ятник у Дубровиці<br>відкрито 2005 р.</p>
                 </div>
                 <div>
-                    <div class="KGAL-ITEM" style="height:240px;border-radius:3px;cursor:pointer;" onclick="openKLB(this)">
+                    <div class="KGAL-ITEM" style="height:260px;border-radius:5px;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.1);" onclick="openKLB(this)">
                         <img src="https://i.imgur.com/GuDy8u6.jpeg" alt="Гробниця Юліанії у Лаврі" loading="lazy"
                              style="width:100%;height:100%;object-fit:cover;filter:sepia(.22) contrast(1.04) brightness(1.06);">
                     </div>
