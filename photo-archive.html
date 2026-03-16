@@ -387,6 +387,963 @@
     color: #c9a227;
 }
 
+/* Uniform grid — consistent card heights */
+.pa-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: .65rem;
+}
+@media (max-width: 1100px) { .pa-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 700px)  { .pa-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 380px)  { .pa-grid { grid-template-columns: 1fr; } }
+
+/* Photo card uniform height inside gallery */
+.pa-grid .photo-card {
+    break-inside: unset;
+    margin-bottom: 0;
+    height: 260px;
+}
+.pa-grid .photo-card img {
+    height: 100%;
+    object-fit: cover;
+}
+@media (max-width: 700px) {
+    .pa-grid .photo-card { height: 200px; }
+}
+
+/* Reuse .photo-card styles from app.css */
+
+/* Empty state */
+.pa-empty {
+    text-align: center;
+    padding: 5rem 1rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem; font-weight: 300;
+    color: var(--color-text-muted, #a8a29e);
+}
+
+/* Pagination */
+.pa-pagination {
+    display: flex; justify-content: center; align-items: center;
+    gap: .4rem; margin-top: 3rem; flex-wrap: wrap;
+}
+.pa-pg-btn {
+    min-width: 40px; height: 40px; padding: 0 .6rem;
+    border-radius: 8px;
+    border: 1px solid var(--color-border-light, rgba(201,162,39,.2));
+    background: transparent;
+    font-family: 'DM Sans', sans-serif; font-size: .75rem;
+    color: var(--color-text-secondary, #78716c);
+    cursor: pointer; transition: all .2s ease;
+    display: flex; align-items: center; justify-content: center;
+}
+.pa-pg-btn:hover:not(:disabled) {
+    border-color: rgba(201,162,39,.5);
+    color: var(--color-text, #1c1917);
+    background: rgba(201,162,39,.06);
+}
+.pa-pg-btn.active {
+    background: rgba(201,162,39,.12);
+    border-color: rgba(201,162,39,.5);
+    color: #c9a227; font-weight: 500;
+}
+.pa-pg-btn:disabled { opacity: .35; cursor: not-allowed; }
+.pa-pg-ellipsis {
+    font-family: 'DM Sans', sans-serif; font-size: .8rem;
+    color: var(--color-text-muted, #a8a29e); padding: 0 .3rem;
+}
+
+/* Loading skeleton */
+.pa-loading {
+    text-align: center; padding: 4rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .72rem; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--color-text-muted, #a8a29e);
+    display: flex; align-items: center; justify-content: center; gap: .8rem;
+}
+.pa-loading-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #c9a227; opacity: .4;
+    animation: paDot 1.2s ease-in-out infinite;
+}
+.pa-loading-dot:nth-child(2) { animation-delay: .2s; }
+.pa-loading-dot:nth-child(3) { animation-delay: .4s; }
+@keyframes paDot {
+    0%,80%,100% { opacity:.15; transform:scale(.8); }
+    40%         { opacity:.9;  transform:scale(1.1); }
+}
+
+/* Dark theme adjustments */
+[data-theme="dark"] .pa-tabs-wrap { box-shadow: 0 4px 20px rgba(0,0,0,.2); }
+[data-theme="dark"] .pa-hero-cell img { filter: contrast(1.05) brightness(.88) saturate(.72); }
+[data-theme="dark"] .pa-hero-cell:hover img { filter: contrast(1.04) brightness(.94) saturate(.76); }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+    <div class="header-container">
+        <a href="index.html" class="logo">
+            <img src="https://i.imgur.com/op2tNhY.jpeg" alt="Герб" class="logo-img" loading="lazy">
+            <div class="logo-text">
+                <span class="logo-city">Дубровиця</span>
+                <span class="logo-subtitle">Цифровий архів</span>
+            </div>
+        </a>
+        <nav class="nav" id="mainNav">
+            <a href="index.html" class="nav-link">Головна</a>
+            <a href="history.html" class="nav-link">Історія</a>
+            <a href="photo-archive.html" class="nav-link active">Фотоархів</a>
+            <a href="architecture.html" class="nav-link">Пам'ятки</a>
+            <a href="metrychni-knyhy.html" class="nav-link">Метричні книги</a>
+            <a href="books.html" class="nav-link">Книги</a>
+            <a href="contacts.html" class="nav-link">Контакти</a>
+        </nav>
+        <button class="theme-toggle" id="themeToggle" aria-label="Перемкнути тему">
+            <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/>
+                <line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/>
+                <line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+            <svg class="theme-icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+        </button>
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Відкрити меню">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</header>
+
+<!-- ═══════════════════════════════════════════
+     HERO SECTION
+═══════════════════════════════════════════ -->
+<section class="pa-hero">
+
+    <div class="pa-hero-header">
+        <div class="pa-hero-label fade-in-up">Цифровий архів · Дубровиця</div>
+        <h1 class="pa-hero-title fade-in-up delay-1">
+            Фото<em>архів</em>
+        </h1>
+        <p class="pa-hero-title-sub fade-in-up delay-2">
+            Унікальна колекція від XIX до XXI&thinsp;ст. &nbsp;·&nbsp; Церкви, вулиці, люди, архітектура
+        </p>
+    </div>
+
+    <!-- Головне фото -->
+    <div class="pa-hero-main-wrap">
+        <div class="pa-hero-main fade-in-up delay-2" data-hero-idx="0">
+            <img src="https://i.imgur.com/ssqiAZi.jpeg" alt="Костел Іоана Хрестителя · 1929" loading="eager">
+            <div class="pa-hero-main-ovl">
+                <div class="pa-hero-main-year">1929 рік · Вид з вулиці</div>
+                <div class="pa-hero-main-title">Костел Іоанна Хрестителя</div>
+            </div>
+            <div class="pa-hero-main-zoom">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+            </div>
+        </div>
+    </div>
+
+    <!-- Стрічка 4 фото -->
+    <div class="pa-hero-strip-wrap">
+        <div class="pa-hero-strip">
+            <div class="pa-strip-cell fade-in-up delay-3" data-hero-idx="1">
+                <img src="https://i.imgur.com/trildJWm.jpeg" alt="Фотолистівка 1910" loading="lazy">
+                <div class="pa-strip-cell-ovl">
+                    <div class="pa-strip-year">1910 рік</div>
+                    <div class="pa-strip-title">Фотолистівка</div>
+                </div>
+            </div>
+            <div class="pa-strip-cell fade-in-up delay-3" data-hero-idx="2">
+                <img src="https://i.imgur.com/ZKkcU77.jpeg" alt="Костел Іоанна Хрестителя" loading="lazy">
+                <div class="pa-strip-cell-ovl">
+                    <div class="pa-strip-year">1920-ті рр.</div>
+                    <div class="pa-strip-title">Міське кладовище. Невідомий похорон</div>
+                </div>
+            </div>
+            <div class="pa-strip-cell fade-in-up delay-4" data-hero-idx="3">
+                <img src="https://i.imgur.com/jpyssNA.jpeg" alt="Палац Плятерів 1925" loading="lazy">
+                <div class="pa-strip-cell-ovl">
+                    <div class="pa-strip-year">1900-ті рр.</div>
+                    <div class="pa-strip-title">Дерев'яний міст через річку Горинь</div>
+                </div>
+            </div>
+            <div class="pa-strip-cell fade-in-up delay-4" data-hero-idx="4">
+                <img src="https://i.imgur.com/CT4rMSK.jpeg" alt="Дубровиця міжвоєнна" loading="lazy">
+                <div class="pa-strip-cell-ovl">
+                    <div class="pa-strip-year">1915 рік</div>
+                    <div class="pa-strip-title">Група людей перед костелом</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pa-hero-bottom-gap"></div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     CATEGORY TABS
+═══════════════════════════════════════════ -->
+<div class="pa-tabs-wrap">
+    <div class="pa-tabs" id="paTabs">
+        <button class="pa-tab active" data-pa-cat="all">
+            Всі фотографії <span class="pa-tab-count" id="cnt-all">…</span>
+        </button>
+        <button class="pa-tab" data-pa-cat="churches">
+            Церкви <span class="pa-tab-count" id="cnt-churches">…</span>
+        </button>
+        <button class="pa-tab" data-pa-cat="streets">
+            Вулиці <span class="pa-tab-count" id="cnt-streets">…</span>
+        </button>
+        <button class="pa-tab" data-pa-cat="people">
+            Люди <span class="pa-tab-count" id="cnt-people">…</span>
+        </button>
+        <button class="pa-tab" data-pa-cat="architecture">
+            Архітектура <span class="pa-tab-count" id="cnt-architecture">…</span>
+        </button>
+        <button class="pa-tab" data-pa-cat="aerial">
+            Аерофотознімки та плани <span class="pa-tab-count" id="cnt-aerial">…</span>
+        </button>
+        <button class="pa-tab" data-pa-cat="drawings">
+            Малюнки <span class="pa-tab-count" id="cnt-drawings">…</span>
+        </button>
+        <button class="pa-tab" data-pa-cat="events">
+            Події <span class="pa-tab-count" id="cnt-events">…</span>
+        </button>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     GALLERY
+═══════════════════════════════════════════ -->
+<div class="pa-gallery-wrap">
+
+    <!-- Section header -->
+    <div class="pa-section-head">
+        <span class="pa-section-title" id="paSectionTitle">Всі фотографії</span>
+        <span class="pa-section-count" id="paSectionCount"></span>
+    </div>
+
+    <!-- Period pills -->
+    <div class="pa-period-pills" id="paPeriodPills">
+        <button class="pa-period-pill active" data-pa-period="all">Всі роки</button>
+        <button class="pa-period-pill" data-pa-period="before-1900">До 1900</button>
+        <button class="pa-period-pill" data-pa-period="1900-1939">1900—1939</button>
+        <button class="pa-period-pill" data-pa-period="1939-1945">1939—1945</button>
+        <button class="pa-period-pill" data-pa-period="1945-1991">1945—1991</button>
+        <button class="pa-period-pill" data-pa-period="after-1991">Після 1991</button>
+    </div>
+
+    <!-- Grid -->
+    <div class="pa-grid" id="paGrid">
+        <div class="pa-loading">
+            <div class="pa-loading-dot"></div>
+            <div class="pa-loading-dot"></div>
+            <div class="pa-loading-dot"></div>
+        </div>
+    </div>
+
+    <!-- Pagination -->
+    <div id="paPagination"></div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4 class="footer-title">Дубровиця</h4>
+                <p class="footer-text">Цифровий архів історичної спадщини міста Дубровиця, Сарненський район, Рівненська область, Україна.</p>
+            </div>
+            <div class="footer-section">
+                <h4 class="footer-title">Навігація</h4>
+                <nav class="footer-nav">
+                    <a href="history.html">Історія</a>
+                    <a href="photo-archive.html">Фотоархів</a>
+                    <a href="metrychni-knyhy.html">Метричні книги</a>
+                    <a href="books.html">Книги</a>
+                </nav>
+            </div>
+            <div class="footer-section">
+                <h4 class="footer-title">Контакти</h4>
+                <p class="footer-text">Маєте матеріали або пропозиції?<br><a href="contacts.html" class="footer-link">Зв'яжіться з нами</a></p>
+            </div>
+        </div>
+        <div class="footer-bottom"><p>&copy; 2026 Дубровиця. Цифровий архів.</p></div>
+    </div>
+</footer>
+
+<!-- ULB Lightbox -->
+<div id="ULB">
+    <button id="ULB-CLOSE" onclick="ULB.close()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div id="ULB-HINT">Прокрутка — зум · Перетяг — пан · Esc — закрити</div>
+    <button class="ulb-nav" id="ULB-PREV" onclick="ULB.nav(-1)">&#8249;</button>
+    <button class="ulb-nav" id="ULB-NEXT" onclick="ULB.nav(1)">&#8250;</button>
+    <div id="ULB-VP"><img id="ULB-IMG" src="" alt="" draggable="false"></div>
+    <div id="ULB-BAR">
+        <button class="ulb-btn" onclick="ULB.zoomOut()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg></button>
+        <span id="ULB-ZVAL">1.0&times;</span>
+        <button class="ulb-btn" onclick="ULB.zoomIn()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></button>
+        <button class="ulb-btn" onclick="ULB.reset()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg></button>
+        <div class="ulb-sep"></div>
+        <span id="ULB-CAP"></span>
+    </div>
+</div>
+<!-- kept for app.js compat -->
+<div style="display:none">
+    <p id="lightboxCaption"></p><p id="lightboxMeta"></p>
+    <div id="lightboxDownloadContainer"></div>
+</div>
+
+<script src="app.js"></script>
+
+<script>
+(function() {
+'use strict';
+
+// ── CONFIG ──────────────────────────────────────────
+var GITHUB_RAW = 'https://raw.githubusercontent.com/jerkinsmichael13-stack/Dubrovytsia1/main/';
+var PHOTOS_PER_PAGE = 16;
+
+var CATEGORY_NAMES = {
+    'churches':     'Церкви',
+    'streets':      'Вулиці',
+    'people':       'Люди',
+    'architecture': 'Архітектура',
+    'aerial':       'Аерофотознімки та плани',
+    'drawings':     'Малюнки',
+    'events':       'Події'
+};
+var PERIOD_NAMES = {
+    'before-1900': 'До 1900',
+    '1900-1939':   '1900—1939',
+    '1939-1945':   '1939—1945',
+    '1945-1991':   '1945—1991',
+    'after-1991':  'Після 1991'
+};
+
+// ── STATE ────────────────────────────────────────────
+var ALL_PHOTOS = [];
+var activeCat    = 'all';
+var activePeriod = 'all';
+var activePage   = 1;
+var filtered     = [];
+
+// ── HERO lightbox ─────────────────────────────────────
+var HERO_PHOTOS = [
+    { src: 'https://i.imgur.com/ssqiAZi.jpeg',  cap: 'Костел Іоана Хрестителя · 1929 рік' },
+    { src: 'https://i.imgur.com/trildJWm.jpeg', cap: 'Фотолистівка · 1910 рік' },
+    { src: 'https://i.imgur.com/ZKkcU77.jpeg',  cap: 'Міське кладовище. Невідомий похорон' },
+    { src: 'https://i.imgur.com/jpyssNA.jpeg',  cap: "Дерев'яний міст через річку Горинь" },
+    { src: 'https://i.imgur.com/CT4rMSK.jpeg',  cap: 'Група людей перед костелом' }
+];
+document.querySelectorAll('.pa-hero-main[data-hero-idx], .pa-strip-cell[data-hero-idx]').forEach(function(cell) {
+    cell.addEventListener('click', function() {
+        var idx = parseInt(this.getAttribute('data-hero-idx'), 10);
+        ULB.open(HERO_PHOTOS, idx);
+    });
+});
+// Auto-reveal main photo text
+setTimeout(function() {
+    var main = document.querySelector('.pa-hero-main');
+    if (main) main.classList.add('revealed');
+}, 500);
+
+// ── FETCH photos.json ─────────────────────────────────
+function imgThumb(url) {
+    if (!url) return url;
+    if (url.includes('i.imgur.com')) return url.replace(/\.(jpe?g|png|gif|webp)$/i, 'l.$1');
+    return url;
+}
+
+// Photos embedded directly — no network request needed
+ALL_PHOTOS = [{"imageUrl":"https://i.imgur.com/xUe22Gn.jpeg","title":"Портрет Ks. Konstanty Jakucewicz, написаний в костелі міста","period":"before-1900","category":"drawings","date":"2026"},{"imageUrl":"https://i.imgur.com/DRaB4CW.jpeg","title":"Портрет Ks. Maciej Kupść, написаний в костелі міста","period":"before-1900","category":"drawings","date":"2026"},{"imageUrl":"https://i.imgur.com/csirjoF.jpeg","title":"План міста","period":"before-1900","category":"aerial","date":"1855"},{"imageUrl":"https://i.imgur.com/I0bdUdp.jpeg","title":"План станції Дубровиця","period":"1900-1939","category":"aerial","date":"1915"},{"imageUrl":"https://i.imgur.com/YxFni3M.png","title":"1 світова війна, солдати біля міста Дубровиця","period":"1900-1939","category":"people","date":"1914-1916"},{"imageUrl":"https://i.imgur.com/67HOTtf.jpeg","title":"Група людей перед костелом","period":"1900-1939","category":"architecture","date":"1915"},{"imageUrl":"https://i.imgur.com/1DIq3cL.jpeg","title":"Центральна площа","period":"1945-1991","category":"streets","date":"2026"},{"imageUrl":"https://i.imgur.com/0FTy7QQ.jpeg","title":"Стадіон \"Горинь\"","period":"1945-1991","category":"streets","date":"1970"},{"imageUrl":"https://i.imgur.com/tpzxriy.jpeg","title":"Центральна площа","period":"1945-1991","category":"streets","date":"2026"},{"imageUrl":"https://i.imgur.com/T5u5LZz.jpeg","title":"Святкова демонстрація","period":"1945-1991","category":"streets","date":"2026"},{"imageUrl":"https://i.imgur.com/81g11dx.jpeg","title":"Річка Горинь, старе русло","period":"1945-1991","category":"streets","date":"2026"},{"imageUrl":"https://i.imgur.com/E5qlHAs.jpeg","title":"Вознесення мощей Іулянії Гольшанської","period":"1900-1939","category":"churches","date":"2026"},{"imageUrl":"https://i.imgur.com/O1ePrRv.jpeg","title":"Залізнична станція","period":"1900-1939","category":"streets","date":"1918"},{"imageUrl":"https://i.imgur.com/GoysWer.jpeg","title":"Вулиці міста, похорон","period":"1900-1939","category":"streets","date":"2026"},{"imageUrl":"https://i.imgur.com/4k6vEvj.jpeg","title":"Центральна площа","period":"1900-1939","category":"streets","date":"2026"},{"imageUrl":"https://i.imgur.com/dV20PSx.jpeg","title":"Готель Готліба","period":"1900-1939","category":"architecture","date":"2026"},{"imageUrl":"https://i.imgur.com/fhWj8PF.jpeg","title":"Пам'ятник Леніну, на задньому плані синагога та костел","period":"1945-1991","category":"streets","date":"2026"},{"imageUrl":"https://i.imgur.com/t5zySGY.jpeg","title":"Будинок побуту \"Полісся\"","period":"1945-1991","category":"architecture","date":"2026"},{"imageUrl":"https://i.imgur.com/Sez1sH2.jpeg","title":"Будинок","period":"1900-1939","category":"architecture","date":"2026"},{"imageUrl":"https://i.imgur.com/0myPz10.jpeg","title":"Дерев'яний міст через річку Горинь","period":"1900-1939","category":"architecture","date":"2026"},{"imageUrl":"https://i.imgur.com/FbtIR3Q.jpeg","title":"Святкова демонстрація","period":"1945-1991","category":"streets","date":"2026"},{"imageUrl":"https://i.imgur.com/z6rnZ1h.jpeg","title":"Будинок пошти","period":"1945-1991","category":"architecture","date":"2026"},{"imageUrl":"https://i.imgur.com/fUKwHFo.jpeg","title":"Будинок культури","period":"1945-1991","category":"architecture","date":"2026"},{"imageUrl":"https://i.imgur.com/60SSg7B.jpeg","title":"Святкова демонстрація","period":"1900-1939","category":"streets","date":"1938"},{"imageUrl":"https://i.imgur.com/GyNm2qs.jpeg","title":"Кінотеатр","period":"1945-1991","category":"architecture","date":"2026"},{"imageUrl":"https://i.imgur.com/tIKvapP.jpeg","title":"Вулиці міста, на задньому плані мала та велика синагоги","period":"1945-1991","category":"streets","date":"2026"},{"imageUrl":"https://i.imgur.com/L87Rka0.jpeg","title":"Святкова демонстрація","period":"1945-1991","category":"streets","date":"2026"},{"imageUrl":"https://i.imgur.com/MOvjB9c.jpeg","title":"Святкова демонстрація","period":"1945-1991","category":"streets","date":"2026"},{"imageUrl":"https://i.imgur.com/ALPbzhV.jpeg","title":"Побудова моста через річку Горинь","period":"1945-1991","category":"architecture","date":"2026"},{"imageUrl":"https://i.imgur.com/NKpzDFw.jpeg","title":"Будівництво дев'ятиповерхівки","period":"1945-1991","category":"architecture","date":"1982"},{"imageUrl":"https://i.imgur.com/MtGj18L.jpeg","title":"Ресторан \"Горинь\"","period":"1945-1991","category":"streets","date":"2026"},{"imageUrl":"https://i.imgur.com/jeSVGjj.jpeg","title":"Святкова демонстрація","period":"1945-1991","category":"streets","date":"2026"},{"imageUrl":"https://i.imgur.com/Xb8FYnK.jpeg","title":"Вулиці міста","period":"1945-1991","category":"streets","date":"2026"},{"imageUrl":"https://i.imgur.com/G5T8ebG.jpeg","title":"Вулиці міста","period":"1945-1991","category":"streets","date":"1950"},{"imageUrl":"https://i.imgur.com/faIkqmZ.jpeg","title":"Міський парк, центр","period":"1900-1939","category":"streets","date":"2026"},{"imageUrl":"https://i.imgur.com/SIiSYZf.jpeg","title":"Вулиці міста","period":"1945-1991","category":"streets","date":"2026"},{"imageUrl":"https://i.imgur.com/FckBe6G.jpeg","title":"Панорама міста","period":"after-1991","category":"streets","date":"2002"},{"imageUrl":"https://i.imgur.com/V4FfjVc.jpeg","title":"Ресторан \"Горинь\"","period":"1945-1991","category":"streets","date":"2026"},{"imageUrl":"https://i.imgur.com/ccWOjJT.jpeg","title":"Пам'ятник Німецько-радянській війні","period":"1945-1991","category":"architecture","date":"2026"},{"imageUrl":"https://i.imgur.com/gd4I25B.jpeg","title":"Вулиці міста","period":"1945-1991","category":"streets","date":"2026"},{"imageUrl":"https://i.imgur.com/VfYue8J.jpeg","title":"Пам'ятник учасникам Дубровицького повстання","period":"1945-1991","category":"events","date":"2026"},{"imageUrl":"https://i.imgur.com/JgXJ9Ql.jpeg","title":"Промисловий комплекс Дубровицького лісгоспу","period":"1945-1991","category":"streets","date":"2026"},{"imageUrl":"https://i.imgur.com/MCu0vpb.jpeg","title":"Вулиця міста","period":"1945-1991","category":"streets","date":"2026"},{"imageUrl":"https://i.imgur.com/DBD4YZW.jpeg","title":"Площа перед костелом","period":"1900-1939","category":"events","date":"1931"},{"imageUrl":"https://i.imgur.com/YuMklQj.jpeg","title":"Центральна площа","period":"1945-1991","category":"streets","date":"2026"},{"imageUrl":"https://i.imgur.com/Vl9hT1Q.jpeg","title":"Пам'ятник Дубровицькому повстанню","period":"1945-1991","category":"events","date":"2026"},{"imageUrl":"https://i.imgur.com/H9f4yVN.jpeg","title":"Універмаг","period":"1945-1991","category":"architecture","date":"1982"},{"imageUrl":"https://i.imgur.com/MOOViTH.jpeg","title":"Вулиця міста","period":"1945-1991","category":"streets","date":"невідомо"},{"imageUrl":"https://i.imgur.com/bd5ZbDp.jpeg","title":"Стадіон Горинь","period":"1945-1991","category":"events","date":"1976"},{"imageUrl":"https://i.imgur.com/05wXfWI.jpeg","title":"Дубровиця, будинок","period":"1945-1991","category":"architecture","date":"1954"},{"imageUrl":"https://i.imgur.com/MfGzR8D.jpeg","title":"Костел, інтер'єр","period":"1900-1939","category":"churches","date":"1905"},{"imageUrl":"https://i.imgur.com/LVWPxA0.jpeg","title":"Міське кладовище. Невідомий похорон","period":"1900-1939","category":"streets","date":"1920"},{"imageUrl":"https://i.imgur.com/00xKSRM.png","title":"Гродський суд","period":"1900-1939","category":"streets","date":"невідомо"},{"imageUrl":"https://i.imgur.com/op2tNhY.jpeg","title":"Фотолистівка","period":"1900-1939","category":"architecture","date":"1910"},{"imageUrl":"https://i.imgur.com/71NjCcc.jpeg","title":"Церква Різдва Пресвятої Богородиці","period":"1945-1991","category":"churches","date":"1977"},{"imageUrl":"https://i.imgur.com/g0nSa1I.jpeg","title":"Церква Різдва Пресвятої Богородиці","period":"1945-1991","category":"churches","date":"1977"},{"imageUrl":"https://i.imgur.com/2Kp3cLR.jpeg","title":"Церква Різдва Пресвятої Богородиці","period":"1945-1991","category":"churches","date":"1977"},{"imageUrl":"https://i.imgur.com/KhiHYSV.jpeg","title":"Церква Різдва Пресвятої Богородиці","period":"1945-1991","category":"churches","date":"1977"},{"imageUrl":"https://i.imgur.com/fEA0QwQ.jpeg","title":"Церква Різдва Пресвятої Богородиці","period":"1900-1939","category":"churches","date":"невідомо"},{"imageUrl":"https://i.imgur.com/PrOxw4k.png","title":"Склад миловарного заводу Комітету Всеросійського земського союзу Південно-Західного фронту в містечку Домбровиці","period":"1900-1939","category":"people","date":"1916"},{"imageUrl":"https://i.imgur.com/LAZURTF.png","title":"Лабораторія миловарного заводу Комітету Всеросійського земського союзу Південно-Західного фронту в містечку Домбровиці","period":"1900-1939","category":"people","date":"1916"},{"imageUrl":"https://i.imgur.com/8yh2dGz.png","title":"Працівники канцелярії миловарного заводу Комітету Всеросійського земського союзу Південно-Західного фронту в містечку Домбровиці","period":"1900-1939","category":"people","date":"1916"},{"imageUrl":"https://i.imgur.com/sQbvtWb.png","title":"Будівля миловарного заводу Комітету Всеросійського земського союзу Південно-Західного фронту в містечку Домбровиці","period":"1900-1939","category":"people","date":"1916"},{"imageUrl":"https://i.imgur.com/Ec2YvCZ.png","title":"Внутрішній вид складу матеріалів Комітету Всеросійського земського союзу Південно-Західного фронту в містечку Домбровиці","period":"1900-1939","category":"people","date":"1916"},{"imageUrl":"https://i.imgur.com/swUEVWE.png","title":"рацівники Комітету Всеросійського земського союзу Південно-Західного фронту в містечку Домбровиці","period":"1900-1939","category":"people","date":"1916"},{"imageUrl":"https://i.imgur.com/LXL6sb2.png","title":"Приміщення бактеріологічної лабораторії головного евакуаційного пункту № 17 Комітету Всеросійського земського союзу П-Західного фронту в містечку Домбровиці","period":"1900-1939","category":"people","date":"1916"},{"imageUrl":"https://i.imgur.com/UxBBvE4.jpeg","title":"Дерев'яний міст через р. Горинь","period":"1900-1939","category":"streets","date":"1930-1939"},{"imageUrl":"https://i.imgur.com/n74FSvK.jpeg","title":"Костел Іоана Хрестителя","period":"1900-1939","category":"churches","date":"1929"},{"imageUrl":"https://i.imgur.com/S3COXmq.jpeg","title":"Дерев'яна хата","period":"1900-1939","category":"streets","date":"1929"},{"imageUrl":"https://i.imgur.com/88VtNiX.jpeg","title":"Корчма","period":"1900-1939","category":"streets","date":"1929"},{"imageUrl":"https://i.imgur.com/TfEzOmr.jpeg","title":"Дерев'яні хати","period":"1900-1939","category":"streets","date":"1929"},{"imageUrl":"https://i.imgur.com/trildJW.jpeg","title":"Костел Іоана Хрестителя, вхідна брама","period":"1900-1939","category":"churches","date":"1929"},{"imageUrl":"https://i.imgur.com/3bLmxz5.jpeg","title":"Костел Іоана Хрестителя, фото зсередини","period":"1900-1939","category":"churches","date":"1929"},{"imageUrl":"https://i.imgur.com/zbKrwKN.jpeg","title":"Костел Іоана Хрестителя, фото зсередини","period":"1900-1939","category":"churches","date":"1929"},{"imageUrl":"https://i.imgur.com/0igOEVC.jpeg","title":"Костел Іоана Хрестителя, фото зсередини","period":"1900-1939","category":"churches","date":"1929"},{"imageUrl":"https://i.imgur.com/gnTjNCA.jpeg","title":"Костел Іоана Хрестителя, фото зсередини","period":"1900-1939","category":"churches","date":"1929"},{"imageUrl":"https://i.imgur.com/q3SmLO9.jpeg","title":"Костел Іоана Хрестителя, фото зсередини","period":"1900-1939","category":"churches","date":"1929"},{"imageUrl":"https://i.imgur.com/tOUTvDh.jpeg","title":"Костел Іоана Хрестителя, фото зсередини","period":"1900-1939","category":"churches","date":"1929"},{"imageUrl":"https://i.imgur.com/LbvFW0Z.jpeg","title":"Костел Іоана Хрестителя, фото зсередини","period":"1900-1939","category":"churches","date":"1929"},{"imageUrl":"https://i.imgur.com/3SPjwUS.jpeg","title":"Костел Іоана Хрестителя, фото зсередини","period":"1939-1945","category":"churches","date":"1929"},{"imageUrl":"https://i.imgur.com/ssqiAZi.jpeg","title":"Костел Іоана Хрестителя","period":"1900-1939","category":"churches","date":"1929"},{"imageUrl":"https://i.imgur.com/DQGw0QT.jpeg","title":"Костел Іоана Хрестителя","period":"1900-1939","category":"churches","date":"1929"},{"imageUrl":"https://i.imgur.com/r24PUh2.jpeg","title":"Костел Іоана Хрестителя, фото зсередини","period":"1900-1939","category":"churches","date":"1929"},{"imageUrl":"https://i.imgur.com/zef8WRy.jpeg","title":"Аерофотознімок Дубровиці та навколишніх сіл","period":"1939-1945","category":"aerial","date":"1943"},{"imageUrl":"https://cdn.imgchest.com/files/dc3db85d5b42.jpg","title":"Аерофотознімок залізничної станції Дубровиця","period":"1939-1945","category":"aerial","date":"2026","originalUrl":"https://drive.google.com/file/d/1U0SUtcARmzWSTdwsH1kT8okxbdi5sPry/view?usp=sharing"},{"imageUrl":"https://i.imgur.com/0HyroRq.jpeg","title":"Церква Різдва Богородиці","period":"1900-1939","category":"churches","date":"1929","originalUrl":"https://drive.google.com/file/d/17WW9my9uAtPylJzPO3F_5BYTVvpYIdTN/view?usp=drive_link"},{"imageUrl":"https://i.imgur.com/WzMH0hh.jpeg","title":"Будинок в місті","period":"1900-1939","category":"streets","date":"1929","originalUrl":"https://drive.google.com/file/d/1AH4mP9QToKbieeaa0VeXRRXAsEklAsTx/view?usp=drive_link"},{"imageUrl":"https://i.imgur.com/ZKkcU77.jpeg","title":"Костел Іоана Хрестителя","period":"1900-1939","category":"streets","date":"1920"},{"imageUrl":"https://i.imgur.com/stST9GC.jpeg","title":"Пам'ятник В. Леніну, центральна площа","period":"1945-1991","category":"people","date":"1980"},{"imageUrl":"https://i.imgur.com/irxrwBo.jpeg","title":"Пам'ятник Щанкіна біля ПТУ","period":"1945-1991","category":"architecture","date":"1960"},{"imageUrl":"https://i.imgur.com/CImFE7S.jpeg","title":"Аерофотознімок Дубровиці","period":"1939-1945","category":"aerial","date":"1944"},{"imageUrl":"https://i.imgur.com/qcjgN1I.jpeg","title":"Центр міста","period":"1900-1939","category":"streets","date":"1920-1939"},{"imageUrl":"https://i.imgur.com/QTP89kg.jpeg","title":"Костел Іоанна Хрестителя","period":"1900-1939","category":"churches","date":"1930"},{"imageUrl":"https://i.imgur.com/3aWJiOy.jpeg","title":"Площа перед Костелом","period":"before-1900","category":"events","date":"1925-1930"}];
+updateCounts();
+applyFilters();
+
+// ── COUNT BADGES ──────────────────────────────────────
+function updateCounts() {
+    var cats = ['all','churches','streets','people','architecture','aerial','drawings','events'];
+    cats.forEach(function(cat) {
+        var el = document.getElementById('cnt-' + cat);
+        if (!el) return;
+        var n = cat === 'all'
+            ? ALL_PHOTOS.length
+            : ALL_PHOTOS.filter(function(p) { return p.category === cat; }).length;
+        el.textContent = n || '0';
+    });
+}
+
+// ── FILTER + RENDER ───────────────────────────────────
+function applyFilters(resetPage) {
+    if (resetPage) activePage = 1;
+    filtered = ALL_PHOTOS.filter(function(p) {
+        var catOk    = activeCat === 'all'    || p.category === activeCat;
+        var periodOk = activePeriod === 'all' || p.period === activePeriod;
+        return catOk && periodOk;
+    });
+    renderSection();
+    renderGrid();
+    renderPagination();
+}
+
+function renderSection() {
+    var title = document.getElementById('paSectionTitle');
+    var count = document.getElementById('paSectionCount');
+    if (title) title.textContent = activeCat === 'all' ? 'Всі фотографії' : (CATEGORY_NAMES[activeCat] || activeCat);
+    if (count) count.textContent = filtered.length + ' фото';
+}
+
+function renderGrid() {
+    var grid = document.getElementById('paGrid');
+    if (!grid) return;
+
+    if (!ALL_PHOTOS.length) {
+        grid.innerHTML = '<div class="pa-loading"><div class="pa-loading-dot"></div><div class="pa-loading-dot"></div><div class="pa-loading-dot"></div></div>';
+        return;
+    }
+    if (!filtered.length) {
+        grid.innerHTML = '<div class="pa-empty">Фотографій у цій категорії ще немає.</div>';
+        return;
+    }
+
+    var total = Math.ceil(filtered.length / PHOTOS_PER_PAGE);
+    if (activePage > total) activePage = total;
+    var start = (activePage - 1) * PHOTOS_PER_PAGE;
+    var page  = filtered.slice(start, start + PHOTOS_PER_PAGE);
+    var globalIndexes = [];
+    for (var i = 0; i < page.length; i++) {
+        globalIndexes.push(filtered.indexOf(page[i]));
+    }
+
+    grid.innerHTML = page.map(function(p, i) {
+        var meta = [p.date || '', CATEGORY_NAMES[p.category] || p.category || ''].filter(Boolean).join(' · ');
+        var gIdx = globalIndexes[i];
+        return '<div class="photo-card" onclick="paOpenLightbox(' + gIdx + ')">' +
+            '<img src="' + imgThumb(p.imageUrl) + '" alt="' + (p.title||'') + '" loading="lazy" decoding="async">' +
+            '<div class="photo-overlay">' +
+                '<div class="photo-info">' +
+                    '<h3>' + (p.title||'') + '</h3>' +
+                    (meta ? '<p class="photo-meta">' + meta + '</p>' : '') +
+                    (p.originalUrl ? '<span class="photo-orig">\uD83D\uDCE5 Оригінал</span>' : '') +
+                '</div>' +
+            '</div>' +
+        '</div>';
+    }).join('');
+
+    // Stagger animation
+    var cards = grid.querySelectorAll('.photo-card');
+    cards.forEach(function(card, i) {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(16px) translateZ(0)';
+        card.style.transition = 'opacity .5s ease, transform .5s cubic-bezier(0.16,1,0.3,1)';
+        setTimeout(function() {
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0) translateZ(0)';
+        }, i * 45);
+    });
+}
+
+// ── LIGHTBOX for gallery photos ───────────────────────
+window.paOpenLightbox = function(filteredIdx) {
+    var arr = filtered.map(function(p) {
+        return { src: p.imageUrl, cap: [p.title, p.date].filter(Boolean).join(' · ') };
+    });
+    ULB.open(arr, filteredIdx);
+};
+
+// ── PAGINATION ────────────────────────────────────────
+function renderPagination() {
+    var pg = document.getElementById('paPagination');
+    if (!pg) return;
+    var total = Math.ceil(filtered.length / PHOTOS_PER_PAGE);
+    if (total <= 1) { pg.innerHTML = ''; return; }
+
+    var html = '<div class="pa-pagination">';
+    html += '<button class="pa-pg-btn" ' + (activePage === 1 ? 'disabled' : '') + ' onclick="paGoPage(' + (activePage-1) + ')">&#8249;</button>';
+    for (var i = 1; i <= total; i++) {
+        if (i === 1 || i === total || Math.abs(i - activePage) <= 1) {
+            html += '<button class="pa-pg-btn' + (i === activePage ? ' active' : '') + '" onclick="paGoPage(' + i + ')">' + i + '</button>';
+        } else if (Math.abs(i - activePage) === 2) {
+            html += '<span class="pa-pg-ellipsis">…</span>';
+        }
+    }
+    html += '<button class="pa-pg-btn" ' + (activePage === total ? 'disabled' : '') + ' onclick="paGoPage(' + (activePage+1) + ')">&#8250;</button>';
+    html += '</div>';
+    pg.innerHTML = html;
+}
+window.paGoPage = function(n) {
+    var total = Math.ceil(filtered.length / PHOTOS_PER_PAGE);
+    if (n < 1 || n > total) return;
+    activePage = n;
+    renderGrid();
+    renderPagination();
+    var wrap = document.querySelector('.pa-gallery-wrap');
+    if (wrap) wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+};
+
+// ── TAB CLICKS ────────────────────────────────────────
+document.querySelectorAll('.pa-tab').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+        document.querySelectorAll('.pa-tab').forEach(function(b) { b.classList.remove('active'); });
+        this.classList.add('active');
+        activeCat = this.getAttribute('data-pa-cat');
+        applyFilters(true);
+    });
+});
+
+// ── PERIOD PILL CLICKS ────────────────────────────────
+document.querySelectorAll('.pa-period-pill').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+        document.querySelectorAll('.pa-period-pill').forEach(function(b) { b.classList.remove('active'); });
+        this.classList.add('active');
+        activePeriod = this.getAttribute('data-pa-period');
+        applyFilters(true);
+    });
+});
+
+// ── SCROLL ANIMATIONS ─────────────────────────────────
+document.addEventListener('DOMContentLoaded', function() {
+    var obs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) {
+            if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+        });
+    }, { threshold: 0.05 });
+    document.querySelectorAll('.fade-in-up').forEach(function(el) {
+        var top = el.getBoundingClientRect().top;
+        if (top < window.innerHeight) { el.classList.add('visible'); }
+        else { obs.observe(el); }
+    });
+});
+
+})(); // end IIFE
+</script>
+
+<!-- ULB JS with drag-fix + smooth zoom -->
+<script>
+(function(g){'use strict';
+var s=1,tx=0,ty=0,drag=false,wasDragged=false,dx=0,dy=0,ox=0,oy=0,pd0=0,ps0=1,items=[],cur=0;
+var zoomTimer=null;
+function gel(id){return document.getElementById(id);}
+function applyT(anim){
+  var i=gel('ULB-IMG');if(!i)return;
+  i.style.transition=anim?'transform .32s cubic-bezier(0.25,0.46,0.45,0.94)':'none';
+  i.style.transform='translate('+tx+'px,'+ty+'px) scale('+s+')';
+  var z=gel('ULB-ZVAL');if(z)z.textContent=s.toFixed(1)+'×';
+}
+function clamp(){
+  var v=gel('ULB-VP'),i=gel('ULB-IMG');if(!v||!i)return;
+  var mx=Math.max(0,(i.offsetWidth*s-v.clientWidth)/2);
+  var my=Math.max(0,(i.offsetHeight*s-v.clientHeight)/2);
+  tx=Math.min(mx,Math.max(-mx,tx));ty=Math.min(my,Math.max(-my,ty));
+}
+function reset(anim){s=1;tx=0;ty=0;applyT(anim);}
+function zoomAt(f,cx,cy,smooth){
+  var v=gel('ULB-VP');if(!v)return;
+  var r=v.getBoundingClientRect();
+  var px=cx-r.left-v.clientWidth/2,py=cy-r.top-v.clientHeight/2;
+  var ns=Math.min(8,Math.max(1,s*f)),ratio=ns/s;
+  tx=px-(px-tx)*ratio;ty=py-(py-ty)*ratio;s=ns;
+  clamp();applyT(smooth||false);
+}
+function loadItem(i2){
+  var i=gel('ULB-IMG'),c2=gel('ULB-CAP');if(!i)return;
+  cur=i2;reset(false);
+  i.style.opacity='0';i.src=items[i2].src;
+  if(c2)c2.textContent=items[i2].cap||'';
+  i.onload=function(){i.style.transition='opacity .25s';i.style.opacity='1';};
+  var p=gel('ULB-PREV'),n=gel('ULB-NEXT');
+  if(p)p.style.display=items.length>1?'':'none';
+  if(n)n.style.display=items.length>1?'':'none';
+}
+function open(arr,i2){
+  items=arr;cur=i2||0;
+  var lb=gel('ULB');if(!lb)return;
+  lb.classList.add('on');document.body.style.overflow='hidden';
+  loadItem(cur);
+}
+function close(){
+  var lb=gel('ULB');if(!lb)return;
+  lb.classList.remove('on');document.body.style.overflow='';reset(false);
+}
+function nav(dir){
+  if(!items.length)return;
+  cur=(cur+dir+items.length)%items.length;loadItem(cur);
+}
+function init(){
+  var v=gel('ULB-VP');if(!v)return;
+  v.addEventListener('mousedown',function(e){
+    if(e.button!==0)return;drag=true;wasDragged=false;dx=e.clientX;dy=e.clientY;ox=tx;oy=ty;
+    v.style.cursor='grabbing';e.preventDefault();
+  });
+  document.addEventListener('mousemove',function(e){
+    if(!drag)return;
+    var mdx=e.clientX-dx,mdy=e.clientY-dy;
+    if(Math.abs(mdx)>4||Math.abs(mdy)>4)wasDragged=true;
+    tx=ox+mdx;ty=oy+mdy;clamp();applyT(false);
+  });
+  document.addEventListener('mouseup',function(){
+    if(!drag)return;drag=false;var vv=gel('ULB-VP');if(vv)vv.style.cursor='grab';
+  });
+  v.addEventListener('wheel',function(e){
+    e.preventDefault();
+    if(zoomTimer)clearTimeout(zoomTimer);
+    var factor=e.deltaY<0?1.12:1/1.12;
+    zoomAt(factor,e.clientX,e.clientY,true);
+    zoomTimer=setTimeout(function(){zoomTimer=null;},200);
+  },{passive:false});
+  v.addEventListener('dblclick',function(e){
+    if(s>1.5)reset(true);else zoomAt(2.5,e.clientX,e.clientY,true);
+  });
+  v.addEventListener('touchstart',function(e){
+    if(e.touches.length===1){drag=true;wasDragged=false;dx=e.touches[0].clientX;dy=e.touches[0].clientY;ox=tx;oy=ty;}
+    else if(e.touches.length===2){drag=false;pd0=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);ps0=s;}
+  },{passive:true});
+  v.addEventListener('touchmove',function(e){
+    e.preventDefault();
+    if(e.touches.length===1&&drag){
+      var mdx=e.touches[0].clientX-dx,mdy=e.touches[0].clientY-dy;
+      if(Math.abs(mdx)>4||Math.abs(mdy)>4)wasDragged=true;
+      tx=ox+mdx;ty=oy+mdy;clamp();applyT(false);
+    }else if(e.touches.length===2){
+      var d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+      s=Math.min(8,Math.max(1,ps0*(d/pd0)));clamp();applyT(true);
+    }
+  },{passive:false});
+  v.addEventListener('touchend',function(){drag=false;});
+  var lb=gel('ULB');
+  if(lb)lb.addEventListener('click',function(e){
+    if(wasDragged){wasDragged=false;return;}
+    if(e.target===lb||e.target===v)close();
+  });
+  document.addEventListener('keydown',function(e){
+    var lb2=gel('ULB');if(!lb2||!lb2.classList.contains('on'))return;
+    if(e.key==='Escape')close();
+    if(e.key==='+'||e.key==='=')zoomAt(1.3,window.innerWidth/2,window.innerHeight/2,true);
+    if(e.key==='-')zoomAt(1/1.3,window.innerWidth/2,window.innerHeight/2,true);
+    if(e.key==='0')reset(true);
+    if(e.key==='ArrowLeft'&&s<=1)nav(-1);
+    if(e.key==='ArrowRight'&&s<=1)nav(1);
+  });
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init);}else{setTimeout(init,0);}
+g.ULB={open:open,close:close,nav:nav,
+  zoomIn:function(){zoomAt(1.3,window.innerWidth/2,window.innerHeight/2,true);},
+  zoomOut:function(){zoomAt(1/1.3,window.innerWidth/2,window.innerHeight/2,true);},
+  reset:function(){reset(true);}};
+})(window);
+</script>
+
+</body>
+</html>/* ═══════════════════════════════════════════
+   HERO — EDITORIAL MAGAZINE LAYOUT
+═══════════════════════════════════════════ */
+.pa-hero {
+    background: var(--color-bg, #faf7f2);
+    padding: 0;
+    overflow: hidden;
+}
+
+/* ── TITLE ── */
+.pa-hero-header {
+    max-width: 1400px; margin: 0 auto;
+    padding: 4.5rem 3rem 3rem;
+}
+@media (max-width: 700px) { .pa-hero-header { padding: 3rem 1.4rem 2.2rem; } }
+
+.pa-hero-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .5rem; letter-spacing: .32em; text-transform: uppercase;
+    color: #b8902a;
+    display: flex; align-items: center; gap: .7rem;
+    margin-bottom: 1rem;
+}
+.pa-hero-label::before {
+    content: ''; display: block; width: 28px; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(180,145,40,.6));
+}
+.pa-hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.2rem, 7vw, 6.4rem);
+    font-weight: 300; line-height: .94;
+    letter-spacing: -.025em;
+    color: var(--color-text, #1c1917);
+}
+.pa-hero-title em {
+    font-style: italic; color: #c9a227;
+    display: block; padding-left: .08em;
+}
+.pa-hero-title-sub {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .68rem; font-weight: 300;
+    color: var(--color-text-secondary, #78716c);
+    letter-spacing: .06em;
+    margin-top: 1.4rem;
+}
+
+/* ── MAIN PHOTO ── */
+.pa-hero-main-wrap {
+    max-width: 1400px; margin: 0 auto;
+    padding: 0 3rem;
+}
+@media (max-width: 700px) { .pa-hero-main-wrap { padding: 0 1.4rem; } }
+
+.pa-hero-main {
+    position: relative;
+    width: 100%;
+    height: clamp(340px, 48vw, 580px);
+    border-radius: 7px;
+    overflow: hidden; cursor: pointer;
+    background: #080604;
+    box-shadow: 0 2px 12px rgba(0,0,0,.07), 0 16px 56px rgba(0,0,0,.14);
+}
+.pa-hero-main img {
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
+    filter: contrast(1.04) brightness(.9) saturate(.72);
+    transition: transform 2s cubic-bezier(0.16,1,0.3,1), filter 1.5s ease;
+    transform: scale(1.0) translateZ(0); will-change: transform;
+}
+.pa-hero-main:hover img {
+    transform: scale(1.035) translateZ(0);
+    filter: contrast(1.03) brightness(.95) saturate(.76);
+}
+.pa-hero-main-ovl {
+    position: absolute; inset: 0;
+    background:
+        linear-gradient(to top, rgba(3,2,1,.96) 0%, rgba(3,2,1,.5) 30%, rgba(3,2,1,.05) 55%, transparent 72%),
+        linear-gradient(108deg, rgba(3,2,1,.22) 0%, transparent 48%);
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 2.8rem 3.2rem 2.6rem;
+}
+@media (max-width: 700px) { .pa-hero-main-ovl { padding: 1.8rem 1.6rem 1.6rem; } }
+.pa-hero-main-year {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .48rem; letter-spacing: .26em; text-transform: uppercase;
+    color: rgba(201,162,39,.88);
+    margin-bottom: .5rem;
+    display: flex; align-items: center; gap: .55rem;
+    opacity: 0; transform: translateY(10px);
+    transition: opacity .8s ease .2s, transform .9s cubic-bezier(0.16,1,0.3,1) .2s;
+}
+.pa-hero-main-year::before {
+    content: ''; display: block; width: 22px; height: 1px;
+    background: rgba(201,162,39,.6);
+}
+.pa-hero-main.revealed .pa-hero-main-year,
+.pa-hero-main:hover .pa-hero-main-year { opacity: 1; transform: translateY(0); }
+.pa-hero-main-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.6rem, 3.2vw, 2.8rem);
+    font-weight: 300; line-height: 1.08; letter-spacing: -.01em;
+    color: #fff;
+    text-shadow: 0 2px 28px rgba(0,0,0,.3);
+    opacity: 0; transform: translateY(10px);
+    transition: opacity .8s ease .3s, transform .9s cubic-bezier(0.16,1,0.3,1) .3s;
+}
+.pa-hero-main.revealed .pa-hero-main-title,
+.pa-hero-main:hover .pa-hero-main-title { opacity: 1; transform: translateY(0); }
+.pa-hero-main-zoom {
+    position: absolute; bottom: 2.4rem; right: 2.4rem;
+    width: 46px; height: 46px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.16);
+    background: rgba(255,255,255,.07); backdrop-filter: blur(10px);
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,.72);
+    opacity: 0; transform: scale(.75);
+    transition: opacity .5s ease .1s, transform .6s cubic-bezier(0.16,1,0.3,1) .1s;
+    z-index: 2;
+}
+.pa-hero-main-zoom svg { width: 18px; height: 18px; }
+.pa-hero-main:hover .pa-hero-main-zoom { opacity: 1; transform: scale(1); }
+@media (max-width: 600px) { .pa-hero-main-zoom { display: none; } }
+
+/* ── STRIP 4 ── */
+.pa-hero-strip-wrap {
+    max-width: 1400px; margin: 0 auto;
+    padding: .65rem 3rem 0;
+}
+@media (max-width: 700px) { .pa-hero-strip-wrap { padding: .5rem 1.4rem 0; } }
+.pa-hero-strip {
+    display: grid;
+    grid-template-columns: 1fr 1.12fr 1.28fr .9fr;
+    gap: .65rem;
+}
+@media (max-width: 900px) { .pa-hero-strip { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 480px) { .pa-hero-strip { grid-template-columns: 1fr 1fr; gap: .4rem; } }
+
+.pa-strip-cell {
+    position: relative;
+    height: clamp(130px, 15vw, 210px);
+    overflow: hidden; border-radius: 5px;
+    cursor: pointer; background: #080604;
+    box-shadow: 0 2px 10px rgba(0,0,0,.1);
+}
+.pa-strip-cell img {
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
+    filter: contrast(1.04) brightness(.88) saturate(.68);
+    transition: transform 1.4s cubic-bezier(0.16,1,0.3,1), filter 1.1s ease;
+    transform: scale(1) translateZ(0); will-change: transform;
+}
+.pa-strip-cell:hover img {
+    transform: scale(1.07) translateZ(0);
+    filter: contrast(1.03) brightness(.96) saturate(.74);
+}
+.pa-strip-cell-ovl {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(3,2,1,.9) 0%, rgba(3,2,1,.28) 42%, transparent 70%);
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: .75rem .85rem .7rem;
+}
+.pa-strip-year {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .43rem; letter-spacing: .22em; text-transform: uppercase;
+    color: rgba(201,162,39,.85); margin-bottom: .22rem;
+    transform: translateY(4px);
+    transition: transform .65s cubic-bezier(0.16,1,0.3,1);
+}
+.pa-strip-cell:hover .pa-strip-year { transform: translateY(0); }
+.pa-strip-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(.78rem, 1.25vw, 1.02rem);
+    font-weight: 400; color: rgba(255,255,255,.92); line-height: 1.22;
+    transform: translateY(4px);
+    transition: transform .65s cubic-bezier(0.16,1,0.3,1) .04s;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.pa-strip-cell:hover .pa-strip-title { transform: translateY(0); }
+.pa-strip-cell::after {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(201,162,39,.85), transparent);
+    opacity: 0; transition: opacity .4s ease; z-index: 3;
+}
+.pa-strip-cell:hover::after { opacity: 1; }
+
+.pa-hero-bottom-gap { height: 4rem; }
+@media (max-width: 700px) { .pa-hero-bottom-gap { height: 2.5rem; } }
+
+[data-theme="dark"] .pa-hero-main img,
+[data-theme="dark"] .pa-strip-cell img {
+    filter: contrast(1.06) brightness(.82) saturate(.6);
+}
+[data-theme="dark"] .pa-hero-main:hover img,
+[data-theme="dark"] .pa-strip-cell:hover img {
+    filter: contrast(1.04) brightness(.9) saturate(.66);
+}
+
+/* ═══════════════════════════════════════════
+   DIVIDER
+═══════════════════════════════════════════ */
+.pa-divider {
+    max-width: 1400px; margin: 0 auto;
+    height: 1px; background: linear-gradient(90deg, transparent, rgba(201,162,39,.25), transparent);
+}
+
+/* ═══════════════════════════════════════════
+   CATEGORY TABS
+═══════════════════════════════════════════ */
+.pa-tabs-wrap {
+    background: var(--color-bg, #faf7f2);
+    position: sticky; top: 62px; z-index: 100;
+    border-bottom: 1px solid var(--color-border-light, rgba(201,162,39,.12));
+    box-shadow: 0 4px 20px rgba(0,0,0,.05);
+}
+.pa-tabs {
+    max-width: 1400px; margin: 0 auto;
+    padding: 0 2rem;
+    display: flex; align-items: stretch; gap: 0;
+    overflow-x: auto; scrollbar-width: none;
+}
+.pa-tabs::-webkit-scrollbar { display: none; }
+.pa-tab {
+    flex-shrink: 0;
+    padding: 1.1rem 1.6rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .65rem; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--color-text-light, #78716c);
+    cursor: pointer; border: none; background: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: color .25s ease, border-color .25s ease;
+    white-space: nowrap;
+    display: flex; align-items: center; gap: .55rem;
+}
+.pa-tab:hover { color: var(--color-text, #1c1917); }
+.pa-tab.active {
+    color: #c9a227;
+    border-bottom-color: #c9a227;
+    font-weight: 500;
+}
+.pa-tab-count {
+    font-size: .52rem; letter-spacing: .08em;
+    background: rgba(201,162,39,.1);
+    color: #b8902a;
+    border-radius: 100px;
+    padding: .12rem .45rem;
+    transition: background .25s;
+}
+.pa-tab.active .pa-tab-count { background: rgba(201,162,39,.2); }
+
+/* ═══════════════════════════════════════════
+   GALLERY AREA
+═══════════════════════════════════════════ */
+.pa-gallery-wrap {
+    max-width: 1400px; margin: 0 auto;
+    padding: 3rem 2rem 6rem;
+}
+.pa-section-head {
+    display: flex; align-items: baseline; gap: 1rem;
+    margin-bottom: 2.2rem;
+}
+.pa-section-head::after {
+    content: ''; flex: 1; height: 1px;
+    background: var(--color-border-light, rgba(201,162,39,.15));
+}
+.pa-section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 300; font-style: italic;
+    color: var(--color-text, #1c1917);
+    white-space: nowrap;
+}
+.pa-section-count {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .58rem; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--color-text-muted, #a8a29e);
+    white-space: nowrap;
+}
+
+/* Period filter pills */
+.pa-period-pills {
+    display: flex; flex-wrap: wrap; gap: .5rem;
+    margin-bottom: 2rem;
+}
+.pa-period-pill {
+    padding: .35rem .9rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .62rem; letter-spacing: .1em; text-transform: uppercase;
+    border-radius: 100px;
+    border: 1px solid var(--color-border-light, rgba(201,162,39,.2));
+    background: transparent;
+    color: var(--color-text-secondary, #78716c);
+    cursor: pointer;
+    transition: all .22s ease;
+}
+.pa-period-pill:hover {
+    border-color: rgba(201,162,39,.45);
+    color: var(--color-text, #1c1917);
+}
+.pa-period-pill.active {
+    background: rgba(201,162,39,.1);
+    border-color: rgba(201,162,39,.45);
+    color: #c9a227;
+}
+
 /* Masonry grid */
 .pa-grid {
     column-count: 4;
@@ -470,7 +1427,7 @@
 <header class="header">
     <div class="header-container">
         <a href="index.html" class="logo">
-            <img src="https://i.imgur.com/mXCrjjG.png" alt="Герб" class="logo-img" loading="lazy">
+            <img src="https://i.imgur.com/op2tNhY.jpeg" alt="Герб" class="logo-img" loading="lazy">
             <div class="logo-text">
                 <span class="logo-city">Дубровиця</span>
                 <span class="logo-subtitle">Цифровий архів</span>
@@ -525,7 +1482,7 @@
     <!-- Main cinematic photo -->
     <div class="pa-hero-main-wrap">
         <div class="pa-hero-main fade-in-up delay-2" data-hero-idx="0">
-            <img src="https://i.imgur.com/Ru7uTkK.jpeg" alt="Костел Іоанна Хрестителя · 1929" loading="eager">
+            <img src="https://i.imgur.com/ssqiAZi.jpeg" alt="Костел Іоана Хрестителя · 1929" loading="eager">
             <div class="pa-hero-main-ovl">
                 <div class="pa-hero-main-eyebrow">1929 рік · Костел Іоанна Хрестителя</div>
                 <div class="pa-hero-main-name">Костел<br><em style="font-style:italic;color:rgba(201,162,39,.9);">Іоанна Хрестителя</em></div>
@@ -540,7 +1497,7 @@
     <div class="pa-hero-strip-wrap">
         <div class="pa-hero-strip">
             <div class="pa-strip-cell fade-in-up delay-3" data-hero-idx="1">
-                <img src="https://i.imgur.com/or52SKu.jpeg" alt="Міське кладовище" loading="lazy">
+                <img src="https://i.imgur.com/LVWPxA0.jpeg" alt="Міське кладовище. Невідомий похорон · 1920" loading="lazy">
                 <div class="pa-strip-cell-ovl">
                     <div class="pa-strip-year">Поч. XX ст.</div>
                     <div class="pa-strip-title">Міське кладовище. Невідомий похорон</div>
@@ -548,21 +1505,21 @@
                 <div class="pa-strip-cell::before"></div>
             </div>
             <div class="pa-strip-cell fade-in-up delay-3" data-hero-idx="2">
-                <img src="https://i.imgur.com/dyP4WgZ.jpeg" alt="Дерев'яний міст" loading="lazy">
+                <img src="https://i.imgur.com/UxBBvE4.jpeg" alt="Дерев'яний міст через р. Горинь · 1930-1939" loading="lazy">
                 <div class="pa-strip-cell-ovl">
-                    <div class="pa-strip-year">1900-ті рр.</div>
+                    <div class="pa-strip-year">1930-ті рр.</div>
                     <div class="pa-strip-title">Дерев'яний міст через Горинь</div>
                 </div>
             </div>
             <div class="pa-strip-cell fade-in-up delay-4" data-hero-idx="3">
-                <img src="https://i.imgur.com/u6vHC49.jpeg" alt="Група людей перед костелом" loading="lazy">
+                <img src="https://i.imgur.com/67HOTtf.jpeg" alt="Група людей перед костелом · 1915" loading="lazy">
                 <div class="pa-strip-cell-ovl">
-                    <div class="pa-strip-year">1920-ті рр.</div>
+                    <div class="pa-strip-year">1915 рік</div>
                     <div class="pa-strip-title">Група людей перед костелом</div>
                 </div>
             </div>
             <div class="pa-strip-cell fade-in-up delay-4" data-hero-idx="4">
-                <img src="https://i.imgur.com/pcuoEmD.jpeg" alt="Фотолистівка 1910" loading="lazy">
+                <img src="https://i.imgur.com/op2tNhY.jpeg" alt="Фотолистівка · 1910" loading="lazy">
                 <div class="pa-strip-cell-ovl">
                     <div class="pa-strip-year">1910 рік</div>
                     <div class="pa-strip-title">Фотолистівка</div>
@@ -726,11 +1683,11 @@ var filtered     = [];
 
 // ── HERO lightbox ─────────────────────────────────────
 var HERO_PHOTOS = [
-    { src: 'https://i.imgur.com/Ru7uTkK.jpeg',  cap: 'Костел Іоанна Хрестителя · 1929 рік' },
-    { src: 'https://i.imgur.com/or52SKu.jpeg',  cap: 'Міське кладовище. Невідомий похорон · поч. XX ст.' },
-    { src: 'https://i.imgur.com/dyP4WgZ.jpeg',  cap: "Дерев'яний міст через річку Горинь · 1900-ті рр." },
-    { src: 'https://i.imgur.com/u6vHC49.jpeg',  cap: 'Група людей перед костелом · 1920-ті рр.' },
-    { src: 'https://i.imgur.com/pcuoEmD.jpeg',  cap: 'Фотолистівка · 1910 рік' }
+    { src: 'https://i.imgur.com/ssqiAZi.jpeg',  cap: 'Костел Іоана Хрестителя · 1929 рік' },
+    { src: 'https://i.imgur.com/LVWPxA0.jpeg',  cap: 'Міське кладовище. Невідомий похорон · 1920 рік' },
+    { src: 'https://i.imgur.com/UxBBvE4.jpeg',  cap: "Дерев'яний міст через р. Горинь · 1930-ті рр." },
+    { src: 'https://i.imgur.com/67HOTtf.jpeg',  cap: 'Група людей перед костелом · 1915 рік' },
+    { src: 'https://i.imgur.com/op2tNhY.jpeg',  cap: 'Фотолистівка · 1910 рік' }
 ];
 document.querySelectorAll('.pa-hero-main[data-hero-idx], .pa-strip-cell[data-hero-idx]').forEach(function(cell) {
     cell.addEventListener('click', function() {
