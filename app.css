@@ -2433,7 +2433,7 @@ select.admin-input { cursor: pointer; }
    DARK THEME — header, nav, scrolled
    ================================================================ */
 
-[data-theme="dark"] .header { background-color: rgba(14,12,10,0.92); }
+[data-theme="dark"] .header { background-color: rgba(14,12,10,0.92); border-bottom-color: transparent; }
 [data-theme="dark"] .header.scrolled { box-shadow: 0 4px 24px rgba(0,0,0,0.5); }
 [data-theme="dark"] .nav { background-color: var(--color-bg-card); }
 [data-theme="dark"] .nav-link { color: rgba(180,170,155,0.65); }
