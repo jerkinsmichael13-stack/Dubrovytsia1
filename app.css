@@ -1151,8 +1151,9 @@ html[data-theme="dark"] .moon-icon { display: none; }
 
 [data-theme="dark"] .article-header {
     background-image:
-        linear-gradient(to bottom, rgba(5, 10, 7, 0.95) 0%, rgba(0, 0, 0, 0.90) 100%),
-        url('https://i.imgur.com/QTP89kg.jpeg');
+        linear-gradient(to bottom, rgba(5, 10, 7, 0.88) 0%, rgba(0, 0, 0, 0.82) 100%),
+        url('https://i.imgur.com/3aWJiOy.jpeg');
+    background-position: center 40%;
 }
 
 .article-header .article-title {
@@ -1738,13 +1739,9 @@ html[data-theme="dark"] .moon-icon { display: none; }
 
 .photo-overlay {
     position: absolute; inset: 0;
-    background: linear-gradient(to top,
-        rgba(4,2,1,0.95) 0%,
-        rgba(4,2,1,0.7)  35%,
-        rgba(4,2,1,0.15) 60%,
-        transparent 100%);
+    background: linear-gradient(to top, rgba(8,5,2,0.90) 0%, rgba(8,5,2,0.55) 40%, rgba(8,5,2,0.1) 65%, transparent 100%);
     display: flex; flex-direction: column; justify-content: flex-end;
-    padding: 1.2rem 1rem 1rem;
+    padding: 1.5rem 1.25rem 1.1rem;
     opacity: 0;
     transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1);
 }
@@ -1752,31 +1749,24 @@ html[data-theme="dark"] .moon-icon { display: none; }
 
 .photo-info h3 {
     font-family: var(--font-display);
-    font-size: 0.95rem; font-weight: 500;
-    color: white;
-    margin-bottom: 0.35rem;
-    line-height: 1.3;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    font-size: 1rem; font-weight: 400;
+    color: rgba(255,255,255,.95);
+    margin-bottom: 0.3rem; line-height: 1.28;
+    display: -webkit-box; -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical; overflow: hidden;
+    text-shadow: 0 1px 8px rgba(0,0,0,.4);
 }
 .photo-meta {
-    font-size: 0.65rem;
-    color: rgba(255,255,255,0.6);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    font-size: 0.58rem;
+    color: rgba(255,255,255,0.55);
+    text-transform: uppercase; letter-spacing: 0.14em;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     margin: 0;
 }
 .photo-orig {
-    display: inline-block;
-    margin-top: 0.3rem;
-    font-size: 0.6rem;
-    color: rgba(201,162,39,0.85);
-    letter-spacing: 0.05em;
+    display: inline-block; margin-top: 0.3rem;
+    font-size: 0.56rem; color: rgba(201,162,39,0.85);
+    letter-spacing: 0.08em; text-transform: uppercase;
 }
 
 /* Zoom icon */
@@ -2074,19 +2064,23 @@ html[data-theme="dark"] .moon-icon { display: none; }
     pointer-events: none;
 }
 
-.lightbox-info { text-align: center; color: white; }
+.lightbox-info {
+    text-align: center; color: white;
+    padding: 0 1rem;
+}
 .lightbox-caption {
     font-family: var(--font-display);
-    font-size: clamp(1.05rem, 2.5vw, 1.45rem);
-    font-weight: 400;
-    margin-bottom: 0.35rem;
+    font-size: clamp(1.1rem, 2.5vw, 1.55rem);
+    font-weight: 300;
+    margin-bottom: 0.45rem;
     letter-spacing: 0.01em;
+    color: rgba(255,255,255,.92);
 }
 .lightbox-meta {
-    font-size: 0.78rem;
-    color: rgba(255,255,255,0.5);
+    font-size: 0.62rem;
+    color: rgba(255,255,255,0.45);
     font-weight: 400;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
 }
 
