@@ -40,7 +40,34 @@
 @media(max-width:480px){.ulb-nav{width:36px;height:36px;font-size:1rem;}#ULB-PREV{left:.4rem;}#ULB-NEXT{right:.4rem;}#ULB-HINT{display:none;}}
 
 /* ── HERO ── */
-.pa-hero { background: var(--color-bg,#faf7f2); overflow: hidden; }
+.pa-hero { 
+    background: var(--color-bg,#faf7f2); 
+    overflow: hidden;
+    position: relative;
+}
+
+/* Background street photo like old site */
+.pa-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('https://i.imgur.com/qcjgN1Il.jpeg');
+    background-size: cover;
+    background-position: center 40%;
+    background-repeat: no-repeat;
+    opacity: 0.13;
+    z-index: 0;
+    pointer-events: none;
+}
+[data-theme="dark"] .pa-hero::before { opacity: 0.07; }
+
+.pa-hero-header,
+.pa-hero-main-wrap,
+.pa-hero-strip-wrap,
+.pa-hero-gap {
+    position: relative;
+    z-index: 1;
+}
 
 .pa-hero-header {
     max-width: 1400px; margin: 0 auto;
@@ -424,28 +451,28 @@
     <div class="pa-hero-strip-wrap">
         <div class="pa-hero-strip">
             <div class="pa-strip-cell fade-in-up delay-3" data-hero-idx="1">
-                <img src="https://i.imgur.com/LVWPxA0.jpeg" alt="Міське кладовище. Невідомий похорон 1920" loading="lazy">
+                <img src="https://i.imgur.com/LVWPxA0l.jpeg" alt="Міське кладовище. Невідомий похорон 1920" loading="lazy">
                 <div class="pa-strip-cell-ovl">
                     <div class="pa-strip-year">1920 рік</div>
                     <div class="pa-strip-title">Міське кладовище. Невідомий похорон</div>
                 </div>
             </div>
             <div class="pa-strip-cell fade-in-up delay-3" data-hero-idx="2">
-                <img src="https://i.imgur.com/UxBBvE4.jpeg" alt="Дерев'яний міст через р. Горинь 1930-ті" loading="lazy">
+                <img src="https://i.imgur.com/UxBBvE4l.jpeg" alt="Дерев'яний міст через р. Горинь 1930-ті" loading="lazy">
                 <div class="pa-strip-cell-ovl">
                     <div class="pa-strip-year">1930-ті рр.</div>
                     <div class="pa-strip-title">Дерев'яний міст через річку Горинь</div>
                 </div>
             </div>
             <div class="pa-strip-cell fade-in-up delay-4" data-hero-idx="3">
-                <img src="https://i.imgur.com/67HOTtf.jpeg" alt="Група людей перед костелом 1915" loading="lazy">
+                <img src="https://i.imgur.com/67HOTtfl.jpeg" alt="Група людей перед костелом 1915" loading="lazy">
                 <div class="pa-strip-cell-ovl">
                     <div class="pa-strip-year">1915 рік</div>
                     <div class="pa-strip-title">Група людей перед костелом</div>
                 </div>
             </div>
             <div class="pa-strip-cell fade-in-up delay-4" data-hero-idx="4">
-                <img src="https://i.imgur.com/op2tNhY.jpeg" alt="Фотолистівка 1910" loading="lazy">
+                <img src="https://i.imgur.com/op2tNhYl.jpeg" alt="Фотолистівка 1910" loading="lazy">
                 <div class="pa-strip-cell-ovl">
                     <div class="pa-strip-year">1910 рік</div>
                     <div class="pa-strip-title">Фотолистівка</div>
