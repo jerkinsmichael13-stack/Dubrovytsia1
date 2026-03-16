@@ -2436,8 +2436,9 @@ select.admin-input { cursor: pointer; }
 [data-theme="dark"] .header { background-color: rgba(14,12,10,0.92); }
 [data-theme="dark"] .header.scrolled { box-shadow: 0 4px 24px rgba(0,0,0,0.5); }
 [data-theme="dark"] .nav { background-color: var(--color-bg-card); }
-[data-theme="dark"] .nav-link { color: var(--color-text-secondary); }
-[data-theme="dark"] .nav-link:hover { color: var(--color-accent-light); background: rgba(255,255,255,0.04); }
+[data-theme="dark"] .nav-link { color: rgba(180,170,155,0.65); }
+[data-theme="dark"] .nav-link:hover { color: rgba(240,230,210,0.9); background: rgba(255,255,255,0.04); }
+[data-theme="dark"] .nav-link.active { color: var(--color-accent); }
 [data-theme="dark"] .nav-link.active { color: var(--color-accent); }
 
 /* ================================================================
