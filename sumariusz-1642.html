@@ -1610,7 +1610,7 @@ uchwalono bywa, Czyni in Summa —
             <div class="ulb-sep"></div>
             <span id="ULB-CAP"></span>
         </div>
-    </div>iv class="smr-lb" id="SMR-LB">
+    </div><div class="smr-lb" id="SMR-LB">
         <!-- Close -->
         <button class="smr-lb-close" onclick="closeScanLB()" title="Закрити (Esc)">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -1667,11 +1667,12 @@ uchwalono bywa, Czyni in Summa —
     </script>
     <script>
 (function(g){'use strict';
-var s=1,tx=0,ty=0,drag=false,dx=0,dy=0,ox=0,oy=0,pd0=0,ps0=1,items=[],cur=0;
+var s=1,tx=0,ty=0,drag=false,wasDragged=false,dx=0,dy=0,ox=0,oy=0,pd0=0,ps0=1,items=[],cur=0;
+var zoomTimer=null;
 function gel(id){return document.getElementById(id);}
 function applyT(anim){
   var i=gel('ULB-IMG');if(!i)return;
-  i.style.transition=anim?'transform .2s ease':'none';
+  i.style.transition=anim?'transform .32s cubic-bezier(0.25,0.46,0.45,0.94)':'none';
   i.style.transform='translate('+tx+'px,'+ty+'px) scale('+s+')';
   var z=gel('ULB-ZVAL');if(z)z.textContent=s.toFixed(1)+'×';
 }
@@ -1682,13 +1683,13 @@ function clamp(){
   tx=Math.min(mx,Math.max(-mx,tx));ty=Math.min(my,Math.max(-my,ty));
 }
 function reset(anim){s=1;tx=0;ty=0;applyT(anim);}
-function zoomAt(f,cx,cy){
+function zoomAt(f,cx,cy,smooth){
   var v=gel('ULB-VP');if(!v)return;
   var r=v.getBoundingClientRect();
   var px=cx-r.left-v.clientWidth/2,py=cy-r.top-v.clientHeight/2;
   var ns=Math.min(8,Math.max(1,s*f)),ratio=ns/s;
   tx=px-(px-tx)*ratio;ty=py-(py-ty)*ratio;s=ns;
-  clamp();applyT(false);
+  clamp();applyT(smooth||false);
 }
 function loadItem(i2){
   var i=gel('ULB-IMG'),c2=gel('ULB-CAP');if(!i)return;
@@ -1717,38 +1718,51 @@ function nav(dir){
 function init(){
   var v=gel('ULB-VP');if(!v)return;
   v.addEventListener('mousedown',function(e){
-    if(e.button!==0)return;drag=true;dx=e.clientX;dy=e.clientY;ox=tx;oy=ty;
+    if(e.button!==0)return;drag=true;wasDragged=false;dx=e.clientX;dy=e.clientY;ox=tx;oy=ty;
     v.style.cursor='grabbing';e.preventDefault();
   });
   document.addEventListener('mousemove',function(e){
-    if(!drag)return;tx=ox+(e.clientX-dx);ty=oy+(e.clientY-dy);clamp();applyT(false);
+    if(!drag)return;
+    var mdx=e.clientX-dx,mdy=e.clientY-dy;
+    if(Math.abs(mdx)>4||Math.abs(mdy)>4)wasDragged=true;
+    tx=ox+mdx;ty=oy+mdy;clamp();applyT(false);
   });
   document.addEventListener('mouseup',function(){
     if(!drag)return;drag=false;var vv=gel('ULB-VP');if(vv)vv.style.cursor='grab';
   });
   v.addEventListener('wheel',function(e){
-    e.preventDefault();zoomAt(e.deltaY<0?1.15:1/1.15,e.clientX,e.clientY);
+    e.preventDefault();
+    if(zoomTimer)clearTimeout(zoomTimer);
+    var factor=e.deltaY<0?1.12:1/1.12;
+    zoomAt(factor,e.clientX,e.clientY,true);
+    zoomTimer=setTimeout(function(){zoomTimer=null;},200);
   },{passive:false});
   v.addEventListener('dblclick',function(e){
-    if(s>1.5)reset(true);else zoomAt(2.5,e.clientX,e.clientY);
+    if(s>1.5)reset(true);else zoomAt(2.5,e.clientX,e.clientY,true);
   });
   v.addEventListener('touchstart',function(e){
-    if(e.touches.length===1){drag=true;dx=e.touches[0].clientX;dy=e.touches[0].clientY;ox=tx;oy=ty;}
+    if(e.touches.length===1){drag=true;wasDragged=false;dx=e.touches[0].clientX;dy=e.touches[0].clientY;ox=tx;oy=ty;}
     else if(e.touches.length===2){drag=false;pd0=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);ps0=s;}
   },{passive:true});
   v.addEventListener('touchmove',function(e){
     e.preventDefault();
-    if(e.touches.length===1&&drag){tx=ox+(e.touches[0].clientX-dx);ty=oy+(e.touches[0].clientY-dy);clamp();applyT(false);}
-    else if(e.touches.length===2){var d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);s=Math.min(8,Math.max(1,ps0*(d/pd0)));clamp();applyT(false);}
+    if(e.touches.length===1&&drag){
+      var mdx=e.touches[0].clientX-dx,mdy=e.touches[0].clientY-dy;
+      if(Math.abs(mdx)>4||Math.abs(mdy)>4)wasDragged=true;
+      tx=ox+mdx;ty=oy+mdy;clamp();applyT(false);
+    }else if(e.touches.length===2){var d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);s=Math.min(8,Math.max(1,ps0*(d/pd0)));clamp();applyT(true);}
   },{passive:false});
   v.addEventListener('touchend',function(){drag=false;});
   var lb=gel('ULB');
-  if(lb)lb.addEventListener('click',function(e){if(e.target===lb||e.target===v)close();});
+  if(lb)lb.addEventListener('click',function(e){
+    if(wasDragged){wasDragged=false;return;}
+    if(e.target===lb||e.target===v)close();
+  });
   document.addEventListener('keydown',function(e){
     var lb2=gel('ULB');if(!lb2||!lb2.classList.contains('on'))return;
     if(e.key==='Escape')close();
-    if(e.key==='+'||e.key==='=')zoomAt(1.3,window.innerWidth/2,window.innerHeight/2);
-    if(e.key==='-')zoomAt(1/1.3,window.innerWidth/2,window.innerHeight/2);
+    if(e.key==='+'||e.key==='=')zoomAt(1.3,window.innerWidth/2,window.innerHeight/2,true);
+    if(e.key==='-')zoomAt(1/1.3,window.innerWidth/2,window.innerHeight/2,true);
     if(e.key==='0')reset(true);
     if(e.key==='ArrowLeft'&&s<=1)nav(-1);
     if(e.key==='ArrowRight'&&s<=1)nav(1);
@@ -1756,8 +1770,8 @@ function init(){
 }
 if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init);}else{setTimeout(init,0);}
 g.ULB={open:open,close:close,nav:nav,
-  zoomIn:function(){zoomAt(1.3,window.innerWidth/2,window.innerHeight/2);},
-  zoomOut:function(){zoomAt(1/1.3,window.innerWidth/2,window.innerHeight/2);},
+  zoomIn:function(){zoomAt(1.3,window.innerWidth/2,window.innerHeight/2,true);},
+  zoomOut:function(){zoomAt(1/1.3,window.innerWidth/2,window.innerHeight/2,true);},
   reset:function(){reset(true);}};
 })(window);
     </script>
