@@ -365,6 +365,151 @@
     [data-theme="dark"] .ygal-cap { color: rgba(240,230,200,.3); }
 
     .KLB-X:hover { background: rgba(255,255,255,.3); }
+
+    /* ═══════════════════════════════════════════════
+       HERO GALLERY — cinematic full-width photo
+    ═══════════════════════════════════════════════ */
+    .KGAL-HERO {
+        position: relative;
+        width: 100%;
+        height: clamp(420px, 62vw, 720px);
+        border-radius: 6px;
+        overflow: hidden;
+        cursor: pointer;
+        margin-bottom: .6rem;
+        background: #0a0805;
+        box-shadow: 0 8px 32px rgba(0,0,0,.18), 0 32px 80px rgba(0,0,0,.22);
+    }
+    .KGAL-HERO img {
+        width: 100%; height: 100%;
+        object-fit: cover; display: block;
+        filter: contrast(1.04) brightness(.92) saturate(.82);
+        transition: transform 1.4s cubic-bezier(0.16,1,0.3,1), filter 1.2s ease;
+        transform-origin: center 40%;
+        will-change: transform;
+    }
+    .KGAL-HERO:hover img {
+        transform: scale(1.04);
+        filter: contrast(1.03) brightness(.96) saturate(.86);
+    }
+    .KGAL-HERO-OVL {
+        position: absolute; inset: 0;
+        background:
+            linear-gradient(to top,  rgba(4,3,2,.88) 0%, rgba(4,3,2,.45) 32%, rgba(4,3,2,.1) 55%, transparent 75%),
+            linear-gradient(to right, rgba(4,3,2,.35) 0%, transparent 45%);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 2.8rem 3rem 2.6rem;
+        transition: background 0.7s ease;
+    }
+    .KGAL-HERO:hover .KGAL-HERO-OVL {
+        background:
+            linear-gradient(to top,  rgba(4,3,2,.93) 0%, rgba(4,3,2,.52) 35%, rgba(4,3,2,.15) 58%, transparent 78%),
+            linear-gradient(to right, rgba(4,3,2,.4) 0%, transparent 45%);
+    }
+    .KGAL-HERO-INNER {
+        position: relative; z-index: 2;
+        transform: translateY(6px);
+        transition: transform 0.8s cubic-bezier(0.16,1,0.3,1);
+    }
+    .KGAL-HERO:hover .KGAL-HERO-INNER { transform: translateY(0); }
+    .KGAL-HERO-EYEBROW {
+        font-family: 'DM Sans', sans-serif;
+        font-size: .52rem; letter-spacing: .28em; text-transform: uppercase;
+        color: rgba(201,162,39,.85); margin-bottom: .65rem;
+        display: flex; align-items: center; gap: .7rem;
+    }
+    .KGAL-HERO-EYEBROW::before {
+        content: ''; display: block; width: 28px; height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(201,162,39,.7));
+    }
+    .KGAL-HERO-TITLE {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(2.4rem, 5vw, 4.2rem);
+        font-weight: 300; line-height: 1;
+        color: #fff;
+        letter-spacing: -.01em;
+        margin-bottom: .5rem;
+        text-shadow: 0 2px 24px rgba(0,0,0,.4);
+    }
+    .KGAL-HERO-SUB {
+        font-family: 'DM Sans', sans-serif;
+        font-size: .62rem; font-weight: 300;
+        color: rgba(255,255,255,.52); letter-spacing: .12em;
+        text-transform: uppercase;
+    }
+    .KGAL-HERO-ZOOM {
+        position: absolute; bottom: 2.4rem; right: 2.4rem;
+        width: 44px; height: 44px; border-radius: 50%;
+        border: 1px solid rgba(255,255,255,.2);
+        background: rgba(255,255,255,.08);
+        backdrop-filter: blur(8px);
+        display: flex; align-items: center; justify-content: center;
+        color: rgba(255,255,255,.7);
+        opacity: 0;
+        transform: scale(.85);
+        transition: opacity .5s ease, transform .5s cubic-bezier(0.16,1,0.3,1), background .2s;
+        z-index: 3;
+    }
+    .KGAL-HERO-ZOOM svg { width: 18px; height: 18px; }
+    .KGAL-HERO:hover .KGAL-HERO-ZOOM { opacity: 1; transform: scale(1); }
+
+    /* ── TRIO ── */
+    .KGAL-TRIO {
+        display: grid;
+        grid-template-columns: 1fr 1.15fr 1fr;
+        grid-template-rows: 240px;
+        gap: .6rem;
+        align-items: stretch;
+    }
+    @media (max-width: 640px) {
+        .KGAL-TRIO { grid-template-columns: 1fr 1fr; grid-template-rows: 180px 180px; }
+        .KGAL-TRIO-TALL { grid-column: span 2; }
+        .KGAL-HERO-OVL { padding: 1.6rem 1.4rem 1.5rem; }
+        .KGAL-HERO-ZOOM { bottom: 1.4rem; right: 1.4rem; }
+    }
+    .KGAL-TRIO-ITEM {
+        position: relative; overflow: hidden;
+        border-radius: 5px; cursor: pointer;
+        background: #0a0805;
+        box-shadow: 0 4px 16px rgba(0,0,0,.12);
+    }
+    .KGAL-TRIO-ITEM img {
+        width: 100%; height: 100%;
+        object-fit: cover; display: block;
+        filter: contrast(1.03) brightness(.94) saturate(.82);
+        transition: transform 1.1s cubic-bezier(0.16,1,0.3,1), filter 0.9s ease;
+        will-change: transform;
+    }
+    .KGAL-TRIO-ITEM:hover img {
+        transform: scale(1.06);
+        filter: contrast(1.02) brightness(.98) saturate(.86);
+    }
+    .KGAL-TRIO-OVL {
+        position: absolute; inset: 0;
+        background: linear-gradient(to top, rgba(4,3,2,.75) 0%, transparent 55%);
+        display: flex; align-items: flex-end;
+        padding: .9rem 1rem;
+        opacity: 0;
+        transition: opacity .55s ease;
+    }
+    .KGAL-TRIO-OVL span {
+        font-family: 'DM Sans', sans-serif;
+        font-size: .56rem; letter-spacing: .18em; text-transform: uppercase;
+        color: rgba(255,255,255,.72);
+        transform: translateY(4px);
+        transition: transform .55s cubic-bezier(0.16,1,0.3,1);
+        display: block;
+    }
+    .KGAL-TRIO-ITEM:hover .KGAL-TRIO-OVL { opacity: 1; }
+    .KGAL-TRIO-ITEM:hover .KGAL-TRIO-OVL span { transform: translateY(0); }
+    .KGAL-TRIO-ITEM::before {
+        content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+        background: linear-gradient(90deg, transparent, rgba(201,162,39,.8), transparent);
+        opacity: 0; transition: opacity .45s ease; z-index: 2;
+    }
+    .KGAL-TRIO-ITEM:hover::before { opacity: 1; }
     </style>
 </head>
 <body>
@@ -536,26 +681,35 @@
         <!-- Gallery -->
         <div class="KGAL">
             <div class="KGAL-HDR"><div class="KGAL-TITLE">Інтер'єр костелу</div></div>
-            <div style="display:inline-flex;align-items:center;gap:.5rem;padding:.4rem .85rem;background:rgba(201,162,39,.07);border:1px solid rgba(201,162,39,.2);border-radius:100px;margin-bottom:1.5rem;font-family:'DM Sans',sans-serif;font-size:.65rem;color:rgba(28,25,23,.55);letter-spacing:.04em;">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:12px;height:12px;flex-shrink:0;color:#c9a227;"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-              Деякі фотографії колоризовані за допомогою ШІ
-            </div>
-            <!-- Hero row: large left + 2 stacked right -->
-            <div style="display:grid;grid-template-columns:1.65fr 1fr;grid-template-rows:1fr 1fr;gap:.5rem;height:580px;">
-                <div class="KGAL-ITEM KGAL-MAIN" onclick="openKLB(this)" style="grid-row:span 2;">
-                    <img src="https://i.imgur.com/u6vHC49.jpeg" alt="Інтер'єр — головна нава" loading="lazy">
+
+            <!-- HERO PHOTO — cinematic full-width -->
+            <div class="KGAL-HERO" onclick="openKLB(this)">
+                <img src="https://i.imgur.com/u6vHC49.jpeg" alt="Інтер'єр — головна нава" loading="lazy">
+                <div class="KGAL-HERO-OVL">
+                    <div class="KGAL-HERO-INNER">
+                        <div class="KGAL-HERO-EYEBROW">Костел Іоанна Хрестителя · 1695–1742</div>
+                        <div class="KGAL-HERO-TITLE">Інтер'єр</div>
+                        <div class="KGAL-HERO-SUB">Трьохнавна базиліка · Стиль рококо · Орден піарів</div>
+                    </div>
+                    <div class="KGAL-HERO-ZOOM">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                    </div>
                 </div>
-                <div class="KGAL-ITEM" onclick="openKLB(this)">
+            </div>
+
+            <!-- THREE PHOTOS BELOW -->
+            <div class="KGAL-TRIO">
+                <div class="KGAL-TRIO-ITEM" onclick="openKLB(this)">
                     <img src="https://i.imgur.com/pcuoEmD.jpeg" alt="Інтер'єр — деталь" loading="lazy">
+                    <div class="KGAL-TRIO-OVL"><span>Деталь інтер'єру</span></div>
                 </div>
-                <div class="KGAL-ITEM" onclick="openKLB(this)">
-                    <img src="https://i.imgur.com/JM3Qg4Z.jpeg" alt="Інтер'єр — деталь" loading="lazy">
-                </div>
-            </div>
-            <!-- Bottom full-width photo -->
-            <div style="margin-top:.5rem;">
-                <div class="KGAL-ITEM" onclick="openKLB(this)" style="height:320px;">
+                <div class="KGAL-TRIO-ITEM KGAL-TRIO-TALL" onclick="openKLB(this)">
                     <img src="https://i.imgur.com/dHKnHPp.jpeg" alt="Інтер'єр — головний портал" loading="lazy">
+                    <div class="KGAL-TRIO-OVL"><span>Головний портал</span></div>
+                </div>
+                <div class="KGAL-TRIO-ITEM" onclick="openKLB(this)">
+                    <img src="https://i.imgur.com/JM3Qg4Z.jpeg" alt="Інтер'єр — деталь" loading="lazy">
+                    <div class="KGAL-TRIO-OVL"><span>Деталь інтер'єру</span></div>
                 </div>
             </div>
         </div>
@@ -777,12 +931,11 @@
     <script src="app.js"></script>
     <script>
 (function(g){'use strict';
-var s=1,tx=0,ty=0,drag=false,wasDragged=false,dx=0,dy=0,ox=0,oy=0,pd0=0,ps0=1,items=[],cur=0;
-var zoomTimer=null;
+var s=1,tx=0,ty=0,drag=false,dx=0,dy=0,ox=0,oy=0,pd0=0,ps0=1,items=[],cur=0;
 function gel(id){return document.getElementById(id);}
 function applyT(anim){
   var i=gel('ULB-IMG');if(!i)return;
-  i.style.transition=anim?'transform .32s cubic-bezier(0.25,0.46,0.45,0.94)':'none';
+  i.style.transition=anim?'transform .2s ease':'none';
   i.style.transform='translate('+tx+'px,'+ty+'px) scale('+s+')';
   var z=gel('ULB-ZVAL');if(z)z.textContent=s.toFixed(1)+'×';
 }
@@ -793,13 +946,13 @@ function clamp(){
   tx=Math.min(mx,Math.max(-mx,tx));ty=Math.min(my,Math.max(-my,ty));
 }
 function reset(anim){s=1;tx=0;ty=0;applyT(anim);}
-function zoomAt(f,cx,cy,smooth){
+function zoomAt(f,cx,cy){
   var v=gel('ULB-VP');if(!v)return;
   var r=v.getBoundingClientRect();
   var px=cx-r.left-v.clientWidth/2,py=cy-r.top-v.clientHeight/2;
   var ns=Math.min(8,Math.max(1,s*f)),ratio=ns/s;
   tx=px-(px-tx)*ratio;ty=py-(py-ty)*ratio;s=ns;
-  clamp();applyT(smooth||false);
+  clamp();applyT(false);
 }
 function loadItem(i2){
   var i=gel('ULB-IMG'),c2=gel('ULB-CAP');if(!i)return;
@@ -828,51 +981,38 @@ function nav(dir){
 function init(){
   var v=gel('ULB-VP');if(!v)return;
   v.addEventListener('mousedown',function(e){
-    if(e.button!==0)return;drag=true;wasDragged=false;dx=e.clientX;dy=e.clientY;ox=tx;oy=ty;
+    if(e.button!==0)return;drag=true;dx=e.clientX;dy=e.clientY;ox=tx;oy=ty;
     v.style.cursor='grabbing';e.preventDefault();
   });
   document.addEventListener('mousemove',function(e){
-    if(!drag)return;
-    var mdx=e.clientX-dx,mdy=e.clientY-dy;
-    if(Math.abs(mdx)>4||Math.abs(mdy)>4)wasDragged=true;
-    tx=ox+mdx;ty=oy+mdy;clamp();applyT(false);
+    if(!drag)return;tx=ox+(e.clientX-dx);ty=oy+(e.clientY-dy);clamp();applyT(false);
   });
   document.addEventListener('mouseup',function(){
     if(!drag)return;drag=false;var vv=gel('ULB-VP');if(vv)vv.style.cursor='grab';
   });
   v.addEventListener('wheel',function(e){
-    e.preventDefault();
-    if(zoomTimer)clearTimeout(zoomTimer);
-    var factor=e.deltaY<0?1.12:1/1.12;
-    zoomAt(factor,e.clientX,e.clientY,true);
-    zoomTimer=setTimeout(function(){zoomTimer=null;},200);
+    e.preventDefault();zoomAt(e.deltaY<0?1.15:1/1.15,e.clientX,e.clientY);
   },{passive:false});
   v.addEventListener('dblclick',function(e){
-    if(s>1.5)reset(true);else zoomAt(2.5,e.clientX,e.clientY,true);
+    if(s>1.5)reset(true);else zoomAt(2.5,e.clientX,e.clientY);
   });
   v.addEventListener('touchstart',function(e){
-    if(e.touches.length===1){drag=true;wasDragged=false;dx=e.touches[0].clientX;dy=e.touches[0].clientY;ox=tx;oy=ty;}
+    if(e.touches.length===1){drag=true;dx=e.touches[0].clientX;dy=e.touches[0].clientY;ox=tx;oy=ty;}
     else if(e.touches.length===2){drag=false;pd0=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);ps0=s;}
   },{passive:true});
   v.addEventListener('touchmove',function(e){
     e.preventDefault();
-    if(e.touches.length===1&&drag){
-      var mdx=e.touches[0].clientX-dx,mdy=e.touches[0].clientY-dy;
-      if(Math.abs(mdx)>4||Math.abs(mdy)>4)wasDragged=true;
-      tx=ox+mdx;ty=oy+mdy;clamp();applyT(false);
-    }else if(e.touches.length===2){var d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);s=Math.min(8,Math.max(1,ps0*(d/pd0)));clamp();applyT(true);}
+    if(e.touches.length===1&&drag){tx=ox+(e.touches[0].clientX-dx);ty=oy+(e.touches[0].clientY-dy);clamp();applyT(false);}
+    else if(e.touches.length===2){var d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);s=Math.min(8,Math.max(1,ps0*(d/pd0)));clamp();applyT(false);}
   },{passive:false});
   v.addEventListener('touchend',function(){drag=false;});
   var lb=gel('ULB');
-  if(lb)lb.addEventListener('click',function(e){
-    if(wasDragged){wasDragged=false;return;}
-    if(e.target===lb||e.target===v)close();
-  });
+  if(lb)lb.addEventListener('click',function(e){if(e.target===lb||e.target===v)close();});
   document.addEventListener('keydown',function(e){
     var lb2=gel('ULB');if(!lb2||!lb2.classList.contains('on'))return;
     if(e.key==='Escape')close();
-    if(e.key==='+'||e.key==='=')zoomAt(1.3,window.innerWidth/2,window.innerHeight/2,true);
-    if(e.key==='-')zoomAt(1/1.3,window.innerWidth/2,window.innerHeight/2,true);
+    if(e.key==='+'||e.key==='=')zoomAt(1.3,window.innerWidth/2,window.innerHeight/2);
+    if(e.key==='-')zoomAt(1/1.3,window.innerWidth/2,window.innerHeight/2);
     if(e.key==='0')reset(true);
     if(e.key==='ArrowLeft'&&s<=1)nav(-1);
     if(e.key==='ArrowRight'&&s<=1)nav(1);
