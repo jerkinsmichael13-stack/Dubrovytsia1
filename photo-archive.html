@@ -45,7 +45,7 @@
     position: relative;
     background-color: #1a1610;
     background-image:
-        linear-gradient(to bottom, rgba(15,12,8,0.65) 0%, rgba(15,12,8,0.72) 75%, rgba(250,247,242,1) 100%),
+        linear-gradient(to bottom, rgba(15,12,8,0.60) 0%, rgba(15,12,8,0.68) 55%, rgba(240,235,228,0.85) 88%, rgba(250,247,242,1) 100%),
         url('https://i.imgur.com/qcjgN1I.jpeg');
     background-size: cover;
     background-position: center 50%;
@@ -290,6 +290,20 @@
 [data-theme="dark"] .pa-strip-cell img {
     filter: contrast(1.06) brightness(.82) saturate(.65);
 }
+[data-theme="dark"] .pa-hero {
+    background-image:
+        linear-gradient(to bottom, rgba(8,6,4,0.72) 0%, rgba(8,6,4,0.78) 55%, rgba(14,12,10,0.95) 88%, rgba(14,12,10,1) 100%),
+        url('https://i.imgur.com/qcjgN1I.jpeg');
+    background-color: #0e0c0a;
+}
+[data-theme="dark"] .pa-tabs-wrap {
+    background: var(--color-bg);
+    border-bottom-color: rgba(201,162,39,.1);
+    box-shadow: 0 4px 20px rgba(0,0,0,.2);
+}
+[data-theme="dark"] .pa-tab { color: var(--color-text-light); }
+[data-theme="dark"] .pa-tab:hover { color: var(--color-text); background: rgba(255,255,255,.04); }
+[data-theme="dark"] .pa-gallery-wrap { background: var(--color-bg); }
 
 /* ── TABS ── */
 .pa-divider {
@@ -453,7 +467,7 @@
 
 <div class="pa-hero-main-wrap">
     <div class="pa-hero-main fade-in-up delay-2" data-hero-idx="0">
-        <img src="https://i.imgur.com/ssqiAZi.jpeg" alt="Костел Іоана Хрестителя 1929" loading="eager">
+        <img src="https://i.imgur.com/n74FSvK.jpeg" alt="Костел Іоана Хрестителя 1929" loading="eager">
         <div class="pa-hero-main-ovl">
             <div class="pa-hero-main-year">1929 рік · Костел Іоана Хрестителя</div>
             <div class="pa-hero-main-title">Костел <em>Іоана Хрестителя</em></div>
