@@ -1706,7 +1706,7 @@ html[data-theme="dark"] .moon-icon { display: none; }
     overflow: hidden;
     cursor: pointer;
     border: 1px solid var(--color-border-light);
-    transition: transform 0.8s cubic-bezier(0.16,1,0.3,1), box-shadow 0.8s cubic-bezier(0.16,1,0.3,1), border-color 0.7s ease;
+    transition: box-shadow 0.9s cubic-bezier(0.16,1,0.3,1), border-color 0.9s ease;
     background: var(--color-bg-secondary);
     animation: cardAppear 0.4s ease both;
 }
@@ -1731,21 +1731,32 @@ html[data-theme="dark"] .moon-icon { display: none; }
     filter: contrast(1.01) brightness(1.0) saturate(0.93);
 }
 .photo-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 32px rgba(24,16,8,0.12), 0 0 0 1px rgba(200,152,26,0.12);
+    box-shadow: 0 8px 28px rgba(24,16,8,0.10), 0 0 0 1px rgba(200,152,26,0.10);
     border-color: rgba(200,152,26,0.18);
     z-index: 2;
 }
-.photo-card:hover img { transform: scale(1.02); filter: contrast(1.02) brightness(1.02) saturate(0.97); }
+.photo-card:hover img {
+    transform: scale(1.025);
+    filter: contrast(1.01) brightness(1.03) saturate(0.97);
+}
 
 .photo-overlay {
     position: absolute; inset: 0;
-    background: linear-gradient(to top, rgba(8,5,2,0.90) 0%, rgba(8,5,2,0.55) 40%, rgba(8,5,2,0.1) 65%, transparent 100%);
+    background: linear-gradient(to top, rgba(8,5,2,0.88) 0%, rgba(8,5,2,0.45) 38%, rgba(8,5,2,0.05) 60%, transparent 100%);
     display: flex; flex-direction: column; justify-content: flex-end;
     padding: 1.5rem 1.25rem 1.1rem;
     opacity: 0;
-    transition: opacity 0.85s cubic-bezier(0.16,1,0.3,1);
+    transition: opacity 1.1s cubic-bezier(0.16,1,0.3,1);
+    pointer-events: none;
 }
+.photo-card::after {
+    content: ''; position: absolute; inset: 0;
+    background: rgba(0,0,0,0);
+    transition: background 0.9s ease;
+    pointer-events: none;
+    border-radius: var(--radius-md);
+}
+.photo-card:hover::after { background: rgba(0,0,0,0.04); }
 .photo-card:hover .photo-overlay { opacity: 1; }
 
 .photo-info h3 {
