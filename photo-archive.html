@@ -41,29 +41,18 @@
 
 /* ── HERO ── */
 .pa-hero { 
+    background: var(--color-bg, #faf7f2);
     overflow: hidden;
     position: relative;
-    background: var(--color-bg, #faf7f2);
 }
 
-/* Street photo visible only in the header area, fades out downward */
 .pa-hero-header {
     position: relative;
     z-index: 1;
+    max-width: 1400px; margin: 0 auto;
+    padding: 5rem 3rem 3rem;
 }
-.pa-hero-header::before {
-    content: '';
-    position: absolute;
-    inset: -20px -9999px;
-    background-image: url('https://i.imgur.com/qcjgN1I.jpeg');
-    background-size: cover;
-    background-position: center 50%;
-    background-attachment: local;
-    opacity: 0.09;
-    pointer-events: none;
-    filter: saturate(0.3);
-}
-[data-theme="dark"] .pa-hero-header::before { opacity: 0.05; }
+@media(max-width:700px){ .pa-hero-header { padding: 3.5rem 1.4rem 2.2rem; } }
 
 .pa-hero-main-wrap,
 .pa-hero-strip-wrap,
@@ -71,18 +60,6 @@
     position: relative;
     z-index: 1;
 }
-
-/* Restore default text colors */
-.pa-hero .pa-hero-label { color: #b8902a; }
-.pa-hero .pa-hero-title { color: var(--color-text, #1c1917); }
-.pa-hero .pa-hero-title em { color: #c9a227; }
-.pa-hero .pa-hero-desc { color: var(--color-text-secondary, #78716c); }
-
-.pa-hero-header {
-    max-width: 1400px; margin: 0 auto;
-    padding: 5rem 3rem 3rem;
-}
-@media(max-width:700px){ .pa-hero-header { padding: 3.5rem 1.4rem 2.2rem; } }
 
 .pa-hero-label {
     font-family: 'DM Sans',sans-serif;
@@ -232,54 +209,51 @@
     width: 100%; height: 100%;
     object-fit: cover; display: block;
     filter: contrast(1.04) brightness(.88) saturate(.7);
-    transition: transform 1.6s cubic-bezier(0.16,1,0.3,1),
-                filter 1.2s ease,
-                opacity .5s ease;
-    transform: scale(1.0) translateZ(0); will-change: transform;
+    transition: transform 1.1s cubic-bezier(0.16,1,0.3,1), filter 0.9s ease, opacity .5s ease;
+    transform: scale(1.0) translateZ(0);
     opacity: 0;
 }
 .pa-strip-cell img.loaded { opacity: 1; }
 .pa-strip-cell:hover img {
-    transform: scale(1.06) translateZ(0);
-    filter: contrast(1.02) brightness(.95) saturate(.75);
+    transform: scale(1.025) translateZ(0);
+    filter: contrast(1.02) brightness(.92) saturate(.75);
 }
+.pa-strip-cell::after {
+    content: ''; position: absolute; inset: 0;
+    background: rgba(0,0,0,0);
+    transition: background 0.9s ease;
+    pointer-events: none;
+}
+.pa-strip-cell:hover::after { background: rgba(0,0,0,0.06); }
 .pa-strip-cell-ovl {
     position: absolute; inset: 0;
-    background: linear-gradient(to top, rgba(4,2,1,.9) 0%, rgba(4,2,1,.3) 42%, transparent 72%);
+    background: linear-gradient(to top, rgba(4,2,1,.88) 0%, rgba(4,2,1,.2) 40%, transparent 68%);
     display: flex; flex-direction: column; justify-content: flex-end;
     padding: .8rem .85rem .75rem;
-}
-.pa-strip-cell:hover .pa-strip-cell-ovl {
-    background: linear-gradient(to top, rgba(4,2,1,.96) 0%, rgba(4,2,1,.45) 46%, transparent 76%);
+    pointer-events: none;
 }
 .pa-strip-year {
     font-family: 'DM Sans',sans-serif;
     font-size: .44rem; letter-spacing: .22em; text-transform: uppercase;
     color: rgba(201,162,39,.85); margin-bottom: .25rem;
-    transform: translateY(4px); opacity: .7;
-    transition: transform .6s cubic-bezier(0.16,1,0.3,1), opacity .5s ease;
+    opacity: .85;
 }
-.pa-strip-cell:hover .pa-strip-year { transform: translateY(0); opacity: 1; }
 .pa-strip-title {
     font-family: 'Cormorant Garamond',serif;
     font-size: clamp(.8rem,1.3vw,1rem);
     font-weight: 400; color: rgba(255,255,255,.92); line-height: 1.25;
-    transform: translateY(4px);
-    transition: transform .6s cubic-bezier(0.16,1,0.3,1) .04s;
     display: -webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
 }
-.pa-strip-cell:hover .pa-strip-title { transform: translateY(0); }
 .pa-strip-cell::before {
     content:''; position:absolute; top:0; left:0; right:0; height:2px;
     background: linear-gradient(90deg,transparent,rgba(201,162,39,.9),transparent);
-    opacity:0; transition:opacity .4s ease; z-index:3;
+    opacity:0; transition:opacity 0.9s ease; z-index:3;
 }
 .pa-strip-cell:hover::before { opacity:1; }
 
 .pa-hero-gap { height: 4rem; }
 @media(max-width:700px){ .pa-hero-gap { height:2.5rem; } }
 
-/* Dark theme */
 [data-theme="dark"] .pa-hero-main img,
 [data-theme="dark"] .pa-strip-cell img {
     filter: contrast(1.06) brightness(.82) saturate(.65);
