@@ -28,7 +28,7 @@
 .ulb-btn:hover{background:rgba(255,255,255,.2);}
 .ulb-btn svg{width:16px;height:16px;pointer-events:none;}
 #ULB-ZVAL{font-family:'DM Sans',sans-serif;font-size:.72rem;color:rgba(255,255,255,.55);min-width:3.2em;text-align:center;}
-#ULB-CAP{font-family:'DM Sans',sans-serif;font-size:.72rem;color:rgba(255,255,255,.5);flex:1;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 .5rem;}
+#ULB-CAP{font-family:'DM Sans',sans-serif;font-size:.74rem;font-weight:400;color:rgba(255,255,255,.62);flex:1;text-align:center;white-space:normal;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;padding:0 1rem;line-height:1.45;letter-spacing:.01em;}
 .ulb-sep{width:1px;height:20px;background:rgba(255,255,255,.1);flex-shrink:0;}
 #ULB-CLOSE{position:absolute;top:.9rem;right:1rem;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.1);backdrop-filter:blur(8px);color:rgba(255,255,255,.85);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s;z-index:2;padding:0;}
 #ULB-CLOSE:hover{background:rgba(255,255,255,.25);}
@@ -129,14 +129,18 @@
 
     <section class="gallery-section">
         <div class="container">
+            <div style="display:flex;align-items:center;gap:.5rem;padding:.45rem 1rem;background:rgba(201,162,39,.07);border:1px solid rgba(201,162,39,.2);border-radius:100px;margin-bottom:1.5rem;font-family:'DM Sans',sans-serif;font-size:.68rem;color:rgba(28,25,23,.55);letter-spacing:.04em;width:fit-content;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:13px;height:13px;flex-shrink:0;color:#c9a227;"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+              Деякі фотографії колоризовані за допомогою ШІ
+            </div>
             <div class="gallery-grid" id="photoGallery">
                 <!-- Photos loaded from photos.json -->
             </div>
         </div>
     </section>
 
-    <!-- Legacy lightbox markup kept for app.js compatibility — hidden, ULB is used instead -->
-    <div class="lightbox" id="lightbox" style="display:none!important">
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
         <div class="lightbox-content">
             <span class="lightbox-close">×</span>
             <button class="lightbox-zoom-btn" id="lightboxZoomBtn" title="Збільшити / зменшити">
@@ -214,7 +218,6 @@
     <script>
 (function(g){'use strict';
 var s=1,tx=0,ty=0,drag=false,wasDragged=false,dx=0,dy=0,ox=0,oy=0,pd0=0,ps0=1,items=[],cur=0;
-/* smooth zoom via CSS transition */
 var zoomTimer=null;
 function gel(id){return document.getElementById(id);}
 function applyT(anim){
@@ -277,7 +280,6 @@ function init(){
   document.addEventListener('mouseup',function(){
     if(!drag)return;drag=false;var vv=gel('ULB-VP');if(vv)vv.style.cursor='grab';
   });
-  /* smooth wheel zoom with debounce */
   v.addEventListener('wheel',function(e){
     e.preventDefault();
     if(zoomTimer)clearTimeout(zoomTimer);
@@ -318,8 +320,8 @@ function init(){
 }
 if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init);}else{setTimeout(init,0);}
 g.ULB={open:open,close:close,nav:nav,
-  zoomIn:function(){zoomAt(1.3,window.innerWidth/2,window.innerHeight/2);},
-  zoomOut:function(){zoomAt(1/1.3,window.innerWidth/2,window.innerHeight/2);},
+  zoomIn:function(){zoomAt(1.3,window.innerWidth/2,window.innerHeight/2,true);},
+  zoomOut:function(){zoomAt(1/1.3,window.innerWidth/2,window.innerHeight/2,true);},
   reset:function(){reset(true);}};
 })(window);
     </script>
