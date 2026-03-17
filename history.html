@@ -21,15 +21,18 @@
 ═══════════════════════════════════════════ */
 #hist-progress {
     position: fixed; top: 0; left: 0; z-index: 9999;
-    height: 2px; width: 0%;
-    background: linear-gradient(90deg, #a8841c, #c9a227, #e0bd5a);
+    height: 3px; width: 0%;
+    background: linear-gradient(90deg, #a8841c, #c9a227, #e0bd5a, #c9a227);
+    background-size: 200% auto;
     transition: width 0.08s linear;
     pointer-events: none;
-    box-shadow: 0 0 8px rgba(201,162,39,0.5);
+    box-shadow: 0 0 12px rgba(201,162,39,0.6);
+    animation: progressShimmer 3s linear infinite;
 }
+@keyframes progressShimmer { to { background-position: 200% center; } }
 
 /* ═══════════════════════════════════════════
-   CINEMATIC HERO — HISTORY
+   CINEMATIC HERO — HISTORY (COLORFUL)
 ═══════════════════════════════════════════ */
 .hist-hero {
     position: relative;
@@ -37,31 +40,28 @@
     display: flex; flex-direction: column;
     justify-content: center; align-items: center;
     overflow: hidden;
-    background: var(--color-bg, #faf7f2);
+    background: #0a0805;
 }
 .hist-hero-bg {
     position: absolute; inset: -8%;
     background-image: url('https://i.imgur.com/3aWJiOy.jpeg');
     background-size: cover;
     background-position: center 30%;
-    filter: sepia(0.5) brightness(0.5) contrast(1.1) saturate(0.4);
-    transform: scale(1.02); opacity: 0;
-    transition: transform 10s cubic-bezier(0.16,1,0.3,1), opacity 0.7s ease;
+    filter: brightness(0.62) contrast(1.06) saturate(0.88);
+    opacity: 0;
+    transition: opacity 0.8s ease;
     z-index: 0;
+    will-change: transform;
 }
-:root:not([data-theme="dark"]) .hist-hero-bg {
-    filter: sepia(0.45) brightness(0.62) contrast(1.08) saturate(0.42);
-}
-.hist-hero.hero-loaded .hist-hero-bg { transform: scale(1.0); opacity: 1;; }
+.hist-hero.hero-loaded .hist-hero-bg { opacity: 1; }
+[data-theme="dark"] .hist-hero-bg { filter: brightness(0.4) contrast(1.1) saturate(0.72); }
 
 .hist-hero-grain {
     position: absolute; inset: -80px;
     width: calc(100% + 160px); height: calc(100% + 160px);
-    opacity: 0.06;
+    opacity: 0.055; pointer-events: none; z-index: 1;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)'/%3E%3C/svg%3E");
-    background-size: 220px 220px;
-    pointer-events: none; z-index: 1;
-    animation: hist-grain 0.55s steps(1) infinite;
+    background-size: 220px 220px; animation: hist-grain 0.55s steps(1) infinite;
 }
 @keyframes hist-grain {
     0%{transform:translate(0,0)} 16%{transform:translate(-4px,-6px)} 33%{transform:translate(6px,3px)}
@@ -71,14 +71,14 @@
     position: absolute; inset: 0; z-index: 2; pointer-events: none;
     background:
         radial-gradient(ellipse 70% 60% at 50% 50%, transparent 20%, rgba(0,0,0,0.3) 100%),
-        linear-gradient(180deg, rgba(0,0,0,0.32) 0%, rgba(0,0,0,0.06) 30%, rgba(0,0,0,0.4) 70%, var(--color-bg,#faf7f2) 100%);
+        linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.04) 28%, rgba(0,0,0,0.45) 72%, #0a0805 100%);
 }
 .hist-hero-scan {
     position: absolute; inset: 0; z-index: 3; pointer-events: none;
-    background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.012) 3px, rgba(0,0,0,0.012) 4px);
+    background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.01) 3px, rgba(0,0,0,0.01) 4px);
 }
 
-/* content */
+/* hero content */
 .hist-hero-content {
     position: relative; z-index: 10;
     text-align: center; padding: 2rem 2rem 8rem;
@@ -92,16 +92,13 @@
 }
 .hist-eyebrow span {
     font-family: 'DM Sans', sans-serif;
-    font-size: 0.5rem; letter-spacing: 0.32em; text-transform: uppercase;
-    color: rgba(201,162,39,0.75);
+    font-size: 0.5rem; letter-spacing: 0.36em; text-transform: uppercase;
+    color: rgba(201,162,39,0.8);
 }
-.hist-eyebrow-ln {
-    width: 36px; height: 1px; flex-shrink: 0;
-}
-.hist-eyebrow-ln:first-child { background: linear-gradient(90deg, transparent, rgba(201,162,39,0.55)); }
-.hist-eyebrow-ln:last-child  { background: linear-gradient(270deg, transparent, rgba(201,162,39,0.55)); }
+.hist-eyebrow-ln { width: 38px; height: 1px; flex-shrink: 0; }
+.hist-eyebrow-ln:first-child { background: linear-gradient(90deg, transparent, rgba(201,162,39,0.6)); }
+.hist-eyebrow-ln:last-child  { background: linear-gradient(270deg, transparent, rgba(201,162,39,0.6)); }
 
-/* ANIMATED YEAR COUNTER */
 .hist-year-display {
     display: flex; align-items: center; justify-content: center;
     gap: clamp(0.8rem, 2vw, 1.8rem); margin-bottom: 2rem;
@@ -110,28 +107,23 @@
 .hist-year {
     font-family: 'Cormorant Garamond', serif;
     font-size: clamp(4rem, 11vw, 9.5rem);
-    font-weight: 300; line-height: 0.9;
-    letter-spacing: -0.04em;
-    color: #fff;
-    text-shadow: 0 2px 40px rgba(0,0,0,0.55);
+    font-weight: 300; line-height: 0.9; letter-spacing: -0.04em;
+    color: #fff; text-shadow: 0 2px 50px rgba(0,0,0,0.7);
 }
-.hist-year.gold { color: #c9a227; text-shadow: 0 0 80px rgba(201,162,39,0.3), 0 4px 32px rgba(0,0,0,0.4); }
+.hist-year.gold { color: #c9a227; text-shadow: 0 0 80px rgba(201,162,39,0.4), 0 4px 40px rgba(0,0,0,0.5); }
 .hist-dash {
     font-family: 'Cormorant Garamond', serif;
     font-size: clamp(2rem, 5vw, 4.5rem);
-    color: rgba(201,162,39,0.4); font-weight: 300; line-height: 1;
-    align-self: center;
+    color: rgba(201,162,39,0.4); font-weight: 300; line-height: 1; align-self: center;
 }
-
 .hist-hero-title {
     font-family: 'Cormorant Garamond', serif;
     font-size: clamp(1.5rem, 3.5vw, 2.8rem);
     font-weight: 300; font-style: italic;
-    color: rgba(255,255,255,0.6);
+    color: rgba(255,255,255,0.55);
     letter-spacing: 0.01em; margin-bottom: 2rem;
     opacity: 0; animation: hist-up 0.85s cubic-bezier(0.16,1,0.3,1) 0.5s forwards;
 }
-
 .hist-ornament {
     display: flex; align-items: center; gap: 0.9rem;
     width: 300px; max-width: 85%;
@@ -139,45 +131,44 @@
     margin-bottom: 2.5rem;
 }
 .hist-ornament-line { flex: 1; height: 1px; }
-.hist-ornament-line:first-child { background: linear-gradient(90deg, transparent, rgba(201,162,39,0.4)); }
-.hist-ornament-line:last-child  { background: linear-gradient(270deg, transparent, rgba(201,162,39,0.4)); }
-.hist-ornament-diamond { width: 5px; height: 5px; background: rgba(201,162,39,0.6); transform: rotate(45deg); flex-shrink: 0; }
-.hist-ornament-dot { width: 3px; height: 3px; border-radius: 50%; background: rgba(201,162,39,0.3); flex-shrink: 0; }
+.hist-ornament-line:first-child { background: linear-gradient(90deg, transparent, rgba(201,162,39,0.45)); }
+.hist-ornament-line:last-child  { background: linear-gradient(270deg, transparent, rgba(201,162,39,0.45)); }
+.hist-ornament-diamond { width: 5px; height: 5px; background: rgba(201,162,39,0.65); transform: rotate(45deg); flex-shrink: 0; }
+.hist-ornament-dot { width: 3px; height: 3px; border-radius: 50%; background: rgba(201,162,39,0.35); flex-shrink: 0; }
 
-/* scroll cue */
 .hist-scroll-cue {
     position: absolute; bottom: 2.2rem; left: 50%; transform: translateX(-50%);
     z-index: 10; display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
     opacity: 0; animation: hist-fadein 1s ease 1.4s forwards; pointer-events: none;
 }
 .hist-scroll-cue span {
-    font-family: 'DM Sans', sans-serif; font-size: 0.48rem;
-    letter-spacing: 0.3em; text-transform: uppercase; color: rgba(255,255,255,0.28);
+    font-family: 'DM Sans', sans-serif; font-size: 0.46rem;
+    letter-spacing: 0.35em; text-transform: uppercase; color: rgba(255,255,255,0.26);
 }
 .hist-scroll-track {
     width: 1px; height: 48px;
-    background: linear-gradient(180deg, rgba(201,162,39,0.55) 0%, transparent 100%);
-    animation: hist-drip 2s ease-in-out infinite;
+    background: linear-gradient(180deg, rgba(201,162,39,0.65) 0%, transparent 100%);
+    animation: hist-drip 2.2s ease-in-out infinite;
 }
-@keyframes hist-drip {
-    0%,100%{opacity:0.3;transform:scaleY(1) translateY(0)} 50%{opacity:1;transform:scaleY(0.5) translateY(12px)}
-}
-@keyframes hist-up { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+@keyframes hist-drip { 0%,100%{opacity:0.3;transform:scaleY(1) translateY(0)} 50%{opacity:1;transform:scaleY(0.5) translateY(14px)} }
+@keyframes hist-up { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
 @keyframes hist-fadein { from{opacity:0} to{opacity:1} }
 
 /* ═══════════════════════════════════════════
-   TWO-COLUMN LAYOUT: EPOCH NAV + ARTICLE
+   TWO-COLUMN LAYOUT
 ═══════════════════════════════════════════ */
 .hist-layout {
     display: grid;
-    grid-template-columns: 220px 1fr;
+    grid-template-columns: 230px 1fr;
     gap: 0;
-    max-width: 1200px;
+    max-width: 1240px;
     margin: 0 auto;
     padding: 0 2rem;
     align-items: start;
+    position: relative;
+    z-index: 10;
 }
-@media(max-width: 900px) {
+@media(max-width: 940px) {
     .hist-layout { grid-template-columns: 1fr; }
     .hist-epoch-nav { display: none; }
 }
@@ -186,253 +177,316 @@
 .hist-epoch-nav {
     position: sticky;
     top: 82px;
-    padding: 3rem 0 3rem 0;
+    padding: 2.5rem 0;
     height: calc(100vh - 82px);
     overflow: hidden;
     display: flex; flex-direction: column; justify-content: center;
+    transition: background 0.5s ease, backdrop-filter 0.5s ease, border-radius 0.4s, padding 0.4s, border-color 0.4s;
 }
 .hist-epoch-label {
     font-family: 'DM Sans', sans-serif;
-    font-size: 0.48rem; letter-spacing: 0.3em; text-transform: uppercase;
-    color: var(--color-text-muted, #a8a29e);
-    margin-bottom: 1.6rem; padding-left: 1.5rem;
+    font-size: 0.45rem; letter-spacing: 0.38em; text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin-bottom: 1.8rem; padding-left: 1.6rem; opacity: 0.75;
 }
 .hist-epoch-track {
     position: relative;
     display: flex; flex-direction: column;
     gap: 0;
 }
-
-/* The vertical gold line */
 .hist-epoch-track::before {
     content: '';
     position: absolute;
-    left: 1.45rem; top: 0.5rem; bottom: 0.5rem;
+    left: 1.5rem; top: 0.5rem; bottom: 0.5rem;
     width: 1px;
-    background: var(--color-border-light, rgba(201,162,39,0.15));
+    background: linear-gradient(180deg, rgba(201,162,39,0.08), rgba(201,162,39,0.28) 50%, rgba(201,162,39,0.08));
 }
-/* Progress fill line */
 .hist-epoch-progress-line {
     position: absolute;
-    left: 1.45rem; top: 0.5rem;
+    left: 1.5rem; top: 0.5rem;
     width: 1px;
-    background: linear-gradient(180deg, #c9a227, rgba(201,162,39,0.3));
-    transition: height 0.3s ease;
-    height: 0%;
-    z-index: 1;
+    background: linear-gradient(180deg, rgba(201,162,39,0.95), rgba(201,162,39,0.3));
+    transition: height 0.4s cubic-bezier(0.16,1,0.3,1);
+    height: 0%; z-index: 1;
+    box-shadow: 0 0 8px rgba(201,162,39,0.45);
 }
-
 .hist-epoch-item {
     display: flex; align-items: center; gap: 0.9rem;
-    padding: 0.55rem 0.75rem 0.55rem 1.1rem;
-    cursor: pointer;
-    border-radius: 6px;
-    transition: background 0.2s ease;
-    text-decoration: none;
+    padding: 0.6rem 0.8rem 0.6rem 1.15rem;
+    cursor: pointer; border-radius: 8px;
+    transition: background 0.25s ease; text-decoration: none;
     position: relative; z-index: 2;
 }
-.hist-epoch-item:hover { background: rgba(201,162,39,0.05); }
-.hist-epoch-item.active { background: rgba(201,162,39,0.07); }
-
+.hist-epoch-item:hover { background: rgba(201,162,39,0.06); }
+.hist-epoch-item.active { background: rgba(201,162,39,0.1); }
 .hist-epoch-dot {
-    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
-    border: 1.5px solid rgba(201,162,39,0.3);
-    background: var(--color-bg, #faf7f2);
-    transition: all 0.3s ease;
+    width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0;
+    border: 1.5px solid rgba(201,162,39,0.28);
+    background: transparent;
+    transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
     position: relative; z-index: 3;
 }
 .hist-epoch-item.active .hist-epoch-dot {
-    background: #c9a227;
-    border-color: #c9a227;
-    box-shadow: 0 0 0 3px rgba(201,162,39,0.18), 0 0 12px rgba(201,162,39,0.35);
-    transform: scale(1.25);
+    background: #c9a227; border-color: #c9a227;
+    box-shadow: 0 0 0 4px rgba(201,162,39,0.15), 0 0 16px rgba(201,162,39,0.5);
+    transform: scale(1.3);
 }
 .hist-epoch-item.passed .hist-epoch-dot {
-    background: rgba(201,162,39,0.45);
-    border-color: rgba(201,162,39,0.6);
+    background: rgba(201,162,39,0.5); border-color: rgba(201,162,39,0.7);
 }
-
 .hist-epoch-text { flex: 1; overflow: hidden; }
 .hist-epoch-era {
-    display: block;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.62rem; font-weight: 500;
-    color: var(--color-text-muted, #a8a29e);
+    display: block; font-family: 'DM Sans', sans-serif;
+    font-size: 0.63rem; font-weight: 400; color: var(--color-text-muted);
     transition: color 0.3s ease;
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    line-height: 1.3;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.3;
 }
 .hist-epoch-date {
-    display: block;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 0.72rem; font-style: italic;
-    color: rgba(201,162,39,0.5);
-    transition: color 0.3s ease;
-    margin-top: 0.05rem;
+    display: block; font-family: 'Cormorant Garamond', serif;
+    font-size: 0.75rem; font-style: italic; color: rgba(201,162,39,0.45);
+    transition: color 0.3s ease; margin-top: 0.05rem;
 }
-.hist-epoch-item.active .hist-epoch-era { color: var(--color-text, #1c1917); font-weight: 600; }
+.hist-epoch-item.active .hist-epoch-era { color: var(--color-text); font-weight: 600; }
 .hist-epoch-item.active .hist-epoch-date { color: #c9a227; }
-.hist-epoch-item.passed .hist-epoch-era { color: var(--color-text-secondary, #44403c); }
-
-/* ARTICLE in new layout */
-.hist-article-col {
-    padding: 4rem 0 6rem 3rem;
-    min-width: 0;
-}
-@media(max-width:900px){ .hist-article-col { padding: 3rem 0 5rem; } }
+.hist-epoch-item.passed .hist-epoch-era { color: var(--color-text-secondary); }
 
 /* ═══════════════════════════════════════════
-   DARK THEME
+   ARTICLE COLUMN — Editorial Magazine
 ═══════════════════════════════════════════ */
-[data-theme="dark"] .hist-hero-bg {
-    filter: sepia(0.65) brightness(0.22) contrast(1.25) saturate(0.35);
+.hist-article-col {
+    padding: 5rem 2rem 8rem 3.5rem;
+    min-width: 0;
+}
+@media(max-width: 940px) { .hist-article-col { padding: 3rem 0 6rem; } }
+
+/* Lead paragraph — drop cap + gold accent */
+.lead-paragraph {
+    font-family: 'Cormorant Garamond', serif !important;
+    font-size: clamp(1.1rem, 1.75vw, 1.3rem) !important;
+    line-height: 1.95 !important;
+    color: var(--color-text) !important;
+    font-weight: 400 !important;
+    margin-bottom: 2.5rem !important;
+    padding: 1.8rem 2.2rem !important;
+    border-left: 3px solid rgba(201,162,39,0.6) !important;
+    background: linear-gradient(90deg, rgba(201,162,39,0.045), transparent 70%) !important;
+    border-radius: 0 8px 8px 0 !important;
+    position: relative !important;
+}
+.lead-paragraph::first-letter {
+    font-size: 4.2em;
+    font-weight: 300;
+    line-height: 0.78;
+    float: left;
+    margin: 0.04em 0.1em 0 0;
+    color: #c9a227;
+    font-family: 'Cormorant Garamond', serif;
 }
 
-/* ═══════════════════════════════════════════════════════════════════
+/* H2 — Cinematic chapter headings */
+.history-section h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 300;
+    color: var(--color-text);
+    line-height: 1.05; letter-spacing: -0.025em;
+    margin: 4rem 0 0.4rem;
+    padding-top: 3.5rem;
+    position: relative;
+}
+/* Gold bar above h2 */
+.history-section h2::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 44px; height: 2px;
+    background: linear-gradient(90deg, #c9a227, rgba(201,162,39,0.25));
+    border-radius: 2px;
+}
+/* Fading line below h2 */
+.history-section h2::after {
+    content: '';
+    display: block;
+    width: 100%; height: 1px;
+    background: linear-gradient(90deg, rgba(201,162,39,0.28), transparent 55%);
+    margin-top: 1.1rem;
+}
+
+/* H3 — Elegant subheadings */
+.history-section h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.1rem, 1.9vw, 1.45rem);
+    font-weight: 400; font-style: italic;
+    color: var(--color-text-secondary);
+    line-height: 1.35; letter-spacing: 0.01em;
+    margin: 2.2rem 0 0.85rem;
+    padding-left: 1rem;
+    border-left: 2px solid rgba(201,162,39,0.35);
+}
+
+/* Body text */
+.article-text p {
+    font-size: 1.0rem; line-height: 1.95;
+    color: var(--color-text-secondary);
+    margin-bottom: 1.35rem; max-width: 70ch;
+}
+.article-text p em { color: var(--color-text); font-style: italic; }
+
+/* Photos */
+.history-photos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.2rem; margin: 2.5rem 0 2.8rem;
+}
+.history-photo { margin: 0; overflow: hidden; border-radius: 6px; background: var(--color-bg-secondary); }
+.history-photo img {
+    width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;
+    transition: transform 1.2s cubic-bezier(0.16,1,0.3,1), filter 0.5s ease;
+    filter: contrast(1.03) brightness(0.99) saturate(0.95);
+}
+.history-photo:hover img { transform: scale(1.03); filter: contrast(1.05) brightness(1.02) saturate(1.05); }
+.history-photo figcaption {
+    padding: 0.75rem 1rem;
+    font-family: 'DM Sans', sans-serif; font-size: 0.72rem;
+    color: var(--color-text-light); letter-spacing: 0.015em; line-height: 1.5;
+    border-top: 1px solid var(--color-border-light);
+    background: var(--color-bg-card);
+}
+
+/* ═══════════════════════════════════════════
+   TIMELINE — Dramatic editorial
+═══════════════════════════════════════════ */
+.timeline {
+    position: relative; padding: 1rem 0 2rem; margin-top: 2rem;
+}
+.timeline::before {
+    content: ''; position: absolute;
+    left: 112px; top: 0; bottom: 0; width: 1px;
+    background: linear-gradient(180deg, transparent, rgba(201,162,39,0.3) 6%, rgba(201,162,39,0.3) 94%, transparent);
+}
+.timeline-item {
+    display: grid; grid-template-columns: 112px 1fr;
+    gap: 0; position: relative; align-items: flex-start;
+}
+.timeline-year {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.92rem; font-weight: 500;
+    color: #c9a227; text-align: right;
+    padding: 1.5rem 1.4rem 1.5rem 0;
+    line-height: 1.2; letter-spacing: 0.01em; position: relative;
+}
+.timeline-year::after {
+    content: ''; position: absolute;
+    right: -5px; top: 50%; transform: translateY(-50%);
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--color-bg, #faf7f2);
+    border: 2px solid rgba(201,162,39,0.55);
+    transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+.timeline-item:hover .timeline-year::after {
+    background: #c9a227; border-color: #c9a227;
+    box-shadow: 0 0 12px rgba(201,162,39,0.5);
+}
+.timeline-content {
+    padding: 1.2rem 0 1.2rem 2rem;
+    border-bottom: 1px solid var(--color-border-light);
+    transition: background 0.2s ease;
+}
+.timeline-item:last-child .timeline-content { border-bottom: none; }
+.timeline-item:hover .timeline-content { background: linear-gradient(90deg, rgba(201,162,39,0.03), transparent 60%); }
+.timeline-content h3 {
+    font-family: 'Cormorant Garamond', serif !important;
+    font-size: 1.05rem !important; font-weight: 500 !important; font-style: normal !important;
+    color: var(--color-text) !important; margin: 0 0 0.32rem !important;
+    padding-left: 0 !important; border-left: none !important; letter-spacing: 0.01em;
+}
+.timeline-content p {
+    font-size: 0.84rem !important; line-height: 1.7 !important;
+    color: var(--color-text-light) !important; margin: 0 !important; max-width: none !important;
+}
+
+/* ═══════════════════════════════════════════
    SCROLLYTELLING DOCUMENTARY BACKGROUND
-   Fixed behind the article — crossfades to archival photo per epoch
-═══════════════════════════════════════════════════════════════════ */
+═══════════════════════════════════════════ */
 #hist-story-bg {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.9s ease;
+    position: fixed; inset: 0; z-index: 0;
+    pointer-events: none; opacity: 0; transition: opacity 0.9s ease;
 }
 #hist-story-bg.visible { opacity: 1; }
 
 .hist-story-layer {
-    position: absolute;
-    inset: 0;
-    background-size: cover;
-    background-position: center;
-    opacity: 0;
-    transition: opacity 1.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: absolute; inset: 0;
+    background-size: cover; background-position: center;
+    opacity: 0; transition: opacity 1.4s cubic-bezier(0.4, 0, 0.2, 1);
     will-change: opacity;
-    /* Film look — strong sepia, desaturated */
-    filter: sepia(0.62) brightness(0.32) contrast(1.18) saturate(0.38);
+    filter: brightness(0.4) contrast(1.08) saturate(0.72);
 }
-:root:not([data-theme="dark"]) .hist-story-layer {
-    filter: sepia(0.55) brightness(0.44) contrast(1.1) saturate(0.38);
-}
+:root:not([data-theme="dark"]) .hist-story-layer { filter: brightness(0.46) contrast(1.05) saturate(0.78); }
+[data-theme="dark"] .hist-story-layer { filter: brightness(0.22) contrast(1.15) saturate(0.55); }
 .hist-story-layer.active { opacity: 1; }
 
-/* Overlay on the story bg for readability */
 #hist-story-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 1;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.9s ease;
+    position: fixed; inset: 0; z-index: 1;
+    pointer-events: none; opacity: 0; transition: opacity 0.9s ease;
     background:
-        radial-gradient(ellipse 80% 60% at 50% 50%, transparent 10%, rgba(0,0,0,0.22) 100%),
-        linear-gradient(180deg,
-            rgba(0,0,0,0.28) 0%,
-            rgba(0,0,0,0.12) 40%,
-            rgba(0,0,0,0.28) 100%);
+        radial-gradient(ellipse 80% 60% at 50% 50%, transparent 10%, rgba(0,0,0,0.2) 100%),
+        linear-gradient(180deg, rgba(0,0,0,0.26) 0%, rgba(0,0,0,0.08) 40%, rgba(0,0,0,0.24) 100%);
 }
 #hist-story-overlay.visible { opacity: 1; }
 
-/* Scan lines on the story bg */
 #hist-story-scan {
-    position: fixed;
-    inset: 0;
-    z-index: 2;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.9s ease;
-    background: repeating-linear-gradient(
-        0deg, transparent, transparent 3px,
-        rgba(0,0,0,0.011) 3px, rgba(0,0,0,0.011) 4px
-    );
+    position: fixed; inset: 0; z-index: 2;
+    pointer-events: none; opacity: 0; transition: opacity 0.9s ease;
+    background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.009) 3px, rgba(0,0,0,0.009) 4px);
 }
 #hist-story-scan.visible { opacity: 1; }
 
-/* ── Era label that floats bottom-right ── */
+/* Era floating watermark */
 #hist-era-label {
-    position: fixed;
-    bottom: 2.2rem;
-    right: 2.4rem;
-    z-index: 50;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 0.3rem;
-    opacity: 0;
-    transform: translateX(12px);
-    transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.16,1,0.3,1);
+    position: fixed; bottom: 2.5rem; right: 2.8rem; z-index: 50;
+    display: flex; flex-direction: column; align-items: flex-end; gap: 0.25rem;
+    opacity: 0; transform: translateX(16px);
+    transition: opacity 0.55s ease, transform 0.65s cubic-bezier(0.16,1,0.3,1);
     pointer-events: none;
 }
-#hist-era-label.visible {
-    opacity: 1;
-    transform: translateX(0);
-}
+#hist-era-label.visible { opacity: 1; transform: translateX(0); }
 .hist-era-label-year {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2.8rem, 5vw, 4.2rem);
-    font-weight: 300;
-    color: rgba(255,255,255,0.18);
-    line-height: 1;
-    letter-spacing: -0.04em;
+    font-size: clamp(3rem, 5.5vw, 5.5rem);
+    font-weight: 200; color: rgba(255,255,255,0.1);
+    line-height: 0.88; letter-spacing: -0.05em;
 }
 .hist-era-label-name {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.5rem;
-    letter-spacing: 0.26em;
-    text-transform: uppercase;
-    color: rgba(201,162,39,0.55);
+    font-family: 'DM Sans', sans-serif; font-size: 0.44rem;
+    letter-spacing: 0.34em; text-transform: uppercase; color: rgba(201,162,39,0.48);
 }
 @media(max-width: 700px) { #hist-era-label { display: none; } }
 
-/* ── Article column needs z-index above fixed bg ── */
-.hist-layout {
-    position: relative;
-    z-index: 10;
-}
-
-/* ── Article sections get a readable backdrop ── */
+/* Article backdrops */
+.hist-layout { position: relative; z-index: 10; }
 .hist-article-col .history-section,
 .hist-article-col .lead-paragraph,
-.hist-article-col section {
-    position: relative;
-}
+.hist-article-col section { position: relative; }
 
-/* text backdrop – warm parchment ghost */
 .hist-article-col .history-section::before {
-    content: '';
-    position: absolute;
-    inset: -1.5rem -2rem;
-    border-radius: 12px;
-    background: rgba(250, 247, 242, 0.0);
-    backdrop-filter: none;
-    transition: background 0.6s ease, backdrop-filter 0.6s ease;
-    z-index: -1;
-    pointer-events: none;
+    content: ''; position: absolute; inset: -1.5rem -2rem;
+    border-radius: 12px; background: transparent; backdrop-filter: none;
+    transition: background 0.7s ease, backdrop-filter 0.7s ease;
+    z-index: -1; pointer-events: none;
 }
-/* when story bg is active, show backdrop */
 body.story-active .hist-article-col .history-section::before {
-    background: rgba(250, 247, 242, 0.78);
-    backdrop-filter: blur(2px);
+    background: rgba(250, 247, 242, 0.84);
+    backdrop-filter: blur(3px);
 }
-[data-theme="dark"] body.story-active .hist-article-col .history-section::before,
-body.story-active [data-theme="dark"] .hist-article-col .history-section::before {
-    background: rgba(14, 12, 10, 0.78);
-    backdrop-filter: blur(2px);
+[data-theme="dark"] body.story-active .hist-article-col .history-section::before {
+    background: rgba(10, 8, 5, 0.86); backdrop-filter: blur(3px);
 }
-/* Epoch nav also gets backdrop */
 body.story-active .hist-epoch-nav {
-    background: rgba(250,247,242,0.7);
-    backdrop-filter: blur(10px);
-    border-radius: 12px;
-    padding-left: 0.75rem;
-    margin-top: 3rem;
-    border: 1px solid rgba(201,162,39,0.1);
+    background: rgba(250, 247, 242, 0.78); backdrop-filter: blur(14px);
+    border-radius: 14px; padding: 1.5rem 0.75rem;
+    border: 1px solid rgba(201,162,39,0.12);
 }
-[data-theme="dark"] body.story-active .hist-epoch-nav {
-    background: rgba(14,12,10,0.72);
-}
+[data-theme="dark"] body.story-active .hist-epoch-nav { background: rgba(10, 8, 5, 0.82); }
 </style>
 </head>
 <body>
@@ -913,8 +967,10 @@ body.story-active .hist-epoch-nav {
         if(bg){
             window.addEventListener('scroll', function(){
                 var y = window.pageYOffset;
-                if(y <= hero.offsetHeight + 200)
-                    bg.style.transform = 'scale(1.0) translateY(' + (y * 0.28).toFixed(2) + 'px)';
+                if(y <= hero.offsetHeight + 200){
+                    bg.style.transition = 'opacity 0.8s ease';
+                    bg.style.transform = 'translateY(' + (y * 0.22).toFixed(2) + 'px)';
+                }
             }, {passive:true});
         }
 

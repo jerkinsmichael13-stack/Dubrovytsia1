@@ -998,71 +998,94 @@ html[data-theme="dark"] .moon-icon { display: none; }
 }
 
 .timeline {
-    max-width: 720px;
-    margin: 0 auto;
     position: relative;
-    padding-left: 2rem;
+    padding: 1rem 0 2rem;
+    margin-top: 2rem;
+    max-width: 100%;
 }
+/* Year-aligned central spine */
 .timeline::before {
     content: '';
     position: absolute;
-    left: 0; top: 8px; bottom: 8px;
-    width: 1px;
-    background: linear-gradient(to bottom, transparent, rgba(200,152,26,0.3) 10%, rgba(200,152,26,0.3) 90%, transparent);
+    left: 112px; top: 0; bottom: 0; width: 1px;
+    background: linear-gradient(180deg, transparent, rgba(201,162,39,0.32) 6%, rgba(201,162,39,0.32) 94%, transparent);
 }
 .timeline-item {
+    display: grid;
+    grid-template-columns: 112px 1fr;
+    gap: 0;
     position: relative;
-    margin-bottom: var(--spacing-2xl);
-    padding-left: var(--spacing-lg);
-    transition: transform 0.3s ease;
+    align-items: flex-start;
+    transition: none;
 }
-.timeline-item:hover { transform: translateX(6px); }
-.timeline-item::before {
+.timeline-item:hover { transform: none; }
+.timeline-item::before { display: none; }
+/* Year badge */
+.timeline-year {
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-accent);
+    text-align: right;
+    padding: 1.4rem 1.4rem 1.4rem 0;
+    line-height: 1.2;
+    letter-spacing: 0.01em;
+    position: relative;
+    display: block;
+    border-radius: 0;
+    border: none;
+    background: none;
+    text-transform: none;
+}
+.timeline-year::after {
     content: '';
     position: absolute;
-    left: -1.875rem; top: 0.3rem;
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: var(--color-accent);
-    border: 2px solid var(--color-bg);
-    box-shadow: 0 0 0 2px var(--color-accent), 0 0 16px rgba(200,152,26,0.3);
-    animation: timelinePulse 4s ease-in-out infinite;
+    right: -5px; top: 50%; transform: translateY(-50%);
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--color-bg, #faf7f2);
+    border: 2px solid rgba(201,162,39,0.55);
+    transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
 }
-@keyframes timelinePulse {
-    0%, 100% { box-shadow: 0 0 0 2px var(--color-accent), 0 0 8px rgba(200,152,26,0.2); }
-    50%       { box-shadow: 0 0 0 2px var(--color-accent), 0 0 20px rgba(200,152,26,0.5); }
-}
-.timeline-year {
-    display: inline-block;
-    background: transparent;
-    color: var(--color-accent);
-    border: 1px solid rgba(200,152,26,0.25);
-    padding: 0.2rem 0.75rem;
-    border-radius: var(--radius-full);
-    font-weight: 500;
-    font-size: 0.75rem;
-    margin-bottom: 0.625rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    font-family: var(--font-body);
+.timeline-item:hover .timeline-year::after {
+    background: #c9a227; border-color: #c9a227;
+    box-shadow: 0 0 12px rgba(201,162,39,0.5);
 }
 [data-theme="dark"] .timeline-year { color: var(--color-accent-light); }
+[data-theme="dark"] .timeline-year::after { background: var(--color-bg); }
+
+.timeline-content {
+    padding: 1.2rem 0 1.2rem 2rem;
+    border-bottom: 1px solid var(--color-border-light);
+    transition: background 0.2s ease;
+}
+.timeline-item:last-child .timeline-content { border-bottom: none; }
+.timeline-item:hover .timeline-content {
+    background: linear-gradient(90deg, rgba(201,162,39,0.03), transparent 60%);
+}
 .timeline-content h3 {
     font-family: var(--font-display);
-    font-size: 1.5rem;
+    font-size: 1.05rem;
     font-weight: 500;
-    margin-bottom: 0.375rem;
+    font-style: normal;
     color: var(--color-text);
+    margin: 0 0 0.35rem;
+    padding-left: 0;
+    border-left: none;
     letter-spacing: 0.01em;
 }
 .timeline-content p {
-    color: var(--color-text-secondary);
-    line-height: 1.8;
-    font-size: 0.94rem;
+    color: var(--color-text-light);
+    line-height: 1.7;
+    font-size: 0.84rem;
+    margin: 0;
+    max-width: none;
 }
 @media (max-width: 768px) {
-    .timeline { padding-left: 1.75rem; }
-    .timeline-item::before { left: -1.5rem; }
+    .timeline::before { left: 0; }
+    .timeline-item { grid-template-columns: 1fr; padding-left: 1.25rem; }
+    .timeline-year { text-align: left; padding: 1.2rem 0 0.2rem; }
+    .timeline-year::after { right: auto; left: -1.55rem; }
+    .timeline-content { padding: 0.4rem 0 1.2rem; }
 }
 
 /* ================================================================
@@ -1197,9 +1220,9 @@ html[data-theme="dark"] .moon-icon { display: none; }
 }
 
 .history-section {
-    margin-bottom: var(--spacing-2xl);
-    padding-bottom: var(--spacing-2xl);
-    border-bottom: 1px solid var(--color-border-light);
+    margin-bottom: 0;
+    padding-bottom: 0.5rem;
+    border-bottom: none;
 }
 
 .history-section:last-child {
@@ -1208,78 +1231,142 @@ html[data-theme="dark"] .moon-icon { display: none; }
     padding-bottom: 0;
 }
 
+/* ── H2 Chapter headings — dramatic, editorial ── */
+.hist-article-col .history-section h2,
 .history-section h2 {
     font-family: var(--font-display);
-    font-size: 2.25rem;
-    font-weight: 500;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 300;
     color: var(--color-text);
-    margin-bottom: var(--spacing-md);
-    margin-top: var(--spacing-xl);
-    line-height: 1.2;
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    margin: 4.5rem 0 0.4rem;
+    padding-top: 3.5rem;
+    position: relative;
+}
+/* Gold accent line above h2 */
+.hist-article-col .history-section h2::before,
+.history-section h2::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 44px; height: 2px;
+    background: linear-gradient(90deg, #c9a227, rgba(201,162,39,0.2));
+    border-radius: 2px;
+}
+/* Fading ornament line below h2 */
+.hist-article-col .history-section h2::after,
+.history-section h2::after {
+    content: '';
+    display: block;
+    width: 100%; height: 1px;
+    background: linear-gradient(90deg, rgba(201,162,39,0.3), transparent 55%);
+    margin-top: 1.1rem;
 }
 
+/* ── H3 Sub-chapter headings — italic, bordered ── */
+.hist-article-col .history-section h3,
 .history-section h3 {
     font-family: var(--font-display);
-    font-size: 1.65rem;
-    font-weight: 500;
-    color: var(--color-text);
-    margin-bottom: var(--spacing-sm);
-    margin-top: var(--spacing-lg);
-    line-height: 1.25;
+    font-size: clamp(1.1rem, 1.9vw, 1.45rem);
+    font-weight: 400;
+    font-style: italic;
+    color: var(--color-text-secondary);
+    line-height: 1.35;
+    letter-spacing: 0.01em;
+    margin: 2.5rem 0 0.9rem;
+    padding-left: 1rem;
+    border-left: 2px solid rgba(201,162,39,0.35);
 }
 
+/* ── Body paragraph ── */
+.hist-article-col .history-section p,
 .history-section p {
-    font-size: 1.05rem;
-    line-height: 1.85;
+    font-size: 1.0rem;
+    line-height: 1.95;
     color: var(--color-text-secondary);
-    margin-bottom: var(--spacing-md);
+    margin-bottom: 1.35rem;
+    max-width: 70ch;
 }
+.history-section p em { color: var(--color-text); font-style: italic; }
 
 .history-section strong { color: var(--color-text); font-weight: 600; }
+
+/* Lead paragraph — drop cap + left gold bar */
+.lead-paragraph {
+    font-family: var(--font-display) !important;
+    font-size: clamp(1.1rem, 1.75vw, 1.3rem) !important;
+    line-height: 1.95 !important;
+    color: var(--color-text) !important;
+    font-weight: 400 !important;
+    margin-bottom: 2.5rem !important;
+    padding: 1.8rem 2.2rem !important;
+    border-left: 3px solid rgba(201,162,39,0.6) !important;
+    background: linear-gradient(90deg, rgba(201,162,39,0.045), transparent 70%) !important;
+    border-radius: 0 8px 8px 0 !important;
+    max-width: none !important;
+    position: relative;
+}
+.lead-paragraph::first-letter {
+    font-size: 4em;
+    font-weight: 300;
+    line-height: 0.78;
+    float: left;
+    margin: 0.05em 0.1em 0 0;
+    color: #c9a227;
+    font-family: var(--font-display);
+}
 
 /* Фото в статті */
 .history-photos {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.25rem;
-    margin: var(--spacing-lg) 0 var(--spacing-xl);
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.2rem;
+    margin: 2.5rem 0 2.8rem;
 }
 .history-photos:has(> .history-photo:only-child) {
     grid-template-columns: 1fr;
-    max-width: 640px;
+    max-width: 600px;
 }
 .history-photos.three-cols { grid-template-columns: repeat(3, 1fr); }
 
 .history-photo {
     margin: 0;
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-md);
     overflow: hidden;
     background: var(--color-bg-secondary);
-    border: 1px solid var(--color-border);
+    border: 1px solid var(--color-border-light);
     box-shadow: var(--shadow-sm);
-    transition: transform var(--transition-base), box-shadow var(--transition-base);
+    transition: box-shadow var(--transition-base);
 }
 .history-photo:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-lg);
+    transform: none;
+    box-shadow: var(--shadow-md);
 }
 .history-photo img {
-    width: 100%; height: 220px;
+    width: 100%;
+    aspect-ratio: 4/3;
     object-fit: cover; display: block;
+    transition: transform 1.2s cubic-bezier(0.16,1,0.3,1), filter 0.5s ease;
+    filter: contrast(1.03) brightness(0.99) saturate(0.95);
+}
+.history-photo:hover img {
+    transform: scale(1.03);
+    filter: contrast(1.05) brightness(1.02) saturate(1.04);
 }
 .history-photo figcaption {
-    padding: 0.625rem 0.875rem;
-    font-size: 0.82rem;
+    padding: 0.75rem 1rem;
+    font-size: 0.72rem;
     color: var(--color-text-light);
-    font-style: italic;
+    letter-spacing: 0.015em;
     line-height: 1.5;
-    border-top: 1px solid var(--color-border);
+    font-style: normal;
+    border-top: 1px solid var(--color-border-light);
     background: var(--color-bg-card);
 }
 
 @media (max-width: 640px) {
     .history-photos, .history-photos.three-cols { grid-template-columns: 1fr; }
-    .history-photo img { height: 200px; }
 }
 
 /* ================================================================
@@ -1393,6 +1480,41 @@ html[data-theme="dark"] .moon-icon { display: none; }
     font-weight: 600;
     box-shadow: 0 3px 12px rgba(201, 162, 39, 0.35);
 }
+
+/* ── Filter buttons inside sticky LIGHT bars (books, metrics pages) ── */
+.books-filters-wrap .catalog-filter-btn,
+.mk-filters-bar .catalog-filter-btn {
+    background: var(--color-bg-secondary);
+    color: var(--color-text-secondary);
+    border-color: var(--color-border);
+    backdrop-filter: none;
+}
+.books-filters-wrap .catalog-filter-btn:hover,
+.mk-filters-bar .catalog-filter-btn:hover {
+    background: var(--color-bg-alt);
+    color: var(--color-text);
+    border-color: var(--color-border-hover);
+}
+.books-filters-wrap .catalog-filter-btn.active,
+.mk-filters-bar .catalog-filter-btn.active {
+    background: var(--color-accent);
+    color: #1a1208;
+    border-color: var(--color-accent);
+    box-shadow: 0 3px 12px rgba(201, 162, 39, 0.35);
+}
+[data-theme="dark"] .books-filters-wrap .catalog-filter-btn,
+[data-theme="dark"] .mk-filters-bar .catalog-filter-btn {
+    background: var(--color-bg-secondary);
+    color: var(--color-text-secondary);
+    border-color: var(--color-border);
+}
+[data-theme="dark"] .books-filters-wrap .catalog-filter-btn:hover,
+[data-theme="dark"] .mk-filters-bar .catalog-filter-btn:hover {
+    background: var(--color-bg-alt);
+    color: var(--color-text);
+    border-color: var(--color-border-hover);
+}
+
 .catalog-item.hidden { display: none; }
 .catalog-no-results {
     grid-column: 1/-1;

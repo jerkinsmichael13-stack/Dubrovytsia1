@@ -36,13 +36,13 @@
     position:absolute;inset:-8%;
     background-image:url('https://i.imgur.com/fEA0QwQ.jpeg');
     background-size:cover;background-position:center 40%;
-    filter:sepia(0.55) brightness(0.5) contrast(1.12) saturate(0.38);
+    filter:brightness(0.62) contrast(1.06) saturate(0.88);
     transform:scale(1.06);transition:transform 10s cubic-bezier(0.16,1,0.3,1), opacity 0.7s ease;z-index:0;
 }
 :root:not([data-theme="dark"]) .arch-hero-bg {
-    filter:sepia(0.48) brightness(0.62) contrast(1.08) saturate(0.4);
+    filter:brightness(0.64) contrast(1.04) saturate(0.9);
 }
-.arch-hero.hero-loaded .hist-hero-bg { transform: scale(1.0); opacity: 1;; opacity:1; }
+.arch-hero.hero-loaded .arch-hero-bg { opacity:1; }
 .arch-hero-grain {
     position:absolute;inset:-80px;width:calc(100% + 160px);height:calc(100% + 160px);
     opacity:0.06;pointer-events:none;z-index:1;
@@ -122,7 +122,7 @@
 @keyframes arch-drip{0%,100%{opacity:0.3;transform:scaleY(1) translateY(0)}50%{opacity:1;transform:scaleY(0.5) translateY(12px)}}
 @keyframes arch-up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 @keyframes arch-fadein{from{opacity:0}to{opacity:1}}
-[data-theme="dark"] .arch-hero-bg { filter:sepia(0.65) brightness(0.22) contrast(1.25) saturate(0.35); }
+[data-theme="dark"] .arch-hero-bg { filter:brightness(0.38) contrast(1.12) saturate(0.65); }
 </style>
     <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1016,7 +1016,7 @@ g.ULB={open:open,close:close,nav:nav,
         setTimeout(function(){hero.classList.add('hero-loaded');},80);
         if(bg) window.addEventListener('scroll',function(){
             var y=window.pageYOffset;
-            if(y<=hero.offsetHeight+200) bg.style.transform='scale(1.0) translateY('+(y*0.28).toFixed(2)+'px)';
+            if(y<=hero.offsetHeight+200){ bg.style.transition='opacity 0.8s ease'; bg.style.transform='translateY('+(y*0.22).toFixed(2)+'px)'; }
         },{passive:true});
     })();
     </script>
