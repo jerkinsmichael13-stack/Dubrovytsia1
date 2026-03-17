@@ -14,7 +14,426 @@
     <link rel="stylesheet" href="app.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   READING PROGRESS BAR
+═══════════════════════════════════════════ */
+#hist-progress {
+    position: fixed; top: 0; left: 0; z-index: 9999;
+    height: 2px; width: 0%;
+    background: linear-gradient(90deg, #a8841c, #c9a227, #e0bd5a);
+    transition: width 0.08s linear;
+    pointer-events: none;
+    box-shadow: 0 0 8px rgba(201,162,39,0.5);
+}
+
+/* ═══════════════════════════════════════════
+   CINEMATIC HERO — HISTORY
+═══════════════════════════════════════════ */
+.hist-hero {
+    position: relative;
+    min-height: calc(100svh - 62px);
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    overflow: hidden;
+    background: var(--color-bg, #faf7f2);
+}
+.hist-hero-bg {
+    position: absolute; inset: -8%;
+    background-image: url('https://i.imgur.com/DBD4YZW.jpeg');
+    background-size: cover;
+    background-position: center 30%;
+    filter: sepia(0.5) brightness(0.5) contrast(1.1) saturate(0.4);
+    transform: scale(1.06);
+    transition: transform 10s cubic-bezier(0.16,1,0.3,1);
+    z-index: 0;
+}
+:root:not([data-theme="dark"]) .hist-hero-bg {
+    filter: sepia(0.45) brightness(0.62) contrast(1.08) saturate(0.42);
+}
+.hist-hero.hero-loaded .hist-hero-bg { transform: scale(1.0); }
+
+.hist-hero-grain {
+    position: absolute; inset: -80px;
+    width: calc(100% + 160px); height: calc(100% + 160px);
+    opacity: 0.06;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 220px 220px;
+    pointer-events: none; z-index: 1;
+    animation: hist-grain 0.55s steps(1) infinite;
+}
+@keyframes hist-grain {
+    0%{transform:translate(0,0)} 16%{transform:translate(-4px,-6px)} 33%{transform:translate(6px,3px)}
+    50%{transform:translate(-3px,7px)} 66%{transform:translate(7px,-4px)} 83%{transform:translate(-5px,2px)} 100%{transform:translate(3px,-5px)}
+}
+.hist-hero-vignette {
+    position: absolute; inset: 0; z-index: 2; pointer-events: none;
+    background:
+        radial-gradient(ellipse 70% 60% at 50% 50%, transparent 20%, rgba(0,0,0,0.3) 100%),
+        linear-gradient(180deg, rgba(0,0,0,0.32) 0%, rgba(0,0,0,0.06) 30%, rgba(0,0,0,0.4) 70%, var(--color-bg,#faf7f2) 100%);
+}
+.hist-hero-scan {
+    position: absolute; inset: 0; z-index: 3; pointer-events: none;
+    background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.012) 3px, rgba(0,0,0,0.012) 4px);
+}
+
+/* content */
+.hist-hero-content {
+    position: relative; z-index: 10;
+    text-align: center; padding: 2rem 2rem 8rem;
+    max-width: 900px; width: 100%;
+    display: flex; flex-direction: column; align-items: center;
+}
+.hist-eyebrow {
+    display: flex; align-items: center; justify-content: center;
+    gap: 1rem; margin-bottom: 3rem;
+    opacity: 0; animation: hist-up 0.85s cubic-bezier(0.16,1,0.3,1) 0.15s forwards;
+}
+.hist-eyebrow span {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.5rem; letter-spacing: 0.32em; text-transform: uppercase;
+    color: rgba(201,162,39,0.75);
+}
+.hist-eyebrow-ln {
+    width: 36px; height: 1px; flex-shrink: 0;
+}
+.hist-eyebrow-ln:first-child { background: linear-gradient(90deg, transparent, rgba(201,162,39,0.55)); }
+.hist-eyebrow-ln:last-child  { background: linear-gradient(270deg, transparent, rgba(201,162,39,0.55)); }
+
+/* ANIMATED YEAR COUNTER */
+.hist-year-display {
+    display: flex; align-items: center; justify-content: center;
+    gap: clamp(0.8rem, 2vw, 1.8rem); margin-bottom: 2rem;
+    opacity: 0; animation: hist-up 1s cubic-bezier(0.16,1,0.3,1) 0.3s forwards;
+}
+.hist-year {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(4rem, 11vw, 9.5rem);
+    font-weight: 300; line-height: 0.9;
+    letter-spacing: -0.04em;
+    color: #fff;
+    text-shadow: 0 2px 40px rgba(0,0,0,0.55);
+}
+.hist-year.gold { color: #c9a227; text-shadow: 0 0 80px rgba(201,162,39,0.3), 0 4px 32px rgba(0,0,0,0.4); }
+.hist-dash {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 5vw, 4.5rem);
+    color: rgba(201,162,39,0.4); font-weight: 300; line-height: 1;
+    align-self: center;
+}
+
+.hist-hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.5rem, 3.5vw, 2.8rem);
+    font-weight: 300; font-style: italic;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 0.01em; margin-bottom: 2rem;
+    opacity: 0; animation: hist-up 0.85s cubic-bezier(0.16,1,0.3,1) 0.5s forwards;
+}
+
+.hist-ornament {
+    display: flex; align-items: center; gap: 0.9rem;
+    width: 300px; max-width: 85%;
+    opacity: 0; animation: hist-up 0.85s cubic-bezier(0.16,1,0.3,1) 0.62s forwards;
+    margin-bottom: 2.5rem;
+}
+.hist-ornament-line { flex: 1; height: 1px; }
+.hist-ornament-line:first-child { background: linear-gradient(90deg, transparent, rgba(201,162,39,0.4)); }
+.hist-ornament-line:last-child  { background: linear-gradient(270deg, transparent, rgba(201,162,39,0.4)); }
+.hist-ornament-diamond { width: 5px; height: 5px; background: rgba(201,162,39,0.6); transform: rotate(45deg); flex-shrink: 0; }
+.hist-ornament-dot { width: 3px; height: 3px; border-radius: 50%; background: rgba(201,162,39,0.3); flex-shrink: 0; }
+
+/* scroll cue */
+.hist-scroll-cue {
+    position: absolute; bottom: 2.2rem; left: 50%; transform: translateX(-50%);
+    z-index: 10; display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
+    opacity: 0; animation: hist-fadein 1s ease 1.4s forwards; pointer-events: none;
+}
+.hist-scroll-cue span {
+    font-family: 'DM Sans', sans-serif; font-size: 0.48rem;
+    letter-spacing: 0.3em; text-transform: uppercase; color: rgba(255,255,255,0.28);
+}
+.hist-scroll-track {
+    width: 1px; height: 48px;
+    background: linear-gradient(180deg, rgba(201,162,39,0.55) 0%, transparent 100%);
+    animation: hist-drip 2s ease-in-out infinite;
+}
+@keyframes hist-drip {
+    0%,100%{opacity:0.3;transform:scaleY(1) translateY(0)} 50%{opacity:1;transform:scaleY(0.5) translateY(12px)}
+}
+@keyframes hist-up { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+@keyframes hist-fadein { from{opacity:0} to{opacity:1} }
+
+/* ═══════════════════════════════════════════
+   TWO-COLUMN LAYOUT: EPOCH NAV + ARTICLE
+═══════════════════════════════════════════ */
+.hist-layout {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 0;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    align-items: start;
+}
+@media(max-width: 900px) {
+    .hist-layout { grid-template-columns: 1fr; }
+    .hist-epoch-nav { display: none; }
+}
+
+/* STICKY EPOCH SIDEBAR */
+.hist-epoch-nav {
+    position: sticky;
+    top: 82px;
+    padding: 3rem 0 3rem 0;
+    height: calc(100vh - 82px);
+    overflow: hidden;
+    display: flex; flex-direction: column; justify-content: center;
+}
+.hist-epoch-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.48rem; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--color-text-muted, #a8a29e);
+    margin-bottom: 1.6rem; padding-left: 1.5rem;
+}
+.hist-epoch-track {
+    position: relative;
+    display: flex; flex-direction: column;
+    gap: 0;
+}
+
+/* The vertical gold line */
+.hist-epoch-track::before {
+    content: '';
+    position: absolute;
+    left: 1.45rem; top: 0.5rem; bottom: 0.5rem;
+    width: 1px;
+    background: var(--color-border-light, rgba(201,162,39,0.15));
+}
+/* Progress fill line */
+.hist-epoch-progress-line {
+    position: absolute;
+    left: 1.45rem; top: 0.5rem;
+    width: 1px;
+    background: linear-gradient(180deg, #c9a227, rgba(201,162,39,0.3));
+    transition: height 0.3s ease;
+    height: 0%;
+    z-index: 1;
+}
+
+.hist-epoch-item {
+    display: flex; align-items: center; gap: 0.9rem;
+    padding: 0.55rem 0.75rem 0.55rem 1.1rem;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background 0.2s ease;
+    text-decoration: none;
+    position: relative; z-index: 2;
+}
+.hist-epoch-item:hover { background: rgba(201,162,39,0.05); }
+.hist-epoch-item.active { background: rgba(201,162,39,0.07); }
+
+.hist-epoch-dot {
+    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+    border: 1.5px solid rgba(201,162,39,0.3);
+    background: var(--color-bg, #faf7f2);
+    transition: all 0.3s ease;
+    position: relative; z-index: 3;
+}
+.hist-epoch-item.active .hist-epoch-dot {
+    background: #c9a227;
+    border-color: #c9a227;
+    box-shadow: 0 0 0 3px rgba(201,162,39,0.18), 0 0 12px rgba(201,162,39,0.35);
+    transform: scale(1.25);
+}
+.hist-epoch-item.passed .hist-epoch-dot {
+    background: rgba(201,162,39,0.45);
+    border-color: rgba(201,162,39,0.6);
+}
+
+.hist-epoch-text { flex: 1; overflow: hidden; }
+.hist-epoch-era {
+    display: block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.62rem; font-weight: 500;
+    color: var(--color-text-muted, #a8a29e);
+    transition: color 0.3s ease;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    line-height: 1.3;
+}
+.hist-epoch-date {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.72rem; font-style: italic;
+    color: rgba(201,162,39,0.5);
+    transition: color 0.3s ease;
+    margin-top: 0.05rem;
+}
+.hist-epoch-item.active .hist-epoch-era { color: var(--color-text, #1c1917); font-weight: 600; }
+.hist-epoch-item.active .hist-epoch-date { color: #c9a227; }
+.hist-epoch-item.passed .hist-epoch-era { color: var(--color-text-secondary, #44403c); }
+
+/* ARTICLE in new layout */
+.hist-article-col {
+    padding: 4rem 0 6rem 3rem;
+    min-width: 0;
+}
+@media(max-width:900px){ .hist-article-col { padding: 3rem 0 5rem; } }
+
+/* ═══════════════════════════════════════════
+   DARK THEME
+═══════════════════════════════════════════ */
+[data-theme="dark"] .hist-hero-bg {
+    filter: sepia(0.65) brightness(0.22) contrast(1.25) saturate(0.35);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   SCROLLYTELLING DOCUMENTARY BACKGROUND
+   Fixed behind the article — crossfades to archival photo per epoch
+═══════════════════════════════════════════════════════════════════ */
+#hist-story-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.9s ease;
+}
+#hist-story-bg.visible { opacity: 1; }
+
+.hist-story-layer {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1.4s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: opacity;
+    /* Film look — strong sepia, desaturated */
+    filter: sepia(0.62) brightness(0.32) contrast(1.18) saturate(0.38);
+}
+:root:not([data-theme="dark"]) .hist-story-layer {
+    filter: sepia(0.55) brightness(0.44) contrast(1.1) saturate(0.38);
+}
+.hist-story-layer.active { opacity: 1; }
+
+/* Overlay on the story bg for readability */
+#hist-story-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.9s ease;
+    background:
+        radial-gradient(ellipse 80% 60% at 50% 50%, transparent 10%, rgba(0,0,0,0.22) 100%),
+        linear-gradient(180deg,
+            rgba(0,0,0,0.28) 0%,
+            rgba(0,0,0,0.12) 40%,
+            rgba(0,0,0,0.28) 100%);
+}
+#hist-story-overlay.visible { opacity: 1; }
+
+/* Scan lines on the story bg */
+#hist-story-scan {
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.9s ease;
+    background: repeating-linear-gradient(
+        0deg, transparent, transparent 3px,
+        rgba(0,0,0,0.011) 3px, rgba(0,0,0,0.011) 4px
+    );
+}
+#hist-story-scan.visible { opacity: 1; }
+
+/* ── Era label that floats bottom-right ── */
+#hist-era-label {
+    position: fixed;
+    bottom: 2.2rem;
+    right: 2.4rem;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.3rem;
+    opacity: 0;
+    transform: translateX(12px);
+    transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.16,1,0.3,1);
+    pointer-events: none;
+}
+#hist-era-label.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+.hist-era-label-year {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.8rem, 5vw, 4.2rem);
+    font-weight: 300;
+    color: rgba(255,255,255,0.18);
+    line-height: 1;
+    letter-spacing: -0.04em;
+}
+.hist-era-label-name {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.5rem;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: rgba(201,162,39,0.55);
+}
+@media(max-width: 700px) { #hist-era-label { display: none; } }
+
+/* ── Article column needs z-index above fixed bg ── */
+.hist-layout {
+    position: relative;
+    z-index: 10;
+}
+
+/* ── Article sections get a readable backdrop ── */
+.hist-article-col .history-section,
+.hist-article-col .lead-paragraph,
+.hist-article-col section {
+    position: relative;
+}
+
+/* text backdrop – warm parchment ghost */
+.hist-article-col .history-section::before {
+    content: '';
+    position: absolute;
+    inset: -1.5rem -2rem;
+    border-radius: 12px;
+    background: rgba(250, 247, 242, 0.0);
+    backdrop-filter: none;
+    transition: background 0.6s ease, backdrop-filter 0.6s ease;
+    z-index: -1;
+    pointer-events: none;
+}
+/* when story bg is active, show backdrop */
+body.story-active .hist-article-col .history-section::before {
+    background: rgba(250, 247, 242, 0.78);
+    backdrop-filter: blur(2px);
+}
+[data-theme="dark"] body.story-active .hist-article-col .history-section::before,
+body.story-active [data-theme="dark"] .hist-article-col .history-section::before {
+    background: rgba(14, 12, 10, 0.78);
+    backdrop-filter: blur(2px);
+}
+/* Epoch nav also gets backdrop */
+body.story-active .hist-epoch-nav {
+    background: rgba(250,247,242,0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding-left: 0.75rem;
+    margin-top: 3rem;
+    border: 1px solid rgba(201,162,39,0.1);
+}
+[data-theme="dark"] body.story-active .hist-epoch-nav {
+    background: rgba(14,12,10,0.72);
+}
+</style>
 </head>
 <body>
     <header class="header">
@@ -43,28 +462,156 @@
         </div>
     </header>
 
-    <section class="article-header">
-        <div class="container">
-            <h1 class="article-title fade-in-up">Історія Дубровиці</h1>
-            <p class="article-meta fade-in-up delay-1">Від найдавніших часів до сьогодення · Понад тисяча років живої історії</p>
+    <!-- SCROLLYTELLING DOCUMENTARY BG — fixed layers, one per epoch -->
+    <div id="hist-story-bg">
+        <div class="hist-story-layer" id="sl-origin"   style="background-image:url('https://i.imgur.com/qcjgN1I.jpeg')"></div>
+        <div class="hist-story-layer" id="sl-kyivrus"  style="background-image:url('https://i.imgur.com/n74FSvK.jpeg')"></div>
+        <div class="hist-story-layer" id="sl-litu"     style="background-image:url('https://i.imgur.com/3bLmxz5.jpeg');background-position:center 20%"></div>
+        <div class="hist-story-layer" id="sl-empire"   style="background-image:url('https://i.imgur.com/op2tNhY.jpeg')"></div>
+        <div class="hist-story-layer" id="sl-ww1"      style="background-image:url('https://i.imgur.com/YxFni3M.png');background-position:center 30%"></div>
+        <div class="hist-story-layer" id="sl-ww2"      style="background-image:url('https://i.imgur.com/zef8WRy.jpeg')"></div>
+        <div class="hist-story-layer" id="sl-soviet"   style="background-image:url('https://i.imgur.com/G5T8ebG.jpeg')"></div>
+        <div class="hist-story-layer" id="sl-ukraine"  style="background-image:url('https://i.imgur.com/FckBe6G.jpeg')"></div>
+        <div class="hist-story-layer" id="sl-timeline" style="background-image:url('https://i.imgur.com/MfGzR8D.jpeg');background-position:center 20%"></div>
+    </div>
+    <div id="hist-story-overlay"></div>
+    <div id="hist-story-scan"></div>
+
+    <!-- FLOATING ERA LABEL (bottom-right) -->
+    <div id="hist-era-label">
+        <span class="hist-era-label-year" id="hel-year"></span>
+        <span class="hist-era-label-name" id="hel-name"></span>
+    </div>
+
+    <!-- Reading progress -->
+    <div id="hist-progress"></div>
+
+    <!-- CINEMATIC HERO -->
+    <section class="hist-hero" id="histHero">
+        <div class="hist-hero-bg" id="histBg"></div>
+        <div class="hist-hero-grain"></div>
+        <div class="hist-hero-vignette"></div>
+        <div class="hist-hero-scan"></div>
+
+        <div class="hist-hero-content">
+            <div class="hist-eyebrow">
+                <div class="hist-eyebrow-ln"></div>
+                <span>Дубровиця · Цифровий архів</span>
+                <div class="hist-eyebrow-ln"></div>
+            </div>
+
+            <div class="hist-year-display">
+                <span class="hist-year" id="histYear1">1005</span>
+                <span class="hist-dash">—</span>
+                <span class="hist-year gold" id="histYear2">2026</span>
+            </div>
+
+            <p class="hist-hero-title">Понад тисяча років живої історії</p>
+
+            <div class="hist-ornament">
+                <div class="hist-ornament-line"></div>
+                <div class="hist-ornament-dot"></div>
+                <div class="hist-ornament-diamond"></div>
+                <div class="hist-ornament-dot"></div>
+                <div class="hist-ornament-line"></div>
+            </div>
+        </div>
+
+        <div class="hist-scroll-cue">
+            <span>Гортайте</span>
+            <div class="hist-scroll-track"></div>
         </div>
     </section>
 
-    <article class="article-content">
-        <div class="container">
+    <!-- EPOCH NAV + ARTICLE -->
+    <div class="hist-layout">
+
+        <!-- Sticky Epoch Navigator -->
+        <nav class="hist-epoch-nav" aria-label="Навігація по епохах">
+            <div class="hist-epoch-label">Навігація по епохах</div>
+            <div class="hist-epoch-track">
+                <div class="hist-epoch-progress-line" id="epochProgressLine"></div>
+                <a href="#epoch-origin" class="hist-epoch-item" data-epoch="0">
+                    <div class="hist-epoch-dot"></div>
+                    <div class="hist-epoch-text">
+                        <span class="hist-epoch-era">Походження назви</span>
+                    </div>
+                </a>
+                <a href="#epoch-kyivrus" class="hist-epoch-item" data-epoch="1">
+                    <div class="hist-epoch-dot"></div>
+                    <div class="hist-epoch-text">
+                        <span class="hist-epoch-era">Давньоруська доба</span>
+                        <span class="hist-epoch-date">X ст. — 1240</span>
+                    </div>
+                </a>
+                <a href="#epoch-litu" class="hist-epoch-item" data-epoch="2">
+                    <div class="hist-epoch-dot"></div>
+                    <div class="hist-epoch-text">
+                        <span class="hist-epoch-era">Велике Князівство Литовське</span>
+                        <span class="hist-epoch-date">XIV–XVI ст.</span>
+                    </div>
+                </a>
+                <a href="#epoch-empire" class="hist-epoch-item" data-epoch="3">
+                    <div class="hist-epoch-dot"></div>
+                    <div class="hist-epoch-text">
+                        <span class="hist-epoch-era">Під чужою владою</span>
+                        <span class="hist-epoch-date">XVII–XIX ст.</span>
+                    </div>
+                </a>
+                <a href="#epoch-ww1" class="hist-epoch-item" data-epoch="4">
+                    <div class="hist-epoch-dot"></div>
+                    <div class="hist-epoch-text">
+                        <span class="hist-epoch-era">Перша світова · Міжвоєнний</span>
+                        <span class="hist-epoch-date">1914–1939</span>
+                    </div>
+                </a>
+                <a href="#epoch-ww2" class="hist-epoch-item" data-epoch="5">
+                    <div class="hist-epoch-dot"></div>
+                    <div class="hist-epoch-text">
+                        <span class="hist-epoch-era">Друга світова</span>
+                        <span class="hist-epoch-date">1939–1944</span>
+                    </div>
+                </a>
+                <a href="#epoch-soviet" class="hist-epoch-item" data-epoch="6">
+                    <div class="hist-epoch-dot"></div>
+                    <div class="hist-epoch-text">
+                        <span class="hist-epoch-era">Радянська окупація</span>
+                        <span class="hist-epoch-date">1944–1991</span>
+                    </div>
+                </a>
+                <a href="#epoch-ukraine" class="hist-epoch-item" data-epoch="7">
+                    <div class="hist-epoch-dot"></div>
+                    <div class="hist-epoch-text">
+                        <span class="hist-epoch-era">Незалежна Україна</span>
+                        <span class="hist-epoch-date">з 1991</span>
+                    </div>
+                </a>
+                <a href="#epoch-timeline" class="hist-epoch-item" data-epoch="8">
+                    <div class="hist-epoch-dot"></div>
+                    <div class="hist-epoch-text">
+                        <span class="hist-epoch-era">Хронологія</span>
+                    </div>
+                </a>
+            </div>
+        </nav>
+
+        <!-- Article column -->
+        <div class="hist-article-col">
+    <article class="article-content" style="padding:0;">
+        <div style="max-width:780px;">
             <div class="article-text">
 
                 <section class="history-section fade-in-up">
                     <p class="lead-paragraph">Дубровиця — найстаріше місто Рівненської області та одне з найдавніших в Україні. Відоме з 1005 року, місто пережило монгольські навали, іноземні загарбання та окупації, криваві визвольні змагання — і крізь усе це зберегло свою ідентичність. Розташована на берегах Горині в серці Волинського Полісся, Дубровиця є живим свідком тисячолітньої боротьби українського народу за свободу.</p>
                 </section>
 
-                <section class="history-section fade-in-up">
+                <section class="history-section fade-in-up" id="epoch-origin">
                     <h2>Походження назви</h2>
                     <p>Існує кілька версій походження назви міста. Найприйнятнішою вважається версія від апелятива <em>дубровиця</em> — «невеликий дубовий гай», пов'язана з давньоруським словом <em>дѹброва</em> («ліс, гай») та українським <em>діброва</em> («дубовий ліс»). Існує також версія від литовсько-латинського кореня <em>dumbas</em> — «болото», що відображає природні особливості поліського краю.</p>
                     <p>Реконструйована давньоруська назва — <em>Дѹбровицѧ</em>, зі згадки в Іпатіївському літописі «Дубровицьскыи [князь]». З кінця XVI ст. набула поширення польська назва <em>Домбровиця</em> (Dąbrowica). У давніх актах місто також згадується як <em>Добровица</em> та <em>Дубравица</em>. 15 серпня 1944 року місто отримало сучасну назву — Дубровиця.</p>
                 </section>
 
-                <section class="history-section fade-in-up">
+                <section class="history-section fade-in-up" id="epoch-kyivrus">
                     <h2>Давньоруський період (X ст. — 1240)</h2>
 
                     <h3>Найдавніша доба</h3>
@@ -94,7 +641,7 @@
                     <p>Під час навали орди Батия у 1240 році Дубровиця була зруйнована. Це поклало кінець існуванню Дубровицького удільного князівства. Проте місто відродилось і незабаром знову зайняло важливе місце в регіоні.</p>
                 </section>
 
-                <section class="history-section fade-in-up">
+                <section class="history-section fade-in-up" id="epoch-litu">
                     <h2>Велике Князівство Литовське (XIV–XVI ст.)</h2>
 
                     <h3>Литовська доба</h3>
@@ -110,7 +657,7 @@
                     <p>На короткий час Дубровиця та навколишні села переходили під українську гетьманську адміністрацію. Впродовж 1657–1659 років, як і все Полісся, вона входила до складу Пінсько-Турівського козачого полку. У 1653 році місто вкотре зазнало серйозних руйнувань.</p>
                 </section>
 
-                <section class="history-section fade-in-up">
+                <section class="history-section fade-in-up" id="epoch-empire">
                     <h2>Під чужою владою (XVII–XIX ст.)</h2>
 
                     <h3>Костел Іоана Хрестителя (1695–1702)</h3>
@@ -134,7 +681,7 @@
                     </div>
                 </section>
 
-                <section class="history-section fade-in-up">
+                <section class="history-section fade-in-up" id="epoch-ww1">
                     <h2>Перша світова та міжвоєнний період (1914–1939)</h2>
 
                     <h3>Перша світова війна</h3>
@@ -147,7 +694,7 @@
                     <p>Від 1920 до 1939 року Дубровиця перебувала у складі Польщі — у Сарненському повіті Поліського, а від 1931 року — Волинського воєводства. Місто розвивалося як невеликий регіональний центр з активним господарським і культурним життям.</p>
                 </section>
 
-                <section class="history-section fade-in-up">
+                <section class="history-section fade-in-up" id="epoch-ww2">
                     <h2>Друга світова війна (1939–1944)</h2>
 
                     <h3>Вхід до УРСР (1939–1940)</h3>
@@ -179,7 +726,7 @@
                     <p>У 2022 році Дубровицька міська рада оголосила рік <strong>Роком Української Повстанської Армії</strong> — на честь 80-ї річниці її створення та для відновлення історичної справедливості щодо борців за волю України.</p>
                 </section>
 
-                <section class="history-section fade-in-up">
+                <section class="history-section fade-in-up" id="epoch-soviet">
                     <h2>Радянська окупація: повоєнний період (1944–1991)</h2>
 
                     <h3>Репресії та придушення спротиву</h3>
@@ -205,7 +752,7 @@
                     <p>За часів войовничого атеїзму обидва головні храми міста — костел Іоана Хрестителя та церква Різдва Богородиці — зазнали серйозних пошкоджень. На початку 1990-х вони були відреставровані та повернуті вірянам.</p>
                 </section>
 
-                <section class="history-section fade-in-up">
+                <section class="history-section fade-in-up" id="epoch-ukraine">
                     <h2>Дубровиця у незалежній Україні (з 1991)</h2>
 
                     <h3>Перші роки незалежності</h3>
@@ -248,7 +795,7 @@
                     <p>Дубровиця зображена на знаменитій карті <em>Poloniae Finitimarumque locorum descriptio</em> Абрахама Ортеліуса (Антверпен, 1580), а також на російських військово-топографічних мапах 1866–1887 років — свідчення стратегічного значення міста в різні епохи.</p>
                 </section>
 
-                <section class="history-section fade-in-up">
+                <section class="history-section fade-in-up" id="epoch-timeline">
                     <h2>Хронологія ключових подій</h2>
                     <div class="timeline">
                         <div class="timeline-item">
@@ -313,6 +860,8 @@
             </div>
         </div>
     </article>
+        </div><!-- /.hist-article-col -->
+    </div><!-- /.hist-layout -->
 
     <footer class="footer">
         <div class="container">
@@ -339,5 +888,186 @@
         </div>
     </footer>
     <script src="app.js"></script>
+    <script>
+    /* ═══════════════════════════════════════════════════════
+       HISTORY PAGE — FULL SCROLLYTELLING DOCUMENTARY ENGINE
+    ═══════════════════════════════════════════════════════ */
+
+    // ── Reading progress bar ──
+    (function(){
+        var bar = document.getElementById('hist-progress');
+        if(!bar) return;
+        window.addEventListener('scroll', function(){
+            var s = document.documentElement;
+            bar.style.width = Math.min(100, (window.pageYOffset / (s.scrollHeight - s.clientHeight)) * 100).toFixed(1) + '%';
+        }, {passive:true});
+    })();
+
+    // ── Cinematic hero init + parallax + year counter ──
+    (function(){
+        var hero = document.getElementById('histHero');
+        var bg   = document.getElementById('histBg');
+        if(!hero) return;
+        setTimeout(function(){ hero.classList.add('hero-loaded'); }, 80);
+
+        if(bg){
+            window.addEventListener('scroll', function(){
+                var y = window.pageYOffset;
+                if(y <= hero.offsetHeight + 200)
+                    bg.style.transform = 'scale(1.0) translateY(' + (y * 0.28).toFixed(2) + 'px)';
+            }, {passive:true});
+        }
+
+        // Animated year counter
+        var el2 = document.getElementById('histYear2');
+        if(el2){
+            var start = 1900, end = 2026, dur = 1200, startTime = null;
+            setTimeout(function(){
+                function step(ts){
+                    if(!startTime) startTime = ts;
+                    var p  = Math.min(1, (ts - startTime) / dur);
+                    var ep = 1 - Math.pow(1 - p, 3);
+                    el2.textContent = Math.round(start + (end - start) * ep);
+                    if(p < 1) requestAnimationFrame(step);
+                }
+                requestAnimationFrame(step);
+            }, 800);
+        }
+    })();
+
+    // ══════════════════════════════════════════════
+    // SCROLLYTELLING DOCUMENTARY ENGINE
+    // ══════════════════════════════════════════════
+    (function(){
+        var storyBg      = document.getElementById('hist-story-bg');
+        var storyOverlay = document.getElementById('hist-story-overlay');
+        var storyScan    = document.getElementById('hist-story-scan');
+        var eraLabel     = document.getElementById('hist-era-label');
+        var eraYear      = document.getElementById('hel-year');
+        var eraName      = document.getElementById('hel-name');
+        var hero         = document.getElementById('histHero');
+        var layout       = document.querySelector('.hist-layout');
+
+        if(!storyBg || !hero) return;
+
+        // Map: epoch-id → { layer, year, name }
+        var epochData = {
+            'epoch-origin':   { layer: 'sl-origin',   year: 'X ст.',    name: 'Походження Дубровиці' },
+            'epoch-kyivrus':  { layer: 'sl-kyivrus',  year: '1005',     name: 'Давньоруська доба' },
+            'epoch-litu':     { layer: 'sl-litu',     year: 'XIV ст.',  name: 'Велике Князівство Литовське' },
+            'epoch-empire':   { layer: 'sl-empire',   year: '1795',     name: 'Під чужою владою' },
+            'epoch-ww1':      { layer: 'sl-ww1',      year: '1914',     name: 'Перша світова' },
+            'epoch-ww2':      { layer: 'sl-ww2',      year: '1943',     name: 'Друга світова · Аерофото' },
+            'epoch-soviet':   { layer: 'sl-soviet',   year: '1944',     name: 'Радянська окупація' },
+            'epoch-ukraine':  { layer: 'sl-ukraine',  year: '1991',     name: 'Незалежна Україна' },
+            'epoch-timeline': { layer: 'sl-timeline', year: '1005–2026','name': 'Хронологія' }
+        };
+
+        var currentLayer = null;
+
+        function setLayer(epochId){
+            var data = epochData[epochId];
+            if(!data) return;
+            if(currentLayer === data.layer) return;
+            currentLayer = data.layer;
+
+            // Fade out all layers
+            document.querySelectorAll('.hist-story-layer').forEach(function(l){ l.classList.remove('active'); });
+
+            // Fade in target layer
+            var target = document.getElementById(data.layer);
+            if(target) target.classList.add('active');
+
+            // Update era label with a brief fade
+            if(eraLabel){
+                eraLabel.style.opacity = '0';
+                eraLabel.style.transform = 'translateX(12px)';
+                setTimeout(function(){
+                    if(eraYear) eraYear.textContent = data.year;
+                    if(eraName) eraName.textContent = data.name;
+                    eraLabel.style.opacity = '';
+                    eraLabel.style.transform = '';
+                }, 250);
+            }
+        }
+
+        function showStoryBg(show){
+            [storyBg, storyOverlay, storyScan].forEach(function(el){
+                if(el) el.classList.toggle('visible', show);
+            });
+            if(eraLabel) eraLabel.classList.toggle('visible', show);
+            document.body.classList.toggle('story-active', show);
+        }
+
+        // Detect when hero exits / enters
+        var heroObs = new IntersectionObserver(function(entries){
+            entries.forEach(function(e){
+                showStoryBg(!e.isIntersecting);
+            });
+        }, { threshold: 0.05 });
+        heroObs.observe(hero);
+
+        // Epoch scrollspy + bg swap
+        var items    = document.querySelectorAll('.hist-epoch-item');
+        var targets  = document.querySelectorAll('[id^="epoch-"]');
+        var progLine = document.getElementById('epochProgressLine');
+
+        function activate(idx, epochId){
+            items.forEach(function(it, i){
+                it.classList.toggle('active', i === idx);
+                it.classList.toggle('passed', i < idx);
+            });
+            if(progLine && items.length > 1)
+                progLine.style.height = ((idx / (items.length - 1)) * 100) + '%';
+            if(epochId) setLayer(epochId);
+        }
+
+        var epochObs = new IntersectionObserver(function(entries){
+            entries.forEach(function(e){
+                if(e.isIntersecting){
+                    var id = e.target.id;
+                    items.forEach(function(it, i){
+                        if(it.getAttribute('href') === '#' + id) activate(i, id);
+                    });
+                }
+            });
+        }, { rootMargin: '-15% 0px -65% 0px', threshold: 0 });
+
+        targets.forEach(function(t){ epochObs.observe(t); });
+
+        // Smooth click nav
+        items.forEach(function(it){
+            it.addEventListener('click', function(e){
+                e.preventDefault();
+                var target = document.querySelector(this.getAttribute('href'));
+                if(target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        // Hide story bg when past the article
+        if(layout){
+            var footerObs = new IntersectionObserver(function(entries){
+                entries.forEach(function(e){
+                    // when footer enters, hide bg
+                    showStoryBg(e.isIntersecting ? false : (window.pageYOffset > hero.offsetHeight));
+                });
+            }, { threshold: 0.1 });
+            var footer = document.querySelector('.footer');
+            if(footer) footerObs.observe(footer);
+        }
+
+        // Preload all story images for instant transitions
+        Object.values(epochData).forEach(function(d){
+            var el = document.getElementById(d.layer);
+            if(el){
+                var img = new Image();
+                var bg  = el.style.backgroundImage.replace(/url\(['"]?|['"]?\)/g,'');
+                img.src = bg;
+            }
+        });
+
+        activate(0, 'epoch-origin');
+    })();
+    </script>
 </body>
 </html>

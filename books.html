@@ -17,7 +17,36 @@
     <link rel="stylesheet" href="app.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+.books-hero{position:relative;min-height:60vh;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;overflow:hidden;background:var(--color-bg,#faf7f2);}
+.books-hero-bg{position:absolute;inset:-8%;background-image:url('https://i.imgur.com/0HyroRq.jpeg');background-size:cover;background-position:center 25%;filter:sepia(0.55) brightness(0.45) contrast(1.12) saturate(0.38);transform:scale(1.06);transition:transform 10s cubic-bezier(0.16,1,0.3,1);z-index:0;}
+:root:not([data-theme="dark"]) .books-hero-bg{filter:sepia(0.48) brightness(0.58) contrast(1.08) saturate(0.4);}
+.books-hero.hero-loaded .books-hero-bg{transform:scale(1.0);}
+.books-hero-grain{position:absolute;inset:-80px;width:calc(100% + 160px);height:calc(100% + 160px);opacity:0.055;pointer-events:none;z-index:1;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)'/%3E%3C/svg%3E");background-size:220px 220px;animation:bgrain 0.55s steps(1) infinite;}
+@keyframes bgrain{0%{transform:translate(0,0)}33%{transform:translate(5px,3px)}66%{transform:translate(-4px,6px)}100%{transform:translate(3px,-4px)}}
+.books-hero-vignette{position:absolute;inset:0;z-index:2;pointer-events:none;background:radial-gradient(ellipse 80% 70% at 30% 50%,transparent 15%,rgba(0,0,0,0.38) 100%),linear-gradient(180deg,rgba(0,0,0,0.22) 0%,rgba(0,0,0,0.04) 25%,rgba(0,0,0,0.55) 72%,var(--color-bg,#faf7f2) 100%);}
+.books-hero-content{position:relative;z-index:10;padding:0 3rem 5rem;max-width:1400px;width:100%;}
+@media(max-width:700px){.books-hero-content{padding:0 1.4rem 3.5rem;}}
+.books-eyebrow{display:flex;align-items:center;gap:0.8rem;margin-bottom:1.4rem;opacity:0;animation:bup 0.85s cubic-bezier(0.16,1,0.3,1) 0.15s forwards;}
+.books-eyebrow span{font-family:'DM Sans',sans-serif;font-size:0.5rem;letter-spacing:0.32em;text-transform:uppercase;color:rgba(201,162,39,0.75);}
+.books-eyebrow::before{content:'';display:block;width:28px;height:1px;background:linear-gradient(90deg,transparent,rgba(201,162,39,0.55));flex-shrink:0;}
+.books-title{font-family:'Cormorant Garamond',serif;font-weight:300;line-height:0.9;letter-spacing:-0.03em;margin-bottom:1.2rem;opacity:0;animation:bup 1s cubic-bezier(0.16,1,0.3,1) 0.3s forwards;}
+.books-title .t-top{display:block;font-size:clamp(3.5rem,9vw,8rem);color:#fff;text-shadow:0 2px 40px rgba(0,0,0,0.55);}
+.books-title .t-bot{display:block;font-size:clamp(2.5rem,6.5vw,6rem);font-style:italic;color:#c9a227;text-shadow:0 0 70px rgba(201,162,39,0.28);}
+.books-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(0.9rem,1.5vw,1.1rem);font-weight:300;font-style:italic;color:rgba(255,255,255,0.42);opacity:0;animation:bup 0.85s cubic-bezier(0.16,1,0.3,1) 0.5s forwards;margin-bottom:0;}
+@keyframes bup{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+[data-theme="dark"] .books-hero-bg{filter:sepia(0.65) brightness(0.2) contrast(1.25) saturate(0.32);}
+
+/* Filters sit inside hero bottom */
+.books-filters-wrap {
+    position:relative;z-index:10;
+    background:var(--color-bg,#faf7f2);
+    border-bottom:1px solid var(--color-border-light,rgba(201,162,39,0.12));
+    box-shadow:0 4px 20px rgba(0,0,0,0.04);
+    position:sticky;top:62px;
+}
+</style>
 </head>
 <body>
     <!-- Header -->
@@ -66,17 +95,27 @@
         </div>
     </header>
 
-    <!-- Catalog Header -->
-    <section class="catalog-header">
-        <div class="container">
-            <h1 class="article-title fade-in-up">Книги про Дубровицю</h1>
-            <p class="article-meta fade-in-up delay-1">
-                Бібліографія досліджень і спогадів
-            </p>
-            <!-- Category Filters -->
-            <div class="catalog-filters fade-in-up delay-2">
-                <h3>Тематика:</h3>
-                <div class="catalog-filter-group">
+    <!-- CINEMATIC HERO -->
+    <section class="books-hero" id="booksHero">
+        <div class="books-hero-bg"></div>
+        <div class="books-hero-grain"></div>
+        <div class="books-hero-vignette"></div>
+        <div class="books-hero-content">
+            <div class="books-eyebrow"><span>Бібліографія · Дубровиця</span></div>
+            <h1 class="books-title">
+                <span class="t-top">Книги</span>
+                <span class="t-bot">про Дубровицю</span>
+            </h1>
+            <p class="books-sub">Дослідження, спогади, документи</p>
+        </div>
+    </section>
+
+    <!-- Category Filters — sticky below hero -->
+    <div class="books-filters-wrap">
+        <div class="container" style="padding-top:1rem;padding-bottom:1rem;">
+            <div style="display:flex;align-items:center;gap:0.8rem;flex-wrap:wrap;">
+                <span style="font-family:'DM Sans',sans-serif;font-size:0.5rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--color-text-muted);flex-shrink:0;">Тематика:</span>
+                <div class="catalog-filter-group" style="flex-wrap:wrap;">
                     <button class="catalog-filter-btn active" data-book-filter="all">Усі книги</button>
                     <button class="catalog-filter-btn" data-book-filter="history">Історія</button>
                     <button class="catalog-filter-btn" data-book-filter="culture">Культура та спадщина</button>
@@ -88,7 +127,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
     <!-- Books Catalog -->
     <section class="catalog-section">
@@ -137,5 +176,17 @@
     </footer>
 
     <script src="app.js"></script>
+    <script>
+    (function(){
+        var hero=document.getElementById('booksHero');
+        var bg=hero&&hero.querySelector('.books-hero-bg');
+        if(!hero)return;
+        setTimeout(function(){hero.classList.add('hero-loaded');},80);
+        if(bg) window.addEventListener('scroll',function(){
+            var y=window.pageYOffset;
+            if(y<=hero.offsetHeight+200) bg.style.transform='scale(1.0) translateY('+(y*0.25).toFixed(2)+'px)';
+        },{passive:true});
+    })();
+    </script>
 </body>
 </html>

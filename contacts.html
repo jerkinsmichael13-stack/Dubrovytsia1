@@ -13,7 +13,28 @@
     <link rel="stylesheet" href="app.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+.cont-hero{position:relative;min-height:55vh;display:flex;flex-direction:column;justify-content:center;align-items:center;overflow:hidden;background:var(--color-bg,#faf7f2);}
+.cont-hero-bg{position:absolute;inset:-8%;background-image:url('https://i.imgur.com/FckBe6G.jpeg');background-size:cover;background-position:center 40%;filter:sepia(0.55) brightness(0.48) contrast(1.1) saturate(0.38);transform:scale(1.06);transition:transform 10s cubic-bezier(0.16,1,0.3,1);z-index:0;}
+:root:not([data-theme="dark"]) .cont-hero-bg{filter:sepia(0.45) brightness(0.6) contrast(1.07) saturate(0.4);}
+.cont-hero.hero-loaded .cont-hero-bg{transform:scale(1.0);}
+.cont-hero-grain{position:absolute;inset:-80px;width:calc(100% + 160px);height:calc(100% + 160px);opacity:0.055;pointer-events:none;z-index:1;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)'/%3E%3C/svg%3E");background-size:220px 220px;animation:cgrain 0.55s steps(1) infinite;}
+@keyframes cgrain{0%{transform:translate(0,0)}33%{transform:translate(5px,3px)}66%{transform:translate(-4px,6px)}100%{transform:translate(3px,-4px)}}
+.cont-hero-vignette{position:absolute;inset:0;z-index:2;pointer-events:none;background:radial-gradient(ellipse 70% 60% at 50% 50%,transparent 20%,rgba(0,0,0,0.3) 100%),linear-gradient(180deg,rgba(0,0,0,0.28) 0%,rgba(0,0,0,0.04) 28%,rgba(0,0,0,0.42) 70%,var(--color-bg,#faf7f2) 100%);}
+.cont-hero-content{position:relative;z-index:10;text-align:center;padding:2rem 2rem 6rem;max-width:760px;width:100%;display:flex;flex-direction:column;align-items:center;}
+.cont-eyebrow{display:flex;align-items:center;justify-content:center;gap:1rem;margin-bottom:2rem;opacity:0;animation:cup 0.85s cubic-bezier(0.16,1,0.3,1) 0.15s forwards;}
+.cont-eyebrow span{font-family:'DM Sans',sans-serif;font-size:0.5rem;letter-spacing:0.32em;text-transform:uppercase;color:rgba(201,162,39,0.75);}
+.cont-eyebrow-ln{width:32px;height:1px;flex-shrink:0;}
+.cont-eyebrow-ln:first-child{background:linear-gradient(90deg,transparent,rgba(201,162,39,0.55));}
+.cont-eyebrow-ln:last-child{background:linear-gradient(270deg,transparent,rgba(201,162,39,0.55));}
+.cont-title{font-family:'Cormorant Garamond',serif;font-weight:300;line-height:0.9;letter-spacing:-0.02em;margin-bottom:1.4rem;opacity:0;animation:cup 1s cubic-bezier(0.16,1,0.3,1) 0.3s forwards;}
+.cont-title .t-top{display:block;font-size:clamp(3rem,8vw,7rem);color:#fff;text-shadow:0 2px 40px rgba(0,0,0,0.55);}
+.cont-title .t-bot{display:block;font-size:clamp(2.2rem,6vw,5rem);font-style:italic;color:#c9a227;text-shadow:0 0 70px rgba(201,162,39,0.28);}
+.cont-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(0.9rem,1.5vw,1.1rem);font-weight:300;font-style:italic;color:rgba(255,255,255,0.42);opacity:0;animation:cup 0.85s cubic-bezier(0.16,1,0.3,1) 0.5s forwards;}
+@keyframes cup{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+[data-theme="dark"] .cont-hero-bg{filter:sepia(0.65) brightness(0.2) contrast(1.25) saturate(0.32);}
+</style>
 </head>
 <body>
     <!-- Header -->
@@ -62,13 +83,22 @@
         </div>
     </header>
 
-    <!-- Article Header -->
-    <section class="article-header">
-        <div class="container">
-            <h1 class="article-title fade-in-up">Про проєкт</h1>
-            <p class="article-meta fade-in-up delay-1">
-                Команда, контакти та подяки
-            </p>
+    <!-- CINEMATIC HERO -->
+    <section class="cont-hero" id="contHero">
+        <div class="cont-hero-bg"></div>
+        <div class="cont-hero-grain"></div>
+        <div class="cont-hero-vignette"></div>
+        <div class="cont-hero-content">
+            <div class="cont-eyebrow">
+                <div class="cont-eyebrow-ln"></div>
+                <span>Цифровий архів · Дубровиця</span>
+                <div class="cont-eyebrow-ln"></div>
+            </div>
+            <h1 class="cont-title">
+                <span class="t-top">Про</span>
+                <span class="t-bot">проєкт</span>
+            </h1>
+            <p class="cont-sub">Команда, контакти та подяки</p>
         </div>
     </section>
 
@@ -198,11 +228,16 @@
 
     <script src="app.js"></script>
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        setTimeout(function() {
-            document.querySelectorAll('.fade-in-up').forEach(function(el) { el.classList.add('visible'); });
-        }, 80);
-    });
+    (function(){
+        var hero=document.getElementById('contHero');
+        var bg=hero&&hero.querySelector('.cont-hero-bg');
+        if(!hero)return;
+        setTimeout(function(){hero.classList.add('hero-loaded');},80);
+        if(bg) window.addEventListener('scroll',function(){
+            var y=window.pageYOffset;
+            if(y<=hero.offsetHeight+200) bg.style.transform='scale(1.0) translateY('+(y*0.22).toFixed(2)+'px)';
+        },{passive:true});
+    })();
     </script>
 </body>
 </html>
