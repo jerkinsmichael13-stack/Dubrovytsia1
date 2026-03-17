@@ -14,6 +14,204 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ── Reading progress ── */
+#mk-progress {
+    position:fixed;top:0;left:0;z-index:9999;height:2px;width:0%;
+    background:linear-gradient(90deg,#a8841c,#c9a227,#e0bd5a);
+    transition:width 0.08s linear;pointer-events:none;
+    box-shadow:0 0 8px rgba(201,162,39,0.5);
+}
+
+/* ── Cinematic hero — parchment manuscript aesthetic ── */
+.mk-hero {
+    position:relative;
+    min-height:calc(100svh - 62px);
+    display:flex;flex-direction:column;
+    justify-content:center;align-items:center;
+    overflow:hidden;
+    background:var(--color-bg,#faf7f2);
+}
+
+/* Two-layer bg: manuscript script behind, church silhouette in front */
+.mk-hero-bg {
+    position:absolute;inset:-8%;
+    background-image:url('https://i.imgur.com/WeDmtIY.jpeg');
+    background-size:cover;background-position:center 30%;
+    filter:sepia(0.7) brightness(0.38) contrast(1.2) saturate(0.3);
+    transform:scale(1.02);opacity:0;
+    transition:transform 10s cubic-bezier(0.16,1,0.3,1), opacity 0.7s ease;
+    z-index:0;
+}
+:root:not([data-theme="dark"]) .mk-hero-bg {
+    filter:sepia(0.6) brightness(0.52) contrast(1.12) saturate(0.32);
+}
+.mk-hero.hero-loaded .mk-hero-bg { transform:scale(1.0); opacity:1; }
+
+/* Grain */
+.mk-hero-grain {
+    position:absolute;inset:-80px;width:calc(100% + 160px);height:calc(100% + 160px);
+    opacity:0.065;pointer-events:none;z-index:1;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size:220px 220px;animation:mk-grain 0.55s steps(1) infinite;
+}
+@keyframes mk-grain {
+    0%{transform:translate(0,0)}16%{transform:translate(-4px,-6px)}33%{transform:translate(6px,3px)}
+    50%{transform:translate(-3px,7px)}66%{transform:translate(7px,-4px)}100%{transform:translate(3px,-5px)}
+}
+
+/* Vignette — bottom fades to page bg */
+.mk-hero-vignette {
+    position:absolute;inset:0;z-index:2;pointer-events:none;
+    background:
+        radial-gradient(ellipse 75% 60% at 50% 50%,transparent 18%,rgba(0,0,0,0.32) 100%),
+        linear-gradient(180deg,
+            rgba(0,0,0,0.28) 0%,
+            rgba(0,0,0,0.06) 30%,
+            rgba(0,0,0,0.45) 72%,
+            var(--color-bg,#faf7f2) 100%);
+}
+
+/* Scan lines */
+.mk-hero-scan {
+    position:absolute;inset:0;z-index:3;pointer-events:none;
+    background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.011) 3px,rgba(0,0,0,0.011) 4px);
+}
+
+/* Horizontal ruling lines (like a manuscript) */
+.mk-hero-ruling {
+    position:absolute;inset:0;z-index:2;pointer-events:none;
+    background:repeating-linear-gradient(
+        180deg,
+        transparent 0px, transparent 32px,
+        rgba(201,162,39,0.035) 32px, rgba(201,162,39,0.035) 33px
+    );
+}
+
+/* Content */
+.mk-hero-content {
+    position:relative;z-index:10;
+    text-align:center;padding:2rem 2rem 8rem;
+    max-width:900px;width:100%;
+    display:flex;flex-direction:column;align-items:center;
+}
+
+/* Eyebrow */
+.mk-eyebrow {
+    display:flex;align-items:center;justify-content:center;gap:1rem;margin-bottom:2.5rem;
+    opacity:0;animation:mk-up 0.85s cubic-bezier(0.16,1,0.3,1) 0.15s forwards;
+}
+.mk-eyebrow span { font-family:'DM Sans',sans-serif;font-size:0.5rem;letter-spacing:0.32em;text-transform:uppercase;color:rgba(201,162,39,0.75); }
+.mk-eyebrow-ln { width:36px;height:1px;flex-shrink:0; }
+.mk-eyebrow-ln:first-child { background:linear-gradient(90deg,transparent,rgba(201,162,39,0.55)); }
+.mk-eyebrow-ln:last-child  { background:linear-gradient(270deg,transparent,rgba(201,162,39,0.55)); }
+
+/* Dates badge */
+.mk-dates-row {
+    display:flex;align-items:center;justify-content:center;gap:1.5rem;margin-bottom:1.8rem;
+    opacity:0;animation:mk-up 0.9s cubic-bezier(0.16,1,0.3,1) 0.28s forwards;
+}
+.mk-date-badge {
+    text-align:center;
+}
+.mk-date-num {
+    display:block;
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(2.2rem,5vw,4rem);
+    font-weight:300;line-height:1;letter-spacing:-0.03em;
+    color:#fff;text-shadow:0 2px 30px rgba(0,0,0,0.5);
+}
+.mk-date-num.gold { color:#c9a227;text-shadow:0 0 60px rgba(201,162,39,0.3); }
+.mk-date-label {
+    display:block;font-family:'DM Sans',sans-serif;
+    font-size:0.46rem;letter-spacing:0.22em;text-transform:uppercase;
+    color:rgba(255,255,255,0.3);margin-top:0.3rem;
+}
+.mk-date-sep {
+    font-family:'Cormorant Garamond',serif;
+    font-size:2.5rem;color:rgba(201,162,39,0.25);font-weight:300;line-height:1;padding-top:0.2rem;
+}
+
+/* Main title */
+.mk-title {
+    font-family:'Cormorant Garamond',serif;
+    font-weight:300;line-height:0.88;letter-spacing:-0.03em;margin-bottom:0;
+    opacity:0;animation:mk-up 1.05s cubic-bezier(0.16,1,0.3,1) 0.38s forwards;
+}
+.mk-title .t-top { display:block;font-size:clamp(4rem,10vw,9rem);color:#fff;text-shadow:0 2px 40px rgba(0,0,0,0.55); }
+.mk-title .t-bot { display:block;font-size:clamp(3rem,7.5vw,6.8rem);font-style:italic;color:#c9a227;text-shadow:0 0 70px rgba(201,162,39,0.28);padding-left:0.06em; }
+
+/* Ornament */
+.mk-ornament {
+    display:flex;align-items:center;gap:0.9rem;width:320px;max-width:88%;
+    margin:2rem auto 1.8rem;
+    opacity:0;animation:mk-up 0.85s cubic-bezier(0.16,1,0.3,1) 0.52s forwards;
+}
+.mk-ornament-line { flex:1;height:1px; }
+.mk-ornament-line:first-child { background:linear-gradient(90deg,transparent,rgba(201,162,39,0.4)); }
+.mk-ornament-line:last-child  { background:linear-gradient(270deg,transparent,rgba(201,162,39,0.4)); }
+.mk-ornament-diamond { width:5px;height:5px;background:rgba(201,162,39,0.6);transform:rotate(45deg);flex-shrink:0; }
+.mk-ornament-dot { width:3px;height:3px;border-radius:50%;background:rgba(201,162,39,0.3);flex-shrink:0; }
+
+/* Stats */
+.mk-stats {
+    display:flex;align-items:flex-start;justify-content:center;gap:2.5rem;
+    opacity:0;animation:mk-up 0.85s cubic-bezier(0.16,1,0.3,1) 0.6s forwards;
+}
+.mk-stat { text-align:center; }
+.mk-stat-num {
+    display:block;font-family:'Cormorant Garamond',serif;
+    font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:300;line-height:1;
+    color:#fff;letter-spacing:-0.02em;
+}
+.mk-stat-num em { font-style:normal;color:#c9a227; }
+.mk-stat-label {
+    display:block;font-family:'DM Sans',sans-serif;
+    font-size:0.46rem;letter-spacing:0.2em;text-transform:uppercase;
+    color:rgba(255,255,255,0.3);margin-top:0.32rem;
+}
+.mk-stat-sep { font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:rgba(201,162,39,0.2);line-height:1;padding-top:0.3rem;flex-shrink:0; }
+
+/* Sub */
+.mk-sub {
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(0.9rem,1.6vw,1.12rem);font-weight:300;font-style:italic;
+    color:rgba(255,255,255,0.42);letter-spacing:0.015em;margin-top:1.8rem;
+    opacity:0;animation:mk-up 0.85s cubic-bezier(0.16,1,0.3,1) 0.7s forwards;
+}
+
+/* Scroll cue */
+.mk-scroll-cue {
+    position:absolute;bottom:2.2rem;left:50%;transform:translateX(-50%);z-index:10;
+    display:flex;flex-direction:column;align-items:center;gap:0.6rem;
+    opacity:0;animation:mk-fadein 1s ease 1.4s forwards;pointer-events:none;
+}
+.mk-scroll-cue span { font-family:'DM Sans',sans-serif;font-size:0.48rem;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.28); }
+.mk-scroll-track { width:1px;height:48px;background:linear-gradient(180deg,rgba(201,162,39,0.55) 0%,transparent 100%);animation:mk-drip 2s ease-in-out infinite; }
+@keyframes mk-drip { 0%,100%{opacity:0.3;transform:scaleY(1) translateY(0)} 50%{opacity:1;transform:scaleY(0.5) translateY(12px)} }
+@keyframes mk-up { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+@keyframes mk-fadein { from{opacity:0} to{opacity:1} }
+
+/* Filters sticky below hero */
+.mk-filters-bar {
+    position:sticky;top:62px;z-index:100;
+    background:var(--color-bg,#faf7f2);
+    border-bottom:1px solid var(--color-border-light,rgba(201,162,39,0.12));
+    box-shadow:0 4px 20px rgba(0,0,0,0.04);
+}
+.mk-filters-inner {
+    max-width:1400px;margin:0 auto;padding:0.85rem 2rem;
+    display:flex;align-items:center;gap:0.8rem;flex-wrap:wrap;
+}
+.mk-filter-label {
+    font-family:'DM Sans',sans-serif;font-size:0.48rem;letter-spacing:0.24em;
+    text-transform:uppercase;color:var(--color-text-muted,#a8a29e);flex-shrink:0;
+    white-space:nowrap;
+}
+.mk-filter-sep { width:1px;height:18px;background:var(--color-border-light,rgba(201,162,39,0.15));flex-shrink:0; }
+
+[data-theme="dark"] .mk-hero-bg { filter:sepia(0.7) brightness(0.22) contrast(1.28) saturate(0.28); }
+</style>
 </head>
 <body>
     <!-- Header -->
@@ -62,38 +260,98 @@
         </div>
     </header>
 
-    <!-- Catalog Header -->
-    <section class="catalog-header">
-        <div class="container">
-            <h1 class="article-title fade-in-up">Метричні книги</h1>
-            <p class="article-meta fade-in-up delay-1">
-                Генеалогічні дослідження · Метричні записи парафій
-            </p>
-            <!-- Confession Filters -->
-            <div class="catalog-filters fade-in-up delay-2">
-                <h3>Конфесія:</h3>
-                <div class="catalog-filter-group">
-                    <button class="catalog-filter-btn active" data-metric-filter="all">Усі</button>
-                    <button class="catalog-filter-btn" data-metric-filter="orthodox">Православна</button>
-                    <button class="catalog-filter-btn" data-metric-filter="catholic">Римо-католицька</button>
-                    <button class="catalog-filter-btn" data-metric-filter="greek-catholic">Греко-католицька</button>
-                    <button class="catalog-filter-btn" data-metric-filter="jewish">Іудаїзм</button>
-                    <button class="catalog-filter-btn" data-metric-filter="civil">Цивільні реєстри</button>
+    <!-- Reading progress -->
+    <div id="mk-progress"></div>
+
+    <!-- CINEMATIC HERO — Manuscript / Parchment -->
+    <section class="mk-hero" id="mkHero">
+        <div class="mk-hero-bg"></div>
+        <div class="mk-hero-grain"></div>
+        <div class="mk-hero-ruling"></div>
+        <div class="mk-hero-vignette"></div>
+        <div class="mk-hero-scan"></div>
+
+        <div class="mk-hero-content">
+            <div class="mk-eyebrow">
+                <div class="mk-eyebrow-ln"></div>
+                <span>Генеалогічні дослідження · Дубровиця</span>
+                <div class="mk-eyebrow-ln"></div>
+            </div>
+
+            <div class="mk-dates-row">
+                <div class="mk-date-badge">
+                    <span class="mk-date-num">XVII</span>
+                    <span class="mk-date-label">Перші записи</span>
+                </div>
+                <span class="mk-date-sep">—</span>
+                <div class="mk-date-badge">
+                    <span class="mk-date-num gold">XX</span>
+                    <span class="mk-date-label">Останні записи</span>
                 </div>
             </div>
-            <!-- Record Type Filters -->
-            <div class="catalog-filters fade-in-up delay-3" style="margin-top:1rem;">
-                <h3>Тип записів:</h3>
-                <div class="catalog-filter-group">
-                    <button class="catalog-filter-btn active" data-metric-type="all">Усі типи</button>
-                    <button class="catalog-filter-btn" data-metric-type="birth">👶 Народження</button>
-                    <button class="catalog-filter-btn" data-metric-type="marriage">💍 Шлюби</button>
-                    <button class="catalog-filter-btn" data-metric-type="death">🕊️ Смерті</button>
-                    <button class="catalog-filter-btn" data-metric-type="confession">📜 Сповідні записи</button>
+
+            <h1 class="mk-title">
+                <span class="t-top">Метричні</span>
+                <span class="t-bot">книги</span>
+            </h1>
+
+            <div class="mk-ornament">
+                <div class="mk-ornament-line"></div>
+                <div class="mk-ornament-dot"></div>
+                <div class="mk-ornament-diamond"></div>
+                <div class="mk-ornament-dot"></div>
+                <div class="mk-ornament-line"></div>
+            </div>
+
+            <div class="mk-stats">
+                <div class="mk-stat">
+                    <span class="mk-stat-num"><em>4</em></span>
+                    <span class="mk-stat-label">Конфесії</span>
+                </div>
+                <span class="mk-stat-sep">·</span>
+                <div class="mk-stat">
+                    <span class="mk-stat-num"><em>3</em></span>
+                    <span class="mk-stat-label">Типи записів</span>
+                </div>
+                <span class="mk-stat-sep">·</span>
+                <div class="mk-stat">
+                    <span class="mk-stat-num"><em>300+</em></span>
+                    <span class="mk-stat-label">Років охоплення</span>
                 </div>
             </div>
+
+            <p class="mk-sub">Народження · Шлюби · Смерті — хроніка поколінь</p>
+        </div>
+
+        <div class="mk-scroll-cue">
+            <span>Гортайте</span>
+            <div class="mk-scroll-track"></div>
         </div>
     </section>
+
+    <!-- Sticky filters bar -->
+    <div class="mk-filters-bar">
+        <div class="mk-filters-inner">
+            <span class="mk-filter-label">Конфесія:</span>
+            <div class="catalog-filter-group">
+                <button class="catalog-filter-btn active" data-metric-filter="all">Усі</button>
+                <button class="catalog-filter-btn" data-metric-filter="orthodox">Православна</button>
+                <button class="catalog-filter-btn" data-metric-filter="catholic">Римо-католицька</button>
+                <button class="catalog-filter-btn" data-metric-filter="greek-catholic">Греко-католицька</button>
+                <button class="catalog-filter-btn" data-metric-filter="jewish">Іудаїзм</button>
+                <button class="catalog-filter-btn" data-metric-filter="civil">Цивільні реєстри</button>
+            </div>
+            <span class="mk-filter-sep"></span>
+            <span class="mk-filter-label">Тип:</span>
+            <div class="catalog-filter-group">
+                <button class="catalog-filter-btn active" data-metric-type="all">Усі</button>
+                <button class="catalog-filter-btn" data-metric-type="birth">Народження</button>
+                <button class="catalog-filter-btn" data-metric-type="marriage">Шлюби</button>
+                <button class="catalog-filter-btn" data-metric-type="death">Смерті</button>
+                <button class="catalog-filter-btn" data-metric-type="confession">Сповідні</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Catalog Content -->
     <section class="catalog-section">
@@ -593,5 +851,27 @@
     </footer>
 
     <script src="app.js"></script>
+    <script>
+    // Reading progress
+    (function(){
+        var bar=document.getElementById('mk-progress');
+        if(!bar)return;
+        window.addEventListener('scroll',function(){
+            var s=document.documentElement;
+            bar.style.width=Math.min(100,(window.pageYOffset/(s.scrollHeight-s.clientHeight))*100).toFixed(1)+'%';
+        },{passive:true});
+    })();
+    // Hero parallax
+    (function(){
+        var hero=document.getElementById('mkHero');
+        var bg=hero&&hero.querySelector('.mk-hero-bg');
+        if(!hero)return;
+        setTimeout(function(){hero.classList.add('hero-loaded');},80);
+        if(bg) window.addEventListener('scroll',function(){
+            var y=window.pageYOffset;
+            if(y<=hero.offsetHeight+200) bg.style.transform='scale(1.0) translateY('+(y*0.26).toFixed(2)+'px)';
+        },{passive:true});
+    })();
+    </script>
 </body>
 </html>

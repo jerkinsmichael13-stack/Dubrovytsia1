@@ -63,16 +63,16 @@
     background-size: cover;
     background-position: center 40%;
     filter: sepia(0.65) brightness(0.38) contrast(1.15) saturate(0.4);
-    transform: scale(1.06);
+    transform: scale(1.02); opacity: 0;
     will-change: transform;
     z-index: 0;
-    transition: transform 10s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 10s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.7s ease;
 }
 /* Light theme: brighter, warms into parchment */
 :root:not([data-theme="dark"]) .pa-hero-bg {
     filter: sepia(0.5) brightness(0.58) contrast(1.08) saturate(0.45);
 }
-.pa-hero.hero-loaded .pa-hero-bg { transform: scale(1.0); }
+.pa-hero.hero-loaded .pa-hero-bg { transform: scale(1.0); opacity: 1;; }
 
 /* ── Film grain ── */
 .pa-hero-grain {

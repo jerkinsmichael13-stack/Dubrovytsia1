@@ -34,15 +34,15 @@
 }
 .arch-hero-bg {
     position:absolute;inset:-8%;
-    background-image:url('https://i.imgur.com/3bLmxz5.jpeg');
-    background-size:cover;background-position:center 35%;
+    background-image:url('https://i.imgur.com/fEA0QwQ.jpeg');
+    background-size:cover;background-position:center 40%;
     filter:sepia(0.55) brightness(0.5) contrast(1.12) saturate(0.38);
-    transform:scale(1.06);transition:transform 10s cubic-bezier(0.16,1,0.3,1);z-index:0;
+    transform:scale(1.06);transition:transform 10s cubic-bezier(0.16,1,0.3,1), opacity 0.7s ease;z-index:0;
 }
 :root:not([data-theme="dark"]) .arch-hero-bg {
     filter:sepia(0.48) brightness(0.62) contrast(1.08) saturate(0.4);
 }
-.arch-hero.hero-loaded .arch-hero-bg { transform:scale(1.0); }
+.arch-hero.hero-loaded .hist-hero-bg { transform: scale(1.0); opacity: 1;; opacity:1; }
 .arch-hero-grain {
     position:absolute;inset:-80px;width:calc(100% + 160px);height:calc(100% + 160px);
     opacity:0.06;pointer-events:none;z-index:1;
