@@ -487,6 +487,163 @@ body.story-active .hist-epoch-nav {
     border: 1px solid rgba(201,162,39,0.12);
 }
 [data-theme="dark"] body.story-active .hist-epoch-nav { background: rgba(10, 8, 5, 0.82); }
+
+/* ══════════════════════════════════════════════════════════════
+   EPOCH CHAPTER INTERSTITIALS — Cinematic chapter title cards
+   Full-width panels with Ken Burns, grain, animated reveal
+══════════════════════════════════════════════════════════════ */
+.epoch-interstitial {
+    position: relative;
+    height: 380px;
+    overflow: hidden;
+    /* Break out of 780px inner wrapper to fill article column */
+    width: calc(100% + 5.5rem);
+    margin-left: -3.5rem;
+    margin-right: -2rem;
+    margin-top: 5rem;
+    margin-bottom: 0;
+    opacity: 0;
+    transform: translateY(50px) scale(0.99);
+    transition: opacity 1s cubic-bezier(0.16,1,0.3,1), transform 1.1s cubic-bezier(0.16,1,0.3,1);
+}
+.epoch-interstitial.ei-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+@media(max-width: 940px) {
+    .epoch-interstitial { width: 100%; margin-left: 0; margin-right: 0; height: 280px; }
+}
+
+/* Ken Burns photo background */
+.ei-bg {
+    position: absolute; inset: -6%;
+    background-size: cover; background-position: center;
+    filter: brightness(0.5) contrast(1.06) saturate(0.82);
+    animation: eiBg 22s ease-in-out infinite alternate;
+    will-change: transform;
+}
+@keyframes eiBg {
+    from { transform: scale(1.0) translateX(0); }
+    to   { transform: scale(1.09) translateX(-1%); }
+}
+
+/* Film grain overlay */
+.ei-grain {
+    position: absolute; inset: -80px;
+    width: calc(100% + 160px); height: calc(100% + 160px);
+    opacity: 0.042; pointer-events: none; z-index: 1;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 220px 220px; animation: hist-grain 0.55s steps(1) infinite;
+}
+
+/* Cinematic vignette + directional gradient */
+.ei-overlay {
+    position: absolute; inset: 0; z-index: 2; pointer-events: none;
+    background:
+        linear-gradient(90deg,
+            rgba(0,0,0,0.72) 0%,
+            rgba(0,0,0,0.32) 45%,
+            rgba(0,0,0,0.18) 60%,
+            rgba(0,0,0,0.48) 100%),
+        linear-gradient(180deg,
+            rgba(0,0,0,0.42) 0%,
+            transparent 35%,
+            transparent 65%,
+            rgba(0,0,0,0.55) 100%);
+}
+
+/* Scan lines */
+.ei-scan {
+    position: absolute; inset: 0; z-index: 3; pointer-events: none;
+    background: repeating-linear-gradient(0deg, transparent, transparent 3px,
+        rgba(0,0,0,0.009) 3px, rgba(0,0,0,0.009) 4px);
+}
+
+/* Content layout */
+.ei-content {
+    position: absolute; inset: 0; z-index: 10;
+    display: flex; align-items: center;
+    padding: 0 3.5rem; gap: 2.8rem;
+}
+
+/* Roman numeral chapter number — huge watermark */
+.ei-chapter-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(5rem, 9vw, 8rem);
+    font-weight: 200;
+    color: rgba(201,162,39,0.16);
+    line-height: 1; letter-spacing: -0.05em;
+    flex-shrink: 0;
+    user-select: none;
+    transition: color 1.2s ease;
+}
+.epoch-interstitial.ei-visible .ei-chapter-num {
+    color: rgba(201,162,39,0.22);
+}
+
+/* Vertical divider line — animated draw */
+.ei-vline {
+    width: 1px; height: 0; flex-shrink: 0;
+    background: linear-gradient(180deg, transparent, rgba(201,162,39,0.65), transparent);
+    transition: height 1s cubic-bezier(0.16,1,0.3,1) 0.35s;
+}
+.epoch-interstitial.ei-visible .ei-vline { height: 100px; }
+
+/* Text block */
+.ei-text-block { flex: 1; }
+.ei-label {
+    display: block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.44rem; letter-spacing: 0.4em; text-transform: uppercase;
+    color: rgba(201,162,39,0.72);
+    margin-bottom: 1rem;
+    opacity: 0; transform: translateX(-16px);
+    transition: opacity 0.8s ease 0.5s, transform 0.8s cubic-bezier(0.16,1,0.3,1) 0.5s;
+}
+.epoch-interstitial.ei-visible .ei-label { opacity: 1; transform: translateX(0); }
+.ei-title-main {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 3.2vw, 2.9rem);
+    font-weight: 300; line-height: 1.0; letter-spacing: -0.025em;
+    color: #fff; margin-bottom: 0.65rem;
+    text-shadow: 0 2px 30px rgba(0,0,0,0.5);
+    opacity: 0; transform: translateX(-20px);
+    transition: opacity 0.9s ease 0.6s, transform 0.9s cubic-bezier(0.16,1,0.3,1) 0.6s;
+}
+.epoch-interstitial.ei-visible .ei-title-main { opacity: 1; transform: translateX(0); }
+.ei-years {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem; font-style: italic;
+    color: rgba(201,162,39,0.62);
+    opacity: 0; transform: translateX(-16px);
+    transition: opacity 0.8s ease 0.75s, transform 0.8s cubic-bezier(0.16,1,0.3,1) 0.75s;
+}
+.epoch-interstitial.ei-visible .ei-years { opacity: 1; transform: translateX(0); }
+
+/* Bottom gold accent line — animated draw from center */
+.ei-bottom-bar {
+    position: absolute; bottom: 0; left: 50%; right: 50%; z-index: 10;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(201,162,39,0.6), transparent);
+    transition: left 1s cubic-bezier(0.16,1,0.3,1) 0.2s, right 1s cubic-bezier(0.16,1,0.3,1) 0.2s;
+}
+.epoch-interstitial.ei-visible .ei-bottom-bar { left: 10%; right: 10%; }
+
+/* Right-side faded year watermark */
+.ei-year-bg {
+    position: absolute; right: 2.5rem; bottom: 1.5rem; z-index: 4;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 6vw, 5.5rem);
+    font-weight: 200;
+    color: rgba(255,255,255,0.055);
+    line-height: 1; letter-spacing: -0.04em;
+    pointer-events: none; user-select: none;
+    opacity: 0;
+    transition: opacity 1.2s ease 0.8s;
+}
+.epoch-interstitial.ei-visible .ei-year-bg { opacity: 1; }
 </style>
 </head>
 <body>
@@ -665,7 +822,24 @@ body.story-active .hist-epoch-nav {
                     <p>Реконструйована давньоруська назва — <em>Дѹбровицѧ</em>, зі згадки в Іпатіївському літописі «Дубровицьскыи [князь]». З кінця XVI ст. набула поширення польська назва <em>Домбровиця</em> (Dąbrowica). У давніх актах місто також згадується як <em>Добровица</em> та <em>Дубравица</em>. 15 серпня 1944 року місто отримало сучасну назву — Дубровиця.</p>
                 </section>
 
-                <section class="history-section fade-in-up" id="epoch-kyivrus">
+                <div class="epoch-interstitial" data-ei>
+    <div class="ei-bg" style="background-image:url('https://i.imgur.com/n74FSvK.jpeg')"></div>
+    <div class="ei-grain"></div>
+    <div class="ei-overlay"></div>
+    <div class="ei-scan"></div>
+    <div class="ei-content">
+        <span class="ei-chapter-num">I</span>
+        <div class="ei-vline"></div>
+        <div class="ei-text-block">
+            <span class="ei-label">Частина перша</span>
+            <span class="ei-title-main">Давньоруська доба</span>
+            <span class="ei-years">X ст. — 1240</span>
+        </div>
+    </div>
+    <div class="ei-year-bg">1005</div>
+    <div class="ei-bottom-bar"></div>
+</div>
+<section class="history-section fade-in-up" id="epoch-kyivrus">
                     <h2>Давньоруський період (X ст. — 1240)</h2>
 
                     <h3>Найдавніша доба</h3>
@@ -695,7 +869,24 @@ body.story-active .hist-epoch-nav {
                     <p>Під час навали орди Батия у 1240 році Дубровиця була зруйнована. Це поклало кінець існуванню Дубровицького удільного князівства. Проте місто відродилось і незабаром знову зайняло важливе місце в регіоні.</p>
                 </section>
 
-                <section class="history-section fade-in-up" id="epoch-litu">
+                <div class="epoch-interstitial" data-ei>
+    <div class="ei-bg" style="background-image:url('https://i.imgur.com/3bLmxz5.jpeg')"></div>
+    <div class="ei-grain"></div>
+    <div class="ei-overlay"></div>
+    <div class="ei-scan"></div>
+    <div class="ei-content">
+        <span class="ei-chapter-num">II</span>
+        <div class="ei-vline"></div>
+        <div class="ei-text-block">
+            <span class="ei-label">Частина друга</span>
+            <span class="ei-title-main">Велике Князівство Литовське</span>
+            <span class="ei-years">XIV — XVI ст.</span>
+        </div>
+    </div>
+    <div class="ei-year-bg">XIV</div>
+    <div class="ei-bottom-bar"></div>
+</div>
+<section class="history-section fade-in-up" id="epoch-litu">
                     <h2>Велике Князівство Литовське (XIV–XVI ст.)</h2>
 
                     <h3>Литовська доба</h3>
@@ -711,7 +902,24 @@ body.story-active .hist-epoch-nav {
                     <p>На короткий час Дубровиця та навколишні села переходили під українську гетьманську адміністрацію. Впродовж 1657–1659 років, як і все Полісся, вона входила до складу Пінсько-Турівського козачого полку. У 1653 році місто вкотре зазнало серйозних руйнувань.</p>
                 </section>
 
-                <section class="history-section fade-in-up" id="epoch-empire">
+                <div class="epoch-interstitial" data-ei>
+    <div class="ei-bg" style="background-image:url('https://i.imgur.com/op2tNhY.jpeg')"></div>
+    <div class="ei-grain"></div>
+    <div class="ei-overlay"></div>
+    <div class="ei-scan"></div>
+    <div class="ei-content">
+        <span class="ei-chapter-num">III</span>
+        <div class="ei-vline"></div>
+        <div class="ei-text-block">
+            <span class="ei-label">Частина третя</span>
+            <span class="ei-title-main">Під чужою владою</span>
+            <span class="ei-years">XVII — XIX ст.</span>
+        </div>
+    </div>
+    <div class="ei-year-bg">1795</div>
+    <div class="ei-bottom-bar"></div>
+</div>
+<section class="history-section fade-in-up" id="epoch-empire">
                     <h2>Під чужою владою (XVII–XIX ст.)</h2>
 
                     <h3>Костел Іоана Хрестителя (1695–1702)</h3>
@@ -735,7 +943,24 @@ body.story-active .hist-epoch-nav {
                     </div>
                 </section>
 
-                <section class="history-section fade-in-up" id="epoch-ww1">
+                <div class="epoch-interstitial" data-ei>
+    <div class="ei-bg" style="background-image:url('https://i.imgur.com/YxFni3M.png')"></div>
+    <div class="ei-grain"></div>
+    <div class="ei-overlay"></div>
+    <div class="ei-scan"></div>
+    <div class="ei-content">
+        <span class="ei-chapter-num">IV</span>
+        <div class="ei-vline"></div>
+        <div class="ei-text-block">
+            <span class="ei-label">Частина четверта</span>
+            <span class="ei-title-main">Перша світова · Міжвоєнний</span>
+            <span class="ei-years">1914 — 1939</span>
+        </div>
+    </div>
+    <div class="ei-year-bg">1914</div>
+    <div class="ei-bottom-bar"></div>
+</div>
+<section class="history-section fade-in-up" id="epoch-ww1">
                     <h2>Перша світова та міжвоєнний період (1914–1939)</h2>
 
                     <h3>Перша світова війна</h3>
@@ -748,7 +973,24 @@ body.story-active .hist-epoch-nav {
                     <p>Від 1920 до 1939 року Дубровиця перебувала у складі Польщі — у Сарненському повіті Поліського, а від 1931 року — Волинського воєводства. Місто розвивалося як невеликий регіональний центр з активним господарським і культурним життям.</p>
                 </section>
 
-                <section class="history-section fade-in-up" id="epoch-ww2">
+                <div class="epoch-interstitial" data-ei>
+    <div class="ei-bg" style="background-image:url('https://i.imgur.com/zef8WRy.jpeg')"></div>
+    <div class="ei-grain"></div>
+    <div class="ei-overlay"></div>
+    <div class="ei-scan"></div>
+    <div class="ei-content">
+        <span class="ei-chapter-num">V</span>
+        <div class="ei-vline"></div>
+        <div class="ei-text-block">
+            <span class="ei-label">Частина п'ята</span>
+            <span class="ei-title-main">Друга світова війна</span>
+            <span class="ei-years">1939 — 1944</span>
+        </div>
+    </div>
+    <div class="ei-year-bg">1943</div>
+    <div class="ei-bottom-bar"></div>
+</div>
+<section class="history-section fade-in-up" id="epoch-ww2">
                     <h2>Друга світова війна (1939–1944)</h2>
 
                     <h3>Вхід до УРСР (1939–1940)</h3>
@@ -780,7 +1022,24 @@ body.story-active .hist-epoch-nav {
                     <p>У 2022 році Дубровицька міська рада оголосила рік <strong>Роком Української Повстанської Армії</strong> — на честь 80-ї річниці її створення та для відновлення історичної справедливості щодо борців за волю України.</p>
                 </section>
 
-                <section class="history-section fade-in-up" id="epoch-soviet">
+                <div class="epoch-interstitial" data-ei>
+    <div class="ei-bg" style="background-image:url('https://i.imgur.com/G5T8ebG.jpeg')"></div>
+    <div class="ei-grain"></div>
+    <div class="ei-overlay"></div>
+    <div class="ei-scan"></div>
+    <div class="ei-content">
+        <span class="ei-chapter-num">VI</span>
+        <div class="ei-vline"></div>
+        <div class="ei-text-block">
+            <span class="ei-label">Частина шоста</span>
+            <span class="ei-title-main">Радянська окупація</span>
+            <span class="ei-years">1944 — 1991</span>
+        </div>
+    </div>
+    <div class="ei-year-bg">1944</div>
+    <div class="ei-bottom-bar"></div>
+</div>
+<section class="history-section fade-in-up" id="epoch-soviet">
                     <h2>Радянська окупація: повоєнний період (1944–1991)</h2>
 
                     <h3>Репресії та придушення спротиву</h3>
@@ -806,7 +1065,24 @@ body.story-active .hist-epoch-nav {
                     <p>За часів войовничого атеїзму обидва головні храми міста — костел Іоана Хрестителя та церква Різдва Богородиці — зазнали серйозних пошкоджень. На початку 1990-х вони були відреставровані та повернуті вірянам.</p>
                 </section>
 
-                <section class="history-section fade-in-up" id="epoch-ukraine">
+                <div class="epoch-interstitial" data-ei>
+    <div class="ei-bg" style="background-image:url('https://i.imgur.com/FckBe6G.jpeg')"></div>
+    <div class="ei-grain"></div>
+    <div class="ei-overlay"></div>
+    <div class="ei-scan"></div>
+    <div class="ei-content">
+        <span class="ei-chapter-num">VII</span>
+        <div class="ei-vline"></div>
+        <div class="ei-text-block">
+            <span class="ei-label">Частина сьома</span>
+            <span class="ei-title-main">Незалежна Україна</span>
+            <span class="ei-years">з 1991</span>
+        </div>
+    </div>
+    <div class="ei-year-bg">1991</div>
+    <div class="ei-bottom-bar"></div>
+</div>
+<section class="history-section fade-in-up" id="epoch-ukraine">
                     <h2>Дубровиця у незалежній Україні (з 1991)</h2>
 
                     <h3>Перші роки незалежності</h3>
@@ -849,7 +1125,24 @@ body.story-active .hist-epoch-nav {
                     <p>Дубровиця зображена на знаменитій карті <em>Poloniae Finitimarumque locorum descriptio</em> Абрахама Ортеліуса (Антверпен, 1580), а також на російських військово-топографічних мапах 1866–1887 років — свідчення стратегічного значення міста в різні епохи.</p>
                 </section>
 
-                <section class="history-section fade-in-up" id="epoch-timeline">
+                <div class="epoch-interstitial" data-ei>
+    <div class="ei-bg" style="background-image:url('https://i.imgur.com/MfGzR8D.jpeg')"></div>
+    <div class="ei-grain"></div>
+    <div class="ei-overlay"></div>
+    <div class="ei-scan"></div>
+    <div class="ei-content">
+        <span class="ei-chapter-num">VIII</span>
+        <div class="ei-vline"></div>
+        <div class="ei-text-block">
+            <span class="ei-label">Хронологія</span>
+            <span class="ei-title-main">Ключові події</span>
+            <span class="ei-years">1005 — 2026</span>
+        </div>
+    </div>
+    <div class="ei-year-bg">∞</div>
+    <div class="ei-bottom-bar"></div>
+</div>
+<section class="history-section fade-in-up" id="epoch-timeline">
                     <h2>Хронологія ключових подій</h2>
                     <div class="timeline">
                         <div class="timeline-item">
@@ -1048,11 +1341,9 @@ body.story-active .hist-epoch-nav {
         }
 
         function showStoryBg(show){
-            [storyBg, storyOverlay, storyScan].forEach(function(el){
-                if(el) el.classList.toggle('visible', show);
-            });
+            // Background photo disabled — clean reading experience
+            // Keep only the era label watermark
             if(eraLabel) eraLabel.classList.toggle('visible', show);
-            document.body.classList.toggle('story-active', show);
         }
 
         // Detect when hero exits / enters
@@ -1123,6 +1414,24 @@ body.story-active .hist-epoch-nav {
         });
 
         activate(0, 'epoch-origin');
+    })();
+
+    // ── Epoch Interstitial reveal ──
+    (function(){
+        var interstitials = document.querySelectorAll('.epoch-interstitial[data-ei]');
+        if(!interstitials.length || !('IntersectionObserver' in window)) {
+            interstitials.forEach(function(el){ el.classList.add('ei-visible'); });
+            return;
+        }
+        var obs = new IntersectionObserver(function(entries){
+            entries.forEach(function(e){
+                if(e.isIntersecting) {
+                    e.target.classList.add('ei-visible');
+                    obs.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+        interstitials.forEach(function(el){ obs.observe(el); });
     })();
     </script>
 </body>
