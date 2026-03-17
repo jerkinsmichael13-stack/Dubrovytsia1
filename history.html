@@ -647,55 +647,6 @@ body.story-active .hist-epoch-nav {
 </style>
 </head>
 <body>
-
-    <!-- INK BLEED SVG FILTER -->
-    <svg class="ink-svg-filter" xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute;width:0;height:0;overflow:hidden;visibility:hidden">
-      <defs>
-        <filter id="ink-bleed" x="-20%" y="-20%" width="140%" height="140%"
-                color-interpolation-filters="sRGB">
-          <!-- Base turbulence for organic edge -->
-          <feTurbulence type="fractalNoise" baseFrequency="0.04 0.06"
-              numOctaves="4" seed="8" result="noise"/>
-          <!-- Use noise to displace the text -->
-          <feDisplacementMap in="SourceGraphic" in2="noise"
-              scale="0" xChannelSelector="R" yChannelSelector="G"
-              result="displaced">
-            <animate attributeName="scale"
-                values="120;80;40;12;4;0"
-                dur="1.4s" fill="freeze"
-                calcMode="spline"
-                keySplines="0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1"
-                begin="indefinite" id="ink-anim-disp"/>
-          </feDisplacementMap>
-          <!-- Blur that collapses inward -->
-          <feGaussianBlur in="displaced" stdDeviation="0" result="blurred">
-            <animate attributeName="stdDeviation"
-                values="8;5;2.5;0.8;0"
-                dur="1.4s" fill="freeze"
-                calcMode="spline"
-                keySplines="0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1"
-                begin="indefinite" id="ink-anim-blur"/>
-          </feGaussianBlur>
-          <!-- Alpha clip: ink grows from 0 to full opacity -->
-          <feColorMatrix in="blurred" type="matrix"
-              values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 40 -6"
-              result="clipped">
-            <animate attributeName="values"
-                values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 40 -38;
-                        1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 40 -28;
-                        1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 40 -18;
-                        1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 40 -8;
-                        1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 40 -2"
-                dur="1.4s" fill="freeze"
-                calcMode="spline"
-                keySplines="0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1"
-                begin="indefinite" id="ink-anim-alpha"/>
-          </feColorMatrix>
-          <feComposite in="clipped" operator="in" in2="SourceGraphic"/>
-        </filter>
-      </defs>
-    </svg>
-
     <header class="header">
         <div class="header-container">
             <a href="index.html" class="logo">
