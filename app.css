@@ -1488,6 +1488,23 @@ html[data-theme="dark"] .moon-icon { display: none; }
     color: var(--color-text-secondary);
     border-color: var(--color-border);
     backdrop-filter: none;
+    /* Prevent width jump when font-weight changes to 600 */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+/* Hidden bold twin reserves space so width stays constant */
+.books-filters-wrap .catalog-filter-btn::after,
+.mk-filters-bar .catalog-filter-btn::after {
+    content: attr(data-text);
+    font-weight: 600;
+    height: 0;
+    overflow: hidden;
+    visibility: hidden;
+    display: block;
+    position: absolute;
+    pointer-events: none;
 }
 .books-filters-wrap .catalog-filter-btn:hover,
 .mk-filters-bar .catalog-filter-btn:hover {
@@ -3654,13 +3671,14 @@ img[loading="lazy"] { transition: opacity 0.6s ease; }
     inset: 0;
     z-index: 99999;
     background: rgba(10,8,5,0);
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     pointer-events: none;
     transition: background 0.5s ease;
 }
 #wax-seal-overlay.active {
+    display: flex;
     pointer-events: all;
     background: rgba(10,8,5,0.82);
     backdrop-filter: blur(6px);
@@ -3763,8 +3781,10 @@ img[loading="lazy"] { transition: opacity 0.6s ease; }
     overflow: visible;
 }
 .ink-svg-filter {
-    position: absolute;
-    width: 0; height: 0;
-    overflow: hidden;
+    position: absolute !important;
+    top: 0; left: 0;
+    width: 0 !important; height: 0 !important;
+    overflow: hidden !important;
+    visibility: hidden;
     pointer-events: none;
 }

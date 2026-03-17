@@ -1386,12 +1386,16 @@ function initWaxSeal() {
     if (!btn || !overlay || !canvas) return;
 
     btn.addEventListener('click', () => {
+        overlay.style.display = 'flex';
+        // Force reflow before adding active class
+        overlay.offsetHeight;
         overlay.classList.add('active');
         setTimeout(() => runWaxAnimation(canvas), 300);
     });
 
     closeBtn.addEventListener('click', () => {
         overlay.classList.remove('active');
+        setTimeout(() => { overlay.style.display = 'none'; }, 600);
     });
 }
 
