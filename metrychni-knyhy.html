@@ -199,17 +199,25 @@
     background:var(--color-bg,#faf7f2);
     border-bottom:1px solid var(--color-border-light,rgba(201,162,39,0.12));
     box-shadow:0 4px 20px rgba(0,0,0,0.04);
+    overflow:hidden;
 }
 .mk-filters-inner {
-    max-width:1400px;margin:0 auto;padding:0.85rem 2rem;
-    display:flex;align-items:center;gap:0.8rem;flex-wrap:wrap;
+    max-width:1400px;margin:0 auto;padding:0.75rem 2rem;
+    display:flex;flex-direction:column;gap:0.55rem;
+}
+.mk-filters-row {
+    display:flex;align-items:center;gap:0.6rem;flex-wrap:wrap;
 }
 .mk-filter-label {
     font-family:'DM Sans',sans-serif;font-size:0.48rem;letter-spacing:0.24em;
     text-transform:uppercase;color:var(--color-text-muted,#a8a29e);flex-shrink:0;
-    white-space:nowrap;
+    white-space:nowrap;min-width:5.5rem;
 }
-.mk-filter-sep { width:1px;height:18px;background:var(--color-border-light,rgba(201,162,39,0.15));flex-shrink:0; }
+.mk-filter-sep { display:none; }
+@media(max-width:600px){
+    .mk-filters-inner { padding:0.6rem 1rem; }
+    .mk-filter-label { min-width:4.5rem; font-size:0.44rem; }
+}
 
 [data-theme="dark"] .mk-hero-bg { filter:brightness(0.36) contrast(1.12) saturate(0.65); }
 </style>
@@ -333,23 +341,26 @@
     <!-- Sticky filters bar -->
     <div class="mk-filters-bar">
         <div class="mk-filters-inner">
-            <span class="mk-filter-label">Конфесія:</span>
-            <div class="catalog-filter-group">
-                <button class="catalog-filter-btn active" data-metric-filter="all">Усі</button>
-                <button class="catalog-filter-btn" data-metric-filter="orthodox">Православна</button>
-                <button class="catalog-filter-btn" data-metric-filter="catholic">Римо-католицька</button>
-                <button class="catalog-filter-btn" data-metric-filter="greek-catholic">Греко-католицька</button>
-                <button class="catalog-filter-btn" data-metric-filter="jewish">Іудаїзм</button>
-                <button class="catalog-filter-btn" data-metric-filter="civil">Цивільні реєстри</button>
+            <div class="mk-filters-row">
+                <span class="mk-filter-label">Конфесія:</span>
+                <div class="catalog-filter-group">
+                    <button class="catalog-filter-btn active" data-metric-filter="all">Усі</button>
+                    <button class="catalog-filter-btn" data-metric-filter="orthodox">Православна</button>
+                    <button class="catalog-filter-btn" data-metric-filter="catholic">Римо-католицька</button>
+                    <button class="catalog-filter-btn" data-metric-filter="greek-catholic">Греко-католицька</button>
+                    <button class="catalog-filter-btn" data-metric-filter="jewish">Іудаїзм</button>
+                    <button class="catalog-filter-btn" data-metric-filter="civil">Цивільні реєстри</button>
+                </div>
             </div>
-            <span class="mk-filter-sep"></span>
-            <span class="mk-filter-label">Тип:</span>
-            <div class="catalog-filter-group">
-                <button class="catalog-filter-btn active" data-metric-type="all">Усі</button>
-                <button class="catalog-filter-btn" data-metric-type="birth">Народження</button>
-                <button class="catalog-filter-btn" data-metric-type="marriage">Шлюби</button>
-                <button class="catalog-filter-btn" data-metric-type="death">Смерті</button>
-                <button class="catalog-filter-btn" data-metric-type="confession">Сповідні</button>
+            <div class="mk-filters-row">
+                <span class="mk-filter-label">Тип:</span>
+                <div class="catalog-filter-group">
+                    <button class="catalog-filter-btn active" data-metric-type="all">Усі</button>
+                    <button class="catalog-filter-btn" data-metric-type="birth">Народження</button>
+                    <button class="catalog-filter-btn" data-metric-type="marriage">Шлюби</button>
+                    <button class="catalog-filter-btn" data-metric-type="death">Смерті</button>
+                    <button class="catalog-filter-btn" data-metric-type="confession">Сповідні</button>
+                </div>
             </div>
         </div>
     </div>
@@ -824,8 +835,8 @@
                 <div class="footer-section">
                     <h4 class="footer-title">Дубровиця</h4>
                     <p class="footer-text">
-                        Цифровий архів історичної спадщини селища міського типу Дубровиця, 
-                        Рівненська область, Україна.
+                        Цифровий архів історичної спадщини міста Дубровиця, 
+                        Сарненський район, Рівненська область, Україна.
                     </p>
                 </div>
                 <div class="footer-section">

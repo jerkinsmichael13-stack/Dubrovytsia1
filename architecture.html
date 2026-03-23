@@ -904,7 +904,7 @@
     <script src="app.js"></script>
     <script>
 (function(g){'use strict';
-var s=1,tx=0,ty=0,drag=false,dx=0,dy=0,ox=0,oy=0,pd0=0,ps0=1,items=[],cur=0;
+var s=1,tx=0,ty=0,drag=false,dx=0,dy=0,ox=0,oy=0,pd0=0,ps0=1,items=[],cur=0,hasMoved=false;
 function gel(id){return document.getElementById(id);}
 function applyT(anim){
   var i=gel('ULB-IMG');if(!i)return;
@@ -954,11 +954,13 @@ function nav(dir){
 function init(){
   var v=gel('ULB-VP');if(!v)return;
   v.addEventListener('mousedown',function(e){
-    if(e.button!==0)return;drag=true;dx=e.clientX;dy=e.clientY;ox=tx;oy=ty;
+    if(e.button!==0)return;drag=true;hasMoved=false;dx=e.clientX;dy=e.clientY;ox=tx;oy=ty;
     v.style.cursor='grabbing';e.preventDefault();
   });
   document.addEventListener('mousemove',function(e){
-    if(!drag)return;tx=ox+(e.clientX-dx);ty=oy+(e.clientY-dy);clamp();applyT(false);
+    if(!drag)return;
+    if(Math.abs(e.clientX-dx)>4||Math.abs(e.clientY-dy)>4) hasMoved=true;
+    tx=ox+(e.clientX-dx);ty=oy+(e.clientY-dy);clamp();applyT(false);
   });
   document.addEventListener('mouseup',function(){
     if(!drag)return;drag=false;var vv=gel('ULB-VP');if(vv)vv.style.cursor='grab';
@@ -980,7 +982,7 @@ function init(){
   },{passive:false});
   v.addEventListener('touchend',function(){drag=false;});
   var lb=gel('ULB');
-  if(lb)lb.addEventListener('click',function(e){if(e.target===lb||e.target===v)close();});
+  if(lb)lb.addEventListener('click',function(e){if(e.target===lb||e.target===v){if(!hasMoved)close();hasMoved=false;}});
   document.addEventListener('keydown',function(e){
     var lb2=gel('ULB');if(!lb2||!lb2.classList.contains('on'))return;
     if(e.key==='Escape')close();

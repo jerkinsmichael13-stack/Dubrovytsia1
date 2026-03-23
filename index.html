@@ -2079,14 +2079,7 @@
           </div>
         </div>
 
-        <div class="CCLB cll">
-          <span class="ccy">1944</span>
-          <span class="ccs">Аерофото · Люфтваффе</span>
-        </div>
-        <div class="CCLB clr">
-          <span class="ccy">2021</span>
-          <span class="ccs">Супутниковий знімок</span>
-        </div>
+
 
 
 
@@ -2326,8 +2319,7 @@
             <svg viewBox="0 0 24 24"><path d="M8.5 5L3 12l5.5 7V5zm7 0v14L21 12l-5.5-7z"/></svg>
           </div>
         </div>
-        <div class="PCLB pll"><span class="pcy">1944</span><span class="pcs">Аерофото · Люфтваффе</span></div>
-        <div class="PCLB plr"><span class="pcy">2021</span><span class="pcs">Супутниковий знімок</span></div>
+
         <div class="PIP" id="PHINT">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 19l-7-7 7-7"/></svg>
           Тягніть для порівняння
@@ -2561,8 +2553,7 @@
             <svg viewBox="0 0 24 24"><path d="M8.5 5L3 12l5.5 7V5zm7 0v14L21 12l-5.5-7z"/></svg>
           </div>
         </div>
-        <div class="WCLB wll"><span class="wcy">1943</span><span class="wcs">Аерофото · Люфтваффе</span></div>
-        <div class="WCLB wlr"><span class="wcy">2021</span><span class="wcs">Супутниковий знімок</span></div>
+
         <div class="WIP">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 19l-7-7 7-7"/></svg>
           Тягніть для порівняння
@@ -3506,7 +3497,7 @@
                 <div class="footer-section">
                     <h4 class="footer-title">Дубровиця</h4>
                     <p class="footer-text">
-                        Цифровий архів історичної спадщини селища міського типу Дубровиця, 
+                        Цифровий архів історичної спадщини міста Дубровиця, 
                         Сарненський район, Рівненська область, Україна.
                     </p>
                 </div>
@@ -3731,7 +3722,7 @@
     </script>
     <script>
 (function(g){'use strict';
-var s=1,tx=0,ty=0,drag=false,dx=0,dy=0,ox=0,oy=0,pd0=0,ps0=1,items=[],cur=0;
+var s=1,tx=0,ty=0,drag=false,dx=0,dy=0,ox=0,oy=0,pd0=0,ps0=1,items=[],cur=0,hasMoved=false;
 function gel(id){return document.getElementById(id);}
 function applyT(anim){
   var i=gel('ULB-IMG');if(!i)return;
@@ -3781,11 +3772,13 @@ function nav(dir){
 function init(){
   var v=gel('ULB-VP');if(!v)return;
   v.addEventListener('mousedown',function(e){
-    if(e.button!==0)return;drag=true;dx=e.clientX;dy=e.clientY;ox=tx;oy=ty;
+    if(e.button!==0)return;drag=true;hasMoved=false;dx=e.clientX;dy=e.clientY;ox=tx;oy=ty;
     v.style.cursor='grabbing';e.preventDefault();
   });
   document.addEventListener('mousemove',function(e){
-    if(!drag)return;tx=ox+(e.clientX-dx);ty=oy+(e.clientY-dy);clamp();applyT(false);
+    if(!drag)return;
+    if(Math.abs(e.clientX-dx)>4||Math.abs(e.clientY-dy)>4) hasMoved=true;
+    tx=ox+(e.clientX-dx);ty=oy+(e.clientY-dy);clamp();applyT(false);
   });
   document.addEventListener('mouseup',function(){
     if(!drag)return;drag=false;var vv=gel('ULB-VP');if(vv)vv.style.cursor='grab';
@@ -3807,7 +3800,7 @@ function init(){
   },{passive:false});
   v.addEventListener('touchend',function(){drag=false;});
   var lb=gel('ULB');
-  if(lb)lb.addEventListener('click',function(e){if(e.target===lb||e.target===v)close();});
+  if(lb)lb.addEventListener('click',function(e){if(e.target===lb||e.target===v){if(!hasMoved)close();hasMoved=false;}});
   document.addEventListener('keydown',function(e){
     var lb2=gel('ULB');if(!lb2||!lb2.classList.contains('on'))return;
     if(e.key==='Escape')close();
