@@ -115,11 +115,11 @@ html {
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     overscroll-behavior: none;
-    background-color: #faf7f2;
+    background-color: #0d1a10;
 }
 
 html[data-theme="dark"] {
-    background-color: #0e0c0a;
+    background-color: #0d1a10;
 }
 
 body {
@@ -1102,25 +1102,7 @@ html[data-theme="dark"] .moon-icon { display: none; }
     background: linear-gradient(160deg, #111a14 0%, #0d1a10 60%, #1a1408 100%);
     color: white;
     padding: var(--spacing-3xl) 0 var(--spacing-xl);
-    padding-top: 6rem;
-    position: relative;
-    overflow: visible;
-}
-
-/* Smooth fade from page bg into footer — works on every page */
-.footer::before {
-    content: '';
-    position: absolute;
-    inset: 0 0 auto 0;
-    height: 6rem;
-    background: linear-gradient(180deg, var(--color-bg, #faf7f2) 0%, transparent 100%);
-    pointer-events: none;
-    z-index: 0;
-}
-
-.footer .container {
-    position: relative;
-    z-index: 1;
+    border-top: 1px solid rgba(201, 162, 39, 0.15);
 }
 
 .footer-content {
@@ -2587,7 +2569,7 @@ select.admin-input { cursor: pointer; }
    PERFORMANCE
    ================================================================ */
 
-.article-header, .catalog-header, .gallery-header, .hero { contain: layout style; }
+.footer, .article-header, .catalog-header, .gallery-header, .hero { contain: layout style; }
 .card, .photo-card, .catalog-item { will-change: auto; }
 .card:hover, .photo-card:hover, .catalog-item:hover { will-change: transform; }
 .fade-in-up { contain: layout style paint; }
