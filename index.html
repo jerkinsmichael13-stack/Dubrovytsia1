@@ -41,7 +41,7 @@
 
 /* ── Comparison section (#CMP) — light theme ── */
 :root:not([data-theme="dark"]) #CMP {
-    background: #f4efe7;
+    background: #faf7f2;
 }
 :root:not([data-theme="dark"]) #CMP::before {
     background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201,162,39,.06) 0%, transparent 70%);
@@ -84,7 +84,7 @@
 
 /* ── Plater section (#PLTR) — light theme ── */
 :root:not([data-theme="dark"]) #PLTR {
-    background: #ede7db;
+    background: #faf7f2;
 }
 :root:not([data-theme="dark"]) #PLTR::before {
     background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201,162,39,.05) 0%, transparent 70%);
@@ -111,7 +111,7 @@
 /* ── Wide/Region comparison — light ── */
 :root:not([data-theme="dark"]) #WM,
 :root:not([data-theme="dark"]) #WMAP {
-    background: #f4efe7;
+    background: #faf7f2;
 }
 :root:not([data-theme="dark"]) .WT { color: #1c1917; }
 :root:not([data-theme="dark"]) .WS { color: rgba(28,25,23,.4); }
@@ -1310,8 +1310,8 @@
     /* ═══════════════════════════════════════════
        TOPO SECTION — Топографічний план 1855 р.
     ═══════════════════════════════════════════ */
-    #TOPO{padding:6rem 0 5rem;background:#f0ebe0;position:relative;overflow:hidden;border-top:1px solid rgba(180,150,80,.15);}
-    [data-theme="dark"] #TOPO{background:#0c0a07;border-color:rgba(201,162,39,.08);}
+    #TOPO{padding:6rem 0 5rem;background:#faf7f2;position:relative;overflow:hidden;border-top:1px solid rgba(180,150,80,.15);}
+    [data-theme="dark"] #TOPO{background:#0e0c0a;border-color:rgba(201,162,39,.08);}
     #TOPO::before{content:'';position:absolute;inset:0;pointer-events:none;
       background:radial-gradient(ellipse 70% 50% at 50% -10%, rgba(201,162,39,.08) 0%, transparent 60%),
         url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a227' fill-opacity='0.025'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");}
@@ -1912,8 +1912,8 @@
     <section id="CMP">
     <style>
     /* ── WRAPPER ── */
-    #CMP{padding:5rem 0 6rem;background:#f4efe7;position:relative;overflow:hidden;}
-    [data-theme="dark"] #CMP{background:#0d0b09;}
+    #CMP{padding:5rem 0 6rem;background:#faf7f2;position:relative;overflow:hidden;}
+    [data-theme="dark"] #CMP{background:#0e0c0a;}
     #CMP::before{content:'';position:absolute;inset:0;
       background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(201,162,39,.07) 0%,transparent 70%);
       pointer-events:none;}
@@ -2161,8 +2161,8 @@
     <!-- ═══ PLATER ESTATE SECTION ═══ -->
     <section id="PLTR">
     <style>
-    #PLTR{padding:5rem 0 6rem;background:#ede7db;position:relative;overflow:hidden;}
-    [data-theme="dark"] #PLTR{background:#0a0907;}
+    #PLTR{padding:5rem 0 6rem;background:#faf7f2;position:relative;overflow:hidden;}
+    [data-theme="dark"] #PLTR{background:#0e0c0a;}
     #PLTR::before{content:'';position:absolute;inset:0;
       background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(139,90,43,.08) 0%,transparent 70%);
       pointer-events:none;}
@@ -2293,14 +2293,14 @@
       <div class="PH">
         <div class="PE"><span>Втрачена спадщина · Воробин</span></div>
         <h2 class="PT">Маєток графів <em>Плятерів</em></h2>
-        <p class="PSB">Перетягніть лінію — порівняйте маєток у різні часи</p>
+        <p class="PSB">Перетягніть лінію — порівняйте маєток 1944 та 2021 рр.</p>
       </div>
 
       <div class="PYR">
         <div class="PYB">
-          <span class="py">Архів</span>
-          <span class="pl">Архівна фотографія</span>
-          <span class="pd">Маєток Плятерів</span>
+          <span class="py">1944</span>
+          <span class="pl">Аерофото Люфтваффе</span>
+          <span class="pd">Маєток вже знищений</span>
         </div>
         <div class="PYD">↔</div>
         <div class="PYB pr">
@@ -2312,7 +2312,7 @@
 
       <div class="PSF" id="PSLIDER">
         <img class="pb" src="https://i.imgur.com/YH48cvzh.jpeg" alt="Маєток Плятерів 2021" draggable="false" decoding="async">
-        <img class="po" id="POVI" src="https://i.imgur.com/GoPvxAo.jpeg" alt="Маєток Плятерів — стара фотографія" draggable="false" decoding="async">
+        <img class="po" id="POVI" src="https://i.imgur.com/aGqVNvZh.jpeg" alt="Маєток Плятерів 1944" draggable="false" decoding="async">
         <div class="PDL" id="PDIV"></div>
         <div class="PDH" id="PHDL">
           <div class="PDISC">
@@ -2325,7 +2325,7 @@
           Тягніть для порівняння
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5l7 7-7 7"/></svg>
         </div>
-        <button class="SFS-BTN" onclick="openSliderFS('https://i.imgur.com/GoPvxAo.jpeg','https://i.imgur.com/YH48cvz.jpeg','Маєток Плятерів — архівне фото','2021 · Супутниковий знімок')" title="Відкрити у повному екрані">
+        <button class="SFS-BTN" onclick="openSliderFS('https://i.imgur.com/aGqVNvZ.jpeg','https://i.imgur.com/YH48cvz.jpeg','1944 · Аерофото Люфтваффе','2021 · Супутниковий знімок')" title="Відкрити у повному екрані">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
         </button>
       </div>
@@ -2419,8 +2419,8 @@
     <!-- ═══ WIDE AREA COMPARISON ═══ -->
     <section id="WIDE">
     <style>
-    #WIDE{padding:5rem 0 6rem;background:#f4efe7;position:relative;overflow:hidden;}
-    [data-theme="dark"] #WIDE{background:#080b0d;}
+    #WIDE{padding:5rem 0 6rem;background:#faf7f2;position:relative;overflow:hidden;}
+    [data-theme="dark"] #WIDE{background:#0e0c0a;}
     #WIDE::before{content:'';position:absolute;inset:0;
       background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(42,90,139,.08) 0%,transparent 70%);
       pointer-events:none;}
@@ -2625,13 +2625,13 @@
    ══════════════════════════════════════════════════════════════ */
 #HTL {
     padding: 6rem 0 4rem;
-    background: linear-gradient(180deg, #faf7f2 0%, #f4efe7 100%);
+    background: #faf7f2;
     border-top: 1px solid rgba(201,162,39,.08);
     position: relative;
     overflow: hidden;
 }
 [data-theme="dark"] #HTL {
-    background: linear-gradient(180deg, #0e0c0a 0%, #161310 100%);
+    background: #0e0c0a;
     border-color: rgba(201,162,39,.12);
 }
 

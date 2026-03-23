@@ -1102,21 +1102,25 @@ html[data-theme="dark"] .moon-icon { display: none; }
     background: linear-gradient(160deg, #111a14 0%, #0d1a10 60%, #1a1408 100%);
     color: white;
     padding: var(--spacing-3xl) 0 var(--spacing-xl);
+    padding-top: 6rem;
     position: relative;
     overflow: visible;
 }
 
-/* Smooth fade from page background into footer on every page */
+/* Smooth fade from page bg into footer — works on every page */
 .footer::before {
     content: '';
     position: absolute;
-    top: -5rem;
-    left: 0;
-    right: 0;
-    height: 5rem;
-    background: linear-gradient(180deg, var(--color-bg, #faf7f2) 0%, #111a14 100%);
+    inset: 0 0 auto 0;
+    height: 6rem;
+    background: linear-gradient(180deg, var(--color-bg, #faf7f2) 0%, transparent 100%);
     pointer-events: none;
     z-index: 0;
+}
+
+.footer .container {
+    position: relative;
+    z-index: 1;
 }
 
 .footer-content {
@@ -1124,8 +1128,6 @@ html[data-theme="dark"] .moon-icon { display: none; }
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: var(--spacing-2xl);
     margin-bottom: var(--spacing-2xl);
-    position: relative;
-    z-index: 1;
 }
 
 .footer-title {
@@ -1166,8 +1168,6 @@ html[data-theme="dark"] .moon-icon { display: none; }
     opacity: 0.4;
     font-size: 0.85rem;
     letter-spacing: 0.05em;
-    position: relative;
-    z-index: 1;
 }
 
 /* ================================================================
