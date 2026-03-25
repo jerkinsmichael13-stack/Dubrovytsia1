@@ -115,11 +115,11 @@ html {
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     overscroll-behavior: none;
-    background-color: #0d1a10;
+    background-color: #1a1408;
 }
 
 html[data-theme="dark"] {
-    background-color: #0d1a10;
+    background-color: #1a1408;
 }
 
 body {
