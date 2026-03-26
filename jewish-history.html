@@ -1434,11 +1434,21 @@
     height: 26px;
     opacity: 0.7;
 }
+/* Vinyl wrapper — holds disc + needle in fixed layout */
+.jh-vinyl-wrapper {
+    position: relative;
+    width: 250px;
+    height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
 /* Needle arm */
 .jh-needle {
     position: absolute;
-    top: -12px;
-    right: -18px;
+    top: -8px;
+    left: 172px;
     width: 70px;
     height: 90px;
     transform-origin: 10px 10px;
@@ -2092,21 +2102,23 @@
     <div class="container">
         <div class="jh-nigun-inner">
             <!-- LEFT: Vinyl disc -->
-            <div class="jh-nigun-icon-col" style="position:relative;">
-                <div class="jh-vinyl" id="jh-vinyl">
-                    <div class="jh-vinyl-label">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:22px;height:22px;opacity:0.6;">
-                            <circle cx="12" cy="12" r="4" fill="rgba(201,162,39,0.8)"/>
-                            <circle cx="12" cy="12" r="8" stroke="rgba(201,162,39,0.4)" stroke-width="1"/>
+            <div class="jh-nigun-icon-col">
+                <div class="jh-vinyl-wrapper">
+                    <div class="jh-vinyl" id="jh-vinyl">
+                        <div class="jh-vinyl-label">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:22px;height:22px;opacity:0.6;">
+                                <circle cx="12" cy="12" r="4" fill="rgba(201,162,39,0.8)"/>
+                                <circle cx="12" cy="12" r="8" stroke="rgba(201,162,39,0.4)" stroke-width="1"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="jh-needle" id="jh-needle">
+                        <svg viewBox="0 0 70 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="7" fill="rgba(201,162,39,0.4)" stroke="rgba(201,162,39,0.6)" stroke-width="1"/>
+                            <line x1="10" y1="17" x2="58" y2="80" stroke="rgba(201,162,39,0.5)" stroke-width="1.5" stroke-linecap="round"/>
+                            <circle cx="58" cy="80" r="3" fill="rgba(201,162,39,0.7)"/>
                         </svg>
                     </div>
-                </div>
-                <div class="jh-needle" id="jh-needle">
-                    <svg viewBox="0 0 70 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="10" cy="10" r="7" fill="rgba(201,162,39,0.4)" stroke="rgba(201,162,39,0.6)" stroke-width="1"/>
-                        <line x1="10" y1="17" x2="58" y2="80" stroke="rgba(201,162,39,0.5)" stroke-width="1.5" stroke-linecap="round"/>
-                        <circle cx="58" cy="80" r="3" fill="rgba(201,162,39,0.7)"/>
-                    </svg>
                 </div>
             </div>
 
