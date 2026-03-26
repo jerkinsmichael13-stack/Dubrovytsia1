@@ -1,0 +1,1737 @@
+<!DOCTYPE html>
+<html lang="uk" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="manifest" href="site.webmanifest">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Єврейська громада Дубровиці — п'ять сторіч присутності, культури та трагічної долі">
+    <meta property="og:title" content="Єврейська Дубровиця — Цифровий архів">
+    <meta property="og:description" content="Від середньовічних поселенців до трагедії 1942 року — повна історія єврейської общини Дубровиці">
+    <meta property="og:type" content="website">
+    <title>Єврейська Дубровиця — Цифровий архів</title>
+    <script>!function(){var t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t)}()</script>
+    <link rel="stylesheet" href="app.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ═══════════════════════════════════════════════
+   HERO — CINEMATIC
+   ═══════════════════════════════════════════════ */
+.jh-hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    overflow: hidden;
+    background: #0d0b09;
+}
+.jh-hero-bg {
+    position: absolute;
+    inset: -8%;
+    background-image: url('https://i.imgur.com/UakA88l.jpeg');
+    background-size: cover;
+    background-position: center 30%;
+    filter: brightness(0.45) contrast(1.12) saturate(0.72);
+    opacity: 0;
+    transition: opacity 1.2s ease;
+    z-index: 0;
+    will-change: transform;
+}
+.jh-hero.loaded .jh-hero-bg { opacity: 1; }
+.jh-hero-grain {
+    position: absolute;
+    inset: -80px;
+    width: calc(100% + 160px);
+    height: calc(100% + 160px);
+    opacity: 0.06;
+    pointer-events: none;
+    z-index: 1;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 220px;
+    animation: jh-grain 0.6s steps(1) infinite;
+}
+@keyframes jh-grain {
+    0%  { transform: translate(0,0) }
+    33% { transform: translate(5px,4px) }
+    66% { transform: translate(-3px,6px) }
+    100%{ transform: translate(4px,-3px) }
+}
+.jh-hero-vignette {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background:
+        radial-gradient(ellipse 80% 70% at 50% 50%, transparent 20%, rgba(0,0,0,0.5) 100%),
+        linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.0) 30%, rgba(0,0,0,0.65) 75%, #0d0b09 100%);
+}
+.jh-hero-scroll {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.jh-hero-star {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 180px;
+    height: 180px;
+    opacity: 0;
+    animation: jh-star-fade 1.5s ease 0.8s forwards;
+}
+@keyframes jh-star-fade {
+    from { opacity:0; transform: translate(-50%,-50%) scale(0.7); }
+    to   { opacity:0.08; transform: translate(-50%,-50%) scale(1); }
+}
+.jh-hero-content {
+    position: relative;
+    z-index: 10;
+    padding: 0 3rem 5.5rem;
+    max-width: 1400px;
+    width: 100%;
+}
+@media(max-width:700px) { .jh-hero-content { padding: 0 1.4rem 4rem; } }
+
+.jh-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: jh-up 0.9s cubic-bezier(0.16,1,0.3,1) 0.2s forwards;
+}
+.jh-eyebrow::before {
+    content: '';
+    display: block;
+    width: 30px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201,162,39,0.6));
+}
+.jh-eyebrow-star {
+    width: 14px;
+    height: 14px;
+    opacity: 0.65;
+    flex-shrink: 0;
+}
+.jh-eyebrow span {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.5rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: rgba(201,162,39,0.7);
+}
+.jh-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    line-height: 0.88;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.4rem;
+    opacity: 0;
+    animation: jh-up 1.1s cubic-bezier(0.16,1,0.3,1) 0.35s forwards;
+}
+.jh-title .t-top {
+    display: block;
+    font-size: clamp(3.5rem, 9.5vw, 9rem);
+    color: #fff;
+    text-shadow: 0 4px 50px rgba(0,0,0,0.6);
+}
+.jh-title .t-bot {
+    display: block;
+    font-size: clamp(2.2rem, 6.5vw, 6.5rem);
+    font-style: italic;
+    color: #c9a227;
+    text-shadow: 0 0 80px rgba(201,162,39,0.3);
+}
+.jh-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1rem, 1.6vw, 1.2rem);
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(255,255,255,0.45);
+    opacity: 0;
+    animation: jh-up 0.9s cubic-bezier(0.16,1,0.3,1) 0.55s forwards;
+    max-width: 580px;
+    line-height: 1.7;
+}
+.jh-scroll-indicator {
+    position: absolute;
+    bottom: 2.5rem;
+    right: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;
+    animation: jh-up 0.8s ease 1.4s forwards;
+    z-index: 10;
+}
+.jh-scroll-indicator span {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.42rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    writing-mode: vertical-lr;
+}
+.jh-scroll-line {
+    width: 1px;
+    height: 48px;
+    background: linear-gradient(180deg, rgba(201,162,39,0.5), transparent);
+    animation: jh-scroll-pulse 2s ease infinite;
+}
+@keyframes jh-scroll-pulse {
+    0%,100% { opacity:0.4 }
+    50% { opacity:1 }
+}
+@keyframes jh-up {
+    from { opacity:0; transform: translateY(20px) }
+    to   { opacity:1; transform: translateY(0) }
+}
+
+/* ═══════════════════════════════════════════════
+   INTRO / КІЛЬКІСНА СТАТИСТИКА
+   ═══════════════════════════════════════════════ */
+.jh-intro-section {
+    background: var(--color-bg);
+    padding: 6rem 0 5rem;
+    position: relative;
+}
+.jh-intro-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
+    opacity: 0.3;
+}
+.jh-stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border: 1px solid var(--color-border-light);
+    margin-bottom: 5rem;
+    background: var(--color-bg-card);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+}
+.jh-stat {
+    padding: 2rem 1.5rem;
+    text-align: center;
+    border-right: 1px solid var(--color-border-light);
+    position: relative;
+}
+.jh-stat:last-child { border-right: none; }
+.jh-stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem;
+    font-weight: 300;
+    color: var(--color-accent);
+    line-height: 1;
+    display: block;
+    margin-bottom: 0.4rem;
+}
+.jh-stat-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.5rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+}
+.jh-intro-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+}
+.jh-intro-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.48rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 1.2rem;
+}
+.jh-intro-label::before {
+    content: '';
+    display: block;
+    width: 22px;
+    height: 1px;
+    background: var(--color-accent);
+    opacity: 0.5;
+}
+.jh-intro-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 4vw, 3.4rem);
+    font-weight: 300;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    color: var(--color-text);
+    margin-bottom: 1.8rem;
+}
+.jh-intro-heading em {
+    font-style: italic;
+    color: var(--color-accent);
+}
+.jh-intro-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-weight: 300;
+    line-height: 1.85;
+    color: var(--color-text-secondary);
+    margin-bottom: 1.2rem;
+}
+.jh-intro-text strong {
+    font-weight: 600;
+    color: var(--color-text);
+}
+.jh-source-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.68rem;
+    color: var(--color-text-muted);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-full);
+    padding: 0.35rem 0.8rem;
+    margin-top: 0.8rem;
+}
+
+/* ═══════════════════════════════════════════════
+   PHOTO GALLERY
+   ═══════════════════════════════════════════════ */
+.jh-gallery-section {
+    background: var(--color-bg-alt);
+    padding: 6rem 0;
+    position: relative;
+    overflow: hidden;
+}
+.jh-gallery-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-border), transparent);
+}
+.jh-section-header {
+    text-align: center;
+    margin-bottom: 3.5rem;
+}
+.jh-section-eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.48rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 0.8rem;
+    display: block;
+}
+.jh-section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 300;
+    color: var(--color-text);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+}
+.jh-section-title em { font-style: italic; color: var(--color-accent); }
+
+/* Masonry-esque gallery grid */
+.jh-gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.2rem;
+}
+.jh-photo-card {
+    background: var(--color-bg-card);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-border-light);
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+    cursor: pointer;
+}
+.jh-photo-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+.jh-photo-card.wide { grid-column: span 2; }
+.jh-photo-card.tall { grid-row: span 2; }
+.jh-photo-img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    display: block;
+    filter: sepia(0.15) contrast(1.04);
+    transition: filter var(--transition-base), transform var(--transition-slow);
+}
+.jh-photo-card.tall .jh-photo-img { aspect-ratio: 3/4; }
+.jh-photo-card.wide .jh-photo-img { aspect-ratio: 16/9; }
+.jh-photo-card:hover .jh-photo-img {
+    filter: sepia(0) contrast(1.06);
+    transform: scale(1.02);
+}
+.jh-photo-caption {
+    padding: 0.85rem 1rem;
+    border-top: 1px solid var(--color-border-light);
+}
+.jh-photo-caption p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.88rem;
+    font-style: italic;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+}
+.jh-photo-caption .year-tag {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    color: var(--color-accent);
+    font-style: normal;
+    display: block;
+    margin-bottom: 0.2rem;
+}
+
+/* ═══════════════════════════════════════════════
+   BOOK SOURCE SECTION — Yizkor quote
+   ═══════════════════════════════════════════════ */
+.jh-book-banner {
+    background: var(--color-bg);
+    padding: 5rem 0;
+    position: relative;
+}
+.jh-book-banner::before {
+    content:'';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-border), transparent);
+}
+.jh-book-inner {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 3.5rem;
+    align-items: center;
+    background: var(--color-bg-alt);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-xl);
+    padding: 3rem;
+    box-shadow: var(--shadow-md);
+}
+.jh-book-cover {
+    width: 160px;
+    flex-shrink: 0;
+}
+.jh-book-cover img {
+    width: 100%;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--color-border);
+}
+.jh-book-meta-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.45rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 0.7rem;
+}
+.jh-book-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 300;
+    line-height: 1.2;
+    color: var(--color-text);
+    margin-bottom: 0.8rem;
+}
+.jh-book-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-style: italic;
+    color: var(--color-text-light);
+    margin-bottom: 1.2rem;
+}
+.jh-book-description {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+}
+
+/* ═══════════════════════════════════════════════
+   HISTORY SECTIONS — Rich Text Chapters
+   ═══════════════════════════════════════════════ */
+.jh-chapter-section {
+    padding: 6rem 0;
+    position: relative;
+}
+.jh-chapter-section:nth-child(even) {
+    background: var(--color-bg-alt);
+}
+.jh-chapter-section::before {
+    content:'';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-border-light), transparent);
+}
+.jh-chapter-inner {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 5rem;
+    align-items: start;
+}
+.jh-chapter-inner.reverse {
+    grid-template-columns: 1fr 300px;
+}
+.jh-chapter-inner.reverse .jh-chapter-aside {
+    order: 2;
+}
+.jh-chapter-aside {
+    position: sticky;
+    top: 90px;
+}
+.jh-chapter-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 6rem;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--color-border);
+    letter-spacing: -0.05em;
+    margin-bottom: 0.5rem;
+    -webkit-text-stroke: 1px var(--color-border-hover);
+    color: transparent;
+}
+.jh-chapter-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.45rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+.jh-chapter-label::before {
+    content:'';
+    display: block;
+    width: 18px;
+    height: 1px;
+    background: var(--color-accent);
+    opacity: 0.5;
+}
+.jh-chapter-aside-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 1.25;
+    color: var(--color-text);
+    margin-bottom: 1.2rem;
+}
+.jh-chapter-aside-desc {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    line-height: 1.7;
+    color: var(--color-text-light);
+}
+.jh-aside-image {
+    margin-top: 1.5rem;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--color-border-light);
+    box-shadow: var(--shadow-md);
+}
+.jh-aside-image img {
+    width: 100%;
+    display: block;
+    filter: sepia(0.12) contrast(1.03);
+}
+.jh-aside-image-caption {
+    padding: 0.6rem 0.8rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.8rem;
+    font-style: italic;
+    color: var(--color-text-muted);
+    background: var(--color-bg-secondary);
+    border-top: 1px solid var(--color-border-light);
+}
+.jh-chapter-body h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 300;
+    line-height: 1.2;
+    color: var(--color-text);
+    margin-bottom: 1.4rem;
+    letter-spacing: -0.02em;
+}
+.jh-chapter-body h3 em { font-style: italic; color: var(--color-accent); }
+.jh-chapter-body p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.12rem;
+    font-weight: 300;
+    line-height: 1.88;
+    color: var(--color-text-secondary);
+    margin-bottom: 1.3rem;
+}
+.jh-chapter-body p strong {
+    font-weight: 600;
+    color: var(--color-text);
+}
+.jh-chapter-body p:first-of-type::first-letter {
+    float: left;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4.2rem;
+    line-height: 0.75;
+    color: var(--color-accent);
+    margin: 0.1em 0.1em 0 0;
+    font-weight: 300;
+}
+
+/* Blockquote */
+.jh-quote {
+    border-left: 2px solid var(--color-accent);
+    padding: 1.2rem 1.8rem;
+    margin: 2rem 0;
+    background: var(--color-bg-warm);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+.jh-quote p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-style: italic;
+    color: var(--color-text);
+    margin-bottom: 0.4rem;
+    line-height: 1.75;
+}
+.jh-quote p::first-letter { float: none; font-size: inherit; color: inherit; margin: 0; }
+.jh-quote cite {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    color: var(--color-text-muted);
+    font-style: normal;
+}
+
+/* Highlight box */
+.jh-highlight-box {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border-light);
+    border-top: 3px solid var(--color-accent);
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+    padding: 1.5rem 1.8rem;
+    margin: 2rem 0;
+}
+.jh-highlight-box-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 0.8rem;
+}
+.jh-highlight-box p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+    font-family: var(--font-body);
+}
+.jh-highlight-box p::first-letter { float: none; font-size: inherit; color: inherit; margin: 0; }
+
+/* ═══════════════════════════════════════════════
+   TIMELINE
+   ═══════════════════════════════════════════════ */
+.jh-timeline-section {
+    background: var(--color-bg);
+    padding: 6rem 0;
+    position: relative;
+}
+.jh-timeline-section::before {
+    content:'';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-border), transparent);
+}
+.jh-timeline {
+    position: relative;
+    max-width: 820px;
+    margin: 0 auto;
+    padding-top: 1rem;
+}
+.jh-timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(180deg, transparent, var(--color-border), var(--color-border), transparent);
+    transform: translateX(-50%);
+}
+.jh-tl-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 2.5rem;
+    margin-bottom: 3.5rem;
+    position: relative;
+}
+.jh-tl-item.right {
+    flex-direction: row-reverse;
+}
+.jh-tl-item.right .jh-tl-content {
+    text-align: right;
+}
+.jh-tl-dot {
+    position: absolute;
+    left: 50%;
+    top: 0.5rem;
+    transform: translateX(-50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    border: 2px solid var(--color-bg);
+    box-shadow: 0 0 0 2px var(--color-accent);
+    z-index: 1;
+    flex-shrink: 0;
+}
+.jh-tl-content {
+    width: calc(50% - 2.5rem);
+    padding: 0 1rem;
+}
+.jh-tl-year {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 300;
+    color: var(--color-accent);
+    display: block;
+    margin-bottom: 0.3rem;
+}
+.jh-tl-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--color-text);
+    margin-bottom: 0.4rem;
+}
+.jh-tl-desc {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--color-text-light);
+}
+
+/* ═══════════════════════════════════════════════
+   HOLOCAUST SECTION — MEMORIAL STYLE
+   ═══════════════════════════════════════════════ */
+.jh-memorial-section {
+    background: #0d0b09;
+    padding: 7rem 0;
+    position: relative;
+    overflow: hidden;
+}
+.jh-memorial-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 150px;
+    opacity: 0.035;
+}
+.jh-memorial-flame {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+.jh-memorial-flame svg {
+    width: 48px;
+    height: 48px;
+    opacity: 0.7;
+    animation: jh-flame 3s ease-in-out infinite;
+}
+@keyframes jh-flame {
+    0%,100% { transform: scaleY(1) scaleX(1); }
+    50% { transform: scaleY(1.05) scaleX(0.97); }
+}
+.jh-memorial-header {
+    text-align: center;
+    margin-bottom: 4rem;
+    position: relative;
+}
+.jh-memorial-eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.45rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: rgba(201,162,39,0.5);
+    margin-bottom: 1rem;
+}
+.jh-memorial-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 5vw, 4.5rem);
+    font-weight: 300;
+    color: #e8d5a3;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.2rem;
+}
+.jh-memorial-title em {
+    font-style: italic;
+    color: #c9a227;
+}
+.jh-memorial-divider {
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201,162,39,0.4), transparent);
+    margin: 1.5rem auto;
+}
+.jh-memorial-body {
+    max-width: 780px;
+    margin: 0 auto;
+}
+.jh-memorial-body p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-weight: 300;
+    line-height: 1.9;
+    color: rgba(245,240,232,0.72);
+    margin-bottom: 1.4rem;
+}
+.jh-memorial-body p strong {
+    color: rgba(245,240,232,0.9);
+    font-weight: 500;
+}
+.jh-memorial-body p::first-letter {
+    float: left;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.8rem;
+    line-height: 0.75;
+    color: rgba(201,162,39,0.55);
+    margin: 0.1em 0.1em 0 0;
+    font-weight: 300;
+}
+.jh-memorial-numbers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin: 3.5rem 0;
+}
+.jh-memorial-num-item {
+    padding: 2rem 1.5rem;
+    text-align: center;
+    background: rgba(0,0,0,0.3);
+}
+.jh-memorial-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem;
+    font-weight: 300;
+    color: #c9a227;
+    line-height: 1;
+    display: block;
+    margin-bottom: 0.4rem;
+}
+.jh-memorial-num-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.5rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+}
+.jh-memorial-quote {
+    border: 1px solid rgba(201,162,39,0.15);
+    border-left: 2px solid rgba(201,162,39,0.4);
+    padding: 1.5rem 2rem;
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    margin: 2rem 0;
+    background: rgba(201,162,39,0.03);
+}
+.jh-memorial-quote p {
+    font-style: italic;
+    font-size: 1.1rem !important;
+    color: rgba(245,240,232,0.65) !important;
+    margin-bottom: 0.5rem !important;
+}
+.jh-memorial-quote p::first-letter { float: none; font-size: inherit; color: inherit; margin: 0; }
+.jh-memorial-quote cite {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    color: rgba(201,162,39,0.4);
+    font-style: normal;
+}
+.jh-memorial-candle {
+    text-align: center;
+    margin-top: 4rem;
+}
+.jh-candle-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: rgba(201,162,39,0.55);
+    display: block;
+    letter-spacing: 0.05em;
+    margin-top: 1rem;
+}
+/* ═══════════════════════════════════════════════
+   SURVIVORS & LEGACY
+   ═══════════════════════════════════════════════ */
+.jh-legacy-section {
+    background: var(--color-bg);
+    padding: 6rem 0;
+}
+.jh-legacy-section::before {
+    content:'';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-border-light), transparent);
+}
+.jh-legacy-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 3rem;
+}
+.jh-legacy-card {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    box-shadow: var(--shadow-sm);
+}
+.jh-legacy-card h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: var(--color-text);
+    margin-bottom: 0.8rem;
+}
+.jh-legacy-card p {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+}
+
+/* ═══════════════════════════════════════════════
+   LIGHTBOX
+   ═══════════════════════════════════════════════ */
+.jh-lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.92);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    backdrop-filter: blur(8px);
+}
+.jh-lightbox.open { display: flex; }
+.jh-lb-content {
+    max-width: 900px;
+    width: 100%;
+    text-align: center;
+}
+.jh-lb-img {
+    max-height: 70vh;
+    max-width: 100%;
+    border-radius: var(--radius-md);
+    box-shadow: 0 30px 80px rgba(0,0,0,0.8);
+    display: block;
+    margin: 0 auto 1.5rem;
+}
+.jh-lb-caption {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-style: italic;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.6;
+}
+.jh-lb-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    width: 40px;
+    height: 40px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 50%;
+    color: #fff;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.jh-lb-close:hover { background: rgba(255,255,255,0.2); }
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+    .jh-gallery-grid { grid-template-columns: repeat(3, 1fr); }
+    .jh-chapter-inner, .jh-chapter-inner.reverse { grid-template-columns: 1fr; gap: 2rem; }
+    .jh-chapter-aside { position: static; }
+    .jh-chapter-num { font-size: 4rem; }
+    .jh-timeline::before { left: 2rem; transform: none; }
+    .jh-tl-item, .jh-tl-item.right { flex-direction: column; padding-left: 4rem; }
+    .jh-tl-item.right .jh-tl-content { text-align: left; }
+    .jh-tl-dot { left: 2rem; }
+    .jh-tl-content { width: 100%; padding: 0; }
+    .jh-tl-item { margin-bottom: 2.5rem; }
+}
+@media (max-width: 768px) {
+    .jh-gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .jh-photo-card.wide { grid-column: span 2; }
+    .jh-stats-row { grid-template-columns: repeat(2, 1fr); }
+    .jh-stat { border-bottom: 1px solid var(--color-border-light); }
+    .jh-intro-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .jh-memorial-numbers { grid-template-columns: 1fr; }
+    .jh-legacy-grid { grid-template-columns: 1fr; }
+    .jh-book-inner { grid-template-columns: 1fr; text-align: center; }
+    .jh-book-cover { margin: 0 auto; width: 120px; }
+}
+@media (max-width: 500px) {
+    .jh-gallery-grid { grid-template-columns: 1fr; }
+    .jh-photo-card.wide { grid-column: span 1; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+    <div class="header-container">
+        <a href="index.html" class="logo">
+            <img src="https://i.imgur.com/mXCrjjG.png" alt="Герб" class="logo-img">
+            <div class="logo-text">
+                <span class="logo-city">Дубровиця</span>
+                <span class="logo-subtitle">Цифровий архів</span>
+            </div>
+        </a>
+        <nav class="nav" id="mainNav">
+            <a href="index.html" class="nav-link">Головна</a>
+            <a href="history.html" class="nav-link">Історія</a>
+            <a href="photo-archive.html" class="nav-link">Фотоархів</a>
+            <a href="architecture.html" class="nav-link">Пам'ятки</a>
+            <a href="metrychni-knyhy.html" class="nav-link">Метричні книги</a>
+            <a href="books.html" class="nav-link">Книги</a>
+            <a href="contacts.html" class="nav-link">Контакти</a>
+        </nav>
+        <button class="theme-toggle" id="themeToggle" aria-label="Перемкнути тему">
+            <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+            <svg class="theme-icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+        </button>
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Відкрити меню" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</header>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section class="jh-hero" id="jhHero">
+    <div class="jh-hero-bg"></div>
+    <div class="jh-hero-grain"></div>
+    <div class="jh-hero-vignette"></div>
+
+    <!-- Звезда Давида-фон -->
+    <div class="jh-hero-scroll" aria-hidden="true">
+        <svg class="jh-hero-star" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="50,5 61,35 95,35 67,57 78,91 50,70 22,91 33,57 5,35 39,35" fill="none" stroke="rgba(201,162,39,0.6)" stroke-width="0.5"/>
+            <polygon points="50,15 59,42 88,42 65,58 74,85 50,69 26,85 35,58 12,42 41,42" fill="none" stroke="rgba(201,162,39,0.3)" stroke-width="0.3"/>
+        </svg>
+    </div>
+
+    <div class="jh-hero-content">
+        <div class="jh-eyebrow">
+            <svg class="jh-eyebrow-star" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="12,2 14.4,8.6 21.5,8.6 15.8,13 17.9,19.8 12,16 6.1,19.8 8.2,13 2.5,8.6 9.6,8.6" fill="rgba(201,162,39,0.7)"/>
+            </svg>
+            <span>Єврейська спадщина · Дубровиця · XV–XX ст.</span>
+        </div>
+        <h1 class="jh-title">
+            <span class="t-top">Єврейська</span>
+            <span class="t-bot">Дубровиця</span>
+        </h1>
+        <p class="jh-sub">П'ять століть присутності, культури та трагічної долі єврейської громади міста</p>
+    </div>
+
+    <div class="jh-scroll-indicator">
+        <div class="jh-scroll-line"></div>
+        <span>Scroll</span>
+    </div>
+</section>
+
+<!-- ═══════════════ СТАТИСТИКА + INTRO ═══════════════ -->
+<section class="jh-intro-section">
+    <div class="container">
+        <div class="jh-stats-row">
+            <div class="jh-stat">
+                <span class="jh-stat-num">XV</span>
+                <span class="jh-stat-label">Ст. — перші євреї</span>
+            </div>
+            <div class="jh-stat">
+                <span class="jh-stat-num">3 225</span>
+                <span class="jh-stat-label">Євреїв у 1937 р.</span>
+            </div>
+            <div class="jh-stat">
+                <span class="jh-stat-num">43%</span>
+                <span class="jh-stat-label">Населення міста</span>
+            </div>
+            <div class="jh-stat">
+                <span class="jh-stat-num">1942</span>
+                <span class="jh-stat-label">Рік трагедії</span>
+            </div>
+        </div>
+
+        <div class="jh-intro-grid">
+            <div>
+                <div class="jh-intro-label">Вступ</div>
+                <h2 class="jh-intro-heading">Місто, де<br><em>дві громади</em><br>жили разом</h2>
+                <span class="jh-source-tag">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                    Джерело: «Сефер Домбровіца», Тел-Авів, 1964
+                </span>
+            </div>
+            <div>
+                <p class="jh-intro-text">
+                    Євреї оселилися в Дубровиці ще у <strong>XV столітті</strong> — приблизно тоді ж, як місто набуло своєї характерної форми з центральною Ринковою площею та десятьма вулицями. До початку XX століття єврейська громада стала невід'ємним економічним і культурним стрижнем міста.
+                </p>
+                <p class="jh-intro-text">
+                    Єврейські купці, ремісники, вчителі, рабини та торговці лісом формували обличчя Дубровиці. <strong>40% з них були ремісниками</strong>, 30% — власниками крамниць. Їхні млини, лісопилки та олійниці обслуговували все навколишнє Полісся. Єврейська і православна громади жили в тісній господарській взаємозалежності — «у всіх сферах праці обидві частини населення доповнювали одна одну», — писав очевидець.
+                </p>
+                <p class="jh-intro-text">
+                    Дубровиця була відома своїми сіоністськими настроями, активним шкільним і культурним рухом. Тут існували п'ять синагог, школа «Тарбут» з навчанням на івриті, власна бібліотека і клезмерський ансамбль. Усе це обірвалося в <strong>серпні 1942 року</strong>.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════ BOOK BANNER ═══════════════ -->
+<div class="jh-book-banner">
+    <div class="container">
+        <div class="jh-book-inner">
+            <div class="jh-book-cover">
+                <img src="https://i.imgur.com/UakA88l.jpeg" alt="Обкладинка книги Сефер Домбровіца" loading="lazy">
+            </div>
+            <div>
+                <div class="jh-book-meta-label">Книга пам'яті · Іцкор-Бух</div>
+                <div class="jh-book-title">«Сефер Домбровіца»<br><em style="font-style:italic; font-weight:300; font-size:1.3rem;">ספר דומברוביצה</em></div>
+                <div class="jh-book-subtitle">Тел-Авів, 1964 рік. Видання об'єднання вихідців з Дубровиці в Ізраїлі</div>
+                <p class="jh-book-description">
+                    Написана тими, хто вижив і виїхав до Ізраїлю ще до Другої світової, книга є унікальним документом — детальна хроніка єврейського побуту, культури, релігійного життя і трагічної долі громади. Основний нарис «Стежками минулих днів» написаний Шмуелем Зальцманом — місцевим уродженцем. Частина сторінок перекладена українською мовою та стала основою для цього розділу.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════ ФОТОГАЛЕРЕЯ ═══════════════ -->
+<section class="jh-gallery-section">
+    <div class="container">
+        <div class="jh-section-header">
+            <span class="jh-section-eyebrow">Фотохроніка · 1900–1942</span>
+            <h2 class="jh-section-title">Обличчя <em>старого міста</em></h2>
+        </div>
+
+        <div class="jh-gallery-grid">
+            <!-- 1 -->
+            <div class="jh-photo-card wide" onclick="openLightbox('https://i.imgur.com/YIRm8Rt.jpeg','Масова маніфестація після конференції в Сан-Ремо, 1920 рік. Євреї Дубровиці вітають рішення про передачу Великій Британії мандата на Палестину — надія на власну державу')">
+                <div style="overflow:hidden;">
+                    <img class="jh-photo-img" src="https://i.imgur.com/YIRm8Rt.jpeg" alt="Маніфестація 1920" loading="lazy">
+                </div>
+                <div class="jh-photo-caption">
+                    <span class="year-tag">1920</span>
+                    <p>Масова маніфестація після рішень конференції в Сан-Ремо. Тисячі євреїв вийшли на вулиці Дубровиці вітати надію на відродження власної держави.</p>
+                </div>
+            </div>
+
+            <!-- 2 -->
+            <div class="jh-photo-card" onclick="openLightbox('https://i.imgur.com/caTP3ND.jpeg','Ринкова площа в суботу — порожня, без людей. Фото початку XX ст. В суботу єврейські крамниці не працювали, і площа завмирала')">
+                <div style="overflow:hidden;">
+                    <img class="jh-photo-img" src="https://i.imgur.com/caTP3ND.jpeg" alt="Ринкова площа" loading="lazy">
+                </div>
+                <div class="jh-photo-caption">
+                    <span class="year-tag">поч. XX ст.</span>
+                    <p>Ринкова площа в суботу — порожня. В шабат усі єврейські крамниці зачинені, місто завмирає.</p>
+                </div>
+            </div>
+
+            <!-- 3 -->
+            <div class="jh-photo-card" onclick="openLightbox('https://i.imgur.com/ol9vPuF.jpeg','Куточок Ринкової площі, біля &quot;Плянтів&quot;. 1939 рік')">
+                <div style="overflow:hidden;">
+                    <img class="jh-photo-img" src="https://i.imgur.com/ol9vPuF.jpeg" alt="Ринкова площа 1939" loading="lazy">
+                </div>
+                <div class="jh-photo-caption">
+                    <span class="year-tag">1939</span>
+                    <p>Куточок Ринкової площі, біля «Плянтів». Останній мирний рік.</p>
+                </div>
+            </div>
+
+            <!-- 4 -->
+            <div class="jh-photo-card" onclick="openLightbox('https://i.imgur.com/TUFVsb8.jpeg','Дубровиця, вулиця 3-го Травня')">
+                <div style="overflow:hidden;">
+                    <img class="jh-photo-img" src="https://i.imgur.com/TUFVsb8.jpeg" alt="Вулиця 3 Травня" loading="lazy">
+                </div>
+                <div class="jh-photo-caption">
+                    <span class="year-tag">~1930-ті</span>
+                    <p>Дубровиця. Вулиця 3-го Травня — одна з головних вулиць міста.</p>
+                </div>
+            </div>
+
+            <!-- 5 -->
+            <div class="jh-photo-card" onclick="openLightbox('https://i.imgur.com/h6fG9oK.jpeg','Футбольна команда «Шомрія», 1925 рік. На задньому плані — дерев&apos;яний міст через Горинь')">
+                <div style="overflow:hidden;">
+                    <img class="jh-photo-img" src="https://i.imgur.com/h6fG9oK.jpeg" alt="Команда Шомрія 1925" loading="lazy">
+                </div>
+                <div class="jh-photo-caption">
+                    <span class="year-tag">1925</span>
+                    <p>Футбольна команда «Шомрія». На задньому плані — дерев'яний міст через Горинь.</p>
+                </div>
+            </div>
+
+            <!-- 6 -->
+            <div class="jh-photo-card" onclick="openLightbox('https://i.imgur.com/lbNIamW.jpeg','Нова будівля школи «Тарбут», 1936 рік. Школа з викладанням на івриті виховала сотні учнів')">
+                <div style="overflow:hidden;">
+                    <img class="jh-photo-img" src="https://i.imgur.com/lbNIamW.jpeg" alt="Школа Тарбут" loading="lazy">
+                </div>
+                <div class="jh-photo-caption">
+                    <span class="year-tag">1936</span>
+                    <p>Нова будівля школи «Тарбут» — з викладанням на івриті, заснована за ініціативи сіоністів.</p>
+                </div>
+            </div>
+
+            <!-- 7 -->
+            <div class="jh-photo-card" onclick="openLightbox('https://i.imgur.com/d1e0JX9.jpeg','Вчителі та учні школи «Мевенінь» під час святкування, 1930 рік')">
+                <div style="overflow:hidden;">
+                    <img class="jh-photo-img" src="https://i.imgur.com/d1e0JX9.jpeg" alt="Школа Мевенінь 1930" loading="lazy">
+                </div>
+                <div class="jh-photo-caption">
+                    <span class="year-tag">1930</span>
+                    <p>Вчителі та учні школи «Мевенінь» під час святкування.</p>
+                </div>
+            </div>
+
+            <!-- 8 -->
+            <div class="jh-photo-card" onclick="openLightbox('https://i.imgur.com/nLCM0i2.jpeg','Лісопилка Горація Геллера — один із провідних єврейських підприємців Дубровиці')">
+                <div style="overflow:hidden;">
+                    <img class="jh-photo-img" src="https://i.imgur.com/nLCM0i2.jpeg" alt="Лісопилка Геллера" loading="lazy">
+                </div>
+                <div class="jh-photo-caption">
+                    <span class="year-tag">~1920-30-ті</span>
+                    <p>Лісопилка (тартак) Горація Геллера. Торгівля лісом — один з головних промислів євреїв Полісся.</p>
+                </div>
+            </div>
+
+            <!-- 9 -->
+            <div class="jh-photo-card" onclick="openLightbox('https://i.imgur.com/ORgbczc.jpeg','Лісопилка братів Шнайдміль')">
+                <div style="overflow:hidden;">
+                    <img class="jh-photo-img" src="https://i.imgur.com/ORgbczc.jpeg" alt="Лісопилка братів Шнайдміль" loading="lazy">
+                </div>
+                <div class="jh-photo-caption">
+                    <span class="year-tag">~1920-30-ті</span>
+                    <p>Лісопилка братів Шнайдміль. Серед торговців лісом виділялися кілька заможних єврейських родин.</p>
+                </div>
+            </div>
+
+            <!-- 10 -->
+            <div class="jh-photo-card" onclick="openLightbox('https://i.imgur.com/fqLDM6s.jpeg','Біля виборчої дільниці під час виборів до польського Сейму, 1935 рік')">
+                <div style="overflow:hidden;">
+                    <img class="jh-photo-img" src="https://i.imgur.com/fqLDM6s.jpeg" alt="Вибори до Сейму 1935" loading="lazy">
+                </div>
+                <div class="jh-photo-caption">
+                    <span class="year-tag">1935</span>
+                    <p>Біля виборчої дільниці під час виборів до польського Сейму. Єврейська громада активно брала участь у громадському житті.</p>
+                </div>
+            </div>
+
+            <!-- 11 -->
+            <div class="jh-photo-card" onclick="openLightbox('https://i.imgur.com/hPI1Xdo.jpeg','Молодь мирно плаває на човні річкою Горинь')">
+                <div style="overflow:hidden;">
+                    <img class="jh-photo-img" src="https://i.imgur.com/hPI1Xdo.jpeg" alt="Човен на Горині" loading="lazy">
+                </div>
+                <div class="jh-photo-caption">
+                    <p>Молодь на човні річкою Горинь — мирні дні до початку катастрофи.</p>
+                </div>
+            </div>
+
+            <!-- 12 -->
+            <div class="jh-photo-card" onclick="openLightbox('https://i.imgur.com/rVnHRb1.jpeg','Єврейська пара біля мосту через Горинь')">
+                <div style="overflow:hidden;">
+                    <img class="jh-photo-img" src="https://i.imgur.com/rVnHRb1.jpeg" alt="Єврейська пара" loading="lazy">
+                </div>
+                <div class="jh-photo-caption">
+                    <p>Єврейська пара біля мосту через Горинь. Міст через річку і прилеглі озера завдовжки близько 500 метрів був збудований у 1884 р.</p>
+                </div>
+            </div>
+
+            <!-- 13 -->
+            <div class="jh-photo-card" onclick="openLightbox('https://i.imgur.com/6Wqyivm.jpeg','Біля будинку Слуцького. Сім&apos;я Слуцьких займала один з ключових будинків на східній стороні Ринкової площі')">
+                <div style="overflow:hidden;">
+                    <img class="jh-photo-img" src="https://i.imgur.com/6Wqyivm.jpeg" alt="Будинок Слуцького" loading="lazy">
+                </div>
+                <div class="jh-photo-caption">
+                    <p>«Біля будинку Слуцького». Будинки Готліба, Слуцького, Герштейна та Сандлера стояли на знаменитій східній стороні Ринкової площі.</p>
+                </div>
+            </div>
+
+            <!-- 14 -->
+            <div class="jh-photo-card" onclick="openLightbox('https://i.imgur.com/aeImat4.jpeg','Похорон у містечку. Традиційний єврейський похоронний ритуал')">
+                <div style="overflow:hidden;">
+                    <img class="jh-photo-img" src="https://i.imgur.com/aeImat4.jpeg" alt="Похорон" loading="lazy">
+                </div>
+                <div class="jh-photo-caption">
+                    <p>Похорон у містечку. Товариство «Хевра Кадіша» — похоронне братство — вело свій літопис з 1500 року.</p>
+                </div>
+            </div>
+
+            <!-- 15 - portraits -->
+            <div class="jh-photo-card wide" onclick="openLightbox('https://i.imgur.com/mZEi5kG.jpeg','Зліва: Потрін Моше та Фроделе Перлін, з"л (благословенної пам&apos;яті). Справа: Мендель Берестер, невідомий посередині, та Мотл Лейбкес, з&quot;л')">
+                <div style="overflow:hidden;">
+                    <img class="jh-photo-img" src="https://i.imgur.com/mZEi5kG.jpeg" alt="Портрети мешканців" loading="lazy">
+                </div>
+                <div class="jh-photo-caption">
+                    <span class="year-tag">Мешканці міста</span>
+                    <p>Зліва: Потрін Моше та Фроделе Перлін, ז"ל. Справа: Reb Мендель Берестер; (той, хто посередині — невідомий); Reb Мотл Лейбкес, ז"ל.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════ CHAPTER 1: Місто та Рада ═══════════════ -->
+<section class="jh-chapter-section">
+    <div class="container">
+        <div class="jh-chapter-inner">
+            <div class="jh-chapter-aside">
+                <div class="jh-chapter-num">01</div>
+                <div class="jh-chapter-label">Розділ перший</div>
+                <h3 class="jh-chapter-aside-title">Місто, громада та її устрій</h3>
+                <p class="jh-chapter-aside-desc">Від середньовічного поселення до незалежної єврейської громади 1753 року — як формувалося єврейське самоврядування Дубровиці.</p>
+                <div class="jh-aside-image">
+                    <img src="https://i.imgur.com/caTP3ND.jpeg" alt="Ринкова площа" loading="lazy">
+                    <div class="jh-aside-image-caption">Ринкова площа — серце єврейської Дубровиці</div>
+                </div>
+            </div>
+            <div class="jh-chapter-body">
+                <h3>Від Середньовіччя до<br><em>самостійної громади</em></h3>
+                <p>
+                    Дубровиця розташована в північно-західній частині Волині, на березі річки Горинь, оточена лісами. До прокладання залізниці Рівне–Вільно (1884 р.) річка була головним транспортним шляхом, що пов'язував місто зі світом. Назва «Дубровиця» походить від слова «діброва» — зелені широколисті ліси, що простягаються вздовж берегів річок. Місто відоме з XIII століття, хоча, можливо, існувало ще раніше.
+                </p>
+                <p>
+                    Євреї оселилися тут лише у <strong>XV столітті</strong>. Спершу вони належали до громади Пінська — великого єврейського центру. Лише в <strong>1753 році</strong> власник міста Міхаель Бростовський видав наказ про заснування незалежної єврейської громади. Євреям надавалися автономний суд, право на землю для синагоги, лазні, цвинтаря, право торгівлі, звільнення від панщини.
+                </p>
+                <div class="jh-highlight-box">
+                    <div class="jh-highlight-box-title">Права 1753 року</div>
+                    <p>Євреї отримали: власний суд, безкоштовні ділянки для громадських будівель, право на гуральні і торгівлю вином, право забою худоби та продажу некошерного м'яса. Громадські будівлі — синагога, лазня, будинок рабина, цвинтар — звільнялися від оподаткування.</p>
+                </div>
+                <p>
+                    Ринкова площа міста мала квадратну форму зі стороною близько 150 метрів. Від неї розходилися десять вулиць. На площі стояв довгий подвійний ряд магазинів, а біля 1930 року з'явився паралельний другий ряд. «Чи спочатку були прокладені вулиці, і само собою виникла площа, — розмірковували у штіблі, — схоже на того, хто розкочує тісто у батон, а потім з'єднує два кінці у коло: само собою всередині утворюється отвір...»
+                </p>
+                <div class="jh-quote">
+                    <p>«Євреї жили в центрі міста, а християни — на його околицях. Відносини між двома громадами були нормальними... Нерідко християни зверталися до рабинів міста з проханням помолитися за одужання хворих у їхніх домівках. Бували також випадки, коли євреї та християни судилися перед рабином, і обидві сторони приймали його рішення з рівною повагою.»</p>
+                    <cite>— Шмуель Зальцман, «Стежками минулих днів»</cite>
+                </div>
+                <p>
+                    Господарська взаємозалежність двох громад була глибокою: <strong>неєвреї рубали дрова, возили плоти, допомагали в господарстві</strong> і продавали євреям врожай. Єврейські ремісники ремонтували знаряддя і підковували коней. На єврейських млинах мололи зерно, на олійницях чавили олію. «У всіх сферах праці, торгівлі та економіки обидві частини населення доповнювали одна одну, і це було прийнятним, бажаним та само собою зрозумілим».
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════ CHAPTER 2: Синагоги та духовне життя ═══════════════ -->
+<section class="jh-chapter-section">
+    <div class="container">
+        <div class="jh-chapter-inner reverse">
+            <div class="jh-chapter-body">
+                <h3>П'ять синагог<br><em>одного міста</em></h3>
+                <p>
+                    Духовне життя громади було пронизане хасидизмом. У XVIII столітті частина жителів, що їздили торгувати до Пінська, «заразилася» хасидизмом Карліна. Так з'явився перший «штібель» — молитовний будинок, де молилися за сефардським обрядом і де щоденно вивчали Тору. Місто поступово розкололося на фракції.
+                </p>
+                <div class="jh-highlight-box">
+                    <div class="jh-highlight-box-title">П'ять синагог Дубровиці</div>
+                    <p>
+                        <strong>1. «Велика синагога»</strong> — на вулиці Синагог, ашкеназький обряд, «мітнагдім».<br>
+                        <strong>2. Столінський штібель</strong> — хасиди Карліна-Століна, на вул. Голост.<br>
+                        <strong>3. «Бейт га-Мідраш»</strong> — хасиди Березного, поруч з Великою синагогою.<br>
+                        <strong>4. «Тріскер штібель»</strong> — хасиди Триська, також на вул. Синагог.<br>
+                        <strong>5. «Корітські»</strong> — відокремлення від столінців, «поспішна» молитва.
+                    </p>
+                </div>
+                <p>
+                    Суперечки між хасидами Століна та Березного були постійними: перші дивилися на других зверхньо як на «людей землі», а люди Березного бачили в столінцях «пихатих». Але коли виникала спільна справа — будівництво лазні, вибір місця для цвинтаря — усі синагоги зачинялися, залишаючи відкритою одну, де збиралося все місто.
+                </p>
+                <p>
+                    Шабат у Дубровиці був особливим. <strong>Рав Іцхак Шапіра</strong> — «рав Ітці-суддя» — особисто стежив за закриттям крамниць напередодні суботи ще за дня, перевіряв ваги торговців. У переддень свята вулицями поспішали євреї з вузлами білизни до лазні. Після миття та занурення в мікву — чай, суботній одяг, синагога. «Кожен будинок чистий і готовий до Шабату: стіл накритий білою скатертиною, а на двох його кінцях — хали та свічки».
+                </p>
+                <div class="jh-quote">
+                    <p>«Хасидська мелодія — це одна з форм служіння Творцю, як молитва та вивчення Тори, вона сповнена відданості, наміру та натхнення... Була зруйнована єврейська Дубровиця: зрубані її гілки та пущений вогонь у її крону. Припинилася творчість і затихла пісня. Дерево зрубано. Ой, яке лихо!»</p>
+                    <cite>— Шмуель Зальцман</cite>
+                </div>
+            </div>
+            <div class="jh-chapter-aside">
+                <div class="jh-chapter-num">02</div>
+                <div class="jh-chapter-label">Розділ другий</div>
+                <h3 class="jh-chapter-aside-title">Синагоги, рабини та хасидизм</h3>
+                <p class="jh-chapter-aside-desc">Місто з п'ятьма синагогами і чотирма рабинами — унікальний для Полісся феномен єврейського духовного плюралізму.</p>
+                <div class="jh-aside-image">
+                    <img src="https://i.imgur.com/aeImat4.jpeg" alt="Похорон" loading="lazy">
+                    <div class="jh-aside-image-caption">Традиційний єврейський похоронний ритуал у містечку</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════ CHAPTER 3: Освіта та культура ═══════════════ -->
+<section class="jh-chapter-section">
+    <div class="container">
+        <div class="jh-chapter-inner">
+            <div class="jh-chapter-aside">
+                <div class="jh-chapter-num">03</div>
+                <div class="jh-chapter-label">Розділ третій</div>
+                <h3 class="jh-chapter-aside-title">Освіта, культура і сіонізм</h3>
+                <p class="jh-chapter-aside-desc">Від традиційних хедерів до школи «Тарбут» з навчанням на івриті — шлях єврейської освіти Дубровиці через три покоління.</p>
+                <div class="jh-aside-image">
+                    <img src="https://i.imgur.com/lbNIamW.jpeg" alt="Школа Тарбут" loading="lazy">
+                    <div class="jh-aside-image-caption">Нова будівля школи «Тарбут», 1936</div>
+                </div>
+            </div>
+            <div class="jh-chapter-body">
+                <h3>Від хедеру<br><em>до «Тарбут»</em></h3>
+                <p>
+                    Традиційна єврейська освіта розпочиналася в «хедері» — приватній початковій школі у домі вчителя-меламеда. П'ятирічні діти вже вчили П'ятикнижжя. Система, при всій своїй суворості, виховувала «видатних геніїв та рабинів, громадських діячів та лідерів громади». Навчання тривало 8–9 годин на день, без канікул.
+                </p>
+                <p>
+                    На початку XX століття «вітри Гаскали» — єврейського просвітництва — досягли і Дубровиці. Учні першої приватної школи стали збирати копійки на бібліотеку та вивчати іврит. «Вони намагалися вести розмови на івриті і для цього вивчали напам'ять цілі розділи з книг приповістей». Цей рух став зародком сіонізму в місті.
+                </p>
+                <div class="jh-highlight-box">
+                    <div class="jh-highlight-box-title">Культурні установи єврейської Дубровиці</div>
+                    <p>
+                        <strong>Школа «Тарбут»</strong> (з 1917 р.) — навчання на івриті, пізніше у новій будівлі (1936).<br>
+                        <strong>Дитячий садок</strong> (з 1919 р.) — до 40 дітей, попри опір батьків-традиціоналістів.<br>
+                        <strong>Міська бібліотека «Тарбут»</strong> — виросла з таємних збірок учнів-піонерів.<br>
+                        <strong>Клезмерський ансамбль</strong> — сім'я Шпіль протягом трьох поколінь, найкращий у всій окрузі.<br>
+                        <strong>Молодіжний рух «Шомрія»</strong> — спортивна команда (фото 1925 р.) і сіоністська організація.
+                    </p>
+                </div>
+                <p>
+                    Сіоністські настрої були особливо сильними: <strong>1920 року</strong>, коли конференція в Сан-Ремо ухвалила передати Великій Британії мандат на Палестину, євреї Дубровиці вийшли на масову маніфестацію. Це пояснює, чому пізніше в місті з'явилася школа «Тарбут» і молодіжні рухи. Перші «халуцим» — піонери — вирушили до Ерець-Ісраель у 1920-х роках, що врешті-решт стало порятунком для десятків вихідців з Дубровиці.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════ TIMELINE ═══════════════ -->
+<section class="jh-timeline-section">
+    <div class="container">
+        <div class="jh-section-header" style="margin-bottom:4rem;">
+            <span class="jh-section-eyebrow">Хронологія</span>
+            <h2 class="jh-section-title">П'ять <em>сторіч</em> присутності</h2>
+        </div>
+        <div class="jh-timeline">
+            <div class="jh-tl-item">
+                <div class="jh-tl-dot"></div>
+                <div class="jh-tl-content">
+                    <span class="jh-tl-year">XV ст.</span>
+                    <div class="jh-tl-title">Перші єврейські поселенці</div>
+                    <p class="jh-tl-desc">Євреї починають оселятися в Дубровиці, спочатку належачи до громади Пінська.</p>
+                </div>
+            </div>
+            <div class="jh-tl-item right">
+                <div class="jh-tl-dot"></div>
+                <div class="jh-tl-content">
+                    <span class="jh-tl-year">1753</span>
+                    <div class="jh-tl-title">Незалежна єврейська громада</div>
+                    <p class="jh-tl-desc">Власник міста Міхаель Бростовський надає євреям право на самостійну громаду з повноваженнями суду, синагоги та цвинтаря.</p>
+                </div>
+            </div>
+            <div class="jh-tl-item">
+                <div class="jh-tl-dot"></div>
+                <div class="jh-tl-content">
+                    <span class="jh-tl-year">1884</span>
+                    <div class="jh-tl-title">Залізниця відкриває місто світу</div>
+                    <p class="jh-tl-desc">Лінія Рівне–Вільно поєднала Дубровицю з великими центрами. Місто «вийшло зі своєї замкнутості у простір».</p>
+                </div>
+            </div>
+            <div class="jh-tl-item right">
+                <div class="jh-tl-dot"></div>
+                <div class="jh-tl-content">
+                    <span class="jh-tl-year">1914–1920</span>
+                    <div class="jh-tl-title">Роки воєн і потрясінь</div>
+                    <p class="jh-tl-desc">WWI, революції, погроми петлюрівців (1919), бої між більшовиками і поляками. Дубровиця пережила 14-денний погром і епідемію тифу.</p>
+                </div>
+            </div>
+            <div class="jh-tl-item">
+                <div class="jh-tl-dot"></div>
+                <div class="jh-tl-content">
+                    <span class="jh-tl-year">1920</span>
+                    <div class="jh-tl-title">Маніфестація після Сан-Ремо</div>
+                    <p class="jh-tl-desc">Масова демонстрація на вулицях — євреї Дубровиці вітають міжнародне визнання права на єврейський національний дім у Палестині.</p>
+                </div>
+            </div>
+            <div class="jh-tl-item right">
+                <div class="jh-tl-dot"></div>
+                <div class="jh-tl-content">
+                    <span class="jh-tl-year">1921–1939</span>
+                    <div class="jh-tl-title">Польський міжвоєнний розквіт</div>
+                    <p class="jh-tl-desc">Школа «Тарбут», нова будівля 1936 р., клезмери, «Шомрія», бібліотека. До 1937 р. — 3 225 євреїв, 43% населення.</p>
+                </div>
+            </div>
+            <div class="jh-tl-item">
+                <div class="jh-tl-dot" style="background:#c0392b; box-shadow:0 0 0 2px #c0392b;"></div>
+                <div class="jh-tl-content">
+                    <span class="jh-tl-year">1939</span>
+                    <div class="jh-tl-title">Радянська окупація</div>
+                    <p class="jh-tl-desc">Розпуск єврейських інституцій, націоналізація майна. Близько 200 молодих євреїв виїхали з радянськими військами до Києва.</p>
+                </div>
+            </div>
+            <div class="jh-tl-item right">
+                <div class="jh-tl-dot" style="background:#c0392b; box-shadow:0 0 0 2px #c0392b;"></div>
+                <div class="jh-tl-content">
+                    <span class="jh-tl-year">1941</span>
+                    <div class="jh-tl-title">Нацистська окупація</div>
+                    <p class="jh-tl-desc">Приходять німці. Юденрат, жовті зірки, примусова праця на лісопилках і залізниці. Погром місцевих мешканців одразу після приходу.</p>
+                </div>
+            </div>
+            <div class="jh-tl-item">
+                <div class="jh-tl-dot" style="background:#7b0000; box-shadow:0 0 0 2px #7b0000;"></div>
+                <div class="jh-tl-content">
+                    <span class="jh-tl-year">Квітень 1942</span>
+                    <div class="jh-tl-title">Створення гетто</div>
+                    <p class="jh-tl-desc">4 327 євреїв зігнано в гетто, включно з сотнями з сусідніх сіл. Людям дали 3 дні на переїзд.</p>
+                </div>
+            </div>
+            <div class="jh-tl-item right">
+                <div class="jh-tl-dot" style="background:#4a0000; box-shadow:0 0 0 2px #4a0000;"></div>
+                <div class="jh-tl-content">
+                    <span class="jh-tl-year">26 серпня 1942</span>
+                    <div class="jh-tl-title">Ліквідація гетто</div>
+                    <p class="jh-tl-desc">Близько 1 500 осіб втекли. Більшість із тих, хто не встиг — розстріляно або вбито в Сарнах разом із євреями регіону. Вижило близько 50 осіб.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════ HOLOCAUST MEMORIAL ═══════════════ -->
+<section class="jh-memorial-section">
+    <div class="container" style="position:relative;">
+        <div class="jh-memorial-flame">
+            <svg viewBox="0 0 60 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M30 75 C10 65 5 50 15 35 C20 28 18 18 25 10 C26 22 28 26 30 30 C32 26 34 22 35 10 C42 18 40 28 45 35 C55 50 50 65 30 75Z" fill="rgba(201,162,39,0.6)" />
+                <path d="M30 68 C18 60 15 48 22 38 C25 33 24 26 28 21 C29 30 30 33 31 36 C32 33 33 30 34 21 C38 26 37 33 40 38 C47 48 44 60 30 68Z" fill="rgba(201,162,39,0.3)" />
+            </svg>
+        </div>
+        <div class="jh-memorial-header">
+            <div class="jh-memorial-eyebrow">Катастрофа · 26 серпня 1942</div>
+            <h2 class="jh-memorial-title">Кінець<br><em>єврейської Дубровиці</em></h2>
+            <div class="jh-memorial-divider"></div>
+        </div>
+
+        <div class="jh-memorial-numbers">
+            <div class="jh-memorial-num-item">
+                <span class="jh-memorial-num">4 327</span>
+                <span class="jh-memorial-num-label">Євреїв у гетто</span>
+            </div>
+            <div class="jh-memorial-num-item">
+                <span class="jh-memorial-num">~3 000</span>
+                <span class="jh-memorial-num-label">Загинуло в Сарнах</span>
+            </div>
+            <div class="jh-memorial-num-item">
+                <span class="jh-memorial-num">~50</span>
+                <span class="jh-memorial-num-label">Вижило до визволення</span>
+            </div>
+        </div>
+
+        <div class="jh-memorial-body">
+            <p>
+                У квітні 1942 року нацистська цивільна адміністрація Сарн наказала встановити гетто в Дубровиці. <strong>Євреям дали лише три дні на переїзд</strong> у відведений квартал. До гетто примусово зігнали також сотні євреїв з навколишніх сіл — Кілець та інших, — збільшивши його населення до 4 327 осіб.
+            </p>
+            <p>
+                Звістки про масові вбивства в Ковелі та інших містах навесні 1942 року змусили частину молодих людей таємно планувати втечу. Юденрат намагався їх відмовити, навіть погрожуючи донести владі. Умови в гетто були жорсткими, але місто дещо рятувалося від голоду завдяки зв'язкам з місцевим борошняним млином: єврейські робітники могли потайки виносити до чверті денного виробництва.
+            </p>
+
+            <div class="jh-memorial-quote">
+                <p>«Хто це каже, що Песах припадає на місяць Нісан? Ще в місяці Кіслів починався Песах у Дубровиці... Ой, люди Дубровиці! Якби можна було відкрити вікно і зазирнути в минуле на 40–50 років назад... ви б побачили і переконалися, що більшої радості за цю не буває.»</p>
+                <cite>— Шмуель Зальцман, «Стежками минулих днів»</cite>
+            </div>
+
+            <p>
+                <strong>26 серпня 1942 року</strong> — поліція та українські колабораціоністи ліквідували гетто. Коли євреїв гнали на залізничну станцію для відправки до Сарн, близько 1 500 осіб вчинили масову втечу — Лейбель Ландау підкупив українських охоронців, щоб ті відвернулися. Близько 200 осіб були застрелені на місці. Тим, хто втік до лісу, загрожували голод, хвороби та облави. Кількасот осіб дістались до гетто у Висоцьку, де незабаром загинули разом із місцевими євреями. Решта 3 000 були знищені в Сарнах.
+            </p>
+            <p>
+                Ті, хто переховувався в лісах у 1942–1943 роках, масово гинули від голоду і хвороб або були спіймані поліцією та розстріляні. <strong>Близько 50 євреїв з Дубровиці вижили до визволення міста радянськими партизанами — 10 січня 1944 року</strong>.
+            </p>
+        </div>
+
+        <div class="jh-memorial-candle">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin:0 auto;">
+                <path d="M16 28 C9 24 7 17 11 11 C13 8 12 4 14.5 1 C15 6 15.5 8 16 10 C16.5 8 17 6 17.5 1 C20 4 19 8 21 11 C25 17 23 24 16 28Z" fill="rgba(201,162,39,0.5)"/>
+            </svg>
+            <span class="jh-candle-text">זכרונם לברכה — Нехай буде благословенна їхня пам'ять</span>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════ LEGACY ═══════════════ -->
+<section class="jh-legacy-section" style="position:relative;">
+    <div class="container">
+        <div class="jh-section-header">
+            <span class="jh-section-eyebrow">Спадщина та пам'ять</span>
+            <h2 class="jh-section-title">Ті, хто <em>вижив</em> і пам'ятає</h2>
+        </div>
+        <div class="jh-legacy-grid">
+            <div class="jh-legacy-card">
+                <h4>📚 Книга пам'яті «Сефер Домбровіца»</h4>
+                <p>У 1964 році в Тель-Авіві вихідці з Дубровиці видали книгу пам'яті, куди увійшли спогади, нариси та списки загиблих. Основну частину — детальну хроніку міського побуту — написав Шмуель Зальцман, уродженець Дубровиці, що виїхав до Ізраїлю до початку Другої світової.</p>
+            </div>
+            <div class="jh-legacy-card">
+                <h4>🌿 Ті, хто встиг виїхати</h4>
+                <p>Завдяки сіоністському руху сотні молодих людей встигли перебратися до Ерець-Ісраель у 1920–30-х роках. Зальцман зустрів їх в Ізраїлі «в кібуцах, поселеннях, на роботі та в сільському господарстві». Масова еміграція перших десятиліть XX ст. врятувала десятки родин від Голокосту.</p>
+            </div>
+            <div class="jh-legacy-card">
+                <h4>🏛️ Архіви та документи</h4>
+                <p>Документи про долю єврейської громади Дубровиці зберігаються в Яд Вашем (Єрусалим), Державному архіві Рівненської області (ДАРО), Федеральному архіві Берліна (BA-L), а також у Фонді відеоісторії (VHF). Метричні книги частково оцифровані та доступні дослідникам.</p>
+            </div>
+            <div class="jh-legacy-card">
+                <h4>✡️ Місця пам'яті</h4>
+                <p>Єврейське кладовище Дубровиці збереглося частково. Пам'ятник жертвам Голокосту встановлено поблизу місця розстрілів. Кожного року 26 серпня — річниця ліквідації гетто — до Дубровиці приїздять нащадки єврейської громади з Ізраїлю, США та Канади.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4 class="footer-title">Дубровиця</h4>
+                <p class="footer-text">Цифровий архів історичної спадщини міста Дубровиця, Сарненський район, Рівненська область, Україна.</p>
+            </div>
+            <div class="footer-section">
+                <h4 class="footer-title">Навігація</h4>
+                <nav class="footer-nav">
+                    <a href="history.html">Історія</a>
+                    <a href="photo-archive.html">Фотоархів</a>
+                    <a href="metrychni-knyhy.html">Метричні книги</a>
+                    <a href="books.html">Книги</a>
+                    <a href="contacts.html">Контакти</a>
+                </nav>
+            </div>
+            <div class="footer-section">
+                <h4 class="footer-title">Джерела</h4>
+                <p class="footer-text">
+                    «Сефер Домбровіца» — Тел-Авів, 1964<br>
+                    Яд Вашем — Єрусалим<br>
+                    ДАРО — Рівне<br>
+                    <a href="contacts.html" class="footer-link">Зв'яжіться з нами</a>
+                </p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Дубровиця. Цифровий архів.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="jh-lightbox" id="lightbox" onclick="closeLightbox(event)">
+    <button class="jh-lb-close" onclick="closeLightbox()">&times;</button>
+    <div class="jh-lb-content">
+        <img class="jh-lb-img" id="lbImg" src="" alt="">
+        <p class="jh-lb-caption" id="lbCaption"></p>
+    </div>
+</div>
+
+<script src="app.js"></script>
+<script>
+// Hero parallax
+(function(){
+    var hero = document.getElementById('jhHero');
+    var bg = hero && hero.querySelector('.jh-hero-bg');
+    if(!hero) return;
+    setTimeout(function(){ hero.classList.add('loaded'); }, 100);
+    if(bg) window.addEventListener('scroll', function(){
+        var y = window.pageYOffset;
+        if(y <= hero.offsetHeight + 200){
+            bg.style.transform = 'translateY(' + (y * 0.2).toFixed(2) + 'px)';
+        }
+    }, {passive:true});
+})();
+
+// Lightbox
+function openLightbox(src, caption) {
+    document.getElementById('lbImg').src = src;
+    document.getElementById('lbCaption').textContent = caption;
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+function closeLightbox(e) {
+    if(!e || e.target === document.getElementById('lightbox') || e.currentTarget.classList.contains('jh-lb-close')) {
+        document.getElementById('lightbox').classList.remove('open');
+        document.body.style.overflow = '';
+    }
+}
+document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeLightbox({target:document.getElementById('lightbox')}); });
+
+// Intersection observer for fade-in
+(function(){
+    if(!window.IntersectionObserver) return;
+    var els = document.querySelectorAll('.jh-stat, .jh-tl-item, .jh-photo-card, .jh-legacy-card');
+    var ob = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+            if(en.isIntersecting){
+                en.target.style.opacity='1';
+                en.target.style.transform='translateY(0)';
+                ob.unobserve(en.target);
+            }
+        });
+    }, {threshold:0.1});
+    els.forEach(function(el){
+        el.style.opacity='0';
+        el.style.transform='translateY(24px)';
+        el.style.transition='opacity 0.7s ease, transform 0.7s ease';
+        ob.observe(el);
+    });
+})();
+</script>
+</body>
+</html>
