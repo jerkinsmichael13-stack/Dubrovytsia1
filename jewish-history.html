@@ -34,7 +34,7 @@
 .jh-hero-bg {
     position: absolute;
     inset: -8%;
-    background-image: url('https://i.imgur.com/UakA88l.jpeg');
+    background-image: url('https://i.imgur.com/KuwKiZP.jpeg');
     background-size: cover;
     background-position: center 30%;
     filter: brightness(0.45) contrast(1.12) saturate(0.72);
@@ -1147,7 +1147,7 @@
     <div class="container">
         <div class="jh-book-inner">
             <div class="jh-book-cover">
-                <img src="https://i.imgur.com/UakA88l.jpeg" alt="Обкладинка книги Сефер Домбровіца" loading="lazy">
+                <img src="https://i.imgur.com/tWo9hCT.png" alt="Титульна сторінка Сефер Домбровіца" loading="lazy" style="cursor:pointer;" onclick="openBookReader()">
             </div>
             <div>
                 <div class="jh-book-meta-label">Книга пам'яті · Іцкор-Бух</div>
@@ -1156,11 +1156,80 @@
                 <p class="jh-book-description">
                     Написана тими, хто вижив і виїхав до Ізраїлю ще до Другої світової, книга є унікальним документом — детальна хроніка єврейського побуту, культури, релігійного життя і трагічної долі громади. Основний нарис «Стежками минулих днів» написаний Шмуелем Зальцманом — місцевим уродженцем. Частина сторінок перекладена українською мовою та стала основою для цього розділу.
                 </p>
+                <div style="margin-top:1.4rem;">
+                    <button onclick="openBookReader()" style="display:inline-flex;align-items:center;gap:0.6rem;font-family:'DM Sans',sans-serif;font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--color-accent);border:1px solid var(--color-accent);border-radius:var(--radius-full);padding:0.55rem 1.2rem;background:transparent;cursor:pointer;transition:background 0.2s,color 0.2s;" onmouseover="this.style.background='var(--color-accent)';this.style.color='#fff';" onmouseout="this.style.background='transparent';this.style.color='var(--color-accent)';">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                        Читати уривки з книги
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
+<!-- ═══════════ BOOK READER MODAL ═══════════ -->
+<div id="bookReaderModal" style="display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.88);backdrop-filter:blur(10px);overflow-y:auto;padding:2rem 1rem;" onclick="if(event.target===this)closeBookReader()">
+<div style="max-width:780px;margin:0 auto;background:var(--color-bg);border-radius:16px;box-shadow:0 40px 120px rgba(0,0,0,0.6);overflow:hidden;position:relative;">
+  <button onclick="closeBookReader()" style="position:absolute;top:1rem;right:1rem;width:34px;height:34px;border-radius:50%;border:1px solid var(--color-border);background:var(--color-bg-card);cursor:pointer;color:var(--color-text-muted);font-size:1.1rem;display:flex;align-items:center;justify-content:center;z-index:1;line-height:1;">×</button>
+  <div style="display:grid;grid-template-columns:110px 1fr;gap:1.8rem;align-items:center;padding:2rem 2.2rem 1.6rem;border-bottom:1px solid var(--color-border-light);background:var(--color-bg-alt);">
+    <img src="https://i.imgur.com/tWo9hCT.png" alt="Обкладинка" style="width:100%;border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.18);">
+    <div>
+      <div style="font-family:'DM Sans',sans-serif;font-size:0.44rem;letter-spacing:0.32em;text-transform:uppercase;color:var(--color-accent);margin-bottom:0.5rem;">Книга пам'яті · Іцкор-Бух · 1964</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:300;color:var(--color-text);line-height:1.2;margin-bottom:0.25rem;">ספר דומברוביצה</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:0.95rem;font-style:italic;color:var(--color-text-light);margin-bottom:0.25rem;">Sefer Dabrowica — Книга Дубровиці</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:0.82rem;color:var(--color-text-muted);">דאמבראָוויצער אָנדענק-בוך · Dabrowitser Ondenk-bukh</div>
+      <div style="margin-top:0.6rem;font-family:'DM Sans',sans-serif;font-size:0.68rem;color:var(--color-text-muted);">Тель-Авів · Грудень 1964 · כסלו תשכ"ה · Видання Дубровицького земляцтва в Ізраїлі</div>
+    </div>
+  </div>
+  <div style="display:flex;gap:0;border-bottom:1px solid var(--color-border-light);overflow-x:auto;background:var(--color-bg);">
+    <button class="brtab" data-tab="0" onclick="switchBRTab(0)" style="flex-shrink:0;padding:0.85rem 1.3rem;font-family:'DM Sans',sans-serif;font-size:0.6rem;letter-spacing:0.1em;border:none;border-bottom:2px solid var(--color-accent);background:transparent;color:var(--color-accent);cursor:pointer;">Стежками минулих днів</button>
+    <button class="brtab" data-tab="1" onclick="switchBRTab(1)" style="flex-shrink:0;padding:0.85rem 1.3rem;font-family:'DM Sans',sans-serif;font-size:0.6rem;letter-spacing:0.1em;border:none;border-bottom:2px solid transparent;background:transparent;color:var(--color-text-muted);cursor:pointer;">Будинки та старожитності</button>
+    <button class="brtab" data-tab="2" onclick="switchBRTab(2)" style="flex-shrink:0;padding:0.85rem 1.3rem;font-family:'DM Sans',sans-serif;font-size:0.6rem;letter-spacing:0.1em;border:none;border-bottom:2px solid transparent;background:transparent;color:var(--color-text-muted);cursor:pointer;">Хаос 1920 року</button>
+    <button class="brtab" data-tab="3" onclick="switchBRTab(3)" style="flex-shrink:0;padding:0.85rem 1.3rem;font-family:'DM Sans',sans-serif;font-size:0.6rem;letter-spacing:0.1em;border:none;border-bottom:2px solid transparent;background:transparent;color:var(--color-text-muted);cursor:pointer;">Майор та Балаховці</button>
+  </div>
+  <div style="padding:2rem 2.2rem 2.5rem;max-height:62vh;overflow-y:auto;">
+    <div id="brpanel0">
+      <p style="font-family:'DM Sans',sans-serif;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--color-accent);margin-bottom:1rem;">Шмуель Зальцман · Розділ А — Місто загалом</p>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1.08rem;line-height:1.88;color:var(--color-text-secondary);margin-bottom:1rem;">Дубровиця розташована в північно-західній частині Волинської губернії, неподалік від залізничної лінії Рівне–Вільно, за 28 кілометрів на північ від Сарн. Місто лежить на березі річки Горинь, оточене лісами з трьох боків. До прокладання залізничної лінії (1884 р.) головним транспортним шляхом була річка Горинь, що впадає в Прип'ять.</p>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1.08rem;line-height:1.88;color:var(--color-text-secondary);margin-bottom:1rem;">У центрі міста простягалася Ринкова площа квадратної форми зі стороною близько 150 метрів. 10 вулиць та провулків перетиналися на площі. Серед тих, хто навчався в «штіблі», колись виникла дискусія: чи спочатку була побудована площа, а від неї розійшлися вулиці, чи навпаки?.. Зрештою вирішили: спочатку прокладали вулиці, і само собою виникла площа — «як той, хто розкачує тісто у батон, а потім з'єднує два кінці в коло: само собою всередині утворюється отвір...»</p>
+      <blockquote style="border-left:2px solid var(--color-accent);padding:1rem 1.5rem;margin:1.2rem 0;background:var(--color-bg-warm);border-radius:0 8px 8px 0;">
+        <p style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-style:italic;color:var(--color-text);margin:0 0 0.4rem;">«Євреї жили в центрі міста, а християни — на його околицях. Відносини між двома громадами були нормальними… Нерідко християни зверталися до рабинів міста з проханням помолитися за одужання хворих у їхніх домівках. Бували також випадки, коли євреї та християни судилися перед рабином, і обидві сторони приймали його рішення з рівною повагою.»</p>
+        <cite style="font-family:'DM Sans',sans-serif;font-size:0.68rem;color:var(--color-text-muted);">— Шмуель Зальцман, «Стежками минулих днів»</cite>
+      </blockquote>
+    </div>
+    <div id="brpanel1" style="display:none;">
+      <p style="font-family:'DM Sans',sans-serif;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--color-accent);margin-bottom:1rem;">Сторінки 24–25 · Старожитності та типи будинків</p>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1.08rem;line-height:1.88;color:var(--color-text-secondary);margin-bottom:1rem;"><strong style="color:var(--color-text);">Старожитності.</strong> Різні легенди ходили щодо виявлення старожитностей: на північ від міста, біля лазні, стирчала скеля висотою близько метра з половиною, і на ній були викарбувані незрозумілі слова та кілька цифр, що починалися з «17…» — слова та цифри ніколи не були розшифровані. На вулиці Воробин, біля штабу поліції, стояла будівля «Сокольня» — на честь текстильної фабрики, що колись існувала тут. Також існувала легенда про підземний хід від католицької церкви на захід — тунель, виявлений у поточному столітті, викликав безліч здогадок.</p>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1.08rem;line-height:1.88;color:var(--color-text-secondary);margin-bottom:1rem;"><strong style="color:var(--color-text);">Будинки.</strong> Будинки в більшості своїй були збудовані з дерева; через численні пожежі почали використовувати випалену цеглу з місцевих цегелень. Стиль будинків був різним, проте можна було розрізнити три основні типи:</p>
+      <div style="background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:8px;padding:1.2rem 1.5rem;margin:1rem 0;">
+        <p style="font-family:'DM Sans',sans-serif;font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--color-accent);margin-bottom:0.8rem;">Три типи житла</p>
+        <p style="font-family:'Cormorant Garamond',serif;font-size:1rem;line-height:1.7;color:var(--color-text-secondary);margin:0;"><strong style="color:var(--color-text);">А.</strong> Велика зала, дві спальні, кухня та комора.<br><strong style="color:var(--color-text);">Б.</strong> Їдальня, вітальня, дві спальні, кухня та комора.<br><strong style="color:var(--color-text);">В.</strong> Передпокій, їдальня, вітальня, дві спальні, кухня та комора.</p>
+      </div>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1.08rem;line-height:1.88;color:var(--color-text-secondary);">Будинки були переважно одноповерховими. Крім кухонної печі, у стінах були вбудовані дві пічки для обігріву взимку. Для опалення використовували дрова, які купували у селян. Вугілля з печі йшло на розігрів самоварів та прасок. На подвір'ї був хлів, бо у більшості родин були корови. В місті не було водопроводу та каналізації — воду черпали з колодязів.</p>
+    </div>
+    <div id="brpanel2" style="display:none;">
+      <p style="font-family:'DM Sans',sans-serif;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--color-accent);margin-bottom:1rem;">Сторінки 218–220 · Рав Аарон Петешник — Розділ 13</p>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1.08rem;line-height:1.88;color:var(--color-text-secondary);margin-bottom:1rem;">О 12 годині дня до міста увійшли кілька сотень солдатів, і як тільки побачили, що в місті немає жодної влади — почали чинити безчинства: розбивали крамниці, грабували, а також били євреїв. Тільки пізніше з'явилися польські офіцери і прогнали їх.</p>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1.08rem;line-height:1.88;color:var(--color-text-secondary);margin-bottom:1rem;">У суботу, 10 липня 1920 року, польський комендант видав наказ, щоб усі йшли за місто копати окопи. Ввечері кавалеристи підпалили довгий міст між містом і залізничною станцією. Протягом трьох наступних днів не було жодної влади.</p>
+      <blockquote style="border-left:2px solid var(--color-accent);padding:1rem 1.5rem;margin:1.2rem 0;background:var(--color-bg-warm);border-radius:0 8px 8px 0;">
+        <p style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-style:italic;color:var(--color-text);margin:0 0 0.4rem;">«Таким чином у нас за три дні тричі змінювалася влада: вдень — більшовики, вдень — поляки, а ввечері — знову більшовики. Наше становище за таких умов можна легко уявити: постійно між молотом і ковадлом, і за все доводилося розплачуватися…»</p>
+        <cite style="font-family:'DM Sans',sans-serif;font-size:0.68rem;color:var(--color-text-muted);">— Рав Аарон Петешник, «Розділи з Першої світової війни», стор. 219</cite>
+      </blockquote>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1.08rem;line-height:1.88;color:var(--color-text-secondary);">У Хол-а-Моед Суккот дізналися, що загін «поляків» — це насправді російські солдати під назвою «Балаховці» (загони Булак-Балаховича). На Йом-Кіпур ці бандити підпалили млин і електростанцію. Одній жінці, з пальця якої каблучка швидко не знімалася, просто відрубали палець.</p>
+    </div>
+    <div id="brpanel3" style="display:none;">
+      <p style="font-family:'DM Sans',sans-serif;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--color-accent);margin-bottom:1rem;">Сторінки 221–225 · Розділи 15–16</p>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1.08rem;line-height:1.88;color:var(--color-text-secondary);margin-bottom:1rem;">До рабина зібралося вузьке коло людей на Сімхат Тора. Раптом почувся легкий стукіт у двері. Зайшов польський офіцер — як виявилося, майор, призначений комендантом гарнізону. Він прийшов встановити зв'язок із єврейським населенням і пообіцяв, що солдати не будуть бешкетувати на ринку, і що видасть дозволи на в'їзд та вивезення товарів.</p>
+      <blockquote style="border-left:2px solid var(--color-accent);padding:1rem 1.5rem;margin:1.2rem 0;background:var(--color-bg-warm);border-radius:0 8px 8px 0;">
+        <p style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-style:italic;color:var(--color-text);margin:0 0 0.4rem;">«Найбільша заслуга і найбільша дія на користь нашого міста — справа балаховців. По всьому регіону поширилися великі погроми. Вони мали намір увірватися і в наше місто, але майор жодним чином не дозволив їм цього. Як залізний мур стояв він за нас і захищав нас за власною ініціативою.»</p>
+        <cite style="font-family:'DM Sans',sans-serif;font-size:0.68rem;color:var(--color-text-muted);">— Рав Аарон Петешник, «Розділи з Першої світової війни», стор. 222</cite>
+      </blockquote>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1.08rem;line-height:1.88;color:var(--color-text-secondary);margin-bottom:1rem;">Десять містечок у регіоні були спустошені балаховцями: сотні євреїв вбиті та поранені, сотні сімей ховалися в лісах із малими дітьми в холодні жовтневі ночі. Завдяки клопотанням майора містечко Серники було врятоване — він надіслав комісію та сповістив жандармерію в Пінську, і балаховців роззброїли.</p>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1.08rem;line-height:1.88;color:var(--color-text-secondary);">Коли майора відкликали у військове міністерство, він через рабина надіслав єврейському населенню теплий прощальний лист. На знак визнання йому подарували срібну скриньку з написом. «У нашому місті завдяки «майору» все минуло спокійно, і ми відбули той час лише переляком» — підсумовує Петешник.</p>
+    </div>
+  </div>
+</div>
+</div>
 <!-- ═══════════════ ФОТОГАЛЕРЕЯ ═══════════════ -->
 <section class="jh-gallery-section">
     <div class="container">
@@ -1459,6 +1528,137 @@
     </div>
 </section>
 
+<!-- ═══════════════ CHAPTER 4: Старожитності ═══════════════ -->
+<section class="jh-chapter-section">
+    <div class="container">
+        <div class="jh-chapter-inner reverse">
+            <div class="jh-chapter-body">
+                <h3>Старожитності:<br><em>скеля, підземний хід і «Сокольня»</em></h3>
+                <p>
+                    Різні легенди ходили щодо виявлення старожитностей на території Дубровиці. На північ від міста, біля лазні, стирчала скеля висотою близько метра з половиною — і на ній були викарбувані незрозумілі слова та кілька цифр, що починалися з «17…». Слова та цифри ніколи не були розшифровані. Хто і коли залишив цей напис — залишилося таємницею.
+                </p>
+                <p>
+                    На вулиці Воробин, поруч зі штабом поліції, стояла будівля, яку називали <strong>«Сокольня»</strong> — на честь текстильної фабрики, що колись існувала на цьому місці. Проте коли це було і кому вона належала в минулому — пояснити ніхто не міг.
+                </p>
+                <div class="jh-quote">
+                    <p>«Також легенда про підземний хід, що тягнеться від католицької церкви на захід — тунель, виявлений у поточному столітті, — викликала багато здогадок та припущень.»</p>
+                    <cite>— Шмуель Зальцман, «Стежками минулих днів», стор. 24</cite>
+                </div>
+            </div>
+            <div class="jh-chapter-aside">
+                <div class="jh-chapter-num">04</div>
+                <div class="jh-chapter-label">Розділ четвертий</div>
+                <h3 class="jh-chapter-aside-title">Старожитності та загадки міста</h3>
+                <p class="jh-chapter-aside-desc">Скеля з нерозшифрованим написом «17…», підземний хід від костелу та загадкова «Сокольня» — артефакти, що зберігали свої таємниці від усіх поколінь.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════ CHAPTER 5: Будинки ═══════════════ -->
+<section class="jh-chapter-section">
+    <div class="container">
+        <div class="jh-chapter-inner">
+            <div class="jh-chapter-aside">
+                <div class="jh-chapter-num">05</div>
+                <div class="jh-chapter-label">Розділ п'ятий</div>
+                <h3 class="jh-chapter-aside-title">Будинки зсередини та ззовні</h3>
+                <p class="jh-chapter-aside-desc">Дерев'яне і цегляне будівництво, три типи планування, груба піч та самовар — побут єврейської родини Дубровиці крізь опис Зальцмана.</p>
+            </div>
+            <div class="jh-chapter-body">
+                <h3>Три типи будинків<br><em>єврейської Дубровиці</em></h3>
+                <p>
+                    Будинки в більшості своїй були збудовані з дерева. Через численні пожежі почали використовувати <strong>випалену цеглу з місцевих цегелень</strong>. Для побудови будинку не потрібно було дозволу чи затвердженого плану — кожен робив план на власний розсуд і наймав місцевих майстрів-будівельників, євреїв та неєвреїв. Стиль будинків був різним, проте Зальцман виділяє три основні типи:
+                </p>
+                <div class="jh-highlight-box">
+                    <div class="jh-highlight-box-title">Три типи житла</div>
+                    <p>
+                        <strong>А.</strong> Велика зала, дві спальні, кухня та комора.<br>
+                        <strong>Б.</strong> Їдальня, вітальня, дві спальні, кухня та комора.<br>
+                        <strong>В.</strong> Передпокій, їдальня, вітальня, дві спальні, кухня та комора.<br><br>
+                        Ці типи відповідали економічному та соціальному статусу власників.
+                    </p>
+                </div>
+                <p>
+                    Будинки в переважній більшості були <strong>одноповерховими</strong>, сходи висотою близько метра вели до будинку. Крім печі для випікання та приготування їжі на кухні, у стінах були вбудовані дві пічки для обігріву взимку. Для опалення використовували лише дрова, куплені у селян з околиць. Заготівля та підготовка дров здійснювалася найманими неєвреями.
+                </p>
+                <p>
+                    Підлога в будинках була дерев'яною, щільно пригнаною. Дах — похилий, вкритий гонтом або бляхою. Між стелею та дахом — горище-комора. На подвір'ї стояв хлів, бо у більшості родин були корови, а також вбиральня. Квітників біля будинку не було прийнято. <strong>Жодної санітарної інженерії</strong> — водопроводу та каналізації в місті не існувало. Воду черпали з колодязів у різних частинах міста.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════ CHAPTER 6: Транспорт ═══════════════ -->
+<section class="jh-chapter-section">
+    <div class="container">
+        <div class="jh-chapter-inner reverse">
+            <div class="jh-chapter-body">
+                <h3>Залізниця, вузькоколійка<br><em>та три дороги з міста</em></h3>
+                <p>
+                    До поселень поблизу залізничної лінії діставалися потягом. Чотири рази на день потяг зупинявся на станції «Дубровиця»: двічі у південному напрямку — до Сарн і Рівного, двічі у північному — до Лунінця. До віддалених поселень (Бережниця, Висоцьк, Володимирець) їздили возами, бо постійного транспортного сполучення до них не існувало.
+                </p>
+                <div class="jh-highlight-box">
+                    <div class="jh-highlight-box-title">Вузькоколійка Першої світової</div>
+                    <p>У роки Першої світової війни була збудована вузькоколійна залізниця, що з'єднувала Дубровицю як початкову станцію з Антонівкою на лінії Сарни–Ковель. Лінія використовувалася переважно для перевезення вантажів та військових потреб — цивільні пасажири майже не користувалися нею.</p>
+                </div>
+                <p>
+                    Три головні вулиці вели з міста назовні: <strong>дорога до залізничної станції</strong> та до Бережниці на півдні; <strong>вулиця Макаров</strong> — до поселень на заході; <strong>вулиця Воробин</strong> — до поселень на півночі. До побудови моста через Горинь переправлялися поромом — лише з прокладенням залізниці у 1884 р. з'явився і довгий міст завдовжки близько 500 метрів.
+                </p>
+            </div>
+            <div class="jh-chapter-aside">
+                <div class="jh-chapter-num">06</div>
+                <div class="jh-chapter-label">Розділ шостий</div>
+                <h3 class="jh-chapter-aside-title">Транспортне сполучення</h3>
+                <p class="jh-chapter-aside-desc">Від парому через Горинь — до залізниці 1884 року та вузькоколійки Першої світової. Як Дубровиця виходила зі своєї поліської замкнутості у великий світ.</p>
+                <div class="jh-aside-image">
+                    <img src="https://i.imgur.com/rVnHRb1.jpeg" alt="Міст через Горинь" loading="lazy">
+                    <div class="jh-aside-image-caption">Єврейська пара біля мосту через Горинь, збудованого у 1884 р.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════ CHAPTER 7: Хаос 1920 і Майор ═══════════════ -->
+<section class="jh-chapter-section">
+    <div class="container">
+        <div class="jh-chapter-inner">
+            <div class="jh-chapter-aside">
+                <div class="jh-chapter-num">07</div>
+                <div class="jh-chapter-label">Розділ сьомий</div>
+                <h3 class="jh-chapter-aside-title">Хаос 1920 року і польський майор</h3>
+                <p class="jh-chapter-aside-desc">Три влади за три дні. Балаховці, що спустошили десять містечок регіону. І польський офіцер, що стояв як залізний мур між погромниками та Дубровицею.</p>
+                <div class="jh-aside-image">
+                    <img src="https://i.imgur.com/YIRm8Rt.jpeg" alt="Маніфестація 1920" loading="lazy">
+                    <div class="jh-aside-image-caption">Маніфестація 1920 р. — рік великих потрясінь для єврейської Дубровиці</div>
+                </div>
+            </div>
+            <div class="jh-chapter-body">
+                <h3>Між молотом і ковадлом:<br><em>1920 рік</em></h3>
+                <p>
+                    Влітку 1920 року місто пережило неймовірний хаос. У суботу, 10 липня, польський комендант наганяв євреїв копати окопи. Ввечері кавалеристи відступили, підпаливши довгий міст між містом і залізничною станцією. Три дні тривало безвладдя — місто тремтіло перед партизанськими загонами.
+                </p>
+                <div class="jh-quote">
+                    <p>«Таким чином у нас за три дні тричі змінювалася влада: вдень — більшовики, вдень — поляки, а ввечері — знову більшовики. Наше становище за таких умов можна легко уявити: постійно між молотом і ковадлом, і за все доводилося розплачуватися…»</p>
+                    <cite>— Рав Аарон Петешник, «Розділи з Першої світової війни», стор. 219</cite>
+                </div>
+                <p>
+                    На Йом-Кіпур бандити-дезертири підпалили млин і електростанцію. В однієї жінки на пальці була каблучка, і оскільки вона швидко не знімалася — <strong>просто відрубали палець</strong>. У Хол-а-Моед Суккот дізналися, що це «балаховці» — загони Булак-Балаховича, відомі жахливими погромами по всій Україні.
+                </p>
+                <div class="jh-highlight-box">
+                    <div class="jh-highlight-box-title">«Майор», який врятував місто</div>
+                    <p>На Сімхат Тора до рабина несподівано зайшов польський офіцер — майор, призначений комендантом гарнізону. Він прийшов встановити зв'язок з єврейською громадою і пообіцяв: солдати не будуть бешкетувати, він видасть дозволи на торгівлю. Головне — він особисто не пустив балаховців до міста, тоді як десять містечок навколо були ними спустошені. Сотні євреїв регіону загинули. Дубровиця обійшлася «лише переляком». Коли майора відкликали, місто подарувало йому срібну скриньку з написом.</p>
+                </div>
+                <p>
+                    Десять містечок у регіоні були спустошені балаховцями: сотні євреїв убиті та поранені, сотні сімей ховалися в лісах із малими дітьми в холодні жовтневі ночі 1920 року. Завдяки клопотанням майора містечко Серники було врятоване — він надіслав комісію до Пінська, і балаховців роззброїли.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- ═══════════════ TIMELINE ═══════════════ -->
 <section class="jh-timeline-section">
     <div class="container">
@@ -1712,6 +1912,29 @@ function closeLightbox(e) {
     }
 }
 document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeLightbox({target:document.getElementById('lightbox')}); });
+
+// Book Reader Modal
+function openBookReader() {
+    document.getElementById('bookReaderModal').style.display = 'block';
+    document.body.style.overflow = 'hidden';
+}
+function closeBookReader() {
+    document.getElementById('bookReaderModal').style.display = 'none';
+    document.body.style.overflow = '';
+}
+function switchBRTab(n) {
+    for (var i = 0; i < 4; i++) {
+        var panel = document.getElementById('brpanel' + i);
+        if (panel) panel.style.display = i === n ? 'block' : 'none';
+    }
+    var tabs = document.querySelectorAll('.brtab');
+    tabs.forEach(function(t) {
+        var active = parseInt(t.getAttribute('data-tab')) === n;
+        t.style.borderBottom = active ? '2px solid var(--color-accent)' : '2px solid transparent';
+        t.style.color = active ? 'var(--color-accent)' : 'var(--color-text-muted)';
+    });
+}
+document.addEventListener('keydown', function(e){ if(e.key==='Escape'){ closeBookReader(); } });
 
 // Intersection observer for fade-in
 (function(){
