@@ -1445,6 +1445,7 @@
     transform: rotate(28deg);
     transition: transform 0.5s ease;
     pointer-events: none;
+    z-index: 10;
 }
 .jh-needle.away { transform: rotate(12deg); }
 .jh-needle svg { width: 100%; height: 100%; }
@@ -1732,7 +1733,7 @@
 
     <!-- Звезда Давида-фон -->
     <div class="jh-hero-scroll" aria-hidden="true">
-        <svg class="jh-hero-star" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg class="jh-hero-star" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:none;">
             <polygon points="50,5 61,35 95,35 67,57 78,91 50,70 22,91 33,57 5,35 39,35" fill="none" stroke="rgba(201,162,39,0.6)" stroke-width="0.5"/>
             <polygon points="50,15 59,42 88,42 65,58 74,85 50,69 26,85 35,58 12,42 41,42" fill="none" stroke="rgba(201,162,39,0.3)" stroke-width="0.3"/>
         </svg>
@@ -1741,7 +1742,8 @@
     <div class="jh-hero-content">
         <div class="jh-eyebrow">
             <svg class="jh-eyebrow-star" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <polygon points="12,2 14.4,8.6 21.5,8.6 15.8,13 17.9,19.8 12,16 6.1,19.8 8.2,13 2.5,8.6 9.6,8.6" fill="rgba(201,162,39,0.7)"/>
+                <path d="M12 2C12 2 7 8 7 13a5 5 0 0 0 10 0c0-5-5-11-5-11z" fill="rgba(201,162,39,0.65)" stroke="rgba(201,162,39,0.4)" stroke-width="0.5"/>
+                <path d="M12 16c-1.1 0-2-.9-2-2 0-2 2-5 2-5s2 3 2 5c0 1.1-.9 2-2 2z" fill="rgba(201,162,39,0.3)"/>
             </svg>
             <span>Єврейська спадщина · Дубровиця · XV–XX ст.</span>
         </div>
@@ -1848,6 +1850,7 @@
     <button class="brtab" data-tab="1" onclick="switchBRTab(1)" style="flex-shrink:0;padding:0.85rem 1.3rem;font-family:'DM Sans',sans-serif;font-size:0.6rem;letter-spacing:0.1em;border:none;border-bottom:2px solid transparent;background:transparent;color:var(--color-text-muted);cursor:pointer;">Будинки та старожитності</button>
     <button class="brtab" data-tab="2" onclick="switchBRTab(2)" style="flex-shrink:0;padding:0.85rem 1.3rem;font-family:'DM Sans',sans-serif;font-size:0.6rem;letter-spacing:0.1em;border:none;border-bottom:2px solid transparent;background:transparent;color:var(--color-text-muted);cursor:pointer;">Хаос 1920 року</button>
     <button class="brtab" data-tab="3" onclick="switchBRTab(3)" style="flex-shrink:0;padding:0.85rem 1.3rem;font-family:'DM Sans',sans-serif;font-size:0.6rem;letter-spacing:0.1em;border:none;border-bottom:2px solid transparent;background:transparent;color:var(--color-text-muted);cursor:pointer;">Майор та Балаховці</button>
+    <button class="brtab" data-tab="4" onclick="switchBRTab(4)" style="flex-shrink:0;padding:0.85rem 1.3rem;font-family:'DM Sans',sans-serif;font-size:0.6rem;letter-spacing:0.1em;border:none;border-bottom:2px solid transparent;background:transparent;color:var(--color-text-muted);cursor:pointer;">Повний текст (укр.)</button>
   </div>
   <div style="padding:2rem 2.2rem 2.5rem;max-height:62vh;overflow-y:auto;">
     <div id="brpanel0">
@@ -1888,6 +1891,48 @@
       </blockquote>
       <p style="font-family:'Cormorant Garamond',serif;font-size:1.08rem;line-height:1.88;color:var(--color-text-secondary);margin-bottom:1rem;">Десять містечок у регіоні були спустошені балаховцями: сотні євреїв вбиті та поранені, сотні сімей ховалися в лісах із малими дітьми в холодні жовтневі ночі. Завдяки клопотанням майора містечко Серники було врятоване — він надіслав комісію та сповістив жандармерію в Пінську, і балаховців роззброїли.</p>
       <p style="font-family:'Cormorant Garamond',serif;font-size:1.08rem;line-height:1.88;color:var(--color-text-secondary);">Коли майора відкликали у військове міністерство, він через рабина надіслав єврейському населенню теплий прощальний лист. На знак визнання йому подарували срібну скриньку з написом. «У нашому місті завдяки «майору» все минуло спокійно, і ми відбули той час лише переляком» — підсумовує Петешник.</p>
+    </div>
+    <div id="brpanel4" style="display:none;">
+      <p style="font-family:'DM Sans',sans-serif;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--color-accent);margin-bottom:1.2rem;">Повний переклад · Шмуель Зальцман та Рав Аарон Петешник</p>
+
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:400;color:var(--color-text);margin:0 0 0.4rem;">Стежками минулих днів</h3>
+      <p style="font-family:'DM Sans',sans-serif;font-size:0.7rem;color:var(--color-text-muted);margin-bottom:1.4rem;">Шмуель Зальцман — сторінки 21–61</p>
+
+      <p style="font-family:'DM Sans',sans-serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--color-accent);margin:0.8rem 0 0.4rem;">1. Географічне положення</p>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.85;color:var(--color-text-secondary);margin-bottom:0.9rem;">Дубровиця розташована в північно-західній частині Волинської губернії, неподалік від залізничної лінії Рівне–Вільно, за 28 кілометрів на північ від Сарн та приблизно за 70 кілометрів на південний схід від Пінська. Місто лежить на березі річки Горинь, оточене лісами з трьох боків. До прокладання залізничної лінії (1884 р.) головним транспортним шляхом була річка Горинь, що впадає в Прип'ять. З прокладанням лінії зв'язки з прилеглими містами значно зміцнилися. У той же період був збудований міст через річку Горинь довжиною близько 500 метрів. Озера поблизу утворилися внаслідок розливів річки Горинь у весняний період.</p>
+
+      <p style="font-family:'DM Sans',sans-serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--color-accent);margin:0.8rem 0 0.4rem;">2. Історія міста</p>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.85;color:var(--color-text-secondary);margin-bottom:0.9rem;">Хоча єврейське поселення в Дубровиці почалося лише в XV столітті, місто існувало задовго до того. «Велика Радянська Енциклопедія» зазначає, що місто відоме з XIII століття. До литовського завоювання (1330 р.) назвою поселення було Дубровиця. Литовці змінили назву на Дубровиць або Дубровичі. Після Унії Литви та Польщі (1386 р.) місто отримало польську назву — Домбровиця, і цей символ супроводжував єврейських мешканців близько 500 років. У 1799 році Дубровиця була включена до Рівненського повіту і залишалася в цьому статусі до відновлення польської влади у 1921 році.</p>
+
+      <p style="font-family:'DM Sans',sans-serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--color-accent);margin:0.8rem 0 0.4rem;">В. Як будувалося поселення</p>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.85;color:var(--color-text-secondary);margin-bottom:0.9rem;">У центрі міста простягалася Ринкова площа квадратної форми зі стороною близько 150 метрів. 10 вулиць та провулків перетиналися на площі. Серед тих, хто навчався в «штіблі», виникла дискусія: «Чи спочатку була побудована площа, а від неї розійшлися вулиці, чи навпаки?» Вирішили, що спочатку прокладали вулиці — «схоже на того, хто розкачує тісто у батон, а потім з'єднує два кінці в коло: само собою всередині утворюється отвір…» На східній стороні ринку стояли будинки Готліба, Слуцького, Герштейна та Сандлера. Між ними — будинок католицької церкви. Далі — великий сад і два будинки родини графа Плятера.</p>
+
+      <p style="font-family:'DM Sans',sans-serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--color-accent);margin:0.8rem 0 0.4rem;">Г. Старожитності</p>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.85;color:var(--color-text-secondary);margin-bottom:0.9rem;">Різні легенди ходили щодо виявлення старожитностей. На північ від міста, біля лазні, стирчала скеля з викарбуваними словами та цифрами, що починалися з «17…» — ніколи не розшифровані. На вулиці Воробин — будівля «Сокольня», названа на честь текстильної фабрики, яка колись існувала тут. Також легенда про підземний хід від католицької церкви на захід, виявлений у поточному столітті.</p>
+
+      <p style="font-family:'DM Sans',sans-serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--color-accent);margin:0.8rem 0 0.4rem;">Д. Будинки зсередини та ззовні</p>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.85;color:var(--color-text-secondary);margin-bottom:0.9rem;">Будинки в більшості своїй були збудовані з дерева; через численні пожежі почали використовувати цеглу. Три типи житла: А — велика зала, дві спальні, кухня та комора; Б — їдальня, вітальня, дві спальні, кухня та комора; В — передпокій, їдальня, вітальня, дві спальні, кухня та комора. Будинки переважно одноповерхові. Крім кухонної печі, у стінах — дві пічки для обігріву взимку. На подвір'ї — хлів, бо у більшості родин були корови. Воду черпали з колодязів у різних частинах міста.</p>
+
+      <p style="font-family:'DM Sans',sans-serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--color-accent);margin:1.2rem 0 0.4rem;">А. Населення</p>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.85;color:var(--color-text-secondary);margin-bottom:0.9rem;">Згідно з переписом 1766 року, Дубровиця налічувала 404 євреї; у 1847 році — 1910 євреїв; у 1897 році — 2868 євреїв із загальної кількості 6007 душ. Напередодні Першої світової війни (1914) у місті було близько 10 000 душ, з них близько 4000 євреїв. Склад єврейського населення: 40% ремісників; 30% власників крамниць; 20% торговців; 10% служителів культу та представників вільних професій. Євреї Дубровиці розмовляли на їдиші з литовським акцентом.</p>
+
+      <p style="font-family:'DM Sans',sans-serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--color-accent);margin:0.8rem 0 0.4rem;">Б. Заснування незалежної громади</p>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.85;color:var(--color-text-secondary);margin-bottom:0.9rem;">Поселенці з північного заходу спочатку належали до громади Пінська (згідно з «Пінков євреїв Литви» від 1623 р.). Лише у 1753 році власник Міхаель Бростовський видав наказ на заснування незалежної єврейської громади: власний автономний суд; право на лісоматеріали; безкоштовні ділянки для громадських будівель (синагога, лазня, будинок рабина, цвинтар); право засновувати гуральні та торгувати вином; звільнення від панщини. Ці права підтвердив у 1774 році Антоній Плятер.</p>
+
+      <p style="font-family:'DM Sans',sans-serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--color-accent);margin:0.8rem 0 0.4rem;">Рабини та духовне протистояння</p>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.85;color:var(--color-text-secondary);margin-bottom:0.9rem;">Першим власним рабином став рав Сендер-Натан. Після нього — рав Яаков-Натан Вайсман (1870 р.) — великий мудрець Тори, але слабкий в «земних справах». Потім — рав Іцхак Шапіра («рав Ітці-суддя»), видатна особистість, що особисто перевіряла ваги торговців. Після його смерті місто запросило аж чотирьох рабинів одночасно — «річ, якої ніколи не траплялося в жодному іншому єврейському поселенні в регіоні». Два з них — рав Зальцман та рав Рабинович — постійно сперечалися, поки суперечки не вирішували рабини Пінська та Борисова.</p>
+
+      <p style="font-family:'DM Sans',sans-serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--color-accent);margin:0.8rem 0 0.4rem;">П'ять синагог та хасидські мелодії</p>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.85;color:var(--color-text-secondary);margin-bottom:0.9rem;">Місто мало п'ять синагог: «Велика синагога» (ашкеназький обряд), Столінський штібель (Карлін-Столін), «Бейт га-Мідраш» (хасиди Березного), «Тріскер штібель» (хасиди Триська), та «Корітські» — «поспішна» синагога. Хасидська мелодія (ніґун) — це форма служіння Творцю, сповнена відданості та натхнення. Були мелодії щоденні та для Суботи, для свят та Страшних днів. Хасидські мелодії співали в кожному домі, у ремісничих майстернях, і навіть діти в «хедерах» співали їх.</p>
+
+      <blockquote style="border-left:2px solid var(--color-accent);padding:1rem 1.5rem;margin:1.2rem 0;background:var(--color-bg-warm);border-radius:0 8px 8px 0;">
+        <p style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-style:italic;color:var(--color-text);margin:0 0 0.4rem;">«Була зруйнована єврейська Дубровиця: зрубані її гілки та пущений вогонь у її крону. Припинилася творчість і затихла пісня. Дерево зрубано. Ой, яке лихо!»</p>
+        <cite style="font-family:'DM Sans',sans-serif;font-size:0.68rem;color:var(--color-text-muted);">— Шмуель Зальцман</cite>
+      </blockquote>
+
+      <p style="font-family:'DM Sans',sans-serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--color-accent);margin:1.2rem 0 0.4rem;">У вирі часів (1914–1920) — Рав Аарон Петешник</p>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.85;color:var(--color-text-secondary);margin-bottom:0.9rem;">Більша частина Першої світової пройшла без особливих потрясень. У 1918 році місцевий комітет захопив владу і проголосив «Радянську Республіку в Домбровиці». Але невдовзі прийшли петлюрівці. П'ять днів тривав бій за місто. Після взяття петлюрівці вчинили жорстокий погром тривалістю 14 днів. Двоє євреїв були вбиті. Делегація з дванадцяти найповажніших мешканців, що вийшла з хлібом і сіллю, була заарештована та побита. Лише дивом, після передачі великої суми комендантові, делегацію звільнили. Слідом за погромом прийшли голод та епідемія тифу — понад сто єврейських душ.</p>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.85;color:var(--color-text-secondary);">Потім прийшов польський майор, призначений комендантом гарнізону, який встановив порядок і захищав місто від балаховців — загонів Булак-Балаховича, що спустошили десять містечок у регіоні. Завдяки його клопотанням Дубровиця уникла погромів. Коли майора відкликали, йому подарували срібну скриньку з написом — на знак вдячності єврейської громади.</p>
     </div>
   </div>
 </div>
@@ -2047,21 +2092,21 @@
     <div class="container">
         <div class="jh-nigun-inner">
             <!-- LEFT: Vinyl disc -->
-            <div class="jh-nigun-icon-col">
+            <div class="jh-nigun-icon-col" style="position:relative;">
                 <div class="jh-vinyl" id="jh-vinyl">
                     <div class="jh-vinyl-label">
-                        <svg class="jh-vinyl-star" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <polygon points="50,5 61,35 95,35 68,57 79,91 50,70 21,91 32,57 5,35 39,35"
-                                fill="none" stroke="rgba(201,162,39,0.85)" stroke-width="1.5"/>
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:22px;height:22px;opacity:0.6;">
+                            <circle cx="12" cy="12" r="4" fill="rgba(201,162,39,0.8)"/>
+                            <circle cx="12" cy="12" r="8" stroke="rgba(201,162,39,0.4)" stroke-width="1"/>
                         </svg>
                     </div>
-                    <div class="jh-needle" id="jh-needle">
-                        <svg viewBox="0 0 70 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="10" cy="10" r="7" fill="rgba(201,162,39,0.4)" stroke="rgba(201,162,39,0.6)" stroke-width="1"/>
-                            <line x1="10" y1="17" x2="58" y2="80" stroke="rgba(201,162,39,0.5)" stroke-width="1.5" stroke-linecap="round"/>
-                            <circle cx="58" cy="80" r="3" fill="rgba(201,162,39,0.7)"/>
-                        </svg>
-                    </div>
+                </div>
+                <div class="jh-needle" id="jh-needle">
+                    <svg viewBox="0 0 70 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="10" cy="10" r="7" fill="rgba(201,162,39,0.4)" stroke="rgba(201,162,39,0.6)" stroke-width="1"/>
+                        <line x1="10" y1="17" x2="58" y2="80" stroke="rgba(201,162,39,0.5)" stroke-width="1.5" stroke-linecap="round"/>
+                        <circle cx="58" cy="80" r="3" fill="rgba(201,162,39,0.7)"/>
+                    </svg>
                 </div>
             </div>
 
@@ -2568,11 +2613,9 @@
                 </nav>
             </div>
             <div class="footer-section">
-                <h4 class="footer-title">Джерела</h4>
+                <h4 class="footer-title">Контакти</h4>
                 <p class="footer-text">
-                    «Сефер Домбровіца» — Тел-Авів, 1964<br>
-                    Яд Вашем — Єрусалим<br>
-                    ДАРО — Рівне<br>
+                    Маєте матеріали або пропозиції?<br>
                     <a href="contacts.html" class="footer-link">Зв'яжіться з нами</a>
                 </p>
             </div>
@@ -2633,7 +2676,7 @@ function closeBookReader() {
     document.body.style.overflow = '';
 }
 function switchBRTab(n) {
-    for (var i = 0; i < 4; i++) {
+    for (var i = 0; i < 5; i++) {
         var panel = document.getElementById('brpanel' + i);
         if (panel) panel.style.display = i === n ? 'block' : 'none';
     }
