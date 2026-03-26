@@ -128,7 +128,7 @@
 }
 .jh-eyebrow span {
     font-family: 'DM Sans', sans-serif;
-    font-size: 0.5rem;
+    font-size: 0.65rem;
     letter-spacing: 0.35em;
     text-transform: uppercase;
     color: rgba(201,162,39,0.7);
@@ -180,7 +180,7 @@
 }
 .jh-scroll-indicator span {
     font-family: 'DM Sans', sans-serif;
-    font-size: 0.42rem;
+    font-size: 0.58rem;
     letter-spacing: 0.3em;
     text-transform: uppercase;
     color: rgba(255,255,255,0.35);
@@ -248,7 +248,7 @@
 }
 .jh-stat-label {
     font-family: 'DM Sans', sans-serif;
-    font-size: 0.5rem;
+    font-size: 0.62rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--color-text-muted);
@@ -261,7 +261,7 @@
 }
 .jh-intro-label {
     font-family: 'DM Sans', sans-serif;
-    font-size: 0.48rem;
+    font-size: 0.62rem;
     letter-spacing: 0.3em;
     text-transform: uppercase;
     color: var(--color-accent);
@@ -338,7 +338,7 @@
 }
 .jh-section-eyebrow {
     font-family: 'DM Sans', sans-serif;
-    font-size: 0.48rem;
+    font-size: 0.62rem;
     letter-spacing: 0.35em;
     text-transform: uppercase;
     color: var(--color-accent);
@@ -362,13 +362,14 @@
     gap: 1.2rem;
 }
 .jh-photo-card {
-    background: var(--color-bg-card);
     border-radius: var(--radius-md);
     overflow: hidden;
     box-shadow: var(--shadow-sm);
     border: 1px solid var(--color-border-light);
     transition: transform var(--transition-base), box-shadow var(--transition-base);
     cursor: pointer;
+    position: relative;
+    background: #111;
 }
 .jh-photo-card:hover {
     transform: translateY(-4px);
@@ -388,27 +389,41 @@
 .jh-photo-card.wide .jh-photo-img { aspect-ratio: 16/9; }
 .jh-photo-card:hover .jh-photo-img {
     filter: sepia(0) contrast(1.06);
-    transform: scale(1.02);
+    transform: scale(1.05);
 }
+/* Caption: overlay at bottom of image */
 .jh-photo-caption {
-    padding: 0.85rem 1rem;
-    border-top: 1px solid var(--color-border-light);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 2rem 1rem 0.9rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.3) 60%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+.jh-photo-card:hover .jh-photo-caption {
+    opacity: 1;
 }
 .jh-photo-caption p {
     font-family: 'Cormorant Garamond', serif;
     font-size: 0.88rem;
     font-style: italic;
-    color: var(--color-text-secondary);
-    line-height: 1.5;
+    color: rgba(255,255,255,0.92);
+    line-height: 1.45;
+    margin: 0;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.5);
 }
 .jh-photo-caption .year-tag {
     font-family: 'DM Sans', sans-serif;
-    font-size: 0.6rem;
-    letter-spacing: 0.15em;
-    color: var(--color-accent);
+    font-size: 0.58rem;
+    letter-spacing: 0.18em;
+    color: #c9a227;
     font-style: normal;
     display: block;
-    margin-bottom: 0.2rem;
+    margin-bottom: 0.25rem;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.6);
 }
 
 /* ═══════════════════════════════════════════════
@@ -449,7 +464,7 @@
 }
 .jh-book-meta-label {
     font-family: 'DM Sans', sans-serif;
-    font-size: 0.45rem;
+    font-size: 0.6rem;
     letter-spacing: 0.3em;
     text-transform: uppercase;
     color: var(--color-accent);
@@ -643,7 +658,7 @@
 }
 .jh-highlight-box-title {
     font-family: 'DM Sans', sans-serif;
-    font-size: 0.55rem;
+    font-size: 0.68rem;
     letter-spacing: 0.25em;
     text-transform: uppercase;
     color: var(--color-accent);
@@ -779,7 +794,7 @@
 }
 .jh-memorial-eyebrow {
     font-family: 'DM Sans', sans-serif;
-    font-size: 0.45rem;
+    font-size: 0.6rem;
     letter-spacing: 0.4em;
     text-transform: uppercase;
     color: rgba(201,162,39,0.5);
@@ -1241,162 +1256,177 @@
         <div class="jh-gallery-grid">
             <!-- 1 -->
             <div class="jh-photo-card wide" onclick="openLightbox('https://i.imgur.com/YIRm8Rt.jpeg','Масова маніфестація після конференції в Сан-Ремо, 1920 рік. Євреї Дубровиці вітають рішення про передачу Великій Британії мандата на Палестину — надія на власну державу')">
-                <div style="overflow:hidden;">
+                <div style="overflow:hidden;position:relative;">
                     <img class="jh-photo-img" src="https://i.imgur.com/YIRm8Rt.jpeg" alt="Маніфестація 1920" loading="lazy">
-                </div>
                 <div class="jh-photo-caption">
                     <span class="year-tag">1920</span>
                     <p>Масова маніфестація після рішень конференції в Сан-Ремо. Тисячі євреїв вийшли на вулиці Дубровиці вітати надію на відродження власної держави.</p>
+                </div>
+
                 </div>
             </div>
 
             <!-- 2 -->
             <div class="jh-photo-card" onclick="openLightbox('https://i.imgur.com/caTP3ND.jpeg','Ринкова площа в суботу — порожня, без людей. Фото початку XX ст. В суботу єврейські крамниці не працювали, і площа завмирала')">
-                <div style="overflow:hidden;">
+                <div style="overflow:hidden;position:relative;">
                     <img class="jh-photo-img" src="https://i.imgur.com/caTP3ND.jpeg" alt="Ринкова площа" loading="lazy">
-                </div>
                 <div class="jh-photo-caption">
                     <span class="year-tag">поч. XX ст.</span>
                     <p>Ринкова площа в суботу — порожня. В шабат усі єврейські крамниці зачинені, місто завмирає.</p>
+                </div>
+
                 </div>
             </div>
 
             <!-- 3 -->
             <div class="jh-photo-card" onclick="openLightbox('https://i.imgur.com/ol9vPuF.jpeg','Куточок Ринкової площі, біля &quot;Плянтів&quot;. 1939 рік')">
-                <div style="overflow:hidden;">
+                <div style="overflow:hidden;position:relative;">
                     <img class="jh-photo-img" src="https://i.imgur.com/ol9vPuF.jpeg" alt="Ринкова площа 1939" loading="lazy">
-                </div>
                 <div class="jh-photo-caption">
                     <span class="year-tag">1939</span>
                     <p>Куточок Ринкової площі, біля «Плянтів». Останній мирний рік.</p>
+                </div>
+
                 </div>
             </div>
 
             <!-- 4 -->
             <div class="jh-photo-card" onclick="openLightbox('https://i.imgur.com/TUFVsb8.jpeg','Дубровиця, вулиця 3-го Травня')">
-                <div style="overflow:hidden;">
+                <div style="overflow:hidden;position:relative;">
                     <img class="jh-photo-img" src="https://i.imgur.com/TUFVsb8.jpeg" alt="Вулиця 3 Травня" loading="lazy">
-                </div>
                 <div class="jh-photo-caption">
                     <span class="year-tag">~1930-ті</span>
                     <p>Дубровиця. Вулиця 3-го Травня — одна з головних вулиць міста.</p>
+                </div>
+
                 </div>
             </div>
 
             <!-- 5 -->
             <div class="jh-photo-card" onclick="openLightbox('https://i.imgur.com/h6fG9oK.jpeg','Футбольна команда «Шомрія», 1925 рік. На задньому плані — дерев&apos;яний міст через Горинь')">
-                <div style="overflow:hidden;">
+                <div style="overflow:hidden;position:relative;">
                     <img class="jh-photo-img" src="https://i.imgur.com/h6fG9oK.jpeg" alt="Команда Шомрія 1925" loading="lazy">
-                </div>
                 <div class="jh-photo-caption">
                     <span class="year-tag">1925</span>
                     <p>Футбольна команда «Шомрія». На задньому плані — дерев'яний міст через Горинь.</p>
+                </div>
+
                 </div>
             </div>
 
             <!-- 6 -->
             <div class="jh-photo-card" onclick="openLightbox('https://i.imgur.com/lbNIamW.jpeg','Нова будівля школи «Тарбут», 1936 рік. Школа з викладанням на івриті виховала сотні учнів')">
-                <div style="overflow:hidden;">
+                <div style="overflow:hidden;position:relative;">
                     <img class="jh-photo-img" src="https://i.imgur.com/lbNIamW.jpeg" alt="Школа Тарбут" loading="lazy">
-                </div>
                 <div class="jh-photo-caption">
                     <span class="year-tag">1936</span>
                     <p>Нова будівля школи «Тарбут» — з викладанням на івриті, заснована за ініціативи сіоністів.</p>
+                </div>
+
                 </div>
             </div>
 
             <!-- 7 -->
             <div class="jh-photo-card" onclick="openLightbox('https://i.imgur.com/d1e0JX9.jpeg','Вчителі та учні школи «Мевенінь» під час святкування, 1930 рік')">
-                <div style="overflow:hidden;">
+                <div style="overflow:hidden;position:relative;">
                     <img class="jh-photo-img" src="https://i.imgur.com/d1e0JX9.jpeg" alt="Школа Мевенінь 1930" loading="lazy">
-                </div>
                 <div class="jh-photo-caption">
                     <span class="year-tag">1930</span>
                     <p>Вчителі та учні школи «Мевенінь» під час святкування.</p>
+                </div>
+
                 </div>
             </div>
 
             <!-- 8 -->
             <div class="jh-photo-card" onclick="openLightbox('https://i.imgur.com/nLCM0i2.jpeg','Лісопилка Горація Геллера — один із провідних єврейських підприємців Дубровиці')">
-                <div style="overflow:hidden;">
+                <div style="overflow:hidden;position:relative;">
                     <img class="jh-photo-img" src="https://i.imgur.com/nLCM0i2.jpeg" alt="Лісопилка Геллера" loading="lazy">
-                </div>
                 <div class="jh-photo-caption">
                     <span class="year-tag">~1920-30-ті</span>
                     <p>Лісопилка (тартак) Горація Геллера. Торгівля лісом — один з головних промислів євреїв Полісся.</p>
+                </div>
+
                 </div>
             </div>
 
             <!-- 9 -->
             <div class="jh-photo-card" onclick="openLightbox('https://i.imgur.com/ORgbczc.jpeg','Лісопилка братів Шнайдміль')">
-                <div style="overflow:hidden;">
+                <div style="overflow:hidden;position:relative;">
                     <img class="jh-photo-img" src="https://i.imgur.com/ORgbczc.jpeg" alt="Лісопилка братів Шнайдміль" loading="lazy">
-                </div>
                 <div class="jh-photo-caption">
                     <span class="year-tag">~1920-30-ті</span>
                     <p>Лісопилка братів Шнайдміль. Серед торговців лісом виділялися кілька заможних єврейських родин.</p>
+                </div>
+
                 </div>
             </div>
 
             <!-- 10 -->
             <div class="jh-photo-card" onclick="openLightbox('https://i.imgur.com/fqLDM6s.jpeg','Біля виборчої дільниці під час виборів до польського Сейму, 1935 рік')">
-                <div style="overflow:hidden;">
+                <div style="overflow:hidden;position:relative;">
                     <img class="jh-photo-img" src="https://i.imgur.com/fqLDM6s.jpeg" alt="Вибори до Сейму 1935" loading="lazy">
-                </div>
                 <div class="jh-photo-caption">
                     <span class="year-tag">1935</span>
                     <p>Біля виборчої дільниці під час виборів до польського Сейму. Єврейська громада активно брала участь у громадському житті.</p>
+                </div>
+
                 </div>
             </div>
 
             <!-- 11 -->
             <div class="jh-photo-card" onclick="openLightbox('https://i.imgur.com/hPI1Xdo.jpeg','Молодь мирно плаває на човні річкою Горинь')">
-                <div style="overflow:hidden;">
+                <div style="overflow:hidden;position:relative;">
                     <img class="jh-photo-img" src="https://i.imgur.com/hPI1Xdo.jpeg" alt="Човен на Горині" loading="lazy">
-                </div>
                 <div class="jh-photo-caption">
                     <p>Молодь на човні річкою Горинь — мирні дні до початку катастрофи.</p>
+                </div>
+
                 </div>
             </div>
 
             <!-- 12 -->
             <div class="jh-photo-card" onclick="openLightbox('https://i.imgur.com/rVnHRb1.jpeg','Єврейська пара біля мосту через Горинь')">
-                <div style="overflow:hidden;">
+                <div style="overflow:hidden;position:relative;">
                     <img class="jh-photo-img" src="https://i.imgur.com/rVnHRb1.jpeg" alt="Єврейська пара" loading="lazy">
-                </div>
                 <div class="jh-photo-caption">
                     <p>Єврейська пара біля мосту через Горинь. Міст через річку і прилеглі озера завдовжки близько 500 метрів був збудований у 1884 р.</p>
+                </div>
+
                 </div>
             </div>
 
             <!-- 13 -->
             <div class="jh-photo-card" onclick="openLightbox('https://i.imgur.com/6Wqyivm.jpeg','Біля будинку Слуцького. Сім&apos;я Слуцьких займала один з ключових будинків на східній стороні Ринкової площі')">
-                <div style="overflow:hidden;">
+                <div style="overflow:hidden;position:relative;">
                     <img class="jh-photo-img" src="https://i.imgur.com/6Wqyivm.jpeg" alt="Будинок Слуцького" loading="lazy">
-                </div>
                 <div class="jh-photo-caption">
                     <p>«Біля будинку Слуцького». Будинки Готліба, Слуцького, Герштейна та Сандлера стояли на знаменитій східній стороні Ринкової площі.</p>
+                </div>
+
                 </div>
             </div>
 
             <!-- 14 -->
             <div class="jh-photo-card" onclick="openLightbox('https://i.imgur.com/aeImat4.jpeg','Похорон у містечку. Традиційний єврейський похоронний ритуал')">
-                <div style="overflow:hidden;">
+                <div style="overflow:hidden;position:relative;">
                     <img class="jh-photo-img" src="https://i.imgur.com/aeImat4.jpeg" alt="Похорон" loading="lazy">
-                </div>
                 <div class="jh-photo-caption">
                     <p>Похорон у містечку. Товариство «Хевра Кадіша» — похоронне братство — вело свій літопис з 1500 року.</p>
+                </div>
+
                 </div>
             </div>
 
             <!-- 15 - portraits -->
             <div class="jh-photo-card wide" onclick="openLightbox('https://i.imgur.com/mZEi5kG.jpeg','Зліва: Потрін Моше та Фроделе Перлін, з"л (благословенної пам&apos;яті). Справа: Мендель Берестер, невідомий посередині, та Мотл Лейбкес, з&quot;л')">
-                <div style="overflow:hidden;">
+                <div style="overflow:hidden;position:relative;">
                     <img class="jh-photo-img" src="https://i.imgur.com/mZEi5kG.jpeg" alt="Портрети мешканців" loading="lazy">
-                </div>
                 <div class="jh-photo-caption">
                     <span class="year-tag">Мешканці міста</span>
                     <p>Зліва: Потрін Моше та Фроделе Перлін, ז"ל. Справа: Reb Мендель Берестер; (той, хто посередині — невідомий); Reb Мотл Лейбкес, ז"ל.</p>
+                </div>
+
                 </div>
             </div>
         </div>
@@ -1789,13 +1819,8 @@
                 Звістки про масові вбивства в Ковелі та інших містах навесні 1942 року змусили частину молодих людей таємно планувати втечу. Юденрат намагався їх відмовити, навіть погрожуючи донести владі. Умови в гетто були жорсткими, але місто дещо рятувалося від голоду завдяки зв'язкам з місцевим борошняним млином: єврейські робітники могли потайки виносити до чверті денного виробництва.
             </p>
 
-            <div class="jh-memorial-quote">
-                <p>«Хто це каже, що Песах припадає на місяць Нісан? Ще в місяці Кіслів починався Песах у Дубровиці... Ой, люди Дубровиці! Якби можна було відкрити вікно і зазирнути в минуле на 40–50 років назад... ви б побачили і переконалися, що більшої радості за цю не буває.»</p>
-                <cite>— Шмуель Зальцман, «Стежками минулих днів»</cite>
-            </div>
-
             <p>
-                <strong>26 серпня 1942 року</strong> — поліція та українські колабораціоністи ліквідували гетто. Коли євреїв гнали на залізничну станцію для відправки до Сарн, близько 1 500 осіб вчинили масову втечу — Лейбель Ландау підкупив українських охоронців, щоб ті відвернулися. Близько 200 осіб були застрелені на місці. Тим, хто втік до лісу, загрожували голод, хвороби та облави. Кількасот осіб дістались до гетто у Висоцьку, де незабаром загинули разом із місцевими євреями. Решта 3 000 були знищені в Сарнах.
+                <strong>26 серпня 1942 року</strong> — поліція та допоміжна варта ліквідували гетто. Коли євреїв гнали на залізничну станцію для відправки до Сарн, близько 1 500 осіб вчинили масову втечу — Лейбель Ландау підкупив вартових, щоб ті відвернулися. Близько 200 осіб були застрелені на місці. Тим, хто втік до лісу, загрожували голод, хвороби та облави. Кількасот осіб дістались до гетто у Висоцьку, де незабаром загинули разом із місцевими євреями. Решта 3 000 були знищені в Сарнах.
             </p>
             <p>
                 Ті, хто переховувався в лісах у 1942–1943 роках, масово гинули від голоду і хвороб або були спіймані поліцією та розстріляні. <strong>Близько 50 євреїв з Дубровиці вижили до визволення міста радянськими партизанами — 10 січня 1944 року</strong>.
