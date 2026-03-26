@@ -317,11 +317,11 @@
 }
 
 /* ═══════════════════════════════════════════════
-   PHOTO GALLERY
+   PHOTO GALLERY — REDESIGNED
    ═══════════════════════════════════════════════ */
 .jh-gallery-section {
-    background: var(--color-bg-alt);
-    padding: 6rem 0;
+    background: var(--color-bg);
+    padding: 7rem 0 6rem;
     position: relative;
     overflow: hidden;
 }
@@ -330,7 +330,8 @@
     position: absolute;
     top: 0; left: 0; right: 0;
     height: 1px;
-    background: linear-gradient(90deg, transparent, var(--color-border), transparent);
+    background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
+    opacity: 0.18;
 }
 .jh-section-header {
     text-align: center;
@@ -338,93 +339,353 @@
 }
 .jh-section-eyebrow {
     font-family: 'DM Sans', sans-serif;
-    font-size: 0.62rem;
-    letter-spacing: 0.35em;
+    font-size: 0.58rem;
+    letter-spacing: 0.38em;
     text-transform: uppercase;
     color: var(--color-accent);
     margin-bottom: 0.8rem;
     display: block;
+    opacity: 0.85;
 }
 .jh-section-title {
     font-family: 'Cormorant Garamond', serif;
     font-size: clamp(2rem, 4vw, 3.2rem);
     font-weight: 300;
     color: var(--color-text);
-    line-height: 1.1;
-    letter-spacing: -0.02em;
+    line-height: 1.08;
+    letter-spacing: -0.025em;
 }
 .jh-section-title em { font-style: italic; color: var(--color-accent); }
-
-/* Masonry-esque gallery grid */
-.jh-gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.2rem;
+.jh-section-sub {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--color-text-muted);
+    margin-top: 0.6rem;
 }
+
+/* ── EDITORIAL GALLERY LAYOUT ── */
+/* All images use object-fit:cover with explicit heights — no white fields ever */
+.jh-gallery-editorial {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.jh-gallery-row {
+    display: grid;
+    gap: 1rem;
+}
+.jh-gallery-row-a { grid-template-columns: 2.2fr 1fr 1fr; }   /* hero + 2 square */
+.jh-gallery-row-b { grid-template-columns: 1fr 1fr 1fr; }      /* 3 equal */
+.jh-gallery-row-c { grid-template-columns: 1fr 1.6fr 1fr; }    /* narrow-wide-narrow */
+.jh-gallery-row-d { grid-template-columns: 1fr 1fr; }          /* 2 wide */
+.jh-gallery-row-e { grid-template-columns: 1fr 1fr 1fr 1fr; }  /* 4 small */
+
 .jh-photo-card {
-    border-radius: var(--radius-md);
-    overflow: hidden;
-    box-shadow: var(--shadow-sm);
-    border: 1px solid var(--color-border-light);
-    transition: transform var(--transition-base), box-shadow var(--transition-base);
-    cursor: pointer;
     position: relative;
-    background: #111;
+    overflow: hidden;
+    border-radius: 5px;
+    cursor: pointer;
+    background: #0d0b09;
+    display: block;
+    /* no border — cleaner editorial look */
+    box-shadow: 0 2px 14px rgba(0,0,0,0.12);
+    transition: box-shadow 0.35s ease, transform 0.4s cubic-bezier(0.16,1,0.3,1);
 }
 .jh-photo-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
+    transform: translateY(-4px) scale(1.008);
+    box-shadow: 0 18px 48px rgba(0,0,0,0.22);
 }
-.jh-photo-card.wide { grid-column: span 2; }
-.jh-photo-card.tall { grid-row: span 2; }
+
+/* Image wrapper — gives the fixed height, clips overflow */
+.jh-photo-img-wrap {
+    width: 100%;
+    overflow: hidden;
+    display: block;
+    background: #0d0b09;
+}
+/* Persistent gradient overlay */
+.jh-photo-img-wrap::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top,
+        rgba(0,0,0,0.75) 0%,
+        rgba(0,0,0,0.25) 38%,
+        transparent 62%);
+    pointer-events: none;
+    z-index: 1;
+    transition: opacity 0.3s ease;
+}
+.jh-photo-card:hover .jh-photo-img-wrap::after {
+    opacity: 0.8;
+}
+
+/* Heights per row/variant */
+.jh-ph-hero  .jh-photo-img-wrap { height: 400px; }
+.jh-ph-sq    .jh-photo-img-wrap { height: 190px; }
+.jh-ph-med   .jh-photo-img-wrap { height: 260px; }
+.jh-ph-tall  .jh-photo-img-wrap { height: 320px; }
+.jh-ph-wide  .jh-photo-img-wrap { height: 300px; }
+.jh-ph-sm    .jh-photo-img-wrap { height: 210px; }
+.jh-ph-center .jh-photo-img-wrap { height: 340px; }
+.jh-ph-land  .jh-photo-img-wrap { height: 250px; }
+
 .jh-photo-img {
     width: 100%;
-    aspect-ratio: 4/3;
+    height: 100%;
     object-fit: cover;
+    object-position: center;
     display: block;
-    filter: sepia(0.15) contrast(1.04);
-    transition: filter var(--transition-base), transform var(--transition-slow);
+    filter: sepia(0.18) contrast(1.06) brightness(0.96);
+    transition: transform 0.65s cubic-bezier(0.16,1,0.3,1), filter 0.5s ease;
 }
-.jh-photo-card.tall .jh-photo-img { aspect-ratio: 3/4; }
-.jh-photo-card.wide .jh-photo-img { aspect-ratio: 16/9; }
 .jh-photo-card:hover .jh-photo-img {
-    filter: sepia(0) contrast(1.06);
-    transform: scale(1.05);
+    transform: scale(1.07);
+    filter: sepia(0.04) contrast(1.08) brightness(1.02);
 }
-/* Caption: overlay at bottom of image */
+
+/* Caption — always visible over gradient */
 .jh-photo-caption {
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 2rem 1rem 0.9rem;
-    background: linear-gradient(to top, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.3) 60%, transparent 100%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
+    padding: 1.4rem 0.9rem 0.8rem;
     pointer-events: none;
-}
-.jh-photo-card:hover .jh-photo-caption {
-    opacity: 1;
+    z-index: 2;
 }
 .jh-photo-caption p {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 0.88rem;
+    font-size: 0.8rem;
     font-style: italic;
-    color: rgba(255,255,255,0.92);
-    line-height: 1.45;
+    color: rgba(255,255,255,0.9);
+    line-height: 1.38;
     margin: 0;
-    text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+    text-shadow: 0 1px 6px rgba(0,0,0,0.65);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
+.jh-ph-sm .jh-photo-caption p { font-size: 0.73rem; }
 .jh-photo-caption .year-tag {
     font-family: 'DM Sans', sans-serif;
-    font-size: 0.58rem;
-    letter-spacing: 0.18em;
+    font-size: 0.5rem;
+    letter-spacing: 0.2em;
     color: #c9a227;
     font-style: normal;
     display: block;
-    margin-bottom: 0.25rem;
-    text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+    margin-bottom: 0.18rem;
+    text-shadow: 0 1px 5px rgba(0,0,0,0.8);
 }
+
+/* ── NIGUN / AUDIO SECTION ── */
+.jh-nigun-section {
+    background: #0d0b09;
+    padding: 6rem 0;
+    position: relative;
+    overflow: hidden;
+}
+.jh-nigun-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 200px;
+    opacity: 0.028;
+    pointer-events: none;
+}
+.jh-nigun-section::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201,162,39,0.28), transparent);
+}
+.jh-nigun-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 3.5rem;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+.jh-nigun-icon-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.2rem;
+}
+.jh-nigun-star-svg {
+    width: 72px;
+    height: 72px;
+    opacity: 0.5;
+    animation: jh-nigun-pulse 5s ease-in-out infinite;
+}
+@keyframes jh-nigun-pulse {
+    0%,100% { opacity: 0.4; transform: scale(1) rotate(0deg); }
+    50%      { opacity: 0.65; transform: scale(1.05) rotate(3deg); }
+}
+.jh-nigun-vert-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.44rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: rgba(201,162,39,0.38);
+    writing-mode: vertical-lr;
+    transform: rotate(180deg);
+}
+.jh-nigun-body {}
+.jh-nigun-eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.52rem;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    color: rgba(201,162,39,0.55);
+    margin-bottom: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+.jh-nigun-eyebrow::before {
+    content: '';
+    display: block;
+    width: 22px;
+    height: 1px;
+    background: rgba(201,162,39,0.35);
+    flex-shrink: 0;
+}
+.jh-nigun-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 3.2vw, 2.7rem);
+    font-weight: 300;
+    line-height: 1.05;
+    color: #e8d5a3;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.25rem;
+}
+.jh-nigun-title em {
+    display: block;
+    font-style: italic;
+    font-size: 0.72em;
+    color: rgba(201,162,39,0.72);
+    margin-top: 0.15rem;
+}
+.jh-nigun-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1.1rem 0 1rem;
+}
+.jh-nigun-tag {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+    color: rgba(201,162,39,0.55);
+    border: 1px solid rgba(201,162,39,0.18);
+    border-radius: 20px;
+    padding: 0.3rem 0.75rem;
+}
+.jh-nigun-desc {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.75;
+    color: rgba(245,240,232,0.52);
+    margin-bottom: 1.6rem;
+}
+.jh-nigun-desc strong {
+    font-style: normal;
+    font-weight: 500;
+    color: rgba(245,240,232,0.78);
+}
+
+/* Custom audio player */
+.jh-audio-player {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(201,162,39,0.14);
+    border-radius: 8px;
+    padding: 1.2rem 1.4rem;
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+}
+.jh-audio-play-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid rgba(201,162,39,0.4);
+    background: rgba(201,162,39,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background 0.2s, border-color 0.2s, transform 0.2s;
+    color: #c9a227;
+}
+.jh-audio-play-btn:hover {
+    background: rgba(201,162,39,0.18);
+    border-color: rgba(201,162,39,0.7);
+    transform: scale(1.06);
+}
+.jh-audio-play-btn svg { width: 16px; height: 16px; }
+.jh-audio-info { flex: 1; min-width: 0; }
+.jh-audio-track-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.92rem;
+    font-style: italic;
+    color: rgba(232,213,163,0.82);
+    display: block;
+    margin-bottom: 0.6rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.jh-audio-progress-wrap {
+    position: relative;
+    height: 3px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 2px;
+    cursor: pointer;
+    margin-bottom: 0.4rem;
+}
+.jh-audio-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, rgba(201,162,39,0.5), rgba(201,162,39,0.9));
+    border-radius: 2px;
+    transition: width 0.1s linear;
+    pointer-events: none;
+}
+.jh-audio-times {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.52rem;
+    letter-spacing: 0.05em;
+    color: rgba(255,255,255,0.25);
+}
+.jh-nigun-source {
+    margin-top: 1.2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.62rem;
+    color: rgba(255,255,255,0.2);
+    line-height: 1.6;
+}
+.jh-nigun-source a {
+    color: rgba(201,162,39,0.45);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(201,162,39,0.18);
+    transition: color 0.2s;
+}
+.jh-nigun-source a:hover { color: rgba(201,162,39,0.75); }
 
 /* ═══════════════════════════════════════════════
    BOOK SOURCE SECTION — Yizkor quote
@@ -1009,7 +1270,9 @@
    RESPONSIVE
    ═══════════════════════════════════════════════ */
 @media (max-width: 1024px) {
-    .jh-gallery-grid { grid-template-columns: repeat(3, 1fr); }
+    .jh-gallery-row-a { grid-template-columns: 1.6fr 1fr; }
+    .jh-gallery-row-a .jh-ph-sq:last-child { display: none; }
+    .jh-gallery-row-c { grid-template-columns: 1fr 1.4fr 1fr; }
     .jh-chapter-inner, .jh-chapter-inner.reverse { grid-template-columns: 1fr; gap: 2rem; }
     .jh-chapter-aside { position: static; }
     .jh-chapter-num { font-size: 4rem; }
@@ -1019,10 +1282,22 @@
     .jh-tl-dot { left: 2rem; }
     .jh-tl-content { width: 100%; padding: 0; }
     .jh-tl-item { margin-bottom: 2.5rem; }
+    .jh-nigun-inner { grid-template-columns: 70px 1fr; gap: 2rem; }
 }
 @media (max-width: 768px) {
-    .jh-gallery-grid { grid-template-columns: repeat(2, 1fr); }
-    .jh-photo-card.wide { grid-column: span 2; }
+    .jh-gallery-row-a,
+    .jh-gallery-row-b,
+    .jh-gallery-row-c,
+    .jh-gallery-row-d,
+    .jh-gallery-row-e { grid-template-columns: 1fr 1fr; }
+    .jh-gallery-row-a .jh-ph-sq:last-child { display: block; }
+    .jh-ph-hero .jh-photo-img-wrap { height: 240px; }
+    .jh-ph-sq   .jh-photo-img-wrap { height: 180px; }
+    .jh-ph-med  .jh-photo-img-wrap { height: 200px; }
+    .jh-ph-tall .jh-photo-img-wrap { height: 220px; }
+    .jh-ph-wide .jh-photo-img-wrap { height: 200px; }
+    .jh-ph-center .jh-photo-img-wrap { height: 240px; }
+    .jh-ph-land .jh-photo-img-wrap { height: 180px; }
     .jh-stats-row { grid-template-columns: repeat(2, 1fr); }
     .jh-stat { border-bottom: 1px solid var(--color-border-light); }
     .jh-intro-grid { grid-template-columns: 1fr; gap: 2rem; }
@@ -1030,10 +1305,19 @@
     .jh-legacy-grid { grid-template-columns: 1fr; }
     .jh-book-inner { grid-template-columns: 1fr; text-align: center; }
     .jh-book-cover { margin: 0 auto; width: 120px; }
+    .jh-nigun-inner { grid-template-columns: 1fr; }
+    .jh-nigun-icon-col { flex-direction: row; justify-content: center; }
+    .jh-nigun-vert-label { writing-mode: horizontal-tb; transform: none; }
 }
 @media (max-width: 500px) {
-    .jh-gallery-grid { grid-template-columns: 1fr; }
-    .jh-photo-card.wide { grid-column: span 1; }
+    .jh-gallery-row-a,
+    .jh-gallery-row-b,
+    .jh-gallery-row-c,
+    .jh-gallery-row-d,
+    .jh-gallery-row-e { grid-template-columns: 1fr; }
+    .jh-ph-hero .jh-photo-img-wrap,
+    .jh-ph-wide .jh-photo-img-wrap,
+    .jh-ph-center .jh-photo-img-wrap { height: 220px; }
 }
 </style>
 </head>
@@ -1251,183 +1535,213 @@
         <div class="jh-section-header">
             <span class="jh-section-eyebrow">Фотохроніка · 1900–1942</span>
             <h2 class="jh-section-title">Обличчя <em>старого міста</em></h2>
+            <span class="jh-section-sub">Знімки з книги пам'яті «Сефер Домбровіца», 1964</span>
         </div>
 
-        <div class="jh-gallery-grid">
-            <!-- 1 -->
-            <div class="jh-photo-card wide" onclick="openLightbox('https://i.imgur.com/YIRm8Rt.jpeg','Масова маніфестація після конференції в Сан-Ремо, 1920 рік. Євреї Дубровиці вітають рішення про передачу Великій Британії мандата на Палестину — надія на власну державу')">
-                <div style="overflow:hidden;position:relative;">
-                    <img class="jh-photo-img" src="https://i.imgur.com/YIRm8Rt.jpeg" alt="Маніфестація 1920" loading="lazy">
-                <div class="jh-photo-caption">
-                    <span class="year-tag">1920</span>
-                    <p>Масова маніфестація після рішень конференції в Сан-Ремо. Тисячі євреїв вийшли на вулиці Дубровиці вітати надію на відродження власної держави.</p>
-                </div>
+        <div class="jh-gallery-editorial">
 
+            <!-- Ряд 1: велике фото маніфестації + 2 квадрати стек -->
+            <div class="jh-gallery-row jh-gallery-row-a">
+                <div class="jh-photo-card jh-ph-hero" onclick="openLightbox('https://i.imgur.com/YIRm8Rt.jpeg','Масова маніфестація після конференції в Сан-Ремо, 1920. Євреї Дубровиці вийшли на вулиці вітати рішення про передачу Великій Британії мандата на Палестину')">
+                    <div class="jh-photo-img-wrap">
+                        <img class="jh-photo-img" src="https://i.imgur.com/YIRm8Rt.jpeg" alt="Маніфестація 1920" loading="lazy">
+                    </div>
+                    <div class="jh-photo-caption">
+                        <span class="year-tag">1920</span>
+                        <p>Масова маніфестація після рішень Сан-Ремо — надія на відродження єврейської держави.</p>
+                    </div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:1rem;">
+                    <div class="jh-photo-card jh-ph-sq" onclick="openLightbox('https://i.imgur.com/caTP3ND.jpeg','Ринкова площа в суботу — порожня. В шабат єврейські крамниці зачинені, місто завмирало')">
+                        <div class="jh-photo-img-wrap">
+                            <img class="jh-photo-img" src="https://i.imgur.com/caTP3ND.jpeg" alt="Ринкова площа" loading="lazy">
+                        </div>
+                        <div class="jh-photo-caption">
+                            <span class="year-tag">поч. XX ст.</span>
+                            <p>Ринкова площа в суботу. В шабат місто завмирало.</p>
+                        </div>
+                    </div>
+                    <div class="jh-photo-card jh-ph-sq" onclick="openLightbox('https://i.imgur.com/ol9vPuF.jpeg','Куточок Ринкової площі, біля Плянтів. 1939 — останній мирний рік')">
+                        <div class="jh-photo-img-wrap">
+                            <img class="jh-photo-img" src="https://i.imgur.com/ol9vPuF.jpeg" alt="Ринкова площа 1939" loading="lazy">
+                        </div>
+                        <div class="jh-photo-caption">
+                            <span class="year-tag">1939</span>
+                            <p>Куточок площі, біля «Плянтів». Останній мирний рік.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- 2 -->
-            <div class="jh-photo-card" onclick="openLightbox('https://i.imgur.com/caTP3ND.jpeg','Ринкова площа в суботу — порожня, без людей. Фото початку XX ст. В суботу єврейські крамниці не працювали, і площа завмирала')">
-                <div style="overflow:hidden;position:relative;">
-                    <img class="jh-photo-img" src="https://i.imgur.com/caTP3ND.jpeg" alt="Ринкова площа" loading="lazy">
-                <div class="jh-photo-caption">
-                    <span class="year-tag">поч. XX ст.</span>
-                    <p>Ринкова площа в суботу — порожня. В шабат усі єврейські крамниці зачинені, місто завмирає.</p>
+            <!-- Ряд 2: 3 рівні -->
+            <div class="jh-gallery-row jh-gallery-row-b">
+                <div class="jh-photo-card jh-ph-med" onclick="openLightbox('https://i.imgur.com/TUFVsb8.jpeg','Дубровиця, вулиця 3-го Травня — одна з головних вулиць міста')">
+                    <div class="jh-photo-img-wrap">
+                        <img class="jh-photo-img" src="https://i.imgur.com/TUFVsb8.jpeg" alt="Вулиця 3 Травня" loading="lazy">
+                    </div>
+                    <div class="jh-photo-caption">
+                        <span class="year-tag">~1930-ті</span>
+                        <p>Вулиця 3-го Травня — одна з головних вулиць міста.</p>
+                    </div>
                 </div>
-
+                <div class="jh-photo-card jh-ph-med" onclick="openLightbox('https://i.imgur.com/h6fG9oK.jpeg','Футбольна команда «Шомрія», 1925 рік. На тлі — дерев'яний міст через Горинь')">
+                    <div class="jh-photo-img-wrap">
+                        <img class="jh-photo-img" src="https://i.imgur.com/h6fG9oK.jpeg" alt="Команда Шомрія 1925" loading="lazy">
+                    </div>
+                    <div class="jh-photo-caption">
+                        <span class="year-tag">1925</span>
+                        <p>Футбольна команда «Шомрія». На тлі — міст через Горинь.</p>
+                    </div>
                 </div>
-            </div>
-
-            <!-- 3 -->
-            <div class="jh-photo-card" onclick="openLightbox('https://i.imgur.com/ol9vPuF.jpeg','Куточок Ринкової площі, біля &quot;Плянтів&quot;. 1939 рік')">
-                <div style="overflow:hidden;position:relative;">
-                    <img class="jh-photo-img" src="https://i.imgur.com/ol9vPuF.jpeg" alt="Ринкова площа 1939" loading="lazy">
-                <div class="jh-photo-caption">
-                    <span class="year-tag">1939</span>
-                    <p>Куточок Ринкової площі, біля «Плянтів». Останній мирний рік.</p>
-                </div>
-
-                </div>
-            </div>
-
-            <!-- 4 -->
-            <div class="jh-photo-card" onclick="openLightbox('https://i.imgur.com/TUFVsb8.jpeg','Дубровиця, вулиця 3-го Травня')">
-                <div style="overflow:hidden;position:relative;">
-                    <img class="jh-photo-img" src="https://i.imgur.com/TUFVsb8.jpeg" alt="Вулиця 3 Травня" loading="lazy">
-                <div class="jh-photo-caption">
-                    <span class="year-tag">~1930-ті</span>
-                    <p>Дубровиця. Вулиця 3-го Травня — одна з головних вулиць міста.</p>
-                </div>
-
+                <div class="jh-photo-card jh-ph-med" onclick="openLightbox('https://i.imgur.com/lbNIamW.jpeg','Нова будівля школи «Тарбут», 1936 рік — з навчанням на івриті')">
+                    <div class="jh-photo-img-wrap">
+                        <img class="jh-photo-img" src="https://i.imgur.com/lbNIamW.jpeg" alt="Школа Тарбут" loading="lazy">
+                    </div>
+                    <div class="jh-photo-caption">
+                        <span class="year-tag">1936</span>
+                        <p>Нова будівля школи «Тарбут» — навчання на івриті.</p>
+                    </div>
                 </div>
             </div>
 
-            <!-- 5 -->
-            <div class="jh-photo-card" onclick="openLightbox('https://i.imgur.com/h6fG9oK.jpeg','Футбольна команда «Шомрія», 1925 рік. На задньому плані — дерев&apos;яний міст через Горинь')">
-                <div style="overflow:hidden;position:relative;">
-                    <img class="jh-photo-img" src="https://i.imgur.com/h6fG9oK.jpeg" alt="Команда Шомрія 1925" loading="lazy">
-                <div class="jh-photo-caption">
-                    <span class="year-tag">1925</span>
-                    <p>Футбольна команда «Шомрія». На задньому плані — дерев'яний міст через Горинь.</p>
+            <!-- Ряд 3: вузьке + широке центральне + вузьке -->
+            <div class="jh-gallery-row jh-gallery-row-c">
+                <div class="jh-photo-card jh-ph-tall" onclick="openLightbox('https://i.imgur.com/d1e0JX9.jpeg','Вчителі та учні школи «Мевенінь» під час святкування, 1930 рік')">
+                    <div class="jh-photo-img-wrap">
+                        <img class="jh-photo-img" src="https://i.imgur.com/d1e0JX9.jpeg" alt="Школа Мевенінь 1930" loading="lazy">
+                    </div>
+                    <div class="jh-photo-caption">
+                        <span class="year-tag">1930</span>
+                        <p>Вчителі та учні школи «Мевенінь».</p>
+                    </div>
                 </div>
-
+                <div class="jh-photo-card jh-ph-center" onclick="openLightbox('https://i.imgur.com/nLCM0i2.jpeg','Лісопилка Горація Геллера — один із провідних єврейських підприємців. Торгівля лісом — головний промисел євреїв Полісся')">
+                    <div class="jh-photo-img-wrap">
+                        <img class="jh-photo-img" src="https://i.imgur.com/nLCM0i2.jpeg" alt="Лісопилка Геллера" loading="lazy">
+                    </div>
+                    <div class="jh-photo-caption">
+                        <span class="year-tag">~1920–30-ті</span>
+                        <p>Лісопилка Горація Геллера. Торгівля лісом — головний промисел євреїв Полісся.</p>
+                    </div>
                 </div>
-            </div>
-
-            <!-- 6 -->
-            <div class="jh-photo-card" onclick="openLightbox('https://i.imgur.com/lbNIamW.jpeg','Нова будівля школи «Тарбут», 1936 рік. Школа з викладанням на івриті виховала сотні учнів')">
-                <div style="overflow:hidden;position:relative;">
-                    <img class="jh-photo-img" src="https://i.imgur.com/lbNIamW.jpeg" alt="Школа Тарбут" loading="lazy">
-                <div class="jh-photo-caption">
-                    <span class="year-tag">1936</span>
-                    <p>Нова будівля школи «Тарбут» — з викладанням на івриті, заснована за ініціативи сіоністів.</p>
-                </div>
-
-                </div>
-            </div>
-
-            <!-- 7 -->
-            <div class="jh-photo-card" onclick="openLightbox('https://i.imgur.com/d1e0JX9.jpeg','Вчителі та учні школи «Мевенінь» під час святкування, 1930 рік')">
-                <div style="overflow:hidden;position:relative;">
-                    <img class="jh-photo-img" src="https://i.imgur.com/d1e0JX9.jpeg" alt="Школа Мевенінь 1930" loading="lazy">
-                <div class="jh-photo-caption">
-                    <span class="year-tag">1930</span>
-                    <p>Вчителі та учні школи «Мевенінь» під час святкування.</p>
-                </div>
-
+                <div class="jh-photo-card jh-ph-tall" onclick="openLightbox('https://i.imgur.com/ORgbczc.jpeg','Лісопилка братів Шнайдміль')">
+                    <div class="jh-photo-img-wrap">
+                        <img class="jh-photo-img" src="https://i.imgur.com/ORgbczc.jpeg" alt="Лісопилка братів Шнайдміль" loading="lazy">
+                    </div>
+                    <div class="jh-photo-caption">
+                        <span class="year-tag">~1920–30-ті</span>
+                        <p>Лісопилка братів Шнайдміль.</p>
+                    </div>
                 </div>
             </div>
 
-            <!-- 8 -->
-            <div class="jh-photo-card" onclick="openLightbox('https://i.imgur.com/nLCM0i2.jpeg','Лісопилка Горація Геллера — один із провідних єврейських підприємців Дубровиці')">
-                <div style="overflow:hidden;position:relative;">
-                    <img class="jh-photo-img" src="https://i.imgur.com/nLCM0i2.jpeg" alt="Лісопилка Геллера" loading="lazy">
-                <div class="jh-photo-caption">
-                    <span class="year-tag">~1920-30-ті</span>
-                    <p>Лісопилка (тартак) Горація Геллера. Торгівля лісом — один з головних промислів євреїв Полісся.</p>
+            <!-- Ряд 4: 2 широкі -->
+            <div class="jh-gallery-row jh-gallery-row-d">
+                <div class="jh-photo-card jh-ph-wide" onclick="openLightbox('https://i.imgur.com/fqLDM6s.jpeg','Біля виборчої дільниці під час виборів до польського Сейму, 1935 рік')">
+                    <div class="jh-photo-img-wrap">
+                        <img class="jh-photo-img" src="https://i.imgur.com/fqLDM6s.jpeg" alt="Вибори до Сейму 1935" loading="lazy">
+                    </div>
+                    <div class="jh-photo-caption">
+                        <span class="year-tag">1935</span>
+                        <p>Біля виборчої дільниці під час виборів до польського Сейму.</p>
+                    </div>
                 </div>
-
-                </div>
-            </div>
-
-            <!-- 9 -->
-            <div class="jh-photo-card" onclick="openLightbox('https://i.imgur.com/ORgbczc.jpeg','Лісопилка братів Шнайдміль')">
-                <div style="overflow:hidden;position:relative;">
-                    <img class="jh-photo-img" src="https://i.imgur.com/ORgbczc.jpeg" alt="Лісопилка братів Шнайдміль" loading="lazy">
-                <div class="jh-photo-caption">
-                    <span class="year-tag">~1920-30-ті</span>
-                    <p>Лісопилка братів Шнайдміль. Серед торговців лісом виділялися кілька заможних єврейських родин.</p>
-                </div>
-
+                <div class="jh-photo-card jh-ph-wide" onclick="openLightbox('https://i.imgur.com/hPI1Xdo.jpeg','Молодь на човні річкою Горинь — мирні дні до початку катастрофи')">
+                    <div class="jh-photo-img-wrap">
+                        <img class="jh-photo-img" src="https://i.imgur.com/hPI1Xdo.jpeg" alt="Човен на Горині" loading="lazy">
+                    </div>
+                    <div class="jh-photo-caption">
+                        <p>Молодь на човні річкою Горинь — мирні дні до початку катастрофи.</p>
+                    </div>
                 </div>
             </div>
 
-            <!-- 10 -->
-            <div class="jh-photo-card" onclick="openLightbox('https://i.imgur.com/fqLDM6s.jpeg','Біля виборчої дільниці під час виборів до польського Сейму, 1935 рік')">
-                <div style="overflow:hidden;position:relative;">
-                    <img class="jh-photo-img" src="https://i.imgur.com/fqLDM6s.jpeg" alt="Вибори до Сейму 1935" loading="lazy">
-                <div class="jh-photo-caption">
-                    <span class="year-tag">1935</span>
-                    <p>Біля виборчої дільниці під час виборів до польського Сейму. Єврейська громада активно брала участь у громадському житті.</p>
+            <!-- Ряд 5: 3 рівні -->
+            <div class="jh-gallery-row jh-gallery-row-b">
+                <div class="jh-photo-card jh-ph-med" onclick="openLightbox('https://i.imgur.com/rVnHRb1.jpeg','Єврейська пара біля мосту через Горинь (1884 р.)')">
+                    <div class="jh-photo-img-wrap">
+                        <img class="jh-photo-img" src="https://i.imgur.com/rVnHRb1.jpeg" alt="Єврейська пара" loading="lazy">
+                    </div>
+                    <div class="jh-photo-caption">
+                        <p>Єврейська пара біля мосту через Горинь (1884 р.).</p>
+                    </div>
                 </div>
-
+                <div class="jh-photo-card jh-ph-med" onclick="openLightbox('https://i.imgur.com/6Wqyivm.jpeg','Біля будинку Слуцького — знаменита східна сторона Ринкової площі')">
+                    <div class="jh-photo-img-wrap">
+                        <img class="jh-photo-img" src="https://i.imgur.com/6Wqyivm.jpeg" alt="Будинок Слуцького" loading="lazy">
+                    </div>
+                    <div class="jh-photo-caption">
+                        <p>«Біля будинку Слуцького» — знаменита східна сторона площі.</p>
+                    </div>
                 </div>
-            </div>
-
-            <!-- 11 -->
-            <div class="jh-photo-card" onclick="openLightbox('https://i.imgur.com/hPI1Xdo.jpeg','Молодь мирно плаває на човні річкою Горинь')">
-                <div style="overflow:hidden;position:relative;">
-                    <img class="jh-photo-img" src="https://i.imgur.com/hPI1Xdo.jpeg" alt="Човен на Горині" loading="lazy">
-                <div class="jh-photo-caption">
-                    <p>Молодь на човні річкою Горинь — мирні дні до початку катастрофи.</p>
-                </div>
-
-                </div>
-            </div>
-
-            <!-- 12 -->
-            <div class="jh-photo-card" onclick="openLightbox('https://i.imgur.com/rVnHRb1.jpeg','Єврейська пара біля мосту через Горинь')">
-                <div style="overflow:hidden;position:relative;">
-                    <img class="jh-photo-img" src="https://i.imgur.com/rVnHRb1.jpeg" alt="Єврейська пара" loading="lazy">
-                <div class="jh-photo-caption">
-                    <p>Єврейська пара біля мосту через Горинь. Міст через річку і прилеглі озера завдовжки близько 500 метрів був збудований у 1884 р.</p>
-                </div>
-
+                <div class="jh-photo-card jh-ph-med" onclick="openLightbox('https://i.imgur.com/aeImat4.jpeg','Похорон у містечку. Братство «Хевра Кадіша» вело літопис з 1500 року')">
+                    <div class="jh-photo-img-wrap">
+                        <img class="jh-photo-img" src="https://i.imgur.com/aeImat4.jpeg" alt="Похорон" loading="lazy">
+                    </div>
+                    <div class="jh-photo-caption">
+                        <p>Похорон у містечку. «Хевра Кадіша» — літопис з 1500 р.</p>
+                    </div>
                 </div>
             </div>
 
-            <!-- 13 -->
-            <div class="jh-photo-card" onclick="openLightbox('https://i.imgur.com/6Wqyivm.jpeg','Біля будинку Слуцького. Сім&apos;я Слуцьких займала один з ключових будинків на східній стороні Ринкової площі')">
-                <div style="overflow:hidden;position:relative;">
-                    <img class="jh-photo-img" src="https://i.imgur.com/6Wqyivm.jpeg" alt="Будинок Слуцького" loading="lazy">
-                <div class="jh-photo-caption">
-                    <p>«Біля будинку Слуцького». Будинки Готліба, Слуцького, Герштейна та Сандлера стояли на знаменитій східній стороні Ринкової площі.</p>
-                </div>
+        </div><!-- /.jh-gallery-editorial -->
+    </div>
+</section>
 
-                </div>
+<!-- ═══════════════ НІҐУН З ДУБРОВИЦІ ═══════════════ -->
+<section class="jh-nigun-section">
+    <div class="container">
+        <div class="jh-nigun-inner">
+            <div class="jh-nigun-icon-col">
+                <svg class="jh-nigun-star-svg" viewBox="0 0 100 115" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <polygon points="50,3 61,34 95,34 68,55 78,88 50,68 22,88 32,55 5,34 39,34"
+                        fill="none" stroke="rgba(201,162,39,0.7)" stroke-width="1"/>
+                    <polygon points="50,16 59,43 88,43 65,59 74,87 50,70 26,87 35,59 12,43 41,43"
+                        fill="none" stroke="rgba(201,162,39,0.35)" stroke-width="0.6"/>
+                </svg>
+                <span class="jh-nigun-vert-label">Ніґун · Дубровиця</span>
             </div>
-
-            <!-- 14 -->
-            <div class="jh-photo-card" onclick="openLightbox('https://i.imgur.com/aeImat4.jpeg','Похорон у містечку. Традиційний єврейський похоронний ритуал')">
-                <div style="overflow:hidden;position:relative;">
-                    <img class="jh-photo-img" src="https://i.imgur.com/aeImat4.jpeg" alt="Похорон" loading="lazy">
-                <div class="jh-photo-caption">
-                    <p>Похорон у містечку. Товариство «Хевра Кадіша» — похоронне братство — вело свій літопис з 1500 року.</p>
+            <div class="jh-nigun-body">
+                <div class="jh-nigun-eyebrow">Музична спадщина · Єврейська Дубровиця</div>
+                <h2 class="jh-nigun-title">
+                    Ніґун Ерец Ісраель
+                    <em>נגון ארץ ישראל · з Дубровиці</em>
+                </h2>
+                <div class="jh-nigun-meta">
+                    <span class="jh-nigun-tag">Дубровиця (Волинь)</span>
+                    <span class="jh-nigun-tag">Хасидська мелодія</span>
+                    <span class="jh-nigun-tag">Ісраель Шліта · 1906–1982</span>
+                    <span class="jh-nigun-tag">Архів YIVO, Нью-Йорк</span>
                 </div>
+                <p class="jh-nigun-desc">
+                    Цю хасидську мелодію записали від <strong>Ісраеля Шліти</strong> — уродженця Дубровиці (1906 р.), що виїхав до Ізраїлю і помер там у 1982 р. У рукопису Бернштейна (YIVO, Нью-Йорк) зазначено: <em>«Ніґун від хасидів Домбровіци, відомий як "Ніґун Ерец Ісраель"»</em>. Це — жива звукова пам'ять про єврейську Дубровицю.
+                </p>
 
+                <div class="jh-audio-player" id="jh-audio-player">
+                    <button class="jh-audio-play-btn" id="jh-play-btn" onclick="jhTogglePlay()" aria-label="Відтворити">
+                        <svg id="jh-play-icon" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+                        <svg id="jh-pause-icon" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                    </button>
+                    <div class="jh-audio-info">
+                        <span class="jh-audio-track-name">Ніґун Ерец Ісраель · Дубровиця · [Algemeyn 2212]</span>
+                        <div class="jh-audio-progress-wrap" id="jh-prog-wrap" onclick="jhSeek(event)">
+                            <div class="jh-audio-progress-fill" id="jh-prog-fill"></div>
+                        </div>
+                        <div class="jh-audio-times">
+                            <span id="jh-cur-time">0:00</span>
+                            <span id="jh-dur-time">–:––</span>
+                        </div>
+                    </div>
                 </div>
-            </div>
+                <audio id="jh-audio" preload="none">
+                    <source src="1425.mp3" type="audio/mpeg">
+                </audio>
 
-            <!-- 15 - portraits -->
-            <div class="jh-photo-card wide" onclick="openLightbox('https://i.imgur.com/mZEi5kG.jpeg','Зліва: Потрін Моше та Фроделе Перлін, з"л (благословенної пам&apos;яті). Справа: Мендель Берестер, невідомий посередині, та Мотл Лейбкес, з&quot;л')">
-                <div style="overflow:hidden;position:relative;">
-                    <img class="jh-photo-img" src="https://i.imgur.com/mZEi5kG.jpeg" alt="Портрети мешканців" loading="lazy">
-                <div class="jh-photo-caption">
-                    <span class="year-tag">Мешканці міста</span>
-                    <p>Зліва: Потрін Моше та Фроделе Перлін, ז"ל. Справа: Reb Мендель Берестер; (той, хто посередині — невідомий); Reb Мотл Лейбкес, ז"ל.</p>
-                </div>
-
-                </div>
+                <p class="jh-nigun-source">
+                    Джерело: <a href="https://www.nigunimbimbom.org/1425" target="_blank" rel="noopener">nigunimbimbom.org · №1425</a> —
+                    Архів єврейської музики Єрусалимського університету та YIVO (Нью-Йорк).
+                    Рукопис Бернштейна, RG 36 F039. Виконавець: Ісраель Шліта, Дубровиця 1906 — Ізраїль 1982.
+                </p>
             </div>
         </div>
     </div>
@@ -1961,7 +2275,45 @@ function switchBRTab(n) {
 }
 document.addEventListener('keydown', function(e){ if(e.key==='Escape'){ closeBookReader(); } });
 
-// Intersection observer for fade-in
+// Audio nigun player
+var jhAudio = document.getElementById('jh-audio');
+function jhFmt(s){ s=Math.floor(s||0); return Math.floor(s/60)+':'+(s%60<10?'0':'')+s%60; }
+function jhTogglePlay(){
+    if(!jhAudio) return;
+    if(jhAudio.paused){ jhAudio.play(); }
+    else { jhAudio.pause(); }
+}
+if(jhAudio){
+    jhAudio.addEventListener('play', function(){
+        document.getElementById('jh-play-icon').style.display='none';
+        document.getElementById('jh-pause-icon').style.display='';
+    });
+    jhAudio.addEventListener('pause', function(){
+        document.getElementById('jh-play-icon').style.display='';
+        document.getElementById('jh-pause-icon').style.display='none';
+    });
+    jhAudio.addEventListener('timeupdate', function(){
+        var cur=jhAudio.currentTime, dur=jhAudio.duration||0;
+        document.getElementById('jh-cur-time').textContent=jhFmt(cur);
+        document.getElementById('jh-dur-time').textContent=dur?jhFmt(dur):'–:––';
+        var pct=dur?(cur/dur*100):0;
+        document.getElementById('jh-prog-fill').style.width=pct+'%';
+    });
+    jhAudio.addEventListener('ended', function(){
+        document.getElementById('jh-play-icon').style.display='';
+        document.getElementById('jh-pause-icon').style.display='none';
+        document.getElementById('jh-prog-fill').style.width='0%';
+        jhAudio.currentTime=0;
+    });
+}
+function jhSeek(e){
+    if(!jhAudio||!jhAudio.duration) return;
+    var wrap=document.getElementById('jh-prog-wrap');
+    var rect=wrap.getBoundingClientRect();
+    var pct=(e.clientX-rect.left)/rect.width;
+    jhAudio.currentTime=pct*jhAudio.duration;
+}
+
 (function(){
     if(!window.IntersectionObserver) return;
     var els = document.querySelectorAll('.jh-stat, .jh-tl-item, .jh-photo-card, .jh-legacy-card');
