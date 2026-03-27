@@ -1,0 +1,508 @@
+<!-- ═══════════════════════════════════════════════════════════════════════
+     MKCAL ADMIN CARD — Редактор Календаря Метричних Книг
+     ВСТАВТЕ ПЕРЕД: </div><!-- /adminContent -->
+     в файлі admin.html
+     ═══════════════════════════════════════════════════════════════════════ -->
+
+<div class="admin-card" id="mkcalAdminCard" style="margin-top:0;">
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;margin-bottom:0.5rem;">
+        📅 Каталог Метричних Книг — Календар по роках
+    </h2>
+    <p style="font-size:0.85rem;color:var(--color-text-secondary);margin-bottom:1.5rem;">
+        Тут ви керуєте записами у файлі <code>metrychni-knyhy.json</code>. Кожен запис — це одна метрична книга зі своїм діапазоном років. Золоті клітинки у календарі на сторінці «Метричні книги» будуються автоматично з цих записів.
+    </p>
+
+    <!-- Tabs: Додати / Список -->
+    <div class="tabs" id="mkcalTabs">
+        <button class="tab-btn active" data-mkcaltab="add">➕ Додати книгу</button>
+        <button class="tab-btn" data-mkcaltab="list">📋 Список (усі записи)</button>
+    </div>
+
+    <!-- ── TAB: ADD ───────────────────────────────────── -->
+    <div id="mkcalTabAdd" style="display:block;">
+
+        <div class="grid-2">
+            <div class="field">
+                <label>Рік початку *</label>
+                <input type="number" id="mkcalYearStart" placeholder="1827" min="1600" max="1940">
+            </div>
+            <div class="field">
+                <label>Рік кінця (якщо один рік — той самий)</label>
+                <input type="number" id="mkcalYearEnd" placeholder="1846" min="1600" max="1940">
+            </div>
+        </div>
+
+        <div class="field">
+            <label>Тип документа *</label>
+            <select id="mkcalType">
+                <option value="">Оберіть...</option>
+                <option value="Метрична книга">Метрична книга</option>
+                <option value="Сповідний розпис">Сповідний розпис</option>
+                <option value="Ревізька казка">Ревізька казка</option>
+                <option value="Книга актів цивільного стану">Книга актів цивільного стану</option>
+                <option value="Список парафіян">Список парафіян</option>
+                <option value="Інший документ">Інший документ</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label>Церква / Установа *</label>
+            <input type="text" id="mkcalChurch" placeholder="Церква Святого Миколая">
+        </div>
+
+        <div class="field">
+            <label>Місцезнаходження (місто, повіт, губернія)</label>
+            <input type="text" id="mkcalLocation" placeholder="м-ко Домбровиця, Ровенський повіт, Волинська губернія">
+        </div>
+
+        <div class="field">
+            <label>Архів та шифр справи</label>
+            <input type="text" id="mkcalArchive" placeholder="ДАРО 639-5-4">
+            <div style="font-size:0.78rem;color:var(--color-text-secondary);margin-top:0.3rem;">
+                Приклад: ДАРО 639-5-4 або ДАЖО 1/8/1109
+            </div>
+        </div>
+
+        <div class="field">
+            <label>Посилання на FamilySearch (скани)</label>
+            <input type="url" id="mkcalFsUrl" placeholder="https://www.familysearch.org/search/catalog/...">
+            <div style="font-size:0.78rem;color:var(--color-text-secondary);margin-top:0.3rem;">
+                Якщо скани вже є на FamilySearch — вставте пряме посилання. Золота крапка на клітинці з'явиться автоматично.
+            </div>
+        </div>
+
+        <div style="display:flex;gap:0.75rem;flex-wrap:wrap;margin-top:0.5rem;">
+            <button class="btn btn-green" id="mkcalAddBtn">📖 Додати до каталогу</button>
+            <button class="btn btn-outline" id="mkcalClearFormBtn">✕ Очистити форму</button>
+        </div>
+        <div id="mkcalAddStatus" class="notice" style="display:none;margin-top:1rem;"></div>
+
+    </div>
+
+    <!-- ── TAB: LIST ──────────────────────────────────── -->
+    <div id="mkcalTabList" style="display:none;">
+
+        <div style="display:flex;gap:0.75rem;align-items:center;flex-wrap:wrap;margin-bottom:1rem;">
+            <button class="btn btn-green" id="mkcalSaveBtn" style="font-size:0.875rem;">💾 Зберегти зміни на GitHub</button>
+            <button class="btn btn-outline" id="mkcalCopyBtn" style="font-size:0.875rem;">📋 Скопіювати JSON</button>
+        </div>
+        <div id="mkcalSaveStatus" class="notice" style="display:none;margin-bottom:1rem;"></div>
+
+        <!-- Search/filter -->
+        <div class="field" style="margin-bottom:1rem;">
+            <input type="text" id="mkcalSearch" placeholder="🔍 Пошук за церквою, роком, архівом..."
+                   style="font-size:0.875rem;">
+        </div>
+
+        <!-- List container -->
+        <div id="mkcalList" style="display:flex;flex-direction:column;gap:0.6rem;"></div>
+        <div id="mkcalListEmpty" style="text-align:center;padding:2rem;font-size:0.875rem;color:var(--color-text-secondary);">
+            Записів ще немає. Перейдіть на вкладку «Додати книгу».
+        </div>
+
+    </div>
+
+    <!-- ── Edit modal ─────────────────────────────────── -->
+    <div id="mkcalEditModal" style="display:none;position:fixed;inset:0;z-index:10000;
+         background:rgba(0,0,0,0.6);backdrop-filter:blur(5px);
+         align-items:center;justify-content:center;">
+        <div style="background:var(--color-bg-card,var(--color-surface));border-radius:16px;
+             padding:1.75rem;width:min(520px,94vw);
+             box-shadow:0 24px 64px rgba(0,0,0,0.3);border:1px solid var(--color-border);
+             max-height:92vh;overflow-y:auto;">
+            <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;margin:0 0 1.25rem;color:var(--color-text);">
+                Редагувати запис
+            </h3>
+            <input type="hidden" id="mkcalEditId">
+            <div class="grid-2">
+                <div class="field">
+                    <label>Рік початку *</label>
+                    <input type="number" id="mkcalEditYS" min="1600" max="1940">
+                </div>
+                <div class="field">
+                    <label>Рік кінця</label>
+                    <input type="number" id="mkcalEditYE" min="1600" max="1940">
+                </div>
+            </div>
+            <div class="field">
+                <label>Тип документа *</label>
+                <select id="mkcalEditType">
+                    <option value="Метрична книга">Метрична книга</option>
+                    <option value="Сповідний розпис">Сповідний розпис</option>
+                    <option value="Ревізька казка">Ревізька казка</option>
+                    <option value="Книга актів цивільного стану">Книга актів цивільного стану</option>
+                    <option value="Список парафіян">Список парафіян</option>
+                    <option value="Інший документ">Інший документ</option>
+                </select>
+            </div>
+            <div class="field">
+                <label>Церква / Установа *</label>
+                <input type="text" id="mkcalEditChurch">
+            </div>
+            <div class="field">
+                <label>Місцезнаходження</label>
+                <input type="text" id="mkcalEditLoc">
+            </div>
+            <div class="field">
+                <label>Архів та шифр</label>
+                <input type="text" id="mkcalEditArch">
+            </div>
+            <div class="field">
+                <label>Посилання FamilySearch</label>
+                <input type="url" id="mkcalEditFs">
+            </div>
+            <div style="display:flex;gap:0.75rem;margin-top:1.25rem;">
+                <button class="btn btn-primary" id="mkcalEditSave" style="flex:1;">✅ Зберегти зміни</button>
+                <button class="btn btn-outline" id="mkcalEditCancel" style="flex:1;">Скасувати</button>
+            </div>
+        </div>
+    </div>
+
+</div><!-- /mkcalAdminCard -->
+
+<script>
+/* ═══════════════════════════════════════════════════════════════════
+   MKCAL ADMIN — управління metrychni-knyhy.json
+   ═══════════════════════════════════════════════════════════════════ */
+(function () {
+    'use strict';
+
+    var GH_REPO = 'jerkinsmichael13-stack/Dubrovytsia1';
+    var BRANCH  = 'main';
+    var FILE    = 'metrychni-knyhy.json';
+    var GH_RAW  = 'https://raw.githubusercontent.com/' + GH_REPO + '/main/';
+    var GH_API  = 'https://api.github.com/repos/' + GH_REPO + '/contents/' + FILE;
+
+    var mkcData = []; // in-memory list
+
+    /* ── DOM refs ─────────────────────────────────────── */
+    var elTabAdd    = document.getElementById('mkcalTabAdd');
+    var elTabList   = document.getElementById('mkcalTabList');
+    var elList      = document.getElementById('mkcalList');
+    var elEmpty     = document.getElementById('mkcalListEmpty');
+    var elAddStatus = document.getElementById('mkcalAddStatus');
+    var elSaveStatus= document.getElementById('mkcalSaveStatus');
+    var elSearch    = document.getElementById('mkcalSearch');
+    var elModal     = document.getElementById('mkcalEditModal');
+
+    /* ── Tab switching ────────────────────────────────── */
+    document.querySelectorAll('[data-mkcaltab]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            var tab = this.getAttribute('data-mkcaltab');
+            document.querySelectorAll('[data-mkcaltab]').forEach(function (b) {
+                b.classList.toggle('active', b === btn);
+            });
+            elTabAdd.style.display  = tab === 'add'  ? 'block' : 'none';
+            elTabList.style.display = tab === 'list' ? 'block' : 'none';
+            if (tab === 'list') renderList();
+        });
+    });
+
+    /* ── Helpers ──────────────────────────────────────── */
+    function esc(s) {
+        return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+    function showStatus(el, msg, type) {
+        el.className = 'notice notice-' + (type || 'info');
+        el.innerHTML = msg;
+        el.style.display = 'block';
+    }
+    function nextId() {
+        if (!mkcData.length) return 1;
+        return Math.max.apply(null, mkcData.map(function (b) { return b.id || 0; })) + 1;
+    }
+    function getToken() {
+        return localStorage.getItem('gh_token_dubrovytsia') || '';
+    }
+
+    /* ── Render list ──────────────────────────────────── */
+    function renderList(filter) {
+        filter = (filter || '').toLowerCase();
+        var items = filter
+            ? mkcData.filter(function (b) {
+                return (b.church + b.archive + b.location + b.type + b.yearStart + b.yearEnd)
+                       .toLowerCase().indexOf(filter) !== -1;
+              })
+            : mkcData.slice();
+
+        elEmpty.style.display  = items.length ? 'none' : 'block';
+        elList.innerHTML       = '';
+
+        // Sort by yearStart
+        items.sort(function (a, b) { return a.yearStart - b.yearStart; });
+
+        items.forEach(function (b) {
+            var row = document.createElement('div');
+            row.style.cssText = [
+                'display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;',
+                'padding:0.85rem 1rem;',
+                'background:var(--color-bg);',
+                'border:1px solid var(--color-border);',
+                'border-radius:10px;',
+                'transition:border-color 0.2s;'
+            ].join('');
+            row.addEventListener('mouseenter', function () { this.style.borderColor = 'rgba(201,162,39,0.35)'; });
+            row.addEventListener('mouseleave', function () { this.style.borderColor = ''; });
+
+            // Year badge
+            var yrBadge = document.createElement('span');
+            var rangeStr = (b.yearEnd && b.yearEnd !== b.yearStart) ? b.yearStart + '–' + b.yearEnd : String(b.yearStart);
+            yrBadge.style.cssText = 'min-width:80px;padding:0.25rem 0.55rem;border-radius:100px;' +
+                'background:rgba(201,162,39,0.1);border:1px solid rgba(201,162,39,0.25);' +
+                'font-family:\'DM Sans\',sans-serif;font-size:0.7rem;font-weight:700;' +
+                'color:#a07d15;text-align:center;flex-shrink:0;';
+            yrBadge.textContent = rangeStr;
+
+            // Info
+            var info = document.createElement('div');
+            info.style.cssText = 'flex:1;min-width:0;';
+            var typeBadge = b.type ? '<span style="font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-text-secondary);">' + esc(b.type) + '</span> · ' : '';
+            info.innerHTML =
+                '<div style="font-size:0.875rem;font-weight:600;color:var(--color-text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'
+                + typeBadge + esc(b.church) + '</div>'
+                + '<div style="font-size:0.72rem;color:var(--color-text-secondary);margin-top:0.12rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'
+                + esc(b.archive) + (b.familySearchUrl ? ' · <span style="color:#c9a227;">✓ FamilySearch</span>' : '') + '</div>';
+
+            // Action buttons
+            var actions = document.createElement('div');
+            actions.style.cssText = 'display:flex;gap:0.4rem;flex-shrink:0;';
+
+            var editBtn = document.createElement('button');
+            editBtn.style.cssText = 'padding:0.35rem 0.7rem;border:1px solid var(--color-border);' +
+                'border-radius:7px;background:transparent;color:var(--color-text-secondary);' +
+                'font-size:0.72rem;cursor:pointer;transition:all 0.15s;';
+            editBtn.textContent = '✏️ Редагувати';
+            editBtn.addEventListener('mouseenter', function () { this.style.borderColor = '#c9a227'; this.style.color = '#c9a227'; });
+            editBtn.addEventListener('mouseleave', function () { this.style.borderColor = ''; this.style.color = ''; });
+            editBtn.addEventListener('click', (function (book) {
+                return function () { openEditModal(book); };
+            })(b));
+
+            var delBtn = document.createElement('button');
+            delBtn.style.cssText = 'padding:0.35rem 0.7rem;border:1px solid rgba(198,40,40,0.3);' +
+                'border-radius:7px;background:transparent;color:#c62828;' +
+                'font-size:0.72rem;cursor:pointer;transition:all 0.15s;';
+            delBtn.textContent = '🗑️';
+            delBtn.title = 'Видалити запис';
+            delBtn.addEventListener('click', (function (id) {
+                return function () {
+                    if (!confirm('Видалити цей запис?')) return;
+                    mkcData = mkcData.filter(function (x) { return x.id !== id; });
+                    renderList(elSearch.value);
+                    showStatus(elSaveStatus, '⚠️ Зміни не збережено. Натисніть «Зберегти зміни на GitHub».', 'warn');
+                };
+            })(b.id));
+
+            actions.appendChild(editBtn);
+            actions.appendChild(delBtn);
+
+            row.appendChild(yrBadge);
+            row.appendChild(info);
+            row.appendChild(actions);
+            elList.appendChild(row);
+        });
+    }
+
+    /* ── Add new book ─────────────────────────────────── */
+    document.getElementById('mkcalAddBtn').addEventListener('click', function () {
+        var ys = parseInt(document.getElementById('mkcalYearStart').value, 10);
+        var ye = parseInt(document.getElementById('mkcalYearEnd').value, 10) || ys;
+        var type   = document.getElementById('mkcalType').value.trim();
+        var church = document.getElementById('mkcalChurch').value.trim();
+        var loc    = document.getElementById('mkcalLocation').value.trim();
+        var arch   = document.getElementById('mkcalArchive').value.trim();
+        var fsUrl  = document.getElementById('mkcalFsUrl').value.trim();
+
+        if (!ys || !type || !church) {
+            showStatus(elAddStatus, '❌ Заповніть обов\'язкові поля: Рік початку, Тип документа, Церква.', 'error');
+            return;
+        }
+        if (ye < ys) ye = ys;
+
+        var newEntry = {
+            id: nextId(),
+            yearStart: ys,
+            yearEnd: ye,
+            type: type,
+            church: church,
+            location: loc,
+            archive: arch,
+            familySearchUrl: fsUrl
+        };
+
+        mkcData.push(newEntry);
+        showStatus(elAddStatus,
+            '✅ Запис «' + church + ' ' + ys + '» додано! Перейдіть на вкладку «Список» і натисніть «Зберегти на GitHub».',
+            'success');
+
+        // Clear form
+        ['mkcalYearStart','mkcalYearEnd','mkcalChurch','mkcalLocation','mkcalArchive','mkcalFsUrl'].forEach(function (id) {
+            document.getElementById(id).value = '';
+        });
+        document.getElementById('mkcalType').value = '';
+    });
+
+    document.getElementById('mkcalClearFormBtn').addEventListener('click', function () {
+        ['mkcalYearStart','mkcalYearEnd','mkcalChurch','mkcalLocation','mkcalArchive','mkcalFsUrl'].forEach(function (id) {
+            document.getElementById(id).value = '';
+        });
+        document.getElementById('mkcalType').value = '';
+        elAddStatus.style.display = 'none';
+    });
+
+    /* ── Search filter ────────────────────────────────── */
+    elSearch.addEventListener('input', function () {
+        renderList(this.value);
+    });
+
+    /* ── Edit modal ───────────────────────────────────── */
+    function openEditModal(book) {
+        document.getElementById('mkcalEditId').value    = book.id;
+        document.getElementById('mkcalEditYS').value    = book.yearStart;
+        document.getElementById('mkcalEditYE').value    = book.yearEnd || book.yearStart;
+        document.getElementById('mkcalEditType').value  = book.type || '';
+        document.getElementById('mkcalEditChurch').value= book.church || '';
+        document.getElementById('mkcalEditLoc').value   = book.location || '';
+        document.getElementById('mkcalEditArch').value  = book.archive || '';
+        document.getElementById('mkcalEditFs').value    = book.familySearchUrl || '';
+        elModal.style.display = 'flex';
+        setTimeout(function () { document.getElementById('mkcalEditChurch').focus(); }, 50);
+    }
+
+    function closeEditModal() { elModal.style.display = 'none'; }
+
+    document.getElementById('mkcalEditSave').addEventListener('click', function () {
+        var id     = parseInt(document.getElementById('mkcalEditId').value, 10);
+        var ys     = parseInt(document.getElementById('mkcalEditYS').value, 10);
+        var ye     = parseInt(document.getElementById('mkcalEditYE').value, 10) || ys;
+        var type   = document.getElementById('mkcalEditType').value.trim();
+        var church = document.getElementById('mkcalEditChurch').value.trim();
+
+        if (!ys || !type || !church) {
+            alert('Заповніть обов\'язкові поля: Рік початку, Тип, Церква.');
+            return;
+        }
+
+        var book = mkcData.find(function (b) { return b.id === id; });
+        if (!book) return;
+
+        book.yearStart      = ys;
+        book.yearEnd        = ye < ys ? ys : ye;
+        book.type           = type;
+        book.church         = church;
+        book.location       = document.getElementById('mkcalEditLoc').value.trim();
+        book.archive        = document.getElementById('mkcalEditArch').value.trim();
+        book.familySearchUrl= document.getElementById('mkcalEditFs').value.trim();
+
+        closeEditModal();
+        renderList(elSearch.value);
+        showStatus(elSaveStatus, '⚠️ Зміни внесено. Не забудьте натиснути «Зберегти зміни на GitHub».', 'warn');
+    });
+
+    document.getElementById('mkcalEditCancel').addEventListener('click', closeEditModal);
+    elModal.addEventListener('click', function (e) { if (e.target === elModal) closeEditModal(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && elModal.style.display === 'flex') closeEditModal(); });
+
+    /* ── Save to GitHub ───────────────────────────────── */
+    document.getElementById('mkcalSaveBtn').addEventListener('click', async function () {
+        var tok = getToken();
+        if (!tok) {
+            showStatus(elSaveStatus, '⚠️ Спочатку введіть GitHub токен у розділі «Налаштування GitHub» вище.', 'warn');
+            return;
+        }
+        var json = JSON.stringify(mkcData, null, 2);
+        showStatus(elSaveStatus, '⏳ Збереження на GitHub...', 'info');
+
+        try {
+            /* Get current SHA */
+            var sha = null;
+            var resp = await fetch(GH_API, {
+                headers: {
+                    Authorization: 'token ' + tok,
+                    Accept: 'application/vnd.github.v3+json'
+                }
+            });
+            if (resp.ok) {
+                var d = await resp.json();
+                sha = d.sha;
+            }
+
+            /* PUT updated file */
+            var body = {
+                message: 'Update ' + FILE + ' via admin panel',
+                content: btoa(unescape(encodeURIComponent(json))),
+                branch: BRANCH
+            };
+            if (sha) body.sha = sha;
+
+            var put = await fetch(GH_API, {
+                method: 'PUT',
+                headers: {
+                    Authorization: 'token ' + tok,
+                    Accept: 'application/vnd.github.v3+json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            });
+
+            if (put.ok) {
+                showStatus(elSaveStatus,
+                    '✅ Файл <code>' + FILE + '</code> збережено на GitHub! Сайт оновиться протягом ~1 хв.',
+                    'success');
+            } else {
+                var err = await put.json();
+                showStatus(elSaveStatus, '❌ Помилка: ' + (err.message || 'Невідома помилка'), 'error');
+            }
+        } catch (e) {
+            showStatus(elSaveStatus, '❌ ' + e.message, 'error');
+        }
+    });
+
+    /* ── Copy JSON to clipboard ───────────────────────── */
+    document.getElementById('mkcalCopyBtn').addEventListener('click', function () {
+        navigator.clipboard.writeText(JSON.stringify(mkcData, null, 2))
+            .then(function () { showStatus(elSaveStatus, '📋 JSON скопійовано в буфер обміну', 'success'); })
+            .catch(function () {
+                // Fallback
+                var ta = document.createElement('textarea');
+                ta.value = JSON.stringify(mkcData, null, 2);
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+                showStatus(elSaveStatus, '📋 JSON скопійовано', 'success');
+            });
+    });
+
+    /* ── Load existing data on admin unlock ───────────── */
+    function loadData() {
+        fetch(GH_RAW + FILE + '?v=' + Date.now())
+            .then(function (r) { return r.ok ? r.json() : []; })
+            .then(function (data) {
+                mkcData = Array.isArray(data) ? data : [];
+                // Re-render list if tab is active
+                if (elTabList.style.display !== 'none') renderList();
+            })
+            .catch(function () {});
+    }
+
+    /* Try to load on DOM ready; also watch for admin unlock */
+    var unlockObserver = new MutationObserver(function (muts) {
+        muts.forEach(function (m) {
+            if (m.target.id === 'adminContent' && m.target.style.display !== 'none') {
+                loadData();
+                unlockObserver.disconnect();
+            }
+        });
+    });
+    var adminContent = document.getElementById('adminContent');
+    if (adminContent) {
+        if (adminContent.style.display !== 'none') {
+            loadData();
+        } else {
+            unlockObserver.observe(adminContent, { attributes: true, attributeFilter: ['style'] });
+        }
+    }
+
+}());
+</script>

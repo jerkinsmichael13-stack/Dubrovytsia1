@@ -1,0 +1,686 @@
+<!-- ═══════════════════════════════════════════════════════════════════
+     MKCAL — Хронологічний календар метричних книг
+     ВСТАВТЕ ЦІЛИЙ БЛОК ПЕРЕД рядком: <!-- Sticky filters bar -->
+     в файлі metrychni-knyhy.html
+     ═══════════════════════════════════════════════════════════════════ -->
+
+<style>
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   MKCAL — Хронологічний каталог: рік за роком
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.mkcal-section {
+    background: var(--color-bg, #faf7f2);
+    padding: 6rem 0 5rem;
+    border-bottom: 1px solid var(--color-border-light, rgba(201,162,39,0.1));
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtle grain overlay */
+.mkcal-section::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 180px;
+    opacity: 0.018;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.mkcal-inner {
+    position: relative; z-index: 1;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+@media (max-width: 600px) { .mkcal-inner { padding: 0 1.2rem; } }
+
+/* ── Header ─────────────────────────────────────── */
+.mkcal-hd {
+    text-align: center;
+    margin-bottom: 2.25rem;
+}
+.mkcal-hd-eyebrow {
+    display: flex; align-items: center; justify-content: center; gap: 1rem;
+    margin-bottom: 1.1rem;
+}
+.mkcal-hd-eyebrow span {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.5rem; letter-spacing: 0.34em; text-transform: uppercase;
+    color: rgba(201,162,39,0.65);
+}
+.mkcal-hd-line {
+    display: block; width: 38px; height: 1px; flex-shrink: 0;
+    background: linear-gradient(90deg, transparent, rgba(201,162,39,0.5));
+}
+.mkcal-hd-line:last-child { transform: scaleX(-1); }
+
+.mkcal-hd-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300; line-height: 0.92; letter-spacing: -0.035em;
+    font-size: clamp(2.8rem, 5.5vw, 4.5rem);
+    color: var(--color-text, #1a1000);
+    margin-bottom: 0.8rem;
+}
+.mkcal-hd-title em { font-style: italic; color: #c9a227; }
+
+.mkcal-hd-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(0.95rem, 1.6vw, 1.1rem);
+    font-weight: 300; font-style: italic;
+    color: var(--color-text-light, #8b6f3e);
+}
+
+/* ── Legend ─────────────────────────────────────── */
+.mkcal-legend {
+    display: flex; align-items: center; justify-content: center;
+    gap: 1.6rem; flex-wrap: wrap;
+    margin-bottom: 2.2rem;
+}
+.mkcal-leg {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.7rem; color: var(--color-text-muted, #a89880);
+}
+.mkcal-leg-sq {
+    width: 13px; height: 13px; border-radius: 3px; flex-shrink: 0;
+}
+.mkcal-leg-sq--av  { background: rgba(201,162,39,0.25); border: 1.5px solid rgba(201,162,39,0.55); }
+.mkcal-leg-sq--no  { background: rgba(120,110,100,0.08); border: 1.5px solid rgba(120,110,100,0.18); }
+.mkcal-leg-sq--fs  { background: #c9a227; border: 1.5px solid #e0c04a; box-shadow: 0 0 6px rgba(201,162,39,0.5); }
+
+/* ── Grid wrap (dark parchment) ─────────────────── */
+.mkcal-grid-wrap {
+    background: linear-gradient(155deg, #0e0c07 0%, #1a160c 55%, #0e0b06 100%);
+    border-radius: 20px;
+    padding: 2.25rem 2.5rem 2.5rem;
+    border: 1px solid rgba(201,162,39,0.14);
+    box-shadow:
+        0 24px 64px rgba(0,0,0,0.22),
+        0 1px 0 rgba(201,162,39,0.1) inset;
+    overflow-x: auto;
+    overflow-y: visible;
+    -webkit-overflow-scrolling: touch;
+}
+@media (max-width: 600px) {
+    .mkcal-grid-wrap { padding: 1.5rem 1.25rem 1.75rem; border-radius: 14px; }
+}
+
+/* Column header row (0–9) */
+.mkcal-col-hd {
+    display: flex;
+    margin-bottom: 0.85rem;
+    padding-left: calc(52px + 0.6rem); /* align with cells */
+    gap: 5px;
+}
+.mkcal-col-hd span {
+    width: 44px; flex-shrink: 0;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.48rem; letter-spacing: 0.06em;
+    color: rgba(201,162,39,0.2);
+    text-align: center;
+    user-select: none;
+}
+@media (max-width: 580px) { .mkcal-col-hd span { width: 36px; } }
+@media (max-width: 430px) { .mkcal-col-hd span { width: 30px; } }
+
+/* Loading */
+.mkcal-loading {
+    display: flex; align-items: center; justify-content: center; gap: 1rem;
+    padding: 3rem 1rem;
+    color: rgba(201,162,39,0.45);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    letter-spacing: 0.06em;
+}
+.mkcal-spinner {
+    width: 20px; height: 20px;
+    border: 2px solid rgba(201,162,39,0.18);
+    border-top-color: #c9a227;
+    border-radius: 50%;
+    animation: mkcal-spin 0.85s linear infinite;
+    flex-shrink: 0;
+}
+@keyframes mkcal-spin { to { transform: rotate(360deg); } }
+
+/* ── Decade row ─────────────────────────────────── */
+.mkcal-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.5rem;
+    min-width: 480px;
+}
+.mkcal-dlbl {
+    width: 52px; flex-shrink: 0; text-align: right;
+    padding-right: 0.35rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.56rem; letter-spacing: 0.08em;
+    color: rgba(201,162,39,0.28);
+    user-select: none;
+    line-height: 1;
+}
+.mkcal-cells {
+    display: flex; gap: 5px;
+}
+
+/* ── Year cell ──────────────────────────────────── */
+.mkcal-cell {
+    position: relative;
+    width: 44px; height: 44px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: transform 0.18s cubic-bezier(0.16,1,0.3,1),
+                box-shadow 0.18s ease,
+                background 0.15s ease,
+                border-color 0.15s ease;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+}
+@media (max-width: 580px) { .mkcal-cell { width: 36px; height: 36px; border-radius: 6px; } }
+@media (max-width: 430px) { .mkcal-cell { width: 30px; height: 30px; border-radius: 5px; } }
+
+.mkcal-cell--no {
+    background: rgba(255,255,255,0.022);
+    border-color: rgba(255,255,255,0.038);
+    cursor: default;
+}
+.mkcal-cell--av {
+    background: rgba(201,162,39,0.085);
+    border-color: rgba(201,162,39,0.22);
+    cursor: pointer;
+}
+.mkcal-cell--av:hover {
+    background: rgba(201,162,39,0.2);
+    border-color: rgba(201,162,39,0.52);
+    box-shadow: 0 0 14px rgba(201,162,39,0.18), inset 0 1px 0 rgba(201,162,39,0.12);
+    transform: scale(1.1) translateY(-1px);
+    z-index: 2;
+}
+.mkcal-cell--av:focus-visible {
+    outline: 2px solid #c9a227;
+    outline-offset: 2px;
+}
+.mkcal-cell--fs {
+    background: rgba(201,162,39,0.14);
+    border-color: rgba(201,162,39,0.36);
+}
+.mkcal-cell--fs:hover {
+    background: rgba(201,162,39,0.26);
+    border-color: rgba(201,162,39,0.65);
+    box-shadow: 0 0 18px rgba(201,162,39,0.28);
+}
+.mkcal-cell--active {
+    background: rgba(201,162,39,0.32) !important;
+    border-color: #c9a227 !important;
+    box-shadow: 0 0 22px rgba(201,162,39,0.45), inset 0 1px 0 rgba(255,255,255,0.15) !important;
+    transform: scale(1.14) translateY(-2px) !important;
+    z-index: 3;
+}
+
+.mkcal-yr {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.62rem; font-weight: 600;
+    line-height: 1; pointer-events: none;
+    transition: color 0.15s;
+}
+.mkcal-cell--no .mkcal-yr  { color: rgba(255,255,255,0.12); }
+.mkcal-cell--av .mkcal-yr  { color: rgba(201,162,39,0.82); }
+.mkcal-cell--active .mkcal-yr { color: #fff; }
+@media (max-width: 430px) { .mkcal-yr { font-size: 0.5rem; } }
+
+/* FamilySearch indicator dot */
+.mkcal-fsdot {
+    position: absolute;
+    bottom: 5px;
+    width: 4px; height: 4px; border-radius: 50%;
+    background: #c9a227;
+    box-shadow: 0 0 6px rgba(201,162,39,0.9);
+    pointer-events: none;
+    animation: mkcal-pulse 2.2s ease-in-out infinite;
+}
+@keyframes mkcal-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.55; transform: scale(0.75); }
+}
+@media (max-width: 430px) { .mkcal-fsdot { bottom: 3px; width: 3px; height: 3px; } }
+
+/* ── Expansion panel ─────────────────────────────── */
+.mkcal-panel {
+    margin-top: 1.75rem;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.38s ease, transform 0.5s cubic-bezier(0.16,1,0.3,1);
+}
+.mkcal-panel--open {
+    opacity: 1; transform: translateY(0);
+}
+
+.mkcal-pi {
+    background: var(--color-surface, #fff);
+    border: 1px solid var(--color-border, rgba(201,162,39,0.12));
+    border-radius: 18px;
+    padding: 2rem 2.25rem 2.25rem;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.07);
+    position: relative;
+}
+@media (max-width: 600px) { .mkcal-pi { padding: 1.5rem 1.25rem 1.75rem; border-radius: 14px; } }
+
+/* Panel header */
+.mkcal-pi-hd {
+    display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap;
+    margin-bottom: 1.75rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--color-border, rgba(201,162,39,0.1));
+}
+.mkcal-pi-yr {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 6vw, 4.5rem);
+    font-weight: 300; line-height: 1; letter-spacing: -0.04em;
+    color: #c9a227;
+}
+.mkcal-pi-cnt {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    color: var(--color-text-muted, #a89880);
+    flex: 1;
+    padding-top: 0.2rem;
+}
+.mkcal-pi-x {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: transparent;
+    border: 1px solid var(--color-border, rgba(201,162,39,0.14));
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 0.78rem;
+    color: var(--color-text-muted, #a89880);
+    transition: all 0.2s; flex-shrink: 0;
+    line-height: 1;
+}
+.mkcal-pi-x:hover { border-color: #c62828; color: #c62828; background: rgba(198,40,40,0.06); }
+
+/* Book cards grid */
+.mkcal-pi-books {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(255px, 1fr));
+    gap: 1rem;
+}
+
+/* Single book card */
+.mkcal-book {
+    background: var(--color-bg, #faf7f2);
+    border: 1px solid var(--color-border, rgba(201,162,39,0.1));
+    border-radius: 12px;
+    padding: 1.25rem 1.25rem 1.1rem;
+    display: flex; flex-direction: column; gap: 0.35rem;
+    transition: border-color 0.22s ease, box-shadow 0.22s ease, transform 0.28s cubic-bezier(0.16,1,0.3,1);
+}
+.mkcal-book:hover {
+    border-color: rgba(201,162,39,0.32);
+    box-shadow: 0 4px 22px rgba(0,0,0,0.07);
+    transform: translateY(-3px);
+}
+
+.mkcal-book-badge {
+    display: inline-flex; align-items: center;
+    padding: 0.16rem 0.55rem;
+    border-radius: 100px;
+    background: rgba(201,162,39,0.09);
+    border: 1px solid rgba(201,162,39,0.22);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.56rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: #a07d15;
+    width: fit-content;
+    margin-bottom: 0.2rem;
+}
+[data-theme="dark"] .mkcal-book-badge { color: #c9a227; background: rgba(201,162,39,0.12); }
+
+.mkcal-book-church {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.08rem; font-weight: 400; line-height: 1.28;
+    color: var(--color-text, #1a1000);
+}
+
+.mkcal-meta-range {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.72rem; font-weight: 600;
+    color: #c9a227;
+}
+
+.mkcal-book-loc {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.69rem;
+    color: var(--color-text-muted, #a89880);
+    line-height: 1.44;
+    margin-top: 0.05rem;
+}
+
+.mkcal-book-arch {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.65rem; letter-spacing: 0.04em;
+    color: rgba(139,111,62,0.65);
+    margin-bottom: 0.55rem;
+}
+
+.mkcal-book-cta {
+    display: inline-flex; align-items: center; gap: 0.42rem;
+    padding: 0.48rem 0.8rem;
+    border-radius: 8px;
+    background: rgba(201,162,39,0.1);
+    border: 1px solid rgba(201,162,39,0.28);
+    color: #a07d15;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.66rem; font-weight: 600;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.2s;
+    width: fit-content;
+    margin-top: auto;
+    cursor: pointer;
+    white-space: nowrap;
+}
+[data-theme="dark"] .mkcal-book-cta { color: #c9a227; }
+.mkcal-book-cta:hover {
+    background: #c9a227;
+    border-color: #c9a227;
+    color: #1a1000;
+    box-shadow: 0 4px 16px rgba(201,162,39,0.32);
+}
+.mkcal-book-cta--nd {
+    opacity: 0.4;
+    cursor: default;
+    border-style: dashed;
+    pointer-events: none;
+}
+
+/* Divider above legend description */
+.mkcal-note {
+    text-align: center;
+    margin-top: 1.75rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.68rem;
+    color: var(--color-text-muted, #a89880);
+    letter-spacing: 0.03em;
+}
+.mkcal-note a { color: #c9a227; text-decoration: none; }
+.mkcal-note a:hover { text-decoration: underline; }
+
+/* Dark theme tweaks for the dark grid */
+[data-theme="dark"] .mkcal-grid-wrap {
+    background: linear-gradient(155deg, #060504 0%, #0f0d08 55%, #060403 100%);
+    border-color: rgba(201,162,39,0.18);
+}
+[data-theme="dark"] .mkcal-pi {
+    background: var(--color-surface, #1a1508);
+}
+[data-theme="dark"] .mkcal-book {
+    background: var(--color-bg, #111009);
+}
+</style>
+
+<!-- ═══════════════════════════════════════════════════════
+     CALENDAR SECTION HTML
+     ═══════════════════════════════════════════════════════ -->
+<section class="mkcal-section" id="mkcalSection">
+    <div class="mkcal-inner">
+
+        <!-- Header -->
+        <div class="mkcal-hd" data-aos="fade-up">
+            <div class="mkcal-hd-eyebrow">
+                <span class="mkcal-hd-line"></span>
+                <span>Хронологічний каталог · 1720–1919</span>
+                <span class="mkcal-hd-line"></span>
+            </div>
+            <h2 class="mkcal-hd-title">Рік <em>за роком</em></h2>
+            <p class="mkcal-hd-sub">Оберіть рік — побачите доступні метричні книги та скани</p>
+        </div>
+
+        <!-- Legend -->
+        <div class="mkcal-legend">
+            <div class="mkcal-leg">
+                <span class="mkcal-leg-sq mkcal-leg-sq--av"></span>
+                Є метрична книга
+            </div>
+            <div class="mkcal-leg">
+                <span class="mkcal-leg-sq mkcal-leg-sq--no"></span>
+                Записів немає
+            </div>
+            <div class="mkcal-leg">
+                <span class="mkcal-leg-sq mkcal-leg-sq--fs"></span>
+                Скан на FamilySearch
+            </div>
+        </div>
+
+        <!-- Dark grid wrapper -->
+        <div class="mkcal-grid-wrap">
+
+            <!-- Column header (0–9) -->
+            <div class="mkcal-col-hd">
+                <span>·0</span><span>·1</span><span>·2</span><span>·3</span><span>·4</span>
+                <span>·5</span><span>·6</span><span>·7</span><span>·8</span><span>·9</span>
+            </div>
+
+            <!-- Loading indicator -->
+            <div class="mkcal-loading" id="mkcalLoading">
+                <div class="mkcal-spinner"></div>
+                Завантаження каталогу...
+            </div>
+
+            <!-- Year grid (rendered by JS) -->
+            <div id="mkcalGrid" style="display:none;"></div>
+
+        </div>
+
+        <!-- Expansion panel (outside dark box) -->
+        <div class="mkcal-panel" id="mkcalPanel" style="display:none;" role="region" aria-live="polite"></div>
+
+        <!-- Bottom note -->
+        <p class="mkcal-note">
+            Дані синхронізуються з базою даних архіву. Щоб додати нову книгу — скористайтесь 
+            <a href="admin.html">адмін-панеллю</a>.
+        </p>
+
+    </div>
+</section>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   MKCAL — Calendar JS (self-contained IIFE)
+   ═══════════════════════════════════════════════════════════ */
+(function () {
+    'use strict';
+
+    var GH_RAW = 'https://raw.githubusercontent.com/jerkinsmichael13-stack/Dubrovytsia1/main/';
+    var FILE   = 'metrychni-knyhy.json';
+    var Y0     = 1720;
+    var Y1     = 1919;
+
+    var mkcBooks   = [];
+    var mkcYearMap = {};
+    var mkcActive  = null;
+
+    var elGrid    = document.getElementById('mkcalGrid');
+    var elPanel   = document.getElementById('mkcalPanel');
+    var elLoading = document.getElementById('mkcalLoading');
+
+    /* ── Helpers ──────────────────────────────────────── */
+    function esc(s) {
+        return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+    function plural(n) {
+        return n === 1 ? 'документ' : (n >= 2 && n <= 4) ? 'документи' : 'документів';
+    }
+
+    /* ── Build year → [books] map ─────────────────────── */
+    function buildMap(arr) {
+        var m = {};
+        (arr || []).forEach(function (b) {
+            var end = b.yearEnd || b.yearStart;
+            for (var y = b.yearStart; y <= end; y++) {
+                if (!m[y]) m[y] = [];
+                m[y].push(b);
+            }
+        });
+        return m;
+    }
+
+    /* ── Render decade grid ───────────────────────────── */
+    function renderGrid() {
+        var html = '';
+        for (var decade = Y0; decade <= Y1; decade += 10) {
+            html += '<div class="mkcal-row">';
+            html += '<div class="mkcal-dlbl">' + decade + 's</div>';
+            html += '<div class="mkcal-cells">';
+
+            for (var i = 0; i <= 9; i++) {
+                var yr = decade + i;
+                if (yr > Y1) break;
+
+                var avail = !!mkcYearMap[yr];
+                var hasFS = avail && mkcYearMap[yr].some(function (b) {
+                    return b.familySearchUrl && b.familySearchUrl.trim();
+                });
+
+                var cls = 'mkcal-cell ' + (avail ? 'mkcal-cell--av' : 'mkcal-cell--no');
+                if (hasFS) cls += ' mkcal-cell--fs';
+
+                var last2 = String(yr).slice(-2);
+                html += '<button class="' + cls + '" data-year="' + yr + '"'
+                      + (avail ? '' : ' disabled aria-disabled="true"')
+                      + ' aria-label="' + yr + '"'
+                      + ' title="' + yr + (avail ? ' — ' + mkcYearMap[yr].length + ' ' + plural(mkcYearMap[yr].length) : '') + '">';
+                html += '<span class="mkcal-yr">' + last2 + '</span>';
+                if (hasFS) html += '<span class="mkcal-fsdot" aria-hidden="true"></span>';
+                html += '</button>';
+            }
+
+            html += '</div></div>';
+        }
+        elGrid.innerHTML = html;
+
+        /* Attach click handlers */
+        elGrid.querySelectorAll('.mkcal-cell--av').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var yr = parseInt(this.getAttribute('data-year'), 10);
+                if (mkcActive === yr) {
+                    closePanel();
+                } else {
+                    openPanel(yr, this);
+                }
+            });
+        });
+    }
+
+    /* ── Open expansion panel ─────────────────────────── */
+    function openPanel(year, btn) {
+        mkcActive = year;
+
+        /* Highlight cell */
+        elGrid.querySelectorAll('.mkcal-cell--active').forEach(function (b) {
+            b.classList.remove('mkcal-cell--active');
+        });
+        btn.classList.add('mkcal-cell--active');
+
+        var bks = mkcYearMap[year] || [];
+
+        /* Build HTML */
+        var html = '<div class="mkcal-pi">';
+
+        /* Header row */
+        html += '<div class="mkcal-pi-hd">';
+        html += '<span class="mkcal-pi-yr">' + year + '</span>';
+        html += '<span class="mkcal-pi-cnt">' + bks.length + '\u00a0' + plural(bks.length) + '</span>';
+        html += '<button class="mkcal-pi-x" id="mkcalClose" aria-label="Закрити панель">✕</button>';
+        html += '</div>';
+
+        /* Book cards */
+        html += '<div class="mkcal-pi-books">';
+        bks.forEach(function (b) {
+            var rangeStr = (b.yearEnd && b.yearEnd !== b.yearStart)
+                ? b.yearStart + '–' + b.yearEnd
+                : String(b.yearStart);
+
+            var url = b.familySearchUrl && b.familySearchUrl.trim();
+
+            html += '<div class="mkcal-book">';
+            html += '<span class="mkcal-book-badge">' + esc(b.type) + '</span>';
+            html += '<div class="mkcal-book-church">' + esc(b.church) + '</div>';
+            html += '<div><span class="mkcal-meta-range">📅\u00a0' + rangeStr + '</span></div>';
+
+            if (b.location) {
+                html += '<div class="mkcal-book-loc">' + esc(b.location) + '</div>';
+            }
+            if (b.archive) {
+                html += '<div class="mkcal-book-arch">🗄\u00a0' + esc(b.archive) + '</div>';
+            }
+
+            if (url) {
+                html += '<a href="' + esc(url) + '" target="_blank" rel="noopener noreferrer" class="mkcal-book-cta">'
+                      + '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>'
+                      + 'Переглянути на FamilySearch</a>';
+            } else {
+                html += '<span class="mkcal-book-cta mkcal-book-cta--nd">'
+                      + '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>'
+                      + 'Посилання готується</span>';
+            }
+            html += '</div>';
+        });
+        html += '</div>';
+
+        html += '</div>';
+
+        elPanel.innerHTML = html;
+        elPanel.style.display = 'block';
+
+        /* Trigger CSS transition */
+        requestAnimationFrame(function () {
+            elPanel.classList.add('mkcal-panel--open');
+        });
+
+        /* Close button */
+        document.getElementById('mkcalClose').addEventListener('click', closePanel);
+
+        /* Smooth scroll */
+        setTimeout(function () {
+            elPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 80);
+    }
+
+    /* ── Close panel ─────────────────────────────────── */
+    function closePanel() {
+        mkcActive = null;
+        elPanel.classList.remove('mkcal-panel--open');
+        elGrid.querySelectorAll('.mkcal-cell--active').forEach(function (b) {
+            b.classList.remove('mkcal-cell--active');
+        });
+        setTimeout(function () {
+            elPanel.style.display = 'none';
+            elPanel.innerHTML = '';
+        }, 400);
+    }
+
+    /* ── Keyboard: Escape closes panel ──────────────── */
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && mkcActive !== null) closePanel();
+    });
+
+    /* ── Fetch data and init ─────────────────────────── */
+    fetch(GH_RAW + FILE + '?v=' + Date.now())
+        .then(function (r) { return r.ok ? r.json() : []; })
+        .then(function (data) {
+            mkcBooks   = Array.isArray(data) ? data : [];
+            mkcYearMap = buildMap(mkcBooks);
+            elLoading.style.display = 'none';
+            elGrid.style.display    = 'block';
+            renderGrid();
+        })
+        .catch(function (err) {
+            console.error('[mkcal] load error:', err);
+            elLoading.innerHTML = '<span style="color:rgba(201,162,39,0.45);font-size:0.8rem;">Не вдалося завантажити каталог</span>';
+        });
+
+}());
+</script>
