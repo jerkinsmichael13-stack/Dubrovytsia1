@@ -886,7 +886,60 @@
     [data-theme="dark"] .LEGHINT{color:#4e4540;border-color:#2a2520;}
     .MSEP{border:none;border-top:1px solid #e8e0d4;margin:3rem 0;}
     [data-theme="dark"] .MSEP{border-color:#1e1b18;}
-    /* Fullscreen overlay moved to #MAFS */
+    /* ── FULLSCREEN OVERLAY — map + pins ── */
+    #MFSO{position:fixed;inset:0;z-index:99999;background:rgba(4,3,2,.97);
+          display:flex;flex-direction:column;
+          opacity:0;pointer-events:none;transition:opacity .22s;}
+    #MFSO.open{opacity:1;pointer-events:all;}
+    #MFS-BAR{display:flex;align-items:center;gap:.5rem;
+             padding:.55rem 1rem .55rem 1.2rem;flex-shrink:0;
+             background:rgba(8,6,4,.92);border-bottom:1px solid rgba(255,255,255,.07);
+             backdrop-filter:blur(10px);}
+    #MFS-LABEL{font-family:'DM Sans',sans-serif;font-size:.55rem;letter-spacing:.22em;
+               text-transform:uppercase;color:#c9a227;flex:1;}
+    .mfs-btn{width:34px;height:34px;flex-shrink:0;border-radius:8px;
+             border:1px solid rgba(255,255,255,.13);background:rgba(255,255,255,.07);
+             color:rgba(255,255,255,.8);cursor:pointer;display:flex;align-items:center;
+             justify-content:center;transition:background .15s;padding:0;font-size:1rem;}
+    .mfs-btn:hover{background:rgba(255,255,255,.2);}
+    #MFS-ZVAL{font-family:'DM Sans',sans-serif;font-size:.72rem;
+              color:rgba(255,255,255,.5);min-width:3em;text-align:center;}
+    #MFS-CLOSE{width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.18);
+               background:rgba(255,255,255,.08);color:rgba(255,255,255,.85);cursor:pointer;
+               display:flex;align-items:center;justify-content:center;
+               font-size:1rem;flex-shrink:0;transition:background .15s;padding:0;margin-left:.4rem;}
+    #MFS-CLOSE:hover{background:rgba(255,255,255,.22);}
+    #MFS-BODY{flex:1;display:flex;overflow:hidden;min-height:0;}
+    #MFS-BOX{flex:1;position:relative;overflow:hidden;cursor:grab;touch-action:none;
+             background:#000;min-width:0;}
+    #MFS-BOX:active{cursor:grabbing;}
+    #MFS-IMG{display:block;width:100%;height:100%;object-fit:contain;
+             transform-origin:0 0;pointer-events:none;user-select:none;will-change:transform;}
+    #MFS-LAY{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:visible;}
+    #MFS-TIP{position:absolute;z-index:50;
+             background:rgba(8,6,4,.94);backdrop-filter:blur(14px);
+             border:1px solid rgba(201,162,39,.36);border-radius:10px;
+             padding:11px 14px 12px;width:220px;max-width:calc(100% - 24px);
+             pointer-events:auto;opacity:0;transform:translateY(4px);
+             transition:opacity .18s,transform .18s;visibility:hidden;
+             box-shadow:0 8px 30px rgba(0,0,0,.55);}
+    #MFS-TIP.show{opacity:1;transform:translateY(0);visibility:visible;}
+    #MFS-SIDE{width:240px;flex-shrink:0;overflow-y:auto;
+              background:rgba(10,8,6,.9);border-left:1px solid rgba(255,255,255,.07);
+              padding:1rem .8rem;}
+    @media(max-width:640px){#MFS-SIDE{display:none;}}
+    #MFS-LEGH{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;
+              color:#e0d4bc;margin:0 0 .75rem;padding-bottom:.6rem;
+              border-bottom:1px solid rgba(255,255,255,.1);}
+    #MFS-LEG{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:2px;}
+    .MFS-LI{display:flex;align-items:flex-start;gap:8px;padding:6px 7px;border-radius:6px;
+            cursor:pointer;border:1px solid transparent;transition:background .13s;
+            font-family:'DM Sans',sans-serif;font-size:.72rem;color:#a09080;line-height:1.45;}
+    .MFS-LI:hover{background:rgba(255,255,255,.07);}
+    .MFS-LI.act{background:rgba(201,162,39,.12);border-color:rgba(201,162,39,.35);}
+    .MFS-LN{flex-shrink:0;width:20px;height:20px;border-radius:50%;background:#c9a227;
+            color:#1a1000;font-size:.58rem;font-weight:800;font-family:'DM Sans',sans-serif;
+            display:flex;align-items:center;justify-content:center;margin-top:1px;}
     </style>
 
     <div class="AW">
@@ -956,43 +1009,32 @@
       </div>
     </div>
 
-    <!-- ── Aerial Fullscreen Overlay with Pins ── -->
-    <div id="MAFS">
-      <button id="MAFS-CLOSE" title="Закрити (Esc)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-      </button>
-      <div id="MAFS-BADGE"></div>
-      <div id="MAFS-BOX">
-        <img id="MAFS-IMG" class="MIMG" draggable="false" alt="">
-        <div class="MLAY" id="MAFS-PINS"></div>
-        <div class="ZW">
-          <button class="ZB" id="mafs-zp">+</button>
-          <button class="ZB" id="mafs-zm">&#8722;</button>
-          <button class="ZB" id="mafs-zr" style="font-size:.78rem">&#8962;</button>
+    <!-- Fullscreen overlay — full map + pins + legend -->
+    <div id="MFSO">
+      <div id="MFS-BAR">
+        <span id="MFS-LABEL">Аерофотознімок Дубровиці</span>
+        <button class="mfs-btn" id="MFS-ZP" title="+">+</button>
+        <button class="mfs-btn" id="MFS-ZM" title="&#8722;">&#8722;</button>
+        <button class="mfs-btn" id="MFS-ZR" title="Скинути" style="font-size:.8rem">&#8962;</button>
+        <span id="MFS-ZVAL">1.0&#xD7;</span>
+        <button id="MFS-CLOSE" title="Закрити (Esc)">&#x2715;</button>
+      </div>
+      <div id="MFS-BODY">
+        <div id="MFS-BOX">
+          <img id="MFS-IMG" src="" alt="" draggable="false">
+          <div id="MFS-LAY"></div>
+          <div id="MFS-TIP">
+            <button class="TTX" id="MFS-TX">&#x2715;</button>
+            <div class="TTR"><span class="TTN" id="MFS-TN"></span><span class="TTT" id="MFS-TT"></span></div>
+            <span class="TTD" id="MFS-TD"></span>
+          </div>
         </div>
-        <div class="MTTIP" id="MAFS-TIP">
-          <button class="TTX" id="MAFS-TIPX">&#x2715;</button>
-          <div class="TTR"><span class="TTN" id="MAFS-TN"></span><span class="TTT" id="MAFS-TT"></span></div>
-          <span class="TTD" id="MAFS-TD"></span>
+        <div id="MFS-SIDE">
+          <p id="MFS-LEGH">Позначення</p>
+          <ul id="MFS-LEG"></ul>
         </div>
       </div>
-      <div id="MAFS-HINT">Тягніть · Scroll для збільшення · Esc — закрити</div>
     </div>
-    <style>
-    #MAFS{position:fixed;inset:0;z-index:99999;background:rgba(4,3,2,.97);display:none;flex-direction:column;align-items:center;justify-content:center;gap:0;padding:0;}
-    #MAFS.open{display:flex;animation:_mafsin .18s ease;}
-    @keyframes _mafsin{from{opacity:0}to{opacity:1}}
-    #MAFS-BOX{position:relative;width:min(98vw,1600px);height:min(88vh,1000px);cursor:grab;touch-action:none;user-select:none;overflow:hidden;border-radius:8px;border:1px solid rgba(201,162,39,.18);background:#050402;box-shadow:0 40px 100px rgba(0,0,0,.8);}
-    #MAFS-BOX:active{cursor:grabbing;}
-    #MAFS-IMG{display:block;width:100%;height:100%;object-fit:contain;transform-origin:0 0;will-change:transform;pointer-events:none;user-select:none;-webkit-user-drag:none;}
-    #MAFS-CLOSE{position:fixed;top:1rem;right:1rem;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.1);backdrop-filter:blur(8px);color:rgba(255,255,255,.85);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s,transform .2s;z-index:10;}
-    #MAFS-CLOSE svg{width:18px;height:18px;pointer-events:none;}
-    #MAFS-CLOSE:hover{background:#c9a227;border-color:#c9a227;color:#0f0a00;transform:rotate(90deg);}
-    #MAFS-BADGE{position:fixed;top:1rem;left:50%;transform:translateX(-50%);background:rgba(8,6,4,.82);backdrop-filter:blur(10px);border:1px solid rgba(201,162,39,.28);border-radius:8px;padding:5px 14px;font-family:'DM Sans',sans-serif;font-size:.72rem;color:#c9a227;font-weight:600;letter-spacing:.06em;pointer-events:none;z-index:10;}
-    #MAFS-HINT{position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);background:rgba(8,6,4,.7);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.07);border-radius:100px;padding:.38rem 1.1rem;font-family:'DM Sans',sans-serif;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.38);pointer-events:none;white-space:nowrap;transition:opacity .5s;z-index:10;}
-    #MAFS.moved #MAFS-HINT{opacity:0;}
-    @media(max-width:600px){#MAFS-BOX{width:100vw;height:80vh;border-radius:0;border-left:none;border-right:none;}}
-    </style>
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -1186,7 +1228,7 @@
         });
         document.getElementById('fs'+mid).addEventListener('click', function(e) {
           e.stopPropagation();
-          openMAFS(mid);
+          openMFS(mid);
         });
       });
 
@@ -1278,12 +1320,205 @@
         }, { passive: true });
       });
 
-      // ── FULLSCREEN is now handled by MAFS below ──────────────
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-          hideTooltip();
-          closeMAFS();
+      // ── FULLSCREEN MAP WITH PINS ────────────────────────────────
+      var _mfsMid = null;
+      var _mfsActive = false;
+      var _mfsST = { sc:1, tx:0, ty:0 };
+      var _mfsActiveN = null;
+
+      function openMFS(mid) {
+        _mfsMid = mid;
+        _mfsST = { sc:1, tx:0, ty:0 };
+        _mfsActiveN = null;
+        _mfsActive = true;
+        document.body.style.overflow = 'hidden';
+        var img = document.getElementById('MFS-IMG');
+        var label = document.getElementById('MFS-LABEL');
+        img.src = getImg(mid).src;
+        label.textContent = mid === '44' ? 'Аерофотознімок 24 січня 1944 року' : 'Аерофотознімок жовтень 1943 року';
+        var leg = document.getElementById('MFS-LEG');
+        leg.innerHTML = '';
+        (DATA[mid] || []).forEach(function(p) {
+          var li = document.createElement('li');
+          li.className = 'MFS-LI';
+          li.id = 'MFS-LI-'+p.n;
+          li.innerHTML = '<span class="MFS-LN">'+p.n+'</span>'+p.t;
+          li.addEventListener('click', function(e) { e.stopPropagation(); mfsTogglePin(p.n, p.t, p.d); });
+          leg.appendChild(li);
+        });
+        var lay = document.getElementById('MFS-LAY');
+        lay.innerHTML = '';
+        (DATA[mid] || []).forEach(function(p) {
+          var el = document.createElement('div');
+          el.className = 'PIN';
+          el.id = 'MFS-PIN-'+p.n;
+          el.innerHTML = '<div class="PRING"></div><div class="PDOT">'+p.n+'</div>';
+          el.addEventListener('click', function(e) { e.stopPropagation(); mfsTogglePin(p.n, p.t, p.d); });
+          lay.appendChild(el);
+        });
+        var ov = document.getElementById('MFSO');
+        ov.classList.add('open');
+        img.onload = function() { mfsApplyT(false); };
+        if (img.complete && img.naturalWidth) { setTimeout(function(){ mfsApplyT(false); }, 30); }
+        mfsUpdateZval();
+      }
+
+      function closeMFS() {
+        document.getElementById('MFSO').classList.remove('open');
+        document.body.style.overflow = '';
+        _mfsActive = false; _mfsMid = null; _mfsActiveN = null;
+        mfsHideTip();
+      }
+
+      function mfsApplyT(anim) {
+        var img = document.getElementById('MFS-IMG');
+        img.style.transition = anim ? 'transform .22s ease' : 'none';
+        img.style.transform = 'translate('+_mfsST.tx+'px,'+_mfsST.ty+'px) scale('+_mfsST.sc+')';
+        mfsUpdatePins();
+        mfsUpdateZval();
+        if (_mfsActiveN !== null) mfsPositionTip(_mfsActiveN);
+      }
+
+      function mfsUpdateZval() {
+        var z = document.getElementById('MFS-ZVAL');
+        if (z) z.textContent = _mfsST.sc.toFixed(1) + '×';
+      }
+
+      function mfsUpdatePins() {
+        if (!_mfsMid) return;
+        var box = document.getElementById('MFS-BOX');
+        var img = document.getElementById('MFS-IMG');
+        var bw = box.clientWidth, bh = box.clientHeight;
+        var iw = img.naturalWidth, ih = img.naturalHeight;
+        if (!iw || !ih) return;
+        var fit = Math.min(bw / iw, bh / ih);
+        var ox = (bw - iw * fit) / 2, oy = (bh - ih * fit) / 2;
+        (DATA[_mfsMid] || []).forEach(function(p) {
+          var pin = document.getElementById('MFS-PIN-'+p.n);
+          if (!pin) return;
+          var nx = _mfsST.tx + (ox + p.x / 100 * iw * fit) * _mfsST.sc;
+          var ny = _mfsST.ty + (oy + p.y / 100 * ih * fit) * _mfsST.sc;
+          pin.style.left = nx + 'px';
+          pin.style.top  = ny + 'px';
+          var vis = nx > -20 && nx < bw + 20 && ny > -20 && ny < bh + 20;
+          pin.style.opacity = vis ? '1' : '0';
+          pin.style.pointerEvents = vis ? '' : 'none';
+        });
+      }
+
+      function mfsDoZoom(factor, px, py) {
+        var box = document.getElementById('MFS-BOX');
+        px = (px !== undefined) ? px : box.clientWidth / 2;
+        py = (py !== undefined) ? py : box.clientHeight / 2;
+        var oldSc = _mfsST.sc;
+        _mfsST.sc = Math.min(10, Math.max(0.5, oldSc * factor));
+        if (_mfsST.sc === oldSc) return;
+        var r = _mfsST.sc / oldSc;
+        _mfsST.tx = px - (px - _mfsST.tx) * r;
+        _mfsST.ty = py - (py - _mfsST.ty) * r;
+        mfsApplyT(true);
+      }
+
+      function mfsReset() { _mfsST={sc:1,tx:0,ty:0}; mfsApplyT(true); mfsHideTip(); }
+
+      function mfsTogglePin(n, title, desc) {
+        if (_mfsActiveN === n) { mfsHideTip(); return; }
+        mfsHideTip();
+        _mfsActiveN = n;
+        var pin = document.getElementById('MFS-PIN-'+n);
+        var li  = document.getElementById('MFS-LI-'+n);
+        if (pin) pin.classList.add('act');
+        if (li)  li.classList.add('act');
+        document.getElementById('MFS-TN').textContent = n;
+        document.getElementById('MFS-TT').textContent = title;
+        document.getElementById('MFS-TD').textContent = desc;
+        mfsPositionTip(n);
+        document.getElementById('MFS-TIP').classList.add('show');
+      }
+
+      function mfsHideTip() {
+        document.getElementById('MFS-TIP').classList.remove('show');
+        if (_mfsActiveN !== null) {
+          var pin = document.getElementById('MFS-PIN-'+_mfsActiveN);
+          var li  = document.getElementById('MFS-LI-'+_mfsActiveN);
+          if (pin) pin.classList.remove('act');
+          if (li)  li.classList.remove('act');
         }
+        _mfsActiveN = null;
+      }
+
+      function mfsPositionTip(n) {
+        var tip = document.getElementById('MFS-TIP');
+        var box = document.getElementById('MFS-BOX');
+        var pin = document.getElementById('MFS-PIN-'+n);
+        if (!pin||!tip||!box) return;
+        tip.style.visibility='hidden'; tip.classList.add('show');
+        var tw=tip.offsetWidth, th=tip.offsetHeight;
+        tip.style.visibility='';
+        var pinX=parseFloat(pin.style.left)||0, pinY=parseFloat(pin.style.top)||0;
+        var bw=box.offsetWidth, bh=box.offsetHeight, GAP=14, M=8;
+        var left=pinX+GAP;
+        if(left+tw>bw-M) left=pinX-tw-GAP;
+        var top=Math.max(M,Math.min(bh-th-M,pinY-th/2));
+        left=Math.max(M,Math.min(bw-tw-M,left));
+        tip.style.left=left+'px'; tip.style.top=top+'px';
+      }
+
+      // FS controls
+      document.getElementById('MFS-CLOSE').addEventListener('click', closeMFS);
+      document.getElementById('MFS-TX').addEventListener('click', function(e){ e.stopPropagation(); mfsHideTip(); });
+      document.getElementById('MFS-ZP').addEventListener('click', function(){ mfsDoZoom(1.5); });
+      document.getElementById('MFS-ZM').addEventListener('click', function(){ mfsDoZoom(1/1.5); });
+      document.getElementById('MFS-ZR').addEventListener('click', mfsReset);
+
+      // FS drag + touch
+      (function(){
+        var box=document.getElementById('MFS-BOX');
+        var drag=false, sx=0, sy=0;
+        box.addEventListener('mousedown',function(e){
+          if(e.button!==0||e.target.closest('.PIN,.TTX,.MFS-LN')) return;
+          drag=true; sx=e.clientX-_mfsST.tx; sy=e.clientY-_mfsST.ty;
+          box.style.cursor='grabbing'; e.preventDefault();
+        });
+        document.addEventListener('mousemove',function(e){
+          if(!drag||!_mfsActive) return;
+          _mfsST.tx=e.clientX-sx; _mfsST.ty=e.clientY-sy; mfsApplyT(false);
+        });
+        document.addEventListener('mouseup',function(){
+          if(drag){ drag=false; var b=document.getElementById('MFS-BOX'); if(b) b.style.cursor=''; }
+        });
+        box.addEventListener('wheel',function(e){
+          e.preventDefault();
+          var r=box.getBoundingClientRect();
+          mfsDoZoom(Math.pow(0.998,e.deltaY),e.clientX-r.left,e.clientY-r.top);
+        },{passive:false});
+        box.addEventListener('dblclick',function(e){
+          var r=box.getBoundingClientRect();
+          if(_mfsST.sc>2) mfsReset(); else mfsDoZoom(2.5,e.clientX-r.left,e.clientY-r.top);
+        });
+        box.addEventListener('click',function(e){
+          if(!e.target.closest('.PIN')&&!e.target.closest('#MFS-TIP')) mfsHideTip();
+        });
+        var lastD=0, tDrag=false, tsx2=0, tsy2=0;
+        box.addEventListener('touchstart',function(e){
+          if(e.touches.length===1){tDrag=true;tsx2=e.touches[0].clientX-_mfsST.tx;tsy2=e.touches[0].clientY-_mfsST.ty;}
+          else if(e.touches.length===2){tDrag=false;lastD=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);}
+        },{passive:true});
+        box.addEventListener('touchmove',function(e){
+          e.preventDefault();
+          if(e.touches.length===1&&tDrag){_mfsST.tx=e.touches[0].clientX-tsx2;_mfsST.ty=e.touches[0].clientY-tsy2;mfsApplyT(false);}
+          else if(e.touches.length===2){var d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);if(lastD>0){var r=box.getBoundingClientRect();mfsDoZoom(d/lastD,(e.touches[0].clientX+e.touches[1].clientX)/2-r.left,(e.touches[0].clientY+e.touches[1].clientY)/2-r.top);}lastD=d;}
+        },{passive:false});
+        box.addEventListener('touchend',function(e){if(e.touches.length<2)lastD=0;tDrag=e.touches.length===1;});
+        window.addEventListener('resize',function(){ if(_mfsActive) mfsApplyT(false); });
+      })();
+
+      document.addEventListener('keydown', function(e) {
+        if (!_mfsActive) return;
+        if (e.key==='Escape') closeMFS();
+        if (e.key==='+'||e.key==='=') mfsDoZoom(1.3);
+        if (e.key==='-') mfsDoZoom(1/1.3);
+        if (e.key==='0') mfsReset();
       });
 
       // ── LOAD PINS FROM GITHUB ──────────────────────────────────
@@ -1319,267 +1554,6 @@
       });
 
     }); // DOMContentLoaded
-
-    // ═══ AERIAL FULLSCREEN WITH PINS (MAFS) ═══
-    (function() {
-      var MAFS_MID = null;
-      var MAFS_ST  = { sc: 1, tx: 0, ty: 0 };
-      var MAFS_AP  = null; // active pin n
-      var MAFS_Drag = false, MAFS_SX = 0, MAFS_SY = 0;
-      var MAFS_TDX = 0, MAFS_TDY = 0, MAFS_LD = 0, MAFS_PS = 1;
-
-      function getMafsBox()  { return document.getElementById('MAFS-BOX'); }
-      function getMafsImg()  { return document.getElementById('MAFS-IMG'); }
-      function getMafsPins() { return document.getElementById('MAFS-PINS'); }
-      function getMafsTip()  { return document.getElementById('MAFS-TIP'); }
-
-      function mafsClamp() {
-        var box = getMafsBox(), img = getMafsImg(), s = MAFS_ST;
-        if (!box || !img) return;
-        var iw = img.offsetWidth * s.sc, ih = img.offsetHeight * s.sc;
-        var bw = box.offsetWidth, bh = box.offsetHeight;
-        // Don't clamp if image fits within box
-        if (iw <= bw) { s.tx = (bw - iw) / 2; } else { s.tx = Math.min(0, Math.max(bw - iw, s.tx)); }
-        if (ih <= bh) { s.ty = (bh - ih) / 2; } else { s.ty = Math.min(0, Math.max(bh - ih, s.ty)); }
-      }
-
-      function applyMafs(anim) {
-        var img = getMafsImg(), s = MAFS_ST;
-        if (!img) return;
-        img.style.transition = anim ? 'transform .25s cubic-bezier(.25,.46,.45,.94)' : 'none';
-        img.style.transform = 'translate(' + s.tx + 'px,' + s.ty + 'px) scale(' + s.sc + ')';
-        if (MAFS_MID) updateMafsPins(MAFS_MID);
-        if (MAFS_AP !== null) mafsReposTip(MAFS_AP);
-      }
-
-      function mafsZoom(factor, px, py) {
-        var box = getMafsBox();
-        if (!box) return;
-        if (px === undefined) px = box.offsetWidth / 2;
-        if (py === undefined) py = box.offsetHeight / 2;
-        var old = MAFS_ST.sc;
-        MAFS_ST.sc = Math.min(10, Math.max(1, old * factor));
-        if (MAFS_ST.sc === old) return;
-        var r = MAFS_ST.sc / old;
-        MAFS_ST.tx = px - (px - MAFS_ST.tx) * r;
-        MAFS_ST.ty = py - (py - MAFS_ST.ty) * r;
-        mafsClamp(); applyMafs(true);
-        document.getElementById('MAFS').classList.add('moved');
-      }
-
-      function mafsReset() {
-        MAFS_ST = { sc: 1, tx: 0, ty: 0 };
-        mafsClamp(); applyMafs(true);
-        hideMafsTip();
-        document.getElementById('MAFS').classList.remove('moved');
-      }
-
-      function updateMafsPins(mid) {
-        var box = getMafsBox(), img = getMafsImg(), s = MAFS_ST;
-        if (!box || !img) return;
-        var w = img.offsetWidth, h = img.offsetHeight;
-        var bw = box.offsetWidth, bh = box.offsetHeight;
-        if (!w || !h) return;
-        DATA[mid].forEach(function(p) {
-          var pin = document.getElementById('MAFSP_' + mid + '_' + p.n);
-          if (!pin) return;
-          var nx = s.tx + (p.x / 100 * w) * s.sc;
-          var ny = s.ty + (p.y / 100 * h) * s.sc;
-          pin.style.left = nx + 'px';
-          pin.style.top  = ny + 'px';
-          var vis = nx > -20 && nx < bw + 20 && ny > -20 && ny < bh + 20;
-          pin.style.opacity = vis ? '1' : '0';
-          pin.style.pointerEvents = vis ? '' : 'none';
-        });
-      }
-
-      function buildMafsPins(mid) {
-        var layer = getMafsPins();
-        if (!layer) return;
-        layer.innerHTML = '';
-        DATA[mid].forEach(function(p) {
-          var el = document.createElement('div');
-          el.className = 'PIN';
-          el.id = 'MAFSP_' + mid + '_' + p.n;
-          el.innerHTML = '<div class="PRING"></div><div class="PDOT">' + p.n + '</div>';
-          el.addEventListener('click', function(e) {
-            e.stopPropagation();
-            toggleMafsPin(mid, p.n, p.t, p.d);
-          });
-          layer.appendChild(el);
-        });
-        // Small delay so image dimensions are available
-        setTimeout(function() { mafsClamp(); updateMafsPins(mid); }, 80);
-      }
-
-      function toggleMafsPin(mid, n, title, desc) {
-        if (MAFS_AP === n) { hideMafsTip(); return; }
-        hideMafsTip();
-        MAFS_AP = n;
-        var pin = document.getElementById('MAFSP_' + mid + '_' + n);
-        if (pin) pin.classList.add('act');
-        document.getElementById('MAFS-TN').textContent = n;
-        document.getElementById('MAFS-TT').textContent = title;
-        document.getElementById('MAFS-TD').textContent = desc || '';
-        getMafsTip().classList.add('show');
-        mafsReposTip(n);
-      }
-
-      function hideMafsTip() {
-        getMafsTip().classList.remove('show');
-        if (MAFS_MID && MAFS_AP !== null) {
-          var pin = document.getElementById('MAFSP_' + MAFS_MID + '_' + MAFS_AP);
-          if (pin) pin.classList.remove('act');
-        }
-        MAFS_AP = null;
-      }
-
-      function mafsReposTip(n) {
-        if (!MAFS_MID) return;
-        var tip = getMafsTip(), box = getMafsBox(), img = getMafsImg(), s = MAFS_ST;
-        if (!tip || !box || !img) return;
-        var p = DATA[MAFS_MID] && DATA[MAFS_MID].filter(function(x){ return x.n === n; })[0];
-        if (!p) return;
-        var pinX = s.tx + (p.x / 100 * img.offsetWidth) * s.sc;
-        var pinY = s.ty + (p.y / 100 * img.offsetHeight) * s.sc;
-        var bw = box.offsetWidth, bh = box.offsetHeight;
-        tip.style.visibility = 'hidden'; tip.classList.add('show');
-        var tw = tip.offsetWidth, th = tip.offsetHeight;
-        tip.style.visibility = '';
-        var GAP = 14, MAR = 8;
-        var left = pinX + GAP;
-        if (left + tw > bw - MAR) left = pinX - tw - GAP;
-        var top = pinY - th / 2;
-        left = Math.max(MAR, Math.min(bw - tw - MAR, left));
-        top  = Math.max(MAR, Math.min(bh - th - MAR, top));
-        tip.style.left = left + 'px'; tip.style.top = top + 'px';
-      }
-
-      window.openMAFS = function(mid) {
-        if (!DATA[mid] || !DATA[mid].length) return;
-        MAFS_MID = mid;
-        MAFS_ST  = { sc: 1, tx: 0, ty: 0 };
-        MAFS_AP  = null;
-
-        // Badge
-        var badge = document.getElementById('MAFS-BADGE');
-        if (badge) badge.textContent = mid === '44' ? 'Аерофото · 24 Jan 1944' : 'Аерофото · Oct 1943';
-
-        // Load full image
-        var img = getMafsImg();
-        if (img) {
-          // Use same src as the map (already loaded)
-          img.src = document.getElementById('I' + mid).src;
-          img.style.transform = 'translate(0,0) scale(1)';
-          img.style.transition = 'none';
-          img.onload = function() { mafsClamp(); applyMafs(false); buildMafsPins(mid); };
-          // If already loaded
-          if (img.complete && img.naturalWidth) { mafsClamp(); applyMafs(false); buildMafsPins(mid); }
-        }
-
-        var overlay = document.getElementById('MAFS');
-        overlay.classList.remove('moved');
-        overlay.classList.add('open');
-        document.body.style.overflow = 'hidden';
-        hideMafsTip();
-      };
-
-      window.closeMAFS = function() {
-        var overlay = document.getElementById('MAFS');
-        if (!overlay) return;
-        overlay.classList.remove('open');
-        document.body.style.overflow = '';
-        MAFS_MID = null;
-        hideMafsTip();
-      };
-
-      // ── Close button ──
-      document.getElementById('MAFS-CLOSE').addEventListener('click', closeMAFS);
-      document.getElementById('MAFS').addEventListener('click', function(e) {
-        if (e.target === this) closeMAFS();
-      });
-      document.getElementById('MAFS-TIPX').addEventListener('click', function(e) {
-        e.stopPropagation(); hideMafsTip();
-      });
-
-      // ── Zoom buttons ──
-      document.getElementById('mafs-zp').addEventListener('click', function(e) { e.stopPropagation(); mafsZoom(1.5); });
-      document.getElementById('mafs-zm').addEventListener('click', function(e) { e.stopPropagation(); mafsZoom(1/1.5); });
-      document.getElementById('mafs-zr').addEventListener('click', function(e) { e.stopPropagation(); mafsReset(); });
-
-      // ── Drag ──
-      var mafsBox = getMafsBox();
-      if (mafsBox) {
-        mafsBox.addEventListener('mousedown', function(e) {
-          if (e.button !== 0) return;
-          if (e.target.closest('.PIN,.ZB,.MTTIP')) return;
-          MAFS_Drag = true; MAFS_SX = e.clientX - MAFS_ST.tx; MAFS_SY = e.clientY - MAFS_ST.ty;
-          mafsBox.style.cursor = 'grabbing';
-        });
-        document.addEventListener('mousemove', function(e) {
-          if (!MAFS_Drag) return;
-          MAFS_ST.tx = e.clientX - MAFS_SX; MAFS_ST.ty = e.clientY - MAFS_SY;
-          mafsClamp(); applyMafs(false);
-          document.getElementById('MAFS').classList.add('moved');
-        });
-        document.addEventListener('mouseup', function() {
-          if (MAFS_Drag) { MAFS_Drag = false; mafsBox.style.cursor = ''; }
-        });
-
-        // ── Wheel ──
-        mafsBox.addEventListener('wheel', function(e) {
-          e.preventDefault();
-          var rect = mafsBox.getBoundingClientRect();
-          mafsZoom(Math.pow(0.998, e.deltaY), e.clientX - rect.left, e.clientY - rect.top);
-        }, { passive: false });
-
-        // ── Click on empty area ──
-        mafsBox.addEventListener('click', function(e) {
-          if (!e.target.closest('.PIN,.MTTIP')) hideMafsTip();
-        });
-
-        // ── Touch ──
-        mafsBox.addEventListener('touchstart', function(e) {
-          if (e.touches.length === 1) {
-            MAFS_Drag = true;
-            MAFS_TDX = e.touches[0].clientX - MAFS_ST.tx;
-            MAFS_TDY = e.touches[0].clientY - MAFS_ST.ty;
-          } else if (e.touches.length === 2) {
-            MAFS_Drag = false;
-            MAFS_LD = Math.hypot(e.touches[0].clientX-e.touches[1].clientX, e.touches[0].clientY-e.touches[1].clientY);
-            MAFS_PS = MAFS_ST.sc;
-          }
-        }, { passive: true });
-        mafsBox.addEventListener('touchmove', function(e) {
-          e.preventDefault();
-          if (e.touches.length === 1 && MAFS_Drag) {
-            MAFS_ST.tx = e.touches[0].clientX - MAFS_TDX;
-            MAFS_ST.ty = e.touches[0].clientY - MAFS_TDY;
-            mafsClamp(); applyMafs(false);
-            document.getElementById('MAFS').classList.add('moved');
-          } else if (e.touches.length === 2 && MAFS_LD > 0) {
-            var d = Math.hypot(e.touches[0].clientX-e.touches[1].clientX, e.touches[0].clientY-e.touches[1].clientY);
-            var rect = mafsBox.getBoundingClientRect();
-            var mx = ((e.touches[0].clientX+e.touches[1].clientX)/2) - rect.left;
-            var my = ((e.touches[0].clientY+e.touches[1].clientY)/2) - rect.top;
-            mafsZoom(d / MAFS_LD, mx, my);
-            MAFS_LD = d;
-          }
-        }, { passive: false });
-        mafsBox.addEventListener('touchend', function(e) {
-          if (e.touches.length === 0) { MAFS_Drag = false; MAFS_LD = 0; }
-          else if (e.touches.length === 1) {
-            MAFS_TDX = e.touches[0].clientX - MAFS_ST.tx;
-            MAFS_TDY = e.touches[0].clientY - MAFS_ST.ty;
-          }
-        }, { passive: true });
-      }
-
-      // ── Resize ──
-      window.addEventListener('resize', function() {
-        if (MAFS_MID) { mafsClamp(); applyMafs(false); }
-      });
-    })();
     </script>
     </section>
     <!-- ═══ END AERIAL MAPS ═══ -->
@@ -2896,6 +2870,7 @@
     </script>
     </section>
     <!-- ═══ END WIDE AREA COMPARISON ═══ -->
+
     <!-- ═══ HORIZONTAL TIMELINE ═══ -->
 
 <!-- ═══ IMPROVED HISTORICAL TIMELINE ═══ -->
