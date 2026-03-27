@@ -64,10 +64,11 @@
         </div>
 
         <div class="field">
-            <label>Посилання на FamilySearch (скани)</label>
-            <input type="url" id="mkcalFsUrl" placeholder="https://www.familysearch.org/search/catalog/...">
-            <div style="font-size:0.78rem;color:var(--color-text-secondary);margin-top:0.3rem;">
-                Якщо скани вже є на FamilySearch — вставте пряме посилання. Золота крапка на клітинці з'явиться автоматично.
+            <label>Посилання на скани (ridni.org або FamilySearch)</label>
+            <input type="url" id="mkcalFsUrl" placeholder="https://ridni.org/catalog/домбровиця?year=1906">
+            <div style="font-size:0.78rem;color:var(--color-text-secondary);margin-top:0.3rem;line-height:1.6;">
+                Підтримуються посилання <strong>ridni.org</strong> (напр. <code>https://ridni.org/catalog/домбровиця?year=1906</code>)
+                та <strong>FamilySearch</strong>. Золота крапка на клітинці з'явиться автоматично.
             </div>
         </div>
 
@@ -148,8 +149,8 @@
                 <input type="text" id="mkcalEditArch">
             </div>
             <div class="field">
-                <label>Посилання FamilySearch</label>
-                <input type="url" id="mkcalEditFs">
+                <label>Посилання на скани (ridni.org або FamilySearch)</label>
+                <input type="url" id="mkcalEditFs" placeholder="https://ridni.org/catalog/домбровиця?year=1874">
             </div>
             <div style="display:flex;gap:0.75rem;margin-top:1.25rem;">
                 <button class="btn btn-primary" id="mkcalEditSave" style="flex:1;">✅ Зберегти зміни</button>
@@ -257,11 +258,16 @@
             var info = document.createElement('div');
             info.style.cssText = 'flex:1;min-width:0;';
             var typeBadge = b.type ? '<span style="font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-text-secondary);">' + esc(b.type) + '</span> · ' : '';
+            var srcLabel = '';
+            if (b.familySearchUrl) {
+                var isRidni = b.familySearchUrl.indexOf('ridni.org') !== -1;
+                srcLabel = ' · <span style="color:#c9a227;">' + (isRidni ? '✓ ridni.org' : '✓ FamilySearch') + '</span>';
+            }
             info.innerHTML =
                 '<div style="font-size:0.875rem;font-weight:600;color:var(--color-text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'
                 + typeBadge + esc(b.church) + '</div>'
                 + '<div style="font-size:0.72rem;color:var(--color-text-secondary);margin-top:0.12rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'
-                + esc(b.archive) + (b.familySearchUrl ? ' · <span style="color:#c9a227;">✓ FamilySearch</span>' : '') + '</div>';
+                + esc(b.archive) + srcLabel + '</div>';
 
             // Action buttons
             var actions = document.createElement('div');

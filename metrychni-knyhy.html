@@ -320,12 +320,12 @@
                 </div>
                 <span class="mk-stat-sep">·</span>
                 <div class="mk-stat">
-                    <span class="mk-stat-num"><em>3</em></span>
-                    <span class="mk-stat-label">Типи записів</span>
+                    <span class="mk-stat-num"><em>40+</em></span>
+                    <span class="mk-stat-label">Документів</span>
                 </div>
                 <span class="mk-stat-sep">·</span>
                 <div class="mk-stat">
-                    <span class="mk-stat-num"><em>300+</em></span>
+                    <span class="mk-stat-num"><em>160</em></span>
                     <span class="mk-stat-label">Років охоплення</span>
                 </div>
             </div>
@@ -339,17 +339,14 @@
         </div>
     </section>
 
-    в файлі metrychni-knyhy.html
-     ═══════════════════════════════════════════════════════════════════ -->
-
 <style>
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   MKCAL — Хронологічний каталог (REDESIGN v2)
+   MKCAL — Хронологічний каталог (REDESIGN v3)
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 
 .mkcal-section {
     background: var(--color-bg, #faf7f2);
-    padding: 5rem 0 5rem;
+    padding: 6rem 0 6rem;
     border-bottom: 1px solid var(--color-border-light, rgba(201,162,39,0.1));
     position: relative;
     overflow: hidden;
@@ -362,7 +359,7 @@
 }
 .mkcal-inner {
     position: relative; z-index: 1;
-    max-width: 1100px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 0 2rem;
 }
@@ -402,17 +399,17 @@
 /* ── Legend ─────────────────────────────────────── */
 .mkcal-legend {
     display: flex; align-items: center; justify-content: center;
-    gap: 2rem; flex-wrap: wrap;
-    margin-bottom: 2rem;
+    gap: 2.5rem; flex-wrap: wrap;
+    margin-bottom: 2.2rem;
 }
 .mkcal-leg {
-    display: flex; align-items: center; gap: 0.55rem;
+    display: flex; align-items: center; gap: 0.6rem;
     font-family: 'DM Sans', sans-serif;
-    font-size: 0.72rem; font-weight: 500;
+    font-size: 0.74rem; font-weight: 500;
     color: var(--color-text-muted, #a89880);
 }
 .mkcal-leg-sq {
-    width: 14px; height: 14px; border-radius: 4px; flex-shrink: 0;
+    width: 15px; height: 15px; border-radius: 4px; flex-shrink: 0;
 }
 .mkcal-leg-sq--av  { background: rgba(201,162,39,0.22); border: 1.5px solid rgba(201,162,39,0.5); }
 .mkcal-leg-sq--no  { background: rgba(255,255,255,0.03); border: 1.5px solid rgba(255,255,255,0.08); }
@@ -421,19 +418,18 @@
 /* ── Outer wrapper (dark parchment) ─────────────── */
 .mkcal-grid-wrap {
     background: linear-gradient(160deg, #0d0b06 0%, #181309 50%, #0d0b06 100%);
-    border-radius: 22px;
-    padding: 2rem 2rem 2.25rem;
+    border-radius: 24px;
+    padding: 2.5rem 2.5rem 2.75rem;
     border: 1px solid rgba(201,162,39,0.15);
     box-shadow:
-        0 32px 80px rgba(0,0,0,0.28),
+        0 40px 100px rgba(0,0,0,0.32),
         0 1px 0 rgba(201,162,39,0.12) inset,
-        inset 0 0 60px rgba(201,162,39,0.02);
+        inset 0 0 80px rgba(201,162,39,0.025);
 }
 @media (max-width: 600px) {
-    .mkcal-grid-wrap { padding: 1.25rem 1rem 1.5rem; border-radius: 16px; }
+    .mkcal-grid-wrap { padding: 1.5rem 1.25rem 1.75rem; border-radius: 18px; }
 }
 
-/* ── No more .mkcal-col-hd needed ─────────────── */
 .mkcal-col-hd { display: none; }
 
 /* ── Loading ─────────────────────────────────── */
@@ -456,46 +452,46 @@
 /* ── Decade separator (every 50 years) ─────────── */
 .mkcal-century-sep {
     display: flex; align-items: center; gap: 1rem;
-    margin: 1.25rem 0 1rem;
-    padding-left: calc(56px + 0.75rem); /* aligns with cells */
+    margin: 1.5rem 0 1.1rem;
+    padding-left: calc(62px + 0.8rem);
 }
 .mkcal-century-sep:first-child { margin-top: 0; }
 .mkcal-century-sep-line { flex: 1; height: 1px; background: rgba(201,162,39,0.1); }
 .mkcal-century-sep-lbl {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 0.72rem; font-style: italic; letter-spacing: 0.08em;
-    color: rgba(201,162,39,0.3);
+    font-size: 0.74rem; font-style: italic; letter-spacing: 0.08em;
+    color: rgba(201,162,39,0.32);
     user-select: none; flex-shrink: 0;
 }
 
 /* ── Decade row ─────────────────────────────────── */
 .mkcal-row {
     display: grid;
-    grid-template-columns: 56px 1fr;
+    grid-template-columns: 62px 1fr;
     align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 5px;
+    gap: 0.8rem;
+    margin-bottom: 6px;
 }
 .mkcal-dlbl {
     text-align: right;
     font-family: 'DM Sans', sans-serif;
-    font-size: 0.6rem; font-weight: 700;
+    font-size: 0.62rem; font-weight: 700;
     letter-spacing: 0.04em;
-    color: rgba(201,162,39,0.55);
+    color: rgba(201,162,39,0.5);
     user-select: none; line-height: 1;
     white-space: nowrap;
 }
 .mkcal-cells {
     display: grid;
     grid-template-columns: repeat(10, 1fr);
-    gap: 4px;
+    gap: 5px;
 }
 
 /* ── Year cell ──────────────────────────────────── */
 .mkcal-cell {
     position: relative;
-    aspect-ratio: 1.55;
-    border-radius: 7px;
+    aspect-ratio: 1.6;
+    border-radius: 8px;
     border: 1px solid transparent;
     display: flex;
     align-items: center; justify-content: center;
@@ -510,20 +506,20 @@
 }
 
 .mkcal-cell--no {
-    background: rgba(255,255,255,0.025);
+    background: rgba(255,255,255,0.022);
     border-color: rgba(255,255,255,0.04);
     cursor: default;
 }
 .mkcal-cell--av {
     background: rgba(201,162,39,0.09);
-    border-color: rgba(201,162,39,0.25);
+    border-color: rgba(201,162,39,0.26);
     cursor: pointer;
 }
 .mkcal-cell--av:hover {
     background: rgba(201,162,39,0.22);
-    border-color: rgba(201,162,39,0.58);
-    box-shadow: 0 0 16px rgba(201,162,39,0.2), inset 0 1px 0 rgba(201,162,39,0.15);
-    transform: scale(1.1) translateY(-1px);
+    border-color: rgba(201,162,39,0.62);
+    box-shadow: 0 0 18px rgba(201,162,39,0.22), inset 0 1px 0 rgba(201,162,39,0.15);
+    transform: scale(1.12) translateY(-1px);
     z-index: 2;
 }
 .mkcal-cell--av:focus-visible {
@@ -531,26 +527,25 @@
     outline-offset: 2px;
 }
 .mkcal-cell--fs {
-    background: rgba(201,162,39,0.15);
-    border-color: rgba(201,162,39,0.4);
+    background: rgba(201,162,39,0.14);
+    border-color: rgba(201,162,39,0.42);
 }
 .mkcal-cell--fs:hover {
     background: rgba(201,162,39,0.28);
-    border-color: rgba(201,162,39,0.7);
-    box-shadow: 0 0 20px rgba(201,162,39,0.3);
+    border-color: rgba(201,162,39,0.72);
+    box-shadow: 0 0 22px rgba(201,162,39,0.32);
 }
 .mkcal-cell--active {
     background: rgba(201,162,39,0.35) !important;
     border-color: #c9a227 !important;
-    box-shadow: 0 0 24px rgba(201,162,39,0.5), inset 0 1px 0 rgba(255,255,255,0.18) !important;
-    transform: scale(1.12) translateY(-2px) !important;
+    box-shadow: 0 0 28px rgba(201,162,39,0.52), inset 0 1px 0 rgba(255,255,255,0.2) !important;
+    transform: scale(1.14) translateY(-2px) !important;
     z-index: 3;
 }
 
-/* Year number text */
 .mkcal-yr {
     font-family: 'DM Sans', sans-serif;
-    font-size: clamp(0.38rem, 1.05vw, 0.72rem);
+    font-size: clamp(0.38rem, 1.08vw, 0.74rem);
     font-weight: 600;
     line-height: 1; pointer-events: none;
     letter-spacing: -0.01em;
@@ -558,10 +553,9 @@
     white-space: nowrap;
 }
 .mkcal-cell--no   .mkcal-yr { color: rgba(255,255,255,0.1); }
-.mkcal-cell--av   .mkcal-yr { color: rgba(201,162,39,0.85); }
+.mkcal-cell--av   .mkcal-yr { color: rgba(201,162,39,0.88); }
 .mkcal-cell--active .mkcal-yr { color: #fff; font-weight: 700; }
 
-/* FamilySearch dot */
 .mkcal-fsdot {
     position: absolute;
     bottom: 3px; right: 4px;
@@ -578,8 +572,8 @@
 
 /* ── Expansion panel ─────────────────────────────── */
 .mkcal-panel {
-    margin-top: 1.75rem;
-    opacity: 0; transform: translateY(10px);
+    margin-top: 2rem;
+    opacity: 0; transform: translateY(12px);
     transition: opacity 0.38s ease, transform 0.5s cubic-bezier(0.16,1,0.3,1);
 }
 .mkcal-panel--open { opacity: 1; transform: translateY(0); }
@@ -587,32 +581,38 @@
 .mkcal-pi {
     background: var(--color-surface, #fff);
     border: 1px solid var(--color-border, rgba(201,162,39,0.12));
-    border-radius: 18px;
-    padding: 2rem 2.25rem 2.25rem;
-    box-shadow: 0 8px 40px rgba(0,0,0,0.07);
+    border-radius: 20px;
+    padding: 2.2rem 2.5rem 2.5rem;
+    box-shadow: 0 12px 50px rgba(0,0,0,0.08);
     position: relative;
+    overflow: hidden;
 }
-@media (max-width: 600px) { .mkcal-pi { padding: 1.5rem 1.25rem 1.75rem; border-radius: 14px; } }
+.mkcal-pi::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, transparent, rgba(201,162,39,0.5), rgba(201,162,39,0.8), rgba(201,162,39,0.5), transparent);
+}
+@media (max-width: 600px) { .mkcal-pi { padding: 1.6rem 1.4rem 1.9rem; border-radius: 16px; } }
 
 .mkcal-pi-hd {
-    display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap;
-    margin-bottom: 1.75rem;
-    padding-bottom: 1.25rem;
+    display: flex; align-items: baseline; gap: 1.2rem; flex-wrap: wrap;
+    margin-bottom: 2rem;
+    padding-bottom: 1.4rem;
     border-bottom: 1px solid var(--color-border, rgba(201,162,39,0.1));
 }
 .mkcal-pi-yr {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(3rem, 6vw, 4.5rem);
+    font-size: clamp(3.2rem, 6.5vw, 5rem);
     font-weight: 300; line-height: 1; letter-spacing: -0.04em;
     color: #c9a227;
 }
 .mkcal-pi-cnt {
     font-family: 'DM Sans', sans-serif;
-    font-size: 0.8rem; color: var(--color-text-muted, #a89880);
+    font-size: 0.82rem; color: var(--color-text-muted, #a89880);
     flex: 1; padding-top: 0.2rem;
 }
 .mkcal-pi-x {
-    width: 34px; height: 34px; border-radius: 50%;
+    width: 36px; height: 36px; border-radius: 50%;
     background: transparent;
     border: 1px solid var(--color-border, rgba(201,162,39,0.14));
     display: flex; align-items: center; justify-content: center;
@@ -624,60 +624,72 @@
 
 .mkcal-pi-books {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(255px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    gap: 1.1rem;
 }
 
+/* ── Book card (expanded) ──────────────────────── */
 .mkcal-book {
     background: var(--color-bg, #faf7f2);
     border: 1px solid var(--color-border, rgba(201,162,39,0.1));
-    border-radius: 12px;
-    padding: 1.25rem 1.25rem 1.1rem;
-    display: flex; flex-direction: column; gap: 0.35rem;
+    border-radius: 14px;
+    padding: 1.35rem 1.35rem 1.2rem;
+    display: flex; flex-direction: column; gap: 0.38rem;
     transition: border-color 0.22s ease, box-shadow 0.22s ease, transform 0.28s cubic-bezier(0.16,1,0.3,1);
+    position: relative; overflow: hidden;
+}
+.mkcal-book::after {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, rgba(201,162,39,0.3), transparent);
+    opacity: 0;
+    transition: opacity 0.22s ease;
 }
 .mkcal-book:hover {
-    border-color: rgba(201,162,39,0.32);
-    box-shadow: 0 4px 22px rgba(0,0,0,0.07);
+    border-color: rgba(201,162,39,0.35);
+    box-shadow: 0 6px 28px rgba(0,0,0,0.08);
     transform: translateY(-3px);
 }
+.mkcal-book:hover::after { opacity: 1; }
+
 .mkcal-book-badge {
     display: inline-flex; align-items: center;
-    padding: 0.16rem 0.55rem; border-radius: 100px;
+    padding: 0.18rem 0.6rem; border-radius: 100px;
     background: rgba(201,162,39,0.09);
     border: 1px solid rgba(201,162,39,0.22);
     font-family: 'DM Sans', sans-serif;
     font-size: 0.56rem; letter-spacing: 0.12em; text-transform: uppercase;
-    color: #a07d15; width: fit-content; margin-bottom: 0.2rem;
+    color: #a07d15; width: fit-content; margin-bottom: 0.25rem;
 }
 [data-theme="dark"] .mkcal-book-badge { color: #c9a227; background: rgba(201,162,39,0.12); }
+
 .mkcal-book-church {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 1.08rem; font-weight: 400; line-height: 1.28;
+    font-size: 1.12rem; font-weight: 400; line-height: 1.28;
     color: var(--color-text, #1a1000);
 }
 .mkcal-meta-range {
     font-family: 'DM Sans', sans-serif;
-    font-size: 0.72rem; font-weight: 600; color: #c9a227;
+    font-size: 0.74rem; font-weight: 600; color: #c9a227;
 }
 .mkcal-book-loc {
     font-family: 'DM Sans', sans-serif;
-    font-size: 0.69rem; color: var(--color-text-muted, #a89880);
+    font-size: 0.7rem; color: var(--color-text-muted, #a89880);
     line-height: 1.44; margin-top: 0.05rem;
 }
 .mkcal-book-arch {
     font-family: 'Jost', sans-serif;
-    font-size: 0.65rem; letter-spacing: 0.04em;
-    color: rgba(139,111,62,0.65); margin-bottom: 0.55rem;
+    font-size: 0.66rem; letter-spacing: 0.04em;
+    color: rgba(139,111,62,0.65); margin-bottom: 0.6rem;
 }
 .mkcal-book-cta {
-    display: inline-flex; align-items: center; gap: 0.42rem;
-    padding: 0.48rem 0.8rem; border-radius: 8px;
+    display: inline-flex; align-items: center; gap: 0.45rem;
+    padding: 0.52rem 0.9rem; border-radius: 9px;
     background: rgba(201,162,39,0.1);
     border: 1px solid rgba(201,162,39,0.28);
     color: #a07d15;
     font-family: 'DM Sans', sans-serif;
-    font-size: 0.66rem; font-weight: 600;
+    font-size: 0.67rem; font-weight: 600;
     letter-spacing: 0.05em; text-transform: uppercase;
     text-decoration: none; transition: all 0.2s;
     width: fit-content; margin-top: auto; cursor: pointer; white-space: nowrap;
@@ -685,20 +697,38 @@
 [data-theme="dark"] .mkcal-book-cta { color: #c9a227; }
 .mkcal-book-cta:hover {
     background: #c9a227; border-color: #c9a227; color: #1a1000;
-    box-shadow: 0 4px 16px rgba(201,162,39,0.32);
+    box-shadow: 0 4px 18px rgba(201,162,39,0.35);
 }
 .mkcal-book-cta--nd {
-    opacity: 0.4; cursor: default; border-style: dashed; pointer-events: none;
+    opacity: 0.38; cursor: default; border-style: dashed; pointer-events: none;
 }
 
-.mkcal-note {
-    text-align: center; margin-top: 1.75rem;
+/* ── Source badge ──────────────────────────────── */
+.mkcal-book-src {
+    display: inline-flex; align-items: center; gap: 0.35rem;
     font-family: 'DM Sans', sans-serif;
-    font-size: 0.68rem; color: var(--color-text-muted, #a89880);
-    letter-spacing: 0.03em;
+    font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase;
+    color: rgba(139,111,62,0.55);
+    margin-bottom: 0.1rem;
+}
+.mkcal-book-src svg { opacity: 0.6; flex-shrink: 0; }
+
+.mkcal-note {
+    text-align: center; margin-top: 2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.7rem; color: var(--color-text-muted, #a89880);
+    letter-spacing: 0.03em; line-height: 1.7;
 }
 .mkcal-note a { color: #c9a227; text-decoration: none; }
 .mkcal-note a:hover { text-decoration: underline; }
+.mkcal-note-ridni {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    margin-top: 0.5rem;
+    padding: 0.4rem 0.85rem; border-radius: 100px;
+    background: rgba(201,162,39,0.07);
+    border: 1px solid rgba(201,162,39,0.18);
+    font-size: 0.65rem;
+}
 
 [data-theme="dark"] .mkcal-grid-wrap {
     background: linear-gradient(160deg, #060503 0%, #100e07 50%, #060503 100%);
@@ -737,7 +767,7 @@
             </div>
             <div class="mkcal-leg">
                 <span class="mkcal-leg-sq mkcal-leg-sq--fs"></span>
-                Скан на FamilySearch
+                Доступні скани онлайн
             </div>
         </div>
 
@@ -767,7 +797,11 @@
         <!-- Bottom note -->
         <p class="mkcal-note">
             Дані синхронізуються з базою даних архіву. Щоб додати нову книгу — скористайтесь 
-            <a href="admin.html">адмін-панеллю</a>.
+            <a href="admin.html">адмін-панеллю</a>.<br>
+            <span class="mkcal-note-ridni">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+                Скани також доступні на <a href="https://ridni.org/catalog/%D0%B4%D0%BE%D0%BC%D0%B1%D1%80%D0%BE%D0%B2%D0%B8%D1%86%D1%8F" target="_blank" rel="noopener">ridni.org → Домбровиця</a>
+            </span>
         </p>
 
     </div>
@@ -925,9 +959,11 @@
             }
 
             if (url) {
+                var isRidni = url.indexOf('ridni.org') !== -1;
+                var ctaLabel = isRidni ? 'Переглянути на ridni.org' : 'Переглянути скани';
                 html += '<a href="' + esc(url) + '" target="_blank" rel="noopener noreferrer" class="mkcal-book-cta">'
                       + '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>'
-                      + 'Переглянути на FamilySearch</a>';
+                      + ctaLabel + '</a>';
             } else {
                 html += '<span class="mkcal-book-cta mkcal-book-cta--nd">'
                       + '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>'
