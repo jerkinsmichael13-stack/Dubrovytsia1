@@ -708,5 +708,96 @@
         "period": "1900-1939",
         "category": "streets",
         "date": "1925-1930"
+    },
+    {
+        "imageUrl": "https://i.imgur.com/YIRm8Rt.jpeg",
+        "title": "Масова маніфестація після рішень Сан-Ремо, 1920 — євреї Дубровиці вітають рішення про єврейський національний дім у Палестині",
+        "period": "1900-1939",
+        "category": "events",
+        "date": "1920"
+    },
+    {
+        "imageUrl": "https://i.imgur.com/caTP3ND.jpeg",
+        "title": "Ринкова площа Дубровиці в суботу. В шабат єврейські крамниці зачинені, місто завмирало",
+        "period": "1900-1939",
+        "category": "streets",
+        "date": "~1910"
+    },
+    {
+        "imageUrl": "https://i.imgur.com/ol9vPuF.jpeg",
+        "title": "Куточок Ринкової площі біля «Плянтів», 1939 — останній мирний рік єврейської Дубровиці",
+        "period": "1900-1939",
+        "category": "streets",
+        "date": "1939"
+    },
+    {
+        "imageUrl": "https://i.imgur.com/TUFVsb8.jpeg",
+        "title": "Вулиця 3-го Травня — одна з головних вулиць єврейської Дубровиці",
+        "period": "1900-1939",
+        "category": "streets",
+        "date": "~1930"
+    },
+    {
+        "imageUrl": "https://i.imgur.com/h6fG9oK.jpeg",
+        "title": "Футбольна команда «Шомрія», 1925 рік — єврейський спортивний рух Дубровиці. На тлі — міст через Горинь",
+        "period": "1900-1939",
+        "category": "people",
+        "date": "1925"
+    },
+    {
+        "imageUrl": "https://i.imgur.com/lbNIamW.jpeg",
+        "title": "Нова будівля єврейської школи «Тарбут», 1936 рік — навчання на івриті",
+        "period": "1900-1939",
+        "category": "architecture",
+        "date": "1936"
+    },
+    {
+        "imageUrl": "https://i.imgur.com/d1e0JX9.jpeg",
+        "title": "Вчителі та учні єврейської школи «Мевенінь», 1930 рік — єврейська освіта в Дубровиці",
+        "period": "1900-1939",
+        "category": "people",
+        "date": "1930"
+    },
+    {
+        "imageUrl": "https://i.imgur.com/nLCM0i2.jpeg",
+        "title": "Лісопилка Горація Геллера — торгівля лісом була головним промислом євреїв Волинського Полісся",
+        "period": "1900-1939",
+        "category": "architecture",
+        "date": "~1920"
+    },
+    {
+        "imageUrl": "https://i.imgur.com/fqLDM6s.jpeg",
+        "title": "Біля виборчої дільниці під час виборів до польського Сейму, 1935 рік — єврейська громадська активність",
+        "period": "1900-1939",
+        "category": "events",
+        "date": "1935"
+    },
+    {
+        "imageUrl": "https://i.imgur.com/rVnHRb1.jpeg",
+        "title": "Єврейська пара біля мосту через Горинь (1884 р.) — мирне довоєнне місто",
+        "period": "1900-1939",
+        "category": "people",
+        "date": "~1920"
+    },
+    {
+        "imageUrl": "https://i.imgur.com/hPI1Xdo.jpeg",
+        "title": "Молодь на човні річкою Горинь — мирні дні єврейської Дубровиці до початку катастрофи",
+        "period": "1900-1939",
+        "category": "people",
+        "date": "~1930"
+    },
+    {
+        "imageUrl": "https://i.imgur.com/aeImat4.jpeg",
+        "title": "Єврейський похорон у Дубровиці. Братство «Хевра Кадіша» вело літопис з 1500 року",
+        "period": "1900-1939",
+        "category": "events",
+        "date": "~1920"
+    },
+    {
+        "imageUrl": "https://i.imgur.com/6Wqyivm.jpeg",
+        "title": "«Біля будинку Слуцького» — знаменита східна сторона Ринкової площі єврейської Дубровиці",
+        "period": "1900-1939",
+        "category": "streets",
+        "date": "~1920"
     }
 ]
