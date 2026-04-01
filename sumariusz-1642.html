@@ -173,7 +173,7 @@
     display: flex; gap: 0;
     border: 1px solid var(--ruling);
     border-radius: 10px;
-    overflow: hidden;
+    overflow: hidden; /* desktop: clip rounded corners */
     margin-bottom: 3rem;
     background: var(--parchment);
 }
@@ -189,6 +189,7 @@
     display: flex; align-items: center; justify-content: center; gap: .5rem;
     border-right: 1px solid var(--ruling);
     position: relative;
+    white-space: nowrap;
 }
 .smr-tab:last-child { border-right: none; }
 .smr-tab svg { width: 14px; height: 14px; opacity: .7; }
@@ -499,6 +500,52 @@
 .smr-lb-caption-bar{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:300;font-style:italic;color:rgba(255,255,255,.75);flex:1;text-align:center;white-space:normal;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;padding:0 1.2rem;line-height:1.5;}
 .smr-lb-hint{position:absolute;top:.9rem;left:50%;transform:translateX(-50%);background:rgba(8,6,12,.8);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.1);border-radius:100px;padding:.35rem 1rem;font-family:'DM Sans',sans-serif;font-size:.57rem;letter-spacing:.06em;color:rgba(255,255,255,.42);pointer-events:none;white-space:nowrap;z-index:2;}
 @media(max-width:480px){.smr-lb-hint{display:none;}}
+
+/* ═══ МОБІЛЬНІ ВКЛАДКИ ═══ */
+@media (max-width: 768px) {
+    /* Tabs: horizontally scrollable strip */
+    .smr-tabs {
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        flex-wrap: nowrap;
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+        margin-left: -1rem;
+        margin-right: -1rem;
+        padding: 0 1rem;
+    }
+    .smr-tabs::-webkit-scrollbar { display: none; }
+    .smr-tab {
+        flex: 0 0 auto;
+        white-space: nowrap;
+        padding: .75rem 1rem;
+        font-size: .62rem;
+    }
+    .smr-tab svg { width: 12px; height: 12px; }
+
+    /* Body & hero padding */
+    .smr-body { padding: 1.5rem 1rem 4rem; }
+    .smr-hero { padding: 5rem 1.2rem 3.5rem; }
+    .smr-hero-title { font-size: 2.2rem; }
+    .smr-hero-meta { gap: .8rem; flex-wrap: wrap; justify-content: center; }
+    .smr-hero-meta-item { padding: .55rem .9rem; }
+    .smr-hero-meta-val { font-size: 1.1rem; }
+
+    /* Finance table: scrollable */
+    .smr-finance { overflow-x: auto; }
+    .smr-finance-row { font-size: .72rem; }
+
+    /* Grids: single col */
+    .smr-context-grid { grid-template-columns: 1fr; }
+    .smr-scans-grid { grid-template-columns: 1fr; }
+    .smr-transcript { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+    .smr-tab { padding: .6rem .75rem; font-size: .58rem; }
+}
 </style>
 </head>
 <body class="smr-page">

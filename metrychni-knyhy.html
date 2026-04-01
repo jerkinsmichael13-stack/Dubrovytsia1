@@ -557,7 +557,7 @@
 .mkcal-panel--open { opacity: 1; transform: translateY(0); }
 
 .mkcal-pi {
-    background: var(--color-surface, #fff);
+    background: var(--color-bg-card);
     border: 1px solid var(--color-border, rgba(201,162,39,0.12));
     border-radius: 20px;
     padding: 2.25rem 2.5rem 2.5rem;
@@ -676,7 +676,7 @@
     background: linear-gradient(160deg, #060503 0%, #100e07 50%, #060503 100%);
     border-color: rgba(201,162,39,0.18);
 }
-[data-theme="dark"] .mkcal-pi { background: var(--color-surface, #1a1508); }
+[data-theme="dark"] .mkcal-pi { background: #1a1508; }
 [data-theme="dark"] .mkcal-book { background: var(--color-bg, #111009); }
 </style>
 
@@ -972,17 +972,17 @@
 
             <!-- Info strip about metric books -->
             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;margin-bottom:4rem;">
-                <div style="background:var(--color-surface,#fff);border:1px solid var(--color-border,rgba(201,162,39,0.12));border-radius:16px;padding:1.75rem 2rem;display:flex;flex-direction:column;gap:0.7rem;">
+                <div style="background:var(--color-bg-card);border:1px solid var(--color-border,rgba(201,162,39,0.12));border-radius:16px;padding:1.75rem 2rem;display:flex;flex-direction:column;gap:0.7rem;">
                     <div style="width:36px;height:36px;border-radius:10px;background:rgba(201,162,39,0.1);border:1px solid rgba(201,162,39,0.2);display:flex;align-items:center;justify-content:center;font-size:1.1rem;">📜</div>
                     <div style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:500;color:var(--color-text,#1a1000);">Що таке метрична книга?</div>
                     <div style="font-family:'DM Sans',sans-serif;font-size:0.82rem;line-height:1.65;color:var(--color-text-muted,#a89880);">Офіційний церковний документ, де реєструвались народження, шлюби та смерті парафіян. Основне джерело генеалогічних досліджень XIX — поч. XX ст.</div>
                 </div>
-                <div style="background:var(--color-surface,#fff);border:1px solid var(--color-border,rgba(201,162,39,0.12));border-radius:16px;padding:1.75rem 2rem;display:flex;flex-direction:column;gap:0.7rem;">
+                <div style="background:var(--color-bg-card);border:1px solid var(--color-border,rgba(201,162,39,0.12));border-radius:16px;padding:1.75rem 2rem;display:flex;flex-direction:column;gap:0.7rem;">
                     <div style="width:36px;height:36px;border-radius:10px;background:rgba(201,162,39,0.1);border:1px solid rgba(201,162,39,0.2);display:flex;align-items:center;justify-content:center;font-size:1.1rem;">🗄️</div>
                     <div style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:500;color:var(--color-text,#1a1000);">Де зберігаються оригінали?</div>
                     <div style="font-family:'DM Sans',sans-serif;font-size:0.82rem;line-height:1.65;color:var(--color-text-muted,#a89880);">Державний архів Рівненської (ДАРО) та Житомирської (ДАЖО) областей. Деякі справи також зберігаються у Волинському архіві (ДАВО).</div>
                 </div>
-                <div style="background:var(--color-surface,#fff);border:1px solid var(--color-border,rgba(201,162,39,0.12));border-radius:16px;padding:1.75rem 2rem;display:flex;flex-direction:column;gap:0.7rem;">
+                <div style="background:var(--color-bg-card);border:1px solid var(--color-border,rgba(201,162,39,0.12));border-radius:16px;padding:1.75rem 2rem;display:flex;flex-direction:column;gap:0.7rem;">
                     <div style="width:36px;height:36px;border-radius:10px;background:rgba(201,162,39,0.1);border:1px solid rgba(201,162,39,0.2);display:flex;align-items:center;justify-content:center;font-size:1.1rem;">🔍</div>
                     <div style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:500;color:var(--color-text,#1a1000);">Як шукати предків?</div>
                     <div style="font-family:'DM Sans',sans-serif;font-size:0.82rem;line-height:1.65;color:var(--color-text-muted,#a89880);">Для пошуку важливо знати населений пункт, конфесію та приблизні роки подій. Частина записів оцифрована на <a href="https://ridni.org" target="_blank" rel="noopener" style="color:#c9a227;text-decoration:none;">ridni.org</a>.</div>

@@ -479,6 +479,7 @@
 }
 @media (max-width: 400px) {
     .inv-sg-grid { grid-template-columns: 1fr; }
+}
 
 /* ── МОБІЛЬНІ ВКЛАДКИ ── */
 @media (max-width: 768px) {
@@ -492,10 +493,12 @@
     }
     .smr-tabs::-webkit-scrollbar { display: none; }
     .smr-tab {
+        flex: 0 0 auto;
         flex-shrink: 0;
         font-size: .62rem;
         padding: .7rem .9rem;
         gap: .35rem;
+        white-space: nowrap;
     }
     .smr-tab svg { width: 12px; height: 12px; }
     .smr-body { padding: 1.5rem 1rem; }
@@ -505,8 +508,6 @@
 }
 @media (max-width: 480px) {
     .smr-tab { padding: .6rem .75rem; font-size: .58rem; }
-}
-
 }
 
 

@@ -131,16 +131,258 @@
     </div>
 
     <!-- Books Catalog -->
-    <section class="catalog-section">
-        <div class="container">
-            <div class="catalog-grid" id="booksGrid">
-                <!-- Завантажується з books.json -->
+    <section class="bk-catalog-section">
+        <div class="bk-catalog-inner">
+            <div class="bk-grid" id="booksGrid">
+                <!-- populated from books.json -->
             </div>
-            <div id="booksEmptyMsg" style="display:none;text-align:center;padding:4rem 1rem;font-family:var(--font-display);font-size:1.3rem;color:var(--color-text-light);">
+            <div id="booksEmptyMsg" class="bk-empty">
                 Книг за обраною темою ще не додано.
             </div>
         </div>
     </section>
+
+    <style>
+    /* ═══════════════════════════════════════════
+       BOOKS CATALOG — EDITORIAL REDESIGN
+    ═══════════════════════════════════════════ */
+    .bk-catalog-section {
+        padding: 3.5rem 0 7rem;
+        background: var(--color-bg);
+        min-height: 40vh;
+    }
+    .bk-catalog-inner {
+        max-width: 1320px;
+        margin: 0 auto;
+        padding: 0 2.5rem;
+    }
+    @media(max-width:700px){ .bk-catalog-inner { padding: 0 1.2rem; } }
+
+    /* ── Grid: 2-col editorial ── */
+    .bk-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0;
+        border-top: 1px solid var(--color-border-light);
+    }
+    @media(max-width:900px){ .bk-grid { grid-template-columns: 1fr; } }
+
+    /* ── Book card ── */
+    .bk-card {
+        display: grid;
+        grid-template-columns: 160px 1fr;
+        gap: 0;
+        border-bottom: 1px solid var(--color-border-light);
+        border-right: 1px solid var(--color-border-light);
+        padding: 2.4rem 2.2rem;
+        background: var(--color-bg-card);
+        transition: background 0.25s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    .bk-grid > .bk-card:nth-child(odd) { border-right: 1px solid var(--color-border-light); }
+    .bk-grid > .bk-card:nth-child(even) { border-right: none; }
+    @media(max-width:900px){
+        .bk-grid > .bk-card { border-right: none; }
+    }
+    .bk-card::before {
+        content: '';
+        position: absolute; top: 0; left: 0; right: 0; height: 2px;
+        background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
+        opacity: 0; transition: opacity 0.3s ease;
+    }
+    .bk-card:hover { background: var(--color-bg-alt); }
+    .bk-card:hover::before { opacity: 1; }
+    [data-theme="dark"] .bk-card { background: #0f0d0b; }
+    [data-theme="dark"] .bk-card:hover { background: #161210; }
+
+    /* Cover column */
+    .bk-cover-col {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+        padding-right: 1.8rem;
+    }
+    .bk-cover-img {
+        width: 120px;
+        height: 172px;
+        object-fit: cover;
+        object-position: center top;
+        border-radius: 3px;
+        display: block;
+        box-shadow: 6px 10px 30px rgba(0,0,0,0.18), 2px 4px 8px rgba(0,0,0,0.12);
+        border: 1px solid rgba(0,0,0,0.08);
+        transition: transform 0.35s ease, box-shadow 0.35s ease;
+        flex-shrink: 0;
+    }
+    .bk-card:hover .bk-cover-img {
+        transform: translateY(-3px) rotate(-0.5deg);
+        box-shadow: 10px 16px 40px rgba(0,0,0,0.24), 3px 6px 12px rgba(0,0,0,0.14);
+    }
+    .bk-cover-placeholder {
+        width: 120px;
+        height: 172px;
+        border-radius: 3px;
+        background: linear-gradient(160deg, var(--color-bg-secondary), var(--color-bg-alt));
+        border: 1px solid var(--color-border-light);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        flex-shrink: 0;
+    }
+    .bk-cover-placeholder svg { opacity: 0.3; }
+    .bk-cover-placeholder span {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 0.5rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--color-text-muted);
+        opacity: 0.6;
+    }
+
+    /* Category badge under cover */
+    .bk-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        padding: 0.25rem 0.7rem;
+        border-radius: 100px;
+        border: 1px solid var(--color-border);
+        font-family: 'DM Sans', sans-serif;
+        font-size: 0.48rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--color-text-muted);
+        background: var(--color-bg);
+        white-space: nowrap;
+    }
+    [data-theme="dark"] .bk-badge { background: #0e0c0a; }
+
+    /* Info column */
+    .bk-info {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+    }
+    .bk-num {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 0.78rem;
+        color: var(--color-accent);
+        opacity: 0.5;
+        letter-spacing: 0.1em;
+        margin-bottom: 0.4rem;
+    }
+    .bk-title {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(1.15rem, 2vw, 1.55rem);
+        font-weight: 400;
+        line-height: 1.2;
+        color: var(--color-text);
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.01em;
+    }
+    .bk-author-row {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        margin-bottom: 1rem;
+    }
+    .bk-author-line {
+        width: 16px; height: 1px;
+        background: var(--color-accent);
+        opacity: 0.5;
+        flex-shrink: 0;
+    }
+    .bk-author {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 0.72rem;
+        color: var(--color-accent-dark);
+        font-weight: 500;
+        letter-spacing: 0.04em;
+    }
+    [data-theme="dark"] .bk-author { color: var(--color-accent-light); }
+    .bk-year {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 0.65rem;
+        color: var(--color-text-muted);
+        margin-left: 0.3rem;
+    }
+    .bk-desc {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 0.95rem;
+        line-height: 1.72;
+        color: var(--color-text-secondary);
+        margin-bottom: 1.2rem;
+        /* clamp to 4 lines */
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    .bk-desc-full { -webkit-line-clamp: unset; overflow: visible; }
+    .bk-read-more {
+        background: none; border: none; padding: 0; cursor: pointer;
+        font-family: 'DM Sans', sans-serif;
+        font-size: 0.62rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--color-accent);
+        display: inline-flex; align-items: center; gap: 0.3rem;
+        margin-bottom: 1rem;
+        transition: gap 0.2s ease;
+    }
+    .bk-read-more:hover { gap: 0.5rem; }
+    .bk-location {
+        margin-top: auto;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--color-border-light);
+    }
+    .bk-location a {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 0.66rem;
+        letter-spacing: 0.05em;
+        color: var(--color-accent-dark);
+        text-decoration: none;
+        display: inline-flex; align-items: center; gap: 0.35rem;
+        transition: gap 0.2s ease;
+    }
+    [data-theme="dark"] .bk-location a { color: var(--color-accent-light); }
+    .bk-location a:hover { gap: 0.55rem; }
+    .bk-location a svg { flex-shrink: 0; }
+
+    /* Empty state */
+    .bk-empty {
+        display: none;
+        text-align: center;
+        padding: 5rem 1rem;
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.4rem;
+        font-style: italic;
+        color: var(--color-text-muted);
+        grid-column: 1 / -1;
+    }
+
+    /* Mobile: stack cover and info */
+    @media(max-width:520px){
+        .bk-card {
+            grid-template-columns: 90px 1fr;
+            padding: 1.6rem 1.2rem;
+            gap: 0;
+        }
+        .bk-cover-col { padding-right: 1.2rem; }
+        .bk-cover-img { width: 90px; height: 128px; }
+        .bk-cover-placeholder { width: 90px; height: 128px; }
+        .bk-badge { display: none; }
+        .bk-title { font-size: 1.05rem; }
+        .bk-desc { -webkit-line-clamp: 3; }
+    }
+    </style>
 
     <!-- Footer -->
     <footer class="footer">

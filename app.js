@@ -488,14 +488,6 @@ async function initBooksPage() {
     } catch { ALL_BOOKS = []; }
     renderBooks();
     initBookFilters();
-    // Авто-лінкування місць зберігання
-    new MutationObserver(() => {
-        grid.querySelectorAll('.book-info p').forEach(p => {
-            if (!p.innerHTML.includes('Місце зберігання:') || p.querySelector('a')) return;
-            const url = p.textContent.match(/https?:\/\/[^\s]+/)?.[0];
-            if (url) p.innerHTML = `<strong>Місце зберігання:</strong> <a href="${url}" target="_blank" rel="noopener" style="color:var(--color-accent-dark)">${url.length > 40 ? url.slice(0,40)+'…' : url} →</a>`;
-        });
-    }).observe(grid, { childList: true, subtree: true });
 }
 
 function renderBooks() {
@@ -509,23 +501,80 @@ function renderBooks() {
         return;
     }
     if (empty) empty.style.display = 'none';
-    grid.innerHTML = list.map(b => `
-        <div class="catalog-item book-item fade-in-up">
-            ${b.coverUrl
-                ? `<img src="${b.coverUrl}" alt="${b.title}" class="book-cover" loading="lazy">`
-                : `<div class="book-cover-placeholder">📚</div>`}
-            <div class="book-info">
-                <h3>${b.title}</h3>
-                <p class="book-meta">Автор: ${b.author}${b.year ? ' · Рік: ' + b.year : ''}</p>
-                <p class="book-description">${b.description}</p>
-                ${b.location  ? `<p><strong>Місце зберігання:</strong> ${b.location}</p>` : ''}
-                ${b.downloadUrl ? `<a href="${b.downloadUrl}" target="_blank" rel="noopener" class="catalog-link">📥 Завантажити / переглянути →</a>` : ''}
+
+    const CATEGORY_LABELS = {
+        history: 'Історія',
+        culture: 'Культура',
+        war: 'Друга світова',
+        religion: 'Релігія',
+        people: 'Постаті',
+        documents: 'Документи',
+        folklore: 'Фольклор'
+    };
+
+    const bookSVG = `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>`;
+    const linkSVG = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`;
+
+    grid.innerHTML = list.map((b, idx) => {
+        const catLabel = CATEGORY_LABELS[b.category] || '';
+        const coverHtml = b.coverUrl
+            ? `<img src="${b.coverUrl}" alt="${b.title}" class="bk-cover-img" loading="lazy">`
+            : `<div class="bk-cover-placeholder">${bookSVG}<span>Обкладинка</span></div>`;
+
+        const locationHtml = b.location
+            ? `<div class="bk-location">
+                 <a href="${b.location}" target="_blank" rel="noopener">
+                   ${linkSVG} Читати / переглянути →
+                 </a>
+               </div>`
+            : (b.downloadUrl
+                ? `<div class="bk-location">
+                     <a href="${b.downloadUrl}" target="_blank" rel="noopener">
+                       ${linkSVG} Завантажити →
+                     </a>
+                   </div>`
+                : '');
+
+        // short desc (≤ 300 chars) never needs toggle; longer ones get expand button
+        const needsToggle = b.description && b.description.length > 300;
+        const descId = `bk-desc-${idx}`;
+        const readMoreBtn = needsToggle
+            ? `<button class="bk-read-more" onclick="bkToggleDesc('${descId}',this)" aria-expanded="false">
+                 Читати далі <span>↓</span>
+               </button>`
+            : '';
+
+        return `
+        <div class="bk-card fade-in-up">
+            <div class="bk-cover-col">
+                ${coverHtml}
+                ${catLabel ? `<span class="bk-badge">${catLabel}</span>` : ''}
             </div>
-        </div>
-    `).join('');
+            <div class="bk-info">
+                <div class="bk-num">${String(idx + 1).padStart(2, '0')}</div>
+                <h3 class="bk-title">${b.title}</h3>
+                <div class="bk-author-row">
+                    <span class="bk-author-line"></span>
+                    <span class="bk-author">${b.author}</span>
+                    ${b.year ? `<span class="bk-year">· ${b.year}</span>` : ''}
+                </div>
+                <p class="bk-desc" id="${descId}">${b.description || ''}</p>
+                ${readMoreBtn}
+                ${locationHtml}
+            </div>
+        </div>`;
+    }).join('');
+
     initScrollAnimations();
-    initCatalogStagger();
-    initMagneticCards();
+}
+
+function bkToggleDesc(id, btn) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const expanded = btn.getAttribute('aria-expanded') === 'true';
+    el.classList.toggle('bk-desc-full', !expanded);
+    btn.setAttribute('aria-expanded', String(!expanded));
+    btn.innerHTML = expanded ? 'Читати далі <span>↓</span>' : 'Згорнути <span>↑</span>';
 }
 
 function initBookFilters() {

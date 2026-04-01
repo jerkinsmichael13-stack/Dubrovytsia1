@@ -1288,6 +1288,33 @@
     .jh-ph-center .jh-photo-img-wrap { height: 220px; }
 }
 
+/* ═══ MOBILE FIXES ═══ */
+@media (max-width: 640px) {
+    .jh-stats-row { grid-template-columns: repeat(2, 1fr); }
+    .jh-stat { border-right: none; border-bottom: 1px solid var(--color-border-light); }
+    .jh-stat:nth-child(odd) { border-right: 1px solid var(--color-border-light); }
+    .jh-stat:nth-last-child(-n+2) { border-bottom: none; }
+    .jh-memorial-numbers { grid-template-columns: 1fr; }
+    .jh-memorial-num-item { border-bottom: 1px solid rgba(255,255,255,0.04); }
+    .jh-memorial-num-item:last-child { border-bottom: none; }
+    .jh-timeline::before { left: 1.2rem; }
+    .jh-tl-item, .jh-tl-item.right { padding-left: 3rem; }
+    .jh-tl-dot { left: 1.2rem; }
+    .jh-hero-content { padding: 0 1.2rem 3rem; }
+    .jh-nigun-section { padding: 4rem 0; }
+    .jh-chapter-section { padding: 3rem 0; }
+    .jh-legacy-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+    .jtp-grid { grid-template-columns: 1fr !important; }
+    .jtp-obj-grid { grid-template-columns: 1fr; }
+    .jtp-wrap { padding: 0 1.2rem; }
+    .jtp-mem { padding: 0 1.2rem; }
+    .jtp-mem-inner { padding: 1.6rem 1.2rem; }
+    .jh-intro-grid { gap: 1.5rem; }
+    section, .jh-chapter-section { overflow-x: hidden; }
+}
+
 /* ═══════════════════════════════════════════════
    DESIGN OVERHAUL v2 — Gallery + Audio
    ═══════════════════════════════════════════════ */
@@ -2744,7 +2771,7 @@
 
 <!-- LIGHTBOX — з повноцінним зумом, паном, клавіатурою -->
 <div id="ULB">
-  <button id="ULB-CLOSE" aria-label="Закрити">
+  <button id="ULB-CLOSE" aria-label="Закрити" onclick="ULB.close()">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
   </button>
   <div id="ULB-HINT">Scroll — зум · Перетягни — пан · Dbl-click — скинути</div>
