@@ -639,6 +639,12 @@
                            font-size:0.875rem;font-weight:600;cursor:pointer;transition:all 0.2s;">
                     📸 Знімок 1943
                 </button>
+                <button class="map-sel-btn" data-mapid="1971"
+                    style="padding:0.6rem 1.2rem;border-radius:0.6rem;border:2px solid var(--color-border);
+                           background:transparent;color:var(--color-text);font-family:'DM Sans',sans-serif;
+                           font-size:0.875rem;font-weight:600;cursor:pointer;transition:all 0.2s;">
+                    🛰️ Супутник 1971
+                </button>
             </div>
 
             <!-- Editor area -->
@@ -2688,11 +2694,15 @@ var MAPS_CONFIG = {
     '1943': {
         img:    'https://i.imgur.com/EhsjkKX.jpeg',
         file:   'aerial_pins_1943.json'
+    },
+    '1971': {
+        img:    'https://i.imgur.com/HiK23WV.jpeg',
+        file:   'aerial_pins_1971.json'
     }
 };
 
 var currentMapId = '1944';
-var pins = { '1944': [], '1943': [] };
+var pins = { '1944': [], '1943': [], '1971': [] };
 var pendingX = 0, pendingY = 0;  // in percentages 0-100
 var dragPin = null, dragOffset = {x:0, y:0};
 var hasDragged = false;
@@ -3010,7 +3020,7 @@ function normalizePin(p) {
 }
 
 function loadAllPins() {
-    ['1944','1943'].forEach(function(key){
+    ['1944','1943','1971'].forEach(function(key){
         var file = MAPS_CONFIG[key].file;
         fetch('https://raw.githubusercontent.com/jerkinsmichael13-stack/Dubrovytsia1/main/'+file+'?v='+Date.now())
             .then(function(r){ return r.ok ? r.json() : []; })

@@ -945,7 +945,7 @@
     <div class="AW">
       <div class="AH">
         <h2 class="AT">Аерофотознімки Дубровиці<span class="AL"></span></h2>
-        <p class="AS">Унікальні знімки міста часів Другої світової війни</p>
+        <p class="AS">Унікальні знімки міста: аерофото ВМВ та супутниковий знімок 1971 р.</p>
       </div>
 
       <!-- MAP 1944 -->
@@ -1007,6 +1007,41 @@
           </div>
         </div>
       </div>
+
+      <hr class="MSEP">
+
+      <!-- MAP 1971 SATELLITE -->
+      <div class="ABLK">
+        <p class="ABT">Супутниковий знімок Дубровиці · 1971 рік</p>
+        <div class="AG">
+          <div class="MBOX" id="M71">
+            <img class="MIMG" id="I71" src="https://i.imgur.com/HiK23WV.jpeg" alt="1971" draggable="false">
+            <div class="MLAY" id="P71"></div>
+            <div class="ZW">
+              <button class="ZB" id="z71p">+</button>
+              <button class="ZB" id="z71m">&#8722;</button>
+              <button class="ZB" id="z71r" style="font-size:.78rem">&#8962;</button>
+            </div>
+            <button class="FSB" id="fs71">&#x26F6;</button>
+            <div class="BADGE" style="border-color:rgba(100,180,255,.3);">
+              <span class="bl" style="color:#4a6a8a;">Супутниковий знімок</span>
+              <span class="bd" style="color:#6ab4ff;">1971</span>
+            </div>
+            <div class="MTTIP" id="TIP71">
+              <button class="TTX" data-mid="71">&#x2715;</button>
+              <div class="TTR"><span class="TTN" id="TN71"></span><span class="TTT" id="TT71"></span></div>
+              <span class="TTD" id="TD71"></span>
+            </div>
+          </div>
+          <div class="LEG">
+            <p class="LEGH">Позначення</p>
+            <ul class="LEGL" id="L71">
+              <li style="font-size:.72rem;color:#a09080;font-family:'DM Sans',sans-serif;padding:.4rem .25rem">Завантаження...</li>
+            </ul>
+            <p class="LEGHINT">Позначення додаються через адмін-панель</p>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Fullscreen overlay — full map + pins + legend -->
@@ -1039,11 +1074,16 @@
     <script>
     document.addEventListener('DOMContentLoaded', function() {
 
-      var DATA = { '44': [], '43': [] };
+      var DATA = { '44': [], '43': [], '71': [] };
       // State: scale + translate from top-left (transform-origin: 0 0)
       var ST = {
         '44': { sc: 1, tx: 0, ty: 0 },
-        '43': { sc: 1, tx: 0, ty: 0 }
+        '43': { sc: 1, tx: 0, ty: 0 },
+        '71': { sc: 1, tx: 0, ty: 0 }
+      };
+      // Full-size images for fullscreen view (different from thumbnails)
+      var FS_IMG = {
+        '71': 'https://i.imgur.com/XGPj0uO.jpeg'
       };
       var activeMid = null, activeN = null;
 
@@ -1094,7 +1134,7 @@
       }
 
       function hideTooltip() {
-        ['44','43'].forEach(function(m) {
+        ['44','43','71'].forEach(function(m) {
           document.getElementById('TIP'+m).classList.remove('show');
         });
         if (activeMid) {
@@ -1216,7 +1256,7 @@
       }
 
       // ── BUTTONS ────────────────────────────────────────────────
-      ['44','43'].forEach(function(mid) {
+      ['44','43','71'].forEach(function(mid) {
         document.getElementById('z'+mid+'p').addEventListener('click', function(e) {
           e.stopPropagation(); doZoom(mid, 1.5);
         });
@@ -1233,7 +1273,7 @@
       });
 
       // ── DRAG & WHEEL ───────────────────────────────────────────
-      ['44','43'].forEach(function(mid) {
+      ['44','43','71'].forEach(function(mid) {
         var box = getBox(mid);
         var dragging = false, startX = 0, startY = 0;
 
@@ -1334,8 +1374,8 @@
         document.body.style.overflow = 'hidden';
         var img = document.getElementById('MFS-IMG');
         var label = document.getElementById('MFS-LABEL');
-        img.src = getImg(mid).src;
-        label.textContent = mid === '44' ? 'Аерофотознімок 24 січня 1944 року' : 'Аерофотознімок жовтень 1943 року';
+        img.src = FS_IMG[mid] || getImg(mid).src;
+        label.textContent = mid === '44' ? 'Аерофотознімок 24 січня 1944 року' : mid === '43' ? 'Аерофотознімок жовтень 1943 року' : 'Супутниковий знімок Дубровиці · 1971 рік';
         var leg = document.getElementById('MFS-LEG');
         leg.innerHTML = '';
         (DATA[mid] || []).forEach(function(p) {
@@ -1548,9 +1588,10 @@
 
       loadMap('44', 'aerial_pins_1944.json', 'L44');
       loadMap('43', 'aerial_pins_1943.json', 'L43');
+      loadMap('71', 'aerial_pins_1971.json', 'L71');
 
       window.addEventListener('resize', function() {
-        ['44','43'].forEach(function(mid) { clamp(mid); applyTransform(mid, false); });
+        ['44','43','71'].forEach(function(mid) { clamp(mid); applyTransform(mid, false); });
       });
 
     }); // DOMContentLoaded
