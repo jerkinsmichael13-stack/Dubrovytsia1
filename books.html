@@ -40,11 +40,44 @@
 
 /* Filters sit inside hero bottom */
 .books-filters-wrap {
-    position:relative;z-index:10;
+    position:sticky;top:62px;z-index:10;
     background:var(--color-bg,#faf7f2);
     border-bottom:1px solid var(--color-border-light,rgba(201,162,39,0.12));
     box-shadow:0 4px 20px rgba(0,0,0,0.04);
-    position:sticky;top:62px;
+    overflow:hidden;
+}
+@media(max-width:768px){
+    .books-filters-wrap {
+        position:static; /* не липкий на мобільному */
+    }
+    .books-filters-wrap .container {
+        overflow-x:auto;
+        overflow-y:hidden;
+        -webkit-overflow-scrolling:touch;
+        scrollbar-width:none;
+        padding-left:1rem !important;
+        padding-right:1rem !important;
+    }
+    .books-filters-wrap .container::-webkit-scrollbar { display:none; }
+    .books-filters-wrap > .container > div {
+        flex-wrap:nowrap !important;
+        width:max-content;
+    }
+    .catalog-filter-group {
+        flex-wrap:nowrap !important;
+        gap:.4rem;
+    }
+}
+</style>
+
+<style>
+/* ── Prevent browser double-tap zoom sitewide ── */
+html { touch-action: manipulation; }
+body { touch-action: manipulation; }
+a, button, [role="button"], input, select, textarea,
+.catalog-filter-btn, .smr-tab, .nav-link, .logo,
+.mobile-toggle, .theme-toggle, .scroll-top-btn {
+    touch-action: manipulation;
 }
 </style>
 </head>

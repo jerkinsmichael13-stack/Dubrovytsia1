@@ -108,14 +108,6 @@
     align-items: center;
 }
 @media(max-width:700px) { .jh-hero-content { padding: 0 1.4rem 4rem; } }
-@media(max-width:480px) {
-    .jh-hero { min-height: 100svh; }
-    .jh-hero-content { padding: 0 1rem 5rem; justify-content: flex-end; }
-    .jh-title .t-top { font-size: clamp(2.6rem, 13vw, 4rem); }
-    .jh-title .t-bot { font-size: clamp(1.8rem, 9vw, 2.8rem); }
-    .jh-sub { font-size: 0.88rem; color: rgba(255,255,255,0.6); max-width: 100%; }
-    .jh-eyebrow span { font-size: 0.55rem; letter-spacing: 0.22em; }
-}
 
 .jh-eyebrow {
     display: flex;
@@ -1240,7 +1232,7 @@
 .ulb-btn:hover{background:rgba(255,255,255,.2);}
 .ulb-btn svg{width:16px;height:16px;pointer-events:none;}
 #ULB-ZVAL{font-family:'DM Sans',sans-serif;font-size:.72rem;color:rgba(255,255,255,.55);min-width:3.2em;text-align:center;}
-#ULB-CAP{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:300;font-style:italic;color:rgba(255,255,255,.75);flex:1;min-width:0;text-align:center;padding:0 .5rem;pointer-events:none;line-height:1.5;letter-spacing:.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+#ULB-CAP{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:300;font-style:italic;color:rgba(255,255,255,.75);position:absolute;left:0;right:0;text-align:center;padding:0 130px;pointer-events:none;top:50%;transform:translateY(-50%);line-height:1.5;letter-spacing:.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .ulb-sep{width:1px;height:20px;background:rgba(255,255,255,.1);flex-shrink:0;}
 #ULB-CLOSE{position:absolute;top:.9rem;right:1rem;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.1);backdrop-filter:blur(8px);color:rgba(255,255,255,.85);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s;z-index:2;padding:0;}
 #ULB-CLOSE:hover{background:rgba(255,255,255,.25);}
@@ -1705,11 +1697,18 @@
     .jh-vinyl-wrapper { width: 175px; height: 150px; }
     .jh-needle { left: 108px; top: -6px; width: 48px; height: 62px; }
     .jh-nigun-title { font-size: clamp(1.6rem, 6vw, 2.2rem); }
-    .jh-nigun-section { padding: 4rem 0 5rem; overflow-x: hidden; }
-    .jh-nigun-inner { padding: 0 1.2rem; box-sizing: border-box; }
-    .jh-nigun-desc { word-break: break-word; overflow-wrap: break-word; }
-    .jh-nigun-source { word-break: break-word; overflow-wrap: break-word; }
-    .jh-audio-player { flex-wrap: wrap; }
+    .jh-nigun-section { padding: 4rem 0 5rem; }
+}
+</style>
+
+<style>
+/* ── Prevent browser double-tap zoom sitewide ── */
+html { touch-action: manipulation; }
+body { touch-action: manipulation; }
+a, button, [role="button"], input, select, textarea,
+.catalog-filter-btn, .smr-tab, .nav-link, .logo,
+.mobile-toggle, .theme-toggle, .scroll-top-btn {
+    touch-action: manipulation;
 }
 </style>
 </head>

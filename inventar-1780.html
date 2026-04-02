@@ -556,6 +556,17 @@
 .smr-lb-hint{position:absolute;top:.9rem;left:50%;transform:translateX(-50%);background:rgba(8,6,12,.8);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.1);border-radius:100px;padding:.35rem 1rem;font-family:'DM Sans',sans-serif;font-size:.57rem;letter-spacing:.06em;color:rgba(255,255,255,.42);pointer-events:none;white-space:nowrap;z-index:2;}
 @media(max-width:480px){.smr-lb-hint{display:none;}}
 </style>
+
+<style>
+/* ── Prevent browser double-tap zoom sitewide ── */
+html { touch-action: manipulation; }
+body { touch-action: manipulation; }
+a, button, [role="button"], input, select, textarea,
+.catalog-filter-btn, .smr-tab, .nav-link, .logo,
+.mobile-toggle, .theme-toggle, .scroll-top-btn {
+    touch-action: manipulation;
+}
+</style>
 </head>
 <body class="smr-page">
 

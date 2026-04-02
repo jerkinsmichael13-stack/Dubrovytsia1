@@ -123,8 +123,6 @@
 @keyframes arch-up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 @keyframes arch-fadein{from{opacity:0}to{opacity:1}}
 [data-theme="dark"] .arch-hero-bg { filter:brightness(0.38) contrast(1.12) saturate(0.65); }
-
-[data-theme="dark"] { --arch-ai-note-color: rgba(220,200,160,.55); }
 </style>
     <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -474,6 +472,17 @@
 
     .KLB-X:hover { background: rgba(255,255,255,.3); }
     </style>
+
+<style>
+/* ── Prevent browser double-tap zoom sitewide ── */
+html { touch-action: manipulation; }
+body { touch-action: manipulation; }
+a, button, [role="button"], input, select, textarea,
+.catalog-filter-btn, .smr-tab, .nav-link, .logo,
+.mobile-toggle, .theme-toggle, .scroll-top-btn {
+    touch-action: manipulation;
+}
+</style>
 </head>
 <body>
     <header class="header">
@@ -666,7 +675,7 @@
         <!-- Gallery -->
         <div class="KGAL">
             <div class="KGAL-HDR"><div class="KGAL-TITLE">Інтер'єр костелу</div></div>
-            <div style="display:inline-flex;align-items:center;gap:.5rem;padding:.4rem .85rem;background:rgba(201,162,39,.07);border:1px solid rgba(201,162,39,.2);border-radius:100px;margin-bottom:1.5rem;font-family:'DM Sans',sans-serif;font-size:.65rem;color:var(--arch-ai-note-color,rgba(28,25,23,.55));letter-spacing:.04em;">
+            <div style="display:inline-flex;align-items:center;gap:.5rem;padding:.4rem .85rem;background:rgba(201,162,39,.07);border:1px solid rgba(201,162,39,.2);border-radius:100px;margin-bottom:1.5rem;font-family:'DM Sans',sans-serif;font-size:.65rem;color:rgba(28,25,23,.55);letter-spacing:.04em;">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:12px;height:12px;flex-shrink:0;color:#c9a227;"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
               Деякі фотографії колоризовані за допомогою ШІ
             </div>

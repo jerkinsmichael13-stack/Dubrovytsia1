@@ -135,8 +135,6 @@
     /* Prevent overflow on narrow screens */
     .COBS, .WOBS, .POBS { gap: 0; }
 }
-
-[data-theme="dark"] { --idx-ai-note-color: rgba(220,200,160,.55); }
 </style>
 <style>
 /* ── ULB ── */
@@ -161,6 +159,17 @@
 #ULB-PREV{left:.8rem;}#ULB-NEXT{right:.8rem;}
 #ULB-HINT{position:absolute;top:.9rem;left:50%;transform:translateX(-50%);background:rgba(8,6,12,.8);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.1);border-radius:100px;padding:.35rem 1rem;font-family:'DM Sans',sans-serif;font-size:.58rem;letter-spacing:.06em;color:rgba(255,255,255,.45);pointer-events:none;white-space:nowrap;z-index:2;}
 @media(max-width:480px){.ulb-nav{width:36px;height:36px;font-size:1rem;}#ULB-PREV{left:.4rem;}#ULB-NEXT{right:.4rem;}#ULB-HINT{display:none;}}
+</style>
+
+<style>
+/* ── Prevent browser double-tap zoom sitewide ── */
+html { touch-action: manipulation; }
+body { touch-action: manipulation; }
+a, button, [role="button"], input, select, textarea,
+.catalog-filter-btn, .smr-tab, .nav-link, .logo,
+.mobile-toggle, .theme-toggle, .scroll-top-btn {
+    touch-action: manipulation;
+}
 </style>
 </head>
 <body>
@@ -2892,7 +2901,7 @@
       <!-- Photo Gallery -->
       <div class="PGL">
         <p class="PGLH">Архівні фотографії маєтку</p>
-        <div style="display:inline-flex;align-items:center;gap:.5rem;padding:.4rem .85rem;background:rgba(201,162,39,.08);border:1px solid rgba(201,162,39,.22);border-radius:100px;margin-bottom:1rem;font-family:'DM Sans',sans-serif;font-size:.65rem;color:var(--idx-ai-note-color,rgba(28,25,23,.55));letter-spacing:.04em;">
+        <div style="display:inline-flex;align-items:center;gap:.5rem;padding:.4rem .85rem;background:rgba(201,162,39,.08);border:1px solid rgba(201,162,39,.22);border-radius:100px;margin-bottom:1rem;font-family:'DM Sans',sans-serif;font-size:.65rem;color:rgba(28,25,23,.55);letter-spacing:.04em;">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:13px;height:13px;flex-shrink:0;color:#c9a227;"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
           Деякі фотографії колоризовані за допомогою ШІ
         </div>

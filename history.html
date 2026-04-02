@@ -645,6 +645,17 @@ body.story-active .hist-epoch-nav {
 }
 .epoch-interstitial.ei-visible .ei-year-bg { opacity: 1; }
 </style>
+
+<style>
+/* ── Prevent browser double-tap zoom sitewide ── */
+html { touch-action: manipulation; }
+body { touch-action: manipulation; }
+a, button, [role="button"], input, select, textarea,
+.catalog-filter-btn, .smr-tab, .nav-link, .logo,
+.mobile-toggle, .theme-toggle, .scroll-top-btn {
+    touch-action: manipulation;
+}
+</style>
 </head>
 <body>
     <header class="header">
