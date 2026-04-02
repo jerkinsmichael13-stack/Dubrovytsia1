@@ -771,278 +771,484 @@
     <!-- ═══ AERIAL MAPS SECTION ═══ -->
     <section id="AER">
     <style>
-    #AER{padding:5rem 0;background:#faf7f2;border-top:1px solid #e8e0d4;}
-    [data-theme="dark"] #AER{background:#0e0c0a;border-color:#1e1b18;}
+    /* ═══════════════════════════════════════════════════════════
+       AERIAL — CINEMATIC ARCHIVE REDESIGN
+    ═══════════════════════════════════════════════════════════ */
+    #AER{padding:6rem 0 8rem;background:#07060a;border-top:1px solid #1c1a18;position:relative;overflow:hidden;}
+    :root:not([data-theme="dark"]) #AER{background:#07060a;border-color:#1c1a18;}
     #AER *{box-sizing:border-box;}
-    .AW{max-width:1200px;margin:0 auto;padding:0 2rem;}
-    .AH{text-align:center;margin-bottom:3rem;}
-    .AT{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(1.9rem,3.2vw,2.6rem);font-weight:500;color:#1c1917;margin:0 0 .5rem;}
-    [data-theme="dark"] .AT{color:#f0e6c8;}
-    .AL{display:block;width:44px;height:2px;background:linear-gradient(90deg,#c9a227,#e0bd5a);margin:.6rem auto 0;border-radius:2px;}
-    .AS{font-family:'DM Sans',sans-serif;font-size:.78rem;letter-spacing:.13em;text-transform:uppercase;color:#a09080;margin:.6rem 0 0;}
-    .ABLK{margin-bottom:4rem;}
-    .ABT{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;color:#1c1917;margin:0 0 1.2rem;display:flex;align-items:center;gap:.8rem;}
-    [data-theme="dark"] .ABT{color:#e8d8b8;}
-    .ABT::before{content:'';display:inline-block;width:4px;height:22px;background:#c9a227;border-radius:2px;flex-shrink:0;}
-    .AG{display:grid;grid-template-columns:1fr 248px;gap:1.5rem;align-items:start;}
-    @media(max-width:820px){.AG{grid-template-columns:1fr;}}
-    /* Map container: auto height based on image, clips on zoom */
-    .MBOX{position:relative;border-radius:12px;overflow:hidden;
-          box-shadow:0 4px 12px rgba(0,0,0,.08),0 16px 40px rgba(0,0,0,.13);
-          border:1px solid rgba(201,162,39,.12);background:#0a0a0a;
-          cursor:grab;touch-action:none;line-height:0;max-height:80vh;}
+
+    /* ── Ambient glows ── */
+    #AER::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
+      width:130%;height:500px;pointer-events:none;z-index:0;
+      background:radial-gradient(ellipse 70% 100% at 50% 0%,rgba(201,162,39,.07) 0%,transparent 70%);}
+
+    /* ── Grain texture ── */
+    .AER-GRAIN{position:absolute;inset:0;pointer-events:none;z-index:1;opacity:.55;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      background-size:180px 180px;mix-blend-mode:overlay;}
+
+    /* ── Layout ── */
+    .AW{max-width:1280px;margin:0 auto;padding:0 2.5rem;position:relative;z-index:2;}
+
+    /* ══ SECTION HEADER ══ */
+    .AH{text-align:center;margin-bottom:5.5rem;position:relative;}
+    .AH-EYE{display:inline-flex;align-items:center;gap:1rem;
+      font-family:'DM Sans',sans-serif;font-size:.5rem;letter-spacing:.38em;text-transform:uppercase;
+      color:rgba(201,162,39,.5);margin-bottom:1.6rem;}
+    .AH-EYE::before,.AH-EYE::after{content:'';width:50px;height:1px;
+      background:linear-gradient(90deg,transparent,rgba(201,162,39,.35));}
+    .AH-EYE::after{transform:scaleX(-1);}
+
+    .AT{font-family:'Cormorant Garamond',Georgia,serif;
+      font-size:clamp(2.6rem,5vw,4.2rem);font-weight:300;
+      color:#f0e6c8;margin:0 0 1.4rem;line-height:1.05;letter-spacing:-.015em;}
+    .AT em{font-style:italic;color:#c9a227;}
+
+    .AH-TL{display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:1.4rem;}
+    .AH-TL-NODE{display:flex;flex-direction:column;align-items:center;gap:.4rem;padding:0 1.6rem;}
+    .AH-TL-Y{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:600;
+      color:#c9a227;line-height:1;}
+    .AH-TL-L{font-family:'DM Sans',sans-serif;font-size:.48rem;letter-spacing:.18em;text-transform:uppercase;
+      color:rgba(201,162,39,.4);}
+    .AH-TL-LINE{flex:1;height:1px;background:linear-gradient(90deg,rgba(201,162,39,.2),rgba(201,162,39,.4),rgba(201,162,39,.2));
+      max-width:60px;}
+    .AH-TL-DOT{width:6px;height:6px;border-radius:50%;background:#c9a227;opacity:.6;
+      box-shadow:0 0 8px rgba(201,162,39,.5);}
+
+    .AS{font-family:'DM Sans',sans-serif;font-size:.75rem;letter-spacing:.1em;
+      color:rgba(240,230,200,.28);text-transform:uppercase;}
+
+    /* ══ BLOCK ══ */
+    .ABLK{margin-bottom:5rem;}
+
+    .ABLK-HEAD{display:flex;align-items:flex-end;gap:1.8rem;
+      margin-bottom:1.6rem;padding-bottom:1.4rem;
+      border-bottom:1px solid rgba(255,255,255,.06);position:relative;overflow:hidden;}
+    .ABLK-HEAD::before{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
+      background:linear-gradient(90deg,rgba(201,162,39,.4),transparent);}
+
+    .ABLK-YEAR{font-family:'Cormorant Garamond',serif;
+      font-size:clamp(4.5rem,9vw,7.5rem);font-weight:700;line-height:1;
+      color:transparent;-webkit-text-stroke:1px rgba(201,162,39,.2);
+      letter-spacing:-.04em;flex-shrink:0;user-select:none;
+      text-shadow:none;position:relative;}
+    .ABLK-YEAR::after{content:attr(data-yr);position:absolute;inset:0;
+      font-size:inherit;font-weight:inherit;line-height:inherit;letter-spacing:inherit;
+      color:transparent;-webkit-text-stroke:0;
+      background:linear-gradient(135deg,rgba(201,162,39,.08),transparent 60%);
+      -webkit-background-clip:text;background-clip:text;
+      pointer-events:none;}
+
+    .ABLK-INFO{flex:1;min-width:0;padding-bottom:.3rem;}
+    .ABT{font-family:'Cormorant Garamond',serif;
+      font-size:clamp(1.2rem,2.5vw,1.65rem);font-weight:500;
+      color:#f0e6c8;margin:0 0 .6rem;line-height:1.2;}
+    .ABLK-TAGS{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;}
+    .ABLK-TAG{font-family:'DM Sans',sans-serif;font-size:.5rem;
+      letter-spacing:.18em;text-transform:uppercase;
+      color:rgba(201,162,39,.5);
+      background:rgba(201,162,39,.06);
+      border:1px solid rgba(201,162,39,.14);
+      border-radius:3px;padding:.2rem .65rem;}
+    .ABLK-TAG.sat{color:rgba(100,180,255,.6);background:rgba(100,180,255,.06);border-color:rgba(100,180,255,.15);}
+
+    /* ══ MAP LAYOUT ══ */
+    .AG{display:grid;grid-template-columns:1fr 268px;gap:1.6rem;align-items:start;}
+    @media(max-width:880px){.AG{grid-template-columns:1fr;}}
+
+    /* ── Map Wrapper (corner brackets) ── */
+    .MWRAP{position:relative;}
+    .MWRAP::before,.MWRAP::after,.MC::before,.MC::after{
+      content:'';position:absolute;width:20px;height:20px;z-index:25;pointer-events:none;
+      transition:opacity .3s;}
+    .MWRAP::before{top:-2px;left:-2px;border-top:1.5px solid rgba(201,162,39,.55);border-left:1.5px solid rgba(201,162,39,.55);}
+    .MWRAP::after{top:-2px;right:-2px;border-top:1.5px solid rgba(201,162,39,.55);border-right:1.5px solid rgba(201,162,39,.55);}
+    .MC{position:absolute;inset:0;pointer-events:none;}
+    .MC::before{bottom:-2px;left:-2px;border-bottom:1.5px solid rgba(201,162,39,.55);border-left:1.5px solid rgba(201,162,39,.55);}
+    .MC::after{bottom:-2px;right:-2px;border-bottom:1.5px solid rgba(201,162,39,.55);border-right:1.5px solid rgba(201,162,39,.55);}
+    .MWRAP:hover::before,.MWRAP:hover::after,.MWRAP:hover .MC::before,.MWRAP:hover .MC::after{
+      opacity:1;border-color:rgba(201,162,39,.9);}
+
+    /* ── Map container ── */
+    .MBOX{position:relative;overflow:hidden;border-radius:2px;
+      box-shadow:0 0 0 1px rgba(201,162,39,.1),0 8px 30px rgba(0,0,0,.6),
+                 0 30px 70px rgba(0,0,0,.5),0 0 100px rgba(201,162,39,.03);
+      background:#06050a;cursor:grab;touch-action:none;line-height:0;max-height:80vh;
+      transition:box-shadow .35s;}
+    .MBOX:hover{box-shadow:0 0 0 1px rgba(201,162,39,.2),0 8px 30px rgba(0,0,0,.7),
+                            0 30px 70px rgba(0,0,0,.6),0 0 120px rgba(201,162,39,.07);}
     .MBOX:active{cursor:grabbing;}
-    /* image: natural size with contain, expands box height */
+
+    /* Vignette */
+    .MBOX::after{content:'';position:absolute;inset:0;
+      background:radial-gradient(ellipse 85% 80% at 50% 50%,transparent 50%,rgba(0,0,0,.6) 100%);
+      pointer-events:none;z-index:6;}
+
     .MIMG{display:block;width:100%;height:auto;
-          filter:sepia(.07) contrast(1.05);
-          transform-origin:0 0;
-          pointer-events:none;user-select:none;}
-    /* pin layer: sits on top of image, absolute */
-    .MLAY{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:visible;}
-    /* pins */
-    .PIN{position:absolute;pointer-events:all;cursor:pointer;
-         transform:translate(-50%,-50%);}
-    .PRING{position:absolute;top:50%;left:50%;
-           width:22px;height:22px;border-radius:50%;
-           background:rgba(201,162,39,.22);
-           transform:translate(-50%,-50%);
-           animation:PR 2.8s ease-out infinite;}
-    @keyframes PR{0%{transform:translate(-50%,-50%) scale(1);opacity:.8}
-                  65%{transform:translate(-50%,-50%) scale(2.4);opacity:0}
-                  100%{transform:translate(-50%,-50%) scale(1);opacity:0}}
-    .PDOT{position:relative;z-index:2;width:20px;height:20px;border-radius:50%;
-          background:#c9a227;border:2px solid rgba(255,255,255,.9);
-          box-shadow:0 1px 6px rgba(0,0,0,.55);
-          display:flex;align-items:center;justify-content:center;
-          font-family:'DM Sans',sans-serif;font-size:8px;font-weight:800;color:#1a1000;
-          transition:transform .14s,background .14s;}
-    .PIN:hover .PDOT,.PIN.act .PDOT{background:#f0c840;transform:scale(1.2);}
-    /* tooltip — absolute inside MBOX, рухається разом зі скролом */
+      filter:sepia(.1) contrast(1.06) brightness(.95);
+      transform-origin:0 0;pointer-events:none;user-select:none;}
+
+    /* Scan-line aesthetic overlay */
+    .MSCAN{position:absolute;inset:0;pointer-events:none;z-index:7;
+      background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.03) 3px,rgba(0,0,0,.03) 4px);
+      opacity:.4;}
+
+    .MLAY{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:10;}
+
+    /* ══ PINS ══ */
+    .PIN{position:absolute;pointer-events:all;cursor:pointer;transform:translate(-50%,-50%);z-index:15;}
+    .PRING{position:absolute;top:50%;left:50%;width:30px;height:30px;border-radius:50%;
+      background:rgba(201,162,39,.15);border:1px solid rgba(201,162,39,.45);
+      transform:translate(-50%,-50%);animation:PR 3s ease-out infinite;}
+    @keyframes PR{
+      0%  {transform:translate(-50%,-50%) scale(1);  opacity:.9;}
+      65% {transform:translate(-50%,-50%) scale(2.8);opacity:0;}
+      100%{transform:translate(-50%,-50%) scale(1);  opacity:0;}}
+    .PDOT{position:relative;z-index:2;width:24px;height:24px;border-radius:50%;
+      background:linear-gradient(135deg,#ddb030,#c49020);
+      border:2px solid rgba(255,255,255,.9);
+      box-shadow:0 2px 10px rgba(0,0,0,.7),0 0 18px rgba(201,162,39,.4);
+      display:flex;align-items:center;justify-content:center;
+      font-family:'DM Sans',sans-serif;font-size:8.5px;font-weight:800;color:#1a1000;
+      transition:transform .15s,box-shadow .15s;}
+    .PIN:hover .PDOT,.PIN.act .PDOT{
+      background:linear-gradient(135deg,#f5d050,#e0b830);transform:scale(1.28);
+      box-shadow:0 2px 10px rgba(0,0,0,.7),0 0 24px rgba(240,200,60,.65);}
+
+    /* ══ TOOLTIP ══ */
     .MTTIP{position:absolute;z-index:50;
-           background:rgba(8,6,4,.94);backdrop-filter:blur(14px);
-           border:1px solid rgba(201,162,39,.36);border-radius:10px;
-           padding:11px 14px 12px;width:220px;max-width:calc(100% - 24px);
-           pointer-events:auto;
-           opacity:0;transform:translateY(4px);
-           transition:opacity .18s,transform .18s;
-           visibility:hidden;
-           box-shadow:0 8px 30px rgba(0,0,0,.55);}
-    .MTTIP.show{opacity:1;transform:translateY(0);visibility:visible;}
-    .TTX{position:absolute;top:7px;right:8px;width:18px;height:18px;
-         border-radius:50%;background:rgba(255,255,255,.09);border:none;
-         color:#7a6a5a;cursor:pointer;font-size:.7rem;
-         display:flex;align-items:center;justify-content:center;transition:background .14s;}
-    .TTX:hover{background:rgba(255,255,255,.22);color:#fff;}
-    .TTR{display:flex;align-items:center;gap:7px;margin-bottom:4px;}
-    .TTN{flex-shrink:0;width:20px;height:20px;border-radius:50%;background:#c9a227;
-         color:#1a1000;font-size:.6rem;font-weight:800;font-family:'DM Sans',sans-serif;
-         display:flex;align-items:center;justify-content:center;}
-    .TTT{font-family:'Cormorant Garamond',serif;font-size:.92rem;font-weight:600;color:#f0e6c8;line-height:1.2;}
-    .TTD{font-family:'DM Sans',sans-serif;font-size:.68rem;color:#9e9080;line-height:1.5;display:block;margin-top:2px;}
-    /* zoom btns */
-    .ZW{position:absolute;bottom:12px;left:12px;display:flex;flex-direction:column;gap:4px;z-index:10;}
-    .ZB{width:32px;height:32px;background:rgba(8,6,4,.82);backdrop-filter:blur(8px);
-        border:1px solid rgba(201,162,39,.28);border-radius:7px;color:#c9a227;
-        font-size:1.1rem;font-weight:700;cursor:pointer;
-        display:flex;align-items:center;justify-content:center;
-        font-family:monospace;border:1px solid rgba(201,162,39,.28);
-        transition:background .14s;}
-    .ZB:hover{background:rgba(201,162,39,.22);color:#f0c840;}
-    /* fullscreen btn */
-    .FSB{position:absolute;bottom:12px;right:12px;z-index:10;
-         width:32px;height:32px;background:rgba(8,6,4,.82);backdrop-filter:blur(8px);
-         border:1px solid rgba(201,162,39,.28);border-radius:7px;color:#c9a227;
-         font-size:.95rem;cursor:pointer;display:flex;align-items:center;justify-content:center;
-         transition:background .14s;}
-    .FSB:hover{background:rgba(201,162,39,.22);}
-    /* badge */
-    .BADGE{position:absolute;top:12px;right:12px;z-index:5;
-           background:rgba(8,6,4,.82);backdrop-filter:blur(10px);
-           border:1px solid rgba(201,162,39,.28);border-radius:8px;
-           padding:5px 11px;pointer-events:none;line-height:1.35;}
-    .BADGE .bl{display:block;font-family:'DM Sans',sans-serif;font-size:.5rem;letter-spacing:.16em;text-transform:uppercase;color:#6b5a3e;}
-    .BADGE .bd{display:block;font-family:'DM Sans',sans-serif;font-size:.8rem;color:#c9a227;font-weight:600;}
-    /* legend */
-    .LEG{background:#fff;border:1px solid #e0d8cd;border-radius:12px;
-         padding:1.2rem 1rem;position:sticky;top:90px;
-         box-shadow:0 2px 4px rgba(0,0,0,.04),0 6px 18px rgba(0,0,0,.06);}
-    [data-theme="dark"] .LEG{background:#161310;border-color:#2a2520;}
+      background:rgba(5,4,2,.97);backdrop-filter:blur(18px);
+      border:1px solid rgba(201,162,39,.4);border-radius:10px;
+      padding:13px 16px 14px;width:236px;max-width:calc(100% - 20px);
+      pointer-events:auto;opacity:0;
+      transform:translateY(6px) scale(.97);
+      transition:opacity .2s,transform .2s;visibility:hidden;
+      box-shadow:0 14px 50px rgba(0,0,0,.75),0 0 0 1px rgba(201,162,39,.07);}
+    .MTTIP.show{opacity:1;transform:translateY(0) scale(1);visibility:visible;}
+    .TTX{position:absolute;top:9px;right:10px;width:18px;height:18px;border-radius:50%;
+      background:rgba(255,255,255,.07);border:none;color:#6a5a4a;cursor:pointer;font-size:.65rem;
+      display:flex;align-items:center;justify-content:center;transition:background .14s;}
+    .TTX:hover{background:rgba(255,255,255,.2);color:#fff;}
+    .TTR{display:flex;align-items:center;gap:8px;margin-bottom:5px;}
+    .TTN{flex-shrink:0;width:22px;height:22px;border-radius:50%;
+      background:linear-gradient(135deg,#ddb030,#c49020);
+      color:#1a1000;font-size:.62rem;font-weight:800;font-family:'DM Sans',sans-serif;
+      display:flex;align-items:center;justify-content:center;}
+    .TTT{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:#f0e6c8;line-height:1.2;}
+    .TTD{font-family:'DM Sans',sans-serif;font-size:.68rem;color:#8a7a68;line-height:1.6;display:block;margin-top:3px;}
+
+    /* ══ ZOOM BTNS ══ */
+    .ZW{position:absolute;bottom:14px;left:14px;display:flex;flex-direction:column;gap:4px;z-index:20;}
+    .ZB{width:34px;height:34px;background:rgba(5,4,2,.9);backdrop-filter:blur(10px);
+      border:1px solid rgba(201,162,39,.25);border-radius:6px;color:rgba(201,162,39,.85);
+      font-size:1.05rem;font-weight:700;cursor:pointer;
+      display:flex;align-items:center;justify-content:center;
+      font-family:monospace;transition:background .14s,border-color .14s;}
+    .ZB:hover{background:rgba(201,162,39,.18);border-color:rgba(201,162,39,.5);color:#f0c840;}
+
+    /* ══ FULLSCREEN BTN ══ */
+    .FSB{position:absolute;bottom:14px;right:14px;z-index:20;
+      width:34px;height:34px;background:rgba(5,4,2,.9);backdrop-filter:blur(10px);
+      border:1px solid rgba(201,162,39,.25);border-radius:6px;
+      color:rgba(201,162,39,.85);font-size:.95rem;cursor:pointer;
+      display:flex;align-items:center;justify-content:center;
+      transition:background .14s,transform .15s,border-color .14s;}
+    .FSB:hover{background:rgba(201,162,39,.18);border-color:rgba(201,162,39,.5);color:#f0c840;transform:scale(1.1);}
+
+    /* ══ BADGE ══ */
+    .BADGE{position:absolute;top:14px;right:14px;z-index:20;
+      background:rgba(5,4,2,.88);backdrop-filter:blur(14px);
+      border:1px solid rgba(201,162,39,.22);border-radius:5px;
+      padding:5px 12px;pointer-events:none;line-height:1.45;}
+    .BADGE .bl{display:block;font-family:'DM Sans',sans-serif;font-size:.46rem;
+      letter-spacing:.22em;text-transform:uppercase;color:rgba(201,162,39,.45);}
+    .BADGE .bd{display:block;font-family:'DM Sans',sans-serif;font-size:.8rem;
+      color:#c9a227;font-weight:700;letter-spacing:.04em;}
+
+    /* ══ LEGEND ══ */
+    .LEG{background:rgba(10,8,6,.75);border:1px solid rgba(255,255,255,.07);
+      border-radius:10px;padding:1.4rem 1.2rem;position:sticky;top:90px;
+      backdrop-filter:blur(16px);
+      box-shadow:0 4px 24px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.04);}
     .LEGH{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;
-          color:#1c1917;margin:0 0 .75rem;padding-bottom:.6rem;border-bottom:1px solid #e0d8cd;}
-    [data-theme="dark"] .LEGH{color:#e0d4bc;border-color:#2a2520;}
+      color:rgba(220,200,160,.8);margin:0 0 .85rem;padding-bottom:.7rem;
+      border-bottom:1px solid rgba(255,255,255,.08);letter-spacing:.02em;}
     .LEGL{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:2px;}
-    .LEGI{display:flex;align-items:center;gap:8px;padding:5px 7px;border-radius:6px;
-          cursor:pointer;border:1px solid transparent;transition:background .13s;
-          font-family:'DM Sans',sans-serif;font-size:.72rem;color:#44403c;}
-    [data-theme="dark"] .LEGI{color:#a09080;}
-    .LEGI:hover{background:#f4efe7;}
-    .LEGI.act{background:#fdf5e0;border-color:rgba(201,162,39,.45);}
-    .LEGN{flex-shrink:0;width:20px;height:20px;border-radius:50%;background:#c9a227;
-          color:#1a1000;font-size:.58rem;font-weight:800;font-family:'DM Sans',sans-serif;
-          display:flex;align-items:center;justify-content:center;transition:transform .13s;}
+    .LEGI{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:6px;
+      cursor:pointer;border:1px solid transparent;transition:background .13s,color .13s;
+      font-family:'DM Sans',sans-serif;font-size:.71rem;color:rgba(200,185,150,.42);line-height:1.4;}
+    .LEGI:hover{background:rgba(255,255,255,.05);color:rgba(200,185,150,.8);}
+    .LEGI.act{background:rgba(201,162,39,.1);border-color:rgba(201,162,39,.28);color:rgba(240,220,155,.9);}
+    .LEGN{flex-shrink:0;width:22px;height:22px;border-radius:50%;
+      background:linear-gradient(135deg,#ddb030,#c49020);
+      color:#1a1000;font-size:.58rem;font-weight:800;font-family:'DM Sans',sans-serif;
+      display:flex;align-items:center;justify-content:center;
+      transition:transform .13s;box-shadow:0 2px 6px rgba(0,0,0,.4);}
     .LEGI:hover .LEGN,.LEGI.act .LEGN{transform:scale(1.12);}
-    .LEGHINT{margin-top:.75rem;font-size:.63rem;color:#b0a898;font-family:'DM Sans',sans-serif;
-             line-height:1.5;font-style:italic;border-top:1px solid #ede7db;padding-top:.65rem;}
-    [data-theme="dark"] .LEGHINT{color:#4e4540;border-color:#2a2520;}
-    .MSEP{border:none;border-top:1px solid #e8e0d4;margin:3rem 0;}
-    [data-theme="dark"] .MSEP{border-color:#1e1b18;}
-    /* ── FULLSCREEN OVERLAY — map + pins ── */
-    #MFSO{position:fixed;inset:0;z-index:99999;background:rgba(4,3,2,.97);
-          display:flex;flex-direction:column;
-          opacity:0;pointer-events:none;transition:opacity .22s;}
+    .LEGHINT{margin-top:.85rem;font-size:.61rem;color:rgba(160,145,120,.3);
+      font-family:'DM Sans',sans-serif;line-height:1.5;font-style:italic;
+      border-top:1px solid rgba(255,255,255,.05);padding-top:.7rem;}
+
+    /* ══ SEPARATOR ══ */
+    .MSEP{border:none;margin:3.5rem 0 4.5rem;position:relative;height:1px;
+      background:linear-gradient(90deg,transparent,rgba(201,162,39,.15),transparent);}
+    .MSEP-INNER{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+      display:flex;align-items:center;gap:.8rem;}
+    .MSEP-TXT{font-family:'DM Sans',sans-serif;font-size:.46rem;letter-spacing:.32em;
+      text-transform:uppercase;color:rgba(201,162,39,.35);
+      background:#07060a;padding:0 .9rem;white-space:nowrap;}
+    .MSEP-DIAMOND{width:5px;height:5px;background:rgba(201,162,39,.3);
+      transform:rotate(45deg);flex-shrink:0;}
+
+    /* ══ FULLSCREEN OVERLAY ══ */
+    #MFSO{position:fixed;inset:0;z-index:99999;background:rgba(3,2,1,.98);
+      display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity .25s;}
     #MFSO.open{opacity:1;pointer-events:all;}
+
     #MFS-BAR{display:flex;align-items:center;gap:.5rem;
-             padding:.55rem 1rem .55rem 1.2rem;flex-shrink:0;
-             background:rgba(8,6,4,.92);border-bottom:1px solid rgba(255,255,255,.07);
-             backdrop-filter:blur(10px);}
-    #MFS-LABEL{font-family:'DM Sans',sans-serif;font-size:.55rem;letter-spacing:.22em;
-               text-transform:uppercase;color:#c9a227;flex:1;}
-    .mfs-btn{width:34px;height:34px;flex-shrink:0;border-radius:8px;
-             border:1px solid rgba(255,255,255,.13);background:rgba(255,255,255,.07);
-             color:rgba(255,255,255,.8);cursor:pointer;display:flex;align-items:center;
-             justify-content:center;transition:background .15s;padding:0;font-size:1rem;}
-    .mfs-btn:hover{background:rgba(255,255,255,.2);}
+      padding:.65rem 1.4rem .65rem 1.6rem;flex-shrink:0;
+      background:rgba(5,4,2,.96);
+      border-bottom:1px solid rgba(201,162,39,.1);
+      backdrop-filter:blur(12px);}
+    #MFS-LABEL{font-family:'DM Sans',sans-serif;font-size:.52rem;
+      letter-spacing:.28em;text-transform:uppercase;color:rgba(201,162,39,.7);flex:1;}
+    .mfs-btn{width:36px;height:36px;flex-shrink:0;border-radius:8px;
+      border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.06);
+      color:rgba(255,255,255,.75);cursor:pointer;
+      display:flex;align-items:center;justify-content:center;
+      transition:background .15s;padding:0;font-size:1rem;}
+    .mfs-btn:hover{background:rgba(255,255,255,.18);color:#fff;}
     #MFS-ZVAL{font-family:'DM Sans',sans-serif;font-size:.72rem;
-              color:rgba(255,255,255,.5);min-width:3em;text-align:center;}
-    #MFS-CLOSE{width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.18);
-               background:rgba(255,255,255,.08);color:rgba(255,255,255,.85);cursor:pointer;
-               display:flex;align-items:center;justify-content:center;
-               font-size:1rem;flex-shrink:0;transition:background .15s;padding:0;margin-left:.4rem;}
-    #MFS-CLOSE:hover{background:rgba(255,255,255,.22);}
+      color:rgba(255,255,255,.42);min-width:3em;text-align:center;}
+    #MFS-CLOSE{width:36px;height:36px;border-radius:50%;
+      border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.07);
+      color:rgba(255,255,255,.8);cursor:pointer;
+      display:flex;align-items:center;justify-content:center;
+      font-size:1rem;flex-shrink:0;transition:background .15s;padding:0;margin-left:.5rem;}
+    #MFS-CLOSE:hover{background:rgba(255,255,255,.2);}
+
     #MFS-BODY{flex:1;display:flex;overflow:hidden;min-height:0;}
     #MFS-BOX{flex:1;position:relative;overflow:hidden;cursor:grab;touch-action:none;
-             background:#000;min-width:0;}
+      background:#000;min-width:0;}
     #MFS-BOX:active{cursor:grabbing;}
     #MFS-IMG{display:block;width:100%;height:100%;object-fit:contain;
-             transform-origin:0 0;pointer-events:none;user-select:none;will-change:transform;}
+      transform-origin:0 0;pointer-events:none;user-select:none;will-change:transform;}
     #MFS-LAY{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:visible;}
     #MFS-TIP{position:absolute;z-index:50;
-             background:rgba(8,6,4,.94);backdrop-filter:blur(14px);
-             border:1px solid rgba(201,162,39,.36);border-radius:10px;
-             padding:11px 14px 12px;width:220px;max-width:calc(100% - 24px);
-             pointer-events:auto;opacity:0;transform:translateY(4px);
-             transition:opacity .18s,transform .18s;visibility:hidden;
-             box-shadow:0 8px 30px rgba(0,0,0,.55);}
-    #MFS-TIP.show{opacity:1;transform:translateY(0);visibility:visible;}
-    #MFS-SIDE{width:240px;flex-shrink:0;overflow-y:auto;
-              background:rgba(10,8,6,.9);border-left:1px solid rgba(255,255,255,.07);
-              padding:1rem .8rem;}
+      background:rgba(5,4,2,.97);backdrop-filter:blur(18px);
+      border:1px solid rgba(201,162,39,.4);border-radius:10px;
+      padding:13px 16px 14px;width:236px;max-width:calc(100% - 20px);
+      pointer-events:auto;opacity:0;transform:translateY(6px) scale(.97);
+      transition:opacity .2s,transform .2s;visibility:hidden;
+      box-shadow:0 14px 50px rgba(0,0,0,.8);}
+    #MFS-TIP.show{opacity:1;transform:translateY(0) scale(1);visibility:visible;}
+
+    #MFS-SIDE{width:268px;flex-shrink:0;overflow-y:auto;
+      background:rgba(6,5,3,.96);border-left:1px solid rgba(255,255,255,.06);
+      padding:1.3rem 1.1rem;}
     @media(max-width:640px){#MFS-SIDE{display:none;}}
     #MFS-LEGH{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;
-              color:#e0d4bc;margin:0 0 .75rem;padding-bottom:.6rem;
-              border-bottom:1px solid rgba(255,255,255,.1);}
+      color:rgba(220,200,160,.8);margin:0 0 .8rem;padding-bottom:.65rem;
+      border-bottom:1px solid rgba(255,255,255,.08);}
     #MFS-LEG{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:2px;}
-    .MFS-LI{display:flex;align-items:flex-start;gap:8px;padding:6px 7px;border-radius:6px;
-            cursor:pointer;border:1px solid transparent;transition:background .13s;
-            font-family:'DM Sans',sans-serif;font-size:.72rem;color:#a09080;line-height:1.45;}
-    .MFS-LI:hover{background:rgba(255,255,255,.07);}
-    .MFS-LI.act{background:rgba(201,162,39,.12);border-color:rgba(201,162,39,.35);}
-    .MFS-LN{flex-shrink:0;width:20px;height:20px;border-radius:50%;background:#c9a227;
-            color:#1a1000;font-size:.58rem;font-weight:800;font-family:'DM Sans',sans-serif;
-            display:flex;align-items:center;justify-content:center;margin-top:1px;}
+    .MFS-LI{display:flex;align-items:flex-start;gap:8px;padding:6px 8px;border-radius:6px;
+      cursor:pointer;border:1px solid transparent;transition:background .13s;
+      font-family:'DM Sans',sans-serif;font-size:.71rem;color:rgba(200,185,150,.45);line-height:1.45;}
+    .MFS-LI:hover{background:rgba(255,255,255,.06);color:rgba(200,185,150,.85);}
+    .MFS-LI.act{background:rgba(201,162,39,.1);border-color:rgba(201,162,39,.32);color:rgba(240,220,155,.9);}
+    .MFS-LN{flex-shrink:0;width:22px;height:22px;border-radius:50%;
+      background:linear-gradient(135deg,#ddb030,#c49020);
+      color:#1a1000;font-size:.58rem;font-weight:800;font-family:'DM Sans',sans-serif;
+      display:flex;align-items:center;justify-content:center;margin-top:1px;}
+
+    .MWRAP.sat::before,.MWRAP.sat::after,.MWRAP.sat .MC::before,.MWRAP.sat .MC::after{
+      border-color:rgba(100,180,255,.5);}
+    .MWRAP.sat:hover::before,.MWRAP.sat:hover::after,.MWRAP.sat:hover .MC::before,.MWRAP.sat:hover .MC::after{
+      border-color:rgba(100,180,255,.9);}
+    /* ── Mobile ── */
+    @media(max-width:640px){
+      .AW{padding:0 1.2rem;}
+      .AT{font-size:2.2rem;}
+      .ABLK-YEAR{font-size:3.8rem;}
+      .LEG{display:none;}
+      .MBOX{max-height:65vw;}
+      .ABLK-HEAD{gap:1rem;}
+    }
     </style>
 
+    <!-- Grain texture -->
+    <div class="AER-GRAIN"></div>
+
     <div class="AW">
+
+      <!-- ── SECTION HEADER ── -->
       <div class="AH">
-        <h2 class="AT">Аерофотознімки Дубровиці<span class="AL"></span></h2>
-        <p class="AS">Унікальні знімки міста: аерофото ВМВ та супутниковий знімок 1971 р.</p>
+        <div class="AH-EYE">Цифровий архів · Повітряна розвідка · Дубровиця</div>
+        <h2 class="AT">Аерофотознімки<br><em>Дубровиці</em></h2>
+        <div class="AH-TL">
+          <div class="AH-TL-NODE">
+            <span class="AH-TL-Y">1943</span>
+            <span class="AH-TL-L">Люфтваффе</span>
+          </div>
+          <div class="AH-TL-LINE"></div>
+          <div class="AH-TL-DOT"></div>
+          <div class="AH-TL-LINE"></div>
+          <div class="AH-TL-NODE">
+            <span class="AH-TL-Y">1944</span>
+            <span class="AH-TL-L">Люфтваффе</span>
+          </div>
+          <div class="AH-TL-LINE"></div>
+          <div class="AH-TL-DOT"></div>
+          <div class="AH-TL-LINE"></div>
+          <div class="AH-TL-NODE">
+            <span class="AH-TL-Y">1971</span>
+            <span class="AH-TL-L">Супутник</span>
+          </div>
+        </div>
+        <p class="AS">Унікальні знімки міста з повітря · Клацніть маркер для деталей · Scroll — збільшення</p>
       </div>
 
-      <!-- MAP 1944 -->
+      <!-- ══ MAP 1944 ══ -->
       <div class="ABLK">
-        <p class="ABT">Аерофотознімок 24 січня 1944 року</p>
+        <div class="ABLK-HEAD">
+          <div class="ABLK-YEAR" data-yr="1944">1944</div>
+          <div class="ABLK-INFO">
+            <h3 class="ABT">Аерофотознімок Дубровиці · 24 січня 1944 р.</h3>
+            <div class="ABLK-TAGS">
+              <span class="ABLK-TAG">Люфтваффе · Рейх</span>
+              <span class="ABLK-TAG">Висота ~3 000 м</span>
+              <span class="ABLK-TAG">Масштаб ~1:10 000</span>
+            </div>
+          </div>
+        </div>
         <div class="AG">
-          <div class="MBOX" id="M44">
-            <img class="MIMG" id="I44" src="https://i.imgur.com/dyP4WgZ.jpeg" alt="1944" draggable="false">
-            <div class="MLAY" id="P44"></div>
-            <div class="ZW">
-              <button class="ZB" id="z44p">+</button>
-              <button class="ZB" id="z44m">&#8722;</button>
-              <button class="ZB" id="z44r" style="font-size:.78rem">&#8962;</button>
+          <div class="MWRAP">
+            <div class="MBOX" id="M44">
+              <img class="MIMG" id="I44" src="https://i.imgur.com/dyP4WgZ.jpeg" alt="1944" draggable="false">
+              <div class="MSCAN"></div>
+              <div class="MLAY" id="P44"></div>
+              <div class="ZW">
+                <button class="ZB" id="z44p">+</button>
+                <button class="ZB" id="z44m">&#8722;</button>
+                <button class="ZB" id="z44r" style="font-size:.78rem">&#8962;</button>
+              </div>
+              <button class="FSB" id="fs44" title="Повний екран">&#x26F6;</button>
+              <div class="BADGE"><span class="bl">Аерофотознімок</span><span class="bd">24 Jan 1944</span></div>
+              <div class="MTTIP" id="TIP44">
+                <button class="TTX" data-mid="44">&#x2715;</button>
+                <div class="TTR"><span class="TTN" id="TN44"></span><span class="TTT" id="TT44"></span></div>
+                <span class="TTD" id="TD44"></span>
+              </div>
             </div>
-            <button class="FSB" id="fs44">&#x26F6;</button>
-            <div class="BADGE"><span class="bl">Аерофотознімок</span><span class="bd">24 Jan 1944</span></div>
-            <div class="MTTIP" id="TIP44">
-              <button class="TTX" data-mid="44">&#x2715;</button>
-              <div class="TTR"><span class="TTN" id="TN44"></span><span class="TTT" id="TT44"></span></div>
-              <span class="TTD" id="TD44"></span>
-            </div>
+            <div class="MC"></div>
           </div>
           <div class="LEG">
             <p class="LEGH">Позначення</p>
             <ul class="LEGL" id="L44"></ul>
-            <p class="LEGHINT">Натисніть маркер або пункт · Scroll для збільшення</p>
+            <p class="LEGHINT">Натисніть маркер або пункт у списку · Scroll для збільшення</p>
           </div>
         </div>
       </div>
 
-      <hr class="MSEP">
+      <!-- ── Separator ── -->
+      <div class="MSEP"><div class="MSEP-INNER"><div class="MSEP-DIAMOND"></div><span class="MSEP-TXT">1943 · жовтень</span><div class="MSEP-DIAMOND"></div></div></div>
 
-      <!-- MAP 1943 -->
+      <!-- ══ MAP 1943 ══ -->
       <div class="ABLK">
-        <p class="ABT">Аерофотознімок жовтень 1943 року</p>
+        <div class="ABLK-HEAD">
+          <div class="ABLK-YEAR" data-yr="1943">1943</div>
+          <div class="ABLK-INFO">
+            <h3 class="ABT">Аерофотознімок Дубровиці · жовтень 1943 р.</h3>
+            <div class="ABLK-TAGS">
+              <span class="ABLK-TAG">Люфтваффе · Рейх</span>
+              <span class="ABLK-TAG">Окупаційний період</span>
+              <span class="ABLK-TAG">Пан. знімання</span>
+            </div>
+          </div>
+        </div>
         <div class="AG">
-          <div class="MBOX" id="M43">
-            <img class="MIMG" id="I43" src="https://i.imgur.com/EhsjkKX.jpeg" alt="1943" draggable="false">
-            <div class="MLAY" id="P43"></div>
-            <div class="ZW">
-              <button class="ZB" id="z43p">+</button>
-              <button class="ZB" id="z43m">&#8722;</button>
-              <button class="ZB" id="z43r" style="font-size:.78rem">&#8962;</button>
+          <div class="MWRAP">
+            <div class="MBOX" id="M43">
+              <img class="MIMG" id="I43" src="https://i.imgur.com/EhsjkKX.jpeg" alt="1943" draggable="false">
+              <div class="MSCAN"></div>
+              <div class="MLAY" id="P43"></div>
+              <div class="ZW">
+                <button class="ZB" id="z43p">+</button>
+                <button class="ZB" id="z43m">&#8722;</button>
+                <button class="ZB" id="z43r" style="font-size:.78rem">&#8962;</button>
+              </div>
+              <button class="FSB" id="fs43" title="Повний екран">&#x26F6;</button>
+              <div class="BADGE"><span class="bl">Аерофотознімок</span><span class="bd">Oct 1943</span></div>
+              <div class="MTTIP" id="TIP43">
+                <button class="TTX" data-mid="43">&#x2715;</button>
+                <div class="TTR"><span class="TTN" id="TN43"></span><span class="TTT" id="TT43"></span></div>
+                <span class="TTD" id="TD43"></span>
+              </div>
             </div>
-            <button class="FSB" id="fs43">&#x26F6;</button>
-            <div class="BADGE"><span class="bl">Аерофотознімок</span><span class="bd">Oct 1943</span></div>
-            <div class="MTTIP" id="TIP43">
-              <button class="TTX" data-mid="43">&#x2715;</button>
-              <div class="TTR"><span class="TTN" id="TN43"></span><span class="TTT" id="TT43"></span></div>
-              <span class="TTD" id="TD43"></span>
-            </div>
+            <div class="MC"></div>
           </div>
           <div class="LEG">
             <p class="LEGH">Позначення</p>
             <ul class="LEGL" id="L43">
-              <li style="font-size:.72rem;color:#a09080;font-family:'DM Sans',sans-serif;padding:.4rem .25rem">Завантаження...</li>
+              <li style="font-size:.71rem;color:rgba(160,150,130,.35);font-family:'DM Sans',sans-serif;padding:.4rem .25rem">Завантаження...</li>
             </ul>
             <p class="LEGHINT">Позначення додаються через адмін-панель</p>
           </div>
         </div>
       </div>
 
-      <hr class="MSEP">
+      <!-- ── Separator ── -->
+      <div class="MSEP"><div class="MSEP-INNER"><div class="MSEP-DIAMOND"></div><span class="MSEP-TXT">1971 · супутниковий знімок</span><div class="MSEP-DIAMOND"></div></div></div>
 
-      <!-- MAP 1971 SATELLITE -->
+      <!-- ══ MAP 1971 SATELLITE ══ -->
       <div class="ABLK">
-        <p class="ABT">Супутниковий знімок Дубровиці · 1971 рік</p>
+        <div class="ABLK-HEAD">
+          <div class="ABLK-YEAR" data-yr="1971" style="-webkit-text-stroke-color:rgba(100,180,255,.2)">1971</div>
+          <div class="ABLK-INFO">
+            <h3 class="ABT">Супутниковий знімок Дубровиці · 1971 рік</h3>
+            <div class="ABLK-TAGS">
+              <span class="ABLK-TAG sat">🛰 Супутниковий</span>
+              <span class="ABLK-TAG sat">Радянський союз</span>
+              <span class="ABLK-TAG sat">Епоха холодної війни</span>
+            </div>
+          </div>
+        </div>
         <div class="AG">
-          <div class="MBOX" id="M71">
-            <img class="MIMG" id="I71" src="https://i.imgur.com/HiK23WV.jpeg" alt="1971" draggable="false">
-            <div class="MLAY" id="P71"></div>
-            <div class="ZW">
-              <button class="ZB" id="z71p">+</button>
-              <button class="ZB" id="z71m">&#8722;</button>
-              <button class="ZB" id="z71r" style="font-size:.78rem">&#8962;</button>
+          <div class="MWRAP sat">
+            <div class="MBOX" id="M71" style="box-shadow:0 0 0 1px rgba(100,180,255,.1),0 8px 30px rgba(0,0,0,.6),0 30px 70px rgba(0,0,0,.5),0 0 120px rgba(100,180,255,.04);">
+              <img class="MIMG" id="I71" src="https://i.imgur.com/HiK23WV.jpeg" alt="1971" draggable="false">
+              <div class="MSCAN"></div>
+              <div class="MLAY" id="P71"></div>
+              <div class="ZW">
+                <button class="ZB" id="z71p">+</button>
+                <button class="ZB" id="z71m">&#8722;</button>
+                <button class="ZB" id="z71r" style="font-size:.78rem">&#8962;</button>
+              </div>
+              <button class="FSB" id="fs71" title="Повний екран" style="border-color:rgba(100,180,255,.25);color:rgba(100,180,255,.8);">&#x26F6;</button>
+              <div class="BADGE" style="border-color:rgba(100,180,255,.22);">
+                <span class="bl" style="color:rgba(100,180,255,.45);">Супутниковий знімок</span>
+                <span class="bd" style="color:#6ab4ff;">1971</span>
+              </div>
+              <div class="MTTIP" id="TIP71">
+                <button class="TTX" data-mid="71">&#x2715;</button>
+                <div class="TTR"><span class="TTN" id="TN71"></span><span class="TTT" id="TT71"></span></div>
+                <span class="TTD" id="TD71"></span>
+              </div>
             </div>
-            <button class="FSB" id="fs71">&#x26F6;</button>
-            <div class="BADGE" style="border-color:rgba(100,180,255,.3);">
-              <span class="bl" style="color:#4a6a8a;">Супутниковий знімок</span>
-              <span class="bd" style="color:#6ab4ff;">1971</span>
-            </div>
-            <div class="MTTIP" id="TIP71">
-              <button class="TTX" data-mid="71">&#x2715;</button>
-              <div class="TTR"><span class="TTN" id="TN71"></span><span class="TTT" id="TT71"></span></div>
-              <span class="TTD" id="TD71"></span>
-            </div>
+            <div class="MC" style="--bc:rgba(100,180,255,.5)"></div>
           </div>
           <div class="LEG">
             <p class="LEGH">Позначення</p>
             <ul class="LEGL" id="L71">
-              <li style="font-size:.72rem;color:#a09080;font-family:'DM Sans',sans-serif;padding:.4rem .25rem">Завантаження...</li>
+              <li style="font-size:.71rem;color:rgba(160,150,130,.35);font-family:'DM Sans',sans-serif;padding:.4rem .25rem">Завантаження...</li>
             </ul>
             <p class="LEGHINT">Позначення додаються через адмін-панель</p>
           </div>
         </div>
       </div>
-    </div>
+
+    </div><!-- /AW -->
 
     <!-- Fullscreen overlay — full map + pins + legend -->
     <div id="MFSO">
