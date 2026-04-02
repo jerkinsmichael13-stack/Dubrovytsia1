@@ -788,14 +788,14 @@
     :root:not([data-theme="dark"]) .AS{color:rgba(28,25,23,.35);}
     :root:not([data-theme="dark"]) .ABLK-HEAD{border-bottom-color:rgba(0,0,0,.1);}
     :root:not([data-theme="dark"]) .ABLK-HEAD::before{background:linear-gradient(90deg,rgba(140,95,15,.4),transparent);}
-    :root:not([data-theme="dark"]) .ABLK-YEAR{-webkit-text-stroke:1px rgba(140,95,15,.2);}
+    :root:not([data-theme="dark"]) .ABLK-YEAR{-webkit-text-stroke:1px rgba(140,95,15,.55);color:rgba(140,95,15,.08);}
     :root:not([data-theme="dark"]) .ABT{color:#1c1917;}
     :root:not([data-theme="dark"]) .ABLK-TAG{color:rgba(110,75,10,.7);background:rgba(140,95,15,.07);border-color:rgba(140,95,15,.18);}
-    :root:not([data-theme="dark"]) .ABLK-TAG.sat{color:rgba(30,80,150,.7);background:rgba(60,120,200,.07);border-color:rgba(60,120,200,.18);}
+    :root:not([data-theme="dark"]) .ABLK-TAG.sat{color:rgba(140,95,15,.75);background:rgba(201,162,39,.08);border-color:rgba(140,95,15,.2);}
     :root:not([data-theme="dark"]) .MWRAP::before,:root:not([data-theme="dark"]) .MWRAP::after,:root:not([data-theme="dark"]) .MC::before,:root:not([data-theme="dark"]) .MC::after{border-color:rgba(140,95,15,.35);}
     :root:not([data-theme="dark"]) .MWRAP:hover::before,:root:not([data-theme="dark"]) .MWRAP:hover::after,:root:not([data-theme="dark"]) .MWRAP:hover .MC::before,:root:not([data-theme="dark"]) .MWRAP:hover .MC::after{border-color:rgba(140,95,15,.75);}
-    :root:not([data-theme="dark"]) .MBOX{background:#e8e0cf;box-shadow:0 0 0 1px rgba(140,95,15,.15),0 8px 30px rgba(0,0,0,.12),0 30px 70px rgba(0,0,0,.08);}
-    :root:not([data-theme="dark"]) .MBOX:hover{box-shadow:0 0 0 1px rgba(140,95,15,.3),0 8px 30px rgba(0,0,0,.18),0 30px 70px rgba(0,0,0,.12);}
+    :root:not([data-theme="dark"]) .MBOX{background:#e8e0cf;box-shadow:0 0 0 1px rgba(140,95,15,.25),0 8px 30px rgba(0,0,0,.45),0 30px 70px rgba(0,0,0,.38);}
+    :root:not([data-theme="dark"]) .MBOX:hover{box-shadow:0 0 0 1px rgba(140,95,15,.4),0 8px 30px rgba(0,0,0,.55),0 30px 70px rgba(0,0,0,.48);}
     :root:not([data-theme="dark"]) .MBOX::after{background:radial-gradient(ellipse 85% 80% at 50% 50%,transparent 50%,rgba(240,235,224,.35) 100%);}
     :root:not([data-theme="dark"]) .BADGE{background:rgba(255,252,245,.95);border-color:rgba(140,95,15,.22);}
     :root:not([data-theme="dark"]) .BADGE .bl{color:rgba(120,85,15,.5);}
@@ -884,7 +884,7 @@
       background:rgba(201,162,39,.06);
       border:1px solid rgba(201,162,39,.14);
       border-radius:3px;padding:.2rem .65rem;}
-    .ABLK-TAG.sat{color:rgba(100,180,255,.6);background:rgba(100,180,255,.06);border-color:rgba(100,180,255,.15);}
+    .ABLK-TAG.sat{color:rgba(201,162,39,.7);background:rgba(201,162,39,.07);border-color:rgba(201,162,39,.2);}
 
     /* ══ MAP LAYOUT ══ */
     .AG{display:grid;grid-template-columns:1fr 268px;gap:1.6rem;align-items:start;}
@@ -1096,9 +1096,9 @@
       display:flex;align-items:center;justify-content:center;margin-top:1px;}
 
     .MWRAP.sat::before,.MWRAP.sat::after,.MWRAP.sat .MC::before,.MWRAP.sat .MC::after{
-      border-color:rgba(100,180,255,.5);}
+      border-color:rgba(201,162,39,.5);}
     .MWRAP.sat:hover::before,.MWRAP.sat:hover::after,.MWRAP.sat:hover .MC::before,.MWRAP.sat:hover .MC::after{
-      border-color:rgba(100,180,255,.9);}
+      border-color:rgba(201,162,39,.9);}
     /* ── Mobile ── */
     @media(max-width:640px){
       .AW{padding:0 1.2rem;}
@@ -1237,7 +1237,7 @@
       <!-- ══ MAP 1971 SATELLITE ══ -->
       <div class="ABLK">
         <div class="ABLK-HEAD">
-          <div class="ABLK-YEAR" data-yr="1971" style="-webkit-text-stroke-color:rgba(100,180,255,.2)">1971</div>
+          <div class="ABLK-YEAR" data-yr="1971">1971</div>
           <div class="ABLK-INFO">
             <h3 class="ABT">Супутниковий знімок Дубровиці · 1971 рік</h3>
             <div class="ABLK-TAGS">
@@ -1249,7 +1249,7 @@
         </div>
         <div class="AG">
           <div class="MWRAP sat">
-            <div class="MBOX" id="M71" style="box-shadow:0 0 0 1px rgba(100,180,255,.1),0 8px 30px rgba(0,0,0,.6),0 30px 70px rgba(0,0,0,.5),0 0 120px rgba(100,180,255,.04);">
+            <div class="MBOX" id="M71">
               <img class="MIMG" id="I71" src="https://i.imgur.com/HiK23WV.jpeg" alt="1971" draggable="false">
               <div class="MSCAN"></div>
               <div class="MLAY" id="P71"></div>
@@ -1258,10 +1258,10 @@
                 <button class="ZB" id="z71m">&#8722;</button>
                 <button class="ZB" id="z71r" style="font-size:.78rem">&#8962;</button>
               </div>
-              <button class="FSB" id="fs71" title="Повний екран" style="border-color:rgba(100,180,255,.25);color:rgba(100,180,255,.8);">&#x26F6;</button>
-              <div class="BADGE" style="border-color:rgba(100,180,255,.22);">
-                <span class="bl" style="color:rgba(100,180,255,.45);">Супутниковий знімок</span>
-                <span class="bd" style="color:#6ab4ff;">1971</span>
+              <button class="FSB" id="fs71" title="Повний екран">&#x26F6;</button>
+              <div class="BADGE">
+                <span class="bl">Супутниковий знімок</span>
+                <span class="bd">1971</span>
               </div>
               <div class="MTTIP" id="TIP71">
                 <button class="TTX" data-mid="71">&#x2715;</button>
@@ -1269,7 +1269,7 @@
                 <span class="TTD" id="TD71"></span>
               </div>
             </div>
-            <div class="MC" style="--bc:rgba(100,180,255,.5)"></div>
+            <div class="MC"></div>
           </div>
           <div class="LEG">
             <p class="LEGH">Позначення</p>
@@ -1873,7 +1873,7 @@
 
     /* ── MAP WRAPPER ── */
     .TPMBOX{position:relative;border-radius:4px;overflow:hidden;max-height:80vh;
-      box-shadow:0 0 0 1px rgba(201,162,39,.18),0 2px 8px rgba(0,0,0,.06),0 12px 40px rgba(0,0,0,.16);
+      box-shadow:0 0 0 1px rgba(201,162,39,.25),0 8px 30px rgba(0,0,0,.5),0 30px 70px rgba(0,0,0,.45);
       background:#1a1206;cursor:grab;user-select:none;}
     .TPMBOX:active{cursor:grabbing;}
     .TPMIMG{display:block;width:100%;height:auto;transform-origin:0 0;will-change:transform;}
@@ -2993,7 +2993,7 @@
     /* slider */
     .WSF{position:relative;width:100%;max-width:1160px;margin:0 auto;aspect-ratio:16/9;max-height:70vh;border-radius:12px;overflow:hidden;
          cursor:ew-resize;user-select:none;-webkit-user-select:none;
-         box-shadow:0 8px 40px rgba(0,0,0,0.18);}
+         box-shadow:0 0 0 1px rgba(201,162,39,.12),0 8px 30px rgba(0,0,0,.55),0 30px 80px rgba(0,0,0,.5);}
     @media(max-width:600px){.WSF{aspect-ratio:4/3;max-height:none;border-radius:6px;cursor:default;}}
     .WSF .wb{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;display:block;
              filter:saturate(1.15) contrast(1.06) brightness(1.03);}
