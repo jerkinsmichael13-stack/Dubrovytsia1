@@ -23,10 +23,10 @@
    ═══════════════════════════════════════════════ */
 .jh-hero {
     position: relative;
-    min-height: 100vh;
+    min-height: calc(100svh - 62px);
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
     overflow: hidden;
     background: #0d0b09;
@@ -37,13 +37,14 @@
     background-image: url('https://i.imgur.com/KuwKiZP.jpeg');
     background-size: cover;
     background-position: center 30%;
-    filter: brightness(0.45) contrast(1.12) saturate(0.72);
+    filter: brightness(0.5) contrast(1.08) saturate(0.75);
+    transform: scale(1.02);
     opacity: 0;
-    transition: opacity 1.2s ease;
+    transition: transform 10s cubic-bezier(0.16,1,0.3,1), opacity 0.9s ease;
     z-index: 0;
     will-change: transform;
 }
-.jh-hero.loaded .jh-hero-bg { opacity: 1; }
+.jh-hero.loaded .jh-hero-bg { opacity: 1; transform: scale(1); }
 .jh-hero-grain {
     position: absolute;
     inset: -80px;
@@ -68,8 +69,22 @@
     z-index: 2;
     pointer-events: none;
     background:
-        radial-gradient(ellipse 80% 70% at 50% 50%, transparent 20%, rgba(0,0,0,0.5) 100%),
-        linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.0) 30%, rgba(0,0,0,0.65) 75%, #0d0b09 100%);
+        radial-gradient(ellipse 70% 60% at 50% 50%, transparent 20%, rgba(0,0,0,0.3) 100%),
+        linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.05) 30%, rgba(0,0,0,0.4) 68%, #0d0b09 100%);
+}
+/* Scan lines like photo-archive */
+.jh-hero-scan {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 3px,
+        rgba(0,0,0,0.012) 3px,
+        rgba(0,0,0,0.012) 4px
+    );
+    z-index: 3;
+    pointer-events: none;
 }
 .jh-hero-scroll {
     position: absolute;
@@ -99,15 +114,16 @@
 .jh-hero-content {
     position: relative;
     z-index: 10;
-    padding: 0 3rem 5.5rem;
-    max-width: 1400px;
+    padding: 2rem 2rem 6rem;
+    max-width: 860px;
     width: 100%;
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-@media(max-width:700px) { .jh-hero-content { padding: 0 1.4rem 4rem; } }
+@media(max-width:700px) { .jh-hero-content { padding: 1.5rem 1.4rem 5rem; } }
+@media(max-width:480px) { .jh-hero-content { padding: 1rem 1.2rem 4rem; } }
 
 .jh-eyebrow {
     display: flex;
@@ -148,13 +164,13 @@
 }
 .jh-title .t-top {
     display: block;
-    font-size: clamp(3.5rem, 9.5vw, 9rem);
+    font-size: clamp(5rem, 13vw, 10rem);
     color: #fff;
     text-shadow: 0 4px 50px rgba(0,0,0,0.6);
 }
 .jh-title .t-bot {
     display: block;
-    font-size: clamp(2.2rem, 6.5vw, 6.5rem);
+    font-size: clamp(4rem, 10.5vw, 8rem);
     font-style: italic;
     color: #c9a227;
     text-shadow: 0 0 80px rgba(201,162,39,0.3);
@@ -494,6 +510,7 @@
     padding: 6rem 0;
     position: relative;
     overflow: hidden;
+    overflow-x: hidden;
 }
 .jh-nigun-section::before {
     content: '';
@@ -546,7 +563,7 @@
     writing-mode: vertical-lr;
     transform: rotate(180deg);
 }
-.jh-nigun-body {}
+.jh-nigun-body { min-width: 0; overflow-wrap: break-word; word-break: break-word; max-width: 100%; }
 .jh-nigun-eyebrow {
     font-family: 'DM Sans', sans-serif;
     font-size: 0.52rem;
@@ -1305,6 +1322,8 @@
     .jh-tl-item, .jh-tl-item.right { padding-left: 3rem; }
     .jh-tl-dot { left: 1.2rem; }
     .jh-hero-content { padding: 0 1.2rem 3rem; }
+    .jh-title .t-top { font-size: clamp(4rem, 15vw, 6rem); }
+    .jh-title .t-bot { font-size: clamp(3.2rem, 12vw, 5rem); }
     .jh-nigun-section { padding: 4rem 0; }
     .jh-chapter-section { padding: 3rem 0; }
     .jh-legacy-grid { grid-template-columns: 1fr; }
@@ -1362,6 +1381,7 @@
     grid-template-columns: 1fr 1.1fr;
     gap: 5rem;
     align-items: center;
+    min-width: 0;
 }
 .jh-nigun-icon-col {
     display: flex;
@@ -1456,7 +1476,7 @@
 .jh-needle svg { width: 100%; height: 100%; }
 
 /* Player body */
-.jh-nigun-body {}
+.jh-nigun-body { min-width: 0; overflow-wrap: break-word; word-break: break-word; max-width: 100%; }
 .jh-nigun-eyebrow {
     font-family: 'DM Sans', sans-serif;
     font-size: 0.5rem;
@@ -1685,14 +1705,15 @@
         gap: 2.5rem;
         text-align: left;
     }
-    .jh-nigun-icon-col { flex-direction: row; justify-content: flex-start; }
+    .jh-nigun-icon-col { flex-direction: row; justify-content: flex-start; overflow: hidden; }
     .jh-vinyl { width: 160px; height: 160px; }
-    .jh-vinyl-wrapper { width: 210px; height: 180px; }
+    .jh-vinyl-wrapper { width: 210px; height: 180px; max-width: 100%; overflow: visible; }
     .jh-needle { left: 133px; top: -8px; width: 58px; height: 76px; }
 }
 
 @media (max-width: 600px) {
     .jh-nigun-inner { gap: 2rem; }
+    .jh-nigun-icon-col { justify-content: center; }
     .jh-vinyl { width: 130px; height: 130px; }
     .jh-vinyl-wrapper { width: 175px; height: 150px; }
     .jh-needle { left: 108px; top: -6px; width: 48px; height: 62px; }
@@ -1757,6 +1778,7 @@ a, button, [role="button"], input, select, textarea,
     <div class="jh-hero-bg"></div>
     <div class="jh-hero-grain"></div>
     <div class="jh-hero-vignette"></div>
+    <div class="jh-hero-scan"></div>
 
     <!-- Звезда Давида-фон -->
     <div class="jh-hero-scroll" aria-hidden="true">

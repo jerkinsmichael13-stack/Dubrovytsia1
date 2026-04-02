@@ -115,6 +115,7 @@ html {
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     overscroll-behavior: none;
+    overflow-x: hidden;
     background-color: #1a1408;
 }
 
