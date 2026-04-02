@@ -2737,6 +2737,320 @@
     </div>
 </section>
 
+<!-- ═══════════════ ЄВРЕЙСЬКІ КЛАДОВИЩА ═══════════════ -->
+<section class="jh-gallery-section jh-cemeteries-section">
+<style>
+.jh-cemeteries-section {
+    padding: 6rem 0 7rem;
+    background: var(--color-bg);
+    position: relative;
+    overflow: hidden;
+}
+.jh-cemeteries-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
+    opacity: 0.18;
+}
+.jh-cem-intro {
+    max-width: 640px;
+    margin: 0 auto 3.5rem;
+    text-align: center;
+}
+.jh-cem-intro p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--color-text-secondary);
+    line-height: 1.75;
+}
+.jh-cem-block {
+    margin-bottom: 4rem;
+}
+.jh-cem-block:last-child { margin-bottom: 0; }
+
+.jh-cem-block-header {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    margin-bottom: 1.6rem;
+    padding-bottom: 1.2rem;
+    border-bottom: 1px solid var(--color-border-light);
+    position: relative;
+}
+.jh-cem-block-header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; left: 0;
+    width: 80px; height: 1px;
+    background: var(--color-accent);
+    opacity: 0.5;
+}
+.jh-cem-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem;
+    font-weight: 700;
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(201,162,39,.3);
+    flex-shrink: 0;
+    user-select: none;
+    letter-spacing: -.04em;
+}
+.jh-cem-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.3rem, 2.5vw, 1.75rem);
+    font-weight: 400;
+    color: var(--color-text);
+    margin: 0 0 .25rem;
+    line-height: 1.15;
+}
+.jh-cem-title em { font-style: italic; color: var(--color-accent); }
+.jh-cem-subtitle {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .68rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+}
+/* 3-col row for old cemetery */
+.jh-cem-row-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+}
+/* 2+1+2+2+2+1 mosaic for new cemetery (10 photos) */
+.jh-cem-mosaic {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.jh-cem-row-2    { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.jh-cem-row-wide { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+.jh-cem-row-4    { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 1rem; }
+
+/* Taller images for new cemetery grid */
+.jh-cem-tall .jh-photo-img-wrap { height: 280px; }
+.jh-cem-sq   .jh-photo-img-wrap { height: 220px; }
+.jh-cem-wide .jh-photo-img-wrap { height: 300px; }
+.jh-cem-sm   .jh-photo-img-wrap { height: 200px; }
+
+@media (max-width: 768px) {
+    .jh-cem-row-3 { grid-template-columns: 1fr 1fr; }
+    .jh-cem-row-3 > :last-child { grid-column: 1 / -1; }
+    .jh-cem-row-4 { grid-template-columns: 1fr 1fr; }
+    .jh-cem-tall .jh-photo-img-wrap,
+    .jh-cem-wide .jh-photo-img-wrap { height: 220px; }
+}
+@media (max-width: 500px) {
+    .jh-cem-row-3,
+    .jh-cem-row-2,
+    .jh-cem-row-4 { grid-template-columns: 1fr; }
+    .jh-cem-row-3 > :last-child { grid-column: auto; }
+    .jh-cem-tall .jh-photo-img-wrap,
+    .jh-cem-sq   .jh-photo-img-wrap,
+    .jh-cem-wide .jh-photo-img-wrap,
+    .jh-cem-sm   .jh-photo-img-wrap { height: 200px; }
+}
+</style>
+
+    <div class="container">
+        <div class="jh-section-header">
+            <span class="jh-section-eyebrow">Місця вічного спокою · Дубровиця</span>
+            <h2 class="jh-section-title">Єврейські <em>кладовища</em></h2>
+            <span class="jh-section-sub">Старе та Нове єврейське кладовище — свідки п'яти сторіч</span>
+        </div>
+
+        <div class="jh-cem-intro">
+            <p>Жодне з єврейських кладовищ Дубровиці не збереглося до наших днів у первісному вигляді.
+            Та пам'ять про них живе — у камені пам'ятників, фотографіях і серцях нащадків,
+            що щороку приїздять вклонитися цим місцям.</p>
+        </div>
+
+        <!-- ── СТАРЕ ЄВРЕЙСЬКЕ КЛАДОВИЩЕ ── -->
+        <div class="jh-cem-block">
+            <div class="jh-cem-block-header">
+                <div class="jh-cem-num">I</div>
+                <div>
+                    <h3 class="jh-cem-title">Старе єврейське <em>кладовище</em></h3>
+                    <div class="jh-cem-subtitle">Не збереглося до наших днів</div>
+                </div>
+            </div>
+            <div class="jh-cem-row-3">
+                <div class="jh-photo-card jh-cem-tall"
+                     onclick="ULB.open(oldCemPhotos, 0)">
+                    <div class="jh-photo-img-wrap">
+                        <img class="jh-photo-img" src="https://i.imgur.com/xhOhiSql.jpeg" alt="Пам'ятник на місці Старого єврейського кладовища" loading="lazy">
+                    </div>
+                    <div class="jh-photo-caption">
+                        <p>Пам'ятник на місці Старого єврейського кладовища</p>
+                    </div>
+                </div>
+                <div class="jh-photo-card jh-cem-tall"
+                     onclick="ULB.open(oldCemPhotos, 1)">
+                    <div class="jh-photo-img-wrap">
+                        <img class="jh-photo-img" src="https://i.imgur.com/fjkTkyol.jpeg" alt="Загальний вигляд — Старе єврейське кладовище" loading="lazy">
+                    </div>
+                    <div class="jh-photo-caption">
+                        <p>Загальний вигляд — кладовище не збереглося</p>
+                    </div>
+                </div>
+                <div class="jh-photo-card jh-cem-tall"
+                     onclick="ULB.open(oldCemPhotos, 2)">
+                    <div class="jh-photo-img-wrap">
+                        <img class="jh-photo-img" src="https://i.imgur.com/SfXsrW8l.jpeg" alt="Загальний вигляд — Старе єврейське кладовище" loading="lazy">
+                    </div>
+                    <div class="jh-photo-caption">
+                        <p>Загальний вигляд — Старе єврейське кладовище</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── НОВЕ ЄВРЕЙСЬКЕ КЛАДОВИЩЕ ── -->
+        <div class="jh-cem-block">
+            <div class="jh-cem-block-header">
+                <div class="jh-cem-num">II</div>
+                <div>
+                    <h3 class="jh-cem-title">Нове єврейське <em>кладовище</em></h3>
+                    <div class="jh-cem-subtitle">Пам'ятники на місці кладовища · Не збереглося до наших днів</div>
+                </div>
+            </div>
+            <div class="jh-cem-mosaic">
+                <!-- Ряд 1: широкий загальний вигляд -->
+                <div class="jh-cem-row-wide">
+                    <div class="jh-photo-card jh-cem-wide"
+                         onclick="ULB.open(newCemPhotos, 0)">
+                        <div class="jh-photo-img-wrap">
+                            <img class="jh-photo-img" src="https://i.imgur.com/21uGzbdl.png" alt="Загальний вигляд — Нове єврейське кладовище" loading="lazy">
+                        </div>
+                        <div class="jh-photo-caption">
+                            <p>Загальний вигляд — Нове єврейське кладовище. Не збереглося до наших днів</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Ряд 2: 3 пам'ятники -->
+                <div class="jh-cem-row-2">
+                    <div class="jh-photo-card jh-cem-tall"
+                         onclick="ULB.open(newCemPhotos, 1)">
+                        <div class="jh-photo-img-wrap">
+                            <img class="jh-photo-img" src="https://i.imgur.com/u4oDBLdl.jpeg" alt="Пам'ятник на місці Нового єврейського кладовища" loading="lazy">
+                        </div>
+                        <div class="jh-photo-caption">
+                            <p>Пам'ятник на місці Нового єврейського кладовища</p>
+                        </div>
+                    </div>
+                    <div class="jh-photo-card jh-cem-tall"
+                         onclick="ULB.open(newCemPhotos, 2)">
+                        <div class="jh-photo-img-wrap">
+                            <img class="jh-photo-img" src="https://i.imgur.com/vGfVWNtl.jpeg" alt="Пам'ятник на місці Нового єврейського кладовища" loading="lazy">
+                        </div>
+                        <div class="jh-photo-caption">
+                            <p>Пам'ятник на місці Нового єврейського кладовища</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Ряд 3: 2 пам'ятники -->
+                <div class="jh-cem-row-2">
+                    <div class="jh-photo-card jh-cem-sq"
+                         onclick="ULB.open(newCemPhotos, 3)">
+                        <div class="jh-photo-img-wrap">
+                            <img class="jh-photo-img" src="https://i.imgur.com/ZljGi5dl.jpeg" alt="Пам'ятник" loading="lazy">
+                        </div>
+                        <div class="jh-photo-caption">
+                            <p>Пам'ятник на місці кладовища</p>
+                        </div>
+                    </div>
+                    <div class="jh-photo-card jh-cem-sq"
+                         onclick="ULB.open(newCemPhotos, 4)">
+                        <div class="jh-photo-img-wrap">
+                            <img class="jh-photo-img" src="https://i.imgur.com/K40hYZsl.jpeg" alt="Пам'ятник" loading="lazy">
+                        </div>
+                        <div class="jh-photo-caption">
+                            <p>Пам'ятник на місці кладовища</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Ряд 4: 4 маленьких -->
+                <div class="jh-cem-row-4">
+                    <div class="jh-photo-card jh-cem-sm"
+                         onclick="ULB.open(newCemPhotos, 5)">
+                        <div class="jh-photo-img-wrap">
+                            <img class="jh-photo-img" src="https://i.imgur.com/bDQF0wll.jpeg" alt="Пам'ятник" loading="lazy">
+                        </div>
+                        <div class="jh-photo-caption">
+                            <p>Пам'ятник</p>
+                        </div>
+                    </div>
+                    <div class="jh-photo-card jh-cem-sm"
+                         onclick="ULB.open(newCemPhotos, 6)">
+                        <div class="jh-photo-img-wrap">
+                            <img class="jh-photo-img" src="https://i.imgur.com/XhuVK4yl.jpeg" alt="Пам'ятник" loading="lazy">
+                        </div>
+                        <div class="jh-photo-caption">
+                            <p>Пам'ятник</p>
+                        </div>
+                    </div>
+                    <div class="jh-photo-card jh-cem-sm"
+                         onclick="ULB.open(newCemPhotos, 7)">
+                        <div class="jh-photo-img-wrap">
+                            <img class="jh-photo-img" src="https://i.imgur.com/mODmanul.jpeg" alt="Пам'ятник" loading="lazy">
+                        </div>
+                        <div class="jh-photo-caption">
+                            <p>Пам'ятник</p>
+                        </div>
+                    </div>
+                    <div class="jh-photo-card jh-cem-sm"
+                         onclick="ULB.open(newCemPhotos, 8)">
+                        <div class="jh-photo-img-wrap">
+                            <img class="jh-photo-img" src="https://i.imgur.com/GfmFqDJl.jpeg" alt="Пам'ятник" loading="lazy">
+                        </div>
+                        <div class="jh-photo-caption">
+                            <p>Пам'ятник</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Ряд 5: 1 широкий (останній) -->
+                <div class="jh-cem-row-wide">
+                    <div class="jh-photo-card jh-cem-wide"
+                         onclick="ULB.open(newCemPhotos, 9)">
+                        <div class="jh-photo-img-wrap">
+                            <img class="jh-photo-img" src="https://i.imgur.com/BVae6ydl.jpeg" alt="Пам'ятник на місці Нового єврейського кладовища" loading="lazy">
+                        </div>
+                        <div class="jh-photo-caption">
+                            <p>Пам'ятник на місці Нового єврейського кладовища</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+// Photo arrays for cemetery galleries
+var oldCemPhotos = [
+    { src: 'https://i.imgur.com/xhOhiSq.jpeg', cap: 'Пам\'ятник на місці Старого єврейського кладовища' },
+    { src: 'https://i.imgur.com/fjkTkyo.jpeg',  cap: 'Загальний вигляд — Старе єврейське кладовище. Не збереглося до наших днів' },
+    { src: 'https://i.imgur.com/SfXsrW8.jpeg',  cap: 'Загальний вигляд — Старе єврейське кладовище' }
+];
+var newCemPhotos = [
+    { src: 'https://i.imgur.com/21uGzbd.png',   cap: 'Загальний вигляд — Нове єврейське кладовище. Не збереглося до наших днів' },
+    { src: 'https://i.imgur.com/u4oDBLd.jpeg',  cap: 'Пам\'ятник на місці Нового єврейського кладовища' },
+    { src: 'https://i.imgur.com/vGfVWNt.jpeg',  cap: 'Пам\'ятник на місці Нового єврейського кладовища' },
+    { src: 'https://i.imgur.com/ZljGi5d.jpeg',  cap: 'Пам\'ятник на місці кладовища' },
+    { src: 'https://i.imgur.com/K40hYZs.jpeg',  cap: 'Пам\'ятник на місці кладовища' },
+    { src: 'https://i.imgur.com/bDQF0wl.jpeg',  cap: 'Пам\'ятник на місці кладовища' },
+    { src: 'https://i.imgur.com/XhuVK4y.jpeg',  cap: 'Пам\'ятник на місці кладовища' },
+    { src: 'https://i.imgur.com/mODmanu.jpeg',  cap: 'Пам\'ятник на місці кладовища' },
+    { src: 'https://i.imgur.com/GfmFqDJ.jpeg',  cap: 'Пам\'ятник на місці кладовища' },
+    { src: 'https://i.imgur.com/BVae6yd.jpeg',  cap: 'Пам\'ятник на місці Нового єврейського кладовища' }
+];
+</script>
+
 <!-- FOOTER -->
 <footer class="footer">
     <div class="container">
