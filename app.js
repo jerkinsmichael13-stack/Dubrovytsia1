@@ -779,6 +779,33 @@ function initAerialMap() {
 }
 
 // ================================================
+// КНОПКА "ВГОРУ" — Back to Top
+// ================================================
+
+function initBackToTop() {
+    const btn = document.createElement('button');
+    btn.className = 'back-to-top';
+    btn.setAttribute('aria-label', 'На початок сторінки');
+    btn.title = 'На початок сторінки';
+    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>';
+    document.body.appendChild(btn);
+
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+            btn.classList.toggle('visible', window.pageYOffset > 450);
+            ticking = false;
+        });
+    }, { passive: true });
+
+    btn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+}
+
+// ================================================
 // ІНІЦІАЛІЗАЦІЯ
 // ================================================
 
@@ -799,6 +826,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initImageReveal();
     initTooltips();
     initMagneticCards();
+    initBackToTop();
 
     // Сторінково-специфічні
     if (document.getElementById('photoGallery'))  initPhotoGallery();

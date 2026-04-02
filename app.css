@@ -2223,6 +2223,62 @@ html[data-theme="dark"] .moon-icon { display: none; }
 }
 
 /* ================================================================
+   BACK TO TOP BUTTON
+   ================================================================ */
+
+.back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 990;
+    opacity: 0;
+    transform: translateY(20px) scale(0.9);
+    transition: opacity 0.35s cubic-bezier(0.16,1,0.3,1),
+                transform 0.35s cubic-bezier(0.16,1,0.3,1),
+                background 0.2s ease,
+                box-shadow 0.2s ease;
+    pointer-events: none;
+    box-shadow: 0 4px 16px rgba(201,162,39,0.35);
+}
+
+.back-to-top.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+.back-to-top:hover {
+    background: var(--color-accent-dark);
+    box-shadow: 0 6px 24px rgba(201,162,39,0.5);
+    transform: translateY(-2px) scale(1.06);
+}
+
+.back-to-top svg {
+    width: 20px;
+    height: 20px;
+    color: #1a1208;
+    pointer-events: none;
+}
+
+@media (max-width: 768px) {
+    .back-to-top {
+        bottom: 1.25rem;
+        right: 1.25rem;
+        width: 42px;
+        height: 42px;
+    }
+}
+
+/* ================================================================
    АДМІН ПАНЕЛЬ
    ================================================================ */
 
