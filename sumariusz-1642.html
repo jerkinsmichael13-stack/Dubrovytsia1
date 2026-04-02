@@ -883,7 +883,7 @@ uchwalono bywa, Czyni in Summa —
                 <!-- RIGHT COL: page-by-page note -->
                 <div>
                     <div class="smr-col-header">
-                        <div class="smr-col-badge" style="background:var(--sepia);color:#1c160a;">UK</div>
+                        <div class="smr-col-badge" style="background:var(--sepia);color:#1c160a;">UA</div>
                         <div class="smr-col-title">Коментар до тексту</div>
                     </div>
 
@@ -938,7 +938,7 @@ uchwalono bywa, Czyni in Summa —
             <div class="smr-transcript ">
                 <div>
                     <div class="smr-col-header">
-                        <div class="smr-col-badge">UK</div>
+                        <div class="smr-col-badge">UA</div>
                         <div class="smr-col-title">Переклад — Сучасна українська</div>
                     </div>
 
@@ -1471,7 +1471,7 @@ uchwalono bywa, Czyni in Summa —
                         <!-- Interpretation A -->
                         <div style="padding:1.2rem 1.4rem;border:1px solid var(--ruling);border-radius:8px;background:var(--parchment);flex:1;">
                             <div style="display:flex;align-items:center;gap:.7rem;margin-bottom:.6rem;">
-                                <div style="width:24px;height:24px;background:var(--ink);color:var(--parchment);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-size:.6rem;font-weight:600;flex-shrink:0;">A</div>
+                                <div style="width:24px;height:24px;background:var(--sepia);color:#1a1000;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-size:.6rem;font-weight:600;flex-shrink:0;">A</div>
                                 <div style="font-family:'DM Sans',sans-serif;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);">«9 фільварків» — кількість</div>
                             </div>
                             <p style="font-family:'DM Sans',sans-serif;font-size:.77rem;line-height:1.75;color:var(--ink-faded);margin:0;">
@@ -1723,15 +1723,41 @@ uchwalono bywa, Czyni in Summa —
     { src: 'https://i.imgur.com/UPFx3Gp.jpeg', cap: 'Сторінка 2 · Промисловий потенціал' },
     { src: 'https://i.imgur.com/gseULFj.jpeg', cap: 'Сторінка 3 · Замок та підсумок' },
 ];
-    document.querySelectorAll('.smr-tab').forEach(function(tab) {
-        tab.addEventListener('click', function() {
-            var panel = this.dataset.panel;
+    (function() {
+        var tabStrip = document.querySelector('.smr-tabs');
+        var touchStartX = 0, touchStartY = 0, stripScrollStart = 0;
+        var SWIPE_THRESHOLD = 8;
+
+        if (tabStrip) {
+            tabStrip.addEventListener('touchstart', function(e) {
+                touchStartX = e.touches[0].clientX;
+                touchStartY = e.touches[0].clientY;
+                stripScrollStart = tabStrip.scrollLeft;
+            }, { passive: true });
+        }
+
+        function activateTab(tab) {
+            var panel = tab.dataset.panel;
             document.querySelectorAll('.smr-tab').forEach(function(t) { t.classList.remove('active'); });
             document.querySelectorAll('.smr-tab-panel').forEach(function(p) { p.classList.remove('active'); });
-            this.classList.add('active');
-            document.getElementById('panel-' + panel).classList.add('active');
+            tab.classList.add('active');
+            var target = document.getElementById('panel-' + panel);
+            if (target) target.classList.add('active');
+        }
+
+        document.querySelectorAll('.smr-tab').forEach(function(tab) {
+            tab.addEventListener('touchend', function(e) {
+                var dx = Math.abs(e.changedTouches[0].clientX - touchStartX);
+                var scrollDelta = Math.abs(tabStrip ? tabStrip.scrollLeft - stripScrollStart : 0);
+                if (dx > SWIPE_THRESHOLD || scrollDelta > SWIPE_THRESHOLD) return;
+                e.preventDefault();
+                activateTab(this);
+            }, { passive: false });
+            tab.addEventListener('click', function() {
+                activateTab(this);
+            });
         });
-    });
+    })();
     window.openScanLB = function(i){ ULB.open(SCANS, i); };
     </script>
     <script>
