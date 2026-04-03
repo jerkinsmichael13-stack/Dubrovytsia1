@@ -4366,6 +4366,20 @@ function close(){
 function nav(dir){if(!items.length)return;cur=(cur+dir+items.length)%items.length;loadItem(cur);}
 function init(){
   var v=gel('ULB-VP');if(!v)return;
+  /* ── Zoom pad: stop propagation to VP ── */
+  var zpad=gel('ULB-ZOOM-PAD');
+  if(zpad){
+    ['mousedown','mouseup','click'].forEach(function(ev){
+      zpad.addEventListener(ev,function(e){e.stopPropagation();});
+    });
+    zpad.addEventListener('touchstart',function(e){e.stopPropagation();},{passive:true});
+    zpad.addEventListener('touchend',function(e){
+      e.stopPropagation();
+      var btn=e.target.closest('.ulb-btn');
+      if(btn&&e.changedTouches.length===1){btn.click();}
+    },{passive:true});
+    zpad.addEventListener('touchmove',function(e){e.stopPropagation();},{passive:true});
+  }
   /* ── Mouse ── */
   v.addEventListener('mousedown',function(e){
     if(e.button!==0)return;
