@@ -27,15 +27,14 @@
 #ULB-LOADER::after{content:'';width:34px;height:34px;border:2px solid rgba(255,255,255,.1);border-top-color:rgba(201,162,39,.85);border-radius:50%;animation:ulb-spin .75s linear infinite;}
 @keyframes ulb-spin{to{transform:rotate(360deg)}}
 #ULB-LOADER.ulb-hidden{display:none;}
-#ULB-BAR{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:0;padding:.5rem .9rem;flex-shrink:0;background:rgba(6,5,10,.93);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid rgba(255,255,255,.06);}
-.ulb-left{display:flex;align-items:center;gap:.3rem;}
-.ulb-right{visibility:hidden;display:flex;align-items:center;gap:.3rem;}
+#ULB-BAR{display:flex;align-items:center;justify-content:center;padding:.55rem 1.2rem;flex-shrink:0;background:rgba(6,5,10,.93);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid rgba(255,255,255,.06);}
+#ULB-ZOOM-PAD{position:absolute;bottom:.7rem;left:.7rem;z-index:30;display:flex;align-items:center;gap:.28rem;background:rgba(6,5,10,.82);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:.35rem .45rem;}
 .ulb-btn{width:36px;height:36px;flex-shrink:0;border-radius:8px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.07);color:rgba(255,255,255,.82);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s,border-color .15s;padding:0;-webkit-tap-highlight-color:transparent;}
 .ulb-btn:hover,.ulb-btn:active{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.22);}
 .ulb-btn svg{width:16px;height:16px;pointer-events:none;}
 #ULB-ZVAL{font-family:'DM Sans',sans-serif;font-size:.7rem;color:rgba(255,255,255,.5);min-width:3.4em;text-align:center;flex-shrink:0;}
 .ulb-sep{width:1px;height:18px;background:rgba(255,255,255,.1);flex-shrink:0;}
-#ULB-CAP{font-family:'Cormorant Garamond',serif;font-size:.95rem;font-weight:300;font-style:italic;color:rgba(255,255,255,.72);text-align:center;padding:0 .5rem;pointer-events:none;line-height:1.4;letter-spacing:.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;}
+#ULB-CAP{font-family:'Cormorant Garamond',serif;font-size:.95rem;font-weight:300;font-style:italic;color:rgba(255,255,255,.72);text-align:center;padding:0;pointer-events:none;line-height:1.4;letter-spacing:.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
 #ULB-CLOSE{position:absolute;top:.75rem;right:.75rem;z-index:20;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.18);background:rgba(10,8,16,.75);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:rgba(255,255,255,.88);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s,transform .15s;padding:0;-webkit-tap-highlight-color:transparent;}
 #ULB-CLOSE:hover{background:rgba(255,255,255,.2);transform:scale(1.08);}
 #ULB-CLOSE svg{width:18px;height:18px;pointer-events:none;}
@@ -877,15 +876,14 @@ a, button, [role="button"], input, select, textarea,
     <div id="ULB-LOADER"></div>
     <img id="ULB-IMG" src="" alt="" draggable="false">
   </div>
+  <div id="ULB-ZOOM-PAD">
+    <button class="ulb-btn" onclick="ULB.zoomOut()" title="Зменшити (−)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="8" y1="11" x2="14" y2="11"/></svg></button>
+    <span id="ULB-ZVAL">1.0&times;</span>
+    <button class="ulb-btn" onclick="ULB.zoomIn()" title="Збільшити (+)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></button>
+    <button class="ulb-btn" onclick="ULB.reset()" title="Скинути (0)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg></button>
+  </div>
   <div id="ULB-BAR">
-    <div class="ulb-left">
-      <button class="ulb-btn" onclick="ULB.zoomOut()" title="Зменшити (−)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="8" y1="11" x2="14" y2="11"/></svg></button>
-      <span id="ULB-ZVAL">1.0&times;</span>
-      <button class="ulb-btn" onclick="ULB.zoomIn()" title="Збільшити (+)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></button>
-      <button class="ulb-btn" onclick="ULB.reset()" title="Скинути (0)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg></button>
-    </div>
     <span id="ULB-CAP"></span>
-    <div class="ulb-right" aria-hidden="true"></div>
   </div>
 </div>
 <div style="display:none">
