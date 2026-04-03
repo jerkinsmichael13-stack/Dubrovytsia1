@@ -1114,7 +1114,7 @@ var pd0=0,ps0=1,piX=0,piY=0;
 var items=[],cur=0,natW=0,natH=0,fitS=1,vW=0,vH=0;
 var savedY=0,MAX=10;
 function gel(id){return document.getElementById(id);}
-function getVP(){var v=gel('ULB-VP');return v?{w:v.clientWidth,h:v.clientHeight}:{w:innerWidth,h:innerHeight};}
+function getVP(){var vv=window.visualViewport;return vv?{w:Math.round(vv.width),h:Math.round(vv.height)}:{w:innerWidth,h:innerHeight};}
 function computeBase(){
   var d=getVP();vW=d.w;vH=d.h;
   if(!natW||!natH)return;
@@ -1179,7 +1179,7 @@ function open(arr,i2){
   document.body.style.top='-'+savedY+'px';
   document.body.style.width='100%';
   lb.classList.add('on');
-  loadItem(cur);
+  requestAnimationFrame(function(){computeBase();loadItem(cur);});
 }
 function close(){
   var lb=gel('ULB');if(!lb)return;

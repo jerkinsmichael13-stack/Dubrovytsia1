@@ -572,7 +572,15 @@ function bkToggleDesc(id, btn) {
     const el = document.getElementById(id);
     if (!el) return;
     const expanded = btn.getAttribute('aria-expanded') === 'true';
-    el.classList.toggle('bk-desc-full', !expanded);
+    if (expanded) {
+        // Collapse: restore webkit-box clamp
+        el.classList.remove('bk-desc-full');
+        el.style.display = '';
+    } else {
+        // Expand: switch to block so height grows naturally
+        el.classList.add('bk-desc-full');
+        el.style.display = 'block';
+    }
     btn.setAttribute('aria-expanded', String(!expanded));
     btn.innerHTML = expanded ? 'Читати далі <span>↓</span>' : 'Згорнути <span>↑</span>';
 }
