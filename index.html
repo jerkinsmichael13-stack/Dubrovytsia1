@@ -35,7 +35,6 @@
     .AW { padding: 0 1rem; }
     .AT { font-size: 1.6rem; }
     .ABT { font-size: 1.05rem; }
-    .LEG { display: none; } /* legend hidden on very small, pins have tooltips */
     .MBOX { max-height: 60vw; }
 }
 
@@ -904,8 +903,7 @@ a, button, [role="button"], input, select, textarea,
     .ABLK-TAG.sat{color:rgba(201,162,39,.7);background:rgba(201,162,39,.07);border-color:rgba(201,162,39,.2);}
 
     /* ══ MAP LAYOUT ══ */
-    .AG{display:grid;grid-template-columns:1fr 268px;gap:1.6rem;align-items:start;}
-    @media(max-width:880px){.AG{grid-template-columns:1fr;}}
+    .AG{display:flex;flex-direction:column;gap:1rem;}
 
     /* ── Map Wrapper (corner brackets) ── */
     .MWRAP{position:relative;}
@@ -1017,28 +1015,28 @@ a, button, [role="button"], input, select, textarea,
       color:#c9a227;font-weight:700;letter-spacing:.04em;}
 
     /* ══ LEGEND ══ */
-    .LEG{background:rgba(10,8,6,.75);border:1px solid rgba(255,255,255,.07);
-      border-radius:10px;padding:1.4rem 1.2rem;position:sticky;top:90px;
+    .LEG{background:rgba(10,8,6,.6);border:1px solid rgba(255,255,255,.07);
+      border-radius:8px;padding:.7rem 1rem;
       backdrop-filter:blur(16px);
       box-shadow:0 4px 24px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.04);}
-    .LEGH{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;
-      color:rgba(220,200,160,.8);margin:0 0 .85rem;padding-bottom:.7rem;
+    .LEGH{font-family:'Cormorant Garamond',serif;font-size:.82rem;font-weight:600;
+      color:rgba(220,200,160,.65);margin:0 0 .5rem;padding-bottom:.4rem;
       border-bottom:1px solid rgba(255,255,255,.08);letter-spacing:.02em;}
-    .LEGL{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:2px;}
-    .LEGI{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:6px;
+    .LEGL{list-style:none;padding:0;margin:0;display:flex;flex-direction:row;flex-wrap:wrap;gap:3px;}
+    .LEGI{display:flex;align-items:center;gap:6px;padding:4px 8px;border-radius:6px;
       cursor:pointer;border:1px solid transparent;transition:background .13s,color .13s;
-      font-family:'DM Sans',sans-serif;font-size:.71rem;color:rgba(200,185,150,.42);line-height:1.4;}
+      font-family:'DM Sans',sans-serif;font-size:.68rem;color:rgba(200,185,150,.42);line-height:1.4;}
     .LEGI:hover{background:rgba(255,255,255,.05);color:rgba(200,185,150,.8);}
     .LEGI.act{background:rgba(201,162,39,.1);border-color:rgba(201,162,39,.28);color:rgba(240,220,155,.9);}
-    .LEGN{flex-shrink:0;width:22px;height:22px;border-radius:50%;
+    .LEGN{flex-shrink:0;width:20px;height:20px;border-radius:50%;
       background:linear-gradient(135deg,#ddb030,#c49020);
-      color:#1a1000;font-size:.58rem;font-weight:800;font-family:'DM Sans',sans-serif;
+      color:#1a1000;font-size:.55rem;font-weight:800;font-family:'DM Sans',sans-serif;
       display:flex;align-items:center;justify-content:center;
       transition:transform .13s;box-shadow:0 2px 6px rgba(0,0,0,.4);}
     .LEGI:hover .LEGN,.LEGI.act .LEGN{transform:scale(1.12);}
-    .LEGHINT{margin-top:.85rem;font-size:.61rem;color:rgba(160,145,120,.3);
+    .LEGHINT{margin-top:.5rem;font-size:.58rem;color:rgba(160,145,120,.3);
       font-family:'DM Sans',sans-serif;line-height:1.5;font-style:italic;
-      border-top:1px solid rgba(255,255,255,.05);padding-top:.7rem;}
+      border-top:1px solid rgba(255,255,255,.05);padding-top:.45rem;}
 
     /* ══ SEPARATOR ══ */
     .MSEP{border:none;margin:3.5rem 0 4.5rem;position:relative;height:1px;
@@ -1269,16 +1267,15 @@ a, button, [role="button"], input, select, textarea,
             <h3 class="AER-FIND-TITLE">Аерофотознімки Дубровиці<br><em>12 червня 1917 року</em></h3>
             <p class="AER-FIND-DESC">
               Два знімки, виконані <strong>47-м баварським польовим авіаційним загоном</strong> 
-              (<em lang="de">Bayerische Feldflieger-Abteilung 47</em>) під час Першої світової війни в районі Ковеля. 
+              (<em lang="de">Bayerische Feldflieger-Abteilung 47</em>) під час Першої світової війни. 
               Це <strong>найдавніші відомі аерофотознімки Дубровиці</strong> — унікальне свідчення того, яким місто виглядало понад 100 років тому: 
               з усіма п'ятьма синагогами, ботанічним садом ордену Піарів, єврейським кварталом у центрі та 
-              нетронутою забудовою, яку знищить Друга світова.
+              незайманою забудовою, яку знищить Друга світова.
             </p>
             <div class="AER-FIND-TAGS">
               <span class="AER-FIND-TAG">12 червня 1917</span>
               <span class="AER-FIND-TAG">Перша світова війна</span>
               <span class="AER-FIND-TAG">Bayr. Fliegerabt. 47</span>
-              <span class="AER-FIND-TAG">Ковельський напрямок</span>
               <span class="AER-FIND-TAG">100+ років тому</span>
             </div>
           </div>
@@ -1294,7 +1291,7 @@ a, button, [role="button"], input, select, textarea,
             <div class="ABLK-TAGS">
               <span class="ABLK-TAG" style="color:rgba(232,184,75,.7);border-color:rgba(232,184,75,.22);">★ Унікальна знахідка</span>
               <span class="ABLK-TAG">Bayr. Fliegerabteilung 47</span>
-              <span class="ABLK-TAG">Перша світова · Ковель</span>
+              <span class="ABLK-TAG">Перша світова війна</span>
               <span class="ABLK-TAG">2 знімки</span>
             </div>
           </div>
@@ -1365,7 +1362,7 @@ a, button, [role="button"], input, select, textarea,
             „<span lang="de">Dombrowica 12.6.1917. Aufnahmen der bayr. Fliegerabteilung 47 bei Kowel.</span>"
           </p>
           <p style="font-family:'DM Sans',sans-serif;font-size:.65rem;color:rgba(240,220,160,.28);margin:0;letter-spacing:.04em;">
-            Оригінальний підпис на знімках · 47-й баварський польовий авіаційний загін, аерофотозйомка в районі Ковеля
+            Оригінальний підпис на знімках · 47-й баварський польовий авіаційний загін
           </p>
         </div>
 
