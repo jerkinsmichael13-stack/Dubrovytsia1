@@ -1226,9 +1226,8 @@ a, button, [role="button"], input, select, textarea,
       }
       :root:not([data-theme="dark"]) .AER-FIND-TAG{color:rgba(120,75,5,.75);background:rgba(140,95,15,.07);border-color:rgba(140,95,15,.2);}
 
-      /* ── Dual photo grid for 1917 ── */
-      .AG17{display:grid;grid-template-columns:1fr 1fr;gap:1.6rem;align-items:start;}
-      @media(max-width:760px){.AG17{grid-template-columns:1fr;}}
+      /* ── Dual photo layout for 1917 — stacked full-width ── */
+      .AG17{display:flex;flex-direction:column;gap:2.4rem;}
       .AG17-LABEL{
         font-family:'DM Sans',sans-serif;font-size:.46rem;letter-spacing:.26em;text-transform:uppercase;
         color:rgba(232,184,75,.5);margin-bottom:.6rem;
@@ -1240,9 +1239,10 @@ a, button, [role="button"], input, select, textarea,
       /* Second photo — simple zoomable, no pins */
       .MBOX17B{position:relative;overflow:hidden;border-radius:2px;
         box-shadow:0 0 0 1px rgba(201,162,39,.15),0 8px 30px rgba(0,0,0,.65),0 30px 70px rgba(0,0,0,.5);
-        cursor:zoom-in;max-height:75vh;
+        cursor:zoom-in;
         background:#0c0b09;
         display:flex;align-items:center;justify-content:center;
+        min-height:300px;max-height:78vh;
       }
       :root:not([data-theme="dark"]) .MBOX17B{background:#e8e0cf;box-shadow:0 0 0 1px rgba(140,95,15,.25),0 8px 30px rgba(0,0,0,.45),0 30px 70px rgba(0,0,0,.38);}
       .MBOX17B img{width:100%;height:100%;object-fit:contain;display:block;user-select:none;pointer-events:none;}
@@ -1340,8 +1340,9 @@ a, button, [role="button"], input, select, textarea,
             </div>
           </div>
 
-          <!-- Photo 2 — simple zoom/lightbox -->
+          <!-- Photo 2 — simple zoom/lightbox, full width -->
           <div>
+            <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(201,162,39,.18),transparent);margin-bottom:2rem;"></div>
             <div class="AG17-LABEL">Знімок 2 · натисніть для збільшення</div>
             <div class="MWRAP">
               <div class="MBOX17B" id="M17b" onclick="window.ULB&&window.ULB.open([{src:'https://i.imgur.com/3lXbs0D.jpeg',cap:'Дубровиця · 12 червня 1917 р. · Знімок 2 з 2 · Bayr. Fliegerabteilung 47'}],0)">
@@ -1542,9 +1543,10 @@ a, button, [role="button"], input, select, textarea,
     <script>
     document.addEventListener('DOMContentLoaded', function() {
 
-      var DATA = { '44': [], '43': [], '71': [] };
+      var DATA = { '17a': [], '44': [], '43': [], '71': [] };
       // State: scale + translate from top-left (transform-origin: 0 0)
       var ST = {
+        '17a': { sc: 1, tx: 0, ty: 0 },
         '44': { sc: 1, tx: 0, ty: 0 },
         '43': { sc: 1, tx: 0, ty: 0 },
         '71': { sc: 1, tx: 0, ty: 0 }
@@ -1602,7 +1604,7 @@ a, button, [role="button"], input, select, textarea,
       }
 
       function hideTooltip() {
-        ['44','43','71'].forEach(function(m) {
+        ['17a','44','43','71'].forEach(function(m) {
           document.getElementById('TIP'+m).classList.remove('show');
         });
         if (activeMid) {
@@ -1724,7 +1726,7 @@ a, button, [role="button"], input, select, textarea,
       }
 
       // ── BUTTONS ────────────────────────────────────────────────
-      ['44','43','71'].forEach(function(mid) {
+      ['17a','44','43','71'].forEach(function(mid) {
         document.getElementById('z'+mid+'p').addEventListener('click', function(e) {
           e.stopPropagation(); doZoom(mid, 1.5);
         });
@@ -1741,7 +1743,7 @@ a, button, [role="button"], input, select, textarea,
       });
 
       // ── DRAG & WHEEL ───────────────────────────────────────────
-      ['44','43','71'].forEach(function(mid) {
+      ['17a','44','43','71'].forEach(function(mid) {
         var box = getBox(mid);
         var dragging = false, startX = 0, startY = 0;
 
