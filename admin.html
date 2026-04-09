@@ -627,6 +627,12 @@
 
             <!-- Map selector -->
             <div style="display:flex;gap:0.75rem;margin-bottom:1.5rem;flex-wrap:wrap;">
+                <button class="map-sel-btn" data-mapid="1917a"
+                    style="padding:0.6rem 1.2rem;border-radius:0.6rem;border:2px solid var(--color-border);
+                           background:transparent;color:var(--color-text);font-family:'DM Sans',sans-serif;
+                           font-size:0.875rem;font-weight:600;cursor:pointer;transition:all 0.2s;">
+                    📸 Знімок 1917
+                </button>
                 <button class="map-sel-btn active" data-mapid="1944"
                     style="padding:0.6rem 1.2rem;border-radius:0.6rem;border:2px solid var(--color-primary);
                            background:var(--color-primary);color:#fff;font-family:'DM Sans',sans-serif;
@@ -2687,6 +2693,10 @@ document.addEventListener('DOMContentLoaded', function(){
 (function(){
 
 var MAPS_CONFIG = {
+    '1917a': {
+        img:    'https://i.imgur.com/Da5KGQS.jpeg',
+        file:   'aerial_pins_1917a.json'
+    },
     '1944': {
         img:    'https://i.imgur.com/dyP4WgZ.jpeg',
         file:   'aerial_pins_1944.json'
@@ -2702,7 +2712,7 @@ var MAPS_CONFIG = {
 };
 
 var currentMapId = '1944';
-var pins = { '1944': [], '1943': [], '1971': [] };
+var pins = { '1917a': [], '1944': [], '1943': [], '1971': [] };
 var pendingX = 0, pendingY = 0;  // in percentages 0-100
 var dragPin = null, dragOffset = {x:0, y:0};
 var hasDragged = false;
@@ -3020,7 +3030,7 @@ function normalizePin(p) {
 }
 
 function loadAllPins() {
-    ['1944','1943','1971'].forEach(function(key){
+    ['1917a','1944','1943','1971'].forEach(function(key){
         var file = MAPS_CONFIG[key].file;
         fetch('https://raw.githubusercontent.com/jerkinsmichael13-stack/Dubrovytsia1/main/'+file+'?v='+Date.now())
             .then(function(r){ return r.ok ? r.json() : []; })
