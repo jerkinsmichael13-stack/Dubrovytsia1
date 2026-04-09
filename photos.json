@@ -1,5 +1,12 @@
 [
     {
+        "imageUrl": "https://i.imgur.com/WuEOc5y.jpeg",
+        "title": "Аерофотознімок міста",
+        "period": "1900-1939",
+        "category": "aerial",
+        "date": "1917"
+    },
+    {
         "imageUrl": "https://i.imgur.com/LqUu7Fd.jpeg",
         "title": "Костел, малюнок Наполеона Орди",
         "period": "before-1900",
