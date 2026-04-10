@@ -33,14 +33,14 @@
 }
 .jh-hero-bg {
     position: absolute;
-    inset: -8%;
+    inset: 0;
     background-image: url('https://i.imgur.com/KuwKiZP.jpeg');
     background-size: cover;
     background-position: center 30%;
     filter: brightness(0.5) contrast(1.08) saturate(0.75);
-    transform: scale(1.02);
+    transform: scale(1.05);
     opacity: 0;
-    transition: transform 10s cubic-bezier(0.16,1,0.3,1), opacity 0.9s ease;
+    transition: transform 12s ease-out, opacity 0.9s ease;
     z-index: 0;
     will-change: transform;
 }
@@ -3163,18 +3163,11 @@ var newCemPhotos = [
 
 <script src="app.js"></script>
 <script>
-// Hero parallax
+// Hero ken-burns init
 (function(){
     var hero = document.getElementById('jhHero');
-    var bg = hero && hero.querySelector('.jh-hero-bg');
     if(!hero) return;
     setTimeout(function(){ hero.classList.add('loaded'); }, 100);
-    if(bg) window.addEventListener('scroll', function(){
-        var y = window.pageYOffset;
-        if(y <= hero.offsetHeight + 200){
-            bg.style.transform = 'translateY(' + (y * 0.2).toFixed(2) + 'px)';
-        }
-    }, {passive:true});
 })();
 
 // ULB — Professional Lightbox with Zoom

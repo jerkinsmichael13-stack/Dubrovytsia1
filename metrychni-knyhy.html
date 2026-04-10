@@ -35,19 +35,19 @@
 
 /* Two-layer bg: manuscript script behind, church silhouette in front */
 .mk-hero-bg {
-    position:absolute;inset:-8%;
+    position:absolute;inset:0;
     background-image:url('https://i.imgur.com/WeDmtIY.jpeg');
     background-size:cover;background-position:center 30%;
     filter:brightness(0.58) contrast(1.06) saturate(0.86);
-    transform:scale(1.02);opacity:0;
-    transition:opacity 0.8s ease;
+    transform:scale(1.05);opacity:0;
+    transition:opacity 0.8s ease, transform 12s ease-out;
     will-change:transform;
     z-index:0;
 }
 :root:not([data-theme="dark"]) .mk-hero-bg {
     filter:brightness(0.6) contrast(1.04) saturate(0.88);
 }
-.mk-hero.hero-loaded .mk-hero-bg { opacity:1; }
+.mk-hero.hero-loaded .mk-hero-bg { opacity:1; transform:scale(1); }
 
 /* Grain */
 .mk-hero-grain {
@@ -1481,16 +1481,11 @@ a, button, [role="button"], input, select, textarea,
             bar.style.width=Math.min(100,(window.pageYOffset/(s.scrollHeight-s.clientHeight))*100).toFixed(1)+'%';
         },{passive:true});
     })();
-    // Hero parallax
+    // Hero ken-burns init
     (function(){
         var hero=document.getElementById('mkHero');
-        var bg=hero&&hero.querySelector('.mk-hero-bg');
         if(!hero)return;
         setTimeout(function(){hero.classList.add('hero-loaded');},80);
-        if(bg) window.addEventListener('scroll',function(){
-            var y=window.pageYOffset;
-            if(y<=hero.offsetHeight+200){ bg.style.transition='opacity 0.8s ease'; bg.style.transform='translateY('+(y*0.22).toFixed(2)+'px)'; }
-        },{passive:true});
     })();
     </script>
 </body>

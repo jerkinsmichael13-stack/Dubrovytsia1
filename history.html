@@ -43,17 +43,18 @@
     background: #0a0805;
 }
 .hist-hero-bg {
-    position: absolute; inset: -8%;
+    position: absolute; inset: 0;
     background-image: url('https://i.imgur.com/kTYK0h1.jpeg');
     background-size: cover;
     background-position: center 30%;
     filter: brightness(0.62) contrast(1.06) saturate(0.88);
     opacity: 0;
-    transition: opacity 0.8s ease;
+    transform: scale(1.05);
+    transition: opacity 0.8s ease, transform 12s ease-out;
     z-index: 0;
     will-change: transform;
 }
-.hist-hero.hero-loaded .hist-hero-bg { opacity: 1; }
+.hist-hero.hero-loaded .hist-hero-bg { opacity: 1; transform: scale(1); }
 [data-theme="dark"] .hist-hero-bg { filter: brightness(0.4) contrast(1.1) saturate(0.72); }
 
 .hist-hero-grain {
@@ -1273,22 +1274,12 @@ a, button, [role="button"], input, select, textarea,
         }, {passive:true});
     })();
 
-    // ── Cinematic hero init + parallax + year counter ──
+    // ── Cinematic hero init ──
     (function(){
         var hero = document.getElementById('histHero');
         var bg   = document.getElementById('histBg');
         if(!hero) return;
         setTimeout(function(){ hero.classList.add('hero-loaded'); }, 80);
-
-        if(bg){
-            window.addEventListener('scroll', function(){
-                var y = window.pageYOffset;
-                if(y <= hero.offsetHeight + 200){
-                    bg.style.transition = 'opacity 0.8s ease';
-                    bg.style.transform = 'translateY(' + (y * 0.22).toFixed(2) + 'px)';
-                }
-            }, {passive:true});
-        }
 
         // Animated year counter
         var el2 = document.getElementById('histYear2');

@@ -823,7 +823,7 @@ a, button, [role="button"], input, select, textarea,
     :root:not([data-theme="dark"]) .LEGI.act{background:rgba(140,95,15,.08);border-color:rgba(140,95,15,.25);color:rgba(90,60,5,.9);}
     :root:not([data-theme="dark"]) .LEGHINT{color:rgba(90,70,40,.35);border-top-color:rgba(0,0,0,.07);}
     :root:not([data-theme="dark"]) .MSEP{background:linear-gradient(90deg,transparent,rgba(140,95,15,.2),transparent);}
-    :root:not([data-theme="dark"]) .MSEP-TXT{background:transparent;color:rgba(100,70,20,.4);}
+    :root:not([data-theme="dark"]) .MSEP-TXT{background:#f0ebe0;color:rgba(100,70,20,.4);position:relative;z-index:1;}
     :root:not([data-theme="dark"]) .MSEP-DIAMOND{background:rgba(140,95,15,.3);}
     #AER *{box-sizing:border-box;}
 
@@ -1045,7 +1045,7 @@ a, button, [role="button"], input, select, textarea,
       display:flex;align-items:center;gap:.8rem;}
     .MSEP-TXT{font-family:'DM Sans',sans-serif;font-size:.46rem;letter-spacing:.32em;
       text-transform:uppercase;color:rgba(201,162,39,.35);
-      background:#07060a;padding:0 .9rem;white-space:nowrap;}
+      background:#07060a;padding:0 1.2rem;white-space:nowrap;position:relative;z-index:1;}
     .MSEP-DIAMOND{width:5px;height:5px;background:rgba(201,162,39,.3);
       transform:rotate(45deg);flex-shrink:0;}
 
@@ -1285,7 +1285,7 @@ a, button, [role="button"], input, select, textarea,
       <!-- ══ MAP 1917 ══ -->
       <div class="ABLK">
         <div class="ABLK-HEAD">
-          <div class="ABLK-YEAR" data-yr="1917" style="-webkit-text-stroke:1px rgba(232,184,75,.28);text-shadow:none;">1917</div>
+          <div class="ABLK-YEAR" data-yr="1917">1917</div>
           <div class="ABLK-INFO">
             <h3 class="ABT">Аерофотознімки Дубровиці · 12 червня 1917 р.</h3>
             <div class="ABLK-TAGS">
@@ -1809,7 +1809,10 @@ a, button, [role="button"], input, select, textarea,
               var rect = box.getBoundingClientRect();
               var mx = ((t0.clientX + t1.clientX) / 2) - rect.left;
               var my = ((t0.clientY + t1.clientY) / 2) - rect.top;
-              doZoom(mid, dist / lastDist, mx, my);
+              // Dampen raw ratio for smooth pinch (lerp toward 1)
+              var rawFactor = dist / lastDist;
+              var smoothFactor = 1 + (rawFactor - 1) * 0.55;
+              doZoom(mid, smoothFactor, mx, my);
             }
             lastDist = dist;
           }

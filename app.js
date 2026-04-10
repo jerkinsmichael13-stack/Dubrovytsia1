@@ -871,7 +871,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     tick();
                 }
             })
-            .catch(() => { if (stat) stat.textContent = '44'; });
+            .catch(() => { if (stat) stat.textContent = '157'; });
     }
 
     // Repeat after dynamic loads
