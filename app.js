@@ -422,7 +422,10 @@ function openLightbox(index) {
     if (cap)  cap.textContent  = p.title || '';
     if (meta) meta.textContent = [PERIOD_NAMES[p.period]||p.period, CATEGORY_NAMES[p.category]||p.category, p.date||''].filter(Boolean).join(' · ');
     if (dl) dl.innerHTML = p.originalUrl?.startsWith('http')
-        ? `<a href="${p.originalUrl}" target="_blank" rel="noopener" class="lightbox-download">📥 Переглянути оригінал</a>` : '';
+        ? `<button class="lightbox-download lightbox-download-btn"
+               onclick="downloadWithWatermark('${p.originalUrl}', '${(p.title||'photo').replace(/'/g,"\\'")}')">
+               📥 Завантажити
+           </button>` : '';
     const arr = filteredPhotos.map(ph => ({ src: ph.imageUrl, cap: ph.title || '' }));
     ULB.open(arr, index);
     buildFilmstrip(filteredPhotos, index);
@@ -435,7 +438,96 @@ function navigateLightbox(dir) {
     openLightbox(currentPhotoIndex);
 }
 function closeLightbox() { ULB.close(); }
-function initLightbox() {}
+function initLightbox() {
+    // Захист від правого кліку на фото
+    document.addEventListener('contextmenu', e => {
+        if (e.target.closest('.photo-card') || e.target.closest('#ULB')) {
+            e.preventDefault();
+        }
+    });
+}
+
+// ================================================
+// ЗАВАНТАЖЕННЯ З ВОТЕРМАРКОЮ
+// ================================================
+
+async function downloadWithWatermark(imageUrl, title) {
+    const WATERMARK = 'dubrovytsia.site';
+
+    const btn = document.querySelector('.lightbox-download-btn');
+    if (btn) { btn.textContent = '⏳ Завантаження...'; btn.disabled = true; }
+
+    try {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+
+        await new Promise((resolve, reject) => {
+            img.onload  = resolve;
+            img.onerror = reject;
+            img.src = imageUrl + (imageUrl.includes('?') ? '&' : '?') + '_cb=' + Date.now();
+        });
+
+        const W = img.naturalWidth  || img.width;
+        const H = img.naturalHeight || img.height;
+
+        const canvas = document.createElement('canvas');
+        canvas.width  = W;
+        canvas.height = H;
+        const ctx = canvas.getContext('2d');
+
+        // 1. Оригінальне фото
+        ctx.drawImage(img, 0, 0, W, H);
+
+        // 2. Параметри тексту
+        const fontSize   = Math.max(18, Math.round(W * 0.028));
+        const fontFamily = '"DM Sans", Arial, sans-serif';
+        ctx.font         = `600 ${fontSize}px ${fontFamily}`;
+
+        const textW = ctx.measureText(WATERMARK).width;
+        const textH = fontSize;
+        const padX  = Math.round(fontSize * 0.75);
+        const padY  = Math.round(fontSize * 0.55);
+        const boxW  = textW + padX * 2;
+        const boxH  = textH + padY * 2;
+        const margin = Math.round(Math.min(W, H) * 0.022);
+        const bx    = W - boxW - margin;
+        const by    = H - boxH - margin;
+        const radius = Math.round(fontSize * 0.3);
+
+        // 3. Напівпрозорий фон
+        ctx.globalAlpha = 0.55;
+        ctx.fillStyle   = '#000000';
+        ctx.beginPath();
+        ctx.roundRect(bx, by, boxW, boxH, radius);
+        ctx.fill();
+
+        // 4. Текст вотермарки
+        ctx.globalAlpha  = 0.85;
+        ctx.fillStyle    = '#ffffff';
+        ctx.textBaseline = 'middle';
+        ctx.textAlign    = 'left';
+        ctx.fillText(WATERMARK, bx + padX, by + boxH / 2);
+        ctx.globalAlpha = 1;
+
+        // 5. Скачати як PNG
+        canvas.toBlob(blob => {
+            const url  = URL.createObjectURL(blob);
+            const a    = document.createElement('a');
+            a.href     = url;
+            a.download = (title || 'photo').replace(/[<>:"/\\|?*]/g, '_').trim() + '.png';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            setTimeout(() => URL.revokeObjectURL(url), 5000);
+            if (btn) { btn.textContent = '📥 Завантажити'; btn.disabled = false; }
+        }, 'image/png');
+
+    } catch (err) {
+        console.warn('Watermark error:', err);
+        window.open(imageUrl, '_blank');
+        if (btn) { btn.textContent = '📥 Завантажити'; btn.disabled = false; }
+    }
+}
 
 
 // FILMSTRIP для lightbox
