@@ -64,21 +64,21 @@
 /* ── Background photo layer ── */
 .pa-hero-bg {
     position: absolute;
-    inset: -8%;
+    inset: 0;
     background-image: url('https://i.imgur.com/qcjgN1I.jpeg');
     background-size: cover;
     background-position: center 40%;
     filter: brightness(0.6) contrast(1.06) saturate(0.88);
-    transform: scale(1.02); opacity: 0;
+    transform: scale(1.05); opacity: 0;
     will-change: transform;
     z-index: 0;
-    transition: transform 10s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.7s ease;
+    transition: transform 12s ease-out, opacity 0.8s ease;
 }
 /* Light theme: brighter, warms into parchment */
 :root:not([data-theme="dark"]) .pa-hero-bg {
     filter: brightness(0.62) contrast(1.04) saturate(0.9);
 }
-.pa-hero.hero-loaded .pa-hero-bg { opacity: 1; }
+.pa-hero.hero-loaded .pa-hero-bg { opacity: 1; transform: scale(1); }
 
 /* ── Film grain ── */
 .pa-hero-grain {
@@ -731,7 +731,7 @@ a, button, [role="button"], input, select, textarea,
             </div>
             <div class="pa-hero-stat-sep">·</div>
             <div class="pa-hero-stat">
-                <span class="pa-hero-stat-num">157</span>
+                <span class="pa-hero-stat-num" id="paHeroCount">157</span>
                 <span class="pa-hero-stat-label">Знімки</span>
             </div>
             <div class="pa-hero-stat-sep">·</div>
@@ -943,31 +943,11 @@ document.querySelectorAll('.pa-hero-main img, .pa-strip-cell img').forEach(funct
     }
 });
 
-// ── Hero parallax + grain init ──
+// ── Hero ken-burns init ──
 (function(){
     var hero = document.getElementById('paHero');
-    var bg   = document.getElementById('paHeroBg');
     if (!hero) return;
-
-    // Slow zoom-in on load
     setTimeout(function(){ hero.classList.add('hero-loaded'); }, 80);
-
-    // Scroll parallax on bg
-    if (bg) {
-        var lastY = -1;
-        function onScroll(){
-            var y = window.pageYOffset;
-            if (y === lastY) return;
-            lastY = y;
-            var heroH = hero.offsetHeight;
-            if (y <= heroH + 200) {
-                bg.style.transition = 'opacity 0.8s ease';
-                bg.style.transform = 'translateY(' + (y * 0.22).toFixed(2) + 'px)';
-            }
-        }
-        window.addEventListener('scroll', onScroll, { passive: true });
-    }
-
     // Reveal main photo captions on load
     var mainPhoto = document.querySelector('.pa-hero-main');
     if (mainPhoto) {
@@ -1008,6 +988,9 @@ function updateCounts(){
     if(!el) return;
     el.textContent=c==='all'?ALL_PHOTOS.length:ALL_PHOTOS.filter(function(p){return p.category===c;}).length;
   });
+  // Update hero stat
+  var heroCount=document.getElementById('paHeroCount');
+  if(heroCount) heroCount.textContent=ALL_PHOTOS.length;
 }
 
 function imgThumb(u){
