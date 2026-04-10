@@ -421,7 +421,17 @@ html[data-theme="dark"] .moon-icon { display: none; }
     pointer-events: none;
     will-change: transform;
 }
-.article-header::after, .catalog-header::after, .gallery-header::after { display: none; }
+.article-header::after,
+.catalog-header::after,
+.gallery-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 140px;
+    background: linear-gradient(to bottom, transparent, var(--color-bg));
+    z-index: 2;
+    pointer-events: none;
+}
 
 .hero-bg {
     position: absolute;
