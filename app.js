@@ -418,14 +418,22 @@ function openLightbox(index) {
     if (!p) return;
     const cap  = document.getElementById('lightboxCaption');
     const meta = document.getElementById('lightboxMeta');
-    const dl   = document.getElementById('lightboxDownloadContainer');
     if (cap)  cap.textContent  = p.title || '';
     if (meta) meta.textContent = [PERIOD_NAMES[p.period]||p.period, CATEGORY_NAMES[p.category]||p.category, p.date||''].filter(Boolean).join(' · ');
-    if (dl) dl.innerHTML = p.originalUrl?.startsWith('http')
-        ? `<button class="lightbox-download lightbox-download-btn"
-               onclick="downloadWithWatermark('${p.originalUrl}', '${(p.title||'photo').replace(/'/g,"\\'")}')">
-               📥 Завантажити
-           </button>` : '';
+
+    // Кнопка завантаження в ULB-BAR
+    const dlBtn = document.getElementById('ULB-DL-BTN');
+    if (dlBtn) {
+        const url = p.originalUrl || p.imageUrl;
+        if (url) {
+            dlBtn.dataset.url   = url;
+            dlBtn.dataset.title = p.title || 'photo';
+            dlBtn.style.display = 'flex';
+        } else {
+            dlBtn.style.display = 'none';
+        }
+    }
+
     const arr = filteredPhotos.map(ph => ({ src: ph.imageUrl, cap: ph.title || '' }));
     ULB.open(arr, index);
     buildFilmstrip(filteredPhotos, index);
@@ -454,8 +462,10 @@ function initLightbox() {
 async function downloadWithWatermark(imageUrl, title) {
     const WATERMARK = 'dubrovytsia.site';
 
-    const btn = document.querySelector('.lightbox-download-btn');
-    if (btn) { btn.textContent = '⏳ Завантаження...'; btn.disabled = true; }
+    const btn   = document.getElementById('ULB-DL-BTN');
+    const label = document.getElementById('ULB-DL-LABEL');
+    if (btn)   btn.disabled    = true;
+    if (label) label.textContent = '⏳ Завантаження...';
 
     try {
         const img = new Image();
@@ -483,15 +493,15 @@ async function downloadWithWatermark(imageUrl, title) {
         const fontFamily = '"DM Sans", Arial, sans-serif';
         ctx.font         = `600 ${fontSize}px ${fontFamily}`;
 
-        const textW = ctx.measureText(WATERMARK).width;
-        const textH = fontSize;
-        const padX  = Math.round(fontSize * 0.75);
-        const padY  = Math.round(fontSize * 0.55);
-        const boxW  = textW + padX * 2;
-        const boxH  = textH + padY * 2;
+        const textW  = ctx.measureText(WATERMARK).width;
+        const textH  = fontSize;
+        const padX   = Math.round(fontSize * 0.75);
+        const padY   = Math.round(fontSize * 0.55);
+        const boxW   = textW + padX * 2;
+        const boxH   = textH + padY * 2;
         const margin = Math.round(Math.min(W, H) * 0.022);
-        const bx    = W - boxW - margin;
-        const by    = H - boxH - margin;
+        const bx     = W - boxW - margin;
+        const by     = H - boxH - margin;
         const radius = Math.round(fontSize * 0.3);
 
         // 3. Напівпрозорий фон
@@ -519,13 +529,15 @@ async function downloadWithWatermark(imageUrl, title) {
             a.click();
             document.body.removeChild(a);
             setTimeout(() => URL.revokeObjectURL(url), 5000);
-            if (btn) { btn.textContent = '📥 Завантажити'; btn.disabled = false; }
+            if (btn)   btn.disabled     = false;
+            if (label) label.textContent = 'Завантажити';
         }, 'image/png');
 
     } catch (err) {
         console.warn('Watermark error:', err);
         window.open(imageUrl, '_blank');
-        if (btn) { btn.textContent = '📥 Завантажити'; btn.disabled = false; }
+        if (btn)   btn.disabled     = false;
+        if (label) label.textContent = 'Завантажити';
     }
 }
 

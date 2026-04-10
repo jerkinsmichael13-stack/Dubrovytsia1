@@ -27,7 +27,10 @@
 #ULB-LOADER::after{content:'';width:34px;height:34px;border:2px solid rgba(255,255,255,.1);border-top-color:rgba(201,162,39,.85);border-radius:50%;animation:ulb-spin .75s linear infinite;}
 @keyframes ulb-spin{to{transform:rotate(360deg)}}
 #ULB-LOADER.ulb-hidden{display:none;}
-#ULB-BAR{display:flex;align-items:center;justify-content:center;padding:.55rem 1.2rem;flex-shrink:0;background:rgba(6,5,10,.93);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid rgba(255,255,255,.06);}
+#ULB-BAR{display:flex;align-items:center;justify-content:center;gap:.8rem;padding:.55rem 1.2rem;flex-shrink:0;background:rgba(6,5,10,.93);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid rgba(255,255,255,.06);}
+#ULB-DL-BTN{display:flex;align-items:center;gap:.4rem;flex-shrink:0;padding:.32rem .85rem;border-radius:8px;border:1px solid rgba(201,162,39,.35);background:rgba(201,162,39,.12);color:rgba(201,162,39,.9);font-family:'DM Sans',sans-serif;font-size:.72rem;letter-spacing:.04em;cursor:pointer;transition:background .15s,border-color .15s;white-space:nowrap;}
+#ULB-DL-BTN:hover{background:rgba(201,162,39,.22);border-color:rgba(201,162,39,.6);}
+#ULB-DL-BTN:disabled{opacity:.45;cursor:not-allowed;}
 #ULB-ZOOM-PAD{position:absolute;bottom:.7rem;left:.7rem;z-index:30;display:flex;align-items:center;gap:.28rem;background:rgba(6,5,10,.82);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:.35rem .45rem;}
 .ulb-btn{width:36px;height:36px;flex-shrink:0;border-radius:8px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.07);color:rgba(255,255,255,.82);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s,border-color .15s;padding:0;-webkit-tap-highlight-color:transparent;}
 .ulb-btn:hover,.ulb-btn:active{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.22);}
@@ -884,6 +887,10 @@ a, button, [role="button"], input, select, textarea,
   </div>
   <div id="ULB-BAR">
     <span id="ULB-CAP"></span>
+    <button id="ULB-DL-BTN" onclick="downloadWithWatermark(this.dataset.url, this.dataset.title)" aria-label="Завантажити фото" style="display:none">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      <span id="ULB-DL-LABEL">Завантажити</span>
+    </button>
   </div>
 </div>
 <div style="display:none">
