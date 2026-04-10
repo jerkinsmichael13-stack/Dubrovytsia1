@@ -72,7 +72,7 @@
     position: absolute; inset: 0; z-index: 2; pointer-events: none;
     background:
         radial-gradient(ellipse 70% 60% at 50% 50%, transparent 20%, rgba(0,0,0,0.3) 100%),
-        linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.04) 28%, rgba(0,0,0,0.45) 72%, #0a0805 100%);
+        linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.04) 28%, rgba(0,0,0,0.45) 72%, var(--color-bg, #faf7f2) 100%);
 }
 .hist-hero-scan {
     position: absolute; inset: 0; z-index: 3; pointer-events: none;
@@ -1274,12 +1274,12 @@ a, button, [role="button"], input, select, textarea,
         }, {passive:true});
     })();
 
-    // ── Cinematic hero init ──
+    // ── Cinematic hero init + parallax + year counter ──
     (function(){
         var hero = document.getElementById('histHero');
-        var bg   = document.getElementById('histBg');
         if(!hero) return;
         setTimeout(function(){ hero.classList.add('hero-loaded'); }, 80);
+            
 
         // Animated year counter
         var el2 = document.getElementById('histYear2');

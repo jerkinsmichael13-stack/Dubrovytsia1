@@ -731,7 +731,7 @@ a, button, [role="button"], input, select, textarea,
             </div>
             <div class="pa-hero-stat-sep">·</div>
             <div class="pa-hero-stat">
-                <span class="pa-hero-stat-num" id="paHeroCount">157</span>
+                <span class="pa-hero-stat-num">157</span>
                 <span class="pa-hero-stat-label">Знімки</span>
             </div>
             <div class="pa-hero-stat-sep">·</div>
@@ -943,11 +943,12 @@ document.querySelectorAll('.pa-hero-main img, .pa-strip-cell img').forEach(funct
     }
 });
 
-// ── Hero ken-burns init ──
+// ── Hero parallax + grain init ──
 (function(){
     var hero = document.getElementById('paHero');
     if (!hero) return;
     setTimeout(function(){ hero.classList.add('hero-loaded'); }, 80);
+
     // Reveal main photo captions on load
     var mainPhoto = document.querySelector('.pa-hero-main');
     if (mainPhoto) {
@@ -988,9 +989,6 @@ function updateCounts(){
     if(!el) return;
     el.textContent=c==='all'?ALL_PHOTOS.length:ALL_PHOTOS.filter(function(p){return p.category===c;}).length;
   });
-  // Update hero stat
-  var heroCount=document.getElementById('paHeroCount');
-  if(heroCount) heroCount.textContent=ALL_PHOTOS.length;
 }
 
 function imgThumb(u){

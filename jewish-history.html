@@ -70,7 +70,7 @@
     pointer-events: none;
     background:
         radial-gradient(ellipse 70% 60% at 50% 50%, transparent 20%, rgba(0,0,0,0.3) 100%),
-        linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.05) 30%, rgba(0,0,0,0.4) 68%, #0d0b09 100%);
+        linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.05) 30%, rgba(0,0,0,0.4) 68%, var(--color-bg, #faf7f2) 100%);
 }
 /* Scan lines like photo-archive */
 .jh-hero-scan {
@@ -3163,7 +3163,7 @@ var newCemPhotos = [
 
 <script src="app.js"></script>
 <script>
-// Hero ken-burns init
+// Hero parallax
 (function(){
     var hero = document.getElementById('jhHero');
     if(!hero) return;
