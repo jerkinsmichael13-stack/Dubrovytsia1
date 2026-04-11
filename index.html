@@ -4435,8 +4435,10 @@ a, button, [role="button"], input, select, textarea,
         fsZoom(Math.pow(0.999, e.deltaY), e.clientX - r.left, e.clientY - r.top);
       }, { passive: false });
 
-      /* FS double-click */
+      /* FS double-click — only on touch devices (on desktop double-clicking buttons fires this) */
       fsframe.addEventListener('dblclick', function(e) {
+        if (window.matchMedia('(pointer:fine)').matches) return; /* desktop mouse — skip */
+        if (e.target.closest('.P62FSZB')) return;
         if (fsst.sc > fitSc * 1.5) { fsReset(); }
         else { var r = fsframe.getBoundingClientRect(); fsZoom(2.5, e.clientX - r.left, e.clientY - r.top); }
       });
