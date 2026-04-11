@@ -227,7 +227,7 @@ input, textarea, select { font-family: var(--font-body); font-size: 1rem; }
 }
 
 [data-theme="dark"] .header {
-    background-color: #0e0c0a;
+    background-color: rgba(14, 12, 10, 0.88);
     border-bottom-color: transparent;
 }
 
@@ -431,6 +431,24 @@ html[data-theme="dark"] .moon-icon { display: none; }
     background: linear-gradient(to bottom, transparent, var(--color-bg));
     z-index: 2;
     pointer-events: none;
+}
+
+/* Page-specific hero bottom fade — matches .hero::after */
+.hist-hero::after,
+.arch-hero::after,
+.books-hero::after,
+.mk-hero::after,
+.jh-hero::after,
+.cont-hero::after,
+.pa-hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 160px;
+    background: linear-gradient(to bottom, transparent, var(--color-bg));
+    z-index: 4;
+    pointer-events: none;
+    will-change: transform;
 }
 
 .hero-bg {
