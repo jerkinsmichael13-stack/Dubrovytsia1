@@ -1615,7 +1615,6 @@ a, button, [role="button"], input, select, textarea,
         .CJ-AC-PHOTOS {
           display: grid; grid-template-columns: 1fr 1fr; gap: .7rem;
         }
-        @media (max-width: 500px) { .CJ-AC-PHOTOS { grid-template-columns: 1fr 1fr; gap: .5rem; } }
         .CJ-AC-PHOTO {
           position: relative; border-radius: 8px; overflow: hidden;
           aspect-ratio: 4/3; background: #0a0806; cursor: zoom-in;
@@ -1663,11 +1662,6 @@ a, button, [role="button"], input, select, textarea,
           color: rgba(201,162,39,.55); font-size: .62rem;
           letter-spacing: .08em; text-transform: uppercase;
           padding-top: .07rem;
-        }
-        @media (max-width: 600px) {
-          .CJ-AC-ROW { flex-direction: column; gap: .15rem; }
-          .CJ-AC-ROW-K { width: auto; }
-          .CJ-DOCS { grid-template-columns: 1fr; }
         }
         :root:not([data-theme="dark"]) .CJ-AC-ROW-K { color: rgba(140,95,15,.6); }
         .CJ-AC-ROW-V { color: rgba(240,225,185,.8); }
@@ -1740,7 +1734,7 @@ a, button, [role="button"], input, select, textarea,
             <div class="CJ-DOC-BODY">
               <div class="CJ-DOC-DATE">22 січня 1944 · 397-а стрілецька дивізія</div>
               <p class="CJ-DOC-TEXT">«Над боевыми порядками дивизии авиация противника с 10:00 до 16:00 вела непрерывную разведку. Сброшено <strong>4 бомбы</strong> на м. Домбровица.»</p>
-              <div class="CJ-DOC-SOURCE">Журнал бойових дій 397-ї СД (архівна виписка)</div>
+              <div class="CJ-DOC-SOURCE">Журнал бойових дій 397-ї СД, ЦАМО РФ</div>
             </div>
           </div>
 
@@ -1753,7 +1747,7 @@ a, button, [role="button"], input, select, textarea,
             <div class="CJ-DOC-BODY">
               <div class="CJ-DOC-DATE">23 січня 1944 · 415-а стрілецька дивізія</div>
               <p class="CJ-DOC-TEXT">«Авиация противника производила разведывательные полеты над районом наших боевых порядков, а также самолет <strong>Fw-189</strong> сбросил <strong>6 бомб</strong> на м. Домбровица.»</p>
-              <div class="CJ-DOC-SOURCE">Журнал бойових дій 415-ї СД (архівна виписка)</div>
+              <div class="CJ-DOC-SOURCE">Журнал бойових дій 415-ї СД, ЦАМО РФ</div>
             </div>
           </div>
 
@@ -1766,7 +1760,7 @@ a, button, [role="button"], input, select, textarea,
             <div class="CJ-DOC-BODY">
               <div class="CJ-DOC-DATE">24 січня 1944 · Бойове донесення — дата аерофотознімку</div>
               <p class="CJ-DOC-TEXT">«Бомбардировщики <strong>Ju-87</strong> зробили до <strong>70 самолетовылетов</strong>. На м. Домбровицу сбросили до <strong>100 бомб</strong> и в районе ж-д моста до <strong>50 бомб</strong>. Потери: <strong>6 чел. ранено, 2 убито</strong>.»</p>
-              <div class="CJ-DOC-SOURCE">Бойове донесення 24.01.1944 (архівна виписка)</div>
+              <div class="CJ-DOC-SOURCE">Бойове донесення 24.01.1944, ЦАМО РФ</div>
             </div>
           </div>
 
@@ -1793,10 +1787,9 @@ a, button, [role="button"], input, select, textarea,
             </div>
             <div class="CJ-STAT">
               <div class="CJ-STAT-NUM">8</div>
-              <div class="CJ-STAT-LBL">Втрат серед солдатів за 3 дні*</div>
+              <div class="CJ-STAT-LBL">Людських жертв за 3 дні</div>
             </div>
           </div>
-          <p style="font-family:'DM Sans',sans-serif;font-size:.6rem;color:rgba(200,175,120,.32);margin-top:.7rem;letter-spacing:.04em;">* Лише задокументовані втрати серед радянських військовослужбовців згідно з бойовими журналами. Дані про жертви серед мирного населення в архівних джерелах не збереглися.</p>
         </div>
 
         <!-- Downed aircraft -->
