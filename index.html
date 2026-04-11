@@ -3523,11 +3523,15 @@ a, button, [role="button"], input, select, textarea,
     .P62MBOX::after{bottom:12px;right:12px;border-bottom:1.5px solid rgba(180,130,30,.55);border-right:1.5px solid rgba(180,130,30,.55);}
 
     /* ── MAP CONTROLS ── */
-    .P62ZW{position:absolute;bottom:14px;left:14px;display:flex;flex-direction:column;gap:5px;z-index:10;}
+    .P62ZW{position:absolute;bottom:14px;left:14px;display:none;flex-direction:column;gap:5px;z-index:10;}
+    /* Show zoom buttons only on touch/mobile screens */
+    @media (pointer:coarse){.P62ZW{display:flex;}}
     .P62ZB{width:34px;height:34px;background:rgba(6,4,1,.9);backdrop-filter:blur(10px);
       border:1px solid rgba(180,130,30,.38);border-radius:8px;color:#c9a227;font-size:1.1rem;font-weight:700;
       cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:monospace;
-      transition:background .14s,transform .1s;-webkit-tap-highlight-color:transparent;}
+      transition:background .14s,transform .1s;-webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;user-select:none;}
+    @media(pointer:coarse){.P62ZB{width:44px;height:44px;font-size:1.2rem;border-radius:10px;}}
     .P62ZB:hover{background:rgba(180,130,30,.25);transform:scale(1.06);}
     .P62FSB{position:absolute;bottom:14px;right:14px;z-index:10;width:34px;height:34px;
       background:rgba(6,4,1,.9);backdrop-filter:blur(10px);border:1px solid rgba(180,130,30,.38);
@@ -3545,6 +3549,7 @@ a, button, [role="button"], input, select, textarea,
       padding:.4rem 1.2rem;font-family:'DM Sans',sans-serif;font-size:.6rem;letter-spacing:.15em;
       text-transform:uppercase;color:rgba(255,255,255,.38);pointer-events:none;white-space:nowrap;
       transition:opacity .5s;z-index:8;}
+    @media(pointer:coarse){.P62HINT{bottom:70px;font-size:.55rem;padding:.35rem .9rem;}}
     .P62MBOX.moved .P62HINT{opacity:0;}
 
     /* ── HQ NOTICE ── */
@@ -3608,7 +3613,7 @@ a, button, [role="button"], input, select, textarea,
     /* ── GEOGRAPHY SECTION ── */
     .P62GEOSEC{margin-bottom:2rem;}
     .P62GEOINNER{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;}
-    @media(max-width:700px){.P62GEOINNER{grid-template-columns:1fr;}}
+    @media(max-width:700px){.P62GEOINNER{grid-template-columns:1fr;gap:.8rem;}}
     .P62GEOBLOCK{background:rgba(255,255,255,.028);border:1px solid rgba(180,130,30,.14);border-radius:12px;padding:1.3rem 1.4rem;}
     :root:not([data-theme="dark"]) .P62GEOBLOCK{background:#faf5eb;border-color:#e2d8c5;}
     .P62GEOBH{font-family:'Cormorant Garamond',serif;font-size:.95rem;font-weight:600;color:#c9a227;
@@ -3616,14 +3621,14 @@ a, button, [role="button"], input, select, textarea,
       display:flex;align-items:center;gap:.5rem;}
     :root:not([data-theme="dark"]) .P62GEOBH{color:#8a5c10;border-color:rgba(140,100,20,.18);}
     .P62GEOBH svg{width:14px;height:14px;}
-    .P62GEOLIST{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.38rem;}
+    .P62GEOLIST{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.42rem;}
     .P62GEOLIST li{font-family:'DM Sans',sans-serif;font-size:.73rem;color:rgba(200,185,150,.62);
-      display:grid;grid-template-columns:auto auto 1fr;align-items:baseline;column-gap:.42rem;line-height:1.6;}
+      display:flex;align-items:baseline;gap:.45rem;line-height:1.65;}
     :root:not([data-theme="dark"]) .P62GEOLIST li{color:rgba(55,40,15,.55);}
-    .P62GEOLIST li::before{content:'·';color:rgba(201,162,39,.55);}
-    .P62GEOLIST li strong{font-weight:600;color:#d8c89a;white-space:nowrap;}
+    .P62GEOLIST li::before{content:'·';color:rgba(201,162,39,.55);flex-shrink:0;}
+    .P62GEOLIST li strong{font-weight:600;color:#d8c89a;white-space:nowrap;flex-shrink:0;}
     :root:not([data-theme="dark"]) .P62GEOLIST li strong{color:#5a3c08;}
-    .P62GEOLIST li span{color:inherit;}
+    .P62GEOLIST li span{flex:1;min-width:0;}
 
     /* ── BOTTOM BAR ── */
     .P62BOTTOM{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:2rem;
@@ -3664,7 +3669,9 @@ a, button, [role="button"], input, select, textarea,
     .P62FSZB{width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.12);
       background:rgba(255,255,255,.07);color:rgba(255,255,255,.82);cursor:pointer;
       display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:700;
-      font-family:monospace;transition:background .15s;padding:0;-webkit-tap-highlight-color:transparent;}
+      font-family:monospace;transition:background .15s;padding:0;-webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;user-select:none;}
+    @media(pointer:coarse){.P62FSZB{width:44px;height:44px;font-size:1.2rem;}}
     .P62FSZB:hover{background:rgba(201,162,39,.28);}
     .P62FSHINT{position:absolute;bottom:4.5rem;left:50%;transform:translateX(-50%);
       background:rgba(6,4,10,.72);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.07);
@@ -4280,6 +4287,8 @@ a, button, [role="button"], input, select, textarea,
       /* Touch */
       var lastDist = 0, tdrag = false, tsx = 0, tsy = 0, tps0 = 1, tpiX = 0, tpiY = 0;
       box.addEventListener('touchstart', function(e) {
+        /* Don't intercept taps on the control buttons */
+        if (e.target.closest('.P62ZB,.P62FSB')) return;
         if (e.touches.length === 1) {
           tdrag = true; tsx = e.touches[0].clientX - st.tx; tsy = e.touches[0].clientY - st.ty;
         } else if (e.touches.length === 2) {
@@ -4293,6 +4302,7 @@ a, button, [role="button"], input, select, textarea,
         }
       }, { passive: true });
       box.addEventListener('touchmove', function(e) {
+        if (e.target.closest('.P62ZB,.P62FSB')) return;
         e.preventDefault();
         if (e.touches.length === 1 && tdrag) {
           st.tx = e.touches[0].clientX - tsx; st.ty = e.touches[0].clientY - tsy;
