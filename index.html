@@ -4197,208 +4197,283 @@ a, button, [role="button"], input, select, textarea,
 
     <script>
     (function(){
-      var THUMB  = 'https://i.imgur.com/Bwgm2zE.jpeg';
-      var FULLRES= 'https://i.imgur.com/uvCQY6f.jpeg';
+      var FULLRES = 'https://i.imgur.com/uvCQY6f.jpeg';
 
-      var img  = document.getElementById('P62IMG');
-      var box  = document.getElementById('P62MAP');
-      var hint = document.getElementById('P62HINT');
-      var st   = { sc:1, tx:0, ty:0 };
-      var dragging=false, startX=0, startY=0;
+      /* ══════════════════════════════════════════
+         INLINE MAP — P62MAP
+         Bug fix: clampSt centres image when it
+         fits within the box (landscape map in tall
+         container) instead of snapping to top-left.
+      ══════════════════════════════════════════ */
+      var img      = document.getElementById('P62IMG');
+      var box      = document.getElementById('P62MAP');
+      var hint     = document.getElementById('P62HINT');
+      var st       = { sc:1, tx:0, ty:0 };
+      var dragging = false, startX = 0, startY = 0;
 
-      function clampSt(){
-        var iw=img.offsetWidth*st.sc,ih=img.offsetHeight*st.sc;
-        var bw=box.offsetWidth,bh=box.offsetHeight;
-        st.tx=Math.min(0,Math.max(bw-iw,st.tx));
-        st.ty=Math.min(0,Math.max(bh-ih,st.ty));
+      function clampSt() {
+        var iw = img.offsetWidth  * st.sc;
+        var ih = img.offsetHeight * st.sc;
+        var bw = box.offsetWidth,  bh = box.offsetHeight;
+        /* Centre axis when image fits; pan-clamp when zoomed past edge */
+        st.tx = iw <= bw ? (bw - iw) / 2 : Math.min(0, Math.max(bw - iw, st.tx));
+        st.ty = ih <= bh ? (bh - ih) / 2 : Math.min(0, Math.max(bh - ih, st.ty));
       }
-      function applyTr(anim){
-        img.style.transition=anim?'transform .28s cubic-bezier(.25,.46,.45,.94)':'none';
-        img.style.transform='translate('+st.tx+'px,'+st.ty+'px) scale('+st.sc+')';
+
+      function applyTr(anim) {
+        img.style.transition = anim ? 'transform .26s cubic-bezier(.25,.46,.45,.94)' : 'none';
+        img.style.transform  = 'translate(' + st.tx + 'px,' + st.ty + 'px) scale(' + st.sc + ')';
       }
-      function doZoom(factor,px,py){
-        var bw=box.offsetWidth,bh=box.offsetHeight;
-        px=(px!==undefined)?px:bw/2; py=(py!==undefined)?py:bh/2;
-        var old=st.sc; st.sc=Math.min(8,Math.max(1,old*factor));
-        if(st.sc===old)return;
-        var r=st.sc/old; st.tx=px-(px-st.tx)*r; st.ty=py-(py-st.ty)*r;
+
+      function doZoom(factor, px, py) {
+        var bw = box.offsetWidth, bh = box.offsetHeight;
+        px = (px !== undefined) ? px : bw / 2;
+        py = (py !== undefined) ? py : bh / 2;
+        var old = st.sc;
+        st.sc = Math.min(10, Math.max(1, old * factor));
+        if (st.sc === old) return;
+        var r  = st.sc / old;
+        st.tx  = px - (px - st.tx) * r;
+        st.ty  = py - (py - st.ty) * r;
         clampSt(); applyTr(true);
-        box.classList.add('moved'); hint.style.opacity='0';
+        box.classList.add('moved'); hint.style.opacity = '0';
       }
-      function doReset(){ st={sc:1,tx:0,ty:0}; applyTr(true); box.classList.remove('moved'); hint.style.opacity='1'; }
 
-      box.addEventListener('mousedown',function(e){
-        if(e.button!==0)return; if(e.target.closest('.P62ZB,.P62FSB'))return;
-        dragging=true; startX=e.clientX-st.tx; startY=e.clientY-st.ty;
-      });
-      document.addEventListener('mousemove',function(e){
-        if(!dragging)return; st.tx=e.clientX-startX; st.ty=e.clientY-startY;
-        clampSt(); applyTr(false); box.classList.add('moved'); hint.style.opacity='0';
-      });
-      document.addEventListener('mouseup',function(){ dragging=false; });
-      box.addEventListener('wheel',function(e){
-        e.preventDefault();
-        var r=box.getBoundingClientRect();
-        doZoom(Math.pow(0.998,e.deltaY),e.clientX-r.left,e.clientY-r.top);
-      },{passive:false});
+      function doReset() {
+        st = { sc:1, tx:0, ty:0 };
+        clampSt(); applyTr(true);
+        box.classList.remove('moved'); hint.style.opacity = '1';
+      }
 
-      var lastDist=0,tdrag=false,tsx=0,tsy=0;
-      box.addEventListener('touchstart',function(e){
-        if(e.touches.length===1){tdrag=true;tsx=e.touches[0].clientX-st.tx;tsy=e.touches[0].clientY-st.ty;}
-        else if(e.touches.length===2){tdrag=false;lastDist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);}
-      },{passive:true});
-      box.addEventListener('touchmove',function(e){
+      /* Centre on load */
+      function initCenter() { clampSt(); applyTr(false); }
+      if (img.complete && img.naturalWidth) { initCenter(); }
+      else { img.addEventListener('load', initCenter, { once: true }); }
+
+      /* Mouse drag */
+      box.addEventListener('mousedown', function(e) {
+        if (e.button !== 0 || e.target.closest('.P62ZB,.P62FSB')) return;
+        dragging = true; startX = e.clientX - st.tx; startY = e.clientY - st.ty;
         e.preventDefault();
-        if(e.touches.length===1&&tdrag){st.tx=e.touches[0].clientX-tsx;st.ty=e.touches[0].clientY-tsy;clampSt();applyTr(false);}
-        else if(e.touches.length===2){
-          var d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
-          if(lastDist>0){var r=box.getBoundingClientRect();doZoom(d/lastDist,((e.touches[0].clientX+e.touches[1].clientX)/2)-r.left,((e.touches[0].clientY+e.touches[1].clientY)/2)-r.top);}
-          lastDist=d;
+      });
+      document.addEventListener('mousemove', function(e) {
+        if (!dragging) return;
+        st.tx = e.clientX - startX; st.ty = e.clientY - startY;
+        clampSt(); applyTr(false);
+        box.classList.add('moved'); hint.style.opacity = '0';
+      });
+      document.addEventListener('mouseup', function() { dragging = false; });
+
+      /* Wheel zoom */
+      box.addEventListener('wheel', function(e) {
+        e.preventDefault();
+        var r = box.getBoundingClientRect();
+        doZoom(Math.pow(0.999, e.deltaY), e.clientX - r.left, e.clientY - r.top);
+      }, { passive: false });
+
+      /* Touch */
+      var lastDist = 0, tdrag = false, tsx = 0, tsy = 0, tps0 = 1, tpiX = 0, tpiY = 0;
+      box.addEventListener('touchstart', function(e) {
+        if (e.touches.length === 1) {
+          tdrag = true; tsx = e.touches[0].clientX - st.tx; tsy = e.touches[0].clientY - st.ty;
+        } else if (e.touches.length === 2) {
+          tdrag = false;
+          lastDist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+          tps0 = st.sc;
+          var r = box.getBoundingClientRect();
+          var pcx = (e.touches[0].clientX + e.touches[1].clientX) / 2 - r.left;
+          var pcy = (e.touches[0].clientY + e.touches[1].clientY) / 2 - r.top;
+          tpiX = (pcx - st.tx) / st.sc; tpiY = (pcy - st.ty) / st.sc;
         }
-      },{passive:false});
-      box.addEventListener('touchend',function(e){
-        if(e.touches.length<2)lastDist=0;
-        if(e.touches.length===0)tdrag=false;
-        else{tsx=e.touches[0].clientX-st.tx;tsy=e.touches[0].clientY-st.ty;tdrag=true;}
-      },{passive:true});
+      }, { passive: true });
+      box.addEventListener('touchmove', function(e) {
+        e.preventDefault();
+        if (e.touches.length === 1 && tdrag) {
+          st.tx = e.touches[0].clientX - tsx; st.ty = e.touches[0].clientY - tsy;
+          clampSt(); applyTr(false);
+        } else if (e.touches.length === 2) {
+          var d  = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+          var ns = Math.min(10, Math.max(1, tps0 * (d / lastDist)));
+          var r  = box.getBoundingClientRect();
+          var pcx = (e.touches[0].clientX + e.touches[1].clientX) / 2 - r.left;
+          var pcy = (e.touches[0].clientY + e.touches[1].clientY) / 2 - r.top;
+          st.tx = pcx - tpiX * ns; st.ty = pcy - tpiY * ns; st.sc = ns;
+          clampSt(); applyTr(false);
+        }
+      }, { passive: false });
+      box.addEventListener('touchend', function(e) {
+        if (e.touches.length === 0) { tdrag = false; }
+        else if (e.touches.length === 1) { tdrag = true; tsx = e.touches[0].clientX - st.tx; tsy = e.touches[0].clientY - st.ty; }
+      }, { passive: true });
 
-      document.getElementById('p62zp').addEventListener('click',function(e){e.stopPropagation();doZoom(1.5);});
-      document.getElementById('p62zm').addEventListener('click',function(e){e.stopPropagation();doZoom(1/1.5);});
-      document.getElementById('p62zr').addEventListener('click',function(e){e.stopPropagation();doReset();});
+      /* Buttons */
+      document.getElementById('p62zp').addEventListener('click', function(e) { e.stopPropagation(); doZoom(1.6); });
+      document.getElementById('p62zm').addEventListener('click', function(e) { e.stopPropagation(); doZoom(1 / 1.6); });
+      document.getElementById('p62zr').addEventListener('click', function(e) { e.stopPropagation(); doReset(); });
 
-      /* ── LEGEND TABS ── */
-      document.querySelectorAll('.P62LEGTAB').forEach(function(btn){
-        btn.addEventListener('click',function(){
-          document.querySelectorAll('.P62LEGTAB').forEach(function(b){b.classList.remove('act');});
-          document.querySelectorAll('.P62LEGPANEL').forEach(function(p){p.classList.remove('act');});
+      /* Resize */
+      window.addEventListener('resize', function() { clampSt(); applyTr(false); }, { passive: true });
+
+      /* ══════════════════════════════════════════
+         LEGEND TABS
+      ══════════════════════════════════════════ */
+      document.querySelectorAll('.P62LEGTAB').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          document.querySelectorAll('.P62LEGTAB').forEach(function(b)  { b.classList.remove('act'); });
+          document.querySelectorAll('.P62LEGPANEL').forEach(function(p) { p.classList.remove('act'); });
           btn.classList.add('act');
-          document.getElementById('p62tab-'+btn.dataset.tab).classList.add('act');
+          document.getElementById('p62tab-' + btn.dataset.tab).classList.add('act');
         });
       });
 
-      /* ── FULLSCREEN ── */
-      var fso    = document.getElementById('P62FSO');
-      var fsframe= document.getElementById('P62FSFRAME');
-      var fsimg  = document.getElementById('P62FSIMG');
-      var fsload = document.getElementById('P62FSLOADER');
-      var fsst   = {sc:1,tx:0,ty:0};
-      var fsdrag=false,fsx=0,fsy=0;
+      /* ══════════════════════════════════════════
+         FULLSCREEN — P62FSO
+         Uses fitSc as minimum scale so the image
+         is always fitted/centred on open and zoom-
+         out can't go smaller than fit.
+      ══════════════════════════════════════════ */
+      var fso     = document.getElementById('P62FSO');
+      var fsframe = document.getElementById('P62FSFRAME');
+      var fsimg   = document.getElementById('P62FSIMG');
+      var fsload  = document.getElementById('P62FSLOADER');
+      var fsst    = { sc: 1, tx: 0, ty: 0 };
+      var fitSc   = 1;   /* set on image load */
+      var fsdrag  = false, fsx = 0, fsy = 0;
 
-      function fsClamp(){
-        var iw=fsimg.offsetWidth*fsst.sc,ih=fsimg.offsetHeight*fsst.sc;
-        var bw=fsframe.offsetWidth,bh=fsframe.offsetHeight;
-        fsst.tx=Math.min(0,Math.max(bw-iw,fsst.tx));
-        fsst.ty=Math.min(0,Math.max(bh-ih,fsst.ty));
+      function fsClamp() {
+        var iw = fsimg.offsetWidth  * fsst.sc;
+        var ih = fsimg.offsetHeight * fsst.sc;
+        var bw = fsframe.offsetWidth, bh = fsframe.offsetHeight;
+        fsst.tx = iw <= bw ? (bw - iw) / 2 : Math.min(0, Math.max(bw - iw, fsst.tx));
+        fsst.ty = ih <= bh ? (bh - ih) / 2 : Math.min(0, Math.max(bh - ih, fsst.ty));
       }
-      function fsApply(anim){
-        fsimg.style.transition=anim?'transform .28s cubic-bezier(.25,.46,.45,.94)':'none';
-        fsimg.style.transform='translate('+fsst.tx+'px,'+fsst.ty+'px) scale('+fsst.sc+')';
+      function fsApply(anim) {
+        fsimg.style.transition = anim ? 'transform .26s cubic-bezier(.25,.46,.45,.94)' : 'none';
+        fsimg.style.transform  = 'translate(' + fsst.tx + 'px,' + fsst.ty + 'px) scale(' + fsst.sc + ')';
       }
-      function fsZoom(factor,px,py){
-        px=px!==undefined?px:fsframe.offsetWidth/2;
-        py=py!==undefined?py:fsframe.offsetHeight/2;
-        var old=fsst.sc; fsst.sc=Math.min(12,Math.max(1,old*factor));
-        if(fsst.sc===old)return;
-        var r=fsst.sc/old; fsst.tx=px-(px-fsst.tx)*r; fsst.ty=py-(py-fsst.ty)*r;
-        fsClamp(); fsApply(true); fsframe.classList.add('fsmoved');
+      function fsZoom(factor, px, py) {
+        px = (px !== undefined) ? px : fsframe.offsetWidth  / 2;
+        py = (py !== undefined) ? py : fsframe.offsetHeight / 2;
+        var old = fsst.sc;
+        fsst.sc = Math.min(14, Math.max(fitSc, old * factor));
+        if (fsst.sc === old) return;
+        var r = fsst.sc / old;
+        fsst.tx = px - (px - fsst.tx) * r;
+        fsst.ty = py - (py - fsst.ty) * r;
+        fsClamp(); fsApply(true);
       }
-      function fsReset(){ fsst={sc:1,tx:0,ty:0}; fsApply(true); fsframe.classList.remove('fsmoved'); }
+      function fsReset() {
+        fsst = { sc: fitSc, tx: 0, ty: 0 };
+        fsClamp(); fsApply(true);
+      }
 
-      function openFs(){
-        fsReset();
+      function openFs() {
         fsload.classList.remove('hidden');
-        fsimg.style.opacity='0';
-        fsimg.src='';
+        fsimg.style.opacity = '0';
+        fsimg.src = '';
         fso.classList.add('open');
-        document.body.style.overflow='hidden';
-        fsimg.onload=function(){
+        document.body.style.overflow = 'hidden';
+        fsimg.onload = function() {
+          var vw = fsframe.offsetWidth,  vh = fsframe.offsetHeight;
+          var nw = fsimg.naturalWidth,   nh = fsimg.naturalHeight;
+          fitSc = Math.min(vw / nw, vh / nh);   /* fit-to-screen scale */
+          fsimg.style.width = nw + 'px';         /* set layout size to natural */
+          fsst = { sc: fitSc, tx: 0, ty: 0 };
+          fsClamp(); fsApply(false);             /* centres via clamp */
           fsload.classList.add('hidden');
-          // fit image to viewport
-          var vw=fsframe.offsetWidth,vh=fsframe.offsetHeight;
-          var nw=fsimg.naturalWidth,nh=fsimg.naturalHeight;
-          var scale=Math.min(vw/nw,vh/nh,1);
-          fsst.sc=scale/1; // use 1 as base since transform-origin is 0 0
-          // position centered
-          fsst.tx=(vw-nw*scale)/2; fsst.ty=(vh-nh*scale)/2;
-          fsimg.style.transition='none';
-          fsimg.style.transform='translate('+fsst.tx+'px,'+fsst.ty+'px) scale(1)';
-          // We'll use a different approach: set the img width directly and center
-          fsimg.style.width=nw+'px';
-          fsst={sc:scale,tx:(vw-nw*scale)/2,ty:(vh-nh*scale)/2};
-          fsApply(false);
-          requestAnimationFrame(function(){ fsimg.style.transition='opacity .3s'; fsimg.style.opacity='1'; });
+          requestAnimationFrame(function() {
+            fsimg.style.transition = 'opacity .3s ease';
+            fsimg.style.opacity = '1';
+          });
         };
-        fsimg.onerror=function(){ fsload.classList.add('hidden'); };
-        fsimg.src=FULLRES;
+        fsimg.onerror = function() { fsload.classList.add('hidden'); };
+        fsimg.src = FULLRES;
       }
 
-      document.getElementById('p62fsb').addEventListener('click',function(e){e.stopPropagation();openFs();});
-      document.getElementById('p62hqbtn').addEventListener('click',function(){openFs();});
-      document.getElementById('P62FSC').addEventListener('click',function(){
-        fso.classList.remove('open'); document.body.style.overflow=''; fsReset();
-      });
-      fso.addEventListener('click',function(e){ if(e.target===fso){fso.classList.remove('open');document.body.style.overflow='';fsReset();} });
+      document.getElementById('p62fsb').addEventListener('click',   function(e) { e.stopPropagation(); openFs(); });
+      document.getElementById('p62hqbtn').addEventListener('click',  openFs);
+      document.getElementById('P62FSC').addEventListener('click',    function() { fso.classList.remove('open'); document.body.style.overflow = ''; });
+      fso.addEventListener('click', function(e) { if (e.target === fso) { fso.classList.remove('open'); document.body.style.overflow = ''; } });
 
-      document.getElementById('p62fszp').addEventListener('click',function(e){e.stopPropagation();fsZoom(1.5);});
-      document.getElementById('p62fszm').addEventListener('click',function(e){e.stopPropagation();fsZoom(1/1.5);});
-      document.getElementById('p62fszr').addEventListener('click',function(e){e.stopPropagation();fsReset();});
+      document.getElementById('p62fszp').addEventListener('click', function(e) { e.stopPropagation(); fsZoom(1.6); });
+      document.getElementById('p62fszm').addEventListener('click', function(e) { e.stopPropagation(); fsZoom(1 / 1.6); });
+      document.getElementById('p62fszr').addEventListener('click', function(e) { e.stopPropagation(); fsReset(); });
 
-      fsframe.addEventListener('mousedown',function(e){
-        if(e.button!==0)return; if(e.target.closest('.P62FSZB'))return;
-        fsdrag=true; fsx=e.clientX-fsst.tx; fsy=e.clientY-fsst.ty;
-      });
-      document.addEventListener('mousemove',function(e){ if(!fsdrag)return; fsst.tx=e.clientX-fsx; fsst.ty=e.clientY-fsy; fsClamp(); fsApply(false); fsframe.classList.add('fsmoved'); });
-      document.addEventListener('mouseup',function(){ fsdrag=false; });
-      fsframe.addEventListener('wheel',function(e){
-        e.preventDefault(); var r=fsframe.getBoundingClientRect();
-        fsZoom(Math.pow(0.998,e.deltaY),e.clientX-r.left,e.clientY-r.top);
-      },{passive:false});
-      fsframe.addEventListener('dblclick',function(e){
-        if(fsst.sc>1.5)fsReset();
-        else{var r=fsframe.getBoundingClientRect();fsZoom(2.5,e.clientX-r.left,e.clientY-r.top);}
-      });
-
-      /* Touch for fullscreen */
-      var fslastDist=0,fstdrag=false,fstsx=0,fstsy=0,fsps0=1,fspiX=0,fspiY=0;
-      fsframe.addEventListener('touchstart',function(e){
+      /* FS mouse drag */
+      fsframe.addEventListener('mousedown', function(e) {
+        if (e.button !== 0 || e.target.closest('.P62FSZB')) return;
+        fsdrag = true; fsx = e.clientX - fsst.tx; fsy = e.clientY - fsst.ty;
         e.preventDefault();
-        if(e.touches.length===1){fstdrag=true;fstsx=e.touches[0].clientX-fsst.tx;fstsy=e.touches[0].clientY-fsst.ty;}
-        else if(e.touches.length===2){
-          fstdrag=false;
-          fslastDist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
-          fsps0=fsst.sc;
-          var r=fsframe.getBoundingClientRect();
-          var pcx=(e.touches[0].clientX+e.touches[1].clientX)/2-r.left;
-          var pcy=(e.touches[0].clientY+e.touches[1].clientY)/2-r.top;
-          fspiX=(pcx-fsst.tx)/fsst.sc; fspiY=(pcy-fsst.ty)/fsst.sc;
+      });
+      document.addEventListener('mousemove', function(e) {
+        if (!fsdrag) return;
+        fsst.tx = e.clientX - fsx; fsst.ty = e.clientY - fsy;
+        fsClamp(); fsApply(false);
+      });
+      document.addEventListener('mouseup', function() { fsdrag = false; });
+
+      /* FS wheel */
+      fsframe.addEventListener('wheel', function(e) {
+        e.preventDefault();
+        var r = fsframe.getBoundingClientRect();
+        fsZoom(Math.pow(0.999, e.deltaY), e.clientX - r.left, e.clientY - r.top);
+      }, { passive: false });
+
+      /* FS double-click */
+      fsframe.addEventListener('dblclick', function(e) {
+        if (fsst.sc > fitSc * 1.5) { fsReset(); }
+        else { var r = fsframe.getBoundingClientRect(); fsZoom(2.5, e.clientX - r.left, e.clientY - r.top); }
+      });
+
+      /* FS touch */
+      var fslD = 0, fstD = false, fstX = 0, fstY = 0, fsP0 = 1, fsPiX = 0, fsPiY = 0;
+      fsframe.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+        if (e.touches.length === 1) {
+          fstD = true; fstX = e.touches[0].clientX - fsst.tx; fstY = e.touches[0].clientY - fsst.ty;
+        } else if (e.touches.length === 2) {
+          fstD = false;
+          fslD = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+          fsP0 = fsst.sc;
+          var r   = fsframe.getBoundingClientRect();
+          var pcx = (e.touches[0].clientX + e.touches[1].clientX) / 2 - r.left;
+          var pcy = (e.touches[0].clientY + e.touches[1].clientY) / 2 - r.top;
+          fsPiX = (pcx - fsst.tx) / fsst.sc; fsPiY = (pcy - fsst.ty) / fsst.sc;
         }
-      },{passive:false});
-      fsframe.addEventListener('touchmove',function(e){
+      }, { passive: false });
+      fsframe.addEventListener('touchmove', function(e) {
         e.preventDefault();
-        if(e.touches.length===1&&fstdrag){fsst.tx=e.touches[0].clientX-fstsx;fsst.ty=e.touches[0].clientY-fstsy;fsClamp();fsApply(false);}
-        else if(e.touches.length===2){
-          var d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
-          var ns=Math.min(12,Math.max(1,fsps0*(d/fslastDist)));
-          var r=fsframe.getBoundingClientRect();
-          var pcx=(e.touches[0].clientX+e.touches[1].clientX)/2-r.left;
-          var pcy=(e.touches[0].clientY+e.touches[1].clientY)/2-r.top;
-          fsst.tx=pcx-fspiX*ns; fsst.ty=pcy-fspiY*ns; fsst.sc=ns;
+        if (e.touches.length === 1 && fstD) {
+          fsst.tx = e.touches[0].clientX - fstX; fsst.ty = e.touches[0].clientY - fstY;
+          fsClamp(); fsApply(false);
+        } else if (e.touches.length === 2) {
+          var d  = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+          var ns = Math.min(14, Math.max(fitSc, fsP0 * (d / fslD)));
+          var r  = fsframe.getBoundingClientRect();
+          var pcx = (e.touches[0].clientX + e.touches[1].clientX) / 2 - r.left;
+          var pcy = (e.touches[0].clientY + e.touches[1].clientY) / 2 - r.top;
+          fsst.tx = pcx - fsPiX * ns; fsst.ty = pcy - fsPiY * ns; fsst.sc = ns;
           fsClamp(); fsApply(false);
         }
-      },{passive:false});
-      fsframe.addEventListener('touchend',function(e){
-        if(e.touches.length===0)fstdrag=false;
-        else if(e.touches.length===1){fstdrag=true;fstsx=e.touches[0].clientX-fsst.tx;fstsy=e.touches[0].clientY-fsst.ty;}
-      },{passive:true});
+      }, { passive: false });
+      fsframe.addEventListener('touchend', function(e) {
+        if (e.touches.length === 0) { fstD = false; }
+        else if (e.touches.length === 1) { fstD = true; fstX = e.touches[0].clientX - fsst.tx; fstY = e.touches[0].clientY - fsst.ty; }
+      }, { passive: true });
 
-      document.addEventListener('keydown',function(e){
-        if(!fso.classList.contains('open'))return;
-        if(e.key==='Escape'){fso.classList.remove('open');document.body.style.overflow='';fsReset();}
-        if(e.key==='+'||e.key==='=')fsZoom(1.3,fsframe.offsetWidth/2,fsframe.offsetHeight/2);
-        if(e.key==='-')fsZoom(1/1.3,fsframe.offsetWidth/2,fsframe.offsetHeight/2);
-        if(e.key==='0')fsReset();
+      /* Keyboard (Escape / +/- / 0) */
+      document.addEventListener('keydown', function(e) {
+        if (!fso.classList.contains('open')) return;
+        if (e.key === 'Escape') { fso.classList.remove('open'); document.body.style.overflow = ''; }
+        if (e.key === '+' || e.key === '=') fsZoom(1.4, fsframe.offsetWidth / 2, fsframe.offsetHeight / 2);
+        if (e.key === '-') fsZoom(1 / 1.4, fsframe.offsetWidth / 2, fsframe.offsetHeight / 2);
+        if (e.key === '0') fsReset();
       });
-      window.addEventListener('resize',function(){ if(fso.classList.contains('open'))fsClamp(); },{passive:true});
+
+      window.addEventListener('resize', function() {
+        if (fso.classList.contains('open')) { fsClamp(); fsApply(false); }
+      }, { passive: true });
+
     })();
     </script>
     </section>
