@@ -3478,6 +3478,930 @@ a, button, [role="button"], input, select, textarea,
     })();
     </script>
     </section>
+
+    <!-- ═══ ESTATE MAP 1862 ═══ -->
+    <section id="PLAN62">
+    <style>
+    /* ═══════════════════════════════════════════
+       PLAN62 SECTION — План маєтку Домбровиці 1862
+    ═══════════════════════════════════════════ */
+    #PLAN62{padding:6rem 0 7rem;background:#0e0b06;position:relative;overflow:hidden;border-top:1px solid rgba(120,90,30,.18);}
+    :root:not([data-theme="dark"]) #PLAN62{background:#ede8de;border-color:rgba(120,90,30,.15);}
+    #PLAN62::before{content:'';position:absolute;inset:0;pointer-events:none;
+      background:radial-gradient(ellipse 60% 40% at 50% 0%, rgba(180,120,20,.07) 0%, transparent 65%),
+        url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23a07820' fill-opacity='0.018'%3E%3Cpath d='M0 0h4v4H0zm10 0h4v4h-4zm10 0h4v4h-4zm10 0h4v4h-4zm10 0h4v4h-4zm10 0h4v4h-4zm10 0h4v4h-4zm10 0h4v4h-4zM0 10h4v4H0zm10 0h4v4h-4zm10 0h4v4h-4zm10 0h4v4h-4zm10 0h4v4h-4zm10 0h4v4h-4zm10 0h4v4h-4zm10 0h4v4h-4zM0 20h4v4H0zm10 0h4v4h-4zm10 0h4v4h-4zm10 0h4v4h-4zm10 0h4v4h-4zm10 0h4v4h-4zm10 0h4v4h-4zm10 0h4v4h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");}
+    #PLAN62 *{box-sizing:border-box;}
+    .P62W{max-width:1260px;margin:0 auto;padding:0 2rem;}
+
+    /* ── HEADER ── */
+    .P62H{text-align:center;margin-bottom:3.5rem;}
+    .P62E{display:inline-flex;align-items:center;gap:.9rem;margin-bottom:1.1rem;}
+    .P62E::before,.P62E::after{content:'';display:block;width:50px;height:1px;}
+    .P62E::before{background:linear-gradient(90deg,transparent,rgba(180,130,30,.7));}
+    .P62E::after{background:linear-gradient(90deg,rgba(180,130,30,.7),transparent);}
+    .P62E span{font-family:'DM Sans',sans-serif;font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:#b07820;}
+    :root:not([data-theme="dark"]) .P62E span{color:#8a5c10;}
+    .P62T{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(2rem,3.8vw,3rem);font-weight:400;color:#f0e6c8;line-height:1.1;margin:0 0 .5rem;}
+    :root:not([data-theme="dark"]) .P62T{color:#1c1917;}
+    .P62T em{font-style:italic;color:#c9a227;}
+    .P62S{font-family:'DM Sans',sans-serif;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(240,230,200,.28);margin:0;}
+    :root:not([data-theme="dark"]) .P62S{color:rgba(28,25,23,.38);}
+
+    /* ── SECTION INTRO LABEL ── */
+    .P62LABEL{font-family:'Cormorant Garamond',serif;font-size:1.22rem;font-weight:600;color:#e0d4b8;margin:0 0 1.4rem;display:flex;align-items:center;gap:.8rem;}
+    :root:not([data-theme="dark"]) .P62LABEL{color:#1c1917;}
+    .P62LABEL-BAR{display:inline-block;width:4px;height:22px;background:#c9a227;border-radius:2px;flex-shrink:0;}
+
+    /* ── MAP WRAPPER ── */
+    .P62MBOX{position:relative;border-radius:6px;overflow:hidden;max-height:82vh;
+      box-shadow:0 0 0 1px rgba(180,130,30,.3),0 12px 40px rgba(0,0,0,.65),0 40px 80px rgba(0,0,0,.5);
+      background:#100d06;cursor:grab;user-select:none;margin-bottom:2rem;}
+    .P62MBOX:active{cursor:grabbing;}
+    .P62IMG{display:block;width:100%;height:auto;transform-origin:0 0;will-change:transform;}
+    .P62MBOX::before,.P62MBOX::after{content:'';position:absolute;width:32px;height:32px;z-index:6;pointer-events:none;}
+    .P62MBOX::before{top:12px;left:12px;border-top:1.5px solid rgba(180,130,30,.55);border-left:1.5px solid rgba(180,130,30,.55);}
+    .P62MBOX::after{bottom:12px;right:12px;border-bottom:1.5px solid rgba(180,130,30,.55);border-right:1.5px solid rgba(180,130,30,.55);}
+
+    /* ── MAP CONTROLS ── */
+    .P62ZW{position:absolute;bottom:14px;left:14px;display:flex;flex-direction:column;gap:5px;z-index:10;}
+    .P62ZB{width:34px;height:34px;background:rgba(6,4,1,.9);backdrop-filter:blur(10px);
+      border:1px solid rgba(180,130,30,.38);border-radius:8px;color:#c9a227;font-size:1.1rem;font-weight:700;
+      cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:monospace;
+      transition:background .14s,transform .1s;-webkit-tap-highlight-color:transparent;}
+    .P62ZB:hover{background:rgba(180,130,30,.25);transform:scale(1.06);}
+    .P62FSB{position:absolute;bottom:14px;right:14px;z-index:10;width:34px;height:34px;
+      background:rgba(6,4,1,.9);backdrop-filter:blur(10px);border:1px solid rgba(180,130,30,.38);
+      border-radius:8px;color:#c9a227;cursor:pointer;display:flex;align-items:center;justify-content:center;
+      transition:background .14s,transform .1s;-webkit-tap-highlight-color:transparent;}
+    .P62FSB:hover{background:rgba(180,130,30,.25);transform:scale(1.06);}
+    .P62FSB svg{width:16px;height:16px;}
+    .P62BADGE{position:absolute;top:14px;right:14px;z-index:5;background:rgba(6,4,1,.9);
+      backdrop-filter:blur(12px);border:1px solid rgba(180,130,30,.32);border-radius:8px;
+      padding:7px 13px;pointer-events:none;line-height:1.4;}
+    .P62BADGE .bl{display:block;font-family:'DM Sans',sans-serif;font-size:.48rem;letter-spacing:.2em;text-transform:uppercase;color:#5a4020;}
+    .P62BADGE .bd{display:block;font-family:'Cormorant Garamond',serif;font-size:.95rem;color:#c9a227;font-weight:500;letter-spacing:.04em;}
+    .P62HINT{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);background:rgba(6,4,1,.74);
+      backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.07);border-radius:100px;
+      padding:.4rem 1.2rem;font-family:'DM Sans',sans-serif;font-size:.6rem;letter-spacing:.15em;
+      text-transform:uppercase;color:rgba(255,255,255,.38);pointer-events:none;white-space:nowrap;
+      transition:opacity .5s;z-index:8;}
+    .P62MBOX.moved .P62HINT{opacity:0;}
+
+    /* ── HQ NOTICE ── */
+    .P62HQ{display:flex;align-items:center;gap:.7rem;background:rgba(180,130,30,.08);border:1px solid rgba(180,130,30,.22);
+      border-radius:10px;padding:.75rem 1.1rem;margin-bottom:2.2rem;cursor:pointer;transition:background .18s;}
+    .P62HQ:hover{background:rgba(180,130,30,.14);}
+    :root:not([data-theme="dark"]) .P62HQ{background:rgba(140,100,20,.05);border-color:rgba(140,100,20,.2);}
+    .P62HQ-ICON{flex-shrink:0;width:32px;height:32px;background:rgba(201,162,39,.15);border:1px solid rgba(201,162,39,.3);
+      border-radius:8px;display:flex;align-items:center;justify-content:center;color:#c9a227;}
+    .P62HQ-ICON svg{width:16px;height:16px;}
+    .P62HQ-TEXT{flex:1;}
+    .P62HQ-T{font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:600;color:#e8d9b0;letter-spacing:.02em;}
+    :root:not([data-theme="dark"]) .P62HQ-T{color:#2c1f06;}
+    .P62HQ-D{font-family:'DM Sans',sans-serif;font-size:.68rem;color:rgba(200,180,130,.55);margin-top:.1rem;}
+    :root:not([data-theme="dark"]) .P62HQ-D{color:rgba(80,55,15,.5);}
+    .P62HQ-ARROW{color:#c9a227;font-size:1.1rem;flex-shrink:0;}
+
+    /* ── ANALYSIS CARDS GRID ── */
+    .P62GRID{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-bottom:2rem;}
+    @media(max-width:960px){.P62GRID{grid-template-columns:repeat(2,1fr);}}
+    @media(max-width:600px){.P62GRID{grid-template-columns:1fr;}}
+    .P62CARD{background:rgba(255,255,255,.03);border:1px solid rgba(180,130,30,.14);border-radius:14px;padding:1.5rem 1.4rem;
+      transition:border-color .2s,background .2s;}
+    .P62CARD:hover{background:rgba(255,255,255,.055);border-color:rgba(201,162,39,.3);}
+    :root:not([data-theme="dark"]) .P62CARD{background:#fff;border-color:#e2d8c5;}
+    :root:not([data-theme="dark"]) .P62CARD:hover{background:#fdfaf4;border-color:rgba(180,130,30,.35);}
+    .P62CARD-ICON{width:38px;height:38px;border-radius:10px;background:rgba(201,162,39,.12);border:1px solid rgba(201,162,39,.22);
+      display:flex;align-items:center;justify-content:center;color:#c9a227;margin-bottom:1rem;}
+    .P62CARD-ICON svg{width:18px;height:18px;}
+    .P62CARD-H{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:#e8d8b5;margin:0 0 .55rem;line-height:1.25;}
+    :root:not([data-theme="dark"]) .P62CARD-H{color:#1c1917;}
+    .P62CARD-B{font-family:'DM Sans',sans-serif;font-size:.73rem;line-height:1.78;color:rgba(200,185,150,.6);}
+    :root:not([data-theme="dark"]) .P62CARD-B{color:rgba(44,35,15,.58);}
+
+    /* ── LEGEND GRID ── */
+    .P62LEGSEC{margin-bottom:2rem;}
+    .P62LEGHEAD{display:flex;align-items:center;gap:.9rem;margin-bottom:1.2rem;}
+    .P62LEGHT{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:#e0d0b0;margin:0;}
+    :root:not([data-theme="dark"]) .P62LEGHT{color:#1c1917;}
+    .P62LEGLINE{flex:1;height:1px;background:rgba(180,130,30,.15);}
+    .P62LEGTABS{display:flex;gap:.5rem;margin-bottom:1.2rem;flex-wrap:wrap;}
+    .P62LEGTAB{font-family:'DM Sans',sans-serif;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;
+      padding:.38rem .85rem;border-radius:100px;border:1px solid rgba(180,130,30,.28);color:rgba(200,180,130,.55);
+      cursor:pointer;transition:all .16s;background:transparent;-webkit-tap-highlight-color:transparent;}
+    .P62LEGTAB:hover,.P62LEGTAB.act{background:rgba(201,162,39,.15);border-color:rgba(201,162,39,.5);color:#c9a227;}
+    :root:not([data-theme="dark"]) .P62LEGTAB{color:rgba(100,75,25,.55);border-color:rgba(140,100,20,.25);}
+    :root:not([data-theme="dark"]) .P62LEGTAB:hover,:root:not([data-theme="dark"]) .P62LEGTAB.act{background:rgba(180,130,20,.1);color:#8a5c10;}
+    .P62LEGPANEL{display:none;}
+    .P62LEGPANEL.act{display:block;}
+    .P62LEGROWS{display:grid;grid-template-columns:repeat(2,1fr);gap:.65rem;}
+    @media(max-width:600px){.P62LEGROWS{grid-template-columns:1fr;}}
+    .P62LEGROW{display:flex;align-items:flex-start;gap:.75rem;padding:.75rem .9rem;border-radius:9px;
+      background:rgba(255,255,255,.025);border:1px solid rgba(180,130,30,.1);}
+    :root:not([data-theme="dark"]) .P62LEGROW{background:#faf7f0;border-color:#ede3d0;}
+    .P62LEGSWATCH{flex-shrink:0;width:22px;height:22px;border-radius:5px;margin-top:2px;border:1px solid rgba(0,0,0,.25);}
+    .P62LEGNAME{font-family:'Cormorant Garamond',serif;font-size:.88rem;font-weight:600;color:#e0d0b0;display:block;margin-bottom:.1rem;}
+    :root:not([data-theme="dark"]) .P62LEGNAME{color:#1c1917;}
+    .P62LEGDESC{font-family:'DM Sans',sans-serif;font-size:.67rem;line-height:1.65;color:rgba(180,160,120,.55);}
+    :root:not([data-theme="dark"]) .P62LEGDESC{color:rgba(60,45,20,.5);}
+
+    /* ── GEOGRAPHY SECTION ── */
+    .P62GEOSEC{margin-bottom:2rem;}
+    .P62GEOINNER{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;}
+    @media(max-width:700px){.P62GEOINNER{grid-template-columns:1fr;}}
+    .P62GEOBLOCK{background:rgba(255,255,255,.028);border:1px solid rgba(180,130,30,.14);border-radius:12px;padding:1.3rem 1.4rem;}
+    :root:not([data-theme="dark"]) .P62GEOBLOCK{background:#faf5eb;border-color:#e2d8c5;}
+    .P62GEOBH{font-family:'Cormorant Garamond',serif;font-size:.95rem;font-weight:600;color:#c9a227;
+      margin:0 0 .9rem;padding-bottom:.7rem;border-bottom:1px solid rgba(180,130,30,.12);
+      display:flex;align-items:center;gap:.5rem;}
+    :root:not([data-theme="dark"]) .P62GEOBH{color:#8a5c10;border-color:rgba(140,100,20,.18);}
+    .P62GEOBH svg{width:14px;height:14px;}
+    .P62GEOLIST{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.45rem;}
+    .P62GEOLIST li{font-family:'DM Sans',sans-serif;font-size:.73rem;color:rgba(200,185,150,.62);
+      display:flex;align-items:baseline;gap:.5rem;line-height:1.55;}
+    :root:not([data-theme="dark"]) .P62GEOLIST li{color:rgba(55,40,15,.55);}
+    .P62GEOLIST li::before{content:'·';color:rgba(201,162,39,.6);flex-shrink:0;}
+    .P62GEOLIST li strong{font-weight:600;color:#d8c89a;}
+    :root:not([data-theme="dark"]) .P62GEOLIST li strong{color:#5a3c08;}
+
+    /* ── BOTTOM BAR ── */
+    .P62BOTTOM{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:2rem;
+      border-top:1px solid rgba(180,130,30,.1);padding-top:2rem;}
+    @media(max-width:760px){.P62BOTTOM{grid-template-columns:1fr;}}
+    :root:not([data-theme="dark"]) .P62BOTTOM{border-color:rgba(140,100,20,.18);}
+    .P62BITEM{display:flex;flex-direction:column;gap:.4rem;}
+    .P62BICO{width:34px;height:34px;border-radius:9px;background:rgba(201,162,39,.1);
+      border:1px solid rgba(201,162,39,.2);display:flex;align-items:center;justify-content:center;
+      color:#c9a227;margin-bottom:.3rem;}
+    .P62BICO svg{width:15px;height:15px;}
+    .P62BTH{font-family:'Cormorant Garamond',serif;font-size:.95rem;font-weight:600;color:#e0d0b0;line-height:1.3;}
+    :root:not([data-theme="dark"]) .P62BTH{color:#1c1917;}
+    .P62BTD{font-family:'DM Sans',sans-serif;font-size:.72rem;line-height:1.75;color:rgba(180,165,130,.55);}
+    :root:not([data-theme="dark"]) .P62BTD{color:rgba(55,40,15,.52);}
+
+    /* ── FULLSCREEN OVERLAY ── */
+    #P62FSO{position:fixed;inset:0;z-index:98000;background:rgba(3,2,4,.97);display:none;flex-direction:column;}
+    #P62FSO.open{display:flex;animation:p62FsIn .22s cubic-bezier(.16,1,.3,1);}
+    @keyframes p62FsIn{from{opacity:0;transform:scale(.985)}to{opacity:1;transform:scale(1)}}
+    #P62FSC{position:absolute;top:.75rem;right:.75rem;z-index:20;width:42px;height:42px;border-radius:50%;
+      border:1px solid rgba(255,255,255,.18);background:rgba(8,5,12,.8);backdrop-filter:blur(8px);
+      color:rgba(255,255,255,.9);cursor:pointer;display:flex;align-items:center;justify-content:center;
+      transition:background .15s,transform .15s;padding:0;-webkit-tap-highlight-color:transparent;}
+    #P62FSC:hover{background:rgba(255,255,255,.2);transform:scale(1.08);}
+    #P62FSC svg{width:18px;height:18px;pointer-events:none;}
+    #P62FSTITLE{position:absolute;top:1rem;left:50%;transform:translateX(-50%);
+      font-family:'Cormorant Garamond',serif;font-size:.85rem;font-weight:400;font-style:italic;
+      color:rgba(255,255,255,.45);pointer-events:none;white-space:nowrap;z-index:15;}
+    #P62FSFRAME{flex:1;position:relative;overflow:hidden;cursor:grab;user-select:none;-webkit-user-select:none;}
+    #P62FSFRAME.fsmoved .P62FSHINT{opacity:0;}
+    #P62FSIMG{position:absolute;top:0;left:0;max-width:none;max-height:none;display:block;
+      transform-origin:0 0;will-change:transform;border-radius:2px;user-select:none;
+      -webkit-user-drag:none;pointer-events:none;}
+    #P62FSZW{position:absolute;bottom:1rem;left:50%;transform:translateX(-50%);
+      display:flex;align-items:center;gap:.4rem;background:rgba(6,4,10,.85);backdrop-filter:blur(12px);
+      border:1px solid rgba(255,255,255,.1);border-radius:100px;padding:.4rem .7rem;z-index:30;}
+    .P62FSZB{width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.07);color:rgba(255,255,255,.82);cursor:pointer;
+      display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:700;
+      font-family:monospace;transition:background .15s;padding:0;-webkit-tap-highlight-color:transparent;}
+    .P62FSZB:hover{background:rgba(201,162,39,.28);}
+    .P62FSHINT{position:absolute;bottom:4.5rem;left:50%;transform:translateX(-50%);
+      background:rgba(6,4,10,.72);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.07);
+      border-radius:100px;padding:.35rem 1.1rem;font-family:'DM Sans',sans-serif;font-size:.58rem;
+      letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.35);pointer-events:none;
+      white-space:nowrap;transition:opacity .5s;z-index:8;}
+    #P62FSMETA{display:flex;align-items:center;justify-content:center;gap:1.5rem;flex-wrap:wrap;
+      padding:.65rem 1.2rem;background:rgba(6,4,10,.93);backdrop-filter:blur(14px);
+      border-top:1px solid rgba(255,255,255,.06);flex-shrink:0;}
+    .P62FSMT{display:flex;align-items:center;gap:.45rem;}
+    .P62FSMT .label{font-family:'DM Sans',sans-serif;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.28);}
+    .P62FSMT .val{font-family:'Cormorant Garamond',serif;font-size:.9rem;color:rgba(201,162,39,.9);}
+    .P62FSSEP{width:1px;height:16px;background:rgba(255,255,255,.1);}
+    #P62FSLOADER{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+      pointer-events:none;z-index:5;}
+    #P62FSLOADER::after{content:'';width:34px;height:34px;border:2px solid rgba(255,255,255,.08);
+      border-top-color:rgba(201,162,39,.8);border-radius:50%;animation:p62Spin .75s linear infinite;}
+    @keyframes p62Spin{to{transform:rotate(360deg)}}
+    #P62FSLOADER.hidden{display:none;}
+    #P62FSHQ{position:absolute;top:3.5rem;left:50%;transform:translateX(-50%);z-index:15;
+      background:rgba(201,162,39,.12);border:1px solid rgba(201,162,39,.28);border-radius:100px;
+      padding:.3rem 1rem;font-family:'DM Sans',sans-serif;font-size:.6rem;letter-spacing:.1em;
+      color:rgba(201,162,39,.75);pointer-events:none;white-space:nowrap;text-transform:uppercase;}
+
+    @media(max-width:600px){
+      .P62W{padding:0 1rem;}
+      .P62T{font-size:1.7rem!important;}
+      .P62GRID{grid-template-columns:1fr;}
+      .P62BOTTOM{grid-template-columns:1fr;}
+      #P62FSMETA{gap:.9rem;}
+      .P62FSSEP{display:none;}
+    }
+    </style>
+
+    <div class="P62W">
+      <!-- HEADER -->
+      <div class="P62H">
+        <div class="P62E"><span>Картографія маєтку</span></div>
+        <h2 class="P62T">Маєток <em>Домбровиця</em></h2>
+        <p class="P62S">Межовий план маєтку · 1862 рік</p>
+      </div>
+
+      <p class="P62LABEL">
+        <span class="P62LABEL-BAR"></span>
+        «Планъ Имѣнія Домбровицы» — Межовий план маєтку, 1862 рік
+      </p>
+
+      <!-- MAP -->
+      <div class="P62MBOX" id="P62MAP">
+        <img class="P62IMG" id="P62IMG" src="https://i.imgur.com/Bwgm2zE.jpeg"
+          alt="Межовий план маєтку Домбровиці 1862 р." draggable="false" loading="eager">
+        <div class="P62ZW">
+          <button class="P62ZB" id="p62zp" title="Збільшити">+</button>
+          <button class="P62ZB" id="p62zm" title="Зменшити">&#8722;</button>
+          <button class="P62ZB" id="p62zr" title="Скинути" style="font-size:.75rem">&#8962;</button>
+        </div>
+        <button class="P62FSB" id="p62fsb" title="Повний розмір — висока якість">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg>
+        </button>
+        <div class="P62BADGE"><span class="bl">Межовий план</span><span class="bd">Маєток · 1862 р.</span></div>
+        <div class="P62HINT" id="P62HINT">Тягніть для переміщення · Scroll для збільшення</div>
+      </div>
+
+      <!-- HQ NOTICE -->
+      <div class="P62HQ" id="p62hqbtn">
+        <div class="P62HQ-ICON">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>
+        </div>
+        <div class="P62HQ-TEXT">
+          <div class="P62HQ-T">Оригінал у повній якості — відкривається у повноекранному режимі</div>
+          <div class="P62HQ-D">Тут відображено зменшену версію. Натисніть ⤢ або цей рядок, щоб побачити оригінал у найвищій роздільності</div>
+        </div>
+        <div class="P62HQ-ARROW">⤢</div>
+      </div>
+
+      <!-- ── ANALYSIS: INFO CARDS ── -->
+      <div class="P62LEGHEAD" style="margin-top:2.5rem;">
+        <h3 class="P62LEGHT">Аналіз документу</h3>
+        <div class="P62LEGLINE"></div>
+      </div>
+      <div class="P62GRID">
+
+        <div class="P62CARD">
+          <div class="P62CARD-ICON">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-1.447-.894L15 9m0 8V9m0 0L9 7"/></svg>
+          </div>
+          <div class="P62CARD-H">Титул і дата</div>
+          <div class="P62CARD-B">«Планъ И. Домбровицы» — де «И.» розшифровується як «Имѣнія» (маєтку). Складено у березні 1862 року — в переломний момент розмежування земель між поміщиком та селянами після реформи 1861 р.</div>
+        </div>
+
+        <div class="P62CARD">
+          <div class="P62CARD-ICON">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>
+          </div>
+          <div class="P62CARD-H">Масштаб і шкала</div>
+          <div class="P62CARD-B">«Масштабъ въ Англійскомъ Дюймѣ 2½ версты» — в одному англійському дюймі (2,54 см) вміщено 2,5 версти (~2,66 км). Додаткова лінійна шкала у сажнях (0–500) дозволяла точно вимірювати відстані між об'єктами прямо на карті.</div>
+        </div>
+
+        <div class="P62CARD">
+          <div class="P62CARD-ICON">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <div class="P62CARD-H">Власник маєтку</div>
+          <div class="P62CARD-B">Граф Ігнацій Броель-Плятер — великий землевласник Волині та Полісся. Маєток охоплював величезні масиви лісів, сіножатей і орних земель навколо Дубровиці. На карті чітко виділено «Фольварочне» (графське) та «Селянське» землекористування.</div>
+        </div>
+
+        <div class="P62CARD">
+          <div class="P62CARD-ICON">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+          </div>
+          <div class="P62CARD-H">Укладач плану</div>
+          <div class="P62CARD-B">Прапорщик Микола Мацкевич (або Маркевич) — землемір Генерального штабу Російської імперії. Підпис і чин «Прапорщикъ» розміщено в нижньому правому куті карти. Архівний номер документа — «№ 71» у губернському межуванні.</div>
+        </div>
+
+        <div class="P62CARD">
+          <div class="P62CARD-ICON">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="P62CARD-H">Сусідні межі</div>
+          <div class="P62CARD-B">На краях плану зазначено: «Граница Казеннаго Имѣнія» (державні землі), «Граница Пинскаго Купца» (землі пінських купців) та «Граница владѣнія Князя Любомирскаго» — Любомирські були головними сусідами-магнатами в регіоні.</div>
+        </div>
+
+        <div class="P62CARD">
+          <div class="P62CARD-ICON">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"/></svg>
+          </div>
+          <div class="P62CARD-H">Перехідний документ</div>
+          <div class="P62CARD-B">Карта 1862 р. є прямим наслідком реформи 1861 р. Вона юридично фіксувала, які землі залишаються у власності графа, а які виділяються селянам у наділ — це була обов'язкова умова розмежування за «Положеннями 19 лютого».</div>
+        </div>
+
+      </div>
+
+      <!-- ── LEGEND / COLOR CLASSIFICATION ── -->
+      <div class="P62LEGSEC">
+        <div class="P62LEGHEAD">
+          <h3 class="P62LEGHT">Легенда кольорів · «Поясненіе Красокъ»</h3>
+          <div class="P62LEGLINE"></div>
+        </div>
+
+        <div class="P62LEGTABS">
+          <button class="P62LEGTAB act" data-tab="land">Землекористування</button>
+          <button class="P62LEGTAB" data-tab="forest">Ліси та болота</button>
+          <button class="P62LEGTAB" data-tab="infra">Інфраструктура</button>
+        </div>
+
+        <!-- LAND USE -->
+        <div class="P62LEGPANEL act" id="p62tab-land">
+          <div class="P62LEGROWS">
+            <div class="P62LEGROW">
+              <div class="P62LEGSWATCH" style="background:#d9534f;"></div>
+              <div>
+                <span class="P62LEGNAME">Садиби фольваркові</span>
+                <span class="P62LEGDESC">Червоний контур із зображенням будівель — адміністративні центри управління маєтком графа Плятера.</span>
+              </div>
+            </div>
+            <div class="P62LEGROW">
+              <div class="P62LEGSWATCH" style="background:#5b9bd5;"></div>
+              <div>
+                <span class="P62LEGNAME">Садиби селянські</span>
+                <span class="P62LEGDESC">Сині прямокутники — житлові будинки та двори кріпаків і звільнених селян.</span>
+              </div>
+            </div>
+            <div class="P62LEGROW">
+              <div class="P62LEGSWATCH" style="background:#f0b8b8;"></div>
+              <div>
+                <span class="P62LEGNAME">Рілля фольваркова</span>
+                <span class="P62LEGDESC">Рожевий/світло-червоний — найкращі орні землі, що залишилися у власності графа після реформи.</span>
+              </div>
+            </div>
+            <div class="P62LEGROW">
+              <div class="P62LEGSWATCH" style="background:#f5e6a3;"></div>
+              <div>
+                <span class="P62LEGNAME">Рілля селянська</span>
+                <span class="P62LEGDESC">Блідо-жовтий/бежевий — землі, виділені селянським громадам у надільне користування.</span>
+              </div>
+            </div>
+            <div class="P62LEGROW">
+              <div class="P62LEGSWATCH" style="background:#2d7a3a;"></div>
+              <div>
+                <span class="P62LEGNAME">Сіножаті фольваркові</span>
+                <span class="P62LEGDESC">Темно-зелений — прибуткові луки маєтку, з яких заготовлялося сіно для власного господарства.</span>
+              </div>
+            </div>
+            <div class="P62LEGROW">
+              <div class="P62LEGSWATCH" style="background:#8fc98a;"></div>
+              <div>
+                <span class="P62LEGNAME">Сіножаті селянські</span>
+                <span class="P62LEGDESC">Світло-зелений — луки, що відходили до селянських наділів для заготівлі кормів.</span>
+              </div>
+            </div>
+            <div class="P62LEGROW">
+              <div class="P62LEGSWATCH" style="background:#b8ccd8;"></div>
+              <div>
+                <span class="P62LEGNAME">Пасовища</span>
+                <span class="P62LEGDESC">Світло-сизий із дрібними рисками (травою) — спільні пасовища для випасу худоби.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FORESTS -->
+        <div class="P62LEGPANEL" id="p62tab-forest">
+          <div class="P62LEGROWS">
+            <div class="P62LEGROW">
+              <div class="P62LEGSWATCH" style="background:#c8a87a;"></div>
+              <div>
+                <span class="P62LEGNAME">Ліси соснові</span>
+                <span class="P62LEGDESC">Світло-коричневі з символами стовбурів — основа лісових угідь Полісся, джерело доходів Плятерів від заготівлі деревини.</span>
+              </div>
+            </div>
+            <div class="P62LEGROW">
+              <div class="P62LEGSWATCH" style="background:#7ab87a;"></div>
+              <div>
+                <span class="P62LEGNAME">Ліси листяні</span>
+                <span class="P62LEGDESC">Блакитно-зелені з символами крони — дубові та березові гаї в заплавах і вододілах.</span>
+              </div>
+            </div>
+            <div class="P62LEGROW">
+              <div class="P62LEGSWATCH" style="background:#9ab88a;"></div>
+              <div>
+                <span class="P62LEGNAME">Ліси мішані</span>
+                <span class="P62LEGDESC">Поєднання обох символів — найпоширеніший тип на Поліссі: сосна з підліском дуба, берези, вільхи.</span>
+              </div>
+            </div>
+            <div class="P62LEGROW">
+              <div class="P62LEGSWATCH" style="background:#d4c87a;"></div>
+              <div>
+                <span class="P62LEGNAME">Чагарники</span>
+                <span class="P62LEGDESC">Жовтуваті поля з групами кущів — перехідні ділянки між лісом і болотом, де ростуть лоза та верба.</span>
+              </div>
+            </div>
+            <div class="P62LEGROW">
+              <div class="P62LEGSWATCH" style="background:#8ab0c8;background:repeating-linear-gradient(0deg,#8ab0c8,#8ab0c8 2px,#c8dce8 2px,#c8dce8 5px);"></div>
+              <div>
+                <span class="P62LEGNAME">Болота зибучі</span>
+                <span class="P62LEGDESC">Синя горизонтальна штриховка — «мертва» земля: трясовина з «вікнами», де не можна ні пасти худобу, ні косити. Типова поліська terra incognita.</span>
+              </div>
+            </div>
+            <div class="P62LEGROW">
+              <div class="P62LEGSWATCH" style="background:#b0a080;"></div>
+              <div>
+                <span class="P62LEGNAME">Болота мохові</span>
+                <span class="P62LEGDESC">Те саме з коричневими цятками — торф'яники і сфагнові мохові болота, що слугували перспективним фондом для меліорації.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- INFRASTRUCTURE -->
+        <div class="P62LEGPANEL" id="p62tab-infra">
+          <div class="P62LEGROWS">
+            <div class="P62LEGROW">
+              <div class="P62LEGSWATCH" style="background:#4a8fc8;"></div>
+              <div>
+                <span class="P62LEGNAME">Води</span>
+                <span class="P62LEGDESC">Синій — річки, озера, канали. Домінує річка Горинь з численними старицями та меандрами, що свідчить про заболоченість заплави.</span>
+              </div>
+            </div>
+            <div class="P62LEGROW">
+              <div class="P62LEGSWATCH" style="background:#d4b898;background:radial-gradient(circle,#b89870 1px,transparent 1px) 0 0/5px 5px,#d4c8b0;"></div>
+              <div>
+                <span class="P62LEGNAME">Піски</span>
+                <span class="P62LEGDESC">Дрібна коричнева крапка — непридатні для оранки піщані ґрунти, типові для поліських борів.</span>
+              </div>
+            </div>
+            <div class="P62LEGROW">
+              <div class="P62LEGSWATCH" style="background:repeating-linear-gradient(90deg,#888 0,#888 3px,#ddd 3px,#ddd 7px);"></div>
+              <div>
+                <span class="P62LEGNAME">Дороги</span>
+                <span class="P62LEGDESC">Паралельні суцільні або пунктирні лінії — тракти та польові шляхи, що з'єднували Дубровицю з сусідніми селами і містами.</span>
+              </div>
+            </div>
+            <div class="P62LEGROW">
+              <div class="P62LEGSWATCH" style="background:#e8e0d0;display:flex;align-items:center;justify-content:center;font-size:.6rem;color:#555;">✝</div>
+              <div>
+                <span class="P62LEGNAME">Цвинтарі</span>
+                <span class="P62LEGDESC">Поля з маленькими хрестиками — православні та католицькі кладовища навколо сіл і в межах містечка.</span>
+              </div>
+            </div>
+            <div class="P62LEGROW">
+              <div class="P62LEGSWATCH" style="background:#f0d878;display:flex;align-items:center;justify-content:center;font-size:.55rem;color:#555;">✝</div>
+              <div>
+                <span class="P62LEGNAME">Церкви</span>
+                <span class="P62LEGDESC">Жовті квадрати з хрестом — православні храми в містечку та приписних селах, що визначали духовне і географічне ядро поселень.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /P62LEGSEC -->
+
+      <!-- ── GEOGRAPHY ── -->
+      <div class="P62GEOSEC">
+        <div class="P62LEGHEAD">
+          <h3 class="P62LEGHT">Географічний аналіз — топоніми</h3>
+          <div class="P62LEGLINE"></div>
+        </div>
+        <div class="P62GEOINNER">
+          <div class="P62GEOBLOCK">
+            <h4 class="P62GEOBH">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0112 2a8 8 0 018 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+              Населені пункти
+            </h4>
+            <ul class="P62GEOLIST">
+              <li><strong>М. Домбровица</strong> — центр, містечко Дубровиця з найбільшим масивом забудови навколо нього</li>
+              <li><strong>С. Залужье</strong> — Залужжя, село вздовж берега Горині</li>
+              <li><strong>Бережкы</strong> — Бережки, прибережне поселення</li>
+              <li><strong>Д. Сохи</strong> — село Сохи</li>
+              <li><strong>Д. Оранцы</strong> — село Оранці</li>
+              <li><strong>Д. Грицкы</strong> — село Грицьки</li>
+              <li><strong>Ф. Антонинъ</strong> — Фольварок Антонін, названий на честь когось із родини Плятерів</li>
+            </ul>
+          </div>
+          <div class="P62GEOBLOCK">
+            <h4 class="P62GEOBH">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12a9 9 0 1018 0 9 9 0 00-18 0M3 12h18M12 3c-2.5 3-4 5.5-4 9s1.5 6 4 9M12 3c2.5 3 4 5.5 4 9s-1.5 6-4 9"/></svg>
+              Гідрографія та орієнтація
+            </h4>
+            <ul class="P62GEOLIST">
+              <li><strong>Річка Горинь</strong> — велика річка праворуч на карті, з численними старицями (старими руслами) та меандрами</li>
+              <li><strong>Заплавні болота</strong> — широка заболочена долина Горині, непридатна для обробітку</li>
+              <li><strong>Орієнтація</strong> — маєток витягнутий з північного заходу на південний схід</li>
+              <li><strong>Архівний №71</strong> — номер аркуша у генеральному межуванні Волинської губернії</li>
+              <li><strong>Масштаб</strong> — лінійна шкала у сажнях від 0 до 500 для точних вимірювань на карті</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── BOTTOM BAR ── -->
+      <div class="P62BOTTOM">
+        <div class="P62BITEM">
+          <div class="P62BICO"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg></div>
+          <div class="P62BTH">Документ реформи</div>
+          <div class="P62BTD">Карта складена у березні 1862 р. — через рік після скасування кріпосного права (1861). Вона юридично фіксувала новий розподіл землі між графом Плятером і звільненими селянами, ставши основою для офіційного наділення.</div>
+        </div>
+        <div class="P62BITEM">
+          <div class="P62BICO"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v1m0 16v1M4.22 4.22l.7.7M18.36 18.36l.7.7M1 12h2m18 0h2M4.22 19.78l.7-.7M18.36 5.64l.7-.7"/><circle cx="12" cy="12" r="4"/></svg></div>
+          <div class="P62BTH">Поліський ландшафт</div>
+          <div class="P62BTD">Карта наочно демонструє типову структуру Полісся: ліси й болота домінують (сірі та зелені тони), рілля фрагментована. Села тягнуться вузькою смугою вздовж Горині — єдиного надійного орієнтира і транспортного шляху.</div>
+        </div>
+        <div class="P62BITEM">
+          <div class="P62BICO"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+          <div class="P62BTH">Цінність джерела</div>
+          <div class="P62BTD">Це один із небагатьох картографічних документів, який показує розподіл власності в Дубровицькому регіоні напередодні великих соціальних змін. Карта є унікальним первинним джерелом для генеалогічних і краєзнавчих досліджень.</div>
+        </div>
+      </div>
+
+      <!-- ── HISTORICAL CONTEXT: LINE OF FRACTURE ── -->
+      <div class="P62BREAK" id="P62BREAK">
+        <style>
+        /* ── P62 BREAK — «Лінія розлому» ── */
+        .P62BREAK{margin-top:3rem;padding-top:2.5rem;border-top:1px solid rgba(180,130,30,.12);}
+        :root:not([data-theme="dark"]) .P62BREAK{border-color:rgba(140,100,20,.18);}
+        .P62BRKHEAD{display:flex;align-items:center;gap:.9rem;margin-bottom:.5rem;}
+        .P62BRKT{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:#e0d0b0;margin:0;}
+        :root:not([data-theme="dark"]) .P62BRKT{color:#1c1917;}
+        .P62BRKLINE{flex:1;height:1px;background:rgba(180,130,30,.13);}
+        .P62BRKLEAD{font-family:'Cormorant Garamond',serif;font-size:1.18rem;font-weight:400;font-style:italic;
+          color:rgba(220,200,155,.75);line-height:1.65;margin:0 0 2.5rem;max-width:800px;}
+        :root:not([data-theme="dark"]) .P62BRKLEAD{color:rgba(60,40,10,.6);}
+        .P62BRKLEAD em{color:#c9a227;font-style:italic;}
+        :root:not([data-theme="dark"]) .P62BRKLEAD em{color:#8a5c10;}
+
+        /* Timeline */
+        .P62TL{position:relative;padding-left:2.4rem;}
+        .P62TL::before{content:'';position:absolute;left:.75rem;top:.5rem;bottom:.5rem;
+          width:1px;background:linear-gradient(180deg,rgba(201,162,39,.5) 0%,rgba(201,162,39,.08) 100%);}
+        .P62TLITEM{position:relative;margin-bottom:2rem;}
+        .P62TLITEM:last-child{margin-bottom:0;}
+        .P62TLITEM::before{content:'';position:absolute;left:-2.4rem;top:.5rem;
+          width:13px;height:13px;border-radius:50%;background:#c9a227;
+          border:2px solid rgba(201,162,39,.3);box-shadow:0 0 0 4px rgba(201,162,39,.07);}
+        .P62TLITEM.highlight::before{background:#f0c840;box-shadow:0 0 0 5px rgba(201,162,39,.14),0 0 14px rgba(201,162,39,.3);}
+        .P62TLYEAR{font-family:'DM Sans',sans-serif;font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;
+          color:#c9a227;margin:0 0 .3rem;display:block;}
+        :root:not([data-theme="dark"]) .P62TLYEAR{color:#8a5c10;}
+        .P62TLTT{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:600;color:#e8d8b5;
+          margin:0 0 .45rem;line-height:1.25;}
+        :root:not([data-theme="dark"]) .P62TLTT{color:#1c1917;}
+        .P62TLTB{font-family:'DM Sans',sans-serif;font-size:.73rem;line-height:1.8;color:rgba(195,178,140,.58);}
+        :root:not([data-theme="dark"]) .P62TLTB{color:rgba(55,40,15,.55);}
+        .P62TLTB strong{font-weight:600;color:rgba(220,200,155,.85);}
+        :root:not([data-theme="dark"]) .P62TLTB strong{color:#3a2608;}
+
+        /* Highlight box for 1862 */
+        .P62TLITEM.highlight .P62TLINBOX{
+          background:rgba(201,162,39,.07);border:1px solid rgba(201,162,39,.22);border-radius:10px;
+          padding:1rem 1.2rem;margin-top:.6rem;}
+        :root:not([data-theme="dark"]) .P62TLITEM.highlight .P62TLINBOX{
+          background:rgba(180,130,20,.05);border-color:rgba(140,100,20,.2);}
+        .P62TLINBOX{margin-top:.5rem;}
+        .P62TLINBOX-NOTE{font-family:'DM Sans',sans-serif;font-size:.68rem;line-height:1.75;
+          color:rgba(230,210,160,.68);}
+        :root:not([data-theme="dark"]) .P62TLINBOX-NOTE{color:rgba(60,40,10,.55);}
+        .P62TLINBOX-NOTE strong{font-weight:700;color:#c9a227;}
+        :root:not([data-theme="dark"]) .P62TLINBOX-NOTE strong{color:#8a5c10;}
+
+        /* Two-column layout for wider screens */
+        .P62BRKWRAP{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;}
+        @media(max-width:800px){.P62BRKWRAP{grid-template-columns:1fr;gap:0;}}
+
+        /* Conclusion quote */
+        .P62CONCL{margin-top:2.5rem;padding:1.5rem 1.6rem;
+          background:rgba(201,162,39,.05);border:1px solid rgba(201,162,39,.18);
+          border-left:3px solid #c9a227;border-radius:0 10px 10px 0;}
+        :root:not([data-theme="dark"]) .P62CONCL{background:rgba(180,130,20,.04);border-color:rgba(140,100,20,.2);border-left-color:#a07820;}
+        .P62CONCL-Q{font-family:'Cormorant Garamond',serif;font-size:1.08rem;font-weight:400;font-style:italic;
+          color:rgba(230,210,160,.82);line-height:1.7;margin:0 0 .6rem;}
+        :root:not([data-theme="dark"]) .P62CONCL-Q{color:rgba(45,30,8,.65);}
+        .P62CONCL-Q em{color:#c9a227;font-style:normal;font-weight:600;}
+        :root:not([data-theme="dark"]) .P62CONCL-Q em{color:#8a5c10;}
+        .P62CONCL-SRC{font-family:'DM Sans',sans-serif;font-size:.62rem;letter-spacing:.1em;
+          text-transform:uppercase;color:rgba(180,155,100,.4);}
+        :root:not([data-theme="dark"]) .P62CONCL-SRC{color:rgba(100,75,25,.38);}
+        </style>
+
+        <div class="P62BRKHEAD">
+          <h3 class="P62BRKT">«Лінія розлому» — Контекст карти</h3>
+          <div class="P62BRKLINE"></div>
+        </div>
+
+        <p class="P62BRKLEAD">
+          Ця карта — <em>знімок</em> Дубровиці за один рік до того, як старий світ (кріпосний) остаточно почав трансформуватися в капіталістичний. Це не був «вимикач», який клацнули — і настав новий лад. Це була болісна й масштабна «перепрошивка» всієї системи.
+        </p>
+
+        <div class="P62BRKWRAP">
+          <div class="P62TL">
+
+            <div class="P62TLITEM">
+              <span class="P62TLYEAR">19 лютого 1861</span>
+              <div class="P62TLTT">Юридичний старт реформи</div>
+              <div class="P62TLINBOX">
+                <p class="P62TLTB">Олександр II підписав Маніфест про скасування кріпосного права. Селяни отримали <strong>особисту свободу</strong> — їх більше не можна було продати чи подарувати. Але земля все ще належала поміщику.</p>
+              </div>
+            </div>
+
+            <div class="P62TLITEM highlight">
+              <span class="P62TLYEAR">Березень 1862 · Ваша карта</span>
+              <div class="P62TLTT">Епоха Уставних грамот</div>
+              <div class="P62TLINBOX">
+                <p class="P62TLINBOX-NOTE">Протягом двох років (1861–1863) поміщики та селяни складали «Уставні грамоти» — договори, де фіксували: яку землю забирає селянин, яку залишає граф, які повинності виконуються до повного викупу. <strong>Ця карта — графічне доповнення до такої грамоти.</strong> Без детального плану Плятер не міг би юридично розділити маєток. Саме тому тут так ретельно відділено «Селянську ріллю» від «Фольварочної».</p>
+              </div>
+            </div>
+
+            <div class="P62TLITEM">
+              <span class="P62TLYEAR">1860-ті – 1880-ті</span>
+              <div class="P62TLTT">Капіталізм у дії</div>
+              <div class="P62TLINBOX">
+                <p class="P62TLTB">Держава виплатила Плятеру 80% вартості землі облігаціями — <strong>живий капітал</strong>, який пішов у розвиток. Колишні кріпаки стали «тимчасовозобов'язаними»: граф мав або платити за їхню працю, або здавати землю в оренду. Фольварки на карті — майбутні центри лісопилень, ґуралень і скляних заводів.</p>
+              </div>
+            </div>
+
+            <div class="P62TLITEM">
+              <span class="P62TLYEAR">1885</span>
+              <div class="P62TLTT">Залізниця — фінальний акорд</div>
+              <div class="P62TLINBOX">
+                <p class="P62TLTB">Через Дубровицю пройшла лінія <strong>Вільно-Рівненської залізниці</strong> (Поліські залізниці). Ліс Плятерів тепер везли вагонами в Європу, а не лише сплавом по Горині. Дубровиця перестала бути ізольованим «островом» серед боліт.</p>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Right: what the map shows about the transition -->
+          <div>
+            <div style="display:flex;flex-direction:column;gap:1.1rem;padding-top:.1rem;">
+
+              <div class="P62CARD" style="padding:1.2rem 1.3rem;">
+                <div class="P62CARD-ICON" style="margin-bottom:.75rem;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                </div>
+                <div class="P62CARD-H">Ринок праці</div>
+                <div class="P62CARD-B">Поява «тимчасовозобов'язаних» означала кінець безкоштовної панщини. Плятер більше не міг наказати людям працювати — він мав домовлятися і платити. Фактично це народження ринку найманої праці на Поліссі.</div>
+              </div>
+
+              <div class="P62CARD" style="padding:1.2rem 1.3rem;">
+                <div class="P62CARD-ICON" style="margin-bottom:.75rem;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                </div>
+                <div class="P62CARD-H">Земля як товар</div>
+                <div class="P62CARD-B">Викупні операції перетворили землю на товар зі ринковою вартістю. Селяни ставали боржниками держави на 49 років. Ця карта — момент, коли «я так хочу» поміщика перетворювалося на «згідно з планом і законом».</div>
+              </div>
+
+              <div class="P62CARD" style="padding:1.2rem 1.3rem;">
+                <div class="P62CARD-ICON" style="margin-bottom:.75rem;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3h18v18H3zM3 9h18M3 15h18M9 3v18"/></svg>
+                </div>
+                <div class="P62CARD-H">Бухгалтерія замість влади</div>
+                <div class="P62CARD-B">Ретельний поділ кольорів на карті — «рожева» фольваркова рілля проти «жовтої» селянської — це не естетика. Це юридичний аргумент. Кожен сажень на цьому плані — це гроші, зобов'язання, суперечки і суди на роки вперед.</div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="P62CONCL">
+          <p class="P62CONCL-Q">На цьому плані ми бачимо <em>останній момент</em>, коли поміщик ще тримає все під контролем як «батько-господар» — але вже змушений математично точно відміряти кожен сажень землі, який він втрачає. Це документ про те, як феодальне <em>«я так хочу»</em> перетворювалося на бухгалтерське <em>«згідно з планом і законом».</em></p>
+          <span class="P62CONCL-SRC">Аналіз · Дубровиця, 1862 р.</span>
+        </div>
+
+      </div><!-- /P62BREAK -->
+
+    </div><!-- /P62W -->
+
+    <!-- FULLSCREEN OVERLAY -->
+    <div id="P62FSO">
+      <button id="P62FSC"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+      <div id="P62FSTITLE">«Планъ Имѣнія Домбровицы» · 1862 рік · Оригінал у повній якості</div>
+      <div id="P62FSHQ">Оригінал · Висока роздільність</div>
+      <div id="P62FSFRAME">
+        <img id="P62FSIMG" src="" alt="Межовий план маєтку Домбровиці 1862 р." style="position:absolute;top:0;left:0;max-width:none;max-height:none;display:block;transform-origin:0 0;will-change:transform;user-select:none;-webkit-user-drag:none;pointer-events:none;">
+        <div id="P62FSLOADER"></div>
+        <div class="P62FSHINT">Тягніть · Scroll для збільшення · Подвійний клік — скинути</div>
+        <div id="P62FSZW">
+          <button class="P62FSZB" id="p62fszp">+</button>
+          <button class="P62FSZB" id="p62fszm">&#8722;</button>
+          <button class="P62FSZB" id="p62fszr" title="Скинути" style="font-size:.7rem">&#8962;</button>
+        </div>
+      </div>
+      <div id="P62FSMETA">
+        <div class="P62FSMT"><span class="label">Рік</span><span class="val">1862</span></div>
+        <div class="P62FSSEP"></div>
+        <div class="P62FSMT"><span class="label">Місяць</span><span class="val">Березень</span></div>
+        <div class="P62FSSEP"></div>
+        <div class="P62FSMT"><span class="label">Масштаб</span><span class="val">2½ версти / дюйм</span></div>
+        <div class="P62FSSEP"></div>
+        <div class="P62FSMT"><span class="label">Власник</span><span class="val">Граф І. Плятер</span></div>
+        <div class="P62FSSEP"></div>
+        <div class="P62FSMT"><span class="label">Архів</span><span class="val">№ 71</span></div>
+      </div>
+    </div>
+
+    <script>
+    (function(){
+      var THUMB  = 'https://i.imgur.com/Bwgm2zE.jpeg';
+      var FULLRES= 'https://i.imgur.com/uvCQY6f.jpeg';
+
+      var img  = document.getElementById('P62IMG');
+      var box  = document.getElementById('P62MAP');
+      var hint = document.getElementById('P62HINT');
+      var st   = { sc:1, tx:0, ty:0 };
+      var dragging=false, startX=0, startY=0;
+
+      function clampSt(){
+        var iw=img.offsetWidth*st.sc,ih=img.offsetHeight*st.sc;
+        var bw=box.offsetWidth,bh=box.offsetHeight;
+        st.tx=Math.min(0,Math.max(bw-iw,st.tx));
+        st.ty=Math.min(0,Math.max(bh-ih,st.ty));
+      }
+      function applyTr(anim){
+        img.style.transition=anim?'transform .28s cubic-bezier(.25,.46,.45,.94)':'none';
+        img.style.transform='translate('+st.tx+'px,'+st.ty+'px) scale('+st.sc+')';
+      }
+      function doZoom(factor,px,py){
+        var bw=box.offsetWidth,bh=box.offsetHeight;
+        px=(px!==undefined)?px:bw/2; py=(py!==undefined)?py:bh/2;
+        var old=st.sc; st.sc=Math.min(8,Math.max(1,old*factor));
+        if(st.sc===old)return;
+        var r=st.sc/old; st.tx=px-(px-st.tx)*r; st.ty=py-(py-st.ty)*r;
+        clampSt(); applyTr(true);
+        box.classList.add('moved'); hint.style.opacity='0';
+      }
+      function doReset(){ st={sc:1,tx:0,ty:0}; applyTr(true); box.classList.remove('moved'); hint.style.opacity='1'; }
+
+      box.addEventListener('mousedown',function(e){
+        if(e.button!==0)return; if(e.target.closest('.P62ZB,.P62FSB'))return;
+        dragging=true; startX=e.clientX-st.tx; startY=e.clientY-st.ty;
+      });
+      document.addEventListener('mousemove',function(e){
+        if(!dragging)return; st.tx=e.clientX-startX; st.ty=e.clientY-startY;
+        clampSt(); applyTr(false); box.classList.add('moved'); hint.style.opacity='0';
+      });
+      document.addEventListener('mouseup',function(){ dragging=false; });
+      box.addEventListener('wheel',function(e){
+        e.preventDefault();
+        var r=box.getBoundingClientRect();
+        doZoom(Math.pow(0.998,e.deltaY),e.clientX-r.left,e.clientY-r.top);
+      },{passive:false});
+
+      var lastDist=0,tdrag=false,tsx=0,tsy=0;
+      box.addEventListener('touchstart',function(e){
+        if(e.touches.length===1){tdrag=true;tsx=e.touches[0].clientX-st.tx;tsy=e.touches[0].clientY-st.ty;}
+        else if(e.touches.length===2){tdrag=false;lastDist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);}
+      },{passive:true});
+      box.addEventListener('touchmove',function(e){
+        e.preventDefault();
+        if(e.touches.length===1&&tdrag){st.tx=e.touches[0].clientX-tsx;st.ty=e.touches[0].clientY-tsy;clampSt();applyTr(false);}
+        else if(e.touches.length===2){
+          var d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+          if(lastDist>0){var r=box.getBoundingClientRect();doZoom(d/lastDist,((e.touches[0].clientX+e.touches[1].clientX)/2)-r.left,((e.touches[0].clientY+e.touches[1].clientY)/2)-r.top);}
+          lastDist=d;
+        }
+      },{passive:false});
+      box.addEventListener('touchend',function(e){
+        if(e.touches.length<2)lastDist=0;
+        if(e.touches.length===0)tdrag=false;
+        else{tsx=e.touches[0].clientX-st.tx;tsy=e.touches[0].clientY-st.ty;tdrag=true;}
+      },{passive:true});
+
+      document.getElementById('p62zp').addEventListener('click',function(e){e.stopPropagation();doZoom(1.5);});
+      document.getElementById('p62zm').addEventListener('click',function(e){e.stopPropagation();doZoom(1/1.5);});
+      document.getElementById('p62zr').addEventListener('click',function(e){e.stopPropagation();doReset();});
+
+      /* ── LEGEND TABS ── */
+      document.querySelectorAll('.P62LEGTAB').forEach(function(btn){
+        btn.addEventListener('click',function(){
+          document.querySelectorAll('.P62LEGTAB').forEach(function(b){b.classList.remove('act');});
+          document.querySelectorAll('.P62LEGPANEL').forEach(function(p){p.classList.remove('act');});
+          btn.classList.add('act');
+          document.getElementById('p62tab-'+btn.dataset.tab).classList.add('act');
+        });
+      });
+
+      /* ── FULLSCREEN ── */
+      var fso    = document.getElementById('P62FSO');
+      var fsframe= document.getElementById('P62FSFRAME');
+      var fsimg  = document.getElementById('P62FSIMG');
+      var fsload = document.getElementById('P62FSLOADER');
+      var fsst   = {sc:1,tx:0,ty:0};
+      var fsdrag=false,fsx=0,fsy=0;
+
+      function fsClamp(){
+        var iw=fsimg.offsetWidth*fsst.sc,ih=fsimg.offsetHeight*fsst.sc;
+        var bw=fsframe.offsetWidth,bh=fsframe.offsetHeight;
+        fsst.tx=Math.min(0,Math.max(bw-iw,fsst.tx));
+        fsst.ty=Math.min(0,Math.max(bh-ih,fsst.ty));
+      }
+      function fsApply(anim){
+        fsimg.style.transition=anim?'transform .28s cubic-bezier(.25,.46,.45,.94)':'none';
+        fsimg.style.transform='translate('+fsst.tx+'px,'+fsst.ty+'px) scale('+fsst.sc+')';
+      }
+      function fsZoom(factor,px,py){
+        px=px!==undefined?px:fsframe.offsetWidth/2;
+        py=py!==undefined?py:fsframe.offsetHeight/2;
+        var old=fsst.sc; fsst.sc=Math.min(12,Math.max(1,old*factor));
+        if(fsst.sc===old)return;
+        var r=fsst.sc/old; fsst.tx=px-(px-fsst.tx)*r; fsst.ty=py-(py-fsst.ty)*r;
+        fsClamp(); fsApply(true); fsframe.classList.add('fsmoved');
+      }
+      function fsReset(){ fsst={sc:1,tx:0,ty:0}; fsApply(true); fsframe.classList.remove('fsmoved'); }
+
+      function openFs(){
+        fsReset();
+        fsload.classList.remove('hidden');
+        fsimg.style.opacity='0';
+        fsimg.src='';
+        fso.classList.add('open');
+        document.body.style.overflow='hidden';
+        fsimg.onload=function(){
+          fsload.classList.add('hidden');
+          // fit image to viewport
+          var vw=fsframe.offsetWidth,vh=fsframe.offsetHeight;
+          var nw=fsimg.naturalWidth,nh=fsimg.naturalHeight;
+          var scale=Math.min(vw/nw,vh/nh,1);
+          fsst.sc=scale/1; // use 1 as base since transform-origin is 0 0
+          // position centered
+          fsst.tx=(vw-nw*scale)/2; fsst.ty=(vh-nh*scale)/2;
+          fsimg.style.transition='none';
+          fsimg.style.transform='translate('+fsst.tx+'px,'+fsst.ty+'px) scale(1)';
+          // We'll use a different approach: set the img width directly and center
+          fsimg.style.width=nw+'px';
+          fsst={sc:scale,tx:(vw-nw*scale)/2,ty:(vh-nh*scale)/2};
+          fsApply(false);
+          requestAnimationFrame(function(){ fsimg.style.transition='opacity .3s'; fsimg.style.opacity='1'; });
+        };
+        fsimg.onerror=function(){ fsload.classList.add('hidden'); };
+        fsimg.src=FULLRES;
+      }
+
+      document.getElementById('p62fsb').addEventListener('click',function(e){e.stopPropagation();openFs();});
+      document.getElementById('p62hqbtn').addEventListener('click',function(){openFs();});
+      document.getElementById('P62FSC').addEventListener('click',function(){
+        fso.classList.remove('open'); document.body.style.overflow=''; fsReset();
+      });
+      fso.addEventListener('click',function(e){ if(e.target===fso){fso.classList.remove('open');document.body.style.overflow='';fsReset();} });
+
+      document.getElementById('p62fszp').addEventListener('click',function(e){e.stopPropagation();fsZoom(1.5);});
+      document.getElementById('p62fszm').addEventListener('click',function(e){e.stopPropagation();fsZoom(1/1.5);});
+      document.getElementById('p62fszr').addEventListener('click',function(e){e.stopPropagation();fsReset();});
+
+      fsframe.addEventListener('mousedown',function(e){
+        if(e.button!==0)return; if(e.target.closest('.P62FSZB'))return;
+        fsdrag=true; fsx=e.clientX-fsst.tx; fsy=e.clientY-fsst.ty;
+      });
+      document.addEventListener('mousemove',function(e){ if(!fsdrag)return; fsst.tx=e.clientX-fsx; fsst.ty=e.clientY-fsy; fsClamp(); fsApply(false); fsframe.classList.add('fsmoved'); });
+      document.addEventListener('mouseup',function(){ fsdrag=false; });
+      fsframe.addEventListener('wheel',function(e){
+        e.preventDefault(); var r=fsframe.getBoundingClientRect();
+        fsZoom(Math.pow(0.998,e.deltaY),e.clientX-r.left,e.clientY-r.top);
+      },{passive:false});
+      fsframe.addEventListener('dblclick',function(e){
+        if(fsst.sc>1.5)fsReset();
+        else{var r=fsframe.getBoundingClientRect();fsZoom(2.5,e.clientX-r.left,e.clientY-r.top);}
+      });
+
+      /* Touch for fullscreen */
+      var fslastDist=0,fstdrag=false,fstsx=0,fstsy=0,fsps0=1,fspiX=0,fspiY=0;
+      fsframe.addEventListener('touchstart',function(e){
+        e.preventDefault();
+        if(e.touches.length===1){fstdrag=true;fstsx=e.touches[0].clientX-fsst.tx;fstsy=e.touches[0].clientY-fsst.ty;}
+        else if(e.touches.length===2){
+          fstdrag=false;
+          fslastDist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+          fsps0=fsst.sc;
+          var r=fsframe.getBoundingClientRect();
+          var pcx=(e.touches[0].clientX+e.touches[1].clientX)/2-r.left;
+          var pcy=(e.touches[0].clientY+e.touches[1].clientY)/2-r.top;
+          fspiX=(pcx-fsst.tx)/fsst.sc; fspiY=(pcy-fsst.ty)/fsst.sc;
+        }
+      },{passive:false});
+      fsframe.addEventListener('touchmove',function(e){
+        e.preventDefault();
+        if(e.touches.length===1&&fstdrag){fsst.tx=e.touches[0].clientX-fstsx;fsst.ty=e.touches[0].clientY-fstsy;fsClamp();fsApply(false);}
+        else if(e.touches.length===2){
+          var d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+          var ns=Math.min(12,Math.max(1,fsps0*(d/fslastDist)));
+          var r=fsframe.getBoundingClientRect();
+          var pcx=(e.touches[0].clientX+e.touches[1].clientX)/2-r.left;
+          var pcy=(e.touches[0].clientY+e.touches[1].clientY)/2-r.top;
+          fsst.tx=pcx-fspiX*ns; fsst.ty=pcy-fspiY*ns; fsst.sc=ns;
+          fsClamp(); fsApply(false);
+        }
+      },{passive:false});
+      fsframe.addEventListener('touchend',function(e){
+        if(e.touches.length===0)fstdrag=false;
+        else if(e.touches.length===1){fstdrag=true;fstsx=e.touches[0].clientX-fsst.tx;fstsy=e.touches[0].clientY-fsst.ty;}
+      },{passive:true});
+
+      document.addEventListener('keydown',function(e){
+        if(!fso.classList.contains('open'))return;
+        if(e.key==='Escape'){fso.classList.remove('open');document.body.style.overflow='';fsReset();}
+        if(e.key==='+'||e.key==='=')fsZoom(1.3,fsframe.offsetWidth/2,fsframe.offsetHeight/2);
+        if(e.key==='-')fsZoom(1/1.3,fsframe.offsetWidth/2,fsframe.offsetHeight/2);
+        if(e.key==='0')fsReset();
+      });
+      window.addEventListener('resize',function(){ if(fso.classList.contains('open'))fsClamp(); },{passive:true});
+    })();
+    </script>
+    </section>
     <!-- ═══ END TOPO PLAN ═══ -->
 
     <!-- ═══ BEFORE/AFTER COMPARISON SLIDER ═══ -->
