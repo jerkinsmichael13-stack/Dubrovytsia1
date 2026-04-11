@@ -652,36 +652,72 @@ a, button, [role="button"], input, select, textarea,
                 </div>
             </div>
 
-            <!-- Rotating quote card -->
-            <div class="TDIH-QUOTE-CARD">
-                <div>
-                    <div class="TDIH-Q-LABEL">Цитати та свідчення</div>
+            <!-- Rotating quote / photo card -->
+            <div class="TDIH-QUOTE-CARD" id="TDIH-QUOTE-CARD">
+                <!-- Photo layer (shown for photo-type quotes) -->
+                <div class="TDIH-Q-PHOTO" id="TDIH-Q-PHOTO"></div>
+                <div class="TDIH-Q-PHOTO-OVERLAY" id="TDIH-Q-PHOTO-OVERLAY"></div>
+                <div style="position:relative;z-index:2;display:flex;flex-direction:column;height:100%;">
+                    <div class="TDIH-Q-LABEL" id="TDIH-Q-LABEL">Цитати та свідчення</div>
                     <p class="TDIH-Q-TEXT" id="TDIH-Q-TEXT"></p>
                     <p class="TDIH-Q-META" id="TDIH-Q-META"></p>
-                </div>
-                <div class="TDIH-Q-BOTTOM">
-                    <div class="TDIH-Q-INDICATOR" id="TDIH-Q-DOTS"></div>
-                    <div style="display:flex;gap:.3rem;">
-                        <button class="TDIH-Q-BTN" id="TDIH-Q-PREV">‹</button>
-                        <button class="TDIH-Q-BTN" id="TDIH-Q-NEXT">›</button>
+                    <div class="TDIH-Q-BOTTOM" style="margin-top:auto;padding-top:1rem;">
+                        <div class="TDIH-Q-INDICATOR" id="TDIH-Q-DOTS"></div>
+                        <div style="display:flex;gap:.3rem;">
+                            <button class="TDIH-Q-BTN" id="TDIH-Q-PREV">‹</button>
+                            <button class="TDIH-Q-BTN" id="TDIH-Q-NEXT">›</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <style>
+    /* Photo layer inside quote card */
+    .TDIH-Q-PHOTO {
+        position: absolute; inset: 0; border-radius: 16px;
+        background-size: cover; background-position: center;
+        opacity: 0; transition: opacity .6s ease;
+        z-index: 0;
+    }
+    .TDIH-Q-PHOTO.visible { opacity: 1; }
+    .TDIH-Q-PHOTO-OVERLAY {
+        position: absolute; inset: 0; border-radius: 16px;
+        background: linear-gradient(160deg, rgba(5,20,12,.82) 0%, rgba(12,35,20,.72) 50%, rgba(4,14,8,.88) 100%);
+        opacity: 0; transition: opacity .6s ease;
+        z-index: 1;
+    }
+    .TDIH-Q-PHOTO-OVERLAY.visible { opacity: 1; }
+    .TDIH-Q-TAG {
+        display: inline-flex; align-items: center; gap: .4rem;
+        font-family: 'DM Sans', sans-serif;
+        font-size: .48rem; letter-spacing: .22em; text-transform: uppercase;
+        color: rgba(201,162,39,.85);
+        background: rgba(201,162,39,.12);
+        border: 1px solid rgba(201,162,39,.22);
+        border-radius: 100px;
+        padding: .18rem .65rem;
+        margin-bottom: .8rem;
+    }
+    </style>
+
     <script>
     (function() {
         // ── THIS DAY IN HISTORY DATA ──
         var FACTS = [
-            { month: 3, day: 18, year: 1576, title: 'Заповіт Марії Гольшанської', text: 'Марія Юріївна Гольшанська (Курбська) підписала заповіт, у якому згадала Пречистенську церкву в Дубровиці — найдавнішу писемну згадку про православний храм у місті.', source: 'Актова книга Луцького замку, 1576' },
-            { month: 10, day: 15, year: 1695, title: 'Початок будівництва костелу', text: 'Орден піарів розпочав будівництво костелу Іоанна Хрестителя в Дубровиці. Головним фундатором виступив Ян Кароль Дольський, пожертвувавши 33 000 злотих.', source: 'Метрика Волинського костелу' },
-            { month: 6, day: 4, year: 1742, title: 'Освячення костелу', text: 'Єпископ Франциск Кобельський урочисто консекрував костел Іоанна Хрестителя в Дубровиці. Будівництво тривало понад 47 років і обійшлося понад 83 000 злотих.', source: 'Літопис ордену піарів' },
-            { month: 5, day: 21, year: 1861, title: 'Мурована церква Різдва Богородиці', text: 'Завершено будівництво мурованої церкви Різдва Пресвятої Богородиці коштом графа Ігнатія Броель-Плятера. Трьохкупольна базиліка у стилі пізнього бароко стала прикрасою міста.', source: 'Рівненський єпархіальний архів' },
-            { month: 8, day: 26, year: 1942, title: 'Ліквідація єврейського гетто', text: '26–28 серпня 1942 року нацисти ліквідували гетто Дубровиці. Близько 4 000 євреїв міста були депортовані до Сарн, де їх стратили. Тих, хто намагався втекти, знищили безпосередньо у Дубровиці. Так була знищена громада, яка існувала тут з XVII ст.', source: 'Яд Вашем · Меморіальна книга Дубровиці · Дубровицький Вісник' },
-            { month: 9, day: 25, year: 1992, title: 'Повернення костелу громаді', text: 'Костел Іоанна Хрестителя офіційно повернено католицькій громаді. Єпископ Маркіян Трофим\'як здійснив повторне освячення після 47 років радянського зберігання.', source: 'Архів Луцько-Житомирської єпархії' },
-            { month: 9, day: 21, year: 2005, title: 'Відкриття пам\'ятника Юліанії', text: 'У Дубровиці відкрито та освячено пам\'ятник святій Юліанії Гольшанській — праведній діві XV–XVI ст., дочці місцевого князя. Пам\'ятник встановлено біля церкви Різдва Богородиці.', source: 'Архів міської ради Дубровиці' },
-            { month: 1, day: 1, year: 1005, title: 'Перша писемна згадка', text: 'Дубровиця — найдавніше місто Рівненської області. Перша писемна згадка датується 1005 роком у літописі, де місто фігурує під назвою «Домбровиця» як центр удільного князівства.', source: 'Іпатіївський літопис' },
+            { month: 1,  day: 1,  year: 1005, title: 'Перша писемна згадка',          text: 'Дубровиця — найдавніше місто Рівненської області. Перша писемна згадка датується 1005 роком у літописі, де місто фігурує під назвою «Домбровиця» як центр удільного князівства на Поліссі.', source: 'Іпатіївський літопис' },
+            { month: 12, day: 1,  year: 1642, title: 'Сумаріуш маєтку: замок на Горині', text: 'Документ «Anno 1642 Decemb.» фіксує дубровицький замок над річкою Горинню. «Замок порядно збудований, з будуванням в ньому, в Інвентарю описаний. До того замку фольварків з дворним, гуменним та обірним будуванням, з огородами, сіножатями та орними полями — №9.» Це єдина відома писемна згадка про замок.', source: 'Сумаріуш маєтку Дубровиця, грудень 1642 р.' },
+            { month: 3,  day: 18, year: 1576, title: 'Заповіт Марії Гольшанської',     text: 'Марія Юріївна Гольшанська (Курбська) підписала заповіт, у якому згадала Пречистенську церкву в Дубровиці — найдавнішу писемну згадку про православний храм у місті та заповіла їй своє Євангеліє в оксамитовій оправі.', source: 'Актова книга Луцького замку, 1576' },
+            { month: 10, day: 15, year: 1695, title: 'Початок будівництва костелу',    text: 'Орден піарів розпочав будівництво костелу Іоанна Хрестителя в Дубровиці. Головним фундатором виступив Ян Кароль Дольський, пожертвувавши 33 000 злотих. Будівництво тривало понад 47 років.', source: 'Метрика Волинського костелу' },
+            { month: 1,  day: 1,  year: 1753, title: 'Заснування єврейської громади',  text: 'Власник маєтку Міхаель Бростовський видав наказ про заснування незалежної єврейської громади Дубровиці: власний суд, синагога, лазня, будинок рабина, цвинтар та право торгівлі. До цього громада належала до Пінська. Права підтвердив 1774 р. Антоній Плятер.', source: 'Сефер Домбровіца (Меморіальна книга Дубровиці)' },
+            { month: 6,  day: 4,  year: 1742, title: 'Освячення костелу',               text: 'Єпископ Франциск Кобельський урочисто консекрував костел Іоанна Хрестителя в Дубровиці. Будівництво обійшлося понад 83 000 злотих. Особливою прикрасою став вітраж, замовлений у Венеції — єдиний у регіоні.', source: 'Літопис ордену піарів' },
+            { month: 6,  day: 12, year: 1917, title: 'Аерофотознімки Дубровиці',        text: '12 червня 1917 року баварський польовий авіаційний загін Fliegerabteilung 47 провів аерофотозйомку Дубровиці з борту літака. Знімки є унікальним документом про місто часів Першої світової війни — детальним планом вулиць, церков та забудови тогочасного міста.', source: 'Bayr. Fliegerabteilung 47 · Архів, 12 червня 1917' },
+            { month: 5,  day: 21, year: 1861, title: 'Мурована церква Різдва Богородиці', text: 'Завершено будівництво мурованої церкви Різдва Пресвятої Богородиці коштом графа Ігнатія Броель-Плятера. Трьохкупольна базиліка у стилі пізнього бароко стала прикрасою міста та збереглася до наших днів.', source: 'Рівненський єпархіальний архів' },
+            { month: 8,  day: 26, year: 1942, title: 'Ліквідація єврейського гетто',    text: '26–28 серпня 1942 року нацисти ліквідували гетто Дубровиці. Близько 4 000 євреїв міста були депортовані до Сарн, де їх стратили. Так була назавжди знищена громада, яка існувала в місті понад 300 років.', source: 'Яд Вашем · Меморіальна книга Дубровиці' },
+            { month: 9,  day: 25, year: 1992, title: 'Повернення костелу громаді',      text: 'Костел Іоанна Хрестителя офіційно повернено католицькій громаді після 47 років радянського зберігання. Єпископ Маркіян Трофим\'як здійснив повторне освячення храму.', source: 'Архів Луцько-Житомирської єпархії' },
+            { month: 9,  day: 21, year: 2005, title: 'Відкриття пам\'ятника Юліанії',   text: 'У Дубровиці відкрито та освячено пам\'ятник святій Юліанії Гольшанській — праведній діві XV–XVI ст., дочці місцевого князя. Пам\'ятник встановлено біля церкви Різдва Богородиці.', source: 'Архів міської ради Дубровиці' },
+            { month: 1,  day: 1,  year: 1780, title: 'Інвентар Воробинського фільварку', text: 'Польський інвентарний документ 1780 р. описує місто: квадратна ринкова площа зі стороною ~150 м, 10 вулиць. На схід — будинки міщан, будинок костелу, сад та два будинки графа Плятера. На вулиці Воробин — «Сокольня», де колись стояла текстильна фабрика.', source: 'Інвентар фільварку Воробин, 1780 р.' },
         ];
 
         var curFact = 0;
@@ -695,7 +731,6 @@ a, button, [role="button"], input, select, textarea,
         var MONTHS_UA = ['',  'Січень','Лютий','Березень','Квітень','Травень','Червень',
             'Липень','Серпень','Вересень','Жовтень','Листопад','Грудень'];
 
-        // Find fact closest to today or cycle
         var today = new Date();
         var best = 0, bestDiff = Infinity;
         FACTS.forEach(function(f, i) {
@@ -704,7 +739,6 @@ a, button, [role="button"], input, select, textarea,
         });
         curFact = best;
 
-        // Build dots
         FACTS.forEach(function(_, i) {
             var d = document.createElement('button');
             d.className = 'TDIH-DOT' + (i === curFact ? ' act' : '');
@@ -732,25 +766,83 @@ a, button, [role="button"], input, select, textarea,
         document.getElementById('TDIH-NEXT').addEventListener('click', function() { showFact(curFact + 1); });
         showFact(curFact);
 
-        // Auto-advance every 8 seconds
         var factTimer = setInterval(function() { showFact(curFact + 1); }, 8000);
         document.querySelector('.TDIH-CARD').addEventListener('mouseenter', function() { clearInterval(factTimer); });
         document.querySelector('.TDIH-CARD').addEventListener('mouseleave', function() {
             factTimer = setInterval(function() { showFact(curFact + 1); }, 8000);
         });
 
-        // ── QUOTES ──
+        // ── QUOTES — тепер з фото і мітками джерела ──
         var QUOTES = [
-            { text: '«Маєте матеріали або пропозиції щодо нашого міста? Дубровиця потребує вашої пам\'яті.»', meta: 'Цифровий архів Дубровиці · 2026' },
-            { text: '«Пречистенській церкві в Домбровиці моє мале Євангеліє в червоному оксамиті й золоченому сріблі...»', meta: 'Марія Гольшанська (Курбська) · Заповіт, 18 березня 1576 р.' },
-            { text: '«Найцінніший елемент інтер\'єру костелу — вітраж, замовлений спеціально у Венеції. Жоден інший костел у регіоні не мав нічого подібного.»', meta: 'З опису костелу Іоанна Хрестителя' },
-            { text: '«Дубровиця — найдавніше місто Рівненської області, якому понад тисячу років.»', meta: 'Цифровий архів · Про місто' },
-            { text: '«У 1938 р. парафія охоплювала понад 100 навколишніх сіл. Це була одна з найбільших католицьких громад на Рівненщині.»', meta: 'Статистика костелу св. Іоанна Хрестителя' },
+            {
+                text: '«Пречистенській церкві в Домбровиці моє мале Євангеліє в червоному оксамиті й золоченому сріблі...»',
+                meta: 'Марія Гольшанська (Курбська) · Заповіт, 18 березня 1576 р.',
+                tag:  'Актова книга, 1576'
+            },
+            {
+                text: '«В тей Маєтності над Річкою Горинею ЗАМОК порядно збудований, з будуванням в ньому, в Інвентарю описаний. До того Замку Фольварків збудуванням Дворним... з Сіножатями сполми Ораними до них №9.»',
+                meta: 'Сумаріуш маєтку Дубровиця · Anno 1642 Decemb.',
+                tag:  'Архівний документ, 1642'
+            },
+            {
+                text: '«Євреї жили в центрі міста, а християни — на його околицях. Нерідко християни зверталися до рабинів з проханням помолитися за одужання хворих. Бували також випадки, коли євреї та християни судилися перед рабином, і обидві сторони приймали його рішення з рівною повагою.»',
+                meta: 'Шмуель Зальцман · «Стежками минулих днів», Сефер Домбровіца',
+                tag:  'Єврейська спадщина'
+            },
+            {
+                photo: 'https://i.imgur.com/Da5KGQS.jpeg',
+                text: 'Аерофотознімок Дубровиці, зроблений 12 червня 1917 р. баварським авіаційним загоном Fliegerabteilung 47. На знімку видно церкву Різдва Богородиці, ринкову площу та вулиці міста. Унікальний документ часів Першої світової.',
+                meta: 'Bayr. Fliegerabteilung 47 · 12 Jun 1917',
+                tag:  '★ Аерофото, 1917',
+                link: 'index.html#AER'
+            },
+            {
+                text: '«Була зруйнована єврейська Дубровиця: зрубані її гілки та пущений вогонь у її крону. Припинилася творчість і затихла пісня. Дерево зрубано. Ой, яке лихо!»',
+                meta: 'Шмуель Зальцман · Сефер Домбровіца (Меморіальна книга Дубровиці)',
+                tag:  'Пам\'ять, 1942'
+            },
+            {
+                text: '«Таким чином у нас за три дні тричі змінювалася влада: вдень — більшовики, вдень — поляки, а ввечері — знову більшовики. Наше становище за таких умов можна легко уявити: постійно між молотом і ковадлом, і за все доводилося розплачуватися…»',
+                meta: 'Рав Аарон Петешник · «Розділи з Першої світової», стор. 219',
+                tag:  'Свідчення, 1920'
+            },
+            {
+                text: '«…від цього каменя, прямуючи на північ Передкостельною вулицею, — ліворуч від неї ринкові міські площі, праворуч — насамперед ділянки Отців Піарів…»',
+                meta: 'Інвентар фільварку Воробин з містом Домбровицею · 1780 р.',
+                tag:  'Архівний документ, 1780'
+            },
+            {
+                text: '«Найбільша заслуга і найбільша дія на користь нашого міста — справа балаховців. По всьому регіону поширилися великі погроми. Але майор жодним чином не дозволив їм увірватися в місто. Як залізний мур стояв він за нас і захищав нас за власною ініціативою.»',
+                meta: 'Рав Аарон Петешник · «Розділи з Першої світової», стор. 222',
+                tag:  'Свідчення, 1920'
+            },
+            {
+                photo: 'https://i.imgur.com/67HOTtf.jpeg',
+                text: 'Група мешканців Дубровиці перед костелом Іоанна Хрестителя, близько 1915 року. Перед входом до храму — жінки та чоловіки в традиційному одязі початку XX ст.',
+                meta: 'Фотоархів Дубровиці · бл. 1915 р.',
+                tag:  'Фото з архіву',
+                link: 'photo-archive.html'
+            },
+            {
+                text: '«У 1938 р. парафія охоплювала понад 100 навколишніх сіл. Це була одна з найбільших католицьких громад на Рівненщині.»',
+                meta: 'Статистика костелу св. Іоанна Хрестителя · Дубровиця',
+                tag:  'Костел Піарів'
+            },
+            {
+                text: '«Згідно з переписом 1897 р., Дубровиця нараховувала 2 868 євреїв із загальної кількості 6 007 душ. Напередодні Першої світової війни у місті було близько 10 000 душ, з них близько 4 000 євреїв.»',
+                meta: 'Сефер Домбровіца · Розділ про населення',
+                tag:  'Єврейська спадщина'
+            },
         ];
+
         var curQ = 0;
-        var qText = document.getElementById('TDIH-Q-TEXT');
-        var qMeta = document.getElementById('TDIH-Q-META');
-        var qDots = document.getElementById('TDIH-Q-DOTS');
+        var qCard  = document.getElementById('TDIH-QUOTE-CARD');
+        var qPhoto = document.getElementById('TDIH-Q-PHOTO');
+        var qOverlay = document.getElementById('TDIH-Q-PHOTO-OVERLAY');
+        var qLabel = document.getElementById('TDIH-Q-LABEL');
+        var qText  = document.getElementById('TDIH-Q-TEXT');
+        var qMeta  = document.getElementById('TDIH-Q-META');
+        var qDots  = document.getElementById('TDIH-Q-DOTS');
 
         QUOTES.forEach(function(_, i) {
             var d = document.createElement('div');
@@ -762,8 +854,30 @@ a, button, [role="button"], input, select, textarea,
             qText.classList.add('fading'); qMeta.classList.add('fading');
             setTimeout(function() {
                 curQ = (idx + QUOTES.length) % QUOTES.length;
-                qText.textContent = QUOTES[curQ].text;
-                qMeta.textContent = QUOTES[curQ].meta;
+                var q = QUOTES[curQ];
+
+                // Tag
+                var tagEl = qLabel.querySelector('.TDIH-Q-TAG');
+                if (!tagEl) { tagEl = document.createElement('span'); tagEl.className = 'TDIH-Q-TAG'; qLabel.appendChild(tagEl); }
+                tagEl.textContent = q.tag || 'Цитати та свідчення';
+
+                // Photo
+                if (q.photo) {
+                    qPhoto.style.backgroundImage = 'url(' + q.photo + ')';
+                    qPhoto.classList.add('visible');
+                    qOverlay.classList.add('visible');
+                } else {
+                    qPhoto.classList.remove('visible');
+                    qOverlay.classList.remove('visible');
+                    setTimeout(function(){ qPhoto.style.backgroundImage = ''; }, 650);
+                }
+
+                // Link
+                qCard.style.cursor = q.link ? 'pointer' : '';
+                qCard.onclick = q.link ? function(){ window.location = q.link; } : null;
+
+                qText.textContent = q.text;
+                qMeta.textContent = q.meta;
                 qDots.querySelectorAll('.TDIH-Q-DOT').forEach(function(d, i) {
                     d.classList.toggle('act', i === curQ);
                 });
@@ -771,14 +885,14 @@ a, button, [role="button"], input, select, textarea,
             }, 400);
         }
 
-        document.getElementById('TDIH-Q-PREV').addEventListener('click', function() { showQuote(curQ - 1); });
-        document.getElementById('TDIH-Q-NEXT').addEventListener('click', function() { showQuote(curQ + 1); });
+        document.getElementById('TDIH-Q-PREV').addEventListener('click', function(e) { e.stopPropagation(); showQuote(curQ - 1); });
+        document.getElementById('TDIH-Q-NEXT').addEventListener('click', function(e) { e.stopPropagation(); showQuote(curQ + 1); });
         showQuote(0);
 
-        var quoteTimer = setInterval(function() { showQuote(curQ + 1); }, 6000);
-        document.querySelector('.TDIH-QUOTE-CARD').addEventListener('mouseenter', function() { clearInterval(quoteTimer); });
-        document.querySelector('.TDIH-QUOTE-CARD').addEventListener('mouseleave', function() {
-            quoteTimer = setInterval(function() { showQuote(curQ + 1); }, 6000);
+        var quoteTimer = setInterval(function() { showQuote(curQ + 1); }, 7000);
+        qCard.addEventListener('mouseenter', function() { clearInterval(quoteTimer); });
+        qCard.addEventListener('mouseleave', function() {
+            quoteTimer = setInterval(function() { showQuote(curQ + 1); }, 7000);
         });
     })();
     </script>
@@ -1246,9 +1360,6 @@ a, button, [role="button"], input, select, textarea,
       }
       :root:not([data-theme="dark"]) .MBOX17B{background:#e8e0cf;box-shadow:0 0 0 1px rgba(140,95,15,.25),0 8px 30px rgba(0,0,0,.45),0 30px 70px rgba(0,0,0,.38);}
       .MBOX17B img{width:100%;height:100%;object-fit:contain;display:block;user-select:none;pointer-events:none;}
-      .MBOX17B::after{content:'';position:absolute;bottom:0;left:0;right:0;height:90px;
-        background:linear-gradient(to bottom,transparent,var(--color-bg));
-        pointer-events:none;z-index:5;}
       .MBOX17B-HINT{
         position:absolute;bottom:.7rem;left:50%;transform:translateX(-50%);
         font-family:'DM Sans',sans-serif;font-size:.5rem;letter-spacing:.16em;text-transform:uppercase;
@@ -1290,7 +1401,7 @@ a, button, [role="button"], input, select, textarea,
       <!-- ══ MAP 1917 ══ -->
       <div class="ABLK">
         <div class="ABLK-HEAD">
-          <div class="ABLK-YEAR" data-yr="1917" style="-webkit-text-stroke:1px rgba(232,184,75,.28);text-shadow:none;">1917</div>
+          <div class="ABLK-YEAR" data-yr="1917">1917</div>
           <div class="ABLK-INFO">
             <h3 class="ABT">Аерофотознімки Дубровиці · 12 червня 1917 р.</h3>
             <div class="ABLK-TAGS">
@@ -1417,458 +1528,6 @@ a, button, [role="button"], input, select, textarea,
           </div>
         </div>
       </div>
-
-      <!-- ══════════════════════════════════════════════════════════
-           БОЙОВІ ЖУРНАЛИ 397-ї та 415-ї СД · 22–24.01.1944
-      ══════════════════════════════════════════════════════════ -->
-      <div class="ABLK" id="CJ">
-        <style>
-        #CJ { margin-bottom: 4rem; }
-
-        /* ── Section header ── */
-        .CJ-HDR {
-          display: flex; align-items: center; gap: 1rem;
-          margin-bottom: 2rem;
-        }
-        .CJ-HDR-ICON {
-          width: 36px; height: 36px; border-radius: 8px;
-          background: rgba(201,162,39,.1); border: 1px solid rgba(201,162,39,.22);
-          display: flex; align-items: center; justify-content: center;
-          flex-shrink: 0;
-        }
-        .CJ-HDR-ICON svg { width: 17px; height: 17px; stroke: #c9a227; }
-        .CJ-HDR-BODY {}
-        .CJ-HDR-EYE {
-          font-family: 'DM Sans', sans-serif; font-size: .48rem;
-          letter-spacing: .26em; text-transform: uppercase;
-          color: rgba(201,162,39,.6); margin-bottom: .25rem;
-        }
-        .CJ-HDR-TITLE {
-          font-family: 'Cormorant Garamond', serif;
-          font-size: clamp(1.15rem, 2.2vw, 1.5rem);
-          font-weight: 500; color: #f0e6c8; line-height: 1.2;
-        }
-        :root:not([data-theme="dark"]) .CJ-HDR-TITLE { color: #1c1917; }
-
-        /* ── Intro paragraph ── */
-        .CJ-INTRO {
-          font-family: 'Cormorant Garamond', serif;
-          font-size: clamp(.95rem, 1.6vw, 1.1rem); font-weight: 300;
-          line-height: 1.85; color: rgba(240,230,195,.65);
-          max-width: 820px; margin-bottom: 2.4rem;
-          border-left: 2px solid rgba(201,162,39,.25);
-          padding-left: 1.2rem;
-        }
-        :root:not([data-theme="dark"]) .CJ-INTRO { color: rgba(44,40,36,.7); border-left-color: rgba(140,95,15,.35); }
-
-        /* ── Documents grid ── */
-        .CJ-DOCS {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 1.2rem;
-          margin-bottom: 2rem;
-        }
-        @media (max-width: 900px) { .CJ-DOCS { grid-template-columns: 1fr; } }
-
-        .CJ-DOC {
-          background: rgba(255,255,255,.03);
-          border: 1px solid rgba(201,162,39,.14);
-          border-radius: 10px;
-          overflow: hidden;
-          display: flex; flex-direction: column;
-          transition: border-color .25s;
-        }
-        :root:not([data-theme="dark"]) .CJ-DOC { background: rgba(0,0,0,.03); border-color: rgba(140,95,15,.18); }
-        .CJ-DOC:hover { border-color: rgba(201,162,39,.32); }
-
-        .CJ-DOC-IMG {
-          position: relative; overflow: hidden;
-          height: 180px; background: #0a0806; cursor: zoom-in;
-          flex-shrink: 0;
-        }
-        .CJ-DOC-IMG img {
-          width: 100%; height: 100%;
-          object-fit: cover; object-position: top center;
-          filter: sepia(.25) brightness(.88) contrast(1.05);
-          transition: transform .5s ease, filter .4s ease;
-          display: block;
-        }
-        .CJ-DOC-IMG:hover img { transform: scale(1.04); filter: sepia(.15) brightness(.98) contrast(1.05); }
-        .CJ-DOC-IMG-LBL {
-          position: absolute; bottom: 0; left: 0; right: 0;
-          padding: .4rem .65rem;
-          background: linear-gradient(transparent, rgba(4,3,2,.88));
-          font-family: 'DM Sans', sans-serif; font-size: .46rem;
-          letter-spacing: .2em; text-transform: uppercase;
-          color: rgba(201,162,39,.75);
-          pointer-events: none;
-        }
-
-        .CJ-DOC-BODY { padding: .9rem 1rem 1rem; flex: 1; }
-        .CJ-DOC-DATE {
-          font-family: 'DM Sans', sans-serif; font-size: .48rem;
-          letter-spacing: .2em; text-transform: uppercase;
-          color: rgba(201,162,39,.6); margin-bottom: .5rem;
-        }
-        .CJ-DOC-TEXT {
-          font-family: 'Cormorant Garamond', serif;
-          font-size: .92rem; font-style: italic; line-height: 1.75;
-          color: rgba(240,225,180,.72);
-        }
-        :root:not([data-theme="dark"]) .CJ-DOC-TEXT { color: rgba(44,36,20,.7); }
-        .CJ-DOC-TEXT strong { font-style: normal; color: rgba(232,184,75,.9); font-weight: 600; }
-        :root:not([data-theme="dark"]) .CJ-DOC-TEXT strong { color: #a8701a; }
-        .CJ-DOC-SOURCE {
-          margin-top: .75rem;
-          font-family: 'DM Sans', sans-serif; font-size: .58rem;
-          color: rgba(200,180,130,.35); letter-spacing: .06em;
-          border-top: 1px solid rgba(201,162,39,.1);
-          padding-top: .6rem;
-        }
-        :root:not([data-theme="dark"]) .CJ-DOC-SOURCE { color: rgba(44,40,36,.38); border-color: rgba(140,95,15,.15); }
-
-        /* ── Context block ── */
-        .CJ-CONTEXT {
-          background: linear-gradient(135deg, rgba(20,12,4,.7), rgba(30,20,6,.55));
-          border: 1px solid rgba(201,162,39,.15);
-          border-radius: 12px;
-          padding: 1.6rem 2rem;
-          margin-bottom: 2.4rem;
-          position: relative; overflow: hidden;
-        }
-        :root:not([data-theme="dark"]) .CJ-CONTEXT { background: rgba(201,162,39,.05); border-color: rgba(140,95,15,.2); }
-        .CJ-CONTEXT::before {
-          content: ''; position: absolute; inset: 0;
-          background: radial-gradient(ellipse 60% 80% at 0% 50%, rgba(201,162,39,.04) 0%, transparent 70%);
-          pointer-events: none;
-        }
-        .CJ-CONTEXT-TITLE {
-          font-family: 'DM Sans', sans-serif; font-size: .52rem;
-          letter-spacing: .26em; text-transform: uppercase;
-          color: rgba(201,162,39,.65); margin-bottom: .9rem;
-          display: flex; align-items: center; gap: .6rem;
-        }
-        .CJ-CONTEXT-TITLE::after {
-          content: ''; flex: 1; height: 1px;
-          background: linear-gradient(90deg, rgba(201,162,39,.25), transparent);
-        }
-        .CJ-CONTEXT-TEXT {
-          font-family: 'Cormorant Garamond', serif;
-          font-size: clamp(.95rem, 1.6vw, 1.08rem); line-height: 1.85;
-          color: rgba(240,225,180,.7); position: relative; z-index: 1;
-        }
-        :root:not([data-theme="dark"]) .CJ-CONTEXT-TEXT { color: rgba(44,36,20,.72); }
-        .CJ-CONTEXT-TEXT em { font-style: italic; color: rgba(232,184,75,.9); }
-        :root:not([data-theme="dark"]) .CJ-CONTEXT-TEXT em { color: #a8701a; }
-
-        /* ── Stats row ── */
-        .CJ-STATS {
-          display: grid; grid-template-columns: repeat(4, 1fr);
-          gap: .8rem; margin: 1.4rem 0 0;
-        }
-        @media (max-width: 700px) { .CJ-STATS { grid-template-columns: repeat(2,1fr); } }
-        .CJ-STAT {
-          background: rgba(0,0,0,.25);
-          border: 1px solid rgba(201,162,39,.1);
-          border-radius: 8px; padding: .75rem .9rem;
-          text-align: center;
-        }
-        :root:not([data-theme="dark"]) .CJ-STAT { background: rgba(255,255,255,.5); border-color: rgba(140,95,15,.18); }
-        .CJ-STAT-NUM {
-          font-family: 'Cormorant Garamond', serif;
-          font-size: 1.7rem; font-weight: 300; line-height: 1;
-          color: #c9a227; margin-bottom: .2rem;
-        }
-        .CJ-STAT-LBL {
-          font-family: 'DM Sans', sans-serif; font-size: .48rem;
-          letter-spacing: .16em; text-transform: uppercase;
-          color: rgba(200,180,130,.45);
-        }
-        :root:not([data-theme="dark"]) .CJ-STAT-LBL { color: rgba(44,40,36,.45); }
-
-        /* ── Aircraft section ── */
-        .CJ-AC {
-          border-top: 1px solid rgba(201,162,39,.15);
-          padding-top: 2rem;
-          margin-top: .5rem;
-        }
-        .CJ-AC-HDR {
-          font-family: 'DM Sans', sans-serif; font-size: .52rem;
-          letter-spacing: .26em; text-transform: uppercase;
-          color: rgba(201,162,39,.6); margin-bottom: 1.5rem;
-          display: flex; align-items: center; gap: .6rem;
-        }
-        .CJ-AC-HDR::after {
-          content: ''; flex: 1; height: 1px;
-          background: linear-gradient(90deg, rgba(201,162,39,.25), transparent);
-        }
-
-        .CJ-AC-GRID {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 1.5rem;
-          align-items: start;
-        }
-        @media (max-width: 800px) { .CJ-AC-GRID { grid-template-columns: 1fr; } }
-
-        /* Photos pair */
-        .CJ-AC-PHOTOS {
-          display: grid; grid-template-columns: 1fr 1fr; gap: .7rem;
-        }
-        .CJ-AC-PHOTO {
-          position: relative; border-radius: 8px; overflow: hidden;
-          aspect-ratio: 4/3; background: #0a0806; cursor: zoom-in;
-          border: 1px solid rgba(201,162,39,.12);
-        }
-        .CJ-AC-PHOTO img {
-          width: 100%; height: 100%; object-fit: cover;
-          filter: sepia(.3) brightness(.82) contrast(1.08);
-          transition: transform .5s, filter .4s;
-          display: block;
-        }
-        .CJ-AC-PHOTO:hover img { transform: scale(1.06); filter: sepia(.15) brightness(.95) contrast(1.06); }
-        .CJ-AC-PHOTO-LBL {
-          position: absolute; bottom: 0; left: 0; right: 0;
-          background: linear-gradient(transparent, rgba(4,3,2,.85));
-          padding: .3rem .5rem;
-          font-family: 'DM Sans', sans-serif; font-size: .44rem;
-          letter-spacing: .14em; text-transform: uppercase;
-          color: rgba(201,162,39,.7); pointer-events: none;
-        }
-
-        /* Info card */
-        .CJ-AC-INFO {
-          background: rgba(255,255,255,.025);
-          border: 1px solid rgba(201,162,39,.14);
-          border-radius: 10px; padding: 1.4rem;
-        }
-        :root:not([data-theme="dark"]) .CJ-AC-INFO { background: rgba(0,0,0,.03); border-color: rgba(140,95,15,.18); }
-        .CJ-AC-TITLE {
-          font-family: 'Cormorant Garamond', serif;
-          font-size: 1.15rem; font-weight: 500;
-          color: #f0e6c8; margin-bottom: 1rem; line-height: 1.2;
-        }
-        :root:not([data-theme="dark"]) .CJ-AC-TITLE { color: #1c1917; }
-        .CJ-AC-TITLE em { font-style: italic; color: #c9a227; }
-
-        .CJ-AC-ROWS { display: flex; flex-direction: column; gap: .5rem; margin-bottom: 1rem; }
-        .CJ-AC-ROW {
-          display: flex; gap: .7rem;
-          font-family: 'DM Sans', sans-serif; font-size: .72rem;
-          line-height: 1.4;
-        }
-        .CJ-AC-ROW-K {
-          flex-shrink: 0; width: 110px;
-          color: rgba(201,162,39,.55); font-size: .62rem;
-          letter-spacing: .08em; text-transform: uppercase;
-          padding-top: .07rem;
-        }
-        :root:not([data-theme="dark"]) .CJ-AC-ROW-K { color: rgba(140,95,15,.6); }
-        .CJ-AC-ROW-V { color: rgba(240,225,185,.8); }
-        :root:not([data-theme="dark"]) .CJ-AC-ROW-V { color: rgba(44,40,36,.8); }
-        .CJ-AC-ROW-V strong { color: rgba(232,184,75,.95); font-weight: 600; }
-        :root:not([data-theme="dark"]) .CJ-AC-ROW-V strong { color: #a8701a; }
-
-        .CJ-AC-NOTE {
-          font-family: 'Cormorant Garamond', serif;
-          font-size: .9rem; font-style: italic; line-height: 1.7;
-          color: rgba(240,225,180,.55);
-          border-top: 1px solid rgba(201,162,39,.1);
-          padding-top: .85rem; margin-top: .2rem;
-        }
-        :root:not([data-theme="dark"]) .CJ-AC-NOTE { color: rgba(44,36,20,.55); border-color: rgba(140,95,15,.15); }
-
-        /* JG-51 band */
-        .CJ-JG51 {
-          margin-top: 1.4rem;
-          background: rgba(201,162,39,.05);
-          border: 1px solid rgba(201,162,39,.16);
-          border-radius: 8px; padding: .9rem 1.1rem;
-          display: flex; align-items: flex-start; gap: .9rem;
-        }
-        :root:not([data-theme="dark"]) .CJ-JG51 { background: rgba(201,162,39,.07); }
-        .CJ-JG51-ICON {
-          font-size: 1.4rem; flex-shrink: 0; line-height: 1; margin-top: .05rem;
-        }
-        .CJ-JG51-BODY { flex: 1; }
-        .CJ-JG51-NAME {
-          font-family: 'Cormorant Garamond', serif;
-          font-size: 1rem; font-weight: 500; color: #c9a227; margin-bottom: .25rem;
-        }
-        .CJ-JG51-DESC {
-          font-family: 'DM Sans', sans-serif; font-size: .7rem; line-height: 1.6;
-          color: rgba(240,225,185,.5);
-        }
-        :root:not([data-theme="dark"]) .CJ-JG51-DESC { color: rgba(44,40,36,.55); }
-        .CJ-JG51-DESC a { color: rgba(201,162,39,.7); text-decoration: underline; text-decoration-color: rgba(201,162,39,.3); }
-        .CJ-JG51-DESC a:hover { color: #c9a227; }
-        </style>
-
-        <!-- Header -->
-        <div class="CJ-HDR">
-          <div class="CJ-HDR-ICON">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>
-            </svg>
-          </div>
-          <div class="CJ-HDR-BODY">
-            <div class="CJ-HDR-EYE">Первинні джерела · Архівні виписки</div>
-            <div class="CJ-HDR-TITLE">Бойові журнали 397-ї та 415-ї стрілецьких дивізій · 22–24 січня 1944</div>
-          </div>
-        </div>
-
-        <!-- Intro -->
-        <p class="CJ-INTRO">
-          Бойові журнали радянських дивізій, що утримували Дубровицю у січні 1944 р., фіксують систематичні авіаційні удари Люфтваффе по місту. Три дні поспіль над позиціями з'являвся розвідник <em style="color:rgba(232,184,75,.85);font-style:italic;">Fw-189 «Рама»</em>, а 24 січня — дата аерофотознімку вище — місто було піддане масованому бомбардуванню пікіруючими бомбардувальниками <em style="color:rgba(232,184,75,.85);font-style:italic;">Ju-87 «Штука»</em>. Архівні виписки пояснюють значні руйнування та численні вирви від бомб, що фіксує аерофотознімок.
-        </p>
-
-        <!-- Three journal documents -->
-        <div class="CJ-DOCS">
-
-          <!-- Doc 1: 22.01.1944 -->
-          <div class="CJ-DOC">
-            <div class="CJ-DOC-IMG" onclick="window.ULB&&window.ULB.open([{src:'https://i.imgur.com/oYpvBOs.jpeg',cap:'Бойовий журнал 397-ї СД · 22 січня 1944 р.'}],0)" title="Відкрити оригінал">
-              <img src="https://i.imgur.com/oYpvBOs.jpeg" alt="Бойовий журнал 22.01.1944" loading="lazy">
-              <div class="CJ-DOC-IMG-LBL">Оригінальна сторінка · натисніть для перегляду</div>
-            </div>
-            <div class="CJ-DOC-BODY">
-              <div class="CJ-DOC-DATE">22 січня 1944 · 397-а стрілецька дивізія</div>
-              <p class="CJ-DOC-TEXT">«Над боевыми порядками дивизии авиация противника с 10:00 до 16:00 вела непрерывную разведку. Сброшено <strong>4 бомбы</strong> на м. Домбровица.»</p>
-              <div class="CJ-DOC-SOURCE">Журнал бойових дій 397-ї СД, ЦАМО РФ</div>
-            </div>
-          </div>
-
-          <!-- Doc 2: 23.01.1944 -->
-          <div class="CJ-DOC">
-            <div class="CJ-DOC-IMG" onclick="window.ULB&&window.ULB.open([{src:'https://i.imgur.com/qj22Xk0.jpeg',cap:'Бойовий журнал 415-ї СД · 23 січня 1944 р.'}],0)" title="Відкрити оригінал">
-              <img src="https://i.imgur.com/qj22Xk0.jpeg" alt="Бойовий журнал 23.01.1944" loading="lazy">
-              <div class="CJ-DOC-IMG-LBL">Оригінальна сторінка · натисніть для перегляду</div>
-            </div>
-            <div class="CJ-DOC-BODY">
-              <div class="CJ-DOC-DATE">23 січня 1944 · 415-а стрілецька дивізія</div>
-              <p class="CJ-DOC-TEXT">«Авиация противника производила разведывательные полеты над районом наших боевых порядков, а также самолет <strong>Fw-189</strong> сбросил <strong>6 бомб</strong> на м. Домбровица.»</p>
-              <div class="CJ-DOC-SOURCE">Журнал бойових дій 415-ї СД, ЦАМО РФ</div>
-            </div>
-          </div>
-
-          <!-- Doc 3: 24.01.1944 -->
-          <div class="CJ-DOC">
-            <div class="CJ-DOC-IMG" onclick="window.ULB&&window.ULB.open([{src:'https://i.imgur.com/FScm3Eq.jpeg',cap:'Бойове донесення 24 січня 1944 р. — дата аерофотознімку'}],0)" title="Відкрити оригінал">
-              <img src="https://i.imgur.com/FScm3Eq.jpeg" alt="Бойовий журнал 24.01.1944" loading="lazy">
-              <div class="CJ-DOC-IMG-LBL">Бойове донесення 24.01.1944 · натисніть для перегляду</div>
-            </div>
-            <div class="CJ-DOC-BODY">
-              <div class="CJ-DOC-DATE">24 січня 1944 · Бойове донесення — дата аерофотознімку</div>
-              <p class="CJ-DOC-TEXT">«Бомбардировщики <strong>Ju-87</strong> зробили до <strong>70 самолетовылетов</strong>. На м. Домбровицу сбросили до <strong>100 бомб</strong> и в районе ж-д моста до <strong>50 бомб</strong>. Потери: <strong>6 чел. ранено, 2 убито</strong>.»</p>
-              <div class="CJ-DOC-SOURCE">Бойове донесення 24.01.1944, ЦАМО РФ</div>
-            </div>
-          </div>
-
-        </div><!-- /CJ-DOCS -->
-
-        <!-- Context / summary -->
-        <div class="CJ-CONTEXT">
-          <div class="CJ-CONTEXT-TITLE">Аналіз: що пояснюють журнали</div>
-          <p class="CJ-CONTEXT-TEXT">
-            Аерофотознімок від <em>24 січня 1944 р.</em> зроблений того самого дня, коли місто зазнало наймасштабнішого бомбардування. Три доби поспіль над Дубровицею з'являлися розвідники <em>Fw-189 «Рама»</em>, які фіксували радянські позиції. Розвідувальні та бомбардувальні вильоти здійснювало, найімовірніше, одне й те саме авіаційне з'єднання Люфтваффе, що базувалося в регіоні. <em>70 бойових вильотів Ju-87</em> і <em>150 бомб</em>, скинутих на місто та залізничний міст за один день, — саме це пояснює масштаб руйнувань, численні вирви та зруйновані будівлі, що відображені на аерознімку.
-          </p>
-          <div class="CJ-STATS">
-            <div class="CJ-STAT">
-              <div class="CJ-STAT-NUM">3</div>
-              <div class="CJ-STAT-LBL">Дні нальотів підряд</div>
-            </div>
-            <div class="CJ-STAT">
-              <div class="CJ-STAT-NUM">70</div>
-              <div class="CJ-STAT-LBL">Ju-87 вильотів за день</div>
-            </div>
-            <div class="CJ-STAT">
-              <div class="CJ-STAT-NUM">~150</div>
-              <div class="CJ-STAT-LBL">Бомб скинуто на місто</div>
-            </div>
-            <div class="CJ-STAT">
-              <div class="CJ-STAT-NUM">8</div>
-              <div class="CJ-STAT-LBL">Людських жертв за 3 дні</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Downed aircraft -->
-        <div class="CJ-AC">
-          <div class="CJ-AC-HDR">Збитий літак · 05.05.1944 · Над Дубровицею</div>
-
-          <div class="CJ-AC-GRID">
-
-            <!-- Photos -->
-            <div class="CJ-AC-PHOTOS">
-              <div class="CJ-AC-PHOTO" onclick="window.ULB&&window.ULB.open([{src:'https://i.imgur.com/5ufWD3d.jpeg',cap:'Збитий Me-109 (Bf 109) · Район Дубровиці · 05.05.1944'},{src:'https://i.imgur.com/BPTwXaH.jpeg',cap:'Збитий Me-109 · Бойовий журнал виписка · 05.05.1944'}],0)">
-                <img src="https://i.imgur.com/5ufWD3d.jpeg" alt="Збитий Me-109 1944" loading="lazy">
-                <div class="CJ-AC-PHOTO-LBL">Фото збитого Me-109</div>
-              </div>
-              <div class="CJ-AC-PHOTO" onclick="window.ULB&&window.ULB.open([{src:'https://i.imgur.com/BPTwXaH.jpeg',cap:'Бойовий журнал · Виписка про збитий літак · 05.05.1944'},{src:'https://i.imgur.com/5ufWD3d.jpeg',cap:'Збитий Me-109 (Bf 109) · Район Дубровиці · 05.05.1944'}],0)">
-                <img src="https://i.imgur.com/BPTwXaH.jpeg" alt="Виписка про збитий літак" loading="lazy">
-                <div class="CJ-AC-PHOTO-LBL">Журнал · виписка 05–06.05</div>
-              </div>
-              <!-- journal pages also available as docs -->
-              <div class="CJ-AC-PHOTO" onclick="window.ULB&&window.ULB.open([{src:'https://i.imgur.com/z0iNKbP.jpeg',cap:'Бойовий журнал · 05.05.1944 — запис про збиття'}],0)">
-                <img src="https://i.imgur.com/z0iNKbP.jpeg" alt="Журнал 05.05.1944" loading="lazy">
-                <div class="CJ-AC-PHOTO-LBL">Журнал · 05.05.1944</div>
-              </div>
-              <div class="CJ-AC-PHOTO" onclick="window.ULB&&window.ULB.open([{src:'https://i.imgur.com/cUprKxU.jpeg',cap:'Журнал · 06.05.1944 — допит пілота'}],0)">
-                <img src="https://i.imgur.com/cUprKxU.jpeg" alt="Журнал 06.05.1944" loading="lazy">
-                <div class="CJ-AC-PHOTO-LBL">Допит пілота · 06.05.1944</div>
-              </div>
-            </div>
-
-            <!-- Info card -->
-            <div class="CJ-AC-INFO">
-              <div class="CJ-AC-TITLE">Messerschmitt Bf&nbsp;109 <em>«RW+GT»</em><br>збитий 05 травня 1944 р.</div>
-
-              <div class="CJ-AC-ROWS">
-                <div class="CJ-AC-ROW">
-                  <span class="CJ-AC-ROW-K">Дата</span>
-                  <span class="CJ-AC-ROW-V"><strong>05.05.1944</strong>, 18:55 — збитий зенітною артилерією над ст. Домбровица. Упав за 1,5 км на захід від с. Бережки</span>
-                </div>
-                <div class="CJ-AC-ROW">
-                  <span class="CJ-AC-ROW-K">Пілот</span>
-                  <span class="CJ-AC-ROW-V"><strong>Uffz. Johann Klupp</strong> — здійснив вимушену посадку після повітряного бою з Як-7; загинув</span>
-                </div>
-                <div class="CJ-AC-ROW">
-                  <span class="CJ-AC-ROW-K">Ескадра</span>
-                  <span class="CJ-AC-ROW-V"><strong>JG 51 «Мельдерс»</strong> — 9-й загін, 3-я група. Кожен загін: 13–15 Bf 109</span>
-                </div>
-                <div class="CJ-AC-ROW">
-                  <span class="CJ-AC-ROW-K">Базування</span>
-                  <span class="CJ-AC-ROW-V">Аеродром на захід від <strong>м. Пінськ</strong>. Смуга дій: ділянка Пінськ–Ковель (2-а армія)</span>
-                </div>
-                <div class="CJ-AC-ROW">
-                  <span class="CJ-AC-ROW-K">Тип</span>
-                  <span class="CJ-AC-ROW-V">Messerschmitt Bf 109 · з/н <strong>162 149</strong> · маркування RW+GT</span>
-                </div>
-                <div class="CJ-AC-ROW">
-                  <span class="CJ-AC-ROW-K">Зв'язок</span>
-                  <span class="CJ-AC-ROW-V">Та ж ескадра JG 51, що базувалась у Пінську, ймовірно виконувала і розвідку, і бомбардування міста у січні–травні 1944 р.</span>
-                </div>
-              </div>
-
-              <p class="CJ-AC-NOTE">Вимушена посадка сталася після повітряного бою з радянським винищувачем Як-7 на захід від Дубровиці. З архівних записів допиту пілота 06.05.1944 відомо, що загін діяв у смузі між Пінськом і Ковелем, безпосередньо над районом Дубровиці.</p>
-
-              <!-- JG-51 info band -->
-              <div class="CJ-JG51">
-                <div class="CJ-JG51-ICON">✦</div>
-                <div class="CJ-JG51-BODY">
-                  <div class="CJ-JG51-NAME">51-ша винищувальна ескадра «Мельдерс» (JG 51)</div>
-                  <div class="CJ-JG51-DESC">
-                    Jagdgeschwader 51 — одна з найвідоміших винищувальних ескадр Люфтваффе, названа на честь аса Вернера Мельдерса. Діяла на Східному фронті з 1941 р. У 1944 р. — ключове авіаційне з'єднання в секторі Пінськ–Ковель.
-                    <br><a href="https://uk.wikipedia.org/wiki/Jagdgeschwader_51" target="_blank" rel="noopener">→ Докладніше у Вікіпедії</a>
-                  </div>
-                </div>
-              </div>
-
-            </div><!-- /CJ-AC-INFO -->
-          </div><!-- /CJ-AC-GRID -->
-        </div><!-- /CJ-AC -->
-
-      </div><!-- /ABLK #CJ -->
 
       <!-- ── Separator ── -->
       <div class="MSEP"><div class="MSEP-INNER"><div class="MSEP-DIAMOND"></div><span class="MSEP-TXT">1943 · жовтень</span><div class="MSEP-DIAMOND"></div></div></div>
