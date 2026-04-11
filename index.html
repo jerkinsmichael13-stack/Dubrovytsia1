@@ -3621,14 +3621,14 @@ a, button, [role="button"], input, select, textarea,
       display:flex;align-items:center;gap:.5rem;}
     :root:not([data-theme="dark"]) .P62GEOBH{color:#8a5c10;border-color:rgba(140,100,20,.18);}
     .P62GEOBH svg{width:14px;height:14px;}
-    .P62GEOLIST{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.42rem;}
+    .P62GEOLIST{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.5rem;}
     .P62GEOLIST li{font-family:'DM Sans',sans-serif;font-size:.73rem;color:rgba(200,185,150,.62);
-      display:flex;align-items:baseline;gap:.45rem;line-height:1.65;}
+      position:relative;padding-left:1.1rem;line-height:1.7;}
     :root:not([data-theme="dark"]) .P62GEOLIST li{color:rgba(55,40,15,.55);}
-    .P62GEOLIST li::before{content:'·';color:rgba(201,162,39,.55);flex-shrink:0;}
-    .P62GEOLIST li strong{font-weight:600;color:#d8c89a;white-space:nowrap;flex-shrink:0;}
+    .P62GEOLIST li::before{content:'·';position:absolute;left:0;top:0;color:rgba(201,162,39,.6);line-height:1.7;}
+    .P62GEOLIST li strong{font-weight:600;color:#d8c89a;}
     :root:not([data-theme="dark"]) .P62GEOLIST li strong{color:#5a3c08;}
-    .P62GEOLIST li span{flex:1;min-width:0;}
+    .P62GEOLIST li span{color:inherit;}
 
     /* ── BOTTOM BAR ── */
     .P62BOTTOM{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:2rem;
@@ -3975,21 +3975,21 @@ a, button, [role="button"], input, select, textarea,
               Населені пункти
             </h4>
             <ul class="P62GEOLIST">
-              <li><strong>М. Домбровица</strong><span>— центр, містечко Дубровиця з найбільшим масивом забудови</span></li>
-              <li><strong>С. Залужье</strong><span>— Залужжя, село вздовж берега Горині</span></li>
-              <li><strong>Бережкы</strong><span>— Бережки, прибережне поселення</span></li>
-              <li><strong>Д. Сохи</strong><span>— село Сохи</span></li>
-              <li><strong>Д. Оранцы</strong><span>— село Оранці</span></li>
-              <li><strong>Д. Грицкы</strong><span>— село Грицьки</span></li>
-              <li><strong>Д. Бересть</strong><span>— село Бересть</span></li>
-              <li><strong>Д. Орвяница</strong><span>— Орвяниця</span></li>
-              <li><strong>Д. Нивецк</strong><span>— Нивецьк</span></li>
-              <li><strong>Д. Залешаны</strong><span>— Залешани</span></li>
-              <li><strong>Д. Шахи</strong><span>— Шахи</span></li>
-              <li><strong>Д. Лютинск</strong><span>— Лютинськ</span></li>
-              <li><strong>Д. Ясенец</strong><span>— Ясенець</span></li>
-              <li><strong>Ф. Антонинъ</strong><span>— Фольварок Антонін, названий на честь родини Плятерів</span></li>
-              <li><strong>Ф. Злоте</strong><span>— Фольварок Злоте</span></li>
+              <li><strong>М. Домбровица</strong><span> — центр, містечко Дубровиця з найбільшим масивом забудови</span></li>
+              <li><strong>С. Залужье</strong><span> — Залужжя</span></li>
+              <li><strong>Бережкы</strong><span> — село Бережки</span></li>
+              <li><strong>Д. Сохи</strong><span> — село Сохи</span></li>
+              <li><strong>Д. Оранцы</strong><span> — село Оранці</span></li>
+              <li><strong>Д. Грицкы</strong><span> — село Грицьки</span></li>
+              <li><strong>Д. Бересть</strong><span> — село Бересть</span></li>
+              <li><strong>Д. Орвяница</strong><span> — Орвяниця</span></li>
+              <li><strong>Д. Нивецк</strong><span> — Нивецьк</span></li>
+              <li><strong>Д. Залешаны</strong><span> — Залішани</span></li>
+              <li><strong>Д. Шахи</strong><span> — Шахи</span></li>
+              <li><strong>Д. Лютинск</strong><span> — Лютинськ</span></li>
+              <li><strong>Д. Ясенец</strong><span> — Ясинець</span></li>
+              <li><strong>Ф. Антонинъ</strong><span> — Фольварок Антонін, найімовірніше названий на честь когось із родини Плятерів</span></li>
+              <li><strong>С. Злоте</strong><span> — село Золоте</span></li>
             </ul>
           </div>
           <div class="P62GEOBLOCK">
@@ -4322,10 +4322,19 @@ a, button, [role="button"], input, select, textarea,
         else if (e.touches.length === 1) { tdrag = true; tsx = e.touches[0].clientX - st.tx; tsy = e.touches[0].clientY - st.ty; }
       }, { passive: true });
 
-      /* Buttons */
-      document.getElementById('p62zp').addEventListener('click', function(e) { e.stopPropagation(); doZoom(1.6); });
-      document.getElementById('p62zm').addEventListener('click', function(e) { e.stopPropagation(); doZoom(1 / 1.6); });
-      document.getElementById('p62zr').addEventListener('click', function(e) { e.stopPropagation(); doReset(); });
+      /* Buttons — click for mouse, touchend for mobile (touchmove preventDefault blocks click on some browsers) */
+      function addBtnHandler(id, fn) {
+        var el = document.getElementById(id);
+        el.addEventListener('click', function(e) { e.stopPropagation(); fn(); });
+        el.addEventListener('touchend', function(e) {
+          e.stopPropagation();
+          e.preventDefault(); /* prevent ghost click */
+          fn();
+        }, { passive: false });
+      }
+      addBtnHandler('p62zp', function() { doZoom(1.6); });
+      addBtnHandler('p62zm', function() { doZoom(1 / 1.6); });
+      addBtnHandler('p62zr', function() { doReset(); });
 
       /* Resize */
       window.addEventListener('resize', function() { clampSt(); applyTr(false); }, { passive: true });
@@ -4406,14 +4415,26 @@ a, button, [role="button"], input, select, textarea,
         fsimg.src = FULLRES;
       }
 
-      document.getElementById('p62fsb').addEventListener('click',   function(e) { e.stopPropagation(); openFs(); });
-      document.getElementById('p62hqbtn').addEventListener('click',  openFs);
-      document.getElementById('P62FSC').addEventListener('click',    function() { fso.classList.remove('open'); document.body.style.overflow = ''; });
+      function addTouchClick(id, fn) {
+        var el = document.getElementById(id);
+        el.addEventListener('click', fn);
+        el.addEventListener('touchend', function(e) { e.stopPropagation(); e.preventDefault(); fn(e); }, { passive: false });
+      }
+      addTouchClick('p62fsb', function(e) { if(e) e.stopPropagation(); openFs(); });
+      addTouchClick('p62hqbtn', openFs);
+      addTouchClick('P62FSC', function() { fso.classList.remove('open'); document.body.style.overflow = ''; });
       fso.addEventListener('click', function(e) { if (e.target === fso) { fso.classList.remove('open'); document.body.style.overflow = ''; } });
 
-      document.getElementById('p62fszp').addEventListener('click', function(e) { e.stopPropagation(); fsZoom(1.6); });
-      document.getElementById('p62fszm').addEventListener('click', function(e) { e.stopPropagation(); fsZoom(1 / 1.6); });
-      document.getElementById('p62fszr').addEventListener('click', function(e) { e.stopPropagation(); fsReset(); });
+      function addFsBtnHandler(id, fn) {
+        var el = document.getElementById(id);
+        el.addEventListener('click', function(e) { e.stopPropagation(); fn(); });
+        el.addEventListener('touchend', function(e) {
+          e.stopPropagation(); e.preventDefault(); fn();
+        }, { passive: false });
+      }
+      addFsBtnHandler('p62fszp', function() { fsZoom(1.6); });
+      addFsBtnHandler('p62fszm', function() { fsZoom(1 / 1.6); });
+      addFsBtnHandler('p62fszr', function() { fsReset(); });
 
       /* FS mouse drag */
       fsframe.addEventListener('mousedown', function(e) {
