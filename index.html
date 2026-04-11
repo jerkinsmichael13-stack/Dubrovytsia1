@@ -652,36 +652,72 @@ a, button, [role="button"], input, select, textarea,
                 </div>
             </div>
 
-            <!-- Rotating quote card -->
-            <div class="TDIH-QUOTE-CARD">
-                <div>
-                    <div class="TDIH-Q-LABEL">Цитати та свідчення</div>
+            <!-- Rotating quote / photo card -->
+            <div class="TDIH-QUOTE-CARD" id="TDIH-QUOTE-CARD">
+                <!-- Photo layer (shown for photo-type quotes) -->
+                <div class="TDIH-Q-PHOTO" id="TDIH-Q-PHOTO"></div>
+                <div class="TDIH-Q-PHOTO-OVERLAY" id="TDIH-Q-PHOTO-OVERLAY"></div>
+                <div style="position:relative;z-index:2;display:flex;flex-direction:column;height:100%;">
+                    <div class="TDIH-Q-LABEL" id="TDIH-Q-LABEL">Цитати та свідчення</div>
                     <p class="TDIH-Q-TEXT" id="TDIH-Q-TEXT"></p>
                     <p class="TDIH-Q-META" id="TDIH-Q-META"></p>
-                </div>
-                <div class="TDIH-Q-BOTTOM">
-                    <div class="TDIH-Q-INDICATOR" id="TDIH-Q-DOTS"></div>
-                    <div style="display:flex;gap:.3rem;">
-                        <button class="TDIH-Q-BTN" id="TDIH-Q-PREV">‹</button>
-                        <button class="TDIH-Q-BTN" id="TDIH-Q-NEXT">›</button>
+                    <div class="TDIH-Q-BOTTOM" style="margin-top:auto;padding-top:1rem;">
+                        <div class="TDIH-Q-INDICATOR" id="TDIH-Q-DOTS"></div>
+                        <div style="display:flex;gap:.3rem;">
+                            <button class="TDIH-Q-BTN" id="TDIH-Q-PREV">‹</button>
+                            <button class="TDIH-Q-BTN" id="TDIH-Q-NEXT">›</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <style>
+    /* Photo layer inside quote card */
+    .TDIH-Q-PHOTO {
+        position: absolute; inset: 0; border-radius: 16px;
+        background-size: cover; background-position: center;
+        opacity: 0; transition: opacity .6s ease;
+        z-index: 0;
+    }
+    .TDIH-Q-PHOTO.visible { opacity: 1; }
+    .TDIH-Q-PHOTO-OVERLAY {
+        position: absolute; inset: 0; border-radius: 16px;
+        background: linear-gradient(160deg, rgba(5,20,12,.82) 0%, rgba(12,35,20,.72) 50%, rgba(4,14,8,.88) 100%);
+        opacity: 0; transition: opacity .6s ease;
+        z-index: 1;
+    }
+    .TDIH-Q-PHOTO-OVERLAY.visible { opacity: 1; }
+    .TDIH-Q-TAG {
+        display: inline-flex; align-items: center; gap: .4rem;
+        font-family: 'DM Sans', sans-serif;
+        font-size: .48rem; letter-spacing: .22em; text-transform: uppercase;
+        color: rgba(201,162,39,.85);
+        background: rgba(201,162,39,.12);
+        border: 1px solid rgba(201,162,39,.22);
+        border-radius: 100px;
+        padding: .18rem .65rem;
+        margin-bottom: .8rem;
+    }
+    </style>
+
     <script>
     (function() {
         // ── THIS DAY IN HISTORY DATA ──
         var FACTS = [
-            { month: 3, day: 18, year: 1576, title: 'Заповіт Марії Гольшанської', text: 'Марія Юріївна Гольшанська (Курбська) підписала заповіт, у якому згадала Пречистенську церкву в Дубровиці — найдавнішу писемну згадку про православний храм у місті.', source: 'Актова книга Луцького замку, 1576' },
-            { month: 10, day: 15, year: 1695, title: 'Початок будівництва костелу', text: 'Орден піарів розпочав будівництво костелу Іоанна Хрестителя в Дубровиці. Головним фундатором виступив Ян Кароль Дольський, пожертвувавши 33 000 злотих.', source: 'Метрика Волинського костелу' },
-            { month: 6, day: 4, year: 1742, title: 'Освячення костелу', text: 'Єпископ Франциск Кобельський урочисто консекрував костел Іоанна Хрестителя в Дубровиці. Будівництво тривало понад 47 років і обійшлося понад 83 000 злотих.', source: 'Літопис ордену піарів' },
-            { month: 5, day: 21, year: 1861, title: 'Мурована церква Різдва Богородиці', text: 'Завершено будівництво мурованої церкви Різдва Пресвятої Богородиці коштом графа Ігнатія Броель-Плятера. Трьохкупольна базиліка у стилі пізнього бароко стала прикрасою міста.', source: 'Рівненський єпархіальний архів' },
-            { month: 8, day: 26, year: 1942, title: 'Ліквідація єврейського гетто', text: '26–28 серпня 1942 року нацисти ліквідували гетто Дубровиці. Близько 4 000 євреїв міста були депортовані до Сарн, де їх стратили. Тих, хто намагався втекти, знищили безпосередньо у Дубровиці. Так була знищена громада, яка існувала тут з XVII ст.', source: 'Яд Вашем · Меморіальна книга Дубровиці · Дубровицький Вісник' },
-            { month: 9, day: 25, year: 1992, title: 'Повернення костелу громаді', text: 'Костел Іоанна Хрестителя офіційно повернено католицькій громаді. Єпископ Маркіян Трофим\'як здійснив повторне освячення після 47 років радянського зберігання.', source: 'Архів Луцько-Житомирської єпархії' },
-            { month: 9, day: 21, year: 2005, title: 'Відкриття пам\'ятника Юліанії', text: 'У Дубровиці відкрито та освячено пам\'ятник святій Юліанії Гольшанській — праведній діві XV–XVI ст., дочці місцевого князя. Пам\'ятник встановлено біля церкви Різдва Богородиці.', source: 'Архів міської ради Дубровиці' },
-            { month: 1, day: 1, year: 1005, title: 'Перша писемна згадка', text: 'Дубровиця — найдавніше місто Рівненської області. Перша писемна згадка датується 1005 роком у літописі, де місто фігурує під назвою «Домбровиця» як центр удільного князівства.', source: 'Іпатіївський літопис' },
+            { month: 1,  day: 1,  year: 1005, title: 'Перша писемна згадка',          text: 'Дубровиця — найдавніше місто Рівненської області. Перша писемна згадка датується 1005 роком у літописі, де місто фігурує під назвою «Домбровиця» як центр удільного князівства на Поліссі.', source: 'Іпатіївський літопис' },
+            { month: 12, day: 1,  year: 1642, title: 'Сумаріуш маєтку: замок на Горині', text: 'Документ «Anno 1642 Decemb.» фіксує дубровицький замок над річкою Горинню. «Замок порядно збудований, з будуванням в ньому, в Інвентарю описаний. До того замку фольварків з дворним, гуменним та обірним будуванням, з огородами, сіножатями та орними полями — №9.» Це єдина відома писемна згадка про замок.', source: 'Сумаріуш маєтку Дубровиця, грудень 1642 р.' },
+            { month: 3,  day: 18, year: 1576, title: 'Заповіт Марії Гольшанської',     text: 'Марія Юріївна Гольшанська (Курбська) підписала заповіт, у якому згадала Пречистенську церкву в Дубровиці — найдавнішу писемну згадку про православний храм у місті та заповіла їй своє Євангеліє в оксамитовій оправі.', source: 'Актова книга Луцького замку, 1576' },
+            { month: 10, day: 15, year: 1695, title: 'Початок будівництва костелу',    text: 'Орден піарів розпочав будівництво костелу Іоанна Хрестителя в Дубровиці. Головним фундатором виступив Ян Кароль Дольський, пожертвувавши 33 000 злотих. Будівництво тривало понад 47 років.', source: 'Метрика Волинського костелу' },
+            { month: 1,  day: 1,  year: 1753, title: 'Заснування єврейської громади',  text: 'Власник маєтку Міхаель Бростовський видав наказ про заснування незалежної єврейської громади Дубровиці: власний суд, синагога, лазня, будинок рабина, цвинтар та право торгівлі. До цього громада належала до Пінська. Права підтвердив 1774 р. Антоній Плятер.', source: 'Сефер Домбровіца (Меморіальна книга Дубровиці)' },
+            { month: 6,  day: 4,  year: 1742, title: 'Освячення костелу',               text: 'Єпископ Франциск Кобельський урочисто консекрував костел Іоанна Хрестителя в Дубровиці. Будівництво обійшлося понад 83 000 злотих. Особливою прикрасою став вітраж, замовлений у Венеції — єдиний у регіоні.', source: 'Літопис ордену піарів' },
+            { month: 6,  day: 12, year: 1917, title: 'Аерофотознімки Дубровиці',        text: '12 червня 1917 року баварський польовий авіаційний загін Fliegerabteilung 47 провів аерофотозйомку Дубровиці з борту літака. Знімки є унікальним документом про місто часів Першої світової війни — детальним планом вулиць, церков та забудови тогочасного міста.', source: 'Bayr. Fliegerabteilung 47 · Архів, 12 червня 1917' },
+            { month: 5,  day: 21, year: 1861, title: 'Мурована церква Різдва Богородиці', text: 'Завершено будівництво мурованої церкви Різдва Пресвятої Богородиці коштом графа Ігнатія Броель-Плятера. Трьохкупольна базиліка у стилі пізнього бароко стала прикрасою міста та збереглася до наших днів.', source: 'Рівненський єпархіальний архів' },
+            { month: 8,  day: 26, year: 1942, title: 'Ліквідація єврейського гетто',    text: '26–28 серпня 1942 року нацисти ліквідували гетто Дубровиці. Близько 4 000 євреїв міста були депортовані до Сарн, де їх стратили. Так була назавжди знищена громада, яка існувала в місті понад 300 років.', source: 'Яд Вашем · Меморіальна книга Дубровиці' },
+            { month: 9,  day: 25, year: 1992, title: 'Повернення костелу громаді',      text: 'Костел Іоанна Хрестителя офіційно повернено католицькій громаді після 47 років радянського зберігання. Єпископ Маркіян Трофим\'як здійснив повторне освячення храму.', source: 'Архів Луцько-Житомирської єпархії' },
+            { month: 9,  day: 21, year: 2005, title: 'Відкриття пам\'ятника Юліанії',   text: 'У Дубровиці відкрито та освячено пам\'ятник святій Юліанії Гольшанській — праведній діві XV–XVI ст., дочці місцевого князя. Пам\'ятник встановлено біля церкви Різдва Богородиці.', source: 'Архів міської ради Дубровиці' },
+            { month: 1,  day: 1,  year: 1780, title: 'Інвентар Воробинського фільварку', text: 'Польський інвентарний документ 1780 р. описує місто: квадратна ринкова площа зі стороною ~150 м, 10 вулиць. На схід — будинки міщан, будинок костелу, сад та два будинки графа Плятера. На вулиці Воробин — «Сокольня», де колись стояла текстильна фабрика.', source: 'Інвентар фільварку Воробин, 1780 р.' },
         ];
 
         var curFact = 0;
@@ -695,7 +731,6 @@ a, button, [role="button"], input, select, textarea,
         var MONTHS_UA = ['',  'Січень','Лютий','Березень','Квітень','Травень','Червень',
             'Липень','Серпень','Вересень','Жовтень','Листопад','Грудень'];
 
-        // Find fact closest to today or cycle
         var today = new Date();
         var best = 0, bestDiff = Infinity;
         FACTS.forEach(function(f, i) {
@@ -704,7 +739,6 @@ a, button, [role="button"], input, select, textarea,
         });
         curFact = best;
 
-        // Build dots
         FACTS.forEach(function(_, i) {
             var d = document.createElement('button');
             d.className = 'TDIH-DOT' + (i === curFact ? ' act' : '');
@@ -732,25 +766,83 @@ a, button, [role="button"], input, select, textarea,
         document.getElementById('TDIH-NEXT').addEventListener('click', function() { showFact(curFact + 1); });
         showFact(curFact);
 
-        // Auto-advance every 8 seconds
         var factTimer = setInterval(function() { showFact(curFact + 1); }, 8000);
         document.querySelector('.TDIH-CARD').addEventListener('mouseenter', function() { clearInterval(factTimer); });
         document.querySelector('.TDIH-CARD').addEventListener('mouseleave', function() {
             factTimer = setInterval(function() { showFact(curFact + 1); }, 8000);
         });
 
-        // ── QUOTES ──
+        // ── QUOTES — тепер з фото і мітками джерела ──
         var QUOTES = [
-            { text: '«Маєте матеріали або пропозиції щодо нашого міста? Дубровиця потребує вашої пам\'яті.»', meta: 'Цифровий архів Дубровиці · 2026' },
-            { text: '«Пречистенській церкві в Домбровиці моє мале Євангеліє в червоному оксамиті й золоченому сріблі...»', meta: 'Марія Гольшанська (Курбська) · Заповіт, 18 березня 1576 р.' },
-            { text: '«Найцінніший елемент інтер\'єру костелу — вітраж, замовлений спеціально у Венеції. Жоден інший костел у регіоні не мав нічого подібного.»', meta: 'З опису костелу Іоанна Хрестителя' },
-            { text: '«Дубровиця — найдавніше місто Рівненської області, якому понад тисячу років.»', meta: 'Цифровий архів · Про місто' },
-            { text: '«У 1938 р. парафія охоплювала понад 100 навколишніх сіл. Це була одна з найбільших католицьких громад на Рівненщині.»', meta: 'Статистика костелу св. Іоанна Хрестителя' },
+            {
+                text: '«Пречистенській церкві в Домбровиці моє мале Євангеліє в червоному оксамиті й золоченому сріблі...»',
+                meta: 'Марія Гольшанська (Курбська) · Заповіт, 18 березня 1576 р.',
+                tag:  'Актова книга, 1576'
+            },
+            {
+                text: '«В тей Маєтності над Річкою Горинею ЗАМОК порядно збудований, з будуванням в ньому, в Інвентарю описаний. До того Замку Фольварків збудуванням Дворним... з Сіножатями сполми Ораними до них №9.»',
+                meta: 'Сумаріуш маєтку Дубровиця · Anno 1642 Decemb.',
+                tag:  'Архівний документ, 1642'
+            },
+            {
+                text: '«Євреї жили в центрі міста, а християни — на його околицях. Нерідко християни зверталися до рабинів з проханням помолитися за одужання хворих. Бували також випадки, коли євреї та християни судилися перед рабином, і обидві сторони приймали його рішення з рівною повагою.»',
+                meta: 'Шмуель Зальцман · «Стежками минулих днів», Сефер Домбровіца',
+                tag:  'Єврейська спадщина'
+            },
+            {
+                photo: 'https://i.imgur.com/Da5KGQS.jpeg',
+                text: 'Аерофотознімок Дубровиці, зроблений 12 червня 1917 р. баварським авіаційним загоном Fliegerabteilung 47. На знімку видно церкву Різдва Богородиці, ринкову площу та вулиці міста. Унікальний документ часів Першої світової.',
+                meta: 'Bayr. Fliegerabteilung 47 · 12 Jun 1917',
+                tag:  '★ Аерофото, 1917',
+                link: 'index.html#AER'
+            },
+            {
+                text: '«Була зруйнована єврейська Дубровиця: зрубані її гілки та пущений вогонь у її крону. Припинилася творчість і затихла пісня. Дерево зрубано. Ой, яке лихо!»',
+                meta: 'Шмуель Зальцман · Сефер Домбровіца (Меморіальна книга Дубровиці)',
+                tag:  'Пам\'ять, 1942'
+            },
+            {
+                text: '«Таким чином у нас за три дні тричі змінювалася влада: вдень — більшовики, вдень — поляки, а ввечері — знову більшовики. Наше становище за таких умов можна легко уявити: постійно між молотом і ковадлом, і за все доводилося розплачуватися…»',
+                meta: 'Рав Аарон Петешник · «Розділи з Першої світової», стор. 219',
+                tag:  'Свідчення, 1920'
+            },
+            {
+                text: '«…від цього каменя, прямуючи на північ Передкостельною вулицею, — ліворуч від неї ринкові міські площі, праворуч — насамперед ділянки Отців Піарів…»',
+                meta: 'Інвентар фільварку Воробин з містом Домбровицею · 1780 р.',
+                tag:  'Архівний документ, 1780'
+            },
+            {
+                text: '«Найбільша заслуга і найбільша дія на користь нашого міста — справа балаховців. По всьому регіону поширилися великі погроми. Але майор жодним чином не дозволив їм увірватися в місто. Як залізний мур стояв він за нас і захищав нас за власною ініціативою.»',
+                meta: 'Рав Аарон Петешник · «Розділи з Першої світової», стор. 222',
+                tag:  'Свідчення, 1920'
+            },
+            {
+                photo: 'https://i.imgur.com/67HOTtf.jpeg',
+                text: 'Група мешканців Дубровиці перед костелом Іоанна Хрестителя, близько 1915 року. Перед входом до храму — жінки та чоловіки в традиційному одязі початку XX ст.',
+                meta: 'Фотоархів Дубровиці · бл. 1915 р.',
+                tag:  'Фото з архіву',
+                link: 'photo-archive.html'
+            },
+            {
+                text: '«У 1938 р. парафія охоплювала понад 100 навколишніх сіл. Це була одна з найбільших католицьких громад на Рівненщині.»',
+                meta: 'Статистика костелу св. Іоанна Хрестителя · Дубровиця',
+                tag:  'Костел Піарів'
+            },
+            {
+                text: '«Згідно з переписом 1897 р., Дубровиця нараховувала 2 868 євреїв із загальної кількості 6 007 душ. Напередодні Першої світової війни у місті було близько 10 000 душ, з них близько 4 000 євреїв.»',
+                meta: 'Сефер Домбровіца · Розділ про населення',
+                tag:  'Єврейська спадщина'
+            },
         ];
+
         var curQ = 0;
-        var qText = document.getElementById('TDIH-Q-TEXT');
-        var qMeta = document.getElementById('TDIH-Q-META');
-        var qDots = document.getElementById('TDIH-Q-DOTS');
+        var qCard  = document.getElementById('TDIH-QUOTE-CARD');
+        var qPhoto = document.getElementById('TDIH-Q-PHOTO');
+        var qOverlay = document.getElementById('TDIH-Q-PHOTO-OVERLAY');
+        var qLabel = document.getElementById('TDIH-Q-LABEL');
+        var qText  = document.getElementById('TDIH-Q-TEXT');
+        var qMeta  = document.getElementById('TDIH-Q-META');
+        var qDots  = document.getElementById('TDIH-Q-DOTS');
 
         QUOTES.forEach(function(_, i) {
             var d = document.createElement('div');
@@ -762,8 +854,30 @@ a, button, [role="button"], input, select, textarea,
             qText.classList.add('fading'); qMeta.classList.add('fading');
             setTimeout(function() {
                 curQ = (idx + QUOTES.length) % QUOTES.length;
-                qText.textContent = QUOTES[curQ].text;
-                qMeta.textContent = QUOTES[curQ].meta;
+                var q = QUOTES[curQ];
+
+                // Tag
+                var tagEl = qLabel.querySelector('.TDIH-Q-TAG');
+                if (!tagEl) { tagEl = document.createElement('span'); tagEl.className = 'TDIH-Q-TAG'; qLabel.appendChild(tagEl); }
+                tagEl.textContent = q.tag || 'Цитати та свідчення';
+
+                // Photo
+                if (q.photo) {
+                    qPhoto.style.backgroundImage = 'url(' + q.photo + ')';
+                    qPhoto.classList.add('visible');
+                    qOverlay.classList.add('visible');
+                } else {
+                    qPhoto.classList.remove('visible');
+                    qOverlay.classList.remove('visible');
+                    setTimeout(function(){ qPhoto.style.backgroundImage = ''; }, 650);
+                }
+
+                // Link
+                qCard.style.cursor = q.link ? 'pointer' : '';
+                qCard.onclick = q.link ? function(){ window.location = q.link; } : null;
+
+                qText.textContent = q.text;
+                qMeta.textContent = q.meta;
                 qDots.querySelectorAll('.TDIH-Q-DOT').forEach(function(d, i) {
                     d.classList.toggle('act', i === curQ);
                 });
@@ -771,14 +885,14 @@ a, button, [role="button"], input, select, textarea,
             }, 400);
         }
 
-        document.getElementById('TDIH-Q-PREV').addEventListener('click', function() { showQuote(curQ - 1); });
-        document.getElementById('TDIH-Q-NEXT').addEventListener('click', function() { showQuote(curQ + 1); });
+        document.getElementById('TDIH-Q-PREV').addEventListener('click', function(e) { e.stopPropagation(); showQuote(curQ - 1); });
+        document.getElementById('TDIH-Q-NEXT').addEventListener('click', function(e) { e.stopPropagation(); showQuote(curQ + 1); });
         showQuote(0);
 
-        var quoteTimer = setInterval(function() { showQuote(curQ + 1); }, 6000);
-        document.querySelector('.TDIH-QUOTE-CARD').addEventListener('mouseenter', function() { clearInterval(quoteTimer); });
-        document.querySelector('.TDIH-QUOTE-CARD').addEventListener('mouseleave', function() {
-            quoteTimer = setInterval(function() { showQuote(curQ + 1); }, 6000);
+        var quoteTimer = setInterval(function() { showQuote(curQ + 1); }, 7000);
+        qCard.addEventListener('mouseenter', function() { clearInterval(quoteTimer); });
+        qCard.addEventListener('mouseleave', function() {
+            quoteTimer = setInterval(function() { showQuote(curQ + 1); }, 7000);
         });
     })();
     </script>
