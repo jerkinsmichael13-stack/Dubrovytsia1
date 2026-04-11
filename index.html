@@ -3616,13 +3616,14 @@ a, button, [role="button"], input, select, textarea,
       display:flex;align-items:center;gap:.5rem;}
     :root:not([data-theme="dark"]) .P62GEOBH{color:#8a5c10;border-color:rgba(140,100,20,.18);}
     .P62GEOBH svg{width:14px;height:14px;}
-    .P62GEOLIST{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.45rem;}
+    .P62GEOLIST{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.38rem;}
     .P62GEOLIST li{font-family:'DM Sans',sans-serif;font-size:.73rem;color:rgba(200,185,150,.62);
-      display:flex;align-items:baseline;gap:.5rem;line-height:1.55;}
+      display:grid;grid-template-columns:auto auto 1fr;align-items:baseline;column-gap:.42rem;line-height:1.6;}
     :root:not([data-theme="dark"]) .P62GEOLIST li{color:rgba(55,40,15,.55);}
-    .P62GEOLIST li::before{content:'·';color:rgba(201,162,39,.6);flex-shrink:0;}
-    .P62GEOLIST li strong{font-weight:600;color:#d8c89a;}
+    .P62GEOLIST li::before{content:'·';color:rgba(201,162,39,.55);}
+    .P62GEOLIST li strong{font-weight:600;color:#d8c89a;white-space:nowrap;}
     :root:not([data-theme="dark"]) .P62GEOLIST li strong{color:#5a3c08;}
+    .P62GEOLIST li span{color:inherit;}
 
     /* ── BOTTOM BAR ── */
     .P62BOTTOM{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:2rem;
@@ -3775,7 +3776,7 @@ a, button, [role="button"], input, select, textarea,
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
           </div>
           <div class="P62CARD-H">Укладач плану</div>
-          <div class="P62CARD-B">Прапорщик Микола Мацкевич (або Маркевич) — землемір Генерального штабу Російської імперії. Підпис і чин «Прапорщикъ» розміщено в нижньому правому куті карти. Архівний номер документа — «№ 71» у губернському межуванні.</div>
+          <div class="P62CARD-B">Прапорщик Микола Мацкевич (або Маркевич) — землемір Генерального штабу Російської імперії. Підпис і чин «Прапорщикъ» розміщено в нижньому правому куті карти.</div>
         </div>
 
         <div class="P62CARD">
@@ -3967,13 +3968,21 @@ a, button, [role="button"], input, select, textarea,
               Населені пункти
             </h4>
             <ul class="P62GEOLIST">
-              <li><strong>М. Домбровица</strong> — центр, містечко Дубровиця з найбільшим масивом забудови навколо нього</li>
-              <li><strong>С. Залужье</strong> — Залужжя, село вздовж берега Горині</li>
-              <li><strong>Бережкы</strong> — Бережки, прибережне поселення</li>
-              <li><strong>Д. Сохи</strong> — село Сохи</li>
-              <li><strong>Д. Оранцы</strong> — село Оранці</li>
-              <li><strong>Д. Грицкы</strong> — село Грицьки</li>
-              <li><strong>Ф. Антонинъ</strong> — Фольварок Антонін, названий на честь когось із родини Плятерів</li>
+              <li><strong>М. Домбровица</strong><span>— центр, містечко Дубровиця з найбільшим масивом забудови</span></li>
+              <li><strong>С. Залужье</strong><span>— Залужжя, село вздовж берега Горині</span></li>
+              <li><strong>Бережкы</strong><span>— Бережки, прибережне поселення</span></li>
+              <li><strong>Д. Сохи</strong><span>— село Сохи</span></li>
+              <li><strong>Д. Оранцы</strong><span>— село Оранці</span></li>
+              <li><strong>Д. Грицкы</strong><span>— село Грицьки</span></li>
+              <li><strong>Д. Бересть</strong><span>— село Бересть</span></li>
+              <li><strong>Д. Орвяница</strong><span>— Орвяниця</span></li>
+              <li><strong>Д. Нивецк</strong><span>— Нивецьк</span></li>
+              <li><strong>Д. Залешаны</strong><span>— Залешани</span></li>
+              <li><strong>Д. Шахи</strong><span>— Шахи</span></li>
+              <li><strong>Д. Лютинск</strong><span>— Лютинськ</span></li>
+              <li><strong>Д. Ясенец</strong><span>— Ясенець</span></li>
+              <li><strong>Ф. Антонинъ</strong><span>— Фольварок Антонін, названий на честь родини Плятерів</span></li>
+              <li><strong>Ф. Злоте</strong><span>— Фольварок Злоте</span></li>
             </ul>
           </div>
           <div class="P62GEOBLOCK">
@@ -3982,11 +3991,10 @@ a, button, [role="button"], input, select, textarea,
               Гідрографія та орієнтація
             </h4>
             <ul class="P62GEOLIST">
-              <li><strong>Річка Горинь</strong> — велика річка праворуч на карті, з численними старицями (старими руслами) та меандрами</li>
-              <li><strong>Заплавні болота</strong> — широка заболочена долина Горині, непридатна для обробітку</li>
-              <li><strong>Орієнтація</strong> — маєток витягнутий з північного заходу на південний схід</li>
-              <li><strong>Архівний №71</strong> — номер аркуша у генеральному межуванні Волинської губернії</li>
-              <li><strong>Масштаб</strong> — лінійна шкала у сажнях від 0 до 500 для точних вимірювань на карті</li>
+              <li><strong>Річка Горинь</strong><span>— велика річка праворуч на карті, з численними старицями та меандрами</span></li>
+              <li><strong>Заплавні болота</strong><span>— широка заболочена долина Горині, непридатна для обробітку</span></li>
+              <li><strong>Орієнтація</strong><span>— маєток витягнутий з північного заходу на південний схід</span></li>
+              <li><strong>Масштаб</strong><span>— лінійна шкала у сажнях від 0 до 500 для точних вимірювань</span></li>
             </ul>
           </div>
         </div>
@@ -4190,8 +4198,6 @@ a, button, [role="button"], input, select, textarea,
         <div class="P62FSMT"><span class="label">Масштаб</span><span class="val">2½ версти / дюйм</span></div>
         <div class="P62FSSEP"></div>
         <div class="P62FSMT"><span class="label">Власник</span><span class="val">Граф І. Плятер</span></div>
-        <div class="P62FSSEP"></div>
-        <div class="P62FSMT"><span class="label">Архів</span><span class="val">№ 71</span></div>
       </div>
     </div>
 
