@@ -1485,7 +1485,7 @@ a, button, [role="button"], input, select, textarea,
       </div><!-- /ABLK 1917 -->
 
       <!-- ── Separator ── -->
-      <div class="MSEP"><div class="MSEP-INNER"><div class="MSEP-DIAMOND"></div><span class="MSEP-TXT">1944 · 24 січня</span><div class="MSEP-DIAMOND"></div></div></div>
+      <div class="MSEP"><div class="MSEP-INNER"><div class="MSEP-DIAMOND"></div><div class="MSEP-DIAMOND"></div></div></div>
 
       <!-- ══ MAP 1944 ══ -->
       <div class="ABLK">
@@ -1529,8 +1529,701 @@ a, button, [role="button"], input, select, textarea,
         </div>
       </div>
 
+      <!-- ══ COMBAT JOURNAL BLOCK — 1944 ══ -->
+      <style>
+      /* ══════════════════════════════════════════════
+         BJ44 — COMBAT JOURNAL 1944 — REDESIGN v2
+      ══════════════════════════════════════════════ */
+
+      /* ── Root block ── */
+      .BJ44 {
+        padding: 0 0 3rem;
+        position: relative;
+      }
+
+      /* ── Cinematic header ── */
+      .BJ44-HDR {
+        position: relative;
+        padding: 3rem 0 2.8rem;
+        margin-bottom: 2.4rem;
+        overflow: hidden;
+      }
+      .BJ44-HDR::before {
+        content: '';
+        position: absolute; top: 0; left: 0; right: 0; height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(201,162,39,.35), rgba(232,60,60,.25), transparent);
+      }
+      .BJ44-HDR-BG {
+        position: absolute; inset: 0; pointer-events: none;
+        background:
+          radial-gradient(ellipse 60% 100% at 0% 50%, rgba(180,30,30,.04) 0%, transparent 70%),
+          radial-gradient(ellipse 40% 80% at 100% 50%, rgba(201,162,39,.03) 0%, transparent 70%);
+      }
+      :root:not([data-theme="dark"]) .BJ44-HDR-BG {
+        background:
+          radial-gradient(ellipse 60% 100% at 0% 50%, rgba(180,30,30,.03) 0%, transparent 70%),
+          radial-gradient(ellipse 40% 80% at 100% 50%, rgba(201,162,39,.025) 0%, transparent 70%);
+      }
+      .BJ44-HDR-GHOST {
+        position: absolute; right: -1rem; top: 50%;
+        transform: translateY(-50%);
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(5rem, 14vw, 11rem); font-weight: 700;
+        line-height: 1; letter-spacing: -.02em;
+        color: rgba(201,162,39,.04);
+        user-select: none; pointer-events: none;
+        white-space: nowrap;
+      }
+      :root:not([data-theme="dark"]) .BJ44-HDR-GHOST { color: rgba(140,95,15,.05); }
+
+      .BJ44-HDR-CONTENT { position: relative; z-index: 1; }
+      .BJ44-HDR-TOP {
+        display: flex; align-items: center; gap: 1rem;
+        margin-bottom: .9rem; flex-wrap: wrap;
+      }
+      .BJ44-EYE {
+        display: inline-flex; align-items: center; gap: .55rem;
+        font-family: 'DM Sans', sans-serif; font-size: .44rem;
+        letter-spacing: .36em; text-transform: uppercase; color: #e87070;
+      }
+      :root:not([data-theme="dark"]) .BJ44-EYE { color: #b03030; }
+      .BJ44-EYE-PULSE {
+        width: 7px; height: 7px; border-radius: 50%; background: #e87070; flex-shrink: 0;
+        box-shadow: 0 0 0 0 rgba(232,112,112,.4);
+        animation: bj44Pulse 1.8s ease-in-out infinite;
+      }
+      @keyframes bj44Pulse {
+        0%, 100% { box-shadow: 0 0 0 0 rgba(232,112,112,.5); }
+        60% { box-shadow: 0 0 0 7px rgba(232,112,112,.0); }
+      }
+      .BJ44-DATE-TAG {
+        font-family: 'DM Sans', sans-serif; font-size: .44rem;
+        letter-spacing: .2em; text-transform: uppercase;
+        color: rgba(201,162,39,.6); background: rgba(201,162,39,.08);
+        border: 1px solid rgba(201,162,39,.2); border-radius: 100px;
+        padding: .22rem .8rem;
+      }
+      :root:not([data-theme="dark"]) .BJ44-DATE-TAG {
+        color: rgba(120,75,5,.65); background: rgba(140,95,15,.07); border-color: rgba(140,95,15,.2);
+      }
+      .BJ44-TITLE {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(1.6rem, 3.5vw, 2.6rem); font-weight: 300;
+        color: #f0e6c8; line-height: 1.15; margin: 0 0 .8rem;
+        letter-spacing: -.01em;
+      }
+      :root:not([data-theme="dark"]) .BJ44-TITLE { color: #1c1917; }
+      .BJ44-TITLE em { font-style: italic; color: #e8b84b; }
+      :root:not([data-theme="dark"]) .BJ44-TITLE em { color: #a8701a; }
+      .BJ44-LEAD {
+        font-family: 'DM Sans', sans-serif; font-size: .78rem; line-height: 1.82;
+        color: rgba(240,230,200,.46); max-width: 680px;
+      }
+      :root:not([data-theme="dark"]) .BJ44-LEAD { color: rgba(44,33,16,.5); }
+      .BJ44-LEAD strong { color: rgba(232,184,75,.8); font-weight: 600; }
+      :root:not([data-theme="dark"]) .BJ44-LEAD strong { color: #8a5c0a; }
+
+      /* ── Stats bar ── */
+      .BJ44-STATSBAR {
+        display: flex; flex-wrap: wrap; gap: 0;
+        margin: 2rem 0 2.8rem;
+        border: 1px solid rgba(201,162,39,.12);
+        border-radius: 8px; overflow: hidden;
+      }
+      :root:not([data-theme="dark"]) .BJ44-STATSBAR { border-color: rgba(140,95,15,.15); }
+      .BJ44-SB-ITEM {
+        flex: 1; min-width: 120px;
+        padding: 1.2rem 1.4rem;
+        border-right: 1px solid rgba(201,162,39,.1);
+        position: relative; overflow: hidden;
+        background: rgba(255,255,255,.02);
+        transition: background .25s;
+      }
+      .BJ44-SB-ITEM:last-child { border-right: none; }
+      :root:not([data-theme="dark"]) .BJ44-SB-ITEM { background: rgba(0,0,0,.02); border-color: rgba(140,95,15,.12); }
+      .BJ44-SB-ITEM:hover { background: rgba(201,162,39,.04); }
+      .BJ44-SB-ITEM::before {
+        content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+        background: linear-gradient(90deg, transparent, rgba(232,112,112,.5), transparent);
+        opacity: 0; transition: opacity .25s;
+      }
+      .BJ44-SB-ITEM:hover::before { opacity: 1; }
+      .BJ44-SB-N {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 600;
+        color: #e87070; line-height: 1; display: block; margin-bottom: .3rem;
+      }
+      .BJ44-SB-L {
+        font-family: 'DM Sans', sans-serif; font-size: .58rem; letter-spacing: .08em;
+        color: rgba(240,230,200,.35); display: block;
+      }
+      :root:not([data-theme="dark"]) .BJ44-SB-L { color: rgba(44,33,16,.4); }
+      @media (max-width: 500px) {
+        .BJ44-STATSBAR { display: grid; grid-template-columns: 1fr 1fr; }
+        .BJ44-SB-ITEM:nth-child(2) { border-right: none; }
+        .BJ44-SB-ITEM:nth-child(3), .BJ44-SB-ITEM:nth-child(4) {
+          border-top: 1px solid rgba(201,162,39,.1); border-right: none;
+        }
+        .BJ44-SB-ITEM:nth-child(3) { border-right: 1px solid rgba(201,162,39,.1); }
+      }
+
+      /* ── Journal cards ── */
+      .BJ44-JGRID {
+        display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem;
+        margin-bottom: 2.8rem;
+      }
+      @media (max-width: 780px) { .BJ44-JGRID { grid-template-columns: 1fr; gap: 1rem; } }
+
+      .BJ44-JCARD {
+        position: relative; border-radius: 8px; overflow: hidden;
+        background: rgba(255,255,255,.025);
+        border: 1px solid rgba(201,162,39,.12);
+        display: flex; flex-direction: column;
+        transition: transform .3s cubic-bezier(.16,1,.3,1), border-color .3s, box-shadow .3s;
+        cursor: pointer;
+      }
+      :root:not([data-theme="dark"]) .BJ44-JCARD { background: rgba(0,0,0,.025); border-color: rgba(140,95,15,.16); }
+      .BJ44-JCARD:hover {
+        transform: translateY(-3px);
+        border-color: rgba(201,162,39,.3);
+        box-shadow: 0 12px 40px rgba(0,0,0,.5), 0 0 0 1px rgba(201,162,39,.12);
+      }
+      :root:not([data-theme="dark"]) .BJ44-JCARD:hover { box-shadow: 0 8px 28px rgba(0,0,0,.18), 0 0 0 1px rgba(140,95,15,.18); }
+
+      /* Number badge */
+      .BJ44-JCARD-NUM {
+        position: absolute; top: .7rem; left: .7rem; z-index: 10;
+        width: 26px; height: 26px; border-radius: 50%;
+        background: rgba(5,4,2,.75); backdrop-filter: blur(8px);
+        border: 1px solid rgba(201,162,39,.3);
+        font-family: 'Cormorant Garamond', serif; font-size: .8rem; font-weight: 600;
+        color: #e8b84b; display: flex; align-items: center; justify-content: center;
+      }
+
+      .BJ44-JTHUMB {
+        position: relative; overflow: hidden; aspect-ratio: 16/10; flex-shrink: 0;
+        background: #0c0b09;
+      }
+      :root:not([data-theme="dark"]) .BJ44-JTHUMB { background: #cec6b4; }
+      .BJ44-JTHUMB img {
+        width: 100%; height: 100%; object-fit: cover; display: block;
+        user-select: none; pointer-events: none;
+        transition: transform .5s cubic-bezier(.16,1,.3,1);
+      }
+      .BJ44-JCARD:hover .BJ44-JTHUMB img { transform: scale(1.06); }
+      .BJ44-JTHUMB-GRAD {
+        position: absolute; inset: 0;
+        background: linear-gradient(to top, rgba(5,4,2,.85) 0%, rgba(5,4,2,.2) 55%, transparent 100%);
+        pointer-events: none;
+      }
+      .BJ44-JTHUMB-DATE {
+        position: absolute; bottom: .6rem; right: .7rem;
+        font-family: 'DM Sans', sans-serif; font-size: .42rem; letter-spacing: .18em;
+        text-transform: uppercase; color: rgba(232,184,75,.8);
+        background: rgba(5,4,2,.6); backdrop-filter: blur(6px);
+        border: 1px solid rgba(201,162,39,.2); border-radius: 100px;
+        padding: .18rem .6rem; pointer-events: none;
+      }
+      .BJ44-JBODY { padding: 1rem 1.1rem 1.2rem; flex: 1; display: flex; flex-direction: column; gap: .55rem; }
+      .BJ44-JLABEL {
+        font-family: 'DM Sans', sans-serif; font-size: .42rem; letter-spacing: .26em;
+        text-transform: uppercase; color: rgba(232,184,75,.5);
+        display: flex; align-items: center; gap: .4rem;
+      }
+      :root:not([data-theme="dark"]) .BJ44-JLABEL { color: rgba(120,75,5,.5); }
+      .BJ44-JLABEL::before {
+        content: ''; width: 14px; height: 1px;
+        background: rgba(201,162,39,.3); flex-shrink: 0;
+      }
+      .BJ44-JTEXT {
+        font-family: 'DM Sans', sans-serif; font-size: .72rem; line-height: 1.78;
+        color: rgba(240,230,200,.55); font-style: italic;
+        padding-left: .8rem;
+        border-left: 2px solid rgba(201,162,39,.22); flex: 1;
+      }
+      :root:not([data-theme="dark"]) .BJ44-JTEXT { color: rgba(44,33,16,.56); border-color: rgba(140,95,15,.22); }
+      .BJ44-JZOOM {
+        display: inline-flex; align-items: center; gap: .35rem;
+        font-family: 'DM Sans', sans-serif; font-size: .46rem; letter-spacing: .14em;
+        text-transform: uppercase; color: rgba(201,162,39,.45);
+        padding-top: .5rem; border-top: 1px solid rgba(201,162,39,.08);
+        transition: color .2s;
+      }
+      :root:not([data-theme="dark"]) .BJ44-JZOOM { color: rgba(120,75,5,.4); border-color: rgba(140,95,15,.1); }
+      .BJ44-JCARD:hover .BJ44-JZOOM { color: rgba(201,162,39,.8); }
+      .BJ44-JZOOM svg { width: 10px; height: 10px; }
+
+      /* ── Analysis block ── */
+      .BJ44-ANALYSIS {
+        position: relative; overflow: hidden;
+        border-radius: 8px; padding: 2.2rem 2.4rem;
+        margin-bottom: 3rem;
+        background: linear-gradient(135deg,
+          rgba(180,30,30,.07) 0%,
+          rgba(120,20,20,.04) 40%,
+          rgba(201,162,39,.04) 100%);
+        border: 1px solid rgba(200,50,50,.2);
+      }
+      :root:not([data-theme="dark"]) .BJ44-ANALYSIS {
+        background: linear-gradient(135deg,
+          rgba(180,30,30,.05) 0%,
+          rgba(120,20,20,.03) 40%,
+          rgba(201,162,39,.03) 100%);
+        border-color: rgba(180,30,30,.22);
+      }
+      .BJ44-ANALYSIS::before {
+        content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+        background: linear-gradient(90deg, rgba(200,50,50,.7), rgba(201,162,39,.5), transparent);
+      }
+      .BJ44-ANALYSIS-GHOST {
+        position: absolute; right: 1.5rem; bottom: -1.5rem;
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(5rem, 14vw, 9rem); font-weight: 700; line-height: 1;
+        color: rgba(200,50,50,.04); user-select: none; pointer-events: none;
+        white-space: nowrap; letter-spacing: -.02em;
+      }
+      :root:not([data-theme="dark"]) .BJ44-ANALYSIS-GHOST { color: rgba(180,30,30,.04); }
+      .BJ44-ANALYSIS-CONTENT { position: relative; z-index: 1; }
+      .BJ44-ANALYSIS-EYE {
+        font-family: 'DM Sans', sans-serif; font-size: .44rem; letter-spacing: .3em;
+        text-transform: uppercase; color: #e87070; margin-bottom: .7rem;
+        display: flex; align-items: center; gap: .6rem;
+      }
+      :root:not([data-theme="dark"]) .BJ44-ANALYSIS-EYE { color: #b03030; }
+      .BJ44-ANALYSIS-EYE::after {
+        content: ''; flex: 1; max-width: 60px; height: 1px;
+        background: linear-gradient(90deg, rgba(232,112,112,.3), transparent);
+      }
+      .BJ44-ANALYSIS-T {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(1.1rem, 2.2vw, 1.45rem); font-weight: 400; font-style: italic;
+        color: #f0e6c8; margin: 0 0 .8rem; line-height: 1.35;
+      }
+      :root:not([data-theme="dark"]) .BJ44-ANALYSIS-T { color: #2c1f06; }
+      .BJ44-ANALYSIS-T em { font-style: normal; color: #e8b84b; }
+      :root:not([data-theme="dark"]) .BJ44-ANALYSIS-T em { color: #a8701a; }
+      .BJ44-ANALYSIS-D {
+        font-family: 'DM Sans', sans-serif; font-size: .74rem; line-height: 1.85;
+        color: rgba(240,230,200,.48);
+      }
+      :root:not([data-theme="dark"]) .BJ44-ANALYSIS-D { color: rgba(44,33,16,.52); }
+      .BJ44-ANALYSIS-D strong { color: rgba(232,184,75,.82); font-weight: 600; }
+      :root:not([data-theme="dark"]) .BJ44-ANALYSIS-D strong { color: #8a5c0a; }
+
+      /* ── Section divider with year ── */
+      .BJ44-SDIV {
+        display: flex; align-items: center; gap: 1.4rem;
+        margin: 3rem 0 2.6rem;
+      }
+      .BJ44-SDIV-LINE {
+        flex: 1; height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(201,162,39,.2));
+      }
+      .BJ44-SDIV-LINE.r { background: linear-gradient(270deg, transparent, rgba(201,162,39,.2)); }
+      .BJ44-SDIV-PILL {
+        display: flex; align-items: center; gap: .7rem;
+        border: 1px solid rgba(232,112,112,.25);
+        border-radius: 100px;
+        padding: .35rem 1.1rem;
+        background: rgba(180,30,30,.06);
+      }
+      :root:not([data-theme="dark"]) .BJ44-SDIV-PILL { background: rgba(180,30,30,.04); border-color: rgba(180,30,30,.22); }
+      .BJ44-SDIV-PILL-DOT {
+        width: 5px; height: 5px; border-radius: 50%; background: #e87070; flex-shrink: 0;
+        box-shadow: 0 0 5px rgba(232,112,112,.5);
+      }
+      .BJ44-SDIV-PILL-TXT {
+        font-family: 'DM Sans', sans-serif; font-size: .44rem; letter-spacing: .26em;
+        text-transform: uppercase; color: rgba(232,112,112,.7); white-space: nowrap;
+      }
+      :root:not([data-theme="dark"]) .BJ44-SDIV-PILL-TXT { color: rgba(180,40,40,.65); }
+
+      /* ── Downed plane ── */
+      .BJ44-PLANE {
+        display: grid; grid-template-columns: 1fr 1.2fr; gap: 2.4rem;
+        align-items: start; margin-bottom: 3rem;
+      }
+      @media (max-width: 720px) { .BJ44-PLANE { grid-template-columns: 1fr; gap: 1.6rem; } }
+
+      .BJ44-PHOTOS { display: flex; flex-direction: column; gap: .8rem; }
+      @media (max-width: 720px) { .BJ44-PHOTOS { display: grid; grid-template-columns: 1fr 1fr; } }
+      @media (max-width: 480px) { .BJ44-PHOTOS { grid-template-columns: 1fr; } }
+
+      .BJ44-PHOTO {
+        position: relative; overflow: hidden; border-radius: 6px; cursor: zoom-in;
+        background: #0c0b09;
+        box-shadow: 0 0 0 1px rgba(201,162,39,.1), 0 6px 24px rgba(0,0,0,.6);
+        transition: box-shadow .3s, transform .3s;
+      }
+      :root:not([data-theme="dark"]) .BJ44-PHOTO {
+        background: #cec6b4;
+        box-shadow: 0 0 0 1px rgba(140,95,15,.18), 0 6px 20px rgba(0,0,0,.25);
+      }
+      .BJ44-PHOTO:hover {
+        box-shadow: 0 0 0 1px rgba(201,162,39,.28), 0 10px 36px rgba(0,0,0,.7);
+        transform: translateY(-2px);
+      }
+      .BJ44-PHOTO img {
+        width: 100%; display: block; user-select: none; pointer-events: none;
+        transition: transform .5s cubic-bezier(.16,1,.3,1);
+      }
+      .BJ44-PHOTO:hover img { transform: scale(1.04); }
+      .BJ44-PHOTO-CAP {
+        position: absolute; bottom: 0; left: 0; right: 0; padding: .45rem .75rem;
+        background: linear-gradient(to top, rgba(5,4,2,.88), transparent);
+        font-family: 'DM Sans', sans-serif; font-size: .42rem; letter-spacing: .12em;
+        color: rgba(232,200,140,.7); text-transform: uppercase; pointer-events: none;
+      }
+
+      .BJ44-INFO { display: flex; flex-direction: column; gap: 1.4rem; }
+      .BJ44-INFO-EYE {
+        display: inline-flex; align-items: center; gap: .55rem;
+        font-family: 'DM Sans', sans-serif; font-size: .44rem; letter-spacing: .3em;
+        text-transform: uppercase; color: #e87070;
+      }
+      :root:not([data-theme="dark"]) .BJ44-INFO-EYE { color: #b03030; }
+      .BJ44-INFO-EYE-DOT {
+        width: 7px; height: 7px; border-radius: 50%; background: #e87070; flex-shrink: 0;
+        box-shadow: 0 0 8px rgba(232,112,112,.6);
+      }
+      .BJ44-INFO-TITLE {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(1.25rem, 2.5vw, 1.7rem); font-weight: 400; line-height: 1.2;
+        color: #f0e6c8; margin: 0;
+      }
+      :root:not([data-theme="dark"]) .BJ44-INFO-TITLE { color: #1c1917; }
+      .BJ44-INFO-TITLE em { font-style: italic; color: #e8b84b; }
+      :root:not([data-theme="dark"]) .BJ44-INFO-TITLE em { color: #a8701a; }
+      .BJ44-INFO-BODY {
+        font-family: 'DM Sans', sans-serif; font-size: .73rem; line-height: 1.85;
+        color: rgba(240,230,200,.48);
+      }
+      :root:not([data-theme="dark"]) .BJ44-INFO-BODY { color: rgba(44,33,16,.52); }
+      .BJ44-INFO-BODY strong { color: rgba(232,184,75,.82); font-weight: 600; }
+      :root:not([data-theme="dark"]) .BJ44-INFO-BODY strong { color: #8a5c0a; }
+
+      /* Docs grid (interrogation) */
+      .BJ44-DOCS-HDR {
+        font-family: 'DM Sans', sans-serif; font-size: .43rem; letter-spacing: .26em;
+        text-transform: uppercase; color: rgba(232,184,75,.42); margin-bottom: .6rem;
+        display: flex; align-items: center; gap: .5rem;
+      }
+      :root:not([data-theme="dark"]) .BJ44-DOCS-HDR { color: rgba(120,75,5,.42); }
+      .BJ44-DOCS-HDR::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, rgba(201,162,39,.15), transparent); }
+      .BJ44-DOCS-GRID {
+        display: grid; grid-template-columns: 1fr 1fr; gap: .7rem;
+      }
+      .BJ44-DOC {
+        position: relative; overflow: hidden; border-radius: 5px; cursor: zoom-in;
+        aspect-ratio: 3/4; background: #0c0b09;
+        box-shadow: 0 0 0 1px rgba(201,162,39,.1), 0 4px 16px rgba(0,0,0,.55);
+        transition: box-shadow .3s, transform .3s;
+      }
+      :root:not([data-theme="dark"]) .BJ44-DOC { background: #cec6b4; box-shadow: 0 0 0 1px rgba(140,95,15,.15), 0 4px 14px rgba(0,0,0,.22); }
+      .BJ44-DOC:hover { box-shadow: 0 0 0 1px rgba(201,162,39,.3), 0 8px 28px rgba(0,0,0,.65); transform: translateY(-2px); }
+      .BJ44-DOC img { width: 100%; height: 100%; object-fit: cover; display: block; user-select: none; pointer-events: none; transition: transform .5s ease; }
+      .BJ44-DOC:hover img { transform: scale(1.05); }
+      .BJ44-DOC-CAP {
+        position: absolute; bottom: 0; left: 0; right: 0; padding: .4rem .6rem;
+        background: linear-gradient(to top, rgba(5,4,2,.9), transparent);
+        font-family: 'DM Sans', sans-serif; font-size: .4rem; letter-spacing: .12em;
+        color: rgba(232,200,140,.7); text-transform: uppercase; pointer-events: none;
+      }
+
+      /* Pilot table */
+      .BJ44-PILOT {
+        border-radius: 6px; overflow: hidden;
+        border: 1px solid rgba(201,162,39,.14);
+        background: rgba(255,255,255,.02);
+      }
+      :root:not([data-theme="dark"]) .BJ44-PILOT { background: rgba(0,0,0,.025); border-color: rgba(140,95,15,.16); }
+      .BJ44-PILOT-HEAD {
+        padding: .65rem 1.1rem;
+        background: linear-gradient(90deg, rgba(201,162,39,.1), rgba(201,162,39,.04));
+        border-bottom: 1px solid rgba(201,162,39,.14);
+        font-family: 'DM Sans', sans-serif; font-size: .43rem; letter-spacing: .28em;
+        text-transform: uppercase; color: rgba(232,184,75,.6);
+        display: flex; align-items: center; gap: .6rem;
+      }
+      :root:not([data-theme="dark"]) .BJ44-PILOT-HEAD { background: rgba(140,95,15,.07); border-color: rgba(140,95,15,.16); color: rgba(120,75,5,.55); }
+      .BJ44-PILOT-ROW {
+        display: grid; grid-template-columns: 130px 1fr; gap: .5rem 1rem;
+        padding: .55rem 1.1rem;
+        border-bottom: 1px solid rgba(201,162,39,.07);
+        font-family: 'DM Sans', sans-serif; font-size: .7rem;
+        align-items: baseline;
+      }
+      :root:not([data-theme="dark"]) .BJ44-PILOT-ROW { border-color: rgba(140,95,15,.09); }
+      .BJ44-PILOT-ROW:last-child { border-bottom: none; }
+      @media (max-width: 460px) { .BJ44-PILOT-ROW { grid-template-columns: 1fr; gap: .15rem; } }
+      .BJ44-PILOT-K { color: rgba(201,162,39,.4); font-size: .64rem; }
+      :root:not([data-theme="dark"]) .BJ44-PILOT-K { color: rgba(120,75,5,.42); }
+      .BJ44-PILOT-V { color: rgba(240,230,200,.72); font-weight: 500; }
+      :root:not([data-theme="dark"]) .BJ44-PILOT-V { color: rgba(28,25,23,.72); }
+
+      /* ── JG51 unit card ── */
+      .BJ44-UNIT {
+        position: relative; overflow: hidden;
+        border-radius: 8px; padding: 2rem 2.2rem;
+        border: 1px solid rgba(80,110,200,.18);
+        background: linear-gradient(135deg,
+          rgba(30,50,130,.06) 0%,
+          rgba(20,40,100,.03) 50%,
+          rgba(201,162,39,.03) 100%);
+      }
+      :root:not([data-theme="dark"]) .BJ44-UNIT {
+        background: linear-gradient(135deg, rgba(30,50,130,.04) 0%, rgba(201,162,39,.025) 100%);
+        border-color: rgba(60,80,180,.18);
+      }
+      .BJ44-UNIT::before {
+        content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+        background: linear-gradient(90deg, transparent, rgba(100,140,255,.45), rgba(201,162,39,.3), transparent);
+      }
+      .BJ44-UNIT-GHOST {
+        position: absolute; right: 1rem; top: 50%; transform: translateY(-50%);
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(4rem, 10vw, 7rem); font-weight: 700;
+        color: rgba(80,110,200,.04); user-select: none; pointer-events: none;
+        letter-spacing: -.02em; white-space: nowrap;
+      }
+      :root:not([data-theme="dark"]) .BJ44-UNIT-GHOST { color: rgba(50,80,180,.04); }
+      .BJ44-UNIT-CONTENT { position: relative; z-index: 1; }
+      .BJ44-UNIT-LABEL {
+        font-family: 'DM Sans', sans-serif; font-size: .44rem; letter-spacing: .3em;
+        text-transform: uppercase; color: rgba(140,170,255,.55); margin-bottom: .55rem;
+        display: flex; align-items: center; gap: .55rem;
+      }
+      :root:not([data-theme="dark"]) .BJ44-UNIT-LABEL { color: rgba(40,60,160,.5); }
+      .BJ44-UNIT-LABEL::after { content: ''; flex: 1; max-width: 50px; height: 1px; background: linear-gradient(90deg, rgba(100,140,255,.2), transparent); }
+      .BJ44-UNIT-T {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(1.05rem, 2vw, 1.3rem); font-weight: 400; line-height: 1.3;
+        color: #f0e6c8; margin: 0 0 .65rem;
+      }
+      :root:not([data-theme="dark"]) .BJ44-UNIT-T { color: #1c1917; }
+      .BJ44-UNIT-T em { font-style: italic; color: #e8b84b; }
+      :root:not([data-theme="dark"]) .BJ44-UNIT-T em { color: #a8701a; }
+      .BJ44-UNIT-D {
+        font-family: 'DM Sans', sans-serif; font-size: .73rem; line-height: 1.85;
+        color: rgba(240,230,200,.46);
+      }
+      :root:not([data-theme="dark"]) .BJ44-UNIT-D { color: rgba(44,33,16,.5); }
+      .BJ44-UNIT-D strong { color: rgba(232,184,75,.8); font-weight: 600; }
+      :root:not([data-theme="dark"]) .BJ44-UNIT-D strong { color: #8a5c0a; }
+      .BJ44-UNIT-D a {
+        color: rgba(140,170,255,.7); text-decoration: none;
+        border-bottom: 1px solid rgba(140,170,255,.22); transition: color .2s, border-color .2s;
+      }
+      .BJ44-UNIT-D a:hover { color: rgba(160,190,255,.95); border-color: rgba(160,190,255,.5); }
+      :root:not([data-theme="dark"]) .BJ44-UNIT-D a { color: #2d5baa; border-color: rgba(45,91,170,.3); }
+      :root:not([data-theme="dark"]) .BJ44-UNIT-D a:hover { color: #1a3d80; }
+
+      </style>
+
+      <div class="BJ44">
+
+        <!-- ── Cinematic header ── -->
+        <div class="BJ44-HDR">
+          <div class="BJ44-HDR-BG"></div>
+          <div class="BJ44-HDR-GHOST">1944</div>
+          <div class="BJ44-HDR-CONTENT">
+            <div class="BJ44-HDR-TOP">
+              <div class="BJ44-EYE">
+                <span class="BJ44-EYE-PULSE"></span>
+                Бойові журнали · Архівні документи
+              </div>
+              <span class="BJ44-DATE-TAG">22–24 · I · 1944</span>
+            </div>
+            <h3 class="BJ44-TITLE">Повітряні бомбардування<br><em>Домбровиці</em></h3>
+            <p class="BJ44-LEAD">
+              Записи бойових журналів <strong>397-ї та 415-ї стрілецьких дивізій</strong> фіксують масовані авіаційні удари противника — розвідувальні польоти та бомбардування, що пояснюють масштаб руйнувань і численні вирви, добре видимі на аерофотознімку від 24 січня 1944 року.
+            </p>
+          </div>
+        </div>
+
+        <!-- ── Stats bar ── -->
+        <div class="BJ44-STATSBAR">
+          <div class="BJ44-SB-ITEM">
+            <span class="BJ44-SB-N">~150</span>
+            <span class="BJ44-SB-L">бомб скинуто на місто</span>
+          </div>
+          <div class="BJ44-SB-ITEM">
+            <span class="BJ44-SB-N">70</span>
+            <span class="BJ44-SB-L">вильотів Ju-87 Stuka</span>
+          </div>
+          <div class="BJ44-SB-ITEM">
+            <span class="BJ44-SB-N">6+ год</span>
+            <span class="BJ44-SB-L">розвідки Fw-189 щодня</span>
+          </div>
+          <div class="BJ44-SB-ITEM">
+            <span class="BJ44-SB-N">8</span>
+            <span class="BJ44-SB-L">втрат (6 ранено, 2 вбито)</span>
+          </div>
+        </div>
+
+        <!-- ── Journal cards ── -->
+        <div class="BJ44-JGRID">
+
+          <div class="BJ44-JCARD" onclick="window.ULB&&ULB.open([{src:'https://i.imgur.com/oYpvBOs.jpeg',cap:'Бойовий журнал 397 сд · 22 січня 1944'},{src:'https://i.imgur.com/qj22Xk0.jpeg',cap:'Бойовий журнал 415 сд · 23 січня 1944'},{src:'https://i.imgur.com/FScm3Eq.jpeg',cap:'Бойове донесення · 24 січня 1944'}],0)">
+            <span class="BJ44-JCARD-NUM">1</span>
+            <div class="BJ44-JTHUMB">
+              <img src="https://i.imgur.com/oYpvBOs.jpeg" alt="Бойовий журнал 22.01.1944" loading="lazy">
+              <div class="BJ44-JTHUMB-GRAD"></div>
+              <span class="BJ44-JTHUMB-DATE">22.01.1944</span>
+            </div>
+            <div class="BJ44-JBODY">
+              <div class="BJ44-JLABEL">397-а стрілецька дивізія</div>
+              <p class="BJ44-JTEXT">Авіація противника з 10:00 до 16:00 вела безперервну розвідку. Скинуто 4 бомби на м. Домбровиця.</p>
+              <div class="BJ44-JZOOM">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="6" r="4"/><path d="M10 10l4 4"/><path d="M8 6h0M6 8v0"/></svg>
+                Відкрити документ
+              </div>
+            </div>
+          </div>
+
+          <div class="BJ44-JCARD" onclick="window.ULB&&ULB.open([{src:'https://i.imgur.com/oYpvBOs.jpeg',cap:'Бойовий журнал 397 сд · 22 січня 1944'},{src:'https://i.imgur.com/qj22Xk0.jpeg',cap:'Бойовий журнал 415 сд · 23 січня 1944'},{src:'https://i.imgur.com/FScm3Eq.jpeg',cap:'Бойове донесення · 24 січня 1944'}],1)">
+            <span class="BJ44-JCARD-NUM">2</span>
+            <div class="BJ44-JTHUMB">
+              <img src="https://i.imgur.com/qj22Xk0.jpeg" alt="Бойовий журнал 23.01.1944" loading="lazy">
+              <div class="BJ44-JTHUMB-GRAD"></div>
+              <span class="BJ44-JTHUMB-DATE">23.01.1944</span>
+            </div>
+            <div class="BJ44-JBODY">
+              <div class="BJ44-JLABEL">415-а стрілецька дивізія</div>
+              <p class="BJ44-JTEXT">Розвідувальні польоти над районом бойових порядків. Fw-189 «Рама» скинув 6 бомб на м. Домбровиця.</p>
+              <div class="BJ44-JZOOM">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="6" r="4"/><path d="M10 10l4 4"/></svg>
+                Відкрити документ
+              </div>
+            </div>
+          </div>
+
+          <div class="BJ44-JCARD" onclick="window.ULB&&ULB.open([{src:'https://i.imgur.com/oYpvBOs.jpeg',cap:'Бойовий журнал 397 сд · 22 січня 1944'},{src:'https://i.imgur.com/qj22Xk0.jpeg',cap:'Бойовий журнал 415 сд · 23 січня 1944'},{src:'https://i.imgur.com/FScm3Eq.jpeg',cap:'Бойове донесення · 24 січня 1944'}],2)">
+            <span class="BJ44-JCARD-NUM">3</span>
+            <div class="BJ44-JTHUMB">
+              <img src="https://i.imgur.com/FScm3Eq.jpeg" alt="Бойове донесення 24.01.1944" loading="lazy">
+              <div class="BJ44-JTHUMB-GRAD"></div>
+              <span class="BJ44-JTHUMB-DATE">24.01.1944 — дата знімку</span>
+            </div>
+            <div class="BJ44-JBODY">
+              <div class="BJ44-JLABEL">Бойове донесення · день знімку</div>
+              <p class="BJ44-JTEXT">Ju-87 — до 70 вильотів. На Домбровицю скинуто до 100 бомб, у районі залізничного мосту — до 50 бомб. Втрати: 6 поранено, 2 вбито.</p>
+              <div class="BJ44-JZOOM">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="6" r="4"/><path d="M10 10l4 4"/></svg>
+                Відкрити документ
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ── Analysis ── -->
+        <div class="BJ44-ANALYSIS">
+          <div class="BJ44-ANALYSIS-GHOST">~150</div>
+          <div class="BJ44-ANALYSIS-CONTENT">
+            <div class="BJ44-ANALYSIS-EYE">🔍 Пояснення до аерофотознімку</div>
+            <h4 class="BJ44-ANALYSIS-T">Масштаб руйнувань на знімку — <em>задокументований результат бомбардувань</em></h4>
+            <p class="BJ44-ANALYSIS-D">
+              Численні вирви від бомб та значні руйнування, чітко видимі на аерофотознімку від 24 січня 1944 року, є безпосереднім наслідком цих задокументованих бойовими журналами ударів. Лише за три дні — <strong>22, 23 та 24 січня</strong> — противник скинув на місто та його найближчі околиці щонайменше <strong>~150 бомб</strong>: до 100 на саму Домбровицю і до 50 — у районі залізничного мосту на північ від міста. Паралельно літаки Fw-189 <strong>«Рама»</strong> щодня вели безперервну розвідку, фіксуючи позиції радянських частин, — і саме ці польоти, ймовірно, передували виконанню аерофотознімку від 24 січня.
+            </p>
+          </div>
+        </div>
+
+        <!-- ── Divider ── -->
+        <div class="BJ44-SDIV">
+          <div class="BJ44-SDIV-LINE"></div>
+          <div class="BJ44-SDIV-PILL">
+            <span class="BJ44-SDIV-PILL-DOT"></span>
+            <span class="BJ44-SDIV-PILL-TXT">05 травня 1944 · збитий літак</span>
+          </div>
+          <div class="BJ44-SDIV-LINE r"></div>
+        </div>
+
+        <!-- ── Downed plane ── -->
+        <div class="BJ44-PLANE">
+          <div class="BJ44-PHOTOS">
+            <div class="BJ44-PHOTO" onclick="window.ULB&&ULB.open([{src:'https://i.imgur.com/5ufWD3d.jpeg',cap:'Збитий Bf 109 · 05.05.1944 · район Домбровиці'},{src:'https://i.imgur.com/BPTwXaH.jpeg',cap:'Місце падіння · 1,5 км на захід від с. Бережки'}],0)">
+              <img src="https://i.imgur.com/5ufWD3d.jpeg" alt="Збитий Bf 109" loading="lazy">
+              <div class="BJ44-PHOTO-CAP">Bf 109 · збитий 05.05.1944</div>
+            </div>
+            <div class="BJ44-PHOTO" onclick="window.ULB&&ULB.open([{src:'https://i.imgur.com/5ufWD3d.jpeg',cap:'Збитий Bf 109 · 05.05.1944 · район Домбровиці'},{src:'https://i.imgur.com/BPTwXaH.jpeg',cap:'Місце падіння · 1,5 км на захід від с. Бережки'}],1)">
+              <img src="https://i.imgur.com/BPTwXaH.jpeg" alt="Місце падіння Bf 109" loading="lazy">
+              <div class="BJ44-PHOTO-CAP">Місце падіння · с. Бережки</div>
+            </div>
+          </div>
+
+          <div class="BJ44-INFO">
+            <div class="BJ44-INFO-EYE">
+              <span class="BJ44-INFO-EYE-DOT"></span>
+              Збитий літак · підтверджено архівом
+            </div>
+            <h4 class="BJ44-INFO-TITLE">Bf 109 збитий над Домбровицею<br><em>5 травня 1944 р.</em></h4>
+            <p class="BJ44-INFO-BODY">
+              О 18:55 вогнем зенітної артилерії над районом ст. Домбровиця збито <strong>Me-109 (Bf 109)</strong>, який впав за 1,5 км на захід від с. Бережки. На допиті 6 травня полонений льотчик повідомив: належить <strong>9-му загону 3-ї групи 51-ї ескадри</strong>, що базується на захід від Пінська на ділянці <strong>Пінськ–Ковель</strong>. Кожен загін має 13–15 літаків Me-109.
+            </p>
+
+            <div>
+              <div class="BJ44-DOCS-HDR">Протокол допиту · архівні документи</div>
+              <div class="BJ44-DOCS-GRID">
+                <div class="BJ44-DOC" onclick="window.ULB&&ULB.open([{src:'https://i.imgur.com/z0iNKbP.jpeg',cap:'Бойовий журнал · збиття Bf 109 · 05.05.1944'},{src:'https://i.imgur.com/cUprKxU.jpeg',cap:'Протокол допиту полоненого льотчика · 06.05.1944'}],0)">
+                  <img src="https://i.imgur.com/z0iNKbP.jpeg" alt="Журнал 05.05.1944" loading="lazy">
+                  <div class="BJ44-DOC-CAP">Журнал · 05.05.1944</div>
+                </div>
+                <div class="BJ44-DOC" onclick="window.ULB&&ULB.open([{src:'https://i.imgur.com/z0iNKbP.jpeg',cap:'Бойовий журнал · збиття Bf 109 · 05.05.1944'},{src:'https://i.imgur.com/cUprKxU.jpeg',cap:'Протокол допиту полоненого льотчика · 06.05.1944'}],1)">
+                  <img src="https://i.imgur.com/cUprKxU.jpeg" alt="Допит 06.05.1944" loading="lazy">
+                  <div class="BJ44-DOC-CAP">Допит · 06.05.1944</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="BJ44-PILOT">
+              <div class="BJ44-PILOT-HEAD">✈ &nbsp;Дані пілота · з архіву</div>
+              <div class="BJ44-PILOT-ROW">
+                <span class="BJ44-PILOT-K">Звання / Ім'я</span>
+                <span class="BJ44-PILOT-V">Uffz. Johann Klupp</span>
+              </div>
+              <div class="BJ44-PILOT-ROW">
+                <span class="BJ44-PILOT-K">Ескадра</span>
+                <span class="BJ44-PILOT-V">Jagdgeschwader 51 «Mölders»</span>
+              </div>
+              <div class="BJ44-PILOT-ROW">
+                <span class="BJ44-PILOT-K">Група / Загін</span>
+                <span class="BJ44-PILOT-V">III. Gruppe · 9. Staffel</span>
+              </div>
+              <div class="BJ44-PILOT-ROW">
+                <span class="BJ44-PILOT-K">Літак</span>
+                <span class="BJ44-PILOT-V">Bf 109 · RW+GT · Werknr. 162&thinsp;149</span>
+              </div>
+              <div class="BJ44-PILOT-ROW">
+                <span class="BJ44-PILOT-K">Дата / Місце</span>
+                <span class="BJ44-PILOT-V">05.05.1944 · Dombrowiza (СРСР)</span>
+              </div>
+              <div class="BJ44-PILOT-ROW">
+                <span class="BJ44-PILOT-K">Обставини</span>
+                <span class="BJ44-PILOT-V">Повітряний бій з Як-7, вимушена посадка за лінією фронту. Загинув.</span>
+              </div>
+            </div>
+          </div>
+        </div><!-- /BJ44-PLANE -->
+
+        <!-- ── JG51 unit ── -->
+        <div class="BJ44-UNIT">
+          <div class="BJ44-UNIT-GHOST">JG 51</div>
+          <div class="BJ44-UNIT-CONTENT">
+            <div class="BJ44-UNIT-LABEL">✦ &nbsp;Авіаційне формування</div>
+            <h4 class="BJ44-UNIT-T">51-ша винищувальна ескадра <em>«Mölders»</em> — Jagdgeschwader 51</h4>
+            <p class="BJ44-UNIT-D">
+              <strong>Jagdgeschwader 51 «Mölders» (JG 51)</strong> — одне з найвідоміших винищувальних з'єднань Люфтваффе. На початку 1944 року III група ескадри базувалася <strong>на захід від Пінська</strong> і діяла на ділянці Пінськ–Ковель. З огляду на показання полоненого льотчика, можна стверджувати, що <strong>більшість розвідувальних польотів та бомбардувань</strong> над Домбровицею у цей період здійснювалась саме підрозділами JG 51 — хоча й інші авіаційні формування, безумовно, діяли в цьому районі.
+              <br><br>
+              Збиття льотчика Йоганна Клуппа 5 травня 1944 р. підтверджує тривалу присутність ескадри над районом. Детальна інформація: <a href="https://uk.wikipedia.org/wiki/Jagdgeschwader_51" target="_blank" rel="noopener">Wikipedia — Jagdgeschwader 51</a>.
+            </p>
+          </div>
+        </div>
+
+      </div><!-- /BJ44 -->
+
       <!-- ── Separator ── -->
-      <div class="MSEP"><div class="MSEP-INNER"><div class="MSEP-DIAMOND"></div><span class="MSEP-TXT">1943 · жовтень</span><div class="MSEP-DIAMOND"></div></div></div>
+      <div class="MSEP"><div class="MSEP-INNER"><div class="MSEP-DIAMOND"></div><div class="MSEP-DIAMOND"></div></div></div>
 
       <!-- ══ MAP 1943 ══ -->
       <div class="ABLK">
@@ -1576,7 +2269,7 @@ a, button, [role="button"], input, select, textarea,
       </div>
 
       <!-- ── Separator ── -->
-      <div class="MSEP"><div class="MSEP-INNER"><div class="MSEP-DIAMOND"></div><span class="MSEP-TXT">1971 · супутниковий знімок</span><div class="MSEP-DIAMOND"></div></div></div>
+      <div class="MSEP"><div class="MSEP-INNER"><div class="MSEP-DIAMOND"></div><div class="MSEP-DIAMOND"></div></div></div>
 
       <!-- ══ MAP 1971 SATELLITE ══ -->
       <div class="ABLK">
