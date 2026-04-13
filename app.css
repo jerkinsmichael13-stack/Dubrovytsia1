@@ -116,11 +116,11 @@ html {
     text-rendering: optimizeLegibility;
     overscroll-behavior: none;
     overflow-x: clip;
-    background-color: #1a1408;
+    background-color: #0d1a10;
 }
 
 html[data-theme="dark"] {
-    background-color: #1a1408;
+    background-color: #0d1a10;
 }
 
 body {
