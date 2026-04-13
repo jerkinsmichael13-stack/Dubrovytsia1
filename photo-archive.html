@@ -659,6 +659,142 @@ a, button, [role="button"], input, select, textarea,
     touch-action: manipulation;
 }
 </style>
+
+<style>
+/* ══════════════════════════════════════════════════
+   DOWNLOAD BUTTON — inline critical styles
+   (ensures correct display independent of app.css)
+══════════════════════════════════════════════════ */
+
+/* The button itself — sits inside the card (overflow:hidden clips image corners, button is within) */
+.photo-dl-btn {
+    position: absolute !important;
+    bottom: .55rem !important;
+    right: .55rem !important;
+    z-index: 20 !important;
+    width: 30px !important;
+    height: 30px !important;
+    border-radius: 8px !important;
+    border: 1px solid rgba(201,162,39,.6) !important;
+    background: rgba(6,4,2,.82) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    color: rgba(201,162,39,.95) !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    opacity: 0 !important;
+    transform: translateY(3px) scale(0.88) !important;
+    transition: opacity .2s ease, transform .2s ease, background .15s, border-color .15s !important;
+    -webkit-tap-highlight-color: transparent !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,.5) !important;
+    box-sizing: border-box !important;
+}
+.photo-card:hover .photo-dl-btn {
+    opacity: 1 !important;
+    transform: translateY(0) scale(1) !important;
+}
+.photo-dl-btn:hover {
+    background: rgba(201,162,39,.22) !important;
+    border-color: rgba(201,162,39,.9) !important;
+}
+.photo-dl-btn svg {
+    display: block !important;
+    flex-shrink: 0 !important;
+    pointer-events: none !important;
+}
+
+/* Dropdown — FIXED position, placed via JS getBoundingClientRect */
+.photo-dl-menu {
+    position: fixed !important;
+    z-index: 99998 !important;
+    min-width: 192px !important;
+    background: rgba(8,5,2,.97) !important;
+    backdrop-filter: blur(22px) !important;
+    -webkit-backdrop-filter: blur(22px) !important;
+    border: 1px solid rgba(201,162,39,.28) !important;
+    border-radius: 10px !important;
+    box-shadow: 0 12px 48px rgba(0,0,0,.7), 0 0 0 1px rgba(201,162,39,.06) !important;
+    overflow: hidden !important;
+    display: none !important;
+    pointer-events: auto !important;
+}
+.photo-dl-menu.open {
+    display: block !important;
+    animation: dlIn .18s cubic-bezier(0.16,1,0.3,1) !important;
+}
+@keyframes dlIn { from{opacity:0;transform:translateY(6px) scale(.95)} to{opacity:1;transform:translateY(0) scale(1)} }
+
+.photo-dl-menu-head {
+    padding: .58rem .92rem .4rem !important;
+    font-family: 'DM Sans', sans-serif !important;
+    font-size: .46rem !important;
+    letter-spacing: .24em !important;
+    text-transform: uppercase !important;
+    color: rgba(201,162,39,.52) !important;
+    border-bottom: 1px solid rgba(201,162,39,.1) !important;
+    user-select: none !important;
+}
+.photo-dl-option {
+    display: flex !important;
+    align-items: center !important;
+    gap: .62rem !important;
+    width: 100% !important;
+    padding: .6rem .92rem !important;
+    background: none !important;
+    border: none !important;
+    cursor: pointer !important;
+    font-family: 'DM Sans', sans-serif !important;
+    font-size: .74rem !important;
+    color: rgba(255,255,255,.82) !important;
+    text-align: left !important;
+    transition: background .12s, color .12s !important;
+    box-sizing: border-box !important;
+    -webkit-tap-highlight-color: transparent !important;
+    white-space: nowrap !important;
+}
+.photo-dl-option:hover { background: rgba(201,162,39,.12) !important; color: rgba(201,162,39,1) !important; }
+.photo-dl-option svg { width: 13px !important; height: 13px !important; flex-shrink: 0 !important; opacity: .7 !important; }
+.photo-dl-option:hover svg { opacity: 1 !important; }
+.photo-dl-option-label { display: flex !important; flex-direction: column !important; gap: .07rem !important; }
+.photo-dl-option-sub { font-size: .55rem !important; letter-spacing: .06em !important; opacity: .45 !important; }
+.photo-dl-sep { height: 1px !important; background: rgba(201,162,39,.1) !important; margin: .2rem 0 !important; }
+
+/* ── Copyright footer ── */
+.footer-copyright-row {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: .75rem !important;
+    padding-top: 1.8rem !important;
+    border-top: 1px solid rgba(201,162,39,.12) !important;
+    text-align: center !important;
+}
+.footer-copyright-ornament { display:flex; align-items:center; gap:.7rem; width:200px; opacity:.28; }
+.footer-copyright-ornament-line { flex:1; height:1px; background:linear-gradient(90deg,transparent,rgba(201,162,39,.8)); }
+.footer-copyright-ornament-line:last-child { background:linear-gradient(270deg,transparent,rgba(201,162,39,.8)); }
+.footer-copyright-ornament-diamond { width:4px; height:4px; background:rgba(201,162,39,.9); transform:rotate(45deg); flex-shrink:0; }
+.footer-copyright-main {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .8rem;
+    color: rgba(255,255,255,.4);
+    letter-spacing: .03em;
+    line-height: 1.8;
+}
+.footer-copyright-main a { color:rgba(201,162,39,.65); text-decoration:none; transition:color .2s; }
+.footer-copyright-main a:hover { color:rgba(201,162,39,1); }
+.footer-copyright-notice {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: .8rem;
+    font-style: italic;
+    color: rgba(255,255,255,.22);
+    letter-spacing: .015em;
+    line-height: 1.9;
+    max-width: 600px;
+}
+</style>
 </head>
 <body>
 
@@ -874,10 +1010,17 @@ a, button, [role="button"], input, select, textarea,
                 <div class="footer-copyright-ornament-line"></div>
             </div>
             <p class="footer-copyright-main">
-                &copy; 2026 <a href="https://dubrovytsia.site">dubrovytsia.site</a> — Цифровий архів Дубровиці, Рівненська область, Україна.
+                &copy; 2026 <a href="https://dubrovytsia.site">dubrovytsia.site</a> — Цифровий архів Дубровиці, Рівненська область, Україна.<br>
+                Сайт є некомерційним краєзнавчим проєктом, створеним з любові до міста та його історії.
             </p>
             <p class="footer-copyright-notice">
-                Усі матеріали цього архіву є культурною спадщиною міста Дубровиця. Фотографії та документи опубліковані в освітніх та краєзнавчих цілях. При використанні матеріалів посилання на dubrovytsia.site є обов'язковим. Фотографії, завантажені з архіву, містять водяний знак сайту.
+                Публікуючи ці матеріали, ми прагнемо зберегти та популяризувати культурну й історичну спадщину міста Дубровиця для нинішніх і майбутніх поколінь.
+                Усі фотографії, документи та архівні матеріали розміщено виключно в освітніх, краєзнавчих і науково-дослідних цілях.
+                Відтворення, поширення або комерційне використання будь-яких матеріалів без письмового дозволу адміністрації сайту — заборонено.
+                При цитуванні або використанні матеріалів у будь-якому форматі — обов'язкове активне посилання на <em>dubrovytsia.site</em>.
+                Якщо ви є власником авторських прав на будь-які з опублікованих матеріалів і маєте заперечення щодо їх розміщення —
+                будь ласка, <a href="contacts.html">зв'яжіться з нами</a> і ми негайно розглянемо ваш запит.
+                Фотографії, завантажені з архіву, містять водяний знак сайту і не можуть публікуватись без нього.
             </p>
         </div>
     </div>
@@ -975,36 +1118,51 @@ function applyWatermarkAndDownload(imgUrl, quality, filename) {
       /* Draw image */
       ctx.drawImage(img, 0, 0, w, h);
 
-      /* ── Watermark ── */
-      var fontSize = Math.max(14, Math.round(w * WM_FONT_RATIO));
+      /* ── Watermark — denser tiled grid ── */
+      var fontSize   = Math.max(13, Math.round(w * 0.026));
+      var fontSizeLg = Math.max(20, Math.round(w * 0.042));
+      var alpha      = quality === 'compressed' ? WM_ALPHA_COMP : WM_ALPHA_ORIG;
+      var angle      = -0.35;           /* ~20° tilt */
+      var stepX      = Math.round(w * 0.195);   /* tighter columns */
+      var stepY      = Math.round(h * 0.135);   /* tighter rows */
+
       ctx.save();
-
-      /* Subtle shadow for legibility on any background */
-      ctx.shadowColor = 'rgba(0,0,0,0.55)';
-      ctx.shadowBlur  = fontSize * 0.6;
-
-      /* Semi-transparent white text */
-      ctx.globalAlpha = quality === 'compressed' ? WM_ALPHA_COMP : WM_ALPHA_ORIG;
       ctx.font = 'italic ' + fontSize + 'px "Cormorant Garamond", Georgia, serif';
       ctx.fillStyle = '#ffffff';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'bottom';
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'middle';
+      ctx.rotate(angle);
 
-      var padX = w * 0.5;
-      var padY = Math.round(fontSize * 1.25);
+      /* Bounding to cover full rotated image */
+      var diagLen = Math.ceil(Math.sqrt(w * w + h * h));
+      var startX  = -diagLen;
+      var startY  = -diagLen;
+      var endX    = diagLen * 2;
+      var endY    = diagLen * 2;
 
-      /* Bottom-center primary */
-      ctx.fillText(WATERMARK_TEXT, padX, h - padY);
-
-      /* Subtle diagonal ghost watermark across middle */
-      ctx.globalAlpha = (quality === 'compressed' ? WM_ALPHA_COMP : WM_ALPHA_ORIG) * 0.18;
-      ctx.font = 'italic ' + Math.round(fontSize * 2.4) + 'px "Cormorant Garamond", Georgia, serif';
-      ctx.save();
-      ctx.translate(w * 0.5, h * 0.5);
-      ctx.rotate(-0.32);
-      ctx.fillText(WATERMARK_TEXT, 0, 0);
+      for (var gy = startY; gy < endY; gy += stepY) {
+        for (var gx = startX; gx < endX; gx += stepX) {
+          ctx.save();
+          ctx.shadowColor = 'rgba(0,0,0,0.6)';
+          ctx.shadowBlur  = fontSize * 0.55;
+          /* Slightly vary alpha per cell for organic feel */
+          ctx.globalAlpha = alpha * (0.7 + (Math.abs((gx + gy * 3) % 7) / 7) * 0.3);
+          ctx.fillText(WATERMARK_TEXT, gx, gy);
+          ctx.restore();
+        }
+      }
       ctx.restore();
 
+      /* ── Prominent bottom-center label ── */
+      ctx.save();
+      ctx.font = 'italic ' + fontSizeLg + 'px "Cormorant Garamond", Georgia, serif';
+      ctx.fillStyle = '#ffffff';
+      ctx.globalAlpha = Math.min(1, alpha * 1.2);
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'bottom';
+      ctx.shadowColor = 'rgba(0,0,0,0.75)';
+      ctx.shadowBlur  = fontSizeLg * 0.9;
+      ctx.fillText(WATERMARK_TEXT, w * 0.5, h - Math.round(fontSizeLg * 0.8));
       ctx.restore();
 
       var mimeType = 'image/jpeg';
@@ -1063,17 +1221,16 @@ function getFilename(title, quality) {
   return 'dubrovytsia-' + slug + (quality === 'compressed' ? '-web' : '') + '.jpg';
 }
 
-/* ── Card dropdown menu ── */
+/* ── Card dropdown menu — uses position:fixed so overflow:hidden on card doesn't clip it ── */
 function toggleMenu(evt, url, title) {
   evt.stopPropagation();
   evt.preventDefault();
 
-  /* If same menu is open – close */
+  /* If same menu open — close */
   if(activeMenu && activeMenu.dataset.dlUrl === url) {
     closeMenu();
     return;
   }
-
   closeMenu();
 
   currentUrl   = url;
@@ -1088,24 +1245,38 @@ function toggleMenu(evt, url, title) {
 
   menu.innerHTML =
     '<div class="photo-dl-menu-head">Завантажити з вотермаркою</div>'
-    + '<button class="photo-dl-option" onclick="DL.fromCard(\'original\')">'
-    +   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>'
-    +   '<span class="photo-dl-option-label"><span>Оригінальна якість</span><span class="photo-dl-option-sub">Повна роздільна здатність</span></span>'
+    + '<button class="photo-dl-option" type="button" onclick="DL.fromCard(\'original\')">'
+    +   '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>'
+    +   '<span class="photo-dl-option-label"><span>Оригінальна якість</span><span class="photo-dl-option-sub">Повна роздільна здатність · JPEG</span></span>'
     + '</button>'
     + '<div class="photo-dl-sep"></div>'
-    + '<button class="photo-dl-option" onclick="DL.fromCard(\'compressed\')">'
-    +   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>'
-    +   '<span class="photo-dl-option-label"><span>Веб-якість</span><span class="photo-dl-option-sub">До ' + COMP_MAX_W + 'px, легший файл</span></span>'
+    + '<button class="photo-dl-option" type="button" onclick="DL.fromCard(\'compressed\')">'
+    +   '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>'
+    +   '<span class="photo-dl-option-label"><span>Веб-якість</span><span class="photo-dl-option-sub">До ' + COMP_MAX_W + 'px · легший файл</span></span>'
     + '</button>';
 
-  triggerBtn.parentNode.style.overflow = 'visible';
-  triggerBtn.parentNode.appendChild(menu);
+  /* Position fixed below/above the trigger button */
+  document.body.appendChild(menu);
   activeMenu = menu;
   currentMenuEl = triggerBtn;
 
-  /* Close on outside click */
+  var rect = triggerBtn.getBoundingClientRect();
+  var mH = menu.offsetHeight || 110;
+  var spaceBelow = window.innerHeight - rect.bottom;
+  var top, right;
+  right = Math.max(8, window.innerWidth - rect.right);
+  if(spaceBelow > mH + 10) {
+    top = rect.bottom + 6;
+  } else {
+    top = rect.top - mH - 6;
+  }
+  menu.style.top  = top + 'px';
+  menu.style.right = right + 'px';
+  menu.style.left = 'auto';
+
   setTimeout(function(){
-    document.addEventListener('click', closeMenuOnOutside, {once: false});
+    document.addEventListener('click', closeMenuOnOutside);
+    document.addEventListener('scroll', closeMenu, {once: true, passive: true});
   }, 10);
 }
 
@@ -1121,11 +1292,9 @@ function closeMenu() {
     activeMenu.remove();
     activeMenu = null;
   }
-  if(currentMenuEl) {
-    var card = currentMenuEl.closest('.photo-card');
-    if(card) card.style.overflow = '';
-    currentMenuEl = null;
-  }
+  currentMenuEl = null;
+  currentUrl = null;
+  currentTitle = null;
   document.removeEventListener('click', closeMenuOnOutside);
 }
 
@@ -1329,17 +1498,17 @@ function renderGrid(){
   grid.innerHTML=page.map(function(p,i){
     var fi=filtered.indexOf(p);
     var meta=[p.date&&p.date!=='2026'?p.date:'',CAT_NAMES[p.category]||p.category||''].filter(Boolean).join(' · ');
-    var safeTitle=(p.title||'').replace(/"/g,'&quot;');
-    var safeUrl=(p.imageUrl||'').replace(/"/g,'&quot;');
-    return '<div class="photo-card" style="position:relative">'
+    var safeTitle=(p.title||'').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+    var safeUrl=(p.imageUrl||'').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+    return '<div class="photo-card">'
       +'<img src="'+imgThumb(p.imageUrl)+'" alt="'+(p.title||'')+'" loading="lazy" decoding="async" onclick="paOpen('+fi+')">'
       +'<div class="photo-overlay" onclick="paOpen('+fi+')"><div class="photo-info">'
       +'<h3>'+(p.title||'')+'</h3>'
       +(meta?'<p class="photo-meta">'+meta+'</p>':'')
       +'</div></div>'
-      +'<div class="photo-dl-btn" id="pdlb-'+fi+'" onclick="DL.toggleMenu(event,\''+safeUrl+'\',\''+safeTitle+'\')" title="Завантажити фото">'
-      +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>'
-      +'</div>'
+      +'<button class="photo-dl-btn" onclick="event.stopPropagation();DL.toggleMenu(event,\''+safeUrl+'\',\''+safeTitle+'\')" title="Завантажити фото" type="button">'
+      +'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>'
+      +'</button>'
       +'</div>';
   }).join('');
   // Stagger
