@@ -3102,3 +3102,268 @@ img[loading="lazy"] { transition: opacity 0.6s ease; }
     background: rgba(255,255,255,0.05);
 }
 
+
+/* ================================================================
+   PHOTO DOWNLOAD BUTTONS — Filigree elegance
+   ================================================================ */
+
+/* ── Per-card download button ── */
+.photo-card {
+    position: relative;
+}
+.photo-dl-btn {
+    position: absolute;
+    bottom: .6rem;
+    right: .6rem;
+    z-index: 12;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 1px solid rgba(201,162,39,.55);
+    background: rgba(8,6,4,.72);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: rgba(201,162,39,.92);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(4px) scale(0.92);
+    transition: opacity .22s ease, transform .22s ease, background .15s, border-color .15s;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+.photo-card:hover .photo-dl-btn,
+.photo-card:focus-within .photo-dl-btn {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+.photo-dl-btn:hover {
+    background: rgba(201,162,39,.2);
+    border-color: rgba(201,162,39,.85);
+}
+.photo-dl-btn svg {
+    width: 14px;
+    height: 14px;
+    pointer-events: none;
+    flex-shrink: 0;
+}
+
+/* ── Quality dropdown ── */
+.photo-dl-menu {
+    position: absolute;
+    bottom: calc(100% + .45rem);
+    right: 0;
+    z-index: 50;
+    min-width: 168px;
+    background: rgba(8,6,4,.93);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(201,162,39,.22);
+    border-radius: 10px;
+    box-shadow: 0 8px 32px rgba(0,0,0,.55), 0 0 0 1px rgba(201,162,39,.06);
+    overflow: hidden;
+    display: none;
+    animation: dlMenuIn .18s cubic-bezier(0.16,1,0.3,1);
+    pointer-events: auto;
+}
+.photo-dl-menu.open { display: block; }
+@keyframes dlMenuIn {
+    from { opacity:0; transform: translateY(6px) scale(0.96); }
+    to   { opacity:1; transform: translateY(0) scale(1); }
+}
+.photo-dl-menu-head {
+    padding: .55rem .85rem .35rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .48rem;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: rgba(201,162,39,.5);
+    border-bottom: 1px solid rgba(201,162,39,.1);
+    margin-bottom: .25rem;
+}
+.photo-dl-option {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    width: 100%;
+    padding: .55rem .85rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .72rem;
+    color: rgba(255,255,255,.78);
+    text-align: left;
+    transition: background .14s, color .14s;
+    -webkit-tap-highlight-color: transparent;
+    white-space: nowrap;
+}
+.photo-dl-option:hover {
+    background: rgba(201,162,39,.1);
+    color: rgba(201,162,39,.95);
+}
+.photo-dl-option svg {
+    width: 13px;
+    height: 13px;
+    flex-shrink: 0;
+    opacity: .7;
+}
+.photo-dl-option:hover svg { opacity: 1; }
+.photo-dl-option-label {
+    display: flex;
+    flex-direction: column;
+    gap: .08rem;
+}
+.photo-dl-option-sub {
+    font-size: .55rem;
+    letter-spacing: .07em;
+    opacity: .45;
+}
+.photo-dl-sep {
+    height: 1px;
+    background: rgba(201,162,39,.1);
+    margin: .2rem 0;
+}
+
+/* ── Lightbox bar quality buttons ── */
+#ULB-DL-WRAP {
+    display: flex;
+    align-items: center;
+    gap: .35rem;
+    flex-shrink: 0;
+}
+.ulb-dl-btn {
+    display: flex;
+    align-items: center;
+    gap: .38rem;
+    padding: .3rem .7rem;
+    border-radius: 8px;
+    border: 1px solid rgba(201,162,39,.28);
+    background: rgba(201,162,39,.08);
+    color: rgba(201,162,39,.85);
+    font-family: 'DM Sans', sans-serif;
+    font-size: .65rem;
+    letter-spacing: .04em;
+    cursor: pointer;
+    transition: background .15s, border-color .15s, color .15s;
+    white-space: nowrap;
+    -webkit-tap-highlight-color: transparent;
+}
+.ulb-dl-btn:hover {
+    background: rgba(201,162,39,.2);
+    border-color: rgba(201,162,39,.55);
+    color: rgba(201,162,39,1);
+}
+.ulb-dl-btn:disabled {
+    opacity: .38;
+    cursor: not-allowed;
+}
+.ulb-dl-btn svg {
+    width: 13px;
+    height: 13px;
+    pointer-events: none;
+    flex-shrink: 0;
+}
+.ulb-dl-btn .ulb-dl-quality {
+    font-size: .5rem;
+    letter-spacing: .1em;
+    opacity: .62;
+    text-transform: uppercase;
+}
+
+/* ── Working indicator ── */
+.photo-dl-working {
+    position: absolute;
+    inset: 0;
+    z-index: 60;
+    background: rgba(8,6,4,.82);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: .55rem;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .2s ease;
+}
+.photo-dl-working.show { opacity: 1; pointer-events: auto; }
+.photo-dl-working-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #c9a227;
+    opacity: .4;
+    animation: paDot 1.2s ease-in-out infinite;
+    display: inline-block;
+}
+.photo-dl-working-row {
+    display: flex;
+    gap: .3rem;
+}
+.photo-dl-working-dot:nth-child(2) { animation-delay: .2s; }
+.photo-dl-working-dot:nth-child(3) { animation-delay: .4s; }
+.photo-dl-working-txt {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .58rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: rgba(201,162,39,.65);
+}
+
+/* ── Enhanced footer copyright ── */
+.footer-copyright-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .65rem;
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid rgba(201,162,39,.12);
+    text-align: center;
+}
+.footer-copyright-main {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .78rem;
+    color: rgba(255,255,255,.35);
+    letter-spacing: .04em;
+    line-height: 1.7;
+}
+.footer-copyright-main a {
+    color: rgba(201,162,39,.65);
+    text-decoration: none;
+    transition: color .2s;
+}
+.footer-copyright-main a:hover { color: rgba(201,162,39,1); }
+.footer-copyright-notice {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: .75rem;
+    font-style: italic;
+    color: rgba(255,255,255,.2);
+    letter-spacing: .02em;
+    line-height: 1.75;
+    max-width: 560px;
+}
+.footer-copyright-ornament {
+    display: flex;
+    align-items: center;
+    gap: .65rem;
+    width: 180px;
+    opacity: .25;
+}
+.footer-copyright-ornament-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201,162,39,.8));
+}
+.footer-copyright-ornament-line:last-child {
+    background: linear-gradient(270deg, transparent, rgba(201,162,39,.8));
+}
+.footer-copyright-ornament-diamond {
+    width: 4px; height: 4px;
+    background: rgba(201,162,39,.9);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+}
