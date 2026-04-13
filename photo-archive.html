@@ -792,7 +792,7 @@ a, button, [role="button"], input, select, textarea,
     color: rgba(255,255,255,.22);
     letter-spacing: .015em;
     line-height: 1.9;
-    max-width: 860px; padding: 0 1rem;
+    max-width: 600px;
 }
 </style>
 </head>
@@ -1068,9 +1068,9 @@ a, button, [role="button"], input, select, textarea,
 'use strict';
 
 var WATERMARK_TEXT = 'dubrovytsia.site';
-var WM_FONT_RATIO  = 0.035;   /* font-size = width * ratio */
-var WM_ALPHA_ORIG  = 0.46;    /* opacity for original quality */
-var WM_ALPHA_COMP  = 0.44;
+var WM_FONT_RATIO  = 0.055;   /* font-size = width * ratio — більший текст */
+var WM_ALPHA_ORIG  = 0.38;    /* opacity for original quality — трохи прозоріше */
+var WM_ALPHA_COMP  = 0.36;
 var COMP_MAX_W     = 1600;    /* max width for compressed */
 var COMP_QUALITY   = 0.72;
 var ORIG_QUALITY   = 0.94;
@@ -1119,12 +1119,12 @@ function applyWatermarkAndDownload(imgUrl, quality, filename) {
       ctx.drawImage(img, 0, 0, w, h);
 
       /* ── Watermark — denser tiled grid ── */
-      var fontSize   = Math.max(13, Math.round(w * 0.026));
-      var fontSizeLg = Math.max(20, Math.round(w * 0.042));
+      var fontSize   = Math.max(18, Math.round(w * 0.038));
+      var fontSizeLg = Math.max(28, Math.round(w * 0.055));
       var alpha      = quality === 'compressed' ? WM_ALPHA_COMP : WM_ALPHA_ORIG;
       var angle      = -0.35;           /* ~20° tilt */
-      var stepX      = Math.round(w * 0.195);   /* tighter columns */
-      var stepY      = Math.round(h * 0.135);   /* tighter rows */
+      var stepX      = Math.round(w * 0.38);   /* менше колонок */
+      var stepY      = Math.round(h * 0.26);   /* менше рядків */
 
       ctx.save();
       ctx.font = 'italic ' + fontSize + 'px "Cormorant Garamond", Georgia, serif';

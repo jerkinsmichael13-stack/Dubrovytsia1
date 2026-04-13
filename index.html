@@ -168,8 +168,7 @@
 
 <style>
 /* ── Prevent browser double-tap zoom sitewide ── */
-html { touch-action: manipulation; background-color: #faf7f2; }
-[data-theme="dark"] html, html[data-theme="dark"] { background-color: #0e0c0a; }
+html { touch-action: manipulation; }
 body { touch-action: manipulation; }
 a, button, [role="button"], input, select, textarea,
 .catalog-filter-btn, .smr-tab, .nav-link, .logo,
@@ -1252,9 +1251,9 @@ a, button, [role="button"], input, select, textarea,
       z-index: 6;
       overflow: hidden;
       border-radius: inherit;
-      /* SVG tiled pattern: "dubrovytsia.site" italic, ~20° tilt, white 38% opacity */
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='100'%3E%3Ctext x='20' y='52' transform='rotate(-20 130 50)' font-family='Georgia%2C serif' font-style='italic' font-size='13' fill='rgba(255%2C255%2C255%2C0.38)' filter='url(%23s)'%3Edubrovytsia.site%3C/text%3E%3Cfilter id='s'%3E%3CfeDropShadow dx='0' dy='0' stdDeviation='1.5' flood-color='rgba(0%2C0%2C0%2C0.6)'/%3E%3C/filter%3E%3C/svg%3E");
-      background-size: 260px 100px;
+      /* SVG tiled pattern: "dubrovytsia.site" italic, ~20° tilt, white 30% opacity */
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='500' height='180'%3E%3Ctext x='40' y='100' transform='rotate(-20 250 90)' font-family='Georgia%2C serif' font-style='italic' font-size='22' fill='rgba(255%2C255%2C255%2C0.30)' filter='url(%23s)'%3Edubrovytsia.site%3C/text%3E%3Cfilter id='s'%3E%3CfeDropShadow dx='0' dy='0' stdDeviation='2' flood-color='rgba(0%2C0%2C0%2C0.55)'/%3E%3C/filter%3E%3C/svg%3E");
+      background-size: 500px 180px;
       background-repeat: repeat;
     }
     /* Stronger version for fullscreen views */
@@ -1264,8 +1263,8 @@ a, button, [role="button"], input, select, textarea,
       pointer-events: none;
       z-index: 8;
       overflow: hidden;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='120'%3E%3Ctext x='20' y='62' transform='rotate(-20 160 60)' font-family='Georgia%2C serif' font-style='italic' font-size='15' fill='rgba(255%2C255%2C255%2C0.40)' filter='url(%23s)'%3Edubrovytsia.site%3C/text%3E%3Cfilter id='s'%3E%3CfeDropShadow dx='0' dy='0' stdDeviation='2' flood-color='rgba(0%2C0%2C0%2C0.65)'/%3E%3C/filter%3E%3C/svg%3E");
-      background-size: 320px 120px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='620' height='220'%3E%3Ctext x='50' y='120' transform='rotate(-20 310 110)' font-family='Georgia%2C serif' font-style='italic' font-size='28' fill='rgba(255%2C255%2C255%2C0.32)' filter='url(%23s)'%3Edubrovytsia.site%3C/text%3E%3Cfilter id='s'%3E%3CfeDropShadow dx='0' dy='0' stdDeviation='2.5' flood-color='rgba(0%2C0%2C0%2C0.6)'/%3E%3C/filter%3E%3C/svg%3E");
+      background-size: 620px 220px;
       background-repeat: repeat;
     }
     </style>
@@ -6195,6 +6194,21 @@ a, button, [role="button"], input, select, textarea,
                 Фотографії, завантажені з архіву, містять водяний знак сайту і не можуть публікуватись без нього.
             </p>
         </div>
+                <div class="footer-copyright-ornament-diamond"></div>
+                <div class="footer-copyright-ornament-line"></div>
+            </div>
+            <p class="footer-copyright-main">
+                &copy; 2026 <a href="https://dubrovytsia.site">dubrovytsia.site</a> — Цифровий архів Дубровиці, Рівненська область, Україна.
+            </p>
+            <p class="footer-copyright-notice">
+                Публікуючи ці матеріали, ми прагнемо зберегти та популяризувати культурну й історичну спадщину міста Дубровиця для нинішніх і майбутніх поколінь.
+                Усі фотографії, документи та архівні матеріали розміщено виключно в освітніх, краєзнавчих і науково-дослідних цілях.
+                Відтворення, поширення або комерційне використання будь-яких матеріалів без письмового дозволу адміністрації сайту — заборонено.
+                При цитуванні або використанні матеріалів у будь-якому форматі — обов'язкове активне посилання на <em>dubrovytsia.site</em>.
+                Якщо ви є власником авторських прав на будь-які з опублікованих матеріалів і маєте заперечення щодо їх розміщення —
+                будь ласка, <a href="contacts.html">зв'яжіться з нами</a> і ми негайно розглянемо ваш запит.
+                Фотографії, завантажені з архіву, містять водяний знак сайту і не можуть публікуватись без нього.
+            </p>
         </div>
         </div>
     </footer>
