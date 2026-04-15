@@ -647,6 +647,18 @@
 .pa-loading-dot:nth-child(2){ animation-delay:.2s; }
 .pa-loading-dot:nth-child(3){ animation-delay:.4s; }
 @keyframes paDot { 0%,80%,100%{opacity:.15;transform:scale(.8)} 40%{opacity:.9;transform:scale(1.1)} }
+
+/* ── Photo card watermark overlay ── */
+.photo-wm-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 4;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='100'%3E%3Ctext x='10' y='50' font-family='Georgia%2C serif' font-style='italic' font-size='13' fill='white' fill-opacity='0.28' transform='rotate(-20 110 50)'%3Edubrovytsia.site%3C/text%3E%3C/svg%3E");
+    background-size: 220px 100px;
+    background-repeat: repeat;
+    mix-blend-mode: normal;
+}
 </style>
 
 <style>
@@ -898,6 +910,7 @@ a, button, [role="button"], input, select, textarea,
 <div class="pa-hero-main-wrap">
     <div class="pa-hero-main fade-in-up delay-3" data-hero-idx="0">
         <img src="https://i.imgur.com/67HOTtf.jpeg" alt="Група людей перед костелом 1915" loading="eager">
+        <div class="photo-wm-overlay"></div>
         <div class="pa-hero-main-ovl">
             <div class="pa-hero-main-year">1915 рік · Група людей перед костелом</div>
             <div class="pa-hero-main-title">Група людей <em>перед костелом</em></div>
@@ -912,6 +925,7 @@ a, button, [role="button"], input, select, textarea,
     <div class="pa-hero-strip">
         <div class="pa-strip-cell fade-in-up delay-3" data-hero-idx="1">
             <img src="https://i.imgur.com/LVWPxA0l.jpeg" alt="Міське кладовище. Невідомий похорон 1920" loading="lazy">
+            <div class="photo-wm-overlay"></div>
             <div class="pa-strip-cell-ovl">
                 <div class="pa-strip-year">1920 рік</div>
                 <div class="pa-strip-title">Міське кладовище. Невідомий похорон</div>
@@ -919,6 +933,7 @@ a, button, [role="button"], input, select, textarea,
         </div>
         <div class="pa-strip-cell fade-in-up delay-3" data-hero-idx="2">
             <img src="https://i.imgur.com/UxBBvE4l.jpeg" alt="Дерев'яний міст через р. Горинь 1930-ті" loading="lazy">
+            <div class="photo-wm-overlay"></div>
             <div class="pa-strip-cell-ovl">
                 <div class="pa-strip-year">1930-ті рр.</div>
                 <div class="pa-strip-title">Дерев'яний міст через річку Горинь</div>
@@ -926,6 +941,7 @@ a, button, [role="button"], input, select, textarea,
         </div>
         <div class="pa-strip-cell fade-in-up delay-4" data-hero-idx="3">
             <img src="https://i.imgur.com/n74FSvKl.jpeg" alt="Костел Іоана Хрестителя 1929" loading="lazy">
+            <div class="photo-wm-overlay"></div>
             <div class="pa-strip-cell-ovl">
                 <div class="pa-strip-year">1929 рік</div>
                 <div class="pa-strip-title">Костел Іоана Хрестителя</div>
@@ -933,6 +949,7 @@ a, button, [role="button"], input, select, textarea,
         </div>
         <div class="pa-strip-cell fade-in-up delay-4" data-hero-idx="4">
             <img src="https://i.imgur.com/op2tNhYl.jpeg" alt="Фотолистівка 1910" loading="lazy">
+            <div class="photo-wm-overlay"></div>
             <div class="pa-strip-cell-ovl">
                 <div class="pa-strip-year">1910 рік</div>
                 <div class="pa-strip-title">Фотолистівка</div>
@@ -1502,6 +1519,7 @@ function renderGrid(){
     var safeUrl=(p.imageUrl||'').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
     return '<div class="photo-card">'
       +'<img src="'+imgThumb(p.imageUrl)+'" alt="'+(p.title||'')+'" loading="lazy" decoding="async" onclick="paOpen('+fi+')">'
+      +'<div class="photo-wm-overlay"></div>'
       +'<div class="photo-overlay" onclick="paOpen('+fi+')"><div class="photo-info">'
       +'<h3>'+(p.title||'')+'</h3>'
       +(meta?'<p class="photo-meta">'+meta+'</p>':'')
