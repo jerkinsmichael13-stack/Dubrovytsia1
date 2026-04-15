@@ -1,0 +1,1915 @@
+<!DOCTYPE html>
+<html lang="uk" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="manifest" href="site.webmanifest">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Реєстр збитків у маєтку Дубровицькому, вчинених паном Борком у 1665 р. Ф. ІІ, од. зб. 12918.">
+    <title>Реєстр збитків 1665 — Дубровиця · Цифровий архів</title>
+    <script>!function(){var t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t)}()</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="app.css">
+
+<style>
+/* ══════════════════════════════════════════════════
+   РЕЄСТР 1665 — RUST / LEGAL DOCUMENT AESTHETIC
+   ══════════════════════════════════════════════════ */
+:root {
+    --parchment:      #f5eed8;
+    --parchment-dark: #ede3c4;
+    --ink:            #1c160a;
+    --ink-faded:      #3d3420;
+    --sepia:          #8b6f3e;
+    --sepia-light:    #c9a553;
+    --sepia-pale:     rgba(139,111,62,.12);
+    --ruling:         rgba(139,111,62,.18);
+    --rust:           #7b3a20;
+    --rust-light:     #c87a45;
+    --rust-pale:      rgba(123,58,32,.1);
+    --rust-border:    rgba(123,58,32,.22);
+}
+[data-theme="dark"] {
+    --parchment:      #130f07;
+    --parchment-dark: #1a1408;
+    --ink:            #e8dbb5;
+    --ink-faded:      #b8a880;
+    --sepia:          #c9a553;
+    --sepia-light:    #e5c87a;
+    --sepia-pale:     rgba(201,165,83,.08);
+    --ruling:         rgba(201,165,83,.12);
+    --rust:           #d0714a;
+    --rust-light:     #e8956a;
+    --rust-pale:      rgba(200,100,60,.08);
+    --rust-border:    rgba(200,100,60,.2);
+}
+
+.rj-page { background: var(--parchment); min-height: 100vh; }
+
+/* ── Hero ── */
+.rj-hero {
+    position: relative; overflow: hidden;
+    background: linear-gradient(155deg, #110804 0%, #1e1008 55%, #150c06 100%);
+    padding: 7rem 2rem 5rem;
+    text-align: center; color: white;
+}
+.rj-hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+        radial-gradient(ellipse 55% 35% at 50% 55%, rgba(123,58,32,.2) 0%, transparent 70%),
+        repeating-linear-gradient(0deg, transparent 0, transparent 34px, rgba(201,162,39,.022) 34px, rgba(201,162,39,.022) 35px);
+    pointer-events: none;
+}
+.rj-hero-grain {
+    position: absolute; inset: -80px;
+    width: calc(100% + 160px); height: calc(100% + 160px);
+    opacity: .055; pointer-events: none; z-index: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 220px 220px;
+    animation: rj-grain .65s steps(1) infinite;
+}
+@keyframes rj-grain {
+    0%{transform:translate(0,0)}20%{transform:translate(-3px,-5px)}40%{transform:translate(5px,2px)}
+    60%{transform:translate(-2px,6px)}80%{transform:translate(6px,-3px)}100%{transform:translate(2px,-4px)}
+}
+.rj-hero-seal {
+    width: 54px; height: 54px;
+    border: 1px solid rgba(200,122,69,.35); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1.6rem;
+    background: rgba(123,58,32,.15);
+    position: relative; z-index: 1;
+}
+.rj-hero-seal svg { width: 26px; height: 26px; stroke: rgba(200,122,69,.8); }
+.rj-hero-eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .5rem; letter-spacing: .36em; text-transform: uppercase;
+    color: rgba(200,122,69,.65); margin-bottom: 1.4rem;
+    position: relative; z-index: 1;
+}
+.rj-hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.1rem, 5.5vw, 3.8rem);
+    font-weight: 300; line-height: 1.08; letter-spacing: -.02em;
+    color: #fff; margin-bottom: .6rem;
+    position: relative; z-index: 1;
+}
+.rj-hero-title em { font-style: italic; color: #c87a45; }
+.rj-hero-subtitle {
+    font-family: 'IM Fell English', 'Cormorant Garamond', serif;
+    font-size: clamp(.82rem, 1.5vw, 1rem);
+    font-style: italic; color: rgba(255,255,255,.42);
+    margin-bottom: 2.2rem; position: relative; z-index: 1;
+}
+.rj-hero-archive {
+    display: inline-block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .58rem; letter-spacing: .18em; text-transform: uppercase;
+    color: rgba(200,122,69,.55);
+    border: 1px solid rgba(200,122,69,.18);
+    border-radius: 6px; padding: .3rem .9rem;
+    margin-bottom: 1.6rem; position: relative; z-index: 1;
+}
+.rj-hero-meta {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 0;
+    border: 1px solid rgba(200,122,69,.2); border-radius: 12px;
+    background: rgba(255,255,255,.04); backdrop-filter: blur(6px);
+    overflow: hidden; max-width: 640px; margin: 0 auto 2rem;
+    position: relative; z-index: 1;
+}
+.rj-hero-meta-item {
+    flex: 1; min-width: 100px; padding: 1.1rem 1rem; text-align: center;
+    border-right: 1px solid rgba(200,122,69,.14);
+}
+.rj-hero-meta-item:last-child { border-right: none; }
+.rj-hero-meta-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.55rem; font-weight: 300; color: #c87a45; line-height: 1; margin-bottom: .3rem;
+}
+.rj-hero-meta-key {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .5rem; letter-spacing: .18em; text-transform: uppercase;
+    color: rgba(255,255,255,.32);
+}
+.rj-hero-alert {
+    display: inline-flex; align-items: center; gap: .7rem;
+    padding: .75rem 1.4rem;
+    background: rgba(123,58,32,.2);
+    border: 1px solid rgba(123,58,32,.4);
+    border-radius: 100px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .65rem; letter-spacing: .1em; text-transform: uppercase;
+    color: rgba(240,180,140,.8);
+    position: relative; z-index: 1;
+}
+.rj-hero-alert svg { width: 14px; height: 14px; stroke: rgba(240,160,110,.8); flex-shrink: 0; }
+.rj-hero-bottom {
+    height: 80px;
+    background: linear-gradient(180deg, transparent, var(--parchment));
+    position: relative; z-index: 1; margin: 2.5rem -2rem -5rem; pointer-events: none;
+}
+
+/* ── Body ── */
+.rj-body { max-width: 1280px; margin: 0 auto; padding: 3rem 2rem 6rem; }
+@media(max-width:600px){ .rj-body { padding: 2rem 1.2rem 4rem; } }
+
+/* ── Breadcrumb ── */
+.rj-breadcrumb {
+    display: flex; align-items: center; gap: .5rem;
+    font-family: 'DM Sans', sans-serif; font-size: .72rem;
+    color: var(--sepia); margin-bottom: 2.5rem; opacity: .7;
+}
+.rj-breadcrumb a { color: inherit; text-decoration: none; }
+.rj-breadcrumb a:hover { opacity: 1; text-decoration: underline; }
+
+/* ── Tabs ── */
+.rj-tabs {
+    display: flex; gap: .4rem; flex-wrap: wrap;
+    border-bottom: 1px solid var(--ruling);
+    margin-bottom: 2.5rem; padding-bottom: 0;
+    overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+}
+.rj-tabs::-webkit-scrollbar { display: none; }
+.rj-tab {
+    display: flex; align-items: center; gap: .55rem;
+    padding: .75rem 1.2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .68rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--sepia); background: none; border: none;
+    border-bottom: 2px solid transparent; margin-bottom: -1px;
+    cursor: pointer; border-radius: 6px 6px 0 0;
+    transition: all .2s ease; white-space: nowrap; flex-shrink: 0;
+}
+.rj-tab svg { width: 14px; height: 14px; flex-shrink: 0; }
+.rj-tab:hover { color: var(--rust-light); background: var(--rust-pale); }
+.rj-tab.active { color: var(--ink); border-bottom-color: #c87a45; background: var(--rust-pale); }
+[data-theme="dark"] .rj-tab.active { color: var(--rust-light); }
+
+.rj-panel { display: none; }
+.rj-panel.active { display: block; }
+
+/* ── Eyebrow ── */
+.rj-eyebrow {
+    display: flex; align-items: center; gap: .9rem; margin-bottom: 1.8rem;
+}
+.rj-eyebrow span {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .55rem; letter-spacing: .28em; text-transform: uppercase;
+    color: var(--sepia); white-space: nowrap;
+}
+.rj-eyebrow::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, var(--ruling), transparent); }
+
+/* ── Scans grid ── */
+.rj-scans-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: .8rem; margin-bottom: 2rem;
+}
+@media(max-width:1100px){ .rj-scans-grid { grid-template-columns: repeat(3,1fr); } }
+@media(max-width:768px)  { .rj-scans-grid { grid-template-columns: repeat(2,1fr); } }
+@media(max-width:420px)  { .rj-scans-grid { grid-template-columns: 1fr; } }
+
+.rj-scan-card {
+    position: relative; overflow: hidden; border-radius: 8px; cursor: pointer;
+    background: #1a1408; border: 1px solid var(--ruling); aspect-ratio: 3/4;
+    transition: box-shadow .3s ease, transform .4s cubic-bezier(.16,1,.3,1);
+}
+.rj-scan-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,.18); transform: translateY(-2px); }
+.rj-scan-img {
+    width: 100%; height: 100%; object-fit: cover; object-position: top;
+    filter: sepia(.15) contrast(1.06) brightness(.88);
+    transition: filter .5s ease, transform .6s cubic-bezier(.16,1,.3,1); display: block;
+}
+.rj-scan-card:hover .rj-scan-img { filter: sepia(.05) contrast(1.08) brightness(.95); transform: scale(1.02); }
+.rj-scan-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(20,10,4,.9) 0%, rgba(20,10,4,.2) 45%, transparent 70%);
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: .75rem .85rem;
+}
+.rj-scan-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem; font-weight: 300; color: rgba(200,122,69,.65); line-height: 1;
+}
+.rj-scan-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .6rem; letter-spacing: .1em; text-transform: uppercase;
+    color: rgba(255,255,255,.72); margin-top: .2rem;
+}
+.rj-scan-badge {
+    position: absolute; top: .65rem; left: .65rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .5rem; letter-spacing: .18em; text-transform: uppercase;
+    background: rgba(20,10,4,.82); backdrop-filter: blur(6px);
+    border: 1px solid rgba(200,122,69,.22);
+    border-radius: 4px; padding: .25rem .6rem; color: rgba(200,122,69,.8);
+}
+.rj-scan-zoom {
+    position: absolute; top: .65rem; right: .65rem;
+    width: 30px; height: 30px; border-radius: 50%;
+    background: rgba(255,255,255,.12); backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,.2);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity .2s ease; color: white;
+}
+.rj-scan-zoom svg { width: 13px; height: 13px; stroke: currentColor; stroke-width: 2; }
+.rj-scan-card:hover .rj-scan-zoom { opacity: 1; }
+
+/* ── Note box ── */
+.rj-note {
+    display: flex; gap: 1rem; align-items: flex-start;
+    padding: 1.4rem 1.6rem;
+    background: var(--sepia-pale); border: 1px solid var(--ruling); border-radius: 10px;
+    margin-bottom: 2rem;
+}
+.rj-note svg { width: 18px; height: 18px; stroke: var(--sepia-light); flex-shrink: 0; margin-top: 2px; }
+.rj-note-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .62rem; letter-spacing: .15em; text-transform: uppercase;
+    color: var(--sepia); margin-bottom: .4rem;
+}
+.rj-note-text {
+    font-family: 'DM Sans', sans-serif; font-size: .8rem; line-height: 1.75;
+    color: var(--ink-faded); margin: 0;
+}
+.rj-note-text strong { color: var(--ink); font-weight: 500; }
+.rj-warn-note { background: linear-gradient(90deg, var(--rust-pale), var(--sepia-pale)); border-color: var(--rust-border); }
+.rj-warn-note svg { stroke: var(--rust-light); }
+.rj-warn-note .rj-note-label { color: var(--rust); }
+
+/* ── Transcript ── */
+.rj-transcript { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; margin-bottom: 2.5rem; align-items: start; }
+@media(max-width:900px){ .rj-transcript { grid-template-columns: 1fr; } }
+
+.rj-col-header {
+    display: flex; align-items: center; gap: .9rem;
+    margin-bottom: 1.2rem; padding-bottom: .8rem; border-bottom: 1px solid var(--ruling);
+}
+.rj-col-badge {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .55rem; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--parchment); background: var(--sepia);
+    border-radius: 4px; padding: .25rem .55rem; flex-shrink: 0;
+}
+.rj-col-title { font-family: 'DM Sans', sans-serif; font-size: .72rem; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--sepia); }
+
+.rj-page-block { margin-bottom: 2.2rem; }
+.rj-page-label {
+    display: flex; align-items: center; gap: .5rem;
+    font-family: 'DM Sans', sans-serif; font-size: .58rem; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--sepia-light); margin-bottom: .9rem; opacity: .75;
+}
+.rj-original {
+    font-family: 'IM Fell English', 'Cormorant Garamond', serif;
+    font-size: .93rem; line-height: 2; color: var(--ink-faded);
+    white-space: pre-wrap;
+    background: rgba(200,122,69,.04); border: 1px solid var(--ruling);
+    border-radius: 8px; padding: 1.4rem 1.6rem;
+}
+.rj-original em { font-style: italic; color: var(--sepia); }
+.rj-original strong { font-weight: 600; color: var(--ink); }
+.rj-translation {
+    font-family: 'DM Sans', sans-serif; font-size: .84rem; line-height: 1.9; color: var(--ink-faded);
+    padding: 1.4rem 1.6rem;
+    background: var(--rust-pale); border: 1px solid var(--rust-border); border-radius: 8px;
+}
+.rj-translation p { margin-bottom: .9rem; }
+.rj-translation p:last-child { margin-bottom: 0; }
+.rj-translation strong { color: var(--ink); font-weight: 500; }
+.rj-translation .rj-village-head {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem; font-weight: 500; color: var(--rust);
+    border-bottom: 1px solid var(--rust-border); padding-bottom: .4rem; margin-bottom: .7rem; margin-top: 1.4rem;
+}
+.rj-translation .rj-village-head:first-child { margin-top: 0; }
+[data-theme="dark"] .rj-translation .rj-village-head { color: var(--rust-light); }
+
+/* ── Part nav ── */
+.rj-part-nav {
+    display: flex; gap: .4rem; flex-wrap: wrap; margin-bottom: 2rem;
+    overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; padding-bottom: 2px;
+}
+.rj-part-nav::-webkit-scrollbar { display: none; }
+.rj-part-btn {
+    padding: .5rem 1.1rem;
+    font-family: 'DM Sans', sans-serif; font-size: .65rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase;
+    border: 1px solid var(--ruling); border-radius: 100px;
+    background: var(--parchment); color: var(--sepia);
+    cursor: pointer; transition: all .2s ease; white-space: nowrap; flex-shrink: 0;
+}
+[data-theme="dark"] .rj-part-btn { background: var(--parchment-dark); }
+.rj-part-btn:hover { border-color: rgba(200,122,69,.5); color: var(--rust-light); }
+.rj-part-btn.active { background: var(--rust); color: var(--parchment); border-color: var(--rust); }
+[data-theme="dark"] .rj-part-btn.active { background: var(--rust-light); color: #1a0a04; border-color: var(--rust-light); }
+
+.rj-doc-part { display: none; }
+.rj-doc-part.active { display: block; }
+
+/* ── People (Особи) tab ── */
+.rj-people-search {
+    position: relative; margin-bottom: 2rem;
+}
+.rj-people-search input {
+    width: 100%; padding: .85rem 1rem .85rem 2.8rem;
+    font-family: 'DM Sans', sans-serif; font-size: .82rem;
+    background: var(--parchment); border: 1px solid var(--ruling);
+    border-radius: 10px; color: var(--ink); outline: none;
+    transition: border-color .2s ease; box-sizing: border-box;
+}
+[data-theme="dark"] .rj-people-search input { background: var(--parchment-dark); color: var(--ink); }
+.rj-people-search input:focus { border-color: rgba(200,122,69,.5); }
+.rj-people-search::before {
+    content: '';
+    position: absolute; left: .9rem; top: 50%; transform: translateY(-50%);
+    width: 16px; height: 16px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238b6f3e' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E") no-repeat center;
+    background-size: contain;
+    pointer-events: none;
+}
+.rj-people-count {
+    font-family: 'DM Sans', sans-serif; font-size: .72rem;
+    color: var(--sepia); opacity: .7; margin-bottom: 1.4rem;
+}
+
+.rj-people-section { margin-bottom: 2.5rem; }
+.rj-people-section-head {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem; font-weight: 400; font-style: italic;
+    color: var(--rust); margin-bottom: 1rem; padding-bottom: .5rem;
+    border-bottom: 1px solid var(--rust-border);
+    display: flex; align-items: center; gap: .75rem;
+}
+[data-theme="dark"] .rj-people-section-head { color: var(--rust-light); }
+.rj-people-section-count {
+    font-family: 'DM Sans', sans-serif; font-size: .6rem; letter-spacing: .1em;
+    background: var(--rust-pale); border: 1px solid var(--rust-border);
+    border-radius: 100px; padding: .15rem .65rem;
+    color: var(--rust); font-style: normal;
+}
+[data-theme="dark"] .rj-people-section-count { color: var(--rust-light); }
+
+.rj-people-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: .7rem;
+}
+.rj-person-card {
+    padding: .9rem 1.1rem;
+    background: var(--parchment); border: 1px solid var(--ruling); border-radius: 8px;
+    position: relative; overflow: hidden;
+    transition: border-color .2s ease;
+}
+[data-theme="dark"] .rj-person-card { background: var(--parchment-dark); }
+.rj-person-card:hover { border-color: rgba(200,122,69,.35); }
+.rj-person-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--rust-pale), transparent); opacity: .6;
+}
+.rj-person-name {
+    font-family: 'DM Sans', sans-serif; font-size: .8rem; font-weight: 500;
+    color: var(--ink); margin-bottom: .2rem;
+}
+[data-theme="dark"] .rj-person-name { color: var(--sepia-light); }
+.rj-person-orig {
+    font-family: 'IM Fell English', serif; font-size: .7rem; font-style: italic;
+    color: var(--sepia); margin-bottom: .4rem; opacity: .8;
+}
+.rj-person-role {
+    font-family: 'DM Sans', sans-serif; font-size: .68rem; line-height: 1.55;
+    color: var(--ink-faded);
+}
+.rj-person-role strong { color: var(--rust); font-weight: 500; }
+[data-theme="dark"] .rj-person-role strong { color: var(--rust-light); }
+.rj-person-tag {
+    display: inline-block; margin-top: .4rem;
+    font-family: 'DM Sans', sans-serif; font-size: .5rem; letter-spacing: .15em; text-transform: uppercase;
+    background: var(--rust-pale); border: 1px solid var(--rust-border);
+    color: var(--rust); border-radius: 3px; padding: .15rem .5rem;
+}
+[data-theme="dark"] .rj-person-tag { color: var(--rust-light); }
+
+/* ── Glossary ── */
+.rj-gloss-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem; margin-bottom: 2rem;
+}
+.rj-gloss-item {
+    padding: 1.2rem 1.4rem;
+    background: var(--parchment); border: 1px solid var(--ruling); border-radius: 8px;
+    transition: background .2s ease;
+}
+[data-theme="dark"] .rj-gloss-item { background: var(--parchment-dark); }
+.rj-gloss-item:hover { background: var(--rust-pale); }
+.rj-gloss-term {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 400;
+    color: var(--ink); margin-bottom: .4rem;
+    display: flex; align-items: center; gap: .5rem;
+}
+[data-theme="dark"] .rj-gloss-term { color: var(--rust-light); }
+.rj-gloss-term::before { content: ''; width: 4px; height: 4px; border-radius: 50%; background: var(--rust); flex-shrink: 0; }
+.rj-gloss-orig { font-family: 'IM Fell English', serif; font-size: .75rem; font-style: italic; color: var(--rust-light); margin-bottom: .4rem; }
+.rj-gloss-def { font-family: 'DM Sans', sans-serif; font-size: .78rem; line-height: 1.7; color: var(--ink-faded); }
+
+/* ── Context cards ── */
+.rj-context-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;
+}
+@media(max-width:768px){ .rj-context-grid { grid-template-columns: 1fr; } }
+.rj-context-card {
+    padding: 1.6rem; border: 1px solid var(--ruling); border-radius: 10px;
+    background: var(--parchment); position: relative; overflow: hidden;
+}
+[data-theme="dark"] .rj-context-card { background: var(--parchment-dark); }
+.rj-context-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--rust-light), transparent); opacity: .4;
+}
+.rj-context-card.rust::before { background: linear-gradient(90deg, transparent, rgba(200,122,69,.8), transparent); opacity: .7; }
+.rj-context-head {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 400; font-style: italic;
+    color: var(--ink); margin-bottom: .9rem;
+    display: flex; align-items: center; gap: .75rem;
+}
+[data-theme="dark"] .rj-context-head { color: var(--rust-light); }
+.rj-context-head svg { width: 18px; height: 18px; stroke: var(--rust); flex-shrink: 0; }
+.rj-context-body {
+    font-family: 'DM Sans', sans-serif; font-size: .8rem; line-height: 1.85; color: var(--ink-faded);
+}
+.rj-context-body strong { color: var(--ink); font-weight: 500; }
+[data-theme="dark"] .rj-context-body strong { color: var(--rust-light); }
+
+/* ── Borko connection special card ── */
+.rj-borko-card {
+    padding: 2rem 2.2rem;
+    background: linear-gradient(135deg, rgba(123,58,32,.08), rgba(201,162,39,.06));
+    border: 1px solid var(--rust-border); border-radius: 12px; margin-bottom: 2rem;
+    position: relative; overflow: hidden;
+}
+.rj-borko-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--rust), rgba(201,162,39,.6), var(--rust));
+}
+.rj-borko-title {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 500;
+    color: var(--rust); margin-bottom: .8rem;
+    display: flex; align-items: center; gap: .7rem;
+}
+[data-theme="dark"] .rj-borko-title { color: var(--rust-light); }
+.rj-borko-title svg { width: 20px; height: 20px; stroke: currentColor; flex-shrink: 0; }
+.rj-borko-text {
+    font-family: 'DM Sans', sans-serif; font-size: .82rem; line-height: 1.9; color: var(--ink-faded);
+}
+.rj-borko-text strong { color: var(--ink); font-weight: 500; }
+[data-theme="dark"] .rj-borko-text strong { color: var(--sepia-light); }
+.rj-timeline {
+    display: flex; flex-direction: column; gap: 0; margin: 1.4rem 0;
+}
+.rj-timeline-item {
+    display: flex; gap: 1.2rem; align-items: flex-start; position: relative; padding-bottom: 1.2rem;
+}
+.rj-timeline-item:last-child { padding-bottom: 0; }
+.rj-timeline-item::before {
+    content: ''; position: absolute; left: .55rem; top: 1.6rem; bottom: 0;
+    width: 1px; background: var(--rust-border);
+}
+.rj-timeline-item:last-child::before { display: none; }
+.rj-timeline-dot {
+    width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; margin-top: .25rem;
+    border: 2px solid var(--rust); background: var(--parchment);
+}
+[data-theme="dark"] .rj-timeline-dot { background: var(--parchment-dark); }
+.rj-timeline-dot.filled { background: var(--rust); }
+.rj-timeline-year {
+    font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 300;
+    color: var(--rust); flex-shrink: 0; min-width: 42px; line-height: 1.2;
+}
+[data-theme="dark"] .rj-timeline-year { color: var(--rust-light); }
+.rj-timeline-text {
+    font-family: 'DM Sans', sans-serif; font-size: .78rem; line-height: 1.65;
+    color: var(--ink-faded);
+}
+.rj-timeline-text strong { color: var(--ink); font-weight: 500; }
+
+/* ── Crime categories ── */
+.rj-crime-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: .9rem; margin: 1.5rem 0;
+}
+.rj-crime-card {
+    padding: 1.1rem; border-radius: 8px; text-align: center;
+    border: 1px solid;
+}
+.rj-crime-num {
+    font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; line-height: 1;
+    margin-bottom: .3rem;
+}
+.rj-crime-label {
+    font-family: 'DM Sans', sans-serif; font-size: .62rem; letter-spacing: .1em; text-transform: uppercase; line-height: 1.4;
+}
+
+/* ── Lightbox ── */
+#RJLB {
+    position: fixed; inset: 0; z-index: 99999;
+    background: rgba(4,2,1,.97); display: none; flex-direction: column;
+}
+#RJLB.open { display: flex; animation: rjIn .2s ease; }
+@keyframes rjIn { from{opacity:0}to{opacity:1} }
+#RJLB-CLOSE {
+    position: absolute; top: .9rem; right: 1rem;
+    width: 40px; height: 40px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.22);
+    background: rgba(255,255,255,.1); backdrop-filter: blur(8px);
+    color: rgba(255,255,255,.85); cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 2; padding: 0;
+}
+#RJLB-CLOSE svg { width: 18px; height: 18px; pointer-events: none; }
+#RJLB-VP {
+    flex: 1; overflow: hidden; display: flex; align-items: center; justify-content: center;
+    cursor: grab; touch-action: none; user-select: none;
+}
+#RJLB-VP:active { cursor: grabbing; }
+#RJLB-IMG {
+    max-width: 100%; max-height: 100%; object-fit: contain; display: block;
+    border-radius: 3px; user-select: none; -webkit-user-drag: none;
+    box-shadow: 0 24px 80px rgba(0,0,0,.7); pointer-events: none;
+}
+#RJLB-NAV-L, #RJLB-NAV-R {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 46px; height: 46px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.16); background: rgba(8,5,2,.72);
+    backdrop-filter: blur(8px); color: rgba(255,255,255,.88); cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; line-height: 1; padding: 0; z-index: 2;
+}
+#RJLB-NAV-L { left: .6rem; }
+#RJLB-NAV-R { right: .6rem; }
+#RJLB-BAR {
+    flex-shrink: 0; padding: .65rem 1.2rem;
+    background: rgba(8,5,2,.92); backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(255,255,255,.06);
+    display: flex; align-items: center; justify-content: center; gap: .8rem;
+}
+#RJLB-CAP {
+    font-family: 'Cormorant Garamond', serif; font-size: .95rem; font-style: italic;
+    color: rgba(255,255,255,.65); text-align: center;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 85%;
+}
+#RJLB-IDX { font-family: 'DM Sans', sans-serif; font-size: .6rem; letter-spacing: .1em; color: rgba(255,255,255,.3); white-space: nowrap; }
+
+@media(max-width:768px){
+    .rj-hero { padding: 5rem 1.2rem 4rem; }
+    .rj-hero-title { font-size: clamp(1.8rem, 6vw, 2.8rem); }
+    .rj-hero-meta-item { padding: .85rem .7rem; }
+    .rj-context-grid { grid-template-columns: 1fr; }
+    .rj-transcript { gap: 1.4rem; }
+    .rj-original { font-size: .88rem; padding: 1rem 1.1rem; }
+    .rj-translation { font-size: .82rem; padding: 1rem 1.1rem; }
+    .rj-people-grid { grid-template-columns: repeat(2, 1fr); }
+    .rj-crime-grid { grid-template-columns: repeat(2, 1fr); }
+    .rj-hero-bottom { margin: 2rem -1.2rem -4rem; }
+}
+@media(max-width:420px){
+    .rj-body { padding: 1.5rem 1rem 4rem; }
+    .rj-people-grid { grid-template-columns: 1fr; }
+    .rj-gloss-grid { grid-template-columns: 1fr; }
+}
+</style>
+<style>
+html,body,a,button,[role="button"],input,select,textarea,
+.rj-tab,.rj-part-btn,.nav-link,.logo,.mobile-toggle,.theme-toggle,.scroll-top-btn
+{ touch-action: manipulation; }
+</style>
+</head>
+<body class="rj-page">
+
+<!-- Header -->
+<header class="header">
+    <div class="header-container">
+        <a href="index.html" class="logo">
+            <img src="https://i.imgur.com/mXCrjjG.png" alt="Герб" class="logo-img">
+            <div class="logo-text">
+                <span class="logo-city">Дубровиця</span>
+                <span class="logo-subtitle">Цифровий архів</span>
+            </div>
+        </a>
+        <nav class="nav" id="mainNav">
+            <a href="index.html" class="nav-link">Головна</a>
+            <a href="history.html" class="nav-link">Історія</a>
+            <a href="photo-archive.html" class="nav-link">Фотоархів</a>
+            <a href="architecture.html" class="nav-link">Пам'ятки</a>
+            <a href="metrychni-knyhy.html" class="nav-link active">Метричні книги</a>
+            <a href="books.html" class="nav-link">Книги</a>
+            <a href="jewish-history.html" class="nav-link">Єврейська спадщина</a>
+            <a href="contacts.html" class="nav-link">Контакти</a>
+        </nav>
+        <button class="theme-toggle" id="themeToggle" aria-label="Перемкнути тему">
+            <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            <svg class="theme-icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Відкрити меню"><span></span><span></span><span></span></button>
+    </div>
+</header>
+
+<!-- HERO -->
+<div class="rj-hero">
+    <div class="rj-hero-grain"></div>
+    <div class="rj-hero-seal">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.4"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+    </div>
+    <div class="rj-hero-eyebrow">Судовий реєстр · Пінський гродський суд · 1665</div>
+    <div class="rj-hero-archive">ф. ІІ, од. зб. 12918</div>
+    <h1 class="rj-hero-title">Реєстр збитків<br>у маєтку <em>Дубровицькому</em></h1>
+    <p class="rj-hero-subtitle">Regestr Szkód Poczynionych w Majętności Dubrowickiej przez J.P. Borków · Anno Domini 1665</p>
+    <div class="rj-hero-meta">
+        <div class="rj-hero-meta-item">
+            <div class="rj-hero-meta-val">1665</div>
+            <div class="rj-hero-meta-key">Рік документу</div>
+        </div>
+        <div class="rj-hero-meta-item">
+            <div class="rj-hero-meta-val">12</div>
+            <div class="rj-hero-meta-key">Сторінок-оригіналів</div>
+        </div>
+        <div class="rj-hero-meta-item">
+            <div class="rj-hero-meta-val">14+</div>
+            <div class="rj-hero-meta-key">Сіл та міста</div>
+        </div>
+        <div class="rj-hero-meta-item">
+            <div class="rj-hero-meta-val">80+</div>
+            <div class="rj-hero-meta-key">Постраждалих осіб</div>
+        </div>
+    </div>
+    <div class="rj-hero-alert">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        Документ містить описи тортур, насильства та зґвалтувань неповнолітніх
+    </div>
+    <div class="rj-hero-bottom"></div>
+</div>
+
+<!-- BODY -->
+<div class="rj-body">
+
+    <div class="rj-breadcrumb">
+        <a href="metrychni-knyhy.html">Метричні книги</a>
+        <span>›</span>
+        <span>Реєстр збитків 1665</span>
+    </div>
+
+    <!-- TABS -->
+    <div class="rj-tabs" role="tablist">
+        <button class="rj-tab active" data-panel="scans" role="tab">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            Скани
+        </button>
+        <button class="rj-tab" data-panel="transcript" role="tab">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>
+            Транскрипція
+        </button>
+        <button class="rj-tab" data-panel="translation" role="tab">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 8l6 6"/><path d="M4 14l6-6 2-3"/><path d="M2 5h12"/><path d="M22 22l-5-10-5 10"/><path d="M14 18h6"/></svg>
+            Переклад
+        </button>
+        <button class="rj-tab" data-panel="people" role="tab">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            Особи
+        </button>
+        <button class="rj-tab" data-panel="glossary" role="tab">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+            Глосарій
+        </button>
+        <button class="rj-tab" data-panel="context" role="tab">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Контекст
+        </button>
+    </div>
+
+    <!-- ══ PANEL: SCANS ══ -->
+    <div class="rj-panel active" id="panel-scans">
+        <div class="rj-eyebrow"><span>Оригінальні скани · 12 сторінок · 1665 р.</span></div>
+        <div class="rj-note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <div>
+                <div class="rj-note-label">Про документ</div>
+                <p class="rj-note-text">Судовий реєстр збитків, вписаний до книг гродського суду у Пінську у 1665 р. Документ складений нотаріально — за участю возного генерала <strong>Романа Яцковського</strong> та свідків-шляхтичів. Мова — старопольська з латинізмами. Оригінал зберігається у фонді ІІ, одиниця зберігання 12918. Натисніть на скан для перегляду у повному розмірі.</p>
+            </div>
+        </div>
+        <div class="rj-scans-grid" id="rjScansGrid">
+            <div class="rj-scan-card" onclick="rjOpenLB(0)">
+                <img class="rj-scan-img" src="https://i.imgur.com/bd6XSvsl.jpeg" alt="Реєстр 1665 — Титульна сторінка">
+                <div class="rj-scan-badge">Обкладинка</div>
+                <div class="rj-scan-overlay"><div class="rj-scan-num">01</div><div class="rj-scan-label">Титул · 1665</div></div>
+                <div class="rj-scan-zoom"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+            </div>
+            <div class="rj-scan-card" onclick="rjOpenLB(1)">
+                <img class="rj-scan-img" src="https://i.imgur.com/11VFVIll.jpeg" alt="Реєстр 1665 — Сторінка 1">
+                <div class="rj-scan-badge">Сторінка 1</div>
+                <div class="rj-scan-overlay"><div class="rj-scan-num">02</div><div class="rj-scan-label">Початок реєстру</div></div>
+                <div class="rj-scan-zoom"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+            </div>
+            <div class="rj-scan-card" onclick="rjOpenLB(2)">
+                <img class="rj-scan-img" src="https://i.imgur.com/Uv34tGpl.jpeg" alt="Реєстр 1665 — Сторінка 2">
+                <div class="rj-scan-badge">Сторінка 2</div>
+                <div class="rj-scan-overlay"><div class="rj-scan-num">03</div><div class="rj-scan-label">Місто Дубровиця</div></div>
+                <div class="rj-scan-zoom"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+            </div>
+            <div class="rj-scan-card" onclick="rjOpenLB(3)">
+                <img class="rj-scan-img" src="https://i.imgur.com/vjHOTJHl.jpeg" alt="Реєстр 1665 — Сторінка 3">
+                <div class="rj-scan-badge">Сторінка 3</div>
+                <div class="rj-scan-overlay"><div class="rj-scan-num">04</div><div class="rj-scan-label">Дубровиця продовж.</div></div>
+                <div class="rj-scan-zoom"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+            </div>
+            <div class="rj-scan-card" onclick="rjOpenLB(4)">
+                <img class="rj-scan-img" src="https://i.imgur.com/znmHFUpl.jpeg" alt="Реєстр 1665 — Сторінка 4">
+                <div class="rj-scan-badge">Сторінка 4</div>
+                <div class="rj-scan-overlay"><div class="rj-scan-num">05</div><div class="rj-scan-label">Замок · Орв'яниця</div></div>
+                <div class="rj-scan-zoom"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+            </div>
+            <div class="rj-scan-card" onclick="rjOpenLB(5)">
+                <img class="rj-scan-img" src="https://i.imgur.com/cWwdB8gl.jpeg" alt="Реєстр 1665 — Сторінка 5">
+                <div class="rj-scan-badge">Сторінка 5</div>
+                <div class="rj-scan-overlay"><div class="rj-scan-num">06</div><div class="rj-scan-label">Велюнь · Біле</div></div>
+                <div class="rj-scan-zoom"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+            </div>
+            <div class="rj-scan-card" onclick="rjOpenLB(6)">
+                <img class="rj-scan-img" src="https://i.imgur.com/jY5W0m3l.jpeg" alt="Реєстр 1665 — Сторінка 6">
+                <div class="rj-scan-badge">Сторінка 6</div>
+                <div class="rj-scan-overlay"><div class="rj-scan-num">07</div><div class="rj-scan-label">Позні · Людинь · Бережці</div></div>
+                <div class="rj-scan-zoom"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+            </div>
+            <div class="rj-scan-card" onclick="rjOpenLB(7)">
+                <img class="rj-scan-img" src="https://i.imgur.com/ykCvCHrl.jpeg" alt="Реєстр 1665 — Сторінка 7">
+                <div class="rj-scan-badge">Сторінка 7</div>
+                <div class="rj-scan-overlay"><div class="rj-scan-num">08</div><div class="rj-scan-label">Орв'яниця · Стрільськ</div></div>
+                <div class="rj-scan-zoom"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+            </div>
+            <div class="rj-scan-card" onclick="rjOpenLB(8)">
+                <img class="rj-scan-img" src="https://i.imgur.com/cgVZT81l.jpeg" alt="Реєстр 1665 — Сторінка 8">
+                <div class="rj-scan-badge">Сторінка 8</div>
+                <div class="rj-scan-overlay"><div class="rj-scan-num">09</div><div class="rj-scan-label">Карпилівка · Шахи</div></div>
+                <div class="rj-scan-zoom"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+            </div>
+            <div class="rj-scan-card" onclick="rjOpenLB(9)">
+                <img class="rj-scan-img" src="https://i.imgur.com/HZ0UgQ4l.jpeg" alt="Реєстр 1665 — Сторінка 9">
+                <div class="rj-scan-badge">Сторінка 9</div>
+                <div class="rj-scan-overlay"><div class="rj-scan-num">10</div><div class="rj-scan-label">Нивецьк</div></div>
+                <div class="rj-scan-zoom"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+            </div>
+            <div class="rj-scan-card" onclick="rjOpenLB(10)">
+                <img class="rj-scan-img" src="https://i.imgur.com/b9pfwpfl.jpeg" alt="Реєстр 1665 — Сторінка 10">
+                <div class="rj-scan-badge">Сторінка 10</div>
+                <div class="rj-scan-overlay"><div class="rj-scan-num">11</div><div class="rj-scan-label">Залішани · Бровки</div></div>
+                <div class="rj-scan-zoom"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+            </div>
+            <div class="rj-scan-card" onclick="rjOpenLB(11)">
+                <img class="rj-scan-img" src="https://i.imgur.com/DrYaDDPl.jpeg" alt="Реєстр 1665 — Підписи">
+                <div class="rj-scan-badge">Підписи</div>
+                <div class="rj-scan-overlay"><div class="rj-scan-num">12</div><div class="rj-scan-label">Мочулища · Засвідчення</div></div>
+                <div class="rj-scan-zoom"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+            </div>
+        </div>
+    </div><!-- /panel-scans -->
+
+    <!-- ══ PANEL: TRANSCRIPT ══ -->
+    <div class="rj-panel" id="panel-transcript">
+        <div class="rj-eyebrow"><span>Оригінальний текст · Старопольська мова з латинізмами · 1665 р.</span></div>
+        <div class="rj-part-nav">
+            <button class="rj-part-btn active" data-part="t1">I. Заголовок · Дубровиця</button>
+            <button class="rj-part-btn" data-part="t2">II. Дубровиця продовж.</button>
+            <button class="rj-part-btn" data-part="t3">III. Замок · Велюнь · Біле</button>
+            <button class="rj-part-btn" data-part="t4">IV. Села за Случчю</button>
+        </div>
+
+        <!-- Part t1 -->
+        <div class="rj-doc-part active" id="part-t1">
+            <div class="rj-transcript">
+                <div>
+                    <div class="rj-col-header">
+                        <div class="rj-col-badge">ОРГ</div>
+                        <div class="rj-col-title">Оригінал (слово в слово)</div>
+                    </div>
+                    <div class="rj-page-block">
+                        <div class="rj-page-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:11px;height:11px;stroke:var(--sepia-light)"><rect x="3" y="3" width="18" height="18" rx="2"/></svg> Скани 1–2 · Початок реєстру · Місто Дубровиця</div>
+                        <div class="rj-original">Regestr Szkod Poczynionych w Roku Tysiąc Sześćset Sześćdziesiąt
+Piątym przez Ich mość Panów Borków w majętności Dubrowickiey Wielmoż-
+nego Imść Pana Mikołaja Andrzeja Na Dąbrowicy Firleja Starosty
+Lubelskiego w Województwie Brzeskim Powiecie Pińskim leżącey, które
+się przy Generale wyklachcia niżej podpisanemi ueryfikowali pod sumienie.
+
+Naprzód Pana Kołayskiego wypędziwszy z tey Majętności przez Asadę
+natenczas te majętność dzierżącego zabrali mu gwałtownie mimo też
+wiadomości jego skrzynie pootwierawszy tak w pieniądzach iako Ruchomych
+Rzeczach sygnetach cynach miedzi koniach czego dosyć Pan Borko zarywa
+na mnie na złotych dwanaście Tysięcy którego szkody Imść Pan Starosta
+Onemu gotowizną musiał ex nunc zapłacić za wypędzeniem Onego.
+
+Miasto Dubrowica woyt Drozd postanowionego przez własnego dziedzica
+Przywileiem Na wóytostwo tego zrucił i z wóytowstwa dowiezienie wzięto
+ciężkiego okowawszy za nogi y ręce temu urzędnikowi która kosztowała
+złotych sto. Okupując się z więzienia dał: złotych sto gotym; złotych
+trzydzieście dwa Podstarościemu; u piciacie złotych pięćdziesiąt; Gospodyni
+Pana Borkowy która się przyczyniała złotych dwanaście; Panu Jelskiemu
+staremu Zaprzeczne złotych trzy; Gospodyni znowu pas za złotych cztery;
+samemu Panu Borkowi złotych pięć — z tey Przyczyny że Dziedzicowi
+przychylny. Bracia Zaworowiczowie na wóytowstwo od niego postanowieni
+okupując się: Naprzód zatnem obiadem w drodze jadącemu wydał złotych sto
+pięćdziesiąt; samego wzięto do więzienia okupując się tego złotych pięćdziesiąt.
+
+Tenże podczas trwóg Tatarskich ucieczkę ułożonego w czółnie zabrał pod
+zamek swojego Fina y wszystkie ruchomości zabrawszy gotowymi pieniądzmi
+wziął złotych dwieście pięćdziesiąt; w fantach wroconych na szkody złotych
+trzydzieście. Temuż to z więzienia żony, obu braci y matkę ich wziął
+w gościnę y samego Kubaisa zabił, wolno strzelał po ogrodach gumnach
+szałasach. Tenże drugim razem powróciwszy wziął z sobą konie, kupia
+pięknego u widzszy słomy u domu czeladzi karą go zabrawszy odbił skrzynie
+wzięli mu gotowych złotych siedm, ośm złotych dwadzieścia cztery y
+wszystkie ruchomości kupieckie zabrali do Zamku.</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="rj-col-header">
+                        <div class="rj-col-badge" style="background:var(--rust);">УКР</div>
+                        <div class="rj-col-title">Примітки до тексту</div>
+                    </div>
+                    <div class="rj-translation">
+                        <p><strong>«Regestr Szkód»</strong> — юридичний реєстр збитків (перелік претензій). Складався нотаріально за участю возного (Jenerał) для подання до гродського суду у Пінську.</p>
+                        <p><strong>«Ich mość Panów Borków»</strong> — форма множини: справа стосується кількох представників родини Борків, а не однієї людини. Документ вживає «Borków» — родовий множини.</p>
+                        <p><strong>«Asada» (наїзд)</strong> — збройний напад шляхти на маєток конкурента з метою вигнати орендаря або захопити майно. В умовах хаосу Руїни — звична практика.</p>
+                        <p><strong>«Ex nunc»</strong> — лат. «відтепер, негайно». Пан Фірлей особисто виплатив Колайському 12 000 злотих компенсації за вигнання — і подає цю суму як частину своїх збитків від Борків.</p>
+                        <p><strong>«Під час татарської тривоги»</strong> — Борко використовував панічну втечу людей до річки та човнів, щоб грабувати їхнє майно у момент найбільшої вразливості.</p>
+                        <p><strong>«Кубайс»</strong> — перший поіменований постраждалий. Борко особисто його «забив» (побив або вбив) — текст двозначний, але вказує на особисте фізичне насильство.</p>
+                        <p><strong>«Заворовичі»</strong> — брати, призначені Борком замість законного війта Дрозда. Усунення законного урядовця через кайдани і викуп — яскрава ілюстрація методів Борка.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part t2 -->
+        <div class="rj-doc-part" id="part-t2">
+            <div class="rj-transcript">
+                <div>
+                    <div class="rj-col-header">
+                        <div class="rj-col-badge">ОРГ</div>
+                        <div class="rj-col-title">Оригінал (слово в слово)</div>
+                    </div>
+                    <div class="rj-page-block">
+                        <div class="rj-page-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:11px;height:11px;stroke:var(--sepia-light)"><rect x="3" y="3" width="18" height="18" rx="2"/></svg> Скани 2–3 · Дубровиця продовження · Смеха, Фалько, Ковал</div>
+                        <div class="rj-original">cochego Eliberowac dał złotych cztery. Sabinu sznurkę złotych pięćdziesiąt
+madżelanu sznurkę złotych dwanaście. Leszkowi bratniego wziął złotych
+pięćdziesiąt. Tenże kupował mu Atlasu na żupan na czapkę za posługi
+musiał Panu Borkowi jeszcze zapłacić złotych sto trzydzieście bezwinny.
+Tenże Kubakie za złotych dwanaście pożyczonym sposobem rocznymi czasy
+dał złotych pięćdziesiąt. Waśkowi ślucharowi wziął wieprza za złotych
+dziesięć gotowych złotych ośm temuż czeladź pobili świń pięcioro do
+ziemię złotych trzydzieście bezwinny. Kołyczkowi bezwinny żadnej raz
+złotych dziesięć drugi złotych siedm groszy piętnaście. Wołodkiewiczowi
+wziął racione odmarłowszczyzny konia za złotych pięćdziesiąt pięć gotowych
+złotych czterdzieście pięć krowę na rzeź złotych sześć. Malczygowi wziął
+złotych trzydzieście ośm groszy piętnaście. Leszkowi Wołodkiewiczowi złotych
+dwadzieścia. Dawele rzeźnikowi mięsa za złotych siedm. Dawidowi
+Zaworowiczowi złotych dwadzieścia. Selewonowiczowi, haira Symonowiczowi
+owce złotych pięć gotowych złotych dwa y groszy piętnaście. Sawce
+Sakhinowi rożnemi czasy bezwinnie zdzierając złotych sto dziesięć zaś
+złotych dwa y gr: piętnaście. Annie Srowey wdowie wziął racione losu
+bezwinnie złotych dwadzieścia pięć. Iwankowi Bachmatowiczowi niewinnie
+zapozwał złotych dziesięć. Klimowi Szupice wziął konia złotych sześćdziesiąt
+gotowych żeby woytem nie był złotych trzydzieście jałowice złotych dwadzieścia.
+Midoroszewiczowi wziął Wołodkiewiczowych spadku złotych sześć. Hryćko
+Srecha zapłacić zadania złotych trzydzieście. Mikicie Tymkiewiczowi rożnymi
+czasy żądania ludzie złotych sześćdziesiąt cztery gr: piętnaście temuż żyta
+kóp cztery złotych szesnaście temuż barana złotych trzy. Hermanowi
+Maleszkiewiczowi konia zł: sto dwadzieścia dał na tego konia onemu złotych
+osiemnaście szkodując złotych sto dwadzieścia dwa temuż chomąt złotych
+sześć temuż skrzynię wziął za złotych sześć temuż kociołów trzy złotych
+dwadzieścia sześć. Ostapowi wziął krowę dobrą więził zadawszy niewinność
+czego nie dowiodszy musiał zapłacić wykupując złotych dwieście. Tenże
+Coutuń prawnując się zapłacić bitymi talarów dwadzieścia uczyni złotych sto
+czterdzieście temuż ula wziął nazad add Decretu dał złotych dwadzieścia
+dziewięć. Dawid Leią rożnemi czasy rozne rzeczy przedani bezwinnie złotych
+sto pięć groszy piętnaście. Bułatnik Andrey naprasny dał zł: siedmnaście
+temuż żyta wziął za złotych sześć.</div>
+                    </div>
+                    <div class="rj-page-block" style="margin-top:1.5rem;">
+                        <div class="rj-page-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:11px;height:11px;stroke:var(--sepia-light)"><rect x="3" y="3" width="18" height="18" rx="2"/></svg> Скан 3 · img0035 · Мозол, Смеха, Ковал, Давид Старий</div>
+                        <div class="rj-original">Mozołowi wziął wołu dawszemu przyczynę złodziejstwa szczego się wywiodł
+kosztowało złotych trzydzieście temuż owiec troie złotych dziewięć temuż
+Tatarce smal suterwary złotych ośm tegoż chałupę żydowi sprzedał złotych
+szesnaście. Smecha żyd dał bez żadnej przyczyny złotych dwieście a to że
+Panu Skołayskiemu dał był za iego dzierżawy; tenże bez żadnej winy złotych
+piętnaście. Kowalu Senusiu lubie oprawując za złotych dziesięć pierścieni
+dwa trzyma złotych rubinowy ieden emu zalicaiąc się wziął złotych trzydzieście
+sześć. Anastasii dał złotych dziewięć. Urzęda Dawida starego dawszy winę
+że daiesz znać o Panu Firlowi z kar podwarzy złotych sto dwadzieścia pięć.
+Punacie tenże zaprzeczne złotych dwanaście karę za poswarkę winy zł: trzydzieście
+tenże sprzeczyny rzekła gorzałka złotych trzydzieście potym uprzednim siedział
+piał miodu za złotych sześćdziesiąt od tegoż zboż wymieniony wymłyną zabrał
+y gorzałek za złotych czterdzieście sześć tenże winy zapłacił sprzeczyny
+jakoby jego dziecię winni kowe wepchnęło w brago oprócz surowie Panu
+Borkowi złotych siedmdziesiąt.
+
+Eija semoyło sprzedawszy Nahuiby złotych trzysta siedmdziesiąt pięć
+wziąwszy podał on znowu dawał; tenże kupując Otyás we Lwowie swych dodał
+złotych trzydzieście; tenże kupując Sukna swych dodał złotych dwadzieścia
+pięć — odm nie oddał. Tegoż żyda naprawił aby go pozywano y dał swych
+pieniędzy złotych pięć. Kury musiał winy y na błąd wracacząc zapłacił
+złotych piętnaście; temuż konia wziął za zł: ośmdziesiąt gorzałki za złotych
+dwadzieścia; temuż gorzałkę zabrał był winniwsky niedostawało złotych
+ośmnaście; pistolety wziął kupił był nie oddał złotych dwadzieścia siedm;
+temuż konia zabrał którego zrobiwszy oddał ten zdech wyidzień zrobiony
+kosztował zł: pięćdziesiąt siedm. Falko żyd dał winy którą naznaczono
+było do skarbu to Pan Borko wziął złotych dwadzieścia; tenże żądania
+ludzkie zapłacił więzienie cierpiąc złotych dziesięć; od tegoż miodu dla
+gości zł: dziewięć.</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="rj-col-header">
+                        <div class="rj-col-badge" style="background:var(--rust);">УКР</div>
+                        <div class="rj-col-title">Примітки до тексту</div>
+                    </div>
+                    <div class="rj-translation">
+                        <p><strong>«Одмерловщина» (odmarłowszczyzna)</strong> — давній податок пану після смерті селянина за право спадщини. Борко використовував його як привід для фіктивних стягнень навіть тоді, коли ніхто не помер.</p>
+                        <p><strong>«Биті талери»</strong> — срібна монета підвищеної якості. 1 талер = 7 злотих. 20 талерів = 140 злотих. Ковтунь (Coutuń) «судячись» заплатив саме такими монетами — значить, це офіційний судовий порядок, а не довільне стягнення.</p>
+                        <p><strong>«Давид Старий — 125 злотих за те, що «даєш знати про пана Фірлея»»</strong> — Борко карав мешканців за лояльність до законного власника. Кращого підтвердження незаконності його дій не знайти.</p>
+                        <p><strong>«Пунаті — штраф за те, що дитина штовхнула когось у брагу»</strong> — брага (bragо) — осад після виробництва горілки. Штраф 70 злотих за таку «провину» — яскравий приклад вигаданих підстав.</p>
+                        <p><strong>«Фалько — штраф до скарбниці»</strong> — Борко привласнив судовий штраф, призначений до державної скарбниці. Це вже не просто здирництво — це крадіжка з державної казни.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part t3 -->
+        <div class="rj-doc-part" id="part-t3">
+            <div class="rj-transcript">
+                <div>
+                    <div class="rj-col-header">
+                        <div class="rj-col-badge">ОРГ</div>
+                        <div class="rj-col-title">Оригінал (слово в слово)</div>
+                    </div>
+                    <div class="rj-page-block">
+                        <div class="rj-page-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:11px;height:11px;stroke:var(--sepia-light)"><rect x="3" y="3" width="18" height="18" rx="2"/></svg> Скан 4 · img0036 · Громада, ґвалти, засвідчення</div>
+                        <div class="rj-original">Miejski pole okupując które z nadania Dziedzica trzyma dał złotych
+pięćdziesiąt. Dmie puchu dawszy mu przyczynę o szkodę zapłacił złotych
+sześć, puł kotła miodu zł: jeden gr: piętnaście a to że rozzymał temuż
+zabrał pasu czerwony złotych dwanaście. Pawłowi dawszy mu przyczynę że
+pieniądze znalazł zapłacić złotych czterdzieście zapodwoszyrzne niewinnie
+złotych trzy. Palamar sługa cerkiewny żądania zapłacił w tey naprasny
+zł: pięćdziesiąt tenże u niego okupując roczenicia zapłacił zł: trzydzieście
+wykładu w tymże sprawie złotych dziesięć. Antoni Jawur naprasno żądania
+zapłacił zł: sto sześćdziesiąt. Swieszczennik mikolski żądania ze dziedzicowej
+strony trzyma powielu dni opuścił więzienia żołnierzow nasysłania nad głowę
+strzyżania za włosy rwania w więzienia po ziemi bicia czego kroc warow
+cierpiąc okupując się dał zł: siedmdziesiąt; tenże krawcóh kupując nadane od
+Dziedzica zapłacił złotych trzydzieście; w Pińsku z okazji jego ratione
+podymnego musiał zapłacić zł: dziesięć.
+
+Gromada wszystka wielkim płaczem y narzekaniem opowiada tym swe krzywdy
+nieznośne od Pana Borka na którą biorą się wszyscy do przysięgi że nie
+inaczej. Kiedy się godała asada żołnierzow co włożył na nich składkę na kilka
+set zł: mało co żołnierzom dawszy jemu się wszystko zostawało. A co jeśli
+naprawio do Wilna znać że dziedzicem jadąc co Panem Biedrzyckim wóz
+żołnierzow wybił. Tak tey nieznośne składki dawali których na mnie przez
+lata jemu się dostało wziął złotych cztery tysiąca y pięćset, a mianowicie
+y Podymne moc się zostało u niego które wybrawszy do skarbu nie wnosił.
+
+Między też szkodami pro niemałąszką uczynił szkodę kiedy dziwkę w lat
+wynastu kazawszy sobie rzekomo przywieść gwałty takowe. Mianowicie Haśkę
+Maławownę która na tymże razie pogwałcił. Wszystkiemu miastu koszulę
+prezentowała z płaczem wielkim y narzekaniem a na ten czas stanąwszy
+oczywistość tylko niekarany. Czyi płacząc skarżyła druga sierota Iwana
+Dubiny corka wodownitego mieszczanina, którą opowszy gwałtem kazał wziąć
+do alkierza. Dziwcze w lat jedynastu zgwałtował mówiąc: „me to wolno
+jako Panu." Fracia Małuszka Tyszkowa mieszczanina y kupca rodowitego
+corka, którą gdzieś zaprowadziwszy precz gwałt tey uczynił. Z tego
+zmarła y grzech niemały których trudno exprimować pismem dla wstydu
+samych miejsc. Żerość Bereszczula, także dziwkę Chweske Borysównę chłopa
+zamodyszego córkę tamże.
+
+W Zamku przychodzieli kazał wziąć y zgwałcić. Ze wsi Orwanice dziwkę
+owdzie szłe naprasnikowo córkę człowieka starego y zamożnego chłopa, także
+spanczyzny wziąwszy zgwałcił. Y wiele inszych się w roznych tego wsiach
+działo czego dla wstydu ojcowie taili.
+
+Ja kom będącym Przysięgiem Roman Jackowski Jenerał MP.
+Jako strona szlachta przy Jenerale będący Thomas Zalibursky MP.
+Ta Lińskie ręką.
+Conatencios będącym przeymnie podpisuje Samuel Szmuryło.</div>
+                    </div>
+                    <div class="rj-page-block" style="margin-top:1.5rem;">
+                        <div class="rj-page-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:11px;height:11px;stroke:var(--sepia-light)"><rect x="3" y="3" width="18" height="18" rx="2"/></svg> Скани 5–6 · img0037–0038 · Велюнь · Біле · Позні · Людинь · Бережці</div>
+                        <div class="rj-original">Wieś Wieluń. Wszystkich wybrał sobie owiec sześdziesiąt każdą rachując po
+złotych pięć uczyniło: trzysta. Tamże roskazał Dwornice swoy aby dla
+przyczyny wziętku wełne la żyta garsc wewrota Dwornie w rym obwiniwszy
+gromadę zapłacili zł: pięćdziesiąt. Od tychże Jałowice wziął złotych
+trzydzieście. Więprza karmnego zł: dwanaście, gęsi szesnaście od tychże
+trzydzieście sześć. Tak gromada uskarża się na nieznośne składki. Zeznali
+że zostało iemu mało zł: dwa tysiąca pięćset. W Tyszewki u Romanowicza
+żadnej niemaiąc do niego przyczyny wziął zł: dwadzieścia sześć. U tegoż
+siwenice zł: piętnaście. U Stepana Oleszkiewicza tejże naprasny wziął
+zł: trzydzieście. Tenże dał spryczyny ziemie iżby ziemie barcią potachlował
+czego nie było zapłacił zł: siedmdziesiąt. Tyszkowi Bachmatowiczowi dawszy
+mu winę zerwanie pszczoły ludzkie zasiadają zapłacił winy zł: dwadzieścia
+ośm. Leszkowi mielnikowi dawszy przyczynę że o natworą czarownicą więził
+y zdar lubo się to nie pokazało zł: sześdziesiąt y mąkę mierzył. Tenże
+pilic Bachmat dawszy przyczynę że starosta u siebie chowa ryby dał zł:
+dziesięć. U Hrycia Oleszkiewicza dawszy też przyczynę że czarownica siostra
+okupując dał zł: czterdzieście. U Piotra Kuryłowicza także naprasny zł:
+siedmdziesiąt. U Iwana żyta się zrodziło chcąc ego wziąć żeby nie brał
+dał zł: dziewięć. U Waszka niżąc zł: jedynaście zastawowice zdzierając
+nację wziął więcej zł: ośmdziesiąt ośm we wszystkich.
+
+Wieś Biała. W żywności wziął owiec pięćdziesiąt bez dania przyczyny zł:
+dwieście pięćdziesiąt, za iakiś podroszczyzny której nigdy nie bywało
+zł: sto. Wojta chwedora obwiniwszy że siewnia szeptano wziął wołu zł:
+dwadzieścia. U tegoż bez przyczyny zł: trzynaście. Chwedor y Daniło za
+tegoż wojta dali zł: ośm. Paweł Chodakowicz bez przyczyny dał zł: szesnaście.
+Tenże barana zł: trzy. U Waszka Lachowicza że się w handzmie przemówił
+y więził go aż dał zł: trzydzieście. U Jacka z ludzkiego udania zł: trzydzieście.
+U Lanowa murnice wziął zł: piętnaście u tegoż gotowych zł: piętnaście.
+U Kuryła Chwedora pszczoły troje wydar zł: sześć. Składki takież wymyśliwszy
+jako y na inszych wsiach wydali zł: tysiąc sto.
+
+Wieś Pozni. U Kostyuka wziął jałowic cztery bez żadnej winy jako gromada
+wszytka powiada zł: sto. U tegoż baranów cztery zł: dwadzieścia. U tegoż
+gotowych pieniędzy że się dobrze miał z tej przyczyny zł: dwieście. U tegoż
+kocioł zł: czterdzieści czego zataił był dał za to zł: trzydzieście. Tenże
+za udaniem że sarnę zabił zł: dziesięć. U Janka Pozniaka owcę zł: pięć.
+U Kostyuka tegoż pierwszego murnice zł: piętnaście.
+
+Wieś Lutynicze. Ci co roczno czynszu wydali Panu Borkowi składkę przez te
+czasy dali zł: pięćset. Na mełka hołocha że wszywny własnej sośnie barć
+zrobił wziął za to zł: sto. U tegoż pszczół troje zł: trzydzieście. U tegoż
+brata hołocha że też barć wyrobił sobie dał zł: dwanaście. Wieprzów dwa
+zł: dwadzieścia. Tenże chcąc wieprze wykupować dał zł: pięć y wieprze
+przepadły.
+
+Wieś Bereźreczko. U Lehowilowi bez winy żadnej wziął dwowie kosi towaru
+zł: dwadzieścia. Od tegoż dawszy mu przyczynę że jakoby miał bobra
+sprzedawati zł: pięćdziesiąt. U Iwana Kwaska bez winie wziął zł: dwieście.
+U Jawora Januszewicza dawszy winę że bobra złapał zł: pięćdziesiąt. U Stepana
+Kwaska także bez winie zł: siedm. U Hordia Semenowicza wziął także bez
+winie złotych ośmdziesiąt. U Bavrema Gawenika bez dania przyczyny wziął
+złotych dwadzieścia u tegoż drugim razem złotych dwadzieścia. U Iwana Kluki...</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="rj-col-header">
+                        <div class="rj-col-badge" style="background:var(--rust);">УКР</div>
+                        <div class="rj-col-title">Примітки до тексту</div>
+                    </div>
+                    <div class="rj-translation">
+                        <p><strong>«Кошулю prezentowała всьому місту»</strong> — закривавлена сорочка як публічний доказ насильства перед громадою. Борко залишився непокараним — красномовний факт про стан правосуддя.</p>
+                        <p><strong>«Мені це вільно, як пану»</strong> (me to wolno jako Panu) — слова Борка при зґвалтуванні 11-річної доньки Івана Дубини. Вписані до офіційного судового документу.</p>
+                        <p><strong>«Від чого померла»</strong> — Фраця Тишкова — єдиний у документі запис про смерть жертви внаслідок злочину. Укладачі: «гріх чималий, важко писати через сором самих місць».</p>
+                        <p><strong>Засвідчення: Яцковський, Залібурський, Лінський</strong> — ці троє шляхтичів підписали весь реєстр під присягою. Самуїл Шмурило — нотаріус при возному.</p>
+                        <p><strong>«Чарівництво»</strong> як привід — у Велюні: Лешко Мельник звинувачений у переховуванні «чарівниці», Гриць Олешкевич — «сестра чарівниця». Обоє відкупилися. Жодне звинувачення не підтверджено.</p>
+                        <p><strong>«Борть у власній сосні»</strong> (Людинь, Мелько Голох) — за законами РП бджоли в панському лісі вважались власністю пана, навіть якщо дупло зробив сам селянин. Борко стягував за це навіть із тих, хто використовував власні сосни.</p>
+                        <p><strong>«Бобер» як привід</strong> (Бережці) — полювання та продаж бобра були панською регалією. Навіть підозра у продажі бобра каралась великим штрафом.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part t4 -->
+        <div class="rj-doc-part" id="part-t4">
+            <div class="rj-transcript">
+                <div>
+                    <div class="rj-col-header">
+                        <div class="rj-col-badge">ОРГ</div>
+                        <div class="rj-col-title">Оригінал (слово в слово)</div>
+                    </div>
+                    <div class="rj-page-block">
+                        <div class="rj-page-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:11px;height:11px;stroke:var(--sepia-light)"><rect x="3" y="3" width="18" height="18" rx="2"/></svg> Скани 7–9 · img0039–0041 · Бережці · Орв'яниця · Стрільськ · Карпилівка</div>
+                        <div class="rj-original">Wieś Orwanica. U Jachna Buchiewicza wziął koni dwuch bojarzynowi krure
+pooddawał juryscie swemu jednego Panu Felsztynowi Marszałkowi Pin: sługm
+drugie za nich zł: dziewięćdziesiąt. U tegoż Janusza targiem a nie zapłacił
+złotych piętnaście. Tenże dał spryczyny za kradzież inszego człeka pszczoły
+pod barć zł: pięćdziesiąt. U Kononowicza z udania jako by miał kotły jego
+sprzedał; się wywodziwszy zapłacił zł: czterdzieście. U Waszka Wołyńca bez
+przyczyny wziął zł: dziesięć, u tegoż pszczół dwoie zł: dwadzieścia temuż
+zł: dwa. U Łazarowicza rożnemi czasy zł: dwadzieścia u tegoż owiec troie
+zł: dziesięć. U Sidora Potoroszy bezwinnie zł: czterdzieście sześć. U Łazora
+Kobryna wziął zł: ośm u tegoż złotych siedm. U Parchoma Miszkiewicza wziął
+złotych cztery. U Nikity Jursowicza bezwinnie złotych czterdzieście. Już
+wszyscy jako insze gromady żołnierzyczyzny która się iemu dostała zapłacili
+bez jego dzierzenia lat złotych tysiąc dwieście. Iż Orwanica nie wyrobił
+czunow ośm swym kosztem wziął za nie złotych trzysta.
+
+Wieś Strzelsko. Chwedorowi Meleszkiewiczowi wziął gotowemi pieniędzmi
+złotych ośmdziesiąt, wołów dwa uczyni złotych sześdziesiąt. Tenże Chwedor
+z bratem swoim okupując ziemie barczną i woig własnoze chcąc się ostrowy
+we wszystkich ziemiach barcznych czego nigdy nie bywało zapłacił za to
+zł: dziesięć, a osobliwie bez dania przyczyny żyta dwoie z własnego kup
+dziesięć, okupując to dał złotych dziesięć. U Kuryła Doroszenka wołu wziął
+tylko co dostał da branie był złotych dwadzieścia; którego mu bez żadny
+winy wziąwszy gotowych złotych dwa naprasny za te ostrowy. Symon Bojarzyn
+z udania ludzkiego dał złotych pułtorasta aby tylko jaka kolwiek okazija
+to płaci. Tyszkowi Meleszkiewiczowi mąkę wziął za złotych trzydzieście
+gotowych złotych sześć. Tymochowi Nirodzie baranów dwoch za złotych
+dziesięć, woła zł: dwadzieścia pięć gotowy za ziemie barczną za ostrowy
+dał zł: pięć. U Hryćka Tarasowicza wołów trzy które czyni złotych sto
+gotowych zł: trzydzieście bezwinien wziął. Kowal Duch z Wyrem dali złotych
+siedm. U Wojtowego Iwana zł: jedynaście naprasny. Olax Hurowicz dał
+złotych siedmdziesiąt, u tegoż za ostrowy zł: jeden. U Komona świnie wziął
+z udaniem za to zł: ośm. U Kocha Kowala także bezwinnie dał zł: dziesięć.
+Iwan Meleszczenic z Oleksiem naprasny zapłacili złotych dwadzieścia a baran
+złotych pięć. Kondrat Gudz zł: trzydzieście a baranów trzy zł: piętnaście.
+Antun także naprasny zapłacił złotych pułtorasta. Hordiy Kelover u bogi
+który niema barcznego tedy oren musiał dać za ostrowy zł: trzy. Małoch
+Nieroda takież za bortne ziemie dał zł: trzy. U Hurowicza także za ziemie
+barczną zł: trzy a drugie tak bezzadny przyczyny zł: trzydzieści. Hryćko
+Łazorowicz z brani zł: sześć. Iwan udany za ziemie barczną zł: trzy.
+Wdowa Kureniata wziąwszy woła zarznął raz znowu troie bydła bez dania
+przyczyny wziął w grabież; tedy one okupując dał zł: dwadzieścia a wół
+czyni zł: dwadzieścia pięć co zarznął gotowych z udaniem zł: pięćdziesiąt.
+Za barci zł: jedynaście. Waśko Boliema człowiek ubogi y u tego zdar
+naprasny groszy piętnaście.
+
+A co większa czego nie bywało wymyślił nieiako sroga przyczynę tedy
+y zato godząc Pana Borka wszystka gromada żeby tego nie było dali
+zł: ośmdziesiąt. Tak wszystka gromada żołnierzow kiedy harcowali w Pilowie
+zapłacili iemu zato razu iednego zł: sześdziesiąt a drugim razem dali
+złotych trzydzieście. Podymnego ponad to jak uchwalono mieli dawać z siedmiu
+dymów to kazał z czterech dawać wszystkie dali zł: siedmset y sześć tedy
+y to nie wszystko do skarbu dał więcej przy sobie zostawił. Teize wsi
+gromadzie żołnierze byli bydło zabrali sztuk trzydzieście rachując każde
+głowa na głowę po zł: piętnaście wszystki czyni czterysta y pięćdziesiąt
+złotych. Okupując to bydło niektore wybrawszy z gromady pieniędzy złotych
+pięćset dali Panu Borkowi żeby odkupił to bydło od żołnierzow. Tedy owego
+bydła nie odkupiwszy pieniądze u siebie zostawił nie dawszy nic żołnierzom
+u których to bydło przepadło a u niego pieniądze.
+
+Wieś Karpiłowka. Wasil Chodak woyt z udaniem że ziemia sypie nigdzie dobrey
+monety tedy musiał dać raz zł: dziewięćdziesiąt; drugim dał złotych dwadzieścia;
+trzecim zł: dwadzieścia; czwartym zł: pięć a wszystko monety dobrej dawać.
+Łukian zł: dziesięć. Iwan Magdycz po kilka razy płacił tedy wszystko
+porachowawszy jedno z drugim tey naprasney dał zł: trzysta. Waszko Pawlicz
+także zł: trzysta te przyczynę dał że chłop możny trzeba w niego wziąć.
+
+Wieś Kunceycze. Hawryło zł: trzysta zapłacił darmo. Wasil Syło tych trzysta
+powiada niech dadzą bo chłop możny te przyczynę dał. Demid zł: trzydzieście.
+Jaras Baczay złotych dwadzieścia. Boien zł: pięćdziesiąt. Denis zł: pięćdziesiąt.
+Chwedor Baczay zł: pięćdziesiąt naprasny tenże znowu zł: siedm y gr: piętnaście.
+
+Wieś Szachi. Strzelcom Szachowom dał przyczynę że jakoby mieli łosia ubić
+a nie oddać czego nigdy nie było; tylko o na nich złożył dla wyzywy; których
+pokować kazał. Wykupując się dali mu zł: dwieście a przyczynom do niego
+zł: dziesięć; stali że drugi przyczyny łosia dali zł: dwanaście; przyczynom
+zł: trzy; ciż bezwinnie zł: dwadzieścia znowu zł: dwanaście. Yaćko
+Meleszczenia rożnymi czasy porachowawszy dał naprasny zł: pułtorasta.
+Meleszko zł: trzydzieście. Skil zł: dziesięć. Iwan Błoycz za naprasno
+niemał z czego dać takim wołu wziął złotych dwadzieścia pięć. Meleszko
+Bondurkiewicz razu iednego zł: ośmnaście adrugim razem zł: dziewięć.
+Hryć Dudka z bracią także naprasny zapłacili zł: dwadzieścia pięć;
+temuż jeszcze y pszczół pięcioro gwałtem im wziął które samią po zł: pięć
+co czyni drugo zł: dwadzieścia pięć. Mikołaj z bratem zł: sześćdziesiąt
+dali niewinnie.</div>
+                    </div>
+                    <div class="rj-page-block" style="margin-top:1.5rem;">
+                        <div class="rj-page-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:11px;height:11px;stroke:var(--sepia-light)"><rect x="3" y="3" width="18" height="18" rx="2"/></svg> Скани 10–12 · img0042–0044 · Нивецьк · Залішани · Бровки · Мочулища · Засвідчення</div>
+                        <div class="rj-original">Wieś Niwicko. Jakobo Pietrulewicz z Stepanem daiąc przyczynę za grunty
+rożnymi czasy zł: piętnaście. U tychże s tey okazyji zł: siedm gr: piętnaście.
+U tychże wziął dawszy przyczynę że chcecie aby Pan waszych przysłał
+żołnierzow zł: dwadzieścia. U Pawła y Łukiana Jurków bez żadny przyczyny
+wziął zł: sto pięćdziesiąt. W tychże pszczół czworo zł: dwadzieścia; u tychże
+krowę byczka zł: dwadzieścia; u tychże owiec troie zł: dziewięć. Kiana za
+złotych dziesięć. U Waszka Jurkowicza dawszy mu przyczynę że gruntu pustego
+zażywa wziął zł: sto dwadzieścia. U tychże konia kupiwszy nie oddał zł:
+dziesięć. U tychże chałupę zabrał zł: trzydzieście. Matfiejwi Januszhowi
+dawszy mu przyczynę podroszczyzny której nie powinien odprowować bo za
+przywileiem siedzą Dziedzica wziął zł: dwadzieścia. Tenże takim sposobem
+zł: czterdzieście pięć. Tenże zł: dwadzieścia temuż konia wziął bez winy
+zł: pięćdziesiąt. Tenże jałowicę wykupując z grabieżu niewinnie zł: piętnaście.
+U tegoż mąkę niedobrze kobicze położyli krowy iego konie zjadły musiał
+zapłacić zł: piętnaście. Temuż prawo nadane od Dziedzica po prawie
+odpłacił zł: czterdzieście pięć. Temuż jałowicę wziął którą wykupując dał
+zł: sześć y ten tenże złotych dwanaście. Młynarz tamtejszy dał bez winy
+zł: trzynaście. Janko y Szymko Dołhi dali zł: sześćdziesiąt. Tenże Janko
+poznał swą siermięgę y zdjął się ze złodzieja za to zapłacił zł: szesnaście
+y gr: piętnaście a siermięga złodziejowi przysądził warta zł: sześć.
+Szymko y Janko s przyczyny że mur grozi może za te wziął parę wołów za
+nie zł: sześćdziesiąt. Wołonica Dołhego rożnymi czasy niewinnie zł: czterdzieście
+gr: piętnaście a u brata iego zł: trzy. Tyszko ze lasach sobie zrobił y siana
+zdar z niego zł: dwadzieścia siedm. Punacie urzędnikowi zł: cztery od rynych
+ze siana sobie robili po lasach zdar z nich zato złotych trzydzieście jeden
+gr: dwadzieścia trzy. Waszko Kioł jako by przeorał pole y dla tego wziął
+zł: trzynaście; tenże swe okupując pszczoły zł: siedmnaście y gr: piętnaście.
+Stańko Jarosz bezwinnie zł: dwanaście. Pszczoły zł: sześć; tenże gotowych
+zł: dwa. Iwan naprasny zł: sześć. Mousiey winnili zł: trzy. U Młynarza
+Tereszka pszczół dwoie zł: piętnaście od tegoż bezwinnie zł: trzydzieście.
+Taż gromada Niwicka policzyła sobie wybranych rzekomo żołnierzyчini
+podymszyzny y inszych składek które się do szkatuły Pana Borkowej dostało
+zł: trzy tysiąca.
+
+Wieś Zaleszany. Naprzód Jankiewicza Prokopa wójt sędzia podstarości na
+podwodę do Pińska któremu na błota kazał jachać gdzie woły potopił,
+kosztowały których pięćdziesiąt. Podstarościemu panu zapłacił a chłopu nic
+nie dostało. U tegoż Jankiewicza na swe wesele dał w ręce złotych dwadzieścia
+pięć. Tenże zasię z bąsiadem poswarzył pszczół zł: pięć gotowych zł: dziesięć
+owsu obrak dwoie zł: cztery. Oleksieia Jankiewicza dawszy mu przyczynę że
+ty mieszczanina nie pozywał zeidąc twego grochu garść urwał a to się działo
+pod czas trwogi musiał Jankiewicz zapłacić że nie pozywał zł: czterdzieście.
+U tegoż jałowicę za złotych dwadzieścia. Kalich Smolski dawszy mu przyczynę
+złodziejstwa którego się wywiodszy dał wołu y skin w dwoie zł: sześćdziesiąt.
+U Miszka chorego pszczoły zł: pięć. Tymko bezwinny złotych dwadzieścia dwa
+temuż zadawszy złodziejstwo którego nie miłosiernie pieczono ani się pokazało
+na niego przez co zdrowie straciwszy y chudoby na złotych pięćdziesiąt.
+Ławryn Siekierz wóyt Maczułki będąc wóytem przez wszystek czas Pana Borku
+dzierżenia że się chłop miał dobrze dał mu przyczynę że mi dwór spalił za co
+kilkanaście razy dym iego kazał rabować przez co sobie mało szkody kładzie
+na złotych pięćset dwadzieścia. U tejże wsi Zaleszaniach dawszy przyczynę
+podroszczyzny zdar z nich zł: ośmdziesiąt.
+Składek jako y drugie wsi żołnierzyчini podymszyzny.
+Cosa do niego szkatuły dostało zł: sześćset.
+
+Wieś Browki. Prokop Siemienowicz który puste pola розробив dał za to
+zł: dwadzieścia y dwa.
+
+Wieś Moczuliska. Kaluch Kononowicz zapłacił w różnymi czasy zł: sto
+siedmdziesiąt. U wieprza karmnego u Pana Borkowa się uprosił chłopskim
+uprosił zł: ośm. U tegoż barana u u zł: trzynaście. U Martina Borysowicza
+dwiie grzywny zabrał złotych szesnaście.
+
+Jako strona szlachta przy Jenerale będący Roman Jackowski Jenerał MP.
+Thomas Zalibursky MP. Ta Linskie ręką.
+
+1665 Regestr Szkód w Majętności Dąbrowickiej przez J.P. Borków uczynionych
+J.P. Firlejów Służący.
+Regestr szkód poddanych J.P. Borków z Roku 1665.</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="rj-col-header">
+                        <div class="rj-col-badge" style="background:var(--rust);">УКР</div>
+                        <div class="rj-col-title">Примітки до тексту</div>
+                    </div>
+                    <div class="rj-translation">
+                        <p><strong>«Острови» (ostrowy)</strong> — Борко самовільно ввів плату за «острови» (ділянки серед боліт або лісу) навіть для тих, хто взагалі не мав бортей. Гордій Келовер — «убогий, який не має бортів» — і той мусив платити.</p>
+                        <p><strong>«Шахрайство з худобою»</strong> — найбільш кричущий епізод. Громада зібрала 500 злотих, щоб Борко посередничав у викупі 30 голів худоби від солдатів. Борко не викупив нічого, гроші залишив собі, худоба пропала у солдатів.</p>
+                        <p><strong>«Підпалив мій двір»</strong> (Залішани, Лаврін Сєкєж) — вигадана провина. Через неї Борко кільканадцять разів грабував двір Сєкєжа. Збитки — 520 злотих. Сама вигадка — безплатно.</p>
+                        <p><strong>«Тимка катували вогнем»</strong> (Залішани) — немилосердно палили (піддавали тортурам вогнем), звинувативши в крадіжці. Нічого не довели, але він втратив здоров'я і 50 злотих майна.</p>
+                        <p><strong>Нивецьк: 3000 злотих</strong> — громада сама підрахувала. Для порівняння: Сумаріуш 1642 р. фіксував дохід усього маєтку (9 фільварків) у 11 586 злотих. З одного лише Нивецька Борко взяв чверть цієї суми.</p>
+                        <p><strong>«Привілей від Власника» (Матвій Янушко)</strong> — селянин мав письмовий дозвіл від Дідича (Фірлея), який звільняв його від певних повинностей. Борко ігнорував цей документ і стягував кілька разів.</p>
+                        <p><strong>«Сіряка» Янка Довгого</strong> — найбільш абсурдний епізод: Янко впізнав свою вкрадену сіряку на злодієві й забрав її назад. Борко оштрафував Янка на 16 злотих і присудив повернути сіряку... злодієві.</p>
+                        <p><strong>«На своє весілля взяв у руки 25 злотих»</strong> (Прокіп Янкевич) — Борко безсоромно брав гроші з підданих навіть на власне весілля. Це окремо вписано до реєстру як окрема стаття збитків.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- /panel-transcript -->
+
+    <!-- ══ PANEL: TRANSLATION ══ -->
+    <div class="rj-panel" id="panel-translation">
+        <div class="rj-eyebrow"><span>Повний переклад на сучасну українську мову</span></div>
+        <div class="rj-part-nav">
+            <button class="rj-part-btn active" data-part="tr1">I. Дубровиця · Початок</button>
+            <button class="rj-part-btn" data-part="tr2">II. Дубровиця · Скарги</button>
+            <button class="rj-part-btn" data-part="tr3">III. Велюнь · Біле · Позні · Бережці</button>
+            <button class="rj-part-btn" data-part="tr4">IV. Орв'яниця — Мочулища</button>
+        </div>
+
+        <!-- tr1 -->
+        <div class="rj-doc-part active" id="part-tr1">
+            <div class="rj-note">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                <div>
+                    <div class="rj-note-label">Частина I — Заголовок та місто Дубровиця (скани 1–2)</div>
+                    <p class="rj-note-text">Вступна частина реєстру: представлення сторін, виганяння орендаря Колайського, незаконне позбавлення посади війта Дрозда, збирання хабарів. Братів Заворовичів призначено на місце законного урядовця.</p>
+                </div>
+            </div>
+            <div class="rj-translation" style="max-width:820px;">
+                <p><strong>Реєстр збитків, вчинених у році тисяча шістсот шістдесят п'ятому їхмостями панами Борками у маєтку Дубровицькому</strong> вельможного його милості пана Миколая Анджея на Дабровиці Фірлея, старости Любельського, що розташований у воєводстві Берестейському, повіті Пінському — які при [участі] Генерала [возного] нижчепідписані засвідчили та верифікували під присягою.</p>
+                <p>По-перше: пана Колайського вигнавши з того маєтку через <strong>наїзд (асаду)</strong>, який на той час цим маєтком володів як орендар, забрали у нього силоміць, незважаючи на його протести, скрині повідкривавши — як у грошах, так і в рухомих речах: печатках (сигнетах), олові, міді, конях. Через що пан Борко залишився мені винен <strong>дванадцять тисяч золотих</strong>, які збитки його милість пан Староста тому [Колайському] готівкою мусив негайно (ex nunc) виплатити.</p>
+                <p>Місто Дубровиця: <strong>війта Дрозда</strong>, призначеного самим власником згідно з привілеєм на війтівство, скинув [Борко] і з війтівства вивіз, взявши його в тяжкі кайдани на ноги і руки. Цьому уряднику коштувало сто золотих; викуповуючись із в'язниці, він дав:</p>
+                <p>— підстарості: <strong>32 злотих</strong><br>
+                — за печатку: <strong>50 злотих</strong><br>
+                — господині пані Борковій (що сприяла звільненню): <strong>12 злотих</strong><br>
+                — пану Єльському старому «за заперечне»: <strong>3 злотих</strong><br>
+                — господині знову пояс: <strong>4 злотих</strong><br>
+                — самому пану Борку: <strong>5 злотих</strong></p>
+                <p>Також <strong>брати Заворовичі</strong>, призначені Борком замість Дрозда на війтівство, самі викуповувалися: видали пишний обід тому, що їхав дорогою — <strong>150 злотих</strong>; одного з них взято до в'язниці — викуп <strong>50 злотих</strong>.</p>
+                <p>Той самий Борко під час <strong>татарської тривоги</strong> втікача, що сховався в човні, захопив і, забравши всі рухомі речі, взяв готівкою <strong>250 злотих</strong>; у заставах за збитки — ще 30 злотих. Дружину, обох братів і матір взяв «у гості» насильно, а самого <strong>Кубайса побив</strong>, вільно стріляв по городах, токах, куренях.</p>
+                <p>Того ж, повернувшись вдруге, забрав коней; у слуги, побачивши солому в домі, силою розбив скрині, взяв готівкою <strong>7–8 злотих</strong>, ще <strong>24 злотих</strong> і всі купецькі товари забрав до замку.</p>
+            </div>
+        </div>
+
+        <!-- tr2 -->
+        <div class="rj-doc-part" id="part-tr2">
+            <div class="rj-note rj-warn-note">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                <div>
+                    <div class="rj-note-label">Частина II — Дубровиця · Численні здирства · Насильство над неповнолітніми</div>
+                    <p class="rj-note-text">Скани 2–4 (img0034–0036). Більш як 25 іменованих міщан пограбовані. Два єврейські купці. Духовенство. Покарання за лояльність до Фірлея. Засвідчення реєстру. Опис п'яти злочинів сексуального насильства.</p>
+                </div>
+            </div>
+            <div class="rj-translation" style="max-width:820px;">
+                <p>Щоб його визволити, дав <strong>4 злотих</strong>. Сабіну за шнурку — <strong>50 злотих</strong>; за шнурку маджелану (вид тканини) — 12 злотих. У Лешка забрав братового — 50 злотих; той же купував йому атласу на жупан, на шапку; за «послуги» мусив пану Борку ще заплатити <strong>130 злотих</strong> — безвинно. У Кубаки за позиченим способом впродовж року — <strong>50 злотих</strong>. У Васька Слюсаря взяв вепра за 10 злотих, готівкою 8 злотих; ще челядь побила 5 свиней — <strong>30 злотих</strong> збитків без вини. Количку безвинно двічі: 10 злотих і 7 злотих 15 грошів.</p>
+                <p>У Володкевича під приводом «одмерловщини» (податку на спадщину) коня за 55 злотих, готівкою 45 злотих, корову на забій — 6 злотих. Мальчигу — 38 злотих 15 грошів. Лешку Володкевичу — 20 злотих. Давелю різнику — м'яса на 7 злотих. Давиду Заворовичу — 20 злотих. Селевоновичу та Гайрі Симоновичу: вівці 5 злотих, готівкою 2 злотих 15 грошів.</p>
+                <p>Савці Сахіну в різний час безпідставно — <strong>110 злотих</strong> і ще 2 злотих 15 грошів. Анні Сровій, вдові, під приводом «долі» — 25 злотих. Іванкові Бахматовичу безвинно викликав до суду — <strong>10 злотих</strong>. Климу Шупиці коня за 60 злотих; ще 30 злотих «щоб не був війтом»; ялівку — 20 злотих.</p>
+                <p>Герману Малешкевичу коня за 120 злотих — збиток 122 злотих; хомут — 6, скриня — 6, три котли — 26 злотих. <strong>Остапу</strong>: ув'язнений без вини, нічого не довівши, виплатив <strong>200 злотих</strong> викупу. <strong>Ковтунь</strong>, судячись, заплатив 20 битих талерів = 140 злотих + вулик — 29 злотих. Давид Лея в різний час — <strong>105 злотих 15 грошів</strong>. Булатник Андрій під тиском — 17 злотих.</p>
+                <p>У Мозола взяв вола, звинувативши у злодійстві (той виправдався, але коштувало) — 30 злотих; ще троє овець — 9 злотих; хату єврею продав — 16 злотих. <strong>Смеха</strong>, єврей, без жодної причини — <strong>200 злотих</strong>. <strong>Фалько</strong>, єврей: штраф, призначений до скарбниці, Борко взяв собі — 20 злотих.</p>
+                <p>Уряду <strong>Давида Старого</strong> — штраф 125 злотих за те, що «даєш знати про пана Фірлея». Пунаті — 12 + 30 + 30 + 60 + 46 + 70 злотих під різними приводами (сварка, горілка, брага, дитина).</p>
+                <p style="padding:1rem;background:var(--rust-pale);border:1px solid var(--rust-border);border-radius:8px;margin-top:1rem;"><strong>Скарга громади:</strong> «З великим плачем і наріканням розповідають свої нестерпні кривди від пана Борка і готові присягнути». Загальна сума поборів з Дубровиці: <strong>4500 злотих</strong>. Подимне зібрав, але до скарбниці не вніс.</p>
+                <p style="margin-top:1rem;"><strong>Злочини сексуального насильства:</strong></p>
+                <p>1. <strong>Гаська Малавовна</strong> (11 р.) — наказав привести і зґвалтував; вона з плачем показала всьому місту закривавлену сорочку. <em>Борко залишився непокараним.</em><br>
+                2. Донька <strong>Івана Дубини</strong> (11 р.) — силоміць взяли до замку і зґвалтували. Борко сказав: <em>«Мені це вільно, як пану»</em>.<br>
+                3. <strong>Фраця, донька Малушка Тишкова</strong> — від насильства <strong>померла</strong>. «Гріх немалий, про який важко писати через сором самих місць».<br>
+                4. <strong>Хвеська Борисівна</strong> — там само.<br>
+                5. Дівчина з <strong>Орв'яниці</strong> — донька старого заможного чоловіка; зґвалтована в замку. Батьки мовчали через сором.</p>
+            </div>
+        </div>
+
+        <!-- tr3 -->
+        <div class="rj-doc-part" id="part-tr3">
+            <div class="rj-note">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+                <div>
+                    <div class="rj-note-label">Частина III — Велюнь · Біле · Позні · Людинь · Бережці (скани 5–6)</div>
+                    <p class="rj-note-text">Засвідчення реєстру (Яцковський, Залібурський, Лінський). Поселення за річкою Случ. Метод Борка однаковий скрізь: вигадані приводи (чарівниця, бобер, лось), фіктивні збори, арешти.</p>
+                </div>
+            </div>
+            <div class="rj-translation" style="max-width:820px;">
+                <p style="font-style:italic;opacity:.75;font-size:.78rem;">Засвідчили: Роман Яцковський, Генерал (возний), власноручно · Томаш Залібурський, власноручно · Лінський, власноручно. Зі згоди присутніх підписує Самуїл Шмурило.</p>
+                <div class="rj-village-head">Велюнь</div>
+                <p>У всіх відібрав собі <strong>60 овець</strong> по 5 злотих = 300 злотих. Наказав своїй економці (дворниці), щоб під приводом вовни, обвинувативши громаду, ті заплатили <strong>50 злотих</strong>. Ялівок — 30 злотих. Відгодований кабан — 12 злотих, 16 гусей — 36 злотих. Громада засвідчила: загальна сума поборів — близько <strong>2500 злотих</strong>.</p>
+                <p>— У Романовича (ловив рибу у своїх озерах — забрав сіті): <strong>26 + 40 + 15 злотих</strong><br>
+                — У Степана Олешкевича насильно: <strong>30 злотих</strong><br>
+                — Звинувачений у борті (яких не було): <strong>70 злотих</strong><br>
+                — Тишко Бахматович (нібито чужі бджоли): <strong>28 злотих</strong><br>
+                — Лешко Мельник (нібито переховує чарівницю): <strong>60 злотих</strong> + борошно<br>
+                — Гриць Олешкевич (нібито сестра чарівниця): <strong>40 злотих</strong><br>
+                — Петро Курилович насильно: <strong>70 злотих</strong></p>
+                <div class="rj-village-head">Біле</div>
+                <p>50 овець без жодної причини — <strong>250 злотих</strong>; фіктивний «старий податок» — <strong>100 злотих</strong>. Ховдор-Війт звинувачений у «шепотінні» — вола 20 злотих + 13 злотих без причини. Федір і Данило за того ж війта — 8 злотих. Павло Ходакович без причини — 16 злотих. Васько Лахович (за розмову в корчмі!) ув'язнений — <strong>30 злотих</strong>. Курил Федір — три борті бджіл: 6 злотих. Загальні збори з Білого: <strong>1100 злотих</strong>.</p>
+                <div class="rj-village-head">Позні</div>
+                <p>Костюк: 4 ялівки (<strong>100 злотих</strong>) + 4 барани (20 злотих) + готівкою «бо заможний» (<strong>200 злотих</strong>) + котел (40 злотих) + штраф що сховав котел (30 злотих) + за нібито «вбиту сарну» (10 злотих). Янко Позняк — вівцю 5 злотих.</p>
+                <div class="rj-village-head">Людинь (Lutynicze)</div>
+                <p>Щорічна складка за роки — <strong>500 злотих</strong>. Мелько Голох: за борть у <strong>власній сосні</strong> — 100 злотих; ще три борті — 30 злотих. Брат Голоха (теж борть у своїй сосні) — 12 злотих. Два кабани — 20 злотих; хотів їх викупити, дав 5 злотих — і кабани пропали.</p>
+                <div class="rj-village-head">Бережці (Bereźreczko)</div>
+                <p>Леховило без вини — 20 злотих товару + 50 злотих («нібито хотів продати бобра»). Іван Квасько без вини — <strong>200 злотих</strong>. Явор Янушевич («злапав бобра») — 50 злотих. Степан Квасько без вини — 7 злотих. Гордій Семенович без вини — 80 злотих. Вавром Гавеник без причини — 20+20 злотих. Рудник в різний час безвинно — <strong>379 злотих</strong> + залізо возами без оплати. Загальні збори з Бережців за ці роки: <strong>1000 злотих</strong>.</p>
+            </div>
+        </div>
+
+        <!-- tr4 -->
+        <div class="rj-doc-part" id="part-tr4">
+            <div class="rj-note">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                <div>
+                    <div class="rj-note-label">Частина IV — Орв'яниця · Стрільськ · Карпилівка · Нивецьк · Залішани · Бровки · Мочулища (скани 7–12)</div>
+                    <p class="rj-note-text">Завершальна частина реєстру. Найбільша сума — Нивецьк: 3000 злотих. Найцинічніша історія — Стрільськ: Борко взяв 500 злотих «на викуп худоби», нічого не зробив. «Худобна афера». Катування вогнем у Залішанах.</p>
+                </div>
+            </div>
+            <div class="rj-translation" style="max-width:820px;">
+                <div class="rj-village-head">Орв'яниця</div>
+                <p>Яхно Бухевич: два коні — <strong>90 злотих</strong>; у Януша взяв товар, не заплатив — 15 злотих. Кононович (нібито мав котли) — 40 злотих. Васько Волинець без причини — 10+20+2 злотих. Лазарович — 20 злотих + 3 вівці. Сидір Потороша безвинно — 46 злотих. Лазор Кобрин — 8+7 злотих. Пархом Мишкевич — 4 злотих. Микита Юрсович безвинно — 40 злотих. Загальна «жовнірщина»: <strong>1200 злотих</strong>. За ненадання 8 човнів власним коштом — ще <strong>300 злотих</strong>.</p>
+                <div class="rj-village-head">Стрільськ</div>
+                <p>Федір Мелешкевич: 80 злотих + 2 воли (60 злотих). Семен Боярчук «бо заможний» — <strong>150 злотих</strong>. Грицько Тарасович: 3 воли (100 злотих) + 30 злотих. Вдова Куренята: вола зарізали, ще 3 голови забрали, викуп — <strong>50+25 злотих</strong>. Тимох Нерода: 2 барани + вол + 5 злотих. Подимне: казав давати з 7 дворів як з 4-х; зібрав <strong>706 злотих</strong>, до скарбниці не вніс.</p>
+                <p style="padding:1rem;background:var(--rust-pale);border:1px solid var(--rust-border);border-radius:8px;"><strong>«Худобна афера»:</strong> Солдати забрали 30 голів худоби (450 злотих). Громада зібрала <strong>500 злотих</strong> і дала Борку — щоб він виступив посередником і викупив. Борко не викупив нічого, гроші залишив собі, нічого не давши солдатам. <em>Худоба пропала у солдатів, гроші — у нього.</em></p>
+                <div class="rj-village-head">Карпилівка</div>
+                <p>Василь Ходак, Війт — звинувачений у «фальшивій монеті» (чотири рази): <strong>90+20+20+5 злотих</strong>. Лук'ян — 10 злотих. Іван Магдич кілька разів — <strong>300 злотих</strong>. Васько Павлич — <strong>300 злотих</strong> («бо заможний»).</p>
+                <div class="rj-village-head">Кунцівці (Kunceycze)</div>
+                <p>Гаврило — <strong>300 злотих</strong> «ні за що». Василь Сило — <strong>300 злотих</strong> («бо заможний»). Демід — 30 злотих. Тарас Бачай — 20 злотих. Боян — 50 злотих. Денис — 50 злотих. Федір Бачай — 50+7 злотих 15 грошів.</p>
+                <div class="rj-village-head">Шахи</div>
+                <p>Стрільців Шахівських звинуватив у вбивстві лося (вигадка) — закував у кайдани. Викупилися: <strong>200+10+12+3 злотих</strong>. Яцько Мелещенич — 150 злотих. Мелешко — 30 злотих. Іван Блоич: не мав чим платити — взяли вола (25 злотих) і одяг (115 злотих). Мелешко Бондуркевич — 18+9 злотих. Григорій Дудка з братами — 25 злотих + 5 бортей бджіл (25 злотих). Микола з братом — 60 злотих.</p>
+                <div class="rj-village-head">Нивецьк (Niwicko)</div>
+                <p>Яків Петрулевич зі Степаном — 15+7 злотих 15 гр.+20 злотих. Павло та Лук'ян Юрки без причини — <strong>150 злотих</strong> + 4 борті + корова + 3 вівці. Кіян — 10 злотих. Васько Юркович («пустий ґрунт») — <strong>120 злотих</strong> + хата — 30 злотих. Матвій Янушко (мав <strong>привілей від Власника</strong>!) — 20+45+20+50+15+45 злотих — Борко ігнорував документ. <strong>Янко Довгий</strong> впізнав свою сіряку на злодієві й забрав — Борко оштрафував Янка на 16 злотих і <em>присудив сіряку злодієві</em>. Шимко і Янко Довгі («мур грозить») — пара волів (60 злотих). Волониця Довгого — 40 злотих 15 грошів. Мельник Терешко: 2 борті (15 злотих) + 30 злотих без вини. Мойсей — 3 злотих. Громада Нивецька підрахувала всі збори Борка: <strong>3000 злотих</strong>.</p>
+                <div class="rj-village-head">Залішани</div>
+                <p>Прокіп Янкевич, Війт: підводою через болота — волів утопив (50 злотих); <strong>на весілля Борка</strong> — 25 злотих; за сварку з сусідом — 5+10+4 злотих. Олексій Янкевич: за те, що не позивався коли хтось зірвав жменю гороху (!) — <strong>40 злотих</strong>. Каліх Смольський (виправдався від звинувачення!) — мусив дати вола + шкуру — 60 злотих. Тимко: катований вогнем за нібито крадіжку — нічого не довели; <strong>втратив здоров'я</strong> і 50 злотих майна. Лаврін Сєкєж, Війт: вигадка «спалив мій двір» → кільканадцять разів пограбований. Збитки — <strong>520 злотих</strong>. Загальні збори з Залішан: <strong>600 злотих</strong>.</p>
+                <div class="rj-village-head">Бровки · Мочулища</div>
+                <p><strong>Прокіп Семенович</strong> (Бровки) — розробив пусті поля, за це 22 злотих. <strong>Калюх Кононович</strong> (Мочулища) — в різний час <strong>170 злотих</strong> + вепр (8 злотих) + баран (13 злотих). <strong>Мартин Борисович</strong> (Мочулища) — 2 гривні = 16 злотих.</p>
+                <p style="margin-top:1.5rem;padding:1rem;background:var(--sepia-pale);border:1px solid var(--ruling);border-radius:8px;font-size:.78rem;font-style:italic;opacity:.8;">Засвідчили: Роман Яцковський, Генерал, власноручно · Томаш Залібурський, власноручно · Лінський, власноручно.<br>«1665 Реєстр збитків у маєтності Дубровицькій, вчинених Ясновельможним паном Борком. Службовець Ясновельможних панів Фірлеїв. Реєстр збитків підданих Я.П. Борка з року 1665.»</p>
+            </div>
+        </div>
+    </div><!-- /panel-translation -->
+
+    <!-- ══ PANEL: PEOPLE ══ -->
+    <div class="rj-panel" id="panel-people">
+        <div class="rj-eyebrow"><span>Особи, згадані у документі · 80+ імен · 1665 р.</span></div>
+        <div class="rj-note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+            <div>
+                <div class="rj-note-label">Генеалогічна цінність</div>
+                <p class="rj-note-text">Реєстр 1665 р. — унікальне першоджерело для генеалогії Дубровиччини. Прізвища <strong>Заворовичів, Бахматовичів, Олешкевичів, Позняків, Квасків, Довгих</strong> та десятків інших родин документально підтверджені ще в XVII ст. Багато з них можуть мати нащадків у сучасній Дубровиці та навколишніх селах.</p>
+            </div>
+        </div>
+        <div class="rj-people-search">
+            <input type="text" id="peopleSearch" placeholder="Пошук за іменем, прізвищем або селом..." oninput="filterPeople()">
+        </div>
+        <div class="rj-people-count" id="peopleCount"></div>
+        <div id="peopleContainer">
+
+        <!-- Власники та адміністрація -->
+        <div class="rj-people-section" data-section="admin">
+            <div class="rj-people-section-head">Власники та адміністрація <span class="rj-people-section-count">7</span></div>
+            <div class="rj-people-grid">
+                <div class="rj-person-card" data-village="адміністрація">
+                    <div class="rj-person-name">Миколай Анджей Фірлей</div>
+                    <div class="rj-person-orig">Mikołaj Andrzej Firlej</div>
+                    <div class="rj-person-role">Власник маєтку Дубровиця, <strong>Любельський Староста</strong>. Від його імені складено реєстр збитків проти Борків.</div>
+                    <span class="rj-person-tag">Власник</span>
+                </div>
+                <div class="rj-person-card" data-village="адміністрація">
+                    <div class="rj-person-name">Пан Борко / Борки</div>
+                    <div class="rj-person-orig">J.P. Borko / Borkowie</div>
+                    <div class="rj-person-role">Орендар або управитель маєтку. Фігурант справи. Документ у множині — «Borków», тобто <strong>кілька представників родини</strong>.</div>
+                    <span class="rj-person-tag">Фігурант</span>
+                </div>
+                <div class="rj-person-card" data-village="адміністрація">
+                    <div class="rj-person-name">Пан Колайський (Скольський)</div>
+                    <div class="rj-person-orig">Pan Kołayski / Skołayski</div>
+                    <div class="rj-person-role">Попередній орендар, якого Борко <strong>силоміць вигнав</strong> з маєтку. Збитки — 12 000 злотих.</div>
+                    <span class="rj-person-tag">Жертва · Дубровиця</span>
+                </div>
+                <div class="rj-person-card" data-village="адміністрація">
+                    <div class="rj-person-name">Дрозд</div>
+                    <div class="rj-person-orig">Drozd (Wójt)</div>
+                    <div class="rj-person-role">Законний <strong>Війт Дубровиці</strong>, призначений самим власником за привілеєм. Незаконно усунутий і закований у кайдани. Викуп — 232 злотих+.</div>
+                    <span class="rj-person-tag">Жертва · Дубровиця</span>
+                </div>
+                <div class="rj-person-card" data-village="адміністрація">
+                    <div class="rj-person-name">Пан Єльський Старий</div>
+                    <div class="rj-person-orig">Pan Jelski Stary</div>
+                    <div class="rj-person-role">Отримав 3 злотих від Дрозда за «заперечне» при звільненні. Можливо — <strong>місцевий шляхтич-посередник</strong>.</div>
+                    <span class="rj-person-tag">Дубровиця</span>
+                </div>
+                <div class="rj-person-card" data-village="адміністрація">
+                    <div class="rj-person-name">Фін</div>
+                    <div class="rj-person-orig">Fin</div>
+                    <div class="rj-person-role">Слуга Борка (?). Під час татарської тривоги Борко переправив пограбоване майно <strong>«під замок свого Фіна»</strong>.</div>
+                    <span class="rj-person-tag">Слуга Борка</span>
+                </div>
+                <div class="rj-person-card" data-village="адміністрація">
+                    <div class="rj-person-name">Пан Бедрицький</div>
+                    <div class="rj-person-orig">Pan Biedrzycki</div>
+                    <div class="rj-person-role">Шляхтич, згаданий у контексті поїздки до Вільна разом з Борком. Можливо — <strong>спільник або свідок</strong> одного з епізодів.</div>
+                    <span class="rj-person-tag">Шляхтич</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Засвідчувачі -->
+        <div class="rj-people-section" data-section="witnesses">
+            <div class="rj-people-section-head">Засвідчувачі документу <span class="rj-people-section-count">4</span></div>
+            <div class="rj-people-grid">
+                <div class="rj-person-card" data-village="засвідчення">
+                    <div class="rj-person-name">Роман Яцковський</div>
+                    <div class="rj-person-orig">Roman Jackowski, Jenerał MP</div>
+                    <div class="rj-person-role"><strong>Генерал (Возний)</strong> — судовий виконавець, який особисто фіксував факти збитків на місці. Підписав весь реєстр.</div>
+                    <span class="rj-person-tag">Возний · Свідок</span>
+                </div>
+                <div class="rj-person-card" data-village="засвідчення">
+                    <div class="rj-person-name">Томаш Залібурський</div>
+                    <div class="rj-person-orig">Thomas Zalibursky MP</div>
+                    <div class="rj-person-role"><strong>Шляхтич-свідок</strong> при Генералові. Власноручно підписав реєстр.</div>
+                    <span class="rj-person-tag">Свідок</span>
+                </div>
+                <div class="rj-person-card" data-village="засвідчення">
+                    <div class="rj-person-name">Лінський</div>
+                    <div class="rj-person-orig">Liński (Ta Lińskie ręką)</div>
+                    <div class="rj-person-role"><strong>Шляхтич-свідок</strong> при Генералові. Власноручно підписав реєстр.</div>
+                    <span class="rj-person-tag">Свідок</span>
+                </div>
+                <div class="rj-person-card" data-village="засвідчення">
+                    <div class="rj-person-name">Самуїл Шмурило</div>
+                    <div class="rj-person-orig">Samuel Szmuryło</div>
+                    <div class="rj-person-role">Підписав документ «зі згоди присутніх». Ймовірно — <strong>нотаріус або писар</strong> при Генералові.</div>
+                    <span class="rj-person-tag">Писар · Свідок</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Дубровиця міщани -->
+        <div class="rj-people-section" data-section="dubrovytsia">
+            <div class="rj-people-section-head">Місто Дубровиця — міщани <span class="rj-people-section-count">22</span></div>
+            <div class="rj-people-grid">
+                <div class="rj-person-card" data-village="дубровиця"><div class="rj-person-name">Заворовичі (брати)</div><div class="rj-person-orig">Bracia Zaworowicze</div><div class="rj-person-role">Призначені Борком <strong>замість Дрозда</strong> на війтівство; самі виплачували викуп.</div><span class="rj-person-tag">Дубровиця</span></div>
+                <div class="rj-person-card" data-village="дубровиця"><div class="rj-person-name">Давид Заворович</div><div class="rj-person-orig">Dawid Zaworowicz</div><div class="rj-person-role">Виплатив <strong>20 злотих</strong> без причини.</div><span class="rj-person-tag">Дубровиця</span></div>
+                <div class="rj-person-card" data-village="дубровиця"><div class="rj-person-name">Кубайс / Кубака</div><div class="rj-person-orig">Kubais / Kubaka</div><div class="rj-person-role">Побитий Борком; скрині розбиті. Борко «вільно стріляв по городах».</div><span class="rj-person-tag">Дубровиця</span></div>
+                <div class="rj-person-card" data-village="дубровиця"><div class="rj-person-name">Сабін</div><div class="rj-person-orig">Sabin</div><div class="rj-person-role">«Шнурку» — <strong>50 злотих</strong>.</div><span class="rj-person-tag">Дубровиця</span></div>
+                <div class="rj-person-card" data-village="дубровиця"><div class="rj-person-name">Васько Слюсар</div><div class="rj-person-orig">Waśko śluchar</div><div class="rj-person-role">Вепр за 10 злотих, готівкою 8 злотих; челядь побила <strong>5 свиней</strong> — 30 злотих.</div><span class="rj-person-tag">Дубровиця</span></div>
+                <div class="rj-person-card" data-village="дубровиця"><div class="rj-person-name">Количко</div><div class="rj-person-orig">Kolyczko</div><div class="rj-person-role">Без вини: <strong>10 злотих + 7 злотих 15 грошів</strong>.</div><span class="rj-person-tag">Дубровиця</span></div>
+                <div class="rj-person-card" data-village="дубровиця"><div class="rj-person-name">Володкевич</div><div class="rj-person-orig">Wołodkiewicz</div><div class="rj-person-role">«Одмерловщина» — кінь 55 злотих, готівкою 45 злотих, корова 6 злотих.</div><span class="rj-person-tag">Дубровиця</span></div>
+                <div class="rj-person-card" data-village="дубровиця"><div class="rj-person-name">Лешко Володкевич</div><div class="rj-person-orig">Leszko Wołodkiewicz</div><div class="rj-person-role"><strong>20 злотих</strong>.</div><span class="rj-person-tag">Дубровиця</span></div>
+                <div class="rj-person-card" data-village="дубровиця"><div class="rj-person-name">Давель Різник</div><div class="rj-person-orig">Dawel rzeźnik</div><div class="rj-person-role">М'яса на <strong>7 злотих</strong>.</div><span class="rj-person-tag">Дубровиця</span></div>
+                <div class="rj-person-card" data-village="дубровиця"><div class="rj-person-name">Савка Сахін</div><div class="rj-person-orig">Sawka Sakhin</div><div class="rj-person-role">В різний час без вини здирством — <strong>110 злотих + 2 злотих 15 грошів</strong>.</div><span class="rj-person-tag">Дубровиця</span></div>
+                <div class="rj-person-card" data-village="дубровиця"><div class="rj-person-name">Анна Срова (вдова)</div><div class="rj-person-orig">Anna Srowa (wdowa)</div><div class="rj-person-role">Під приводом «долі» — <strong>25 злотих</strong> без вини.</div><span class="rj-person-tag">Дубровиця</span></div>
+                <div class="rj-person-card" data-village="дубровиця"><div class="rj-person-name">Іванко Бахматович</div><div class="rj-person-orig">Iwanko Bachmatowicz</div><div class="rj-person-role">Безневинно викликаний до суду (запозваний) — <strong>10 злотих</strong>.</div><span class="rj-person-tag">Дубровиця</span></div>
+                <div class="rj-person-card" data-village="дубровиця"><div class="rj-person-name">Клим Шупика</div><div class="rj-person-orig">Klim Szupica</div><div class="rj-person-role">Кінь — 60 злотих; і ще 30 злотих «щоб не був війтом»; ялівка — 20 злотих.</div><span class="rj-person-tag">Дубровиця</span></div>
+                <div class="rj-person-card" data-village="дубровиця"><div class="rj-person-name">Микита Тимкевич</div><div class="rj-person-orig">Mikita Tymkiewicz</div><div class="rj-person-role">В різний час — <strong>64 злотих 15 грошів</strong> + жито 16 злотих + баран 3 злотих.</div><span class="rj-person-tag">Дубровиця</span></div>
+                <div class="rj-person-card" data-village="дубровиця"><div class="rj-person-name">Герман Малешкевич</div><div class="rj-person-orig">Herman Maleszkiewicz</div><div class="rj-person-role">Кінь — 122 злотих збитку, хомут — 6, скриня — 6, три котли — 26 злотих.</div><span class="rj-person-tag">Дубровиця</span></div>
+                <div class="rj-person-card" data-village="дубровиця"><div class="rj-person-name">Остап</div><div class="rj-person-orig">Ostap</div><div class="rj-person-role">Ув'язнений без вини; не довівши нічого, виплатив за викуп <strong>200 злотих</strong>.</div><span class="rj-person-tag">Дубровиця</span></div>
+                <div class="rj-person-card" data-village="дубровиця"><div class="rj-person-name">Ковтунь</div><div class="rj-person-orig">Coutuń</div><div class="rj-person-role">Судячись, заплатив 20 битих талерів = <strong>140 злотих</strong>. Вулик — ще 29 злотих.</div><span class="rj-person-tag">Дубровиця</span></div>
+                <div class="rj-person-card" data-village="дубровиця"><div class="rj-person-name">Тимко</div><div class="rj-person-orig">Tymko (Dubrovytsia)</div><div class="rj-person-role">За вигадане звинувачення у крадіжці <strong>катований вогнем</strong> — нічого не довели. Втратив здоров'я і 50 злотих майна.</div><span class="rj-person-tag">Жертва катувань · Дубровиця</span></div>
+                <div class="rj-person-card" data-village="дубровиця"><div class="rj-person-name">Давид Лея</div><div class="rj-person-orig">Dawid Leja</div><div class="rj-person-role">В різний час різні речі «продав без вини» — <strong>105 злотих 15 грошів</strong>.</div><span class="rj-person-tag">Дубровиця</span></div>
+                <div class="rj-person-card" data-village="дубровиця"><div class="rj-person-name">Смеха</div><div class="rj-person-orig">Smecha (żyd)</div><div class="rj-person-role">Єврей. Без жодної причини — <strong>200 злотих</strong>.</div><span class="rj-person-tag">Дубровиця</span></div>
+                <div class="rj-person-card" data-village="дубровиця"><div class="rj-person-name">Фалько</div><div class="rj-person-orig">Falko (żyd)</div><div class="rj-person-role">Єврей. Штраф, призначений до скарбниці, — Борко взяв <strong>20 злотих</strong> собі.</div><span class="rj-person-tag">Дубровиця</span></div>
+                <div class="rj-person-card" data-village="дубровиця"><div class="rj-person-name">Іван Дубина</div><div class="rj-person-orig">Iwan Dubyna</div><div class="rj-person-role">Міщанин Дубровиці. Його неповнолітня донька стала жертвою насильства з боку Борка.</div><span class="rj-person-tag">Батько жертви · Дубровиця</span></div>
+            </div>
+        </div>
+
+        <!-- Велюнь -->
+        <div class="rj-people-section" data-section="veliun">
+            <div class="rj-people-section-head">Велюнь <span class="rj-people-section-count">9</span></div>
+            <div class="rj-people-grid">
+                <div class="rj-person-card" data-village="велюнь"><div class="rj-person-name">Романович</div><div class="rj-person-orig">Romanowicz</div><div class="rj-person-role">Ловив рибу у власних озерах — Борко забрав сіті. <strong>40 злотих</strong>.</div><span class="rj-person-tag">Велюнь</span></div>
+                <div class="rj-person-card" data-village="велюнь"><div class="rj-person-name">Степан Олешкевич</div><div class="rj-person-orig">Stepan Oleszkiewicz</div><div class="rj-person-role">«Насильно» — <strong>30 злотих</strong>.</div><span class="rj-person-tag">Велюнь</span></div>
+                <div class="rj-person-card" data-village="велюнь"><div class="rj-person-name">Тишко Бахматович</div><div class="rj-person-orig">Tyszko Bachmatowicz</div><div class="rj-person-role">Звинувачений у привласненні чужих бджіл — штраф <strong>28 злотих</strong>.</div><span class="rj-person-tag">Велюнь</span></div>
+                <div class="rj-person-card" data-village="велюнь"><div class="rj-person-name">Лешко Мельник</div><div class="rj-person-orig">Leszko mielnik</div><div class="rj-person-role">Звинувачений в укриванні «чарівниці» — <strong>60 злотих</strong>.</div><span class="rj-person-tag">Велюнь</span></div>
+                <div class="rj-person-card" data-village="велюнь"><div class="rj-person-name">Бахмат</div><div class="rj-person-orig">Bachmat</div><div class="rj-person-role">«Тримає рибу для Старости» — <strong>10 злотих</strong>.</div><span class="rj-person-tag">Велюнь</span></div>
+                <div class="rj-person-card" data-village="велюнь"><div class="rj-person-name">Гриць Олешкевич</div><div class="rj-person-orig">Hryć Oleszkiewicz</div><div class="rj-person-role">«Сестра чарівниця» (вигадка) — відкуповуючись, дав <strong>40 злотих</strong>.</div><span class="rj-person-tag">Велюнь</span></div>
+                <div class="rj-person-card" data-village="велюнь"><div class="rj-person-name">Петро Курилович</div><div class="rj-person-orig">Piotr Kuryłowicz</div><div class="rj-person-role">«Насильно» — <strong>70 злотих</strong>.</div><span class="rj-person-tag">Велюнь</span></div>
+                <div class="rj-person-card" data-village="велюнь"><div class="rj-person-name">Васько</div><div class="rj-person-orig">Waszko (Wieluń)</div><div class="rj-person-role">Всього «насильних» зборів — <strong>88 злотих</strong>.</div><span class="rj-person-tag">Велюнь</span></div>
+                <div class="rj-person-card" data-village="велюнь"><div class="rj-person-name">Тишківці у Романовича</div><div class="rj-person-orig">Tyszewki u Romanowicza</div><div class="rj-person-role">Без причини — <strong>26 злотих</strong> та ячмінь — 15 злотих.</div><span class="rj-person-tag">Велюнь</span></div>
+            </div>
+        </div>
+
+        <!-- Біле -->
+        <div class="rj-people-section" data-section="bile">
+            <div class="rj-people-section-head">Біле <span class="rj-people-section-count">7</span></div>
+            <div class="rj-people-grid">
+                <div class="rj-person-card" data-village="біле"><div class="rj-person-name">Федір (Ховдор) Війт</div><div class="rj-person-orig">Chwedor (Wójt)</div><div class="rj-person-role">Звинувачений у «шепотінні» — вола за 20 злотих + ще 13 злотих без причини.</div><span class="rj-person-tag">Біле</span></div>
+                <div class="rj-person-card" data-village="біле"><div class="rj-person-name">Данило</div><div class="rj-person-orig">Daniło</div><div class="rj-person-role">Разом з Федором — <strong>8 злотих</strong> «за того ж війта».</div><span class="rj-person-tag">Біле</span></div>
+                <div class="rj-person-card" data-village="біле"><div class="rj-person-name">Павло Ходакович</div><div class="rj-person-orig">Paweł Chodakowicz</div><div class="rj-person-role">Без причини — <strong>16 злотих + баран 3 злотих</strong>.</div><span class="rj-person-tag">Біле</span></div>
+                <div class="rj-person-card" data-village="біле"><div class="rj-person-name">Васько Лахович</div><div class="rj-person-orig">Waszko Lachowicz</div><div class="rj-person-role">За щось сказане <strong>в корчмі</strong> — ув'язнений, поки не дав <strong>30 злотих</strong>.</div><span class="rj-person-tag">Біле</span></div>
+                <div class="rj-person-card" data-village="біле"><div class="rj-person-name">Яцько</div><div class="rj-person-orig">Jacko (Biała)</div><div class="rj-person-role">За наклепом людей — <strong>30 злотих</strong>.</div><span class="rj-person-tag">Біле</span></div>
+                <div class="rj-person-card" data-village="біле"><div class="rj-person-name">Курил Федір</div><div class="rj-person-orig">Kurył Chwedor</div><div class="rj-person-role">Три борті бджіл видрані — <strong>6 злотих</strong>.</div><span class="rj-person-tag">Біле</span></div>
+                <div class="rj-person-card" data-village="біле"><div class="rj-person-name">Лаврів</div><div class="rj-person-orig">Lanow/Lawrow</div><div class="rj-person-role">Взяв борошно — <strong>15 злотих</strong> + готівкою 15 злотих.</div><span class="rj-person-tag">Біле</span></div>
+            </div>
+        </div>
+
+        <!-- Інші села -->
+        <div class="rj-people-section" data-section="other">
+            <div class="rj-people-section-head">Позні · Людинь · Бережці · Орв'яниця <span class="rj-people-section-count">15</span></div>
+            <div class="rj-people-grid">
+                <div class="rj-person-card" data-village="позні"><div class="rj-person-name">Костюк</div><div class="rj-person-orig">Kostyuk</div><div class="rj-person-role">4 ялівки + 4 барани + <strong>200 злотих</strong> («бо заможний») + котел — 40 злотих.</div><span class="rj-person-tag">Позні</span></div>
+                <div class="rj-person-card" data-village="позні"><div class="rj-person-name">Янко Позняк</div><div class="rj-person-orig">Janko Pozniak</div><div class="rj-person-role">Вівцю — <strong>5 злотих</strong>.</div><span class="rj-person-tag">Позні</span></div>
+                <div class="rj-person-card" data-village="людинь"><div class="rj-person-name">Мелько Голох</div><div class="rj-person-orig">Melko Hołoch</div><div class="rj-person-role">За борть у <strong>власній сосні</strong> — 100 злотих + три борті — 30 злотих.</div><span class="rj-person-tag">Людинь</span></div>
+                <div class="rj-person-card" data-village="людинь"><div class="rj-person-name">Брат Голоха</div><div class="rj-person-orig">Brat Hołocha</div><div class="rj-person-role">Також за борть — <strong>12 злотих</strong> + два кабани (20 злотих).</div><span class="rj-person-tag">Людинь</span></div>
+                <div class="rj-person-card" data-village="бережці"><div class="rj-person-name">Іван Квасько</div><div class="rj-person-orig">Iwan Kwasek</div><div class="rj-person-role">Без вини — <strong>200 злотих</strong>.</div><span class="rj-person-tag">Бережці</span></div>
+                <div class="rj-person-card" data-village="бережці"><div class="rj-person-name">Гордій Семенович</div><div class="rj-person-orig">Hordiy Semenowicz</div><div class="rj-person-role">Без вини — <strong>80 злотих</strong>.</div><span class="rj-person-tag">Бережці</span></div>
+                <div class="rj-person-card" data-village="бережці"><div class="rj-person-name">Явор Янушевич</div><div class="rj-person-orig">Jawor Januszewicz</div><div class="rj-person-role">«Вбив бобра» (вигадка) — <strong>50 злотих</strong>.</div><span class="rj-person-tag">Бережці</span></div>
+                <div class="rj-person-card" data-village="бережці"><div class="rj-person-name">Рудник</div><div class="rj-person-orig">Rudnik</div><div class="rj-person-role">В різний час без вини — <strong>379 злотих</strong> + залізо возами.</div><span class="rj-person-tag">Бережці</span></div>
+                <div class="rj-person-card" data-village="бережці"><div class="rj-person-name">Степан Квасько</div><div class="rj-person-orig">Stepan Kwasek</div><div class="rj-person-role">Без вини — <strong>7 злотих</strong>.</div><span class="rj-person-tag">Бережці</span></div>
+                <div class="rj-person-card" data-village="орв'яниця"><div class="rj-person-name">Яхно Бухевич</div><div class="rj-person-orig">Jachno Buchiewicz</div><div class="rj-person-role">Два коні — 90 злотих; ще Янушу — 15 злотих.</div><span class="rj-person-tag">Орв'яниця</span></div>
+                <div class="rj-person-card" data-village="орв'яниця"><div class="rj-person-name">Кононович</div><div class="rj-person-orig">Kononowicz</div><div class="rj-person-role">Звинувачений у продажу котлів — <strong>40 злотих</strong>.</div><span class="rj-person-tag">Орв'яниця</span></div>
+                <div class="rj-person-card" data-village="орв'яниця"><div class="rj-person-name">Сидір Потороша</div><div class="rj-person-orig">Sidor Potorosza</div><div class="rj-person-role">Без вини — <strong>46 злотих</strong>.</div><span class="rj-person-tag">Орв'яниця</span></div>
+                <div class="rj-person-card" data-village="орв'яниця"><div class="rj-person-name">Пархом Мишкевич</div><div class="rj-person-orig">Parchom Miszkiewicz</div><div class="rj-person-role"><strong>4 злотих</strong>.</div><span class="rj-person-tag">Орв'яниця</span></div>
+                <div class="rj-person-card" data-village="орв'яниця"><div class="rj-person-name">Микита Юрсович</div><div class="rj-person-orig">Nikita Jursowicz</div><div class="rj-person-role">Без вини — <strong>40 злотих</strong>.</div><span class="rj-person-tag">Орв'яниця</span></div>
+                <div class="rj-person-card" data-village="орв'яниця"><div class="rj-person-name">Лазор Кобрин</div><div class="rj-person-orig">Łazor Kobryn</div><div class="rj-person-role"><strong>8 + 7 злотих</strong>.</div><span class="rj-person-tag">Орв'яниця</span></div>
+            </div>
+        </div>
+
+        <!-- Стрільськ / Карпилівка -->
+        <div class="rj-people-section" data-section="strilsk">
+            <div class="rj-people-section-head">Стрільськ · Карпилівка · Кунцівці · Шахи <span class="rj-people-section-count">18</span></div>
+            <div class="rj-people-grid">
+                <div class="rj-person-card" data-village="стрільськ"><div class="rj-person-name">Федір Мелешкевич</div><div class="rj-person-orig">Chwedor Meleszkiewicz</div><div class="rj-person-role">80 злотих + два воли — 60 злотих.</div><span class="rj-person-tag">Стрільськ</span></div>
+                <div class="rj-person-card" data-village="стрільськ"><div class="rj-person-name">Семен Боярчук</div><div class="rj-person-orig">Symon Bojarzyn</div><div class="rj-person-role">«Бо заможний» — <strong>150 злотих</strong>.</div><span class="rj-person-tag">Стрільськ</span></div>
+                <div class="rj-person-card" data-village="стрільськ"><div class="rj-person-name">Тимох Нерода</div><div class="rj-person-orig">Tymoch Nieroda</div><div class="rj-person-role">Два барани + вол (35 злотих) + 5 злотих за «острови».</div><span class="rj-person-tag">Стрільськ</span></div>
+                <div class="rj-person-card" data-village="стрільськ"><div class="rj-person-name">Грицько Тарасович</div><div class="rj-person-orig">Hryćko Tarasowicz</div><div class="rj-person-role">Три воли (100 злотих) + <strong>30 злотих</strong> готівкою без вини.</div><span class="rj-person-tag">Стрільськ</span></div>
+                <div class="rj-person-card" data-village="стрільськ"><div class="rj-person-name">Вдова Куренята</div><div class="rj-person-orig">Wdowa Kureniata</div><div class="rj-person-role">Вола зарізав + три худоби без причини. Збитки <strong>95 злотих</strong>.</div><span class="rj-person-tag">Стрільськ</span></div>
+                <div class="rj-person-card" data-village="стрільськ"><div class="rj-person-name">Кіндрат Ґудзь</div><div class="rj-person-orig">Kondrat Gudz</div><div class="rj-person-role"><strong>30 злотих + 3 барани</strong> (15 злотих).</div><span class="rj-person-tag">Стрільськ</span></div>
+                <div class="rj-person-card" data-village="карпилівка"><div class="rj-person-name">Василь Ходак (Війт)</div><div class="rj-person-orig">Wasil Chodak</div><div class="rj-person-role">Звинувачений у «фальшивій монеті» — чотири рази: <strong>90+20+20+5 злотих</strong>.</div><span class="rj-person-tag">Карпилівка</span></div>
+                <div class="rj-person-card" data-village="карпилівка"><div class="rj-person-name">Іван Магдич</div><div class="rj-person-orig">Iwan Magdycz</div><div class="rj-person-role">Кілька разів — загалом <strong>300 злотих</strong>.</div><span class="rj-person-tag">Карпилівка</span></div>
+                <div class="rj-person-card" data-village="карпилівка"><div class="rj-person-name">Васько Павлич</div><div class="rj-person-orig">Waszko Pawlicz</div><div class="rj-person-role"><strong>300 злотих</strong> («бо заможний»).</div><span class="rj-person-tag">Карпилівка</span></div>
+                <div class="rj-person-card" data-village="кунцівці"><div class="rj-person-name">Гаврило</div><div class="rj-person-orig">Hawryło</div><div class="rj-person-role">Без причини — <strong>300 злотих</strong>.</div><span class="rj-person-tag">Кунцівці</span></div>
+                <div class="rj-person-card" data-village="кунцівці"><div class="rj-person-name">Василь Сило</div><div class="rj-person-orig">Wasil Syło</div><div class="rj-person-role"><strong>300 злотих</strong> («бо заможний»).</div><span class="rj-person-tag">Кунцівці</span></div>
+                <div class="rj-person-card" data-village="кунцівці"><div class="rj-person-name">Тарас Бачай</div><div class="rj-person-orig">Jaras Baczay</div><div class="rj-person-role"><strong>20 злотих</strong>.</div><span class="rj-person-tag">Кунцівці</span></div>
+                <div class="rj-person-card" data-village="кунцівці"><div class="rj-person-name">Федір Бачай</div><div class="rj-person-orig">Chwedor Baczay</div><div class="rj-person-role"><strong>50 злотих + 7 злотих 15 гр.</strong> насильно.</div><span class="rj-person-tag">Кунцівці</span></div>
+                <div class="rj-person-card" data-village="шахи"><div class="rj-person-name">Стрільці Шахівські</div><div class="rj-person-orig">Strzelcy Szachowi</div><div class="rj-person-role">«Вбили лося» (вигадка) — закуті в кайдани, викуп <strong>200 злотих</strong> + 10 злотих.</div><span class="rj-person-tag">Шахи</span></div>
+                <div class="rj-person-card" data-village="шахи"><div class="rj-person-name">Яцько Мелещенич</div><div class="rj-person-orig">Jacko Meleszczenia</div><div class="rj-person-role">В різний час — <strong>150 злотих</strong>.</div><span class="rj-person-tag">Шахи</span></div>
+                <div class="rj-person-card" data-village="шахи"><div class="rj-person-name">Мелешко Бондуркевич</div><div class="rj-person-orig">Meleszko Bondurkiewicz</div><div class="rj-person-role"><strong>18 + 9 злотих</strong>.</div><span class="rj-person-tag">Шахи</span></div>
+                <div class="rj-person-card" data-village="шахи"><div class="rj-person-name">Григорій Дудка</div><div class="rj-person-orig">Hryć Dudka</div><div class="rj-person-role">З братами — <strong>25 злотих</strong> + 5 бортів бджіл (25 злотих).</div><span class="rj-person-tag">Шахи</span></div>
+                <div class="rj-person-card" data-village="шахи"><div class="rj-person-name">Микола з братом</div><div class="rj-person-orig">Mikołaj z bratem</div><div class="rj-person-role">Без вини — <strong>60 злотих</strong>.</div><span class="rj-person-tag">Шахи</span></div>
+            </div>
+        </div>
+
+        <!-- Нивецьк / Залішани -->
+        <div class="rj-people-section" data-section="nivetsk">
+            <div class="rj-people-section-head">Нивецьк · Залішани · Бровки · Мочулища <span class="rj-people-section-count">16</span></div>
+            <div class="rj-people-grid">
+                <div class="rj-person-card" data-village="нивецьк"><div class="rj-person-name">Яків Петрулевич</div><div class="rj-person-orig">Jakobo Pietrulewicz</div><div class="rj-person-role">Зі Степаном — за «ґрунти» в різний час — <strong>15+7 грошів+20 злотих</strong>.</div><span class="rj-person-tag">Нивецьк</span></div>
+                <div class="rj-person-card" data-village="нивецьк"><div class="rj-person-name">Павло та Лук'ян Юрки</div><div class="rj-person-orig">Pawło y Łukian Jurkowie</div><div class="rj-person-role">Без причини — <strong>150 злотих</strong> + 4 борті + корова + 3 вівці.</div><span class="rj-person-tag">Нивецьк</span></div>
+                <div class="rj-person-card" data-village="нивецьк"><div class="rj-person-name">Васько Юркович</div><div class="rj-person-orig">Waszko Jurkowicz</div><div class="rj-person-role">За «порожній ґрунт» — <strong>120 злотих</strong> + хата — 30 злотих.</div><span class="rj-person-tag">Нивецьк</span></div>
+                <div class="rj-person-card" data-village="нивецьк"><div class="rj-person-name">Матвій Янушко</div><div class="rj-person-orig">Matfiej Januszko</div><div class="rj-person-role">Мав <strong>привілей від Власника</strong> — Борко ігнорував. Взяв 20+45+20+50+15+45 злотих.</div><span class="rj-person-tag">Нивецьк</span></div>
+                <div class="rj-person-card" data-village="нивецьк"><div class="rj-person-name">Янко Довгий</div><div class="rj-person-orig">Janko Dołhi</div><div class="rj-person-role">Повернув свою вкрадену сіряку — Борко <strong>оштрафував його 16 злотих</strong> і наказав віддати сіряку злодієві.</div><span class="rj-person-tag">Нивецьк · Абсурд</span></div>
+                <div class="rj-person-card" data-village="нивецьк"><div class="rj-person-name">Шимко Довгий</div><div class="rj-person-orig">Szymko Dołhi</div><div class="rj-person-role">Разом з Янком — пара волів (60 злотих) за «загрозу муру».</div><span class="rj-person-tag">Нивецьк</span></div>
+                <div class="rj-person-card" data-village="нивецьк"><div class="rj-person-name">Волониця Довгого</div><div class="rj-person-orig">Wołonica Dołhego</div><div class="rj-person-role">В різний час без вини — <strong>40 злотих 15 грошів</strong> + брат — 3 злотих.</div><span class="rj-person-tag">Нивецьк</span></div>
+                <div class="rj-person-card" data-village="нивецьк"><div class="rj-person-name">Путята (урядник)</div><div class="rj-person-orig">Punacie (urządnik)</div><div class="rj-person-role">За сіно в лісах — <strong>31 злотий 23 гроші</strong>.</div><span class="rj-person-tag">Нивецьк</span></div>
+                <div class="rj-person-card" data-village="нивецьк"><div class="rj-person-name">Станько Ярош</div><div class="rj-person-orig">Stańko Jarosz</div><div class="rj-person-role">Без вини — <strong>12 злотих</strong>.</div><span class="rj-person-tag">Нивецьк</span></div>
+                <div class="rj-person-card" data-village="нивецьк"><div class="rj-person-name">Мельник Терешко</div><div class="rj-person-orig">Młynarz Tereszko</div><div class="rj-person-role">Дві борті — 15 злотих + без вини — <strong>30 злотих</strong>.</div><span class="rj-person-tag">Нивецьк</span></div>
+                <div class="rj-person-card" data-village="залішани"><div class="rj-person-name">Прокіп Янкевич (Війт)</div><div class="rj-person-orig">Prokop Jankiewicz</div><div class="rj-person-role">Підводою через болото — волів утопив (50 злотих). На весілля Борка — <strong>25 злотих</strong>.</div><span class="rj-person-tag">Залішани</span></div>
+                <div class="rj-person-card" data-village="залішани"><div class="rj-person-name">Олексій Янкевич</div><div class="rj-person-orig">Oleksieja Jankiewicz</div><div class="rj-person-role">За те, що «не позивався» коли перехожий горох зірвав — <strong>40 злотих</strong>.</div><span class="rj-person-tag">Залішани</span></div>
+                <div class="rj-person-card" data-village="залішани"><div class="rj-person-name">Каліх Смольський</div><div class="rj-person-orig">Kalich Smolski</div><div class="rj-person-role">Звинувачений у крадіжці — виправдався, але мусив дати вола і шкуру — <strong>60 злотих</strong>.</div><span class="rj-person-tag">Залішани</span></div>
+                <div class="rj-person-card" data-village="залішани"><div class="rj-person-name">Лаврін Сєкєж (Війт)</div><div class="rj-person-orig">Ławryn Siekierz</div><div class="rj-person-role">«Мав статки» → вигадка «спалив двір» → кільканадцять разів пограбований. Збитки — <strong>520 злотих</strong>.</div><span class="rj-person-tag">Залішани</span></div>
+                <div class="rj-person-card" data-village="бровки"><div class="rj-person-name">Прокіп Семенович</div><div class="rj-person-orig">Prokop Siemienowicz</div><div class="rj-person-role">Розробив пусті поля — за це <strong>22 злотих</strong>.</div><span class="rj-person-tag">Бровки</span></div>
+                <div class="rj-person-card" data-village="мочулища"><div class="rj-person-name">Калюх Кононович</div><div class="rj-person-orig">Kaluch Kononowicz</div><div class="rj-person-role">В різний час — <strong>170 злотих</strong> + відгодований вепр + баран (13 злотих).</div><span class="rj-person-tag">Мочулища</span></div>
+            </div>
+        </div>
+
+        </div><!-- /peopleContainer -->
+    </div><!-- /panel-people -->
+
+    <!-- ══ PANEL: GLOSSARY ══ -->
+    <div class="rj-panel" id="panel-glossary">
+        <div class="rj-eyebrow"><span>Юридична та господарська термінологія документу</span></div>
+        <div class="rj-gloss-grid">
+            <div class="rj-gloss-item"><div class="rj-gloss-term">Реєстр збитків</div><div class="rj-gloss-orig">Regestr Szkód</div><div class="rj-gloss-def">Юридичний перелік претензій (шкод), складений нотаріально за участю возного. Подавався до гродського суду як основа позову. Кожен пункт засвідчувався «під совість» (під присягою) кількома шляхтичами.</div></div>
+            <div class="rj-gloss-item"><div class="rj-gloss-term">Асада (наїзд)</div><div class="rj-gloss-orig">Asada / Najazd</div><div class="rj-gloss-def">Збройний напад шляхти на чужий маєток або двір. Попри юридичну заборону, в умовах слабкої державної влади часів Руїни (1650–1680) набув масового характеру. Вважався злочином, але реальне покарання було рідкістю.</div></div>
+            <div class="rj-gloss-item"><div class="rj-gloss-term">Возний Генерал</div><div class="rj-gloss-orig">Jenerał (Woźny generalny)</div><div class="rj-gloss-def">Судовий виконавець — найнижча, але ключова посада в судочинстві РП. Виїжджав «в поле», особисто фіксував факти злочинів, допитував свідків. Його засвідчення мало юридичну силу без додаткового підтвердження.</div></div>
+            <div class="rj-gloss-item"><div class="rj-gloss-term">Одмерловщина</div><div class="rj-gloss-orig">Odmarłowszczyzna</div><div class="rj-gloss-def">Старовинний податок, який платили пану після смерті селянина за право спадщини. Борко використовував його як легальний привід для фіктивних стягнень навіть тоді, коли ніхто не помер.</div></div>
+            <div class="rj-gloss-item"><div class="rj-gloss-term">Борть / Бортна земля</div><div class="rj-gloss-orig">Barć / Ziemia barczna</div><div class="rj-gloss-def">Лісове бджільництво: дупло в дереві, де живуть бджоли. За законами РП борті в панському лісі вважались власністю пана. Будь-яка борть — навіть зроблена у власній сосні — ставала підставою для штрафу. Борко активно цим користувався.</div></div>
+            <div class="rj-gloss-item"><div class="rj-gloss-term">Подимне</div><div class="rj-gloss-orig">Podymne</div><div class="rj-gloss-def">Державний податок з кожного будинку (диму/двору). Мав передаватися до державної скарбниці. Борко збирав подимне, але не передавав — присвоював різницю. Це вже державний злочин, що виходить за рамки простого здирства.</div></div>
+            <div class="rj-gloss-item"><div class="rj-gloss-term">Жовнірщина</div><div class="rj-gloss-orig">Żołnierzczyzna</div><div class="rj-gloss-def">Збір на утримання пройшовши або розквартированих солдатів. Борко збирав ці кошти з громад — іноді тисячами злотих — але передавав солдатам лише малу частину або не передавав нічого. Класичне шахрайство «посередника».</div></div>
+            <div class="rj-gloss-item"><div class="rj-gloss-term">Підрощина</div><div class="rj-gloss-orig">Podroszczyzna</div><div class="rj-gloss-def">Повинність або збір, пов'язані з «приростом» майна. Борко вигадував цей збір для сіл, де він ніколи не існував, щоб стягнути чергові гроші без юридичного підґрунтя.</div></div>
+            <div class="rj-gloss-item"><div class="rj-gloss-term">Биті талери</div><div class="rj-gloss-orig">Bite talary</div><div class="rj-gloss-def">Срібна монета високої якості (талер). Один талер = 7 злотих. «Биті» — тобто карбовані з доброго срібла, на відміну від «легкої» монети. Документ перераховує: 20 талерів = 140 злотих.</div></div>
+            <div class="rj-gloss-item"><div class="rj-gloss-term">Напрасний (naprasny)</div><div class="rj-gloss-orig">Naprasny / bezwinnie</div><div class="rj-gloss-def">«Безпідставно», «насильно», «без вини» — одне з найчастіших слів у документі. Укладачі постійно підкреслюють відсутність законної підстави для стягнень, щоб посилити юридичну силу скарги.</div></div>
+            <div class="rj-gloss-item"><div class="rj-gloss-term">Острів (ostrów)</div><div class="rj-gloss-orig">Ostróv / Ostrowy</div><div class="rj-gloss-def">У поліській традиції — підвищена ділянка серед боліт або виокремлена лісова ділянка. Борко самовільно ввів плату за «острови» навіть для тих, хто не мав ні бортей, ні лісу — просто ще один фіктивний збір.</div></div>
+            <div class="rj-gloss-item"><div class="rj-gloss-term">Фанти (застави)</div><div class="rj-gloss-orig">Fanty</div><div class="rj-gloss-def">Речі, взяті як застава за борг або конфісковані в рахунок фіктивного боргу. Борко брав «фанти», а потім вимагав гроші за їхнє повернення — незалежно від того, чи існував реальний борг.</div></div>
+        </div>
+    </div><!-- /panel-glossary -->
+
+    <!-- ══ PANEL: CONTEXT ══ -->
+    <div class="rj-panel" id="panel-context">
+        <div class="rj-eyebrow"><span>Історичний контекст та значення документу</span></div>
+
+        <!-- Borko connection card -->
+        <div class="rj-borko-card">
+            <div class="rj-borko-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+                Хто такий «пан Борко»? Зв'язок із документом 1650 року
+            </div>
+            <div class="rj-borko-text">
+                <p>Ім'я «Борко» або «Борек» у дубровицькому контексті з'являється двічі — у документах 1650 та 1665 років. Це не збіг.</p>
+                <div class="rj-timeline">
+                    <div class="rj-timeline-item">
+                        <div class="rj-timeline-dot filled"></div>
+                        <div class="rj-timeline-year">1642</div>
+                        <div class="rj-timeline-text"><strong>Марцин Борек Сендзівой</strong> (Marcin Borek Sędziwój), суддя Вінницький — живий власник маєтку Дубровиця. За його управління Дубровиця мала 11&thinsp;586 злотих річного доходу (Сумаріуш).</div>
+                    </div>
+                    <div class="rj-timeline-item">
+                        <div class="rj-timeline-dot filled"></div>
+                        <div class="rj-timeline-year">1650</div>
+                        <div class="rj-timeline-text"><strong>Марцин Борек</strong> вже мертвий. Маєток перейшов до його онука за материнською лінією — <strong>Стефана Четвертинського</strong>, підкоморія Луцького. Козацька Хмельниччина руйнує маєток (Скарга 1650).</div>
+                    </div>
+                    <div class="rj-timeline-item">
+                        <div class="rj-timeline-dot filled"></div>
+                        <div class="rj-timeline-year">~1655</div>
+                        <div class="rj-timeline-text">Маєток змінює власника: від Четвертинських переходить до роду <strong>Фірлеїв</strong>. Миколай Анджей Фірлей (Любельський Староста) стає новим паном Дубровиці — імовірно, через купівлю або шлюб.</div>
+                    </div>
+                    <div class="rj-timeline-item">
+                        <div class="rj-timeline-dot"></div>
+                        <div class="rj-timeline-year">1665</div>
+                        <div class="rj-timeline-text"><strong>«Пани Борки»</strong> (у множині) — орендарі або управителі Фірлея. Можливо, це нащадки або далекі родичі первісної родини Бореків, які <em>втратили право власності</em> на Дубровицький маєток, але осіли в регіоні як орендарі. Маєток, що колись належав їхньому роду, тепер перебуває у чужих руках — і вони беруть з нього все, що можуть.</div>
+                    </div>
+                </div>
+                <p>Ця версія пояснює особливу жорстокість і цинізм реєстру 1665 р.: <strong>Борки виводили прибуток з чужого маєтку як орендарі</strong>, не дбаючи про довготривале господарство, тоді як у Сумаріуші 1642 р. Марцин Борек власноруч розбудовував свій маєток. Якщо документ описує нащадків того самого роду — це трагічна ілюстрація того, як два покоління можуть змінити людину: від господаря до здирника.</p>
+            </div>
+        </div>
+
+        <div class="rj-context-grid">
+            <div class="rj-context-card rust">
+                <div class="rj-context-head">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14.5 10c-.83 0-1.5-.67-1.5-1.5v-5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5z"/><path d="M20.5 10H19V8.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/><path d="M9.5 14c.83 0 1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5S8 21.33 8 20.5v-5c0-.83.67-1.5 1.5-1.5z"/><path d="M3.5 14H5v1.5c0 .83-.67 1.5-1.5 1.5S2 16.33 2 15.5 2.67 14 3.5 14z"/><path d="M14 14.5c0-.83.67-1.5 1.5-1.5h5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5h-5c-.83 0-1.5-.67-1.5-1.5z"/><path d="M15.5 9H14v1.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5-.67-1.5-1.5-1.5z"/><path d="M10 9.5C10 8.67 9.33 8 8.5 8h-5C2.67 8 2 8.67 2 9.5S2.67 11 3.5 11h5c.83 0 1.5-.67 1.5-1.5z"/><path d="M8.5 15H10v-1.5c0-.83-.67-1.5-1.5-1.5S7 12.67 7 13.5s.67 1.5 1.5 1.5z"/></svg>
+                    Методи здирства: анатомія злочину
+                </div>
+                <div class="rj-context-body">
+                    Документ фіксує щонайменше <strong>8 типів злочинів</strong>:<br><br>
+                    <strong>1. Штраф «за заможність»</strong> — найчесніший Борко: «він багатий, треба взяти»;<br>
+                    <strong>2. Фіктивні звинувачення</strong> — чарівництво, лось, бобер;<br>
+                    <strong>3. Привласнення держподатків</strong> — подимне в кишеню;<br>
+                    <strong>4. Шахрайство з викупом</strong> — зібрав 500 злотих «на худобу», нічого не зробив;<br>
+                    <strong>5. Ув'язнення та тортури</strong> — катування вогнем Тимка;<br>
+                    <strong>6. Покарання за лояльність</strong> — 125 злотих за зв'язок з Фірлеєм;<br>
+                    <strong>7. Ігнорування привілеїв</strong> — Матвій Янушко мав письмовий дозвіл, Борко ігнорував;<br>
+                    <strong>8. Сексуальне насильство</strong> — задокументовано 5 жертв.
+                </div>
+            </div>
+
+            <div class="rj-context-card">
+                <div class="rj-context-head">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                    1665 рік: Дубровиця в епоху Руїни
+                </div>
+                <div class="rj-context-body">
+                    1665 рік — розпал <strong>«Руїни»</strong>: громадянської війни після смерті Богдана Хмельницького. Річ Посполита, Московія, Швеція, Крим і козацькі гетьмани ведуть виснажливі війни.<br><br>
+                    Для Дубровиччини це означало: <strong>постійні солдатські постої</strong>, татарські набіги (документ згадує «tatarskie trwogi» як звичне явище), слабку державну владу. В таких умовах орендар-здирник міг безкарно діяти роками — держава була зайнята виживанням.
+                </div>
+            </div>
+
+            <div class="rj-context-card">
+                <div class="rj-context-head">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    Ціни 1665 року: економічний зріз
+                </div>
+                <div class="rj-context-body">
+                    Реєстр — унікальне джерело цін на Поліссі середини XVII ст.:<br><br>
+                    🐎 <strong>Кінь</strong> — 50–120 злотих<br>
+                    🐄 <strong>Віл</strong> — 20–30 злотих<br>
+                    🐄 <strong>Корова</strong> — 6–15 злотих<br>
+                    🐑 <strong>Вівця</strong> — 3–5 злотих<br>
+                    🐝 <strong>Борть бджіл</strong> — 5 злотих<br>
+                    🏠 <strong>Хата</strong> — 30 злотих<br>
+                    🥃 <strong>Горілка (партія)</strong> — 18–20 злотих<br><br>
+                    Для контексту: місячне утримання дрібного шляхтича становило ~30 злотих. Стягнути 300 злотих із одного селянина — це відібрати <strong>10 коней або 15 корів</strong>.
+                </div>
+            </div>
+
+            <div class="rj-context-card">
+                <div class="rj-context-head">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                    Правосуддя та значення документу
+                </div>
+                <div class="rj-context-body">
+                    Реєстр складений <strong>від імені Фірлея</strong> (нового власника) для подання до гродського суду у Пінську. Залучення возного Яцковського та трьох шляхтичів-свідків свідчить про серйозні юридичні наміри.<br><br>
+                    Парадокс: навіть посеред хаосу Руїни <strong>юридична машина РП продовжувала працювати</strong>. Люди збирали докази, засвідчували злочини, зверталися до суду. Це свідчення того, що і жертви мали правову свідомість — і надію на справедливість.
+                </div>
+            </div>
+        </div>
+
+        <!-- Crime summary stats -->
+        <div class="rj-eyebrow" style="margin-top:1rem;"><span>Масштаб злочинів · зведені дані</span></div>
+        <div class="rj-crime-grid">
+            <div class="rj-crime-card" style="background:var(--rust-pale);border-color:var(--rust-border);">
+                <div class="rj-crime-num" style="color:var(--rust);">~30 000</div>
+                <div class="rj-crime-label" style="color:var(--sepia);">Злотих<br>загальних збитків</div>
+            </div>
+            <div class="rj-crime-card" style="background:rgba(201,162,39,.06);border-color:rgba(201,162,39,.2);">
+                <div class="rj-crime-num" style="color:#c9a227;">14+</div>
+                <div class="rj-crime-label" style="color:var(--sepia);">Населених пунктів<br>постраждали</div>
+            </div>
+            <div class="rj-crime-card" style="background:rgba(90,128,64,.06);border-color:rgba(90,128,64,.2);">
+                <div class="rj-crime-num" style="color:#5a8040;">80+</div>
+                <div class="rj-crime-label" style="color:var(--sepia);">Іменованих<br>постраждалих</div>
+            </div>
+            <div class="rj-crime-card" style="background:var(--rust-pale);border-color:var(--rust-border);">
+                <div class="rj-crime-num" style="color:var(--rust);">5</div>
+                <div class="rj-crime-label" style="color:var(--sepia);">Задокументованих<br>жертв насильства</div>
+            </div>
+        </div>
+
+        <div class="rj-note" style="margin-top:1rem;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <div>
+                <div class="rj-note-label">Реєстр збитків у порівнянні з іншими документами</div>
+                <p class="rj-note-text">
+                    У <strong>Сумаріуші 1642 р.</strong> Дубровиця мала річний дохід 11 586 злотих і 20 озер. У <strong>Скарзі 1650 р.</strong> — 120+ порожніх господарств після Хмельниччини. У <strong>Реєстрі 1665 р.</strong> — лише з Нивецька витягнуто 3000 злотих, з Дубровиці — 4500. За 23 роки між 1642 та 1665 рр. маєток пережив повстання, польсько-московську війну, татарські напади і, нарешті, свавілля орендаря. Три документи разом складають трагічну трилогію Дубровиці XVII ст.
+                </p>
+            </div>
+        </div>
+    </div><!-- /panel-context -->
+
+</div><!-- /rj-body -->
+
+<!-- Lightbox -->
+<div id="RJLB">
+    <button id="RJLB-CLOSE" onclick="rjCloseLB()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <button id="RJLB-NAV-L" onclick="rjNavLB(-1)">&#8249;</button>
+    <button id="RJLB-NAV-R" onclick="rjNavLB(1)">&#8250;</button>
+    <div id="RJLB-VP"><img id="RJLB-IMG" src="" alt="" draggable="false"></div>
+    <div id="RJLB-BAR"><span id="RJLB-CAP"></span><span id="RJLB-IDX"></span></div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4 class="footer-title">Дубровиця</h4>
+                <p class="footer-text">Цифровий архів історичної спадщини міста Дубровиця, Рівненська область, Україна.</p>
+            </div>
+            <div class="footer-section">
+                <h4 class="footer-title">Навігація</h4>
+                <nav class="footer-nav">
+                    <a href="history.html">Історія</a>
+                    <a href="photo-archive.html">Фотоархів</a>
+                    <a href="metrychni-knyhy.html">Метричні книги</a>
+                    <a href="books.html">Книги</a>
+                </nav>
+            </div>
+            <div class="footer-section">
+                <h4 class="footer-title">Контакти</h4>
+                <p class="footer-text">Маєте матеріали?<br><a href="contacts.html" class="footer-link">Зв'яжіться з нами</a></p>
+            </div>
+        </div>
+        <div class="footer-copyright-row">
+            <div class="footer-copyright-ornament"><div class="footer-copyright-ornament-line"></div><div class="footer-copyright-ornament-diamond"></div><div class="footer-copyright-ornament-line"></div></div>
+            <p class="footer-copyright-main">&copy; 2026 <a href="https://dubrovytsia.site">dubrovytsia.site</a> — Цифровий архів Дубровиці, Рівненська область, Україна.</p>
+            <p class="footer-copyright-notice">Документи розміщено виключно в освітніх та науково-дослідних цілях. При цитуванні — обов'язкове активне посилання на <em>dubrovytsia.site</em>.</p>
+        </div>
+    </div>
+</footer>
+
+<script src="app.js"></script>
+<script>
+/* ── Tabs ── */
+document.querySelectorAll('.rj-tab').forEach(function(btn){
+    btn.addEventListener('click', function(){
+        var panel = this.getAttribute('data-panel');
+        document.querySelectorAll('.rj-tab').forEach(function(b){ b.classList.remove('active'); });
+        document.querySelectorAll('.rj-panel').forEach(function(p){ p.classList.remove('active'); });
+        this.classList.add('active');
+        document.getElementById('panel-'+panel).classList.add('active');
+    });
+});
+
+/* ── Part nav ── */
+document.querySelectorAll('.rj-part-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+        var part = this.getAttribute('data-part');
+        var parent = this.closest('.rj-panel');
+        parent.querySelectorAll('.rj-part-btn').forEach(function(b){ b.classList.remove('active'); });
+        parent.querySelectorAll('.rj-doc-part').forEach(function(p){ p.classList.remove('active'); });
+        this.classList.add('active');
+        parent.querySelector('#part-'+part).classList.add('active');
+    });
+});
+
+/* ── People search ── */
+function filterPeople(){
+    var q = document.getElementById('peopleSearch').value.toLowerCase().trim();
+    var cards = document.querySelectorAll('.rj-person-card');
+    var visible = 0;
+    cards.forEach(function(c){
+        var text = c.textContent.toLowerCase();
+        var show = !q || text.indexOf(q) > -1;
+        c.style.display = show ? '' : 'none';
+        if(show) visible++;
+    });
+    document.querySelectorAll('.rj-people-section').forEach(function(s){
+        var any = Array.from(s.querySelectorAll('.rj-person-card')).some(function(c){ return c.style.display !== 'none'; });
+        s.style.display = any ? '' : 'none';
+    });
+    var count = document.getElementById('peopleCount');
+    count.textContent = q ? 'Знайдено: ' + visible + ' осіб' : '';
+}
+
+/* ── Lightbox ── */
+var RJ_SCANS = [
+    {src:'https://i.imgur.com/bd6XSvs.jpeg', cap:'01 · Титульна сторінка · 1665'},
+    {src:'https://i.imgur.com/11VFVIl.jpeg', cap:'02 · Початок реєстру'},
+    {src:'https://i.imgur.com/Uv34tGp.jpeg', cap:'03 · Місто Дубровиця'},
+    {src:'https://i.imgur.com/vjHOTJH.jpeg', cap:'04 · Дубровиця продовження'},
+    {src:'https://i.imgur.com/znmHFUp.jpeg', cap:'05 · Замок · Орв\'яниця'},
+    {src:'https://i.imgur.com/cWwdB8g.jpeg', cap:'06 · Велюнь · Біле'},
+    {src:'https://i.imgur.com/jY5W0m3.jpeg', cap:'07 · Позні · Людинь · Бережці'},
+    {src:'https://i.imgur.com/ykCvCHr.jpeg', cap:'08 · Орв\'яниця · Стрільськ'},
+    {src:'https://i.imgur.com/cgVZT81.jpeg', cap:'09 · Карпилівка · Кунцівці · Шахи'},
+    {src:'https://i.imgur.com/HZ0UgQ4.jpeg', cap:'10 · Нивецьк'},
+    {src:'https://i.imgur.com/b9pfwpf.jpeg', cap:'11 · Залішани · Бровки'},
+    {src:'https://i.imgur.com/DrYaDDP.jpeg', cap:'12 · Мочулища · Підписи · Титул'}
+];
+var rjIdx=0, rjOpen=false;
+function rjOpenLB(i){
+    rjIdx=i;
+    var lb=document.getElementById('RJLB');
+    document.getElementById('RJLB-IMG').src=RJ_SCANS[i].src;
+    document.getElementById('RJLB-CAP').textContent=RJ_SCANS[i].cap;
+    document.getElementById('RJLB-IDX').textContent=(i+1)+' / '+RJ_SCANS.length;
+    lb.classList.add('open'); document.body.style.overflow='hidden'; rjOpen=true;
+}
+function rjCloseLB(){ document.getElementById('RJLB').classList.remove('open'); document.body.style.overflow=''; rjOpen=false; }
+function rjNavLB(dir){ rjIdx=(rjIdx+dir+RJ_SCANS.length)%RJ_SCANS.length; rjOpenLB(rjIdx); }
+document.addEventListener('keydown',function(e){ if(!rjOpen)return; if(e.key==='Escape')rjCloseLB(); if(e.key==='ArrowLeft')rjNavLB(-1); if(e.key==='ArrowRight')rjNavLB(1); });
+document.getElementById('RJLB').addEventListener('click',function(e){ if(e.target===this)rjCloseLB(); });
+</script>
+</body>
+</html>
