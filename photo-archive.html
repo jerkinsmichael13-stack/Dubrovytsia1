@@ -1480,7 +1480,9 @@ function loadGhPhotos() {
       ALL_PHOTOS.forEach(function(p){ if(p.imageUrl) existing[p.imageUrl] = true; });
       var newOnes = ghPhotos.filter(function(p){ return p.imageUrl && !existing[p.imageUrl]; });
       if (!newOnes.length) return;
-      ALL_PHOTOS = newOnes.concat(ALL_PHOTOS);
+      var trapPhotos = ALL_PHOTOS.filter(function(p){ return p.trap; });
+      var nonTrapPhotos = ALL_PHOTOS.filter(function(p){ return !p.trap; });
+      ALL_PHOTOS = trapPhotos.concat(newOnes).concat(nonTrapPhotos);
       updateCounts();
       applyFilters(true);
     })
@@ -1577,6 +1579,8 @@ function applyFilters(reset){
   filtered=ALL_PHOTOS.filter(function(p){
     return (activeCat==='all'||p.category===activeCat)&&(activePeriod==='all'||p.period===activePeriod);
   });
+  /* Trap photos always first */
+  filtered.sort(function(a,b){ return (b.trap?1:0)-(a.trap?1:0); });
   renderHead(); renderGrid(); renderPagination();
 }
 
