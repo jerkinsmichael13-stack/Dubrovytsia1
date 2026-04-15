@@ -1114,11 +1114,7 @@ a, button, [role="button"], input, select, textarea,
     <div id="ULB-DL-WRAP">
       <button class="ulb-dl-btn" id="ULB-DL-ORIG" onclick="DL.fromLightbox('original')" aria-label="Завантажити оригінал" title="Оригінальна якість з вотермаркою">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        <span>Оригінал</span>
-      </button>
-      <button class="ulb-dl-btn" id="ULB-DL-COMP" onclick="DL.fromLightbox('compressed')" aria-label="Завантажити стиснене" title="Знижена якість з вотермаркою">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h8M12 8v8"/></svg>
-        <span class="ulb-dl-quality">Стиснене</span>
+        <span>Завантажити фото</span>
       </button>
     </div>
   </div>
@@ -1287,12 +1283,7 @@ function toggleMenu(evt, url, title) {
     '<div class="photo-dl-menu-head">Завантажити з вотермаркою</div>'
     + '<button class="photo-dl-option" type="button" onclick="DL.fromCard(\'original\')">'
     +   '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>'
-    +   '<span class="photo-dl-option-label"><span>Оригінальна якість</span><span class="photo-dl-option-sub">Повна роздільна здатність · JPEG</span></span>'
-    + '</button>'
-    + '<div class="photo-dl-sep"></div>'
-    + '<button class="photo-dl-option" type="button" onclick="DL.fromCard(\'compressed\')">'
-    +   '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>'
-    +   '<span class="photo-dl-option-label"><span>Веб-якість</span><span class="photo-dl-option-sub">До ' + COMP_MAX_W + 'px · легший файл</span></span>'
+    +   '<span class="photo-dl-option-label"><span>Завантажити фото</span><span class="photo-dl-option-sub">Оригінальна якість · JPEG · з вотермаркою</span></span>'
     + '</button>';
 
   /* Position fixed below/above the trigger button */
@@ -1824,6 +1815,165 @@ g.ULB={open:open,close:close,nav:nav,
   zoomOut:function(){zoomAt(1/1.3,innerWidth/2,innerHeight/2,true);},
   reset:function(){reset(true);}
 };
+})(window);
+</script>
+
+<!-- ══════════════════════════════════════════════════════
+     FAIR-USE TOAST — shows on PrintScreen + on download
+     ══════════════════════════════════════════════════════ -->
+<style>
+#fu-toast {
+    position: fixed;
+    bottom: -120px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 999999;
+    min-width: 320px;
+    max-width: min(600px, 92vw);
+    background: rgba(8,5,2,0.97);
+    border: 1px solid rgba(201,162,39,0.55);
+    border-radius: 12px;
+    box-shadow: 0 12px 48px rgba(0,0,0,0.65), 0 0 0 1px rgba(201,162,39,0.08);
+    padding: 0;
+    overflow: hidden;
+    transition: bottom 0.42s cubic-bezier(0.16,1,0.3,1), opacity 0.42s ease;
+    opacity: 0;
+    pointer-events: none;
+}
+#fu-toast.show {
+    bottom: 24px;
+    opacity: 1;
+    pointer-events: auto;
+}
+#fu-toast-bar {
+    height: 3px;
+    background: linear-gradient(90deg, #c9a227, rgba(201,162,39,0.2));
+    width: 100%;
+}
+#fu-toast-body {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    padding: 0.95rem 1.1rem 1rem;
+}
+#fu-toast-icon {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: rgba(201,162,39,0.12);
+    border: 1px solid rgba(201,162,39,0.28);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+}
+#fu-toast-icon svg { width: 16px; height: 16px; color: #c9a227; }
+#fu-toast-text { flex: 1; }
+#fu-toast-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: #c9a227;
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+}
+#fu-toast-msg {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 0.88rem;
+    font-style: italic;
+    color: rgba(255,255,255,0.72);
+    line-height: 1.55;
+}
+#fu-toast-msg a {
+    color: #c9a227;
+    text-decoration: none;
+    font-style: normal;
+    font-weight: 600;
+}
+#fu-toast-msg a:hover { text-decoration: underline; }
+#fu-toast-close {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: none;
+    color: rgba(255,255,255,0.35);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border-radius: 6px;
+    transition: color 0.15s, background 0.15s;
+    margin-top: 1px;
+    font-size: 1rem;
+    line-height: 1;
+}
+#fu-toast-close:hover { color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.08); }
+@media (max-width: 480px) {
+    #fu-toast { min-width: 0; }
+    #fu-toast-msg { font-size: 0.82rem; }
+}
+</style>
+
+<div id="fu-toast">
+  <div id="fu-toast-bar"></div>
+  <div id="fu-toast-body">
+    <div id="fu-toast-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+        <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><circle cx="12" cy="16" r="0.5" fill="currentColor"/>
+      </svg>
+    </div>
+    <div id="fu-toast-text">
+      <div id="fu-toast-title">Добросовісне використання</div>
+      <div id="fu-toast-msg">Матеріали сайту зібрані з любові до міста. При використанні будь-якого фото — будь ласка, додайте посилання на <a href="https://dubrovytsia.site" target="_blank">dubrovytsia.site</a>. Дякуємо!</div>
+    </div>
+    <button id="fu-toast-close" onclick="FU.hide()" aria-label="Закрити">&#x2715;</button>
+  </div>
+</div>
+
+<script>
+(function(w){
+'use strict';
+var toast    = document.getElementById('fu-toast');
+var hideTimer = null;
+
+function show() {
+    if(!toast) return;
+    clearTimeout(hideTimer);
+    toast.classList.add('show');
+    hideTimer = setTimeout(hide, 7000);
+}
+function hide() {
+    if(!toast) return;
+    toast.classList.remove('show');
+    clearTimeout(hideTimer);
+}
+
+/* ── PrintScreen / screenshot keys ── */
+document.addEventListener('keyup', function(e) {
+    var k = e.key || '';
+    /* PrintScreen, Ctrl+Shift+S (some tools), Meta+Shift+4 (macOS — not catchable, but try) */
+    if(k === 'PrintScreen' || k === 'Print' || (e.ctrlKey && e.shiftKey && k === 'S')) {
+        show();
+    }
+}, true);
+
+/* ── Patch DL.fromCard and DL.fromLightbox to show toast on download ── */
+document.addEventListener('DOMContentLoaded', function() {
+    var origFromCard     = w.DL && w.DL.fromCard;
+    var origFromLightbox = w.DL && w.DL.fromLightbox;
+    if(origFromCard) {
+        w.DL.fromCard = function(q) { show(); origFromCard(q); };
+    }
+    if(origFromLightbox) {
+        w.DL.fromLightbox = function(q) { show(); origFromLightbox(q); };
+    }
+});
+
+w.FU = { show: show, hide: hide };
 })(window);
 </script>
 
