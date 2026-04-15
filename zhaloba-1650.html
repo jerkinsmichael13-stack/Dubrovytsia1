@@ -1,0 +1,1544 @@
+<!DOCTYPE html>
+<html lang="uk" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="manifest" href="site.webmanifest">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Жалоба слуги графа Четвертинського про спустошення Дубровицького маєтку козаками та жовнірами 1650 р.">
+    <title>Жалоба 1650 — Дубровиця · Цифровий архів</title>
+    <script>!function(){var t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t)}()</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="app.css">
+
+<style>
+/* ══════════════════════════════════════════════════════
+   ЖАЛОБА 1650 — WAR DOCUMENT AESTHETIC
+   ══════════════════════════════════════════════════════ */
+
+:root {
+    --parchment:      #f5eed8;
+    --parchment-dark: #ede3c4;
+    --ink:            #1c160a;
+    --ink-faded:      #3d3420;
+    --sepia:          #8b6f3e;
+    --sepia-light:    #c9a553;
+    --sepia-pale:     rgba(139,111,62,.12);
+    --ruling:         rgba(139,111,62,.18);
+    --blood:          #8b2020;
+    --blood-light:    rgba(139,32,32,.12);
+}
+[data-theme="dark"] {
+    --parchment:      #130f07;
+    --parchment-dark: #1a1408;
+    --ink:            #e8dbb5;
+    --ink-faded:      #b8a880;
+    --sepia:          #c9a553;
+    --sepia-light:    #e5c87a;
+    --sepia-pale:     rgba(201,165,83,.08);
+    --ruling:         rgba(201,165,83,.12);
+    --blood:          #c04040;
+    --blood-light:    rgba(192,64,64,.1);
+}
+
+.zh-page { background: var(--parchment); min-height: 100vh; }
+
+/* ── Hero ── */
+.zh-hero {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(160deg, #120a0a 0%, #1e1008 50%, #1a0d0d 100%);
+    padding: 7rem 2rem 5rem;
+    text-align: center;
+    color: white;
+}
+.zh-hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+        radial-gradient(ellipse 60% 40% at 50% 55%, rgba(139,32,32,.18) 0%, transparent 70%),
+        repeating-linear-gradient(0deg, transparent 0, transparent 34px, rgba(201,162,39,.025) 34px, rgba(201,162,39,.025) 35px);
+    pointer-events: none;
+}
+.zh-hero-grain {
+    position: absolute; inset: -80px;
+    width: calc(100% + 160px); height: calc(100% + 160px);
+    opacity: .055; pointer-events: none; z-index: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 220px 220px;
+    animation: zh-grain .6s steps(1) infinite;
+}
+@keyframes zh-grain {
+    0%{transform:translate(0,0)}20%{transform:translate(-3px,-5px)}40%{transform:translate(5px,2px)}
+    60%{transform:translate(-2px,6px)}80%{transform:translate(6px,-3px)}100%{transform:translate(2px,-4px)}
+}
+
+.zh-hero-seal {
+    width: 54px; height: 54px;
+    border: 1px solid rgba(201,162,39,.35);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1.6rem;
+    background: rgba(139,32,32,.12);
+    position: relative; z-index: 1;
+}
+.zh-hero-seal svg { width: 26px; height: 26px; stroke: rgba(201,162,39,.8); }
+
+.zh-hero-eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .5rem; letter-spacing: .36em; text-transform: uppercase;
+    color: rgba(201,162,39,.65); margin-bottom: 1.4rem;
+    position: relative; z-index: 1;
+}
+.zh-hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 5.5vw, 4rem);
+    font-weight: 300; line-height: 1.08; letter-spacing: -.02em;
+    color: #fff; margin-bottom: .6rem;
+    position: relative; z-index: 1;
+}
+.zh-hero-title em { font-style: italic; color: #c9a227; }
+.zh-hero-subtitle {
+    font-family: 'IM Fell English', 'Cormorant Garamond', serif;
+    font-size: clamp(.85rem, 1.5vw, 1.05rem);
+    font-style: italic; color: rgba(255,255,255,.45);
+    margin-bottom: 2.4rem; position: relative; z-index: 1;
+}
+.zh-hero-meta {
+    display: flex; flex-wrap: wrap;
+    justify-content: center; gap: 0;
+    border: 1px solid rgba(201,162,39,.2);
+    border-radius: 12px;
+    background: rgba(255,255,255,.04);
+    backdrop-filter: blur(6px);
+    overflow: hidden;
+    max-width: 620px; margin: 0 auto 2rem;
+    position: relative; z-index: 1;
+}
+.zh-hero-meta-item {
+    flex: 1; min-width: 100px;
+    padding: 1.1rem 1rem;
+    text-align: center;
+    border-right: 1px solid rgba(201,162,39,.14);
+}
+.zh-hero-meta-item:last-child { border-right: none; }
+.zh-hero-meta-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.55rem; font-weight: 300;
+    color: #c9a227; line-height: 1; margin-bottom: .3rem;
+}
+.zh-hero-meta-key {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .5rem; letter-spacing: .18em; text-transform: uppercase;
+    color: rgba(255,255,255,.32);
+}
+.zh-hero-alert {
+    display: inline-flex; align-items: center; gap: .7rem;
+    padding: .75rem 1.4rem;
+    background: rgba(139,32,32,.18);
+    border: 1px solid rgba(139,32,32,.35);
+    border-radius: 100px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .65rem; letter-spacing: .1em; text-transform: uppercase;
+    color: rgba(255,160,140,.8);
+    margin-bottom: 0;
+    position: relative; z-index: 1;
+}
+.zh-hero-alert svg { width: 14px; height: 14px; stroke: rgba(255,140,120,.8); flex-shrink: 0; }
+.zh-hero-bottom {
+    height: 80px;
+    background: linear-gradient(180deg, transparent, var(--parchment));
+    position: relative; z-index: 1; margin: 2.5rem -2rem -5rem; pointer-events: none;
+}
+
+/* ── Body wrapper ── */
+.zh-body {
+    max-width: 1280px; margin: 0 auto;
+    padding: 3rem 2rem 6rem;
+}
+@media(max-width:600px){ .zh-body { padding: 2rem 1.2rem 4rem; } }
+
+/* ── Breadcrumb ── */
+.zh-breadcrumb {
+    display: flex; align-items: center; gap: .5rem;
+    font-family: 'DM Sans', sans-serif; font-size: .72rem;
+    color: var(--sepia); margin-bottom: 2.5rem; opacity: .7;
+}
+.zh-breadcrumb a { color: inherit; text-decoration: none; }
+.zh-breadcrumb a:hover { opacity: 1; text-decoration: underline; }
+
+/* ── Tabs ── */
+.zh-tabs {
+    display: flex; gap: .4rem; flex-wrap: wrap;
+    border-bottom: 1px solid var(--ruling);
+    margin-bottom: 2.5rem; padding-bottom: 0;
+}
+.zh-tab {
+    display: flex; align-items: center; gap: .55rem;
+    padding: .75rem 1.2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .68rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--sepia); background: none; border: none;
+    border-bottom: 2px solid transparent; margin-bottom: -1px;
+    cursor: pointer; border-radius: 6px 6px 0 0;
+    transition: all .2s ease;
+}
+.zh-tab svg { width: 14px; height: 14px; flex-shrink: 0; }
+.zh-tab:hover { color: var(--sepia-light); background: var(--sepia-pale); }
+.zh-tab.active {
+    color: var(--ink);
+    border-bottom-color: #c9a227;
+    background: var(--sepia-pale);
+}
+[data-theme="dark"] .zh-tab.active { color: var(--sepia-light); }
+
+/* ── Tab panels ── */
+.zh-panel { display: none; }
+.zh-panel.active { display: block; }
+
+/* ── Section eyebrow ── */
+.zh-eyebrow {
+    display: flex; align-items: center; gap: .9rem;
+    margin-bottom: 1.8rem;
+}
+.zh-eyebrow span {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .55rem; letter-spacing: .28em; text-transform: uppercase;
+    color: var(--sepia); white-space: nowrap;
+}
+.zh-eyebrow::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(90deg, var(--ruling), transparent);
+}
+
+/* ── Scans grid ── */
+.zh-scans-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: .8rem;
+    margin-bottom: 2rem;
+}
+@media(max-width:1100px){ .zh-scans-grid { grid-template-columns: repeat(3,1fr); } }
+@media(max-width:768px) { .zh-scans-grid { grid-template-columns: repeat(2,1fr); } }
+@media(max-width:420px) { .zh-scans-grid { grid-template-columns: 1fr; } }
+
+.zh-scan-card {
+    position: relative; overflow: hidden;
+    border-radius: 8px; cursor: pointer;
+    background: #1a1408;
+    border: 1px solid var(--ruling);
+    aspect-ratio: 3/4;
+    transition: box-shadow .3s ease, transform .4s cubic-bezier(.16,1,.3,1);
+}
+.zh-scan-card:hover {
+    box-shadow: 0 8px 32px rgba(0,0,0,.18);
+    transform: translateY(-2px);
+}
+.zh-scan-img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: top;
+    filter: sepia(.15) contrast(1.06) brightness(.9);
+    transition: filter .5s ease, transform .6s cubic-bezier(.16,1,.3,1);
+    display: block;
+}
+.zh-scan-card:hover .zh-scan-img {
+    filter: sepia(.05) contrast(1.08) brightness(.95);
+    transform: scale(1.02);
+}
+.zh-scan-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(20,12,4,.9) 0%, rgba(20,12,4,.2) 45%, transparent 70%);
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: .75rem .85rem;
+}
+.zh-scan-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem; font-weight: 300;
+    color: rgba(201,162,39,.6); line-height: 1;
+}
+.zh-scan-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .6rem; letter-spacing: .1em; text-transform: uppercase;
+    color: rgba(255,255,255,.72); margin-top: .2rem;
+}
+.zh-scan-part-badge {
+    position: absolute; top: .65rem; left: .65rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .5rem; letter-spacing: .18em; text-transform: uppercase;
+    background: rgba(20,10,4,.82); backdrop-filter: blur(6px);
+    border: 1px solid rgba(201,162,39,.25);
+    border-radius: 4px; padding: .25rem .6rem;
+    color: rgba(201,162,39,.8);
+}
+.zh-scan-zoom {
+    position: absolute; top: .65rem; right: .65rem;
+    width: 30px; height: 30px; border-radius: 50%;
+    background: rgba(255,255,255,.12); backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,.2);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity .2s ease;
+    color: white;
+}
+.zh-scan-zoom svg { width: 13px; height: 13px; stroke: currentColor; stroke-width: 2; }
+.zh-scan-card:hover .zh-scan-zoom { opacity: 1; }
+
+/* Part dividers in scans */
+.zh-part-divider {
+    grid-column: 1 / -1;
+    display: flex; align-items: center; gap: 1rem;
+    padding: .6rem 0 .2rem;
+}
+.zh-part-divider-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem; font-style: italic;
+    color: var(--sepia); white-space: nowrap;
+}
+.zh-part-divider-line {
+    flex: 1; height: 1px;
+    background: linear-gradient(90deg, var(--ruling), transparent);
+}
+.zh-part-divider-date {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .58rem; letter-spacing: .18em; text-transform: uppercase;
+    color: rgba(139,111,62,.55); white-space: nowrap;
+}
+
+/* ── Transcript ── */
+.zh-transcript {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+    margin-bottom: 2.5rem;
+    align-items: start;
+}
+@media(max-width:900px){ .zh-transcript { grid-template-columns: 1fr; } }
+
+.zh-col-header {
+    display: flex; align-items: center; gap: .9rem;
+    margin-bottom: 1.2rem; padding-bottom: .8rem;
+    border-bottom: 1px solid var(--ruling);
+}
+.zh-col-badge {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .55rem; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--parchment); background: var(--sepia);
+    border-radius: 4px; padding: .25rem .55rem; flex-shrink: 0;
+}
+.zh-col-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .72rem; font-weight: 500; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--sepia);
+}
+
+.zh-page-block { margin-bottom: 2.2rem; }
+.zh-page-label {
+    display: flex; align-items: center; gap: .5rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .58rem; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--sepia-light); margin-bottom: .9rem; opacity: .75;
+}
+
+.zh-original {
+    font-family: 'IM Fell English', 'Cormorant Garamond', serif;
+    font-size: .95rem; line-height: 1.95;
+    color: var(--ink-faded);
+    white-space: pre-wrap;
+    background: rgba(201,162,39,.04);
+    border: 1px solid var(--ruling);
+    border-radius: 8px; padding: 1.4rem 1.6rem;
+}
+.zh-original em { font-style: italic; color: var(--sepia); }
+.zh-original strong { font-weight: 600; color: var(--ink); }
+[data-theme="dark"] .zh-original { color: var(--ink-faded); }
+
+/* ── Translation ── */
+.zh-translation {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .85rem; line-height: 1.9;
+    color: var(--ink-faded);
+    padding: 1.4rem 1.6rem;
+    background: var(--sepia-pale);
+    border: 1px solid var(--ruling);
+    border-radius: 8px;
+}
+.zh-translation p { margin-bottom: 1rem; }
+.zh-translation p:last-child { margin-bottom: 0; }
+.zh-translation strong { color: var(--ink); font-weight: 500; }
+[data-theme="dark"] .zh-translation { color: var(--ink-faded); }
+
+/* ── Stats cards (census) ── */
+.zh-stats-section { margin-bottom: 2.5rem; }
+.zh-stats-intro {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .85rem; line-height: 1.85;
+    color: var(--ink-faded); margin-bottom: 1.6rem;
+    max-width: 740px;
+}
+.zh-city-block {
+    display: flex; align-items: center; gap: 1.6rem;
+    padding: 1.4rem 1.8rem;
+    background: linear-gradient(90deg, rgba(139,32,32,.08), rgba(201,162,39,.06));
+    border: 1px solid rgba(139,32,32,.22);
+    border-left: 4px solid rgba(139,32,32,.55);
+    border-radius: 8px; margin-bottom: 1.6rem;
+}
+.zh-city-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem; font-weight: 300; line-height: 1;
+    color: var(--blood); flex-shrink: 0;
+}
+.zh-city-info {}
+.zh-city-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem; font-weight: 400;
+    color: var(--ink); margin-bottom: .25rem;
+}
+[data-theme="dark"] .zh-city-name { color: var(--sepia-light); }
+.zh-city-note {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .75rem; color: var(--sepia);
+    line-height: 1.55;
+}
+
+.zh-villages-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: .8rem;
+    margin-bottom: 1.6rem;
+}
+.zh-village-card {
+    padding: 1rem 1.2rem;
+    background: var(--parchment);
+    border: 1px solid var(--ruling);
+    border-radius: 8px;
+    position: relative; overflow: hidden;
+    transition: border-color .2s ease;
+}
+[data-theme="dark"] .zh-village-card { background: var(--parchment-dark); }
+.zh-village-card:hover { border-color: rgba(201,162,39,.4); }
+.zh-village-card.burned {
+    border-color: rgba(139,32,32,.3);
+    background: linear-gradient(135deg, var(--parchment), rgba(139,32,32,.04));
+}
+[data-theme="dark"] .zh-village-card.burned {
+    background: linear-gradient(135deg, var(--parchment-dark), rgba(139,32,32,.06));
+}
+.zh-village-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--sepia-light), transparent);
+    opacity: .4;
+}
+.zh-village-card.burned::before {
+    background: linear-gradient(90deg, rgba(139,32,32,.7), transparent);
+    opacity: .7;
+}
+.zh-village-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem; font-weight: 300; line-height: 1;
+    color: var(--sepia); margin-bottom: .3rem;
+}
+.zh-village-card.burned .zh-village-num { color: var(--blood); }
+.zh-village-name {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .78rem; font-weight: 500;
+    color: var(--ink); margin-bottom: .15rem;
+}
+[data-theme="dark"] .zh-village-name { color: var(--sepia-light); }
+.zh-village-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .62rem; color: var(--sepia); opacity: .7;
+}
+.zh-village-badge {
+    position: absolute; top: .6rem; right: .65rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .46rem; letter-spacing: .14em; text-transform: uppercase;
+    color: rgba(139,32,32,.7);
+    background: rgba(139,32,32,.1);
+    border: 1px solid rgba(139,32,32,.2);
+    border-radius: 3px; padding: .18rem .45rem;
+}
+
+/* ── Warning/note box ── */
+.zh-note {
+    display: flex; gap: 1rem; align-items: flex-start;
+    padding: 1.4rem 1.6rem;
+    background: var(--sepia-pale);
+    border: 1px solid var(--ruling); border-radius: 10px;
+    margin-bottom: 2rem;
+}
+.zh-note svg { width: 18px; height: 18px; stroke: var(--sepia-light); flex-shrink: 0; margin-top: 2px; }
+.zh-note-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .62rem; letter-spacing: .15em; text-transform: uppercase;
+    color: var(--sepia); margin-bottom: .4rem;
+}
+.zh-note-text {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .8rem; line-height: 1.75;
+    color: var(--ink-faded); margin: 0;
+}
+.zh-note-text strong { color: var(--ink); font-weight: 500; }
+[data-theme="dark"] .zh-note-text { color: var(--ink-faded); }
+
+.zh-war-note {
+    background: linear-gradient(90deg, var(--blood-light), var(--sepia-pale));
+    border-color: rgba(139,32,32,.25);
+}
+.zh-war-note svg { stroke: rgba(200,80,80,.8); }
+.zh-war-note .zh-note-label { color: var(--blood); }
+
+/* ── Glossary ── */
+.zh-gloss-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+.zh-gloss-item {
+    padding: 1.2rem 1.4rem;
+    background: var(--parchment);
+    border: 1px solid var(--ruling);
+    border-radius: 8px;
+    transition: background .2s ease;
+}
+[data-theme="dark"] .zh-gloss-item { background: var(--parchment-dark); }
+.zh-gloss-item:hover { background: var(--sepia-pale); }
+.zh-gloss-term {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-weight: 400;
+    color: var(--ink); margin-bottom: .4rem;
+    display: flex; align-items: center; gap: .5rem;
+}
+[data-theme="dark"] .zh-gloss-term { color: var(--sepia-light); }
+.zh-gloss-term::before {
+    content: '';
+    width: 4px; height: 4px; border-radius: 50%;
+    background: var(--sepia); flex-shrink: 0;
+}
+.zh-gloss-orig {
+    font-family: 'IM Fell English', serif;
+    font-size: .75rem; font-style: italic;
+    color: var(--sepia-light); margin-bottom: .4rem;
+}
+.zh-gloss-def {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .78rem; line-height: 1.7;
+    color: var(--ink-faded);
+}
+
+/* ── Context cards ── */
+.zh-context-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem; margin-bottom: 2rem;
+}
+@media(max-width:768px){ .zh-context-grid { grid-template-columns: 1fr; } }
+.zh-context-card {
+    padding: 1.6rem;
+    border: 1px solid var(--ruling); border-radius: 10px;
+    background: var(--parchment);
+    position: relative; overflow: hidden;
+}
+[data-theme="dark"] .zh-context-card { background: var(--parchment-dark); }
+.zh-context-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--sepia-light), transparent);
+    opacity: .45;
+}
+.zh-context-card.red::before {
+    background: linear-gradient(90deg, transparent, rgba(200,70,70,.7), transparent);
+}
+.zh-context-head {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-weight: 400; font-style: italic;
+    color: var(--ink); margin-bottom: .9rem;
+    display: flex; align-items: center; gap: .75rem;
+}
+[data-theme="dark"] .zh-context-head { color: var(--sepia-light); }
+.zh-context-head svg { width: 18px; height: 18px; stroke: var(--sepia); flex-shrink: 0; }
+.zh-context-body {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .8rem; line-height: 1.85;
+    color: var(--ink-faded);
+}
+.zh-context-body strong { color: var(--ink); font-weight: 500; }
+[data-theme="dark"] .zh-context-body strong { color: var(--sepia-light); }
+
+/* ── Part switcher (within transcript) ── */
+.zh-part-nav {
+    display: flex; gap: .4rem; flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+.zh-part-btn {
+    padding: .5rem 1.1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .65rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase;
+    border: 1px solid var(--ruling); border-radius: 100px;
+    background: var(--parchment); color: var(--sepia);
+    cursor: pointer; transition: all .2s ease;
+}
+[data-theme="dark"] .zh-part-btn { background: var(--parchment-dark); }
+.zh-part-btn:hover { border-color: rgba(201,162,39,.5); color: var(--sepia-light); }
+.zh-part-btn.active { background: var(--ink); color: var(--parchment); border-color: var(--ink); }
+[data-theme="dark"] .zh-part-btn.active { background: var(--sepia); color: #1a1000; border-color: var(--sepia); }
+
+.zh-doc-part { display: none; }
+.zh-doc-part.active { display: block; }
+
+/* ── Lightbox ── */
+#ZHLB {
+    position: fixed; inset: 0; z-index: 99999;
+    background: rgba(4,2,1,.97);
+    display: none; flex-direction: column;
+}
+#ZHLB.open { display: flex; animation: zhIn .2s ease; }
+@keyframes zhIn { from{opacity:0}to{opacity:1} }
+#ZHLB-CLOSE {
+    position: absolute; top: .9rem; right: 1rem;
+    width: 40px; height: 40px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.22);
+    background: rgba(255,255,255,.1); backdrop-filter: blur(8px);
+    color: rgba(255,255,255,.85); cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .15s; z-index: 2; padding: 0;
+}
+#ZHLB-CLOSE:hover { background: rgba(255,255,255,.25); }
+#ZHLB-CLOSE svg { width: 18px; height: 18px; pointer-events: none; }
+#ZHLB-VP {
+    flex: 1; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    cursor: grab; touch-action: none; user-select: none;
+}
+#ZHLB-VP:active { cursor: grabbing; }
+#ZHLB-IMG {
+    max-width: 100%; max-height: 100%; object-fit: contain;
+    display: block; border-radius: 3px;
+    user-select: none; -webkit-user-drag: none;
+    box-shadow: 0 24px 80px rgba(0,0,0,.7);
+    will-change: transform; pointer-events: none;
+}
+#ZHLB-NAV-L, #ZHLB-NAV-R {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 46px; height: 46px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.16);
+    background: rgba(8,5,2,.72); backdrop-filter: blur(8px);
+    color: rgba(255,255,255,.88); cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; line-height: 1; padding: 0; z-index: 2;
+    transition: background .15s;
+}
+#ZHLB-NAV-L:hover, #ZHLB-NAV-R:hover { background: rgba(255,255,255,.18); }
+#ZHLB-NAV-L { left: .6rem; }
+#ZHLB-NAV-R { right: .6rem; }
+#ZHLB-BAR {
+    flex-shrink: 0; padding: .65rem 1.2rem;
+    background: rgba(8,5,2,.92); backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(255,255,255,.06);
+    display: flex; align-items: center; justify-content: center; gap: .8rem;
+}
+#ZHLB-CAP {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: .95rem; font-style: italic;
+    color: rgba(255,255,255,.65); text-align: center;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 85%;
+}
+#ZHLB-IDX {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .6rem; letter-spacing: .1em;
+    color: rgba(255,255,255,.3); white-space: nowrap;
+}
+
+@media(max-width:600px){
+    .zh-scans-grid { grid-template-columns: repeat(2,1fr); gap:.5rem; }
+    .zh-tabs { gap: .25rem; }
+    .zh-tab { padding: .6rem .75rem; font-size: .6rem; }
+    .zh-gloss-grid { grid-template-columns: 1fr; }
+}
+</style>
+
+<style>
+html { touch-action: manipulation; }
+body { touch-action: manipulation; }
+a, button, [role="button"], input, select, textarea,
+.zh-tab, .zh-part-btn, .nav-link, .logo,
+.mobile-toggle, .theme-toggle, .scroll-top-btn {
+    touch-action: manipulation;
+}
+</style>
+</head>
+<body class="zh-page">
+
+<!-- Header -->
+<header class="header">
+    <div class="header-container">
+        <a href="index.html" class="logo">
+            <img src="https://i.imgur.com/mXCrjjG.png" alt="Герб" class="logo-img">
+            <div class="logo-text">
+                <span class="logo-city">Дубровиця</span>
+                <span class="logo-subtitle">Цифровий архів</span>
+            </div>
+        </a>
+        <nav class="nav" id="mainNav">
+            <a href="index.html" class="nav-link">Головна</a>
+            <a href="history.html" class="nav-link">Історія</a>
+            <a href="photo-archive.html" class="nav-link">Фотоархів</a>
+            <a href="architecture.html" class="nav-link">Пам'ятки</a>
+            <a href="metrychni-knyhy.html" class="nav-link active">Метричні книги</a>
+            <a href="books.html" class="nav-link">Книги</a>
+            <a href="jewish-history.html" class="nav-link">Єврейська спадщина</a>
+            <a href="contacts.html" class="nav-link">Контакти</a>
+        </nav>
+        <button class="theme-toggle" id="themeToggle" aria-label="Перемкнути тему">
+            <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            <svg class="theme-icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Відкрити меню"><span></span><span></span><span></span></button>
+    </div>
+</header>
+
+<!-- ══ HERO ══ -->
+<div class="zh-hero">
+    <div class="zh-hero-grain"></div>
+    <div class="zh-hero-seal">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.4"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    </div>
+    <div class="zh-hero-eyebrow">Архівний документ · Гродські книги Пінські · 1650</div>
+    <h1 class="zh-hero-title">Жалоба про спустошення<br><em>Дубровицького маєтку</em></h1>
+    <p class="zh-hero-subtitle">Relacja, Manifestacja i Atestacja dóbr Dąbrowickich · Anno Domini 1650</p>
+
+    <div class="zh-hero-meta">
+        <div class="zh-hero-meta-item">
+            <div class="zh-hero-meta-val">1650</div>
+            <div class="zh-hero-meta-key">Рік документу</div>
+        </div>
+        <div class="zh-hero-meta-item">
+            <div class="zh-hero-meta-val">3</div>
+            <div class="zh-hero-meta-key">Частини справи</div>
+        </div>
+        <div class="zh-hero-meta-item">
+            <div class="zh-hero-meta-val">12</div>
+            <div class="zh-hero-meta-key">Сторінок-оригіналів</div>
+        </div>
+        <div class="zh-hero-meta-item">
+            <div class="zh-hero-meta-val">120+</div>
+            <div class="zh-hero-meta-key">Порожніх господарств</div>
+        </div>
+    </div>
+
+    <div class="zh-hero-alert">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        Документ описує воєнні злочини часів Хмельниччини 1650 р.
+    </div>
+    <div class="zh-hero-bottom"></div>
+</div>
+
+<!-- ══ BODY ══ -->
+<div class="zh-body">
+
+    <!-- Breadcrumb -->
+    <div class="zh-breadcrumb">
+        <a href="metrychni-knyhy.html">Метричні книги</a>
+        <span>›</span>
+        <span>Жалоба 1650</span>
+    </div>
+
+    <!-- Tabs -->
+    <div class="zh-tabs" role="tablist">
+        <button class="zh-tab active" data-panel="scans" role="tab">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            Скани
+        </button>
+        <button class="zh-tab" data-panel="transcript" role="tab">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>
+            Транскрипція
+        </button>
+        <button class="zh-tab" data-panel="translation" role="tab">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 8l6 6"/><path d="M4 14l6-6 2-3"/><path d="M2 5h12"/><path d="M22 22l-5-10-5 10"/><path d="M14 18h6"/></svg>
+            Переклад
+        </button>
+        <button class="zh-tab" data-panel="census" role="tab">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            Перепис димів
+        </button>
+        <button class="zh-tab" data-panel="glossary" role="tab">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+            Глосарій
+        </button>
+        <button class="zh-tab" data-panel="context" role="tab">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Контекст
+        </button>
+    </div>
+
+    <!-- ══ PANEL: SCANS ══ -->
+    <div class="zh-panel active" id="panel-scans">
+        <div class="zh-eyebrow"><span>Оригінальні скани · 12 сторінок · 3 документи</span></div>
+
+        <div class="zh-note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <div>
+                <div class="zh-note-label">Про документ</div>
+                <p class="zh-note-text">Справа складається з трьох юридичних актів, вписаних до Гродських книг Пінського замку у 1650 р. Мова документів — суміш <strong>старопольської, латини та канцелярської (руської)</strong> мов, що було нормою для діловодства Великого Князівства Литовського. Натисніть на скан для перегляду у повному розмірі.</p>
+            </div>
+        </div>
+
+        <div class="zh-scans-grid" id="zhScansGrid">
+            <!-- Part I -->
+            <div class="zh-part-divider">
+                <span class="zh-part-divider-label">Частина I — Реляція</span>
+                <div class="zh-part-divider-line"></div>
+                <span class="zh-part-divider-date">5–13 квітня 1650</span>
+            </div>
+
+            <div class="zh-scan-card" onclick="zhOpenLB(0)">
+                <img class="zh-scan-img" src="https://i.imgur.com/kKYrt4hl.jpeg" alt="img0001">
+                <div class="zh-scan-part-badge">Реляція · I</div>
+                <div class="zh-scan-overlay">
+                    <div class="zh-scan-num">01</div>
+                    <div class="zh-scan-label">Реляція · Початок</div>
+                </div>
+                <div class="zh-scan-zoom"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+            </div>
+            <div class="zh-scan-card" onclick="zhOpenLB(1)">
+                <img class="zh-scan-img" src="https://i.imgur.com/yiAXkKrl.jpeg" alt="img0002">
+                <div class="zh-scan-part-badge">Реляція · I</div>
+                <div class="zh-scan-overlay">
+                    <div class="zh-scan-num">02</div>
+                    <div class="zh-scan-label">Реляція · Опис сіл</div>
+                </div>
+                <div class="zh-scan-zoom"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+            </div>
+            <div class="zh-scan-card" onclick="zhOpenLB(2)">
+                <img class="zh-scan-img" src="https://i.imgur.com/IavNR4el.jpeg" alt="img0003">
+                <div class="zh-scan-part-badge">Реляція · I</div>
+                <div class="zh-scan-overlay">
+                    <div class="zh-scan-num">03</div>
+                    <div class="zh-scan-label">Реляція · Підпис Сахновського</div>
+                </div>
+                <div class="zh-scan-zoom"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+            </div>
+            <div class="zh-scan-card" onclick="zhOpenLB(3)">
+                <img class="zh-scan-img" src="https://i.imgur.com/bXMhh1Gl.jpeg" alt="img0004">
+                <div class="zh-scan-part-badge">Реляція · I</div>
+                <div class="zh-scan-overlay">
+                    <div class="zh-scan-num">04</div>
+                    <div class="zh-scan-label">Реляція · Обкладинка</div>
+                </div>
+                <div class="zh-scan-zoom"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+            </div>
+
+            <!-- Part II -->
+            <div class="zh-part-divider">
+                <span class="zh-part-divider-label">Частина II — Маніфестація</span>
+                <div class="zh-part-divider-line"></div>
+                <span class="zh-part-divider-date">22 вересня 1650</span>
+            </div>
+
+            <div class="zh-scan-card" onclick="zhOpenLB(4)">
+                <img class="zh-scan-img" src="https://i.imgur.com/gU3f28ol.jpeg" alt="img0005">
+                <div class="zh-scan-part-badge">Маніфестація · II</div>
+                <div class="zh-scan-overlay">
+                    <div class="zh-scan-num">05</div>
+                    <div class="zh-scan-label">Маніфестація · Початок</div>
+                </div>
+                <div class="zh-scan-zoom"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+            </div>
+            <div class="zh-scan-card" onclick="zhOpenLB(5)">
+                <img class="zh-scan-img" src="https://i.imgur.com/bgKQlcYl.jpeg" alt="img0006">
+                <div class="zh-scan-part-badge">Маніфестація · II</div>
+                <div class="zh-scan-overlay">
+                    <div class="zh-scan-num">06</div>
+                    <div class="zh-scan-label">Маніфестація · Татари та голод</div>
+                </div>
+                <div class="zh-scan-zoom"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+            </div>
+            <div class="zh-scan-card" onclick="zhOpenLB(6)">
+                <img class="zh-scan-img" src="https://i.imgur.com/7MRAkfml.jpeg" alt="img0007">
+                <div class="zh-scan-part-badge">Маніфестація · II</div>
+                <div class="zh-scan-overlay">
+                    <div class="zh-scan-num">07</div>
+                    <div class="zh-scan-label">Маніфестація · Завірення</div>
+                </div>
+                <div class="zh-scan-zoom"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+            </div>
+            <div class="zh-scan-card" onclick="zhOpenLB(7)">
+                <img class="zh-scan-img" src="https://i.imgur.com/a01fqi4l.jpeg" alt="img0008">
+                <div class="zh-scan-part-badge">Маніфестація · II</div>
+                <div class="zh-scan-overlay">
+                    <div class="zh-scan-num">08</div>
+                    <div class="zh-scan-label">Маніфестація · Обкладинка</div>
+                </div>
+                <div class="zh-scan-zoom"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+            </div>
+
+            <!-- Part III -->
+            <div class="zh-part-divider">
+                <span class="zh-part-divider-label">Частина III — Атестація</span>
+                <div class="zh-part-divider-line"></div>
+                <span class="zh-part-divider-date">14 квітня 1650</span>
+            </div>
+
+            <div class="zh-scan-card" onclick="zhOpenLB(8)">
+                <img class="zh-scan-img" src="https://i.imgur.com/Opfu6Dvl.jpeg" alt="img0009">
+                <div class="zh-scan-part-badge">Атестація · III</div>
+                <div class="zh-scan-overlay">
+                    <div class="zh-scan-num">09</div>
+                    <div class="zh-scan-label">Атестація · Перепис</div>
+                </div>
+                <div class="zh-scan-zoom"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+            </div>
+            <div class="zh-scan-card" onclick="zhOpenLB(9)">
+                <img class="zh-scan-img" src="https://i.imgur.com/it7mDUAl.jpeg" alt="img0010">
+                <div class="zh-scan-part-badge">Атестація · III</div>
+                <div class="zh-scan-overlay">
+                    <div class="zh-scan-num">10</div>
+                    <div class="zh-scan-label">Атестація · Заріччя</div>
+                </div>
+                <div class="zh-scan-zoom"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+            </div>
+            <div class="zh-scan-card" onclick="zhOpenLB(10)">
+                <img class="zh-scan-img" src="https://i.imgur.com/hgy7Is0l.jpeg" alt="img0011">
+                <div class="zh-scan-part-badge">Атестація · III</div>
+                <div class="zh-scan-overlay">
+                    <div class="zh-scan-num">11</div>
+                    <div class="zh-scan-label">Атестація · Присяга війтів</div>
+                </div>
+                <div class="zh-scan-zoom"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+            </div>
+            <div class="zh-scan-card" onclick="zhOpenLB(11)">
+                <img class="zh-scan-img" src="https://i.imgur.com/jUVD2Xbl.jpeg" alt="img0012">
+                <div class="zh-scan-part-badge">Атестація · III</div>
+                <div class="zh-scan-overlay">
+                    <div class="zh-scan-num">12</div>
+                    <div class="zh-scan-label">Атестація · Обкладинка</div>
+                </div>
+                <div class="zh-scan-zoom"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+            </div>
+        </div>
+    </div><!-- /panel-scans -->
+
+    <!-- ══ PANEL: TRANSCRIPT ══ -->
+    <div class="zh-panel" id="panel-transcript">
+        <div class="zh-eyebrow"><span>Оригінальний текст · Старопольська, латина, руська мова · XVII ст.</span></div>
+
+        <div class="zh-part-nav">
+            <button class="zh-part-btn active" data-part="t1">I. Реляція · 5–13.04.1650</button>
+            <button class="zh-part-btn" data-part="t2">II. Маніфестація · 22.09.1650</button>
+            <button class="zh-part-btn" data-part="t3">III. Атестація · 14.04.1650</button>
+        </div>
+
+        <!-- Part I -->
+        <div class="zh-doc-part active" id="part-t1">
+            <div class="zh-transcript">
+                <div>
+                    <div class="zh-col-header">
+                        <div class="zh-col-badge">ОРГ</div>
+                        <div class="zh-col-title">Оригінал (слово в слово)</div>
+                    </div>
+                    <div class="zh-page-block">
+                        <div class="zh-page-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:11px;height:11px;stroke:var(--sepia-light)"><rect x="3" y="3" width="18" height="18" rx="2"/></svg> Сторінки 1–3 (img0001–0004)</div>
+                        <div class="zh-original">Выпис з книг гродских Пинских.
+Року тисяча шестсот пятдесят мца априля тринадцатого дня.
+
+На уряде кгродском в замку Пинском пере мною Яном на Столпю Ясиковским подстаростим пинским и в книгах нинешних гродских Пинских покладал реляцию возный генерал его королевской милости воеводства Берестейского Андрій Сахновский, которую до книг гродских Пинских вписати просил, в тые слова:
+
+<em>Ja, Andrey Sachiowski, renevat ego Królewskiej Mości Powiatu Pińskiego zeznawam tym moim kwitem, iz roku terazniejszego tysiącznego sześćset pięćdziesiątego miesiąca Aprila piątego dnia, mając za przy sobie stronę szlachtę Pana Jana Dikowiczkiego a Pana Andreya Istomiczkiego, z któremi byłm uczynił na sprawę niżej pomienioną od sługi Pana Jego Mości Hrehovego Czetwertyńskiego Podkomorzego Luckiego od Pana Mikołaja Berezeczkiego sprawcy Dąbrowickiego do majętności Dąbrowicy w powiecie Pińskim leżącej, tamże przed mną renevatem, stroną szlachecką Pan Berezeczki opowiadał to, iż ta majętność Dąbrowicka po nieboszczyku Jego Mości Panu Boiku Sodziwinia Дзіад Jego Mości Pana Podkomorzego Luckiego została, pierwej przez kozaków a potym przez żołnierzow jest bardzo spustoszona i zniszczona.</em>
+
+<em>Poddani jedni z kozakami pobuntowani, a drudzy od motłochu zniszczeni i rabeżeni precz powychodzili, a inne wsi przez żołnierza popalone zostały. Gdzie za obiedzeniem i okazaniem Jego Pana Berezeczkiego naprzód w samym mieście Dąbrowicy na części Sodziwinia Dziada Jego Mości będącej widziałem domow pustych niemało, których na liczyło się domow pustych dwadzieścia pięć. Potym zjeździliśmy Jego Dnia wyżej pomienionego do siół do tej majętności Dąbrowickiej należących: naprzód do sioła Beresteczka, tamże za okazaniem widziałem domow pustych trzy. Potym we wsi Orwenicy okazowali domow pustych siedm. We wsi Niwecku widziałem domow pustych siedm. We wsi Moczuliszczach widziałem domow pustych cztery. We wsi Zaleszanach widziałem domow pustych cztery. Potym nazajutrz, to jest dnia szóstego m-ca Aprila, widzieliśmy do siół za rzeką Słuczą będących do tej majętności Dąbrowicy należących, naprzód do sioła Białej, tam w tej wsi za okazaniem widziałem domow pustych osiem. W drugiej wsi Wieluniu widziałem domow pustych osiem. We wsi Łuniczach widziałem domow pustych sześć. We wsi Klesowie widziałem domow pustych dwanaście. We wsi Korpilowce widziałem domow pustych osiem.</em>
+
+<em>Potym tegoż dnia przyjechawszy do wsi Strzelska, tamże za okazaniem widziałem domow wszystkich dwadzieścia, nowo napogorzelisku pobudowanych, a wszystka wieś była spalona. Potym we wsi Hłuszycy także widziałem chałup osiem nowopobudowanych na pogorzelisku, а wszystka wieś także była spalona.</em>
+
+Писан року і дня выше писаного.
+<strong>Андрей Сахновский, возный генерал, яко возный заручаю.</strong>
+Справили возний і сторона шляхта.</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="zh-col-header">
+                        <div class="zh-col-badge" style="background:var(--blood);">УКР</div>
+                        <div class="zh-col-title">Примітки до тексту</div>
+                    </div>
+                    <div class="zh-translation">
+                        <p><strong>«Renevat»</strong> — латинізм у тексті: «возний, що відновлює / повторює свідчення перед судом». Це офіційна формула для позначення посади.</p>
+                        <p><strong>«Boiku Sodziwinia»</strong> — у транскрипції це дещо спотворене прочитання скоропису. Правильно: <strong>«Marcin Borek Sędziwój»</strong> — Марцин Борек, суддя Вінницький.</p>
+                        <p><strong>«Побунтовані з козаками» / «від натовпу знищені і пограбовані»</strong> — дві долі підданих. Частина свідомо приєдналась до повстання, частина просто стала жертвою мародерства.</p>
+                        <p><strong>«Nowo na pogorzelisku pobudowanych»</strong> — «наново на попелищі побудованих» — ключова фраза. Свідчить, що через кілька місяців після пожеж люди повертались і відбудовувались.</p>
+                        <p><strong>Маршрут возного 5–6 квітня:</strong> Дубровиця → Береcть → Орв'яниця → Нивецьк → Мочулище → Залішани (день 1); Біла → Велюнь → Лунічі → Клесів → Карпилівка → Стрільськ → Глушиця (день 2).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part II -->
+        <div class="zh-doc-part" id="part-t2">
+            <div class="zh-transcript">
+                <div>
+                    <div class="zh-col-header">
+                        <div class="zh-col-badge">ОРГ</div>
+                        <div class="zh-col-title">Оригінал (слово в слово)</div>
+                    </div>
+                    <div class="zh-page-block">
+                        <div class="zh-page-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:11px;height:11px;stroke:var(--sepia-light)"><rect x="3" y="3" width="18" height="18" rx="2"/></svg> Сторінки 5–8 (img0005–0008)</div>
+                        <div class="zh-original">Выпис з книг гродских Пинских.
+Року тисяча шестсот пятдесят мца септемвра двадцатого второго дня.
+
+На уряде гродском в замку Пинском покладал маніфестацію возный генерал Андрій Сахновский:
+
+<em>Mości Panie Urzędzie Grodzki Piński, Ja Mikołay Berezeczky, Starosta Dąbrowicky, od Jaśnie Oświeconego Księcia Jego Mości Pana Hrabi na Horodnie Stefana Czetwertyńskiego Podkomorzego Łuckiego ustanowiony, opowiadam y do wiadomości Urzędowi tę manifestacyą imieniem J.K. Mości Pana mego donoszę, iż w Roku teraźniejszym tysiącznym sześćset pięćdziesiątym, będąc Ja od J.O. Księcia JM Starosty zesłanym do Dąbrowice, dobr w powiecie Pińskim leżących...</em>
+
+<em>...tamże J.O. Księciu Panu memu uczynione wielkie zniszczenie, spustoszenie, splądrowanie y spalenie dostałem, która majętność Dąbrowicka, Zamek, Folwarki y sioła do niego należące, wprzódy przez Kozaków Rebelizantów zdrapieżona, tak potym przez żołnierzów Woyska J.K. Mości Koronne y Wielkiego Księstwa Litewskiego żołnierza też Pińskich chorągwiach zdrapieżona, a teraz de nowo najechawszy nieiakis Stepkowsky z chorągwiami z Tatarami za universlaem Jaśnie Oświeconego Księcia Jego Mości Pana Wojewody Ruskiego w Roku teraźniejszym tysiąc sześćset pięćdziesiątym miesiąca Julia ósmego dnia przez niedziel pięć albo daley po wsiach y miasteczku wielki czynsz y danie biorąc, zwloki posty złotych stacyi pieniężnej y nieludzkie ciężary wnosząc na poddanych y mieszczan Dąbrowickich, chleb odbierając, gumna plądrując, z pola zboża wszelakie zbierając, ku sobie na pożytek swój obracali, drugie końmi wniwecz wytrawili y wybili.</em>
+
+<em>...y wydreptali, barcie z ulami ze pszczolami, tak dworne jako y chłopskie powydzierali. Bydła rogate y nierogate, woły, krowy, konie od mieszczan y poddanych po odbierali, co zgoła wniwecz doszczętu sami przez się byli. Także ludzie z głodu puchną y umierają.</em>
+
+<em>...Ja imieniem J.O. Księcia JM iż w majętności mieszkać tym nie masz nic. A nadto cokolwiek było przed tym u nieboszczyka Pana Borka złota, srebra, cyny, miedzi, pieniędzy gotowych do oddania, to wszystko w Pińsku zostawało, а po zabiciu nieboszczyka Pana Borka, zaraz Jego Mość Pan Piotr Krakowski podwojewoda piński jako na świętego Franciszka krewnym będąc dziatkom nieboszczykowskim, to wszystko do siebie zabrawszy ku JM Pani Elżbiecie Boratyńskiej Bieleckiej, ciotce rodzonej tych dziatek, te wszystkie rzeczy do rąk oddał.</em>
+
+<strong>Mikołay Berezeczky, Starosta Dąbrowicky.</strong>
+
+Стефан Казимир Война, писар господарський.
+<em>dochodu groszy szesć dano</em> — сплачено 6 грошів мита.</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="zh-col-header">
+                        <div class="zh-col-badge" style="background:var(--blood);">УКР</div>
+                        <div class="zh-col-title">Примітки до тексту</div>
+                    </div>
+                    <div class="zh-translation">
+                        <p><strong>«Stepkowsky»</strong> у транскрипції — правильно: <strong>Стемпковський (Stępkowski)</strong>, відоме шляхетське прізвище. Не «Стефановський», як помилково інтерпретується в деяких читаннях.</p>
+                        <p><strong>«Za universlaem Pana Wojewody Ruskiego»</strong> — «за дозволом воєводи Руського». Загін діяв нібито з офіційного дозволу, але фактично вчиняв мародерство.</p>
+                        <p><strong>«Барті з вуликами»</strong> — бджільництво на вуликах-бортях у деревах. Вилучення пасік — один із найтяжчих видів збитків, адже відновити їх можна лише за роки.</p>
+                        <p><strong>«Люди з голоду пухнуть і вмирають»</strong> — пряме свідчення гуманітарної катастрофи. Формула не є канцелярським штампом — це конкретна констатація факту.</p>
+                        <p><strong>Срібло та мідь покійного Борка</strong> — майно, передане підвоєводою Краківським пані Білецькій, тітці сиріт. Згадка потрібна для обґрунтування претензій кн. Четвертинського як опікуна.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part III -->
+        <div class="zh-doc-part" id="part-t3">
+            <div class="zh-transcript">
+                <div>
+                    <div class="zh-col-header">
+                        <div class="zh-col-badge">ОРГ</div>
+                        <div class="zh-col-title">Оригінал (слово в слово)</div>
+                    </div>
+                    <div class="zh-page-block">
+                        <div class="zh-page-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:11px;height:11px;stroke:var(--sepia-light)"><rect x="3" y="3" width="18" height="18" rx="2"/></svg> Сторінки 9–12 (img0009–0012)</div>
+                        <div class="zh-original">Выпис з книг гродских Пинских.
+Року тисяча шестсот пятдесят мца априля четырнадцатого дня.
+
+На уряде кгродском в замку Пинском покладал атестацию возный генерал Андрій Сахновский:
+
+<em>Ja, Mikołay Berezeczky, sługa Księcia Jego Mości Stefana Czetwertyńskiego Podkomorzego Łuckiego, oznajmuję tą atestacyją moją, jako według uchwały Sejmu Walnego Warszawskiego w roku przeszłym tysiąc sześćset czterdziestym dziewiątym odprawionej, podymne ma być uchwalone, które ja z majętności w dzierżeniu Księcia JM Pana mego będącej, z połowicy miasta Dąbrowicy y siół do niego należących, ze pobranie wybrałwszy sprawiedliwie do rąk Panów Poborców oddaję, mianowicie:</em>
+
+<em>Z połowicy miasta Dąbrowicy, w której znajdują się z proroczymi domami dwiema, wszystkich dymów 120, gdzie ludzie mieszkania mają. Tamże młynów dwa po jednym kole na rzece Horyniu. We wsi Beresteczka dymów piętnaście. We wsi Orwianicy dymów dwadzieścia. We wsi Niwecku dymów trzydzieście, tamże młyn z rudnią. We wsi Moczulishczach domów siedm. We wsi Zaleszanach dymów siedm. A we wsiach za rzeką Słuczą: we wsi Białej domów dziesięć. We wsi Wieluniu z młynem jednym w kole dymów siedemnaście. We wsi Ludyniczach dymów ośm. We wsi Klesowie dymów dwadzieścia. We wsi Karpylowce dymów ośm. Na wsi Strzelsku dymów dwadzieścia z popowskim domem nowo na pogorzelisku pobudowanych z młynem na rzece Słuczy o jednym kole. We wsi Hłuczycy dymów ośm nowo pobudowanych z młynem na rzece Słuczy.</em>
+
+<em>Na którym wybraniu tego подымного, którego do rąk Panów Poborców oddaję, wziąłem trzej: jednego z miasta Dąbrowicy Klima Kasiuszyca, drugiego ze wsi Moculishcze Makara Kanonowicza, а trzeciego ze wsi Białej Fedora Łukianowicza, na tym, iż jako więcej domów, w których by ludzie mieszkali nie masz, do przysięgi posyłam.</em>
+
+<strong>Mikołay Berezeczky, namiestnik Dąbrowicky.</strong>
+
+Я, Клим Канунич, войт з Пинска, присягаю.
+Я, Макар Ранонович, войт з Моцулишч, присягаю.
+Я, Федор Лукянович, войт з села Білої, присягаю.
+
+Присягнули, іж яко в містах і в селах по велі закону господнього і по закону посполитому поправдиве уписали, нічого не таїли і не опустошили.
+
+<strong>Стефан Казимир Война, писар господарський.</strong>
+<em>1650 Aprila 14. Dochodu groszy sześć dano.</em></div>
+                    </div>
+                </div>
+                <div>
+                    <div class="zh-col-header">
+                        <div class="zh-col-badge" style="background:var(--blood);">УКР</div>
+                        <div class="zh-col-title">Примітки до тексту</div>
+                    </div>
+                    <div class="zh-translation">
+                        <p><strong>«Подимне»</strong> — податок з кожного «диму» (господарства). Ухвалено Варшавським сеймом 1649 р. Декларація подавалась під присягою, щоб уникнути фальсифікацій.</p>
+                        <p><strong>«З пророчими домами двома»</strong> — мабуть, будинки-прогнози / будинки-застави. Можлива також інтерпретація: «профані» (нецерковні) будинки.</p>
+                        <p><strong>Млин з рудньою у Нивецьку</strong> — важлива деталь: рудня (залізоплавильне підприємство) при млині. Свідчить про промислову функцію маєтку.</p>
+                        <p><strong>«Nowo na pogorzelisku pobudowanych»</strong> (Стрільськ, Глушиця) — тут ця фраза має іронічно-трагічний відтінок у контексті податкової декларації: лічимо «нові» хати на попелі.</p>
+                        <p><strong>Три присяжні — по одному від трьох різних сіл</strong> — стандартна юридична процедура. Кожен представляв своє село і ніс особисту відповідальність за точність даних.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- /panel-transcript -->
+
+    <!-- ══ PANEL: TRANSLATION ══ -->
+    <div class="zh-panel" id="panel-translation">
+        <div class="zh-eyebrow"><span>Повний переклад на сучасну українську · всі три документи</span></div>
+
+        <div class="zh-part-nav">
+            <button class="zh-part-btn active" data-part="tr1">I. Реляція</button>
+            <button class="zh-part-btn" data-part="tr2">II. Маніфестація</button>
+            <button class="zh-part-btn" data-part="tr3">III. Атестація</button>
+        </div>
+
+        <!-- Translation Part I -->
+        <div class="zh-doc-part active" id="part-tr1">
+            <div class="zh-note">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                <div>
+                    <div class="zh-note-label">Частина I — Реляція · 5–13 квітня 1650</div>
+                    <p class="zh-note-text">Офіційний звіт возного про огляд порожніх будинків у Дубровицькому маєтку після козацько-жовнірських спустошень.</p>
+                </div>
+            </div>
+            <div class="zh-translation" style="max-width:820px;">
+                <p><strong>Виписка з книг гродських Пінських. Року 1650, квітня 13 дня.</strong></p>
+                <p>В уряді гродському в замку Пінському перед підстаростою Яном Ясиковським возний генерал Берестейського воєводства Андрій Сахновський подав реляцію і просив вписати її до книг гродських Пінських.</p>
+                <p>«Я, Андрій Сахновський, возний Пінського повіту, засвідчую, що 5 квітня 1650 р., взявши зі собою шляхтичів — пана Яна Діковицького та пана Андрія Істомицького, прибув за дорученням слуги підкоморія Луцького Грехового Четвертинського, управителя Миколая Березецького, до маєтку Дубровиця в Пінському повіті.</p>
+                <p>Пан Березецький заявив, що маєток Дубровиця — спадщина після покійного діда підкоморія Луцького — спершу козаками, а потім жовнірами дуже спустошений і знищений. Частина підданих збунтувалась із козаками, частина — пограбована натовпом і втекла, деякі села спалені жовнірами.</p>
+                <p>Під час огляду я побачив:</p>
+                <p>• У місті Дубровиця: <strong>25 порожніх будинків</strong><br>
+                • У селі Береcть: <strong>3 порожніх будинки</strong><br>
+                • У селі Орв'яниця: <strong>7 порожніх будинків</strong><br>
+                • У селі Нивецьк: <strong>7 порожніх будинків</strong><br>
+                • У селі Мочулище: <strong>4 порожніх будинки</strong><br>
+                • У селі Залішани: <strong>4 порожніх будинки</strong></p>
+                <p>Наступного дня, 6 квітня, за річкою Случ:</p>
+                <p>• У селі Біла: <strong>8 порожніх будинків</strong><br>
+                • У селі Велюнь: <strong>8 порожніх будинків</strong><br>
+                • У селі Лунічі: <strong>6 порожніх будинків</strong><br>
+                • У селі Клесів: <strong>12 порожніх будинків</strong><br>
+                • У селі Карпилівка: <strong>8 порожніх будинків</strong><br>
+                • У селі Стрільськ: <strong>20 будинків, заново відбудованих на попелищі</strong> — все село було спалене<br>
+                • У селі Глушиця: <strong>8 хат на згарищі</strong> — все село також спалене»</p>
+                <p><strong>Андрій Сахновський, возний генерал, підтверджую.</strong></p>
+            </div>
+        </div>
+
+        <!-- Translation Part II -->
+        <div class="zh-doc-part" id="part-tr2">
+            <div class="zh-note zh-war-note">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                <div>
+                    <div class="zh-note-label">Частина II — Маніфестація · 22 вересня 1650</div>
+                    <p class="zh-note-text">Офіційна скарга управителя Березецького про мародерство загону Стемпковського з татарами та голод серед населення.</p>
+                </div>
+            </div>
+            <div class="zh-translation" style="max-width:820px;">
+                <p><strong>Виписка з книг гродських Пінських. Року 1650, вересня 22 дня.</strong></p>
+                <p>«Я, Миколай Березецький, управитель Дубровицький, від імені Ясновельможного князя Стефана Четвертинського, підкоморія Луцького, заявляю про велике нещастя. Прибувши до Дубровиці (маєток залишився сиротам після покійного Марцина Борка Сендзівоя), я виявив повне спустошення.</p>
+                <p>Маєток — замок, фольварки і села — спочатку пограбували козаки-повстанці. Потім грабували коронні та литовські війська (пінські хоругви). А нещодавно пан <strong>Стемпковський</strong> зі своїми хоругвами та <strong>татарами</strong>, діючи нібито з відома воєводи Руського, з 8 липня перебував тут понад п'ять тижнів.</p>
+                <p>Вони вимагали від містечка величезні кошти (стації), накладали нелюдські тягарі, <strong>забирали хліб, грабували стодоли, вивозили зерно з полів</strong>, а те, що не забрали — витоптали кіньми. Виривали вулики з пасік (і дворянських, і селянських). Забирали у міщан і селян <strong>всю рогату худобу, волів, корів та коней</strong>. Через ці злочини <strong>люди тепер пухнуть і вмирають від голоду</strong>.</p>
+                <p>Також зазначаю: золото, срібло, мідь та готівка, що належали покійному Борку, зберігались у Пінську. Після його вбивства підвоєвода Петро Краківський передав ці речі рідній тітці сиріт — пані Ельжбеті Боратинській-Білецькій.</p>
+                <p>Подаю цю офіційну скаргу (маніфестацію) до гродських книг, щоб зафіксувати збитки та захистити права законних спадкоємців.»</p>
+                <p><strong>Миколай Березецький, управитель Дубровицький.</strong></p>
+            </div>
+        </div>
+
+        <!-- Translation Part III -->
+        <div class="zh-doc-part" id="part-tr3">
+            <div class="zh-note">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                <div>
+                    <div class="zh-note-label">Частина III — Атестація · 14 квітня 1650</div>
+                    <p class="zh-note-text">Податкова декларація під присягою. Точний реєстр господарств («димів»), що вцілили після воєнних дій — для розрахунку подимного податку.</p>
+                </div>
+            </div>
+            <div class="zh-translation" style="max-width:820px;">
+                <p><strong>Виписка з книг гродських Пінських. 14 квітня 1650 року.</strong></p>
+                <p>«Я, Миколай Березецький, слуга князя Стефана Четвертинського, підкоморія Луцького, згідно з ухвалою Варшавського сейму 1649 р. про збір подимного податку, перераховую господарства («дими») і передаю дані збирачам:</p>
+                <p>• Місто Дубровиця (половина): <strong>120 димів</strong>, два млини на річці Горинь<br>
+                • Береcть: <strong>15 димів</strong><br>
+                • Орв'яниця: <strong>20 димів</strong><br>
+                • Нивецьк: <strong>30 димів</strong> та млин із рудньою<br>
+                • Мочулище: <strong>7 хат</strong><br>
+                • Залішани: <strong>7 димів</strong></p>
+                <p>За річкою Случ:</p>
+                <p>• Біла: <strong>10 хат</strong><br>
+                • Велюнь: <strong>17 димів</strong> та млин<br>
+                • Людинь: <strong>8 димів</strong><br>
+                • Клесів: <strong>20 димів</strong><br>
+                • Карпилівка: <strong>8 димів</strong><br>
+                • Стрільськ: <strong>20 димів</strong> (нових, на попелищі) та млин на Случі<br>
+                • Глушиця: <strong>8 нових хат</strong> та млин на Случі</p>
+                <p>Для підтвердження надсилаю до присяги: Клима Касіушича з Дубровиці, Макара Канонича з Мочулищ та Федора Лукяновича з Білої. Вони присягають, що більше заселених будинків немає.</p>
+                <p>10 квітня 1650 р. <strong>Миколай Березецький, намісник Дубровицький.</strong>»</p>
+                <p>Війти склали присягу перед Богом, підтвердивши правдивість даних. Документ завірений писарем <strong>Стефаном Казимиром Войною</strong>.</p>
+            </div>
+        </div>
+    </div><!-- /panel-translation -->
+
+    <!-- ══ PANEL: CENSUS ══ -->
+    <div class="zh-panel" id="panel-census">
+        <div class="zh-eyebrow"><span>Перепис господарств (димів) · Атестація 14 квітня 1650 р.</span></div>
+
+        <div class="zh-stats-intro">
+            Цей реєстр є одним із найточніших статистичних джерел про стан Дубровиці та навколишніх сіл після першої хвилі повстання Богдана Хмельницького. Дані подавались під присягою — за фальсифікацію загрожувало суворе покарання. Один «дим» = одне господарство (хата), де мешкала одна родина.
+        </div>
+
+        <!-- Dubrovytsia city -->
+        <div class="zh-city-block">
+            <div class="zh-city-num">120</div>
+            <div class="zh-city-info">
+                <div class="zh-city-name">Місто Дубровиця</div>
+                <div class="zh-city-note">Половина міста, що належала кн. Четвертинському · + 2 млини на Горині<br>Попри спустошення — найбільший населений пункт у переписі</div>
+            </div>
+        </div>
+
+        <!-- Villages west bank -->
+        <div class="zh-eyebrow" style="margin-top:2rem;"><span>Села правого берега (до Случі)</span></div>
+        <div class="zh-villages-grid">
+            <div class="zh-village-card">
+                <div class="zh-village-num">15</div>
+                <div class="zh-village-name">Береcть</div>
+                <div class="zh-village-label">димів · (Beresteczka)</div>
+            </div>
+            <div class="zh-village-card">
+                <div class="zh-village-num">20</div>
+                <div class="zh-village-name">Орв'яниця</div>
+                <div class="zh-village-label">димів · (Orwianica)</div>
+            </div>
+            <div class="zh-village-card">
+                <div class="zh-village-num">30</div>
+                <div class="zh-village-name">Нивецьк</div>
+                <div class="zh-village-label">димів · млин + рудня · (Niweck)</div>
+            </div>
+            <div class="zh-village-card">
+                <div class="zh-village-num">7</div>
+                <div class="zh-village-name">Мочулище</div>
+                <div class="zh-village-label">хат · (Moczulishcza)</div>
+            </div>
+            <div class="zh-village-card">
+                <div class="zh-village-num">7</div>
+                <div class="zh-village-name">Залішани</div>
+                <div class="zh-village-label">димів · (Zaleszany)</div>
+            </div>
+        </div>
+
+        <!-- Villages east bank -->
+        <div class="zh-eyebrow" style="margin-top:1.5rem;"><span>Села лівого берега (за Случчю)</span></div>
+        <div class="zh-villages-grid">
+            <div class="zh-village-card">
+                <div class="zh-village-num">10</div>
+                <div class="zh-village-name">Біла</div>
+                <div class="zh-village-label">хат · (Biała)</div>
+            </div>
+            <div class="zh-village-card">
+                <div class="zh-village-num">17</div>
+                <div class="zh-village-name">Велюнь</div>
+                <div class="zh-village-label">димів · з млином · (Wieluń)</div>
+            </div>
+            <div class="zh-village-card">
+                <div class="zh-village-num">8</div>
+                <div class="zh-village-name">Лунічі</div>
+                <div class="zh-village-label">димів · (Ludynicze)</div>
+            </div>
+            <div class="zh-village-card">
+                <div class="zh-village-num">20</div>
+                <div class="zh-village-name">Клесів</div>
+                <div class="zh-village-label">димів · (Klesów)</div>
+            </div>
+            <div class="zh-village-card">
+                <div class="zh-village-num">8</div>
+                <div class="zh-village-name">Карпилівка</div>
+                <div class="zh-village-label">димів · (Karpylowce)</div>
+            </div>
+            <div class="zh-village-card burned">
+                <div class="zh-village-badge">на попелищі</div>
+                <div class="zh-village-num">20</div>
+                <div class="zh-village-name">Стрільськ</div>
+                <div class="zh-village-label">нових хат · все село спалено · млин на Случі</div>
+            </div>
+            <div class="zh-village-card burned">
+                <div class="zh-village-badge">на попелищі</div>
+                <div class="zh-village-num">8</div>
+                <div class="zh-village-name">Глушиця</div>
+                <div class="zh-village-label">нових хат · все село спалено · млин на Случі</div>
+            </div>
+        </div>
+
+        <div class="zh-note" style="margin-top:2rem;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <div>
+                <div class="zh-note-label">Присяжні свідки</div>
+                <p class="zh-note-text"><strong>Клим Касіушич</strong> — війт з Дубровиці · <strong>Макар Ранонович</strong> — війт з Мочулищ · <strong>Федор Лукянович</strong> — війт з Білої. Присягнули, що «по велі закону господнього і посполитому правдиво вписали, нічого не таїли і не пропустили».</p>
+            </div>
+        </div>
+    </div><!-- /panel-census -->
+
+    <!-- ══ PANEL: GLOSSARY ══ -->
+    <div class="zh-panel" id="panel-glossary">
+        <div class="zh-eyebrow"><span>Юридична та історична термінологія документу</span></div>
+
+        <div class="zh-gloss-grid">
+            <div class="zh-gloss-item">
+                <div class="zh-gloss-term">Реляція</div>
+                <div class="zh-gloss-orig">Relacja / Реляція</div>
+                <div class="zh-gloss-def">Офіційний звіт возного про виконання судового доручення — огляд місця злочину, оцінку збитків. Фіксувався й вписувався до гродських книг негайно.</div>
+            </div>
+            <div class="zh-gloss-item">
+                <div class="zh-gloss-term">Маніфестація</div>
+                <div class="zh-gloss-orig">Manifestacja / Маніфестація</div>
+                <div class="zh-gloss-def">Публічна заява-скарга, подана до суду відразу після події, щоб зафіксувати факт шкоди. «Поки сліди ще свіжі» — обов'язкова умова юридичної сили.</div>
+            </div>
+            <div class="zh-gloss-item">
+                <div class="zh-gloss-term">Атестація</div>
+                <div class="zh-gloss-orig">Atestacja / Атестація</div>
+                <div class="zh-gloss-def">Свідчення під присягою — фінальний рівень юридичного підтвердження. Відповідальність присяжного була особистою й духовною.</div>
+            </div>
+            <div class="zh-gloss-item">
+                <div class="zh-gloss-term">Возний генерал</div>
+                <div class="zh-gloss-orig">Woźny generalny</div>
+                <div class="zh-gloss-def">Найнижча, але ключова посада в судочинстві РП. «Очі і вуха» закону: возний виїжджав «в поле», особисто фіксував факти, його свідченням суд довіряв беззастережно.</div>
+            </div>
+            <div class="zh-gloss-item">
+                <div class="zh-gloss-term">Renevat</div>
+                <div class="zh-gloss-orig">Лат. renovatus</div>
+                <div class="zh-gloss-def">Латинізм у формулі «возний-реневат» — той, хто «відновлює» або «повторює» свідчення перед судом. Юридична канцелярська формула XVII ст.</div>
+            </div>
+            <div class="zh-gloss-item">
+                <div class="zh-gloss-term">Дим / Подимне</div>
+                <div class="zh-gloss-orig">Dym / Podymne</div>
+                <div class="zh-gloss-def">Дим — одиниця оподаткування: одне господарство (хата з димарем), одна родина. Подимне — податок із кожного такого господарства за ухвалою Сейму.</div>
+            </div>
+            <div class="zh-gloss-item">
+                <div class="zh-gloss-term">Стація</div>
+                <div class="zh-gloss-orig">Stacyja / Stacja</div>
+                <div class="zh-gloss-def">Обов'язок населення утримувати розквартироване військо — годувати солдатів і коней. На практиці часто перетворювалась на відверте пограбування.</div>
+            </div>
+            <div class="zh-gloss-item">
+                <div class="zh-gloss-term">Квіт</div>
+                <div class="zh-gloss-orig">Kwit</div>
+                <div class="zh-gloss-def">У цьому контексті — не розписка про гроші, а письмове посвідчення факту, офіційний документ, яким возний засвідчував результати свого огляду.</div>
+            </div>
+            <div class="zh-gloss-item">
+                <div class="zh-gloss-term">Козаки-ребелізанти</div>
+                <div class="zh-gloss-orig">Kozacy Rebelizanci</div>
+                <div class="zh-gloss-def">Офіційна польська назва учасників повстання Богдана Хмельницького. Документ написано 1650 р. — між Зборівським миром (1649) і Берестецькою битвою (1651).</div>
+            </div>
+            <div class="zh-gloss-item">
+                <div class="zh-gloss-term">Барть / Рудня</div>
+                <div class="zh-gloss-orig">Barć / Rudnia</div>
+                <div class="zh-gloss-def">Барть — вулик-борть у стовбурі дерева (бортницьке бджільництво). Рудня — залізоплавильне підприємство при водяному млині. Обидва — типові для Полісся промисли.</div>
+            </div>
+            <div class="zh-gloss-item">
+                <div class="zh-gloss-term">Погорілище</div>
+                <div class="zh-gloss-orig">Pogorzelisko</div>
+                <div class="zh-gloss-def">Місце, де все згоріло. Формула «nowo na pogorzelisku pobudowanych» (нових, збудованих на попелищі) у документі свідчить, що вже за кілька місяців люди поверталися й відбудовувалися.</div>
+            </div>
+            <div class="zh-gloss-item">
+                <div class="zh-gloss-term">Stępkowski</div>
+                <div class="zh-gloss-orig">Стемпковський</div>
+                <div class="zh-gloss-def">Командир польського загону з татарами. У рукописі: «Stepkowsky» — помилкове читання як «Стефановський» є некоректним. Правильне прочитання — Стемпковський, відоме шляхетське прізвище.</div>
+            </div>
+        </div>
+    </div><!-- /panel-glossary -->
+
+    <!-- ══ PANEL: CONTEXT ══ -->
+    <div class="zh-panel" id="panel-context">
+        <div class="zh-eyebrow"><span>Історичний контекст та значення документу</span></div>
+
+        <div class="zh-note zh-war-note" style="margin-bottom:2rem;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <div>
+                <div class="zh-note-label">1650 рік — між Зборівським миром та Берестецькою битвою</div>
+                <p class="zh-note-text">Документи написані у розпалі <strong>Хмельниччини</strong>. Поліщуки страждали від козацьких рейдів, польських і литовських гарнізонів та татарських союзних загонів — одночасно. Для звичайної людини з Дубровиці не було різниці між «своїм» і «чужим» — грабували всі.</p>
+            </div>
+        </div>
+
+        <div class="zh-context-grid">
+            <div class="zh-context-card red">
+                <div class="zh-context-head">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14.5 10c-.83 0-1.5-.67-1.5-1.5v-5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5z"/><path d="M20.5 10H19V8.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/><path d="M9.5 14c.83 0 1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5S8 21.33 8 20.5v-5c0-.83.67-1.5 1.5-1.5z"/><path d="M3.5 14H5v1.5c0 .83-.67 1.5-1.5 1.5S2 16.33 2 15.5 2.67 14 3.5 14z"/><path d="M14 14.5c0-.83.67-1.5 1.5-1.5h5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5h-5c-.83 0-1.5-.67-1.5-1.5z"/><path d="M15.5 9H14v1.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5-.67-1.5-1.5-1.5z"/><path d="M10 9.5C10 8.67 9.33 8 8.5 8h-5C2.67 8 2 8.67 2 9.5S2.67 11 3.5 11h5c.83 0 1.5-.67 1.5-1.5z"/><path d="M8.5 15H10v-1.5c0-.83-.67-1.5-1.5-1.5S7 12.67 7 13.5s.67 1.5 1.5 1.5z"/></svg>
+                    Чотири агресори одночасно
+                </div>
+                <div class="zh-context-body">
+                    Документ унікально фіксує <strong>всі чотири сторони</strong>, що вчиняли насильство:<br><br>
+                    <strong>1. Козаки-повстанці</strong> — грабунок і підбурювання підданих;<br>
+                    <strong>2. Коронні та литовські хоругви</strong> — спалення сіл при відступі;<br>
+                    <strong>3. Татарські загони Стемпковського</strong> — п'яти-шести тижневе мародерство;<br>
+                    <strong>4. Голод</strong> — наслідок тотального знищення врожаю і запасів зерна.
+                </div>
+            </div>
+
+            <div class="zh-context-card">
+                <div class="zh-context-head">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                    Юридична культура посеред пожеж
+                </div>
+                <div class="zh-context-body">
+                    Попри воєнний хаос, <strong>бюрократична машина Речі Посполитої продовжувала працювати</strong>. Гродські книги велись, возні виїжджали «в поле», шляхтичі-свідки підписувались, а документи сплачували по <strong>6 грошів мита</strong>.<br><br>
+                    Це свідчить про неймовірну інституційну живучість правової системи — і про те, що власники мали чіткий юридичний інтерес: зафіксовані збитки = підстава для <strong>звільнення від податків</strong>.
+                </div>
+            </div>
+
+            <div class="zh-context-card">
+                <div class="zh-context-head">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    Виживаність народу
+                </div>
+                <div class="zh-context-body">
+                    Найдивовижніший факт документу — <strong>Стрільськ і Глушиця</strong>. Обидва села були повністю спалені. Але в атестації від квітня 1650 р. там уже нараховано <strong>20 і 8 нових хат</strong> «на погорілищі».<br><br>
+                    Від пожежі до відбудови — менше року. Люди поверталися на попелища і починали жити заново. Це не просто статистика — це свідчення <strong>неймовірної стійкості поліщуків</strong>.
+                </div>
+            </div>
+
+            <div class="zh-context-card">
+                <div class="zh-context-head">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                    Географія документу сьогодні
+                </div>
+                <div class="zh-context-body">
+                    Більшість згаданих у документі сіл <strong>існують і сьогодні</strong> у Рівненській та Хмельницькій областях України:<br><br>
+                    Дубровиця, <strong>Клесів</strong>, <strong>Карпилівка</strong>, <strong>Велюнь</strong>, <strong>Стрільськ</strong>, <strong>Залішани</strong>, <strong>Білa</strong> — всі ці населені пункти є на сучасній карті. <strong>Нивецьк</strong> (Нивецьке) — зараз затоплений Хмельницьким водосховищем.
+                </div>
+            </div>
+        </div>
+
+        <div class="zh-note" style="margin-top:.5rem;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <div>
+                <div class="zh-note-label">Дійові особи документу</div>
+                <p class="zh-note-text">
+                    <strong>Андрій Сахновський</strong> — возний генерал Берестейського воєводства, безпосередній укладач реляцій.
+                    <strong>Миколай Березецький</strong> — управитель (Starosta) Дубровицького маєтку, автор маніфестації й атестації.
+                    <strong>Стефан Четвертинський</strong> — підкоморій Луцький, власник маєтку та опікун сиріт Борка.
+                    <strong>Марцин Борек Сендзівой</strong> — покійний попередній власник (суддя Вінницький), дід Четвертинського по материнській лінії.
+                    <strong>Стемпковський</strong> — командир загону жовнірів із татарами, «відряджений» нібито від воєводи Руського.
+                    <strong>Стефан Казимир Война</strong> — писар господарський Пінського воєводства, завіряв документи.
+                </p>
+            </div>
+        </div>
+    </div><!-- /panel-context -->
+
+</div><!-- /zh-body -->
+
+<!-- Lightbox -->
+<div id="ZHLB">
+    <button id="ZHLB-CLOSE" onclick="zhCloseLB()" aria-label="Закрити">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <button id="ZHLB-NAV-L" onclick="zhNavLB(-1)">&#8249;</button>
+    <button id="ZHLB-NAV-R" onclick="zhNavLB(1)">&#8250;</button>
+    <div id="ZHLB-VP">
+        <img id="ZHLB-IMG" src="" alt="" draggable="false">
+    </div>
+    <div id="ZHLB-BAR">
+        <span id="ZHLB-CAP"></span>
+        <span id="ZHLB-IDX"></span>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4 class="footer-title">Дубровиця</h4>
+                <p class="footer-text">Цифровий архів історичної спадщини міста Дубровиця, Рівненська область, Україна.</p>
+            </div>
+            <div class="footer-section">
+                <h4 class="footer-title">Навігація</h4>
+                <nav class="footer-nav">
+                    <a href="history.html">Історія</a>
+                    <a href="photo-archive.html">Фотоархів</a>
+                    <a href="metrychni-knyhy.html">Метричні книги</a>
+                    <a href="books.html">Книги</a>
+                </nav>
+            </div>
+            <div class="footer-section">
+                <h4 class="footer-title">Контакти</h4>
+                <p class="footer-text">Маєте матеріали?<br><a href="contacts.html" class="footer-link">Зв'яжіться з нами</a></p>
+            </div>
+        </div>
+        <div class="footer-copyright-row">
+            <div class="footer-copyright-ornament">
+                <div class="footer-copyright-ornament-line"></div>
+                <div class="footer-copyright-ornament-diamond"></div>
+                <div class="footer-copyright-ornament-line"></div>
+            </div>
+            <p class="footer-copyright-main">
+                &copy; 2026 <a href="https://dubrovytsia.site">dubrovytsia.site</a> — Цифровий архів Дубровиці, Рівненська область, Україна.
+            </p>
+            <p class="footer-copyright-notice">
+                Документи розміщено виключно в освітніх та науково-дослідних цілях.
+                При цитуванні — обов'язкове активне посилання на <em>dubrovytsia.site</em>.
+            </p>
+        </div>
+    </div>
+</footer>
+
+<script src="app.js"></script>
+<script>
+/* ── Tabs ── */
+document.querySelectorAll('.zh-tab').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+        var panel = this.getAttribute('data-panel');
+        document.querySelectorAll('.zh-tab').forEach(function(b){ b.classList.remove('active'); });
+        document.querySelectorAll('.zh-panel').forEach(function(p){ p.classList.remove('active'); });
+        this.classList.add('active');
+        document.getElementById('panel-' + panel).classList.add('active');
+    });
+});
+
+/* ── Part nav (transcript + translation) ── */
+document.querySelectorAll('.zh-part-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+        var part = this.getAttribute('data-part');
+        var parent = this.closest('.zh-panel');
+        parent.querySelectorAll('.zh-part-btn').forEach(function(b){ b.classList.remove('active'); });
+        parent.querySelectorAll('.zh-doc-part').forEach(function(p){ p.classList.remove('active'); });
+        this.classList.add('active');
+        parent.querySelector('#part-' + part).classList.add('active');
+    });
+});
+
+/* ── Lightbox ── */
+var ZH_SCANS = [
+    {src:'https://i.imgur.com/kKYrt4h.jpeg', cap:'img0001 · Реляція · Сторінка 1'},
+    {src:'https://i.imgur.com/yiAXkKr.jpeg', cap:'img0002 · Реляція · Сторінка 2'},
+    {src:'https://i.imgur.com/IavNR4e.jpeg', cap:'img0003 · Реляція · Сторінка 3'},
+    {src:'https://i.imgur.com/bXMhh1G.jpeg', cap:'img0004 · Реляція · Обкладинка'},
+    {src:'https://i.imgur.com/gU3f28o.jpeg', cap:'img0005 · Маніфестація · Сторінка 1'},
+    {src:'https://i.imgur.com/bgKQlcY.jpeg', cap:'img0006 · Маніфестація · Сторінка 2'},
+    {src:'https://i.imgur.com/7MRAkfm.jpeg', cap:'img0007 · Маніфестація · Завірення'},
+    {src:'https://i.imgur.com/a01fqi4.jpeg', cap:'img0008 · Маніфестація · Обкладинка'},
+    {src:'https://i.imgur.com/Opfu6Dv.jpeg', cap:'img0009 · Атестація · Перепис димів'},
+    {src:'https://i.imgur.com/it7mDUA.jpeg', cap:'img0010 · Атестація · Заріччя'},
+    {src:'https://i.imgur.com/hgy7Is0.jpeg', cap:'img0011 · Атестація · Присяга'},
+    {src:'https://i.imgur.com/jUVD2Xb.jpeg', cap:'img0012 · Атестація · Обкладинка'}
+];
+var zhLBIdx = 0;
+var zhLBOpen = false;
+
+function zhOpenLB(i) {
+    zhLBIdx = i;
+    var lb = document.getElementById('ZHLB');
+    var img = document.getElementById('ZHLB-IMG');
+    var cap = document.getElementById('ZHLB-CAP');
+    var idx = document.getElementById('ZHLB-IDX');
+    img.src = ZH_SCANS[i].src;
+    cap.textContent = ZH_SCANS[i].cap;
+    idx.textContent = (i + 1) + ' / ' + ZH_SCANS.length;
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    zhLBOpen = true;
+}
+function zhCloseLB() {
+    document.getElementById('ZHLB').classList.remove('open');
+    document.body.style.overflow = '';
+    zhLBOpen = false;
+}
+function zhNavLB(dir) {
+    zhLBIdx = (zhLBIdx + dir + ZH_SCANS.length) % ZH_SCANS.length;
+    zhOpenLB(zhLBIdx);
+}
+document.addEventListener('keydown', function(e) {
+    if (!zhLBOpen) return;
+    if (e.key === 'Escape') zhCloseLB();
+    if (e.key === 'ArrowLeft') zhNavLB(-1);
+    if (e.key === 'ArrowRight') zhNavLB(1);
+});
+document.getElementById('ZHLB').addEventListener('click', function(e) {
+    if (e.target === this) zhCloseLB();
+});
+</script>
+</body>
+</html>
