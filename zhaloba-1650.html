@@ -1,13 +1,21 @@
 <!DOCTYPE html>
 <html lang="uk" data-theme="light">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WGBZ0BD23K"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-WGBZ0BD23K');
+</script>
     <meta charset="UTF-8">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="manifest" href="site.webmanifest">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Скарга слуги князя Четвертинського про спустошення Дубровицького маєтку козаками та жовнірами 1650 р.">
-    <title>Скарга 1650 — Дубровиця · Цифровий архів</title>
+    <meta name="description" content="Жалоба слуги графа Четвертинського про спустошення Дубровицького маєтку козаками та жовнірами 1650 р.">
+    <title>Жалоба 1650 — Дубровиця · Цифровий архів</title>
     <script>!function(){var t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t)}()</script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -659,72 +667,6 @@
     .zh-tab { padding: .6rem .75rem; font-size: .6rem; }
     .zh-gloss-grid { grid-template-columns: 1fr; }
 }
-
-/* ── Enhanced responsive improvements ── */
-@media(max-width:768px){
-    .zh-hero { padding: 5rem 1.2rem 4rem; }
-    .zh-hero-title { font-size: clamp(1.8rem, 6vw, 2.8rem); }
-    .zh-hero-meta { margin: 0 0 1.6rem; }
-    .zh-hero-meta-item { padding: .85rem .7rem; }
-    .zh-hero-meta-val { font-size: 1.25rem; }
-    .zh-hero-meta-key { font-size: .45rem; }
-    .zh-hero-alert { font-size: .6rem; padding: .65rem 1rem; }
-    .zh-tabs {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        flex-wrap: nowrap;
-        padding-bottom: 0;
-        scrollbar-width: none;
-    }
-    .zh-tabs::-webkit-scrollbar { display: none; }
-    .zh-tab { white-space: nowrap; flex-shrink: 0; }
-    .zh-transcript { gap: 1.4rem; }
-    .zh-original { font-size: .88rem; padding: 1rem 1.1rem; line-height: 1.85; }
-    .zh-translation { font-size: .82rem; padding: 1rem 1.1rem; }
-    .zh-part-nav { gap: .3rem; }
-    .zh-part-btn { padding: .45rem .9rem; font-size: .62rem; }
-    .zh-city-block { flex-direction: column; gap: .75rem; padding: 1.1rem 1.2rem; align-items: flex-start; }
-    .zh-city-num { font-size: 2.4rem; }
-    .zh-villages-grid { grid-template-columns: repeat(2, 1fr); gap: .6rem; }
-    .zh-context-grid { grid-template-columns: 1fr; gap: 1rem; }
-    .zh-note { padding: 1rem 1.1rem; gap: .75rem; }
-    .zh-gloss-grid { grid-template-columns: 1fr; gap: .8rem; }
-    .zh-hero-bottom { margin: 2rem -1.2rem -4rem; }
-}
-
-@media(max-width:420px){
-    .zh-hero { padding: 4.5rem 1rem 3.5rem; }
-    .zh-hero-meta { flex-wrap: wrap; }
-    .zh-hero-meta-item { min-width: 45%; border: none; padding: .7rem; }
-    .zh-hero-meta { border-radius: 10px; }
-    .zh-villages-grid { grid-template-columns: repeat(2, 1fr); }
-    .zh-scans-grid { grid-template-columns: repeat(2,1fr); gap:.4rem; }
-    .zh-body { padding: 1.5rem 1rem 4rem; }
-    .zh-breadcrumb { font-size: .65rem; }
-    .zh-tabs { gap: .2rem; }
-    .zh-tab { padding: .55rem .65rem; font-size: .58rem; }
-    .zh-gloss-item { padding: 1rem 1.1rem; }
-    .zh-context-card { padding: 1.2rem 1.1rem; }
-}
-
-/* ── Part nav scroll on small screens ── */
-.zh-part-nav {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    padding-bottom: 2px;
-}
-.zh-part-nav::-webkit-scrollbar { display: none; }
-.zh-part-btn { white-space: nowrap; flex-shrink: 0; }
-
-/* ── Smooth scan image loading ── */
-.zh-scan-img { background: var(--parchment-dark); }
-
-/* ── Better focus states ── */
-.zh-tab:focus-visible, .zh-part-btn:focus-visible {
-    outline: 2px solid rgba(201,162,39,.6);
-    outline-offset: 2px;
-}
 </style>
 
 <style>
@@ -774,7 +716,7 @@ a, button, [role="button"], input, select, textarea,
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.4"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
     </div>
     <div class="zh-hero-eyebrow">Архівний документ · Гродські книги Пінські · 1650</div>
-    <h1 class="zh-hero-title">Скарга про спустошення<br><em>Дубровицького маєтку</em></h1>
+    <h1 class="zh-hero-title">Жалоба про спустошення<br><em>Дубровицького маєтку</em></h1>
     <p class="zh-hero-subtitle">Relacja, Manifestacja i Atestacja dóbr Dąbrowickich · Anno Domini 1650</p>
 
     <div class="zh-hero-meta">
@@ -810,7 +752,7 @@ a, button, [role="button"], input, select, textarea,
     <div class="zh-breadcrumb">
         <a href="metrychni-knyhy.html">Метричні книги</a>
         <span>›</span>
-        <span>Скарга 1650</span>
+        <span>Жалоба 1650</span>
     </div>
 
     <!-- Tabs -->
@@ -1013,9 +955,9 @@ a, button, [role="button"], input, select, textarea,
 
 На уряде кгродском в замку Пинском пере мною Яном на Столпю Ясиковским подстаростим пинским и в книгах нинешних гродских Пинских покладал реляцию возный генерал его королевской милости воеводства Берестейского Андрій Сахновский, которую до книг гродских Пинских вписати просил, в тые слова:
 
-<em>Ja, Andrey Sachiowski, renevat ego Królewskiej Mości Powiatu Pińskiego zeznawam tym moim kwitem, iz roku terazniejszego tysiącznego sześćset pięćdziesiątego miesiąca Aprila piątego dnia, mając za przy sobie stronę szlachtę Pana Jana Dikowiczkiego a Pana Andreya Istomiczkiego, z któremi byłm uczynił na sprawę niżej pomienioną od sługi Pana Jego Mości Hrehovego Czetwertyńskiego Podkomorzego Luckiego od Pana Mikołaja Berezeczkiego sprawcy Dąbrowickiego do majętności Dąbrowicy w powiecie Pińskim leżącej, tamże przed mną renevatem, stroną szlachecką Pan Berezeczki opowiadał to, iż ta majętność Dąbrowicka po nieboszczyku Jego Mości Panu Marcinie Borku, sędzim winnickim, Дзіад Jego Mości Pana Podkomorzego Luckiego została, pierwej przez kozaków a potym przez żołnierzow jest bardzo spustoszona i zniszczona.</em>
+<em>Ja, Andrey Sachiowski, renevat ego Królewskiej Mości Powiatu Pińskiego zeznawam tym moim kwitem, iz roku terazniejszego tysiącznego sześćset pięćdziesiątego miesiąca Aprila piątego dnia, mając za przy sobie stronę szlachtę Pana Jana Dikowiczkiego a Pana Andreya Istomiczkiego, z któremi byłm uczynił na sprawę niżej pomienioną od sługi Pana Jego Mości Hrehovego Czetwertyńskiego Podkomorzego Luckiego od Pana Mikołaja Berezeczkiego sprawcy Dąbrowickiego do majętności Dąbrowicy w powiecie Pińskim leżącej, tamże przed mną renevatem, stroną szlachecką Pan Berezeczki opowiadał to, iż ta majętność Dąbrowicka po nieboszczyku Jego Mości Panu Boiku Sodziwinia Дзіад Jego Mości Pana Podkomorzego Luckiego została, pierwej przez kozaków a potym przez żołnierzow jest bardzo spustoszona i zniszczona.</em>
 
-<em>Poddani jedni z kozakami pobuntowani, a drudzy od motłochu zniszczeni i rabeżeni precz powychodzili, a inne wsi przez żołnierza popalone zostały. Gdzie za obiedzeniem i okazaniem Jego Pana Berezeczkiego naprzód w samym mieście Dąbrowicy na części Sodziwinia Dziada Jego Mości będącej widziałem domow pustych niemało, których na liczyło się domow pustych dwadzieścia pięć. Potym zjeździliśmy Jego Dnia wyżej pomienionego do siół do tej majętności Dąbrowickiej należących: naprzód do sioła Beresteczka, tamże za okazaniem widziałem domow pustych trzy. Potym we wsi Orwenicy okazowali domow pustych siedm. We wsi Niwecku widziałem domow pustych siedm. We wsi Moczuliszczach widziałem domow pustych cztery. We wsi Zaleszanach widziałem domow pustych cztery. Potym nazajutrz, to jest dnia szóstego m-ca Aprila, widzieliśmy do siół za rzeką Słuczą będących do tej majętności Dąbrowicy należących, naprzód do sioła Białej, tam w tej wsi za okazaniem widziałem domow pustych osiem. W drugiej wsi Wieluniu widziałem domow pustych osiem. We wsi Ludyniczach widziałem domow pustych sześć. We wsi Klesowie widziałem domow pustych dwanaście. We wsi Korpilowce widziałem domow pustych osiem.</em>
+<em>Poddani jedni z kozakami pobuntowani, a drudzy od motłochu zniszczeni i rabeżeni precz powychodzili, a inne wsi przez żołnierza popalone zostały. Gdzie za obiedzeniem i okazaniem Jego Pana Berezeczkiego naprzód w samym mieście Dąbrowicy na części Sodziwinia Dziada Jego Mości będącej widziałem domow pustych niemało, których na liczyło się domow pustych dwadzieścia pięć. Potym zjeździliśmy Jego Dnia wyżej pomienionego do siół do tej majętności Dąbrowickiej należących: naprzód do sioła Beresteczka, tamże za okazaniem widziałem domow pustych trzy. Potym we wsi Orwenicy okazowali domow pustych siedm. We wsi Niwecku widziałem domow pustych siedm. We wsi Moczuliszczach widziałem domow pustych cztery. We wsi Zaleszanach widziałem domow pustych cztery. Potym nazajutrz, to jest dnia szóstego m-ca Aprila, widzieliśmy do siół za rzeką Słuczą będących do tej majętności Dąbrowicy należących, naprzód do sioła Białej, tam w tej wsi za okazaniem widziałem domow pustych osiem. W drugiej wsi Wieluniu widziałem domow pustych osiem. We wsi Łuniczach widziałem domow pustych sześć. We wsi Klesowie widziałem domow pustych dwanaście. We wsi Korpilowce widziałem domow pustych osiem.</em>
 
 <em>Potym tegoż dnia przyjechawszy do wsi Strzelska, tamże za okazaniem widziałem domow wszystkich dwadzieścia, nowo napogorzelisku pobudowanych, a wszystka wieś była spalona. Potym we wsi Hłuszycy także widziałem chałup osiem nowopobudowanych na pogorzelisku, а wszystka wieś także była spalona.</em>
 
@@ -1031,9 +973,10 @@ a, button, [role="button"], input, select, textarea,
                     </div>
                     <div class="zh-translation">
                         <p><strong>«Renevat»</strong> — латинізм у тексті: «возний, що відновлює / повторює свідчення перед судом». Це офіційна формула для позначення посади.</p>
+                        <p><strong>«Boiku Sodziwinia»</strong> — у транскрипції це дещо спотворене прочитання скоропису. Правильно: <strong>«Marcin Borek Sędziwój»</strong> — Марцин Борек, суддя Вінницький.</p>
                         <p><strong>«Побунтовані з козаками» / «від натовпу знищені і пограбовані»</strong> — дві долі підданих. Частина свідомо приєдналась до повстання, частина просто стала жертвою мародерства.</p>
                         <p><strong>«Nowo na pogorzelisku pobudowanych»</strong> — «наново на попелищі побудованих» — ключова фраза. Свідчить, що через кілька місяців після пожеж люди повертались і відбудовувались.</p>
-                        <p><strong>Маршрут возного 5–6 квітня:</strong> Дубровиця → Береcть → Орв'яниця → Нивецьк → Мочулище → Залішани (день 1); Біле → Велюнь → Людинь → Клесів → Карпилівка → Стрільськ → Глушиця (день 2).</p>
+                        <p><strong>Маршрут возного 5–6 квітня:</strong> Дубровиця → Береcть → Орв'яниця → Нивецьк → Мочулище → Залішани (день 1); Біла → Велюнь → Лунічі → Клесів → Карпилівка → Стрільськ → Глушиця (день 2).</p>
                     </div>
                 </div>
             </div>
@@ -1101,7 +1044,7 @@ a, button, [role="button"], input, select, textarea,
 
 <em>Ja, Mikołay Berezeczky, sługa Księcia Jego Mości Stefana Czetwertyńskiego Podkomorzego Łuckiego, oznajmuję tą atestacyją moją, jako według uchwały Sejmu Walnego Warszawskiego w roku przeszłym tysiąc sześćset czterdziestym dziewiątym odprawionej, podymne ma być uchwalone, które ja z majętności w dzierżeniu Księcia JM Pana mego będącej, z połowicy miasta Dąbrowicy y siół do niego należących, ze pobranie wybrałwszy sprawiedliwie do rąk Panów Poborców oddaję, mianowicie:</em>
 
-<em>Z połowicy miasta Dąbrowicy, w której znajdują się z popowskimi domami dwiema, wszystkich dymów 120, gdzie ludzie mieszkania mają. Tamże młynów dwa po jednym kole na rzece Horyniu. We wsi Beresteczka dymów piętnaście. We wsi Orwianicy dymów dwadzieścia. We wsi Niwecku dymów trzydzieście, tamże młyn z rudnią. We wsi Moczulishczach domów siedm. We wsi Zaleszanach dymów siedm. A we wsiach za rzeką Słuczą: we wsi Białej domów dziesięć. We wsi Wieluniu z młynem jednym w kole dymów siedemnaście. We wsi Ludyniczach dymów ośm. We wsi Klesowie dymów dwadzieścia. We wsi Karpylowce dymów ośm. Na wsi Strzelsku dymów dwadzieścia z popowskim domem nowo na pogorzelisku pobudowanych z młynem na rzece Słuczy o jednym kole. We wsi Hłuczycy dymów ośm nowo pobudowanych z młynem na rzece Słuczy.</em>
+<em>Z połowicy miasta Dąbrowicy, w której znajdują się z proroczymi domami dwiema, wszystkich dymów 120, gdzie ludzie mieszkania mają. Tamże młynów dwa po jednym kole na rzece Horyniu. We wsi Beresteczka dymów piętnaście. We wsi Orwianicy dymów dwadzieścia. We wsi Niwecku dymów trzydzieście, tamże młyn z rudnią. We wsi Moczulishczach domów siedm. We wsi Zaleszanach dymów siedm. A we wsiach za rzeką Słuczą: we wsi Białej domów dziesięć. We wsi Wieluniu z młynem jednym w kole dymów siedemnaście. We wsi Ludyniczach dymów ośm. We wsi Klesowie dymów dwadzieścia. We wsi Karpylowce dymów ośm. Na wsi Strzelsku dymów dwadzieścia z popowskim domem nowo na pogorzelisku pobudowanych z młynem na rzece Słuczy o jednym kole. We wsi Hłuczycy dymów ośm nowo pobudowanych z młynem na rzece Słuczy.</em>
 
 <em>Na którym wybraniu tego подымного, którego do rąk Panów Poborców oddaję, wziąłem trzej: jednego z miasta Dąbrowicy Klima Kasiuszyca, drugiego ze wsi Moculishcze Makara Kanonowicza, а trzeciego ze wsi Białej Fedora Łukianowicza, na tym, iż jako więcej domów, w których by ludzie mieszkali nie masz, do przysięgi posyłam.</em>
 
@@ -1109,7 +1052,7 @@ a, button, [role="button"], input, select, textarea,
 
 Я, Клим Канунич, войт з Пинска, присягаю.
 Я, Макар Ранонович, войт з Моцулишч, присягаю.
-Я, Федор Лукянович, войт з села Білого, присягаю.
+Я, Федор Лукянович, войт з села Білої, присягаю.
 
 Присягнули, іж яко в містах і в селах по велі закону господнього і по закону посполитому поправдиве уписали, нічого не таїли і не опустошили.
 
@@ -1124,7 +1067,7 @@ a, button, [role="button"], input, select, textarea,
                     </div>
                     <div class="zh-translation">
                         <p><strong>«Подимне»</strong> — податок з кожного «диму» (господарства). Ухвалено Варшавським сеймом 1649 р. Декларація подавалась під присягою, щоб уникнути фальсифікацій.</p>
-                        <p><strong>«З поповськими домами двома»</strong> — будинки, що належали священикам (попам). Виключені з оподаткування або враховувались окремо як церковна власність.</p>
+                        <p><strong>«З пророчими домами двома»</strong> — мабуть, будинки-прогнози / будинки-застави. Можлива також інтерпретація: «профані» (нецерковні) будинки.</p>
                         <p><strong>Млин з рудньою у Нивецьку</strong> — важлива деталь: рудня (залізоплавильне підприємство) при млині. Свідчить про промислову функцію маєтку.</p>
                         <p><strong>«Nowo na pogorzelisku pobudowanych»</strong> (Стрільськ, Глушиця) — тут ця фраза має іронічно-трагічний відтінок у контексті податкової декларації: лічимо «нові» хати на попелі.</p>
                         <p><strong>Три присяжні — по одному від трьох різних сіл</strong> — стандартна юридична процедура. Кожен представляв своє село і ніс особисту відповідальність за точність даних.</p>
@@ -1166,9 +1109,9 @@ a, button, [role="button"], input, select, textarea,
                 • У селі Мочулище: <strong>4 порожніх будинки</strong><br>
                 • У селі Залішани: <strong>4 порожніх будинки</strong></p>
                 <p>Наступного дня, 6 квітня, за річкою Случ:</p>
-                <p>• У селі Біле: <strong>8 порожніх будинків</strong><br>
+                <p>• У селі Біла: <strong>8 порожніх будинків</strong><br>
                 • У селі Велюнь: <strong>8 порожніх будинків</strong><br>
-                • У селі Людинь: <strong>6 порожніх будинків</strong><br>
+                • У селі Лунічі: <strong>6 порожніх будинків</strong><br>
                 • У селі Клесів: <strong>12 порожніх будинків</strong><br>
                 • У селі Карпилівка: <strong>8 порожніх будинків</strong><br>
                 • У селі Стрільськ: <strong>20 будинків, заново відбудованих на попелищі</strong> — все село було спалене<br>
@@ -1188,7 +1131,7 @@ a, button, [role="button"], input, select, textarea,
             </div>
             <div class="zh-translation" style="max-width:820px;">
                 <p><strong>Виписка з книг гродських Пінських. Року 1650, вересня 22 дня.</strong></p>
-                <p>«Я, Миколай Березецький, управитель Дубровицький, від імені Ясновельможного князя Стефана Четвертинського, підкоморія Луцького, заявляю про велике нещастя. Прибувши до Дубровиці (маєток залишився сиротам після покійного Марцина Борка, судді Вінницького), я виявив повне спустошення.</p>
+                <p>«Я, Миколай Березецький, управитель Дубровицький, від імені Ясновельможного князя Стефана Четвертинського, підкоморія Луцького, заявляю про велике нещастя. Прибувши до Дубровиці (маєток залишився сиротам після покійного Марцина Борка Сендзівоя), я виявив повне спустошення.</p>
                 <p>Маєток — замок, фольварки і села — спочатку пограбували козаки-повстанці. Потім грабували коронні та литовські війська (пінські хоругви). А нещодавно пан <strong>Стемпковський</strong> зі своїми хоругвами та <strong>татарами</strong>, діючи нібито з відома воєводи Руського, з 8 липня перебував тут понад п'ять тижнів.</p>
                 <p>Вони вимагали від містечка величезні кошти (стації), накладали нелюдські тягарі, <strong>забирали хліб, грабували стодоли, вивозили зерно з полів</strong>, а те, що не забрали — витоптали кіньми. Виривали вулики з пасік (і дворянських, і селянських). Забирали у міщан і селян <strong>всю рогату худобу, волів, корів та коней</strong>. Через ці злочини <strong>люди тепер пухнуть і вмирають від голоду</strong>.</p>
                 <p>Також зазначаю: золото, срібло, мідь та готівка, що належали покійному Борку, зберігались у Пінську. Після його вбивства підвоєвода Петро Краківський передав ці речі рідній тітці сиріт — пані Ельжбеті Боратинській-Білецькій.</p>
@@ -1209,21 +1152,21 @@ a, button, [role="button"], input, select, textarea,
             <div class="zh-translation" style="max-width:820px;">
                 <p><strong>Виписка з книг гродських Пінських. 14 квітня 1650 року.</strong></p>
                 <p>«Я, Миколай Березецький, слуга князя Стефана Четвертинського, підкоморія Луцького, згідно з ухвалою Варшавського сейму 1649 р. про збір подимного податку, перераховую господарства («дими») і передаю дані збирачам:</p>
-                <p>• Місто Дубровиця (половина): <strong>120 димів</strong> з двома поповськими будинками, два млини на річці Горинь<br>
+                <p>• Місто Дубровиця (половина): <strong>120 димів</strong>, два млини на річці Горинь<br>
                 • Береcть: <strong>15 димів</strong><br>
                 • Орв'яниця: <strong>20 димів</strong><br>
                 • Нивецьк: <strong>30 димів</strong> та млин із рудньою<br>
                 • Мочулище: <strong>7 хат</strong><br>
                 • Залішани: <strong>7 димів</strong></p>
                 <p>За річкою Случ:</p>
-                <p>• Біле: <strong>10 хат</strong><br>
+                <p>• Біла: <strong>10 хат</strong><br>
                 • Велюнь: <strong>17 димів</strong> та млин<br>
                 • Людинь: <strong>8 димів</strong><br>
                 • Клесів: <strong>20 димів</strong><br>
                 • Карпилівка: <strong>8 димів</strong><br>
                 • Стрільськ: <strong>20 димів</strong> (нових, на попелищі) та млин на Случі<br>
                 • Глушиця: <strong>8 нових хат</strong> та млин на Случі</p>
-                <p>Для підтвердження надсилаю до присяги: Клима Касіушича з Дубровиці, Макара Канонича з Мочулищ та Федора Лукяновича з Білого. Вони присягають, що більше заселених будинків немає.</p>
+                <p>Для підтвердження надсилаю до присяги: Клима Касіушича з Дубровиці, Макара Канонича з Мочулищ та Федора Лукяновича з Білої. Вони присягають, що більше заселених будинків немає.</p>
                 <p>10 квітня 1650 р. <strong>Миколай Березецький, намісник Дубровицький.</strong>»</p>
                 <p>Війти склали присягу перед Богом, підтвердивши правдивість даних. Документ завірений писарем <strong>Стефаном Казимиром Войною</strong>.</p>
             </div>
@@ -1282,8 +1225,8 @@ a, button, [role="button"], input, select, textarea,
         <div class="zh-villages-grid">
             <div class="zh-village-card">
                 <div class="zh-village-num">10</div>
-                <div class="zh-village-name">Біле</div>
-                <div class="zh-village-label">хат · (Białe)</div>
+                <div class="zh-village-name">Біла</div>
+                <div class="zh-village-label">хат · (Biała)</div>
             </div>
             <div class="zh-village-card">
                 <div class="zh-village-num">17</div>
@@ -1292,7 +1235,7 @@ a, button, [role="button"], input, select, textarea,
             </div>
             <div class="zh-village-card">
                 <div class="zh-village-num">8</div>
-                <div class="zh-village-name">Людинь</div>
+                <div class="zh-village-name">Лунічі</div>
                 <div class="zh-village-label">димів · (Ludynicze)</div>
             </div>
             <div class="zh-village-card">
@@ -1323,7 +1266,7 @@ a, button, [role="button"], input, select, textarea,
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             <div>
                 <div class="zh-note-label">Присяжні свідки</div>
-                <p class="zh-note-text"><strong>Клим Касіушич</strong> — війт з Дубровиці · <strong>Макар Ранонович</strong> — війт з Мочулищ · <strong>Федор Лукянович</strong> — війт з Білого. Присягнули, що «по велі закону господнього і посполитому правдиво вписали, нічого не таїли і не пропустили».</p>
+                <p class="zh-note-text"><strong>Клим Касіушич</strong> — війт з Дубровиці · <strong>Макар Ранонович</strong> — війт з Мочулищ · <strong>Федор Лукянович</strong> — війт з Білої. Присягнули, що «по велі закону господнього і посполитому правдиво вписали, нічого не таїли і не пропустили».</p>
             </div>
         </div>
     </div><!-- /panel-census -->
@@ -1451,8 +1394,8 @@ a, button, [role="button"], input, select, textarea,
                     Географія документу сьогодні
                 </div>
                 <div class="zh-context-body">
-                    Усі згадані у документі села знаходяться у <strong>Дубровицькому районі Рівненської області</strong> — географія цього документу виключно Дубровиччина:<br><br>
-                    Дубровиця, <strong>Клесів</strong>, <strong>Карпилівка</strong>, <strong>Велюнь</strong>, <strong>Стрільськ</strong>, <strong>Залішани</strong>, <strong>Біле</strong>, <strong>Людинь</strong> — всі ці населені пункти є на сучасній карті Дубровицького району. <strong>Нивецьк</strong> — також знаходиться у межах Дубровицького району.
+                    Більшість згаданих у документі сіл <strong>існують і сьогодні</strong> у Рівненській та Хмельницькій областях України:<br><br>
+                    Дубровиця, <strong>Клесів</strong>, <strong>Карпилівка</strong>, <strong>Велюнь</strong>, <strong>Стрільськ</strong>, <strong>Залішани</strong>, <strong>Білa</strong> — всі ці населені пункти є на сучасній карті. <strong>Нивецьк</strong> (Нивецьке) — зараз затоплений Хмельницьким водосховищем.
                 </div>
             </div>
         </div>
@@ -1465,7 +1408,7 @@ a, button, [role="button"], input, select, textarea,
                     <strong>Андрій Сахновський</strong> — возний генерал Берестейського воєводства, безпосередній укладач реляцій.
                     <strong>Миколай Березецький</strong> — управитель (Starosta) Дубровицького маєтку, автор маніфестації й атестації.
                     <strong>Стефан Четвертинський</strong> — підкоморій Луцький, власник маєтку та опікун сиріт Борка.
-                    <strong>Марцин Борек</strong> — покійний попередній власник (суддя Вінницький), дід Четвертинського по материнській лінії.
+                    <strong>Марцин Борек Сендзівой</strong> — покійний попередній власник (суддя Вінницький), дід Четвертинського по материнській лінії.
                     <strong>Стемпковський</strong> — командир загону жовнірів із татарами, «відряджений» нібито від воєводи Руського.
                     <strong>Стефан Казимир Война</strong> — писар господарський Пінського воєводства, завіряв документи.
                 </p>
