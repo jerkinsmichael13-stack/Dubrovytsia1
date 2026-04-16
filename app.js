@@ -1,3 +1,16 @@
+// ── Google Analytics 4 ──────────────────────────
+(function(){
+    var s1 = document.createElement('script');
+    s1.async = true;
+    s1.src = 'https://www.googletagmanager.com/gtag/js?id=G-WGBZ0BD23K';
+    document.head.appendChild(s1);
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    window.gtag = gtag;
+    gtag('js', new Date());
+    gtag('config', 'G-WGBZ0BD23K');
+})();
+
 // ⚡ Застосувати тему ДО рендеру — без блимання
 (function(){
     var t = localStorage.getItem('theme') || 'light';
