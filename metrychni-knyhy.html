@@ -1008,674 +1008,755 @@ a, button, [role="button"], input, select, textarea,
                 </div>
             </div>
 
-            <!-- 1642 DOCUMENT TEASER -->
-            <div id="DOC1642" style="padding:0 0 2rem;">
-                <style>
-                #DOC1642 {
-                    --d-parchment: #f5eed8;
-                    --d-ink: #1c160a;
-                    --d-sepia: #c9a227;
-                    --d-ruling: rgba(139,111,62,.18);
-                }
-                [data-theme="dark"] #DOC1642 {
-                    --d-parchment: #1a1408;
-                    --d-ink: #e8dbb5;
-                    --d-sepia: #c9a553;
-                    --d-ruling: rgba(201,165,83,.12);
-                }
-                .d42-header {
-                    display: flex; align-items: center; gap: 1.2rem;
-                    margin-bottom: 2.5rem;
-                }
-                .d42-header::after {
-                    content: ''; flex: 1; height: 1px;
-                    background: linear-gradient(90deg, var(--d-ruling), transparent);
-                }
-                .d42-eyebrow {
-                    font-family: 'DM Sans', sans-serif;
-                    font-size: .55rem; letter-spacing: .3em; text-transform: uppercase;
-                    color: var(--d-sepia); white-space: nowrap;
-                }
-                .d42-card {
-                    display: grid;
-                    grid-template-columns: 1fr 1.6fr;
-                    gap: 0;
-                    border: 1px solid var(--d-ruling);
-                    border-radius: 14px;
-                    overflow: hidden;
-                    background: var(--d-parchment);
-                    box-shadow: 0 4px 32px rgba(0,0,0,.07);
-                    text-decoration: none;
-                    transition: box-shadow .4s ease, transform .5s cubic-bezier(.16,1,.3,1);
-                }
-                @media (max-width: 700px) { .d42-card { grid-template-columns: 1fr; } .d42-scans { min-height: 220px; } .d42-body { padding: 1.4rem 1.2rem; } }
-                .d42-card:hover {
-                    box-shadow: 0 12px 48px rgba(0,0,0,.12);
-                    transform: translateY(-3px);
-                }
-                .d42-scans {
-                    position: relative; overflow: hidden;
-                    background: #1a1408;
-                    min-height: 340px;
-                }
-                .d42-scan-thumb {
-                    width: 100%; height: 100%;
-                    object-fit: cover; object-position: top center;
-                    filter: sepia(.2) contrast(1.05) brightness(.92);
-                    transition: filter .6s ease, transform .8s cubic-bezier(.16,1,.3,1);
-                    display: block;
-                }
-                .d42-card:hover .d42-scan-thumb {
-                    filter: sepia(.1) contrast(1.08) brightness(.96);
-                    transform: scale(1.02);
-                }
-                .d42-scan-overlay-badge {
-                    position: absolute; bottom: 1rem; left: 1rem;
-                    display: flex; align-items: center; gap: .5rem;
-                    background: rgba(26,20,8,.8); backdrop-filter: blur(8px);
-                    border: 1px solid rgba(201,165,83,.25);
-                    border-radius: 6px; padding: .4rem .8rem;
-                    font-family: 'DM Sans', sans-serif;
-                    font-size: .58rem; letter-spacing: .15em; text-transform: uppercase;
-                    color: rgba(201,165,83,.8);
-                }
-                .d42-scan-overlay-badge::before {
-                    content: '';
-                    width: 6px; height: 6px; border-radius: 50%;
-                    background: #c9a227; flex-shrink: 0;
-                }
-                .d42-body {
-                    padding: 2.2rem 2.4rem;
-                    display: flex; flex-direction: column; justify-content: space-between;
-                    position: relative; overflow: hidden;
-                    min-width: 0;
-                }
-                .d42-body::before {
-                    content: '1642';
-                    position: absolute; right: -1rem; bottom: -3rem;
-                    font-family: 'Cormorant Garamond', serif;
-                    font-size: 9rem; font-weight: 300; line-height: 1;
-                    color: rgba(201,162,39,.06); pointer-events: none;
-                    user-select: none;
-                }
-                .d42-tag {
-                    display: inline-flex; align-items: center; gap: .5rem;
-                    font-family: 'DM Sans', sans-serif;
-                    font-size: .55rem; letter-spacing: .22em; text-transform: uppercase;
-                    color: var(--d-sepia);
-                    border: 1px solid rgba(201,162,39,.25);
-                    border-radius: 100px; padding: .3rem .85rem;
-                    margin-bottom: 1.2rem; width: fit-content;
-                    background: rgba(201,162,39,.06);
-                }
-                .d42-title {
-                    font-family: 'Cormorant Garamond', serif;
-                    font-size: clamp(1.4rem, 3vw, 2rem);
-                    font-weight: 300; line-height: 1.15;
-                    color: var(--d-ink); margin-bottom: .6rem;
-                }
-                .d42-title em { font-style: italic; color: var(--d-sepia); }
-                [data-theme="dark"] .d42-title { color: #e8dbb5; }
-                .d42-subtitle {
-                    font-family: 'DM Sans', sans-serif;
-                    font-size: .8rem; font-style: italic;
-                    color: rgba(139,111,62,.7); margin-bottom: 1.5rem;
-                }
-                .d42-excerpt {
-                    font-family: 'DM Sans', sans-serif;
-                    font-size: .8rem; line-height: 1.85;
-                    color: rgba(44,30,10,.6); margin-bottom: 1.8rem;
-                    flex: 1;
-                }
-                [data-theme="dark"] .d42-excerpt { color: rgba(200,185,155,.5); }
-                .d42-stats {
-                    display: flex; gap: 1rem; margin-bottom: 1.8rem;
-                    padding: 1rem 1.2rem;
-                    background: rgba(201,162,39,.06);
-                    border: 1px solid rgba(201,162,39,.15);
-                    border-radius: 8px;
-                    flex-wrap: wrap;
-                }
-                .d42-stat { text-align: center; }
-                .d42-stat-num {
-                    font-family: 'Cormorant Garamond', serif;
-                    font-size: 1.4rem; font-weight: 300;
-                    color: var(--d-sepia); line-height: 1;
-                }
-                .d42-stat-key {
-                    font-family: 'DM Sans', sans-serif;
-                    font-size: .55rem; letter-spacing: .1em; text-transform: uppercase;
-                    color: rgba(139,111,62,.6); margin-top: .2rem;
-                }
-                .d42-cta {
-                    display: inline-flex; align-items: center; gap: .7rem;
-                    padding: .75rem 1.5rem;
-                    background: var(--d-ink);
-                    color: var(--d-parchment);
-                    border-radius: 100px;
-                    font-family: 'DM Sans', sans-serif;
-                    font-size: .72rem; font-weight: 500; letter-spacing: .07em; text-transform: uppercase;
-                    transition: all .25s ease;
-                    width: fit-content;
-                }
-                [data-theme="dark"] .d42-cta { background: var(--d-sepia); color: #1a1000; }
-                .d42-card:hover .d42-cta {
-                    background: var(--d-sepia); color: #1a1000;
-                    box-shadow: 0 4px 16px rgba(201,162,39,.3);
-                }
-                .d42-cta svg { width: 14px; height: 14px; transition: transform .25s ease; }
-                .d42-card:hover .d42-cta svg { transform: translateX(3px); }
-                </style>
+            <!-- ══════════════════════════════════════════
+                 АРХІВНІ ДОКУМЕНТИ — REDESIGNED TEASERS
+                 ══════════════════════════════════════════ -->
+            <style>
+            /* ── Section header ── */
+            .arc-section-head {
+                display: flex; align-items: center; gap: 1.4rem;
+                margin-bottom: 3.5rem;
+            }
+            .arc-section-head::before {
+                content: '';
+                width: 3px; height: 2.2rem; border-radius: 2px;
+                background: linear-gradient(180deg, #c9a227, rgba(201,162,39,.2));
+                flex-shrink: 0;
+            }
+            .arc-section-label {
+                font-family: 'DM Sans', sans-serif;
+                font-size: .55rem; letter-spacing: .36em; text-transform: uppercase;
+                color: #c9a227;
+            }
+            .arc-section-title {
+                font-family: 'Cormorant Garamond', serif;
+                font-size: clamp(1.5rem, 2.5vw, 2rem);
+                font-weight: 300; color: var(--color-text, #1a1000);
+                line-height: 1.1;
+            }
+            [data-theme="dark"] .arc-section-title { color: #e8dbb5; }
+            .arc-section-head-line {
+                flex: 1; height: 1px;
+                background: linear-gradient(90deg, rgba(201,162,39,.25), transparent);
+            }
 
-                <div class="d42-header">
-                    <span class="d42-eyebrow">Архівний документ · Пам'ятка XVII ст.</span>
+            /* ── Universal card shell ── */
+            .arc-card {
+                display: grid;
+                grid-template-columns: 420px 1fr;
+                border-radius: 18px;
+                overflow: hidden;
+                text-decoration: none;
+                position: relative;
+                transition: transform .5s cubic-bezier(.16,1,.3,1), box-shadow .4s ease;
+                margin-bottom: 3.5rem;
+                background: var(--color-bg-card, #faf7f2);
+            }
+            .arc-card:hover { transform: translateY(-4px); }
+            [data-theme="dark"] .arc-card { background: #1a1408; }
+            @media(max-width:900px){ .arc-card { grid-template-columns: 1fr; } }
+
+            /* ── Image panel ── */
+            .arc-img-panel {
+                position: relative; overflow: hidden;
+                min-height: 420px;
+            }
+            @media(max-width:900px){ .arc-img-panel { min-height: 260px; } }
+            .arc-img {
+                position: absolute; inset: 0;
+                width: 100%; height: 100%;
+                object-fit: cover; object-position: top center;
+                transition: transform .9s cubic-bezier(.16,1,.3,1), filter .6s ease;
+            }
+            .arc-card:hover .arc-img { transform: scale(1.04); }
+
+            /* image overlays per card */
+            .arc-img-overlay {
+                position: absolute; inset: 0;
+                pointer-events: none;
+            }
+            .arc-img-badge {
+                position: absolute; bottom: 1.1rem; left: 1.1rem; right: 1.1rem;
+                display: flex; align-items: flex-end; justify-content: space-between;
+                z-index: 3;
+            }
+            .arc-img-pill {
+                display: flex; align-items: center; gap: .45rem;
+                background: rgba(8,5,2,.82); backdrop-filter: blur(10px);
+                border-radius: 6px; padding: .4rem .85rem;
+                font-family: 'DM Sans', sans-serif;
+                font-size: .55rem; letter-spacing: .18em; text-transform: uppercase;
+            }
+            .arc-img-dot {
+                width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+            }
+
+            /* ── Content panel ── */
+            .arc-body {
+                padding: 2.8rem 3rem;
+                display: flex; flex-direction: column;
+                justify-content: space-between;
+                position: relative; overflow: hidden;
+                gap: 1.4rem;
+            }
+            @media(max-width:700px){ .arc-body { padding: 1.8rem 1.4rem; } }
+
+            /* Year watermark */
+            .arc-body::after {
+                position: absolute; bottom: -2rem; right: -1rem;
+                font-family: 'Cormorant Garamond', serif;
+                font-size: 8rem; font-weight: 300; line-height: 1;
+                pointer-events: none; user-select: none;
+            }
+
+            .arc-tag {
+                display: inline-flex; align-items: center; gap: .5rem;
+                font-family: 'DM Sans', sans-serif;
+                font-size: .54rem; letter-spacing: .22em; text-transform: uppercase;
+                border-radius: 100px; padding: .3rem .9rem;
+                width: fit-content;
+            }
+            .arc-tag svg { width: 10px; height: 10px; flex-shrink: 0; }
+
+            .arc-title {
+                font-family: 'Cormorant Garamond', serif;
+                font-size: clamp(1.5rem, 2.8vw, 2.2rem);
+                font-weight: 300; line-height: 1.1;
+                margin: 0;
+            }
+            .arc-title em { font-style: italic; }
+
+            /* ── Pull quote — the centrepiece ── */
+            .arc-quote {
+                position: relative;
+                padding: 1.4rem 1.6rem 1.4rem 2rem;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            .arc-quote::before {
+                content: '\201C';
+                position: absolute; top: -.6rem; left: .8rem;
+                font-family: 'Cormorant Garamond', serif;
+                font-size: 5rem; font-weight: 300; line-height: 1;
+                opacity: .25;
+            }
+            .arc-quote-text {
+                font-family: 'Cormorant Garamond', serif;
+                font-size: clamp(1.1rem, 2vw, 1.4rem);
+                font-style: italic; font-weight: 300;
+                line-height: 1.5;
+                position: relative; z-index: 1;
+            }
+            .arc-quote-attr {
+                font-family: 'DM Sans', sans-serif;
+                font-size: .65rem; letter-spacing: .1em;
+                margin-top: .6rem; opacity: .6;
+                position: relative; z-index: 1;
+            }
+
+            /* ── Hook bullets ── */
+            .arc-hooks {
+                display: flex; flex-direction: column; gap: .65rem;
+            }
+            .arc-hook {
+                display: flex; align-items: flex-start; gap: .85rem;
+                font-family: 'DM Sans', sans-serif;
+                font-size: .78rem; line-height: 1.6;
+                color: var(--color-text-muted, #7a6040);
+            }
+            [data-theme="dark"] .arc-hook { color: rgba(200,185,155,.55); }
+            .arc-hook-icon {
+                width: 26px; height: 26px; border-radius: 7px;
+                display: flex; align-items: center; justify-content: center;
+                flex-shrink: 0; margin-top: .05rem;
+                font-size: .85rem;
+            }
+            .arc-hook strong { font-weight: 500; }
+
+            /* ── Stat row ── */
+            .arc-stats {
+                display: flex; gap: 0;
+                border-radius: 10px; overflow: hidden;
+                border: 1px solid;
+            }
+            .arc-stat {
+                flex: 1; padding: .85rem .6rem;
+                text-align: center;
+                border-right: 1px solid;
+            }
+            .arc-stat:last-child { border-right: none; }
+            .arc-stat-num {
+                font-family: 'Cormorant Garamond', serif;
+                font-size: 1.5rem; font-weight: 300; line-height: 1;
+            }
+            .arc-stat-key {
+                font-family: 'DM Sans', sans-serif;
+                font-size: .5rem; letter-spacing: .12em; text-transform: uppercase;
+                margin-top: .25rem; opacity: .6;
+            }
+
+            /* ── CTA ── */
+            .arc-cta-row { display: flex; align-items: center; gap: 1.2rem; }
+            .arc-cta {
+                display: inline-flex; align-items: center; gap: .75rem;
+                padding: .85rem 1.8rem;
+                border-radius: 100px;
+                font-family: 'DM Sans', sans-serif;
+                font-size: .72rem; font-weight: 500; letter-spacing: .07em; text-transform: uppercase;
+                transition: all .28s cubic-bezier(.16,1,.3,1);
+                white-space: nowrap;
+            }
+            .arc-cta svg { width: 14px; height: 14px; transition: transform .28s ease; flex-shrink: 0; }
+            .arc-card:hover .arc-cta svg { transform: translateX(4px); }
+            .arc-cta-hint {
+                font-family: 'DM Sans', sans-serif;
+                font-size: .68rem; opacity: .45;
+                color: var(--color-text-muted, #7a6040);
+            }
+            [data-theme="dark"] .arc-cta-hint { opacity: .35; }
+
+            /* ─────────────────────────────────────
+               CARD 1 — SUMARIUSZ 1642 (Gold)
+               ───────────────────────────────────── */
+            #ARC42 .arc-card {
+                border: 1px solid rgba(201,162,39,.22);
+                box-shadow: 0 6px 40px rgba(0,0,0,.07), 0 0 0 0 rgba(201,162,39,.15);
+            }
+            #ARC42 .arc-card:hover {
+                box-shadow: 0 16px 60px rgba(0,0,0,.12), 0 0 0 3px rgba(201,162,39,.12);
+            }
+            #ARC42 .arc-img { filter: sepia(.3) contrast(1.04) brightness(.88); }
+            #ARC42 .arc-card:hover .arc-img { filter: sepia(.15) contrast(1.06) brightness(.95); }
+            #ARC42 .arc-img-overlay {
+                background: linear-gradient(90deg, transparent 55%, rgba(26,20,8,.6) 100%),
+                            linear-gradient(0deg, rgba(26,20,8,.7) 0%, transparent 40%);
+            }
+            @media(max-width:900px){
+                #ARC42 .arc-img-overlay {
+                    background: linear-gradient(0deg, rgba(26,20,8,.75) 0%, transparent 50%);
+                }
+            }
+            #ARC42 .arc-img-pill { color: rgba(201,165,83,.9); }
+            #ARC42 .arc-img-dot { background: #c9a227; }
+            #ARC42 .arc-body::after { content: '1642'; color: rgba(201,162,39,.05); }
+            #ARC42 .arc-tag {
+                color: #c9a227;
+                border: 1px solid rgba(201,162,39,.25);
+                background: rgba(201,162,39,.07);
+            }
+            #ARC42 .arc-title { color: var(--color-text, #1a1000); }
+            #ARC42 .arc-title em { color: #c9a227; }
+            [data-theme="dark"] #ARC42 .arc-title { color: #e8dbb5; }
+            #ARC42 .arc-quote {
+                background: rgba(201,162,39,.07);
+                border-left: 3px solid rgba(201,162,39,.5);
+            }
+            #ARC42 .arc-quote::before { color: #c9a227; }
+            #ARC42 .arc-quote-text { color: var(--color-text, #1a1000); }
+            [data-theme="dark"] #ARC42 .arc-quote-text { color: #e8dbb5; }
+            #ARC42 .arc-hook strong { color: var(--color-text, #1a1000); }
+            [data-theme="dark"] #ARC42 .arc-hook strong { color: #d4b96a; }
+            #ARC42 .arc-hook-icon { background: rgba(201,162,39,.1); border: 1px solid rgba(201,162,39,.2); }
+            #ARC42 .arc-stats {
+                border-color: rgba(201,162,39,.18);
+                background: rgba(201,162,39,.04);
+            }
+            #ARC42 .arc-stat { border-color: rgba(201,162,39,.14); }
+            #ARC42 .arc-stat-num { color: #c9a227; }
+            #ARC42 .arc-stat-key { color: #8b6f3e; }
+            #ARC42 .arc-cta {
+                background: #1c160a; color: #f5eed8;
+            }
+            #ARC42 .arc-card:hover .arc-cta {
+                background: #c9a227; color: #1a1000;
+                box-shadow: 0 4px 20px rgba(201,162,39,.35);
+            }
+            [data-theme="dark"] #ARC42 .arc-cta { background: #c9a553; color: #1a1000; }
+
+            /* ─────────────────────────────────────
+               CARD 2 — INVENTAR 1780 (Forest)
+               ───────────────────────────────────── */
+            #ARC80 .arc-card {
+                border: 1px solid rgba(80,110,70,.22);
+                box-shadow: 0 6px 40px rgba(0,0,0,.07);
+            }
+            #ARC80 .arc-card:hover {
+                box-shadow: 0 16px 60px rgba(0,0,0,.12), 0 0 0 3px rgba(90,120,75,.12);
+            }
+            #ARC80 .arc-img { filter: sepia(.2) contrast(1.05) brightness(.85); }
+            #ARC80 .arc-card:hover .arc-img { filter: sepia(.08) contrast(1.07) brightness(.93); }
+            #ARC80 .arc-img-overlay {
+                background: linear-gradient(90deg, transparent 50%, rgba(10,22,12,.65) 100%),
+                            linear-gradient(0deg, rgba(10,22,12,.7) 0%, transparent 40%);
+            }
+            @media(max-width:900px){
+                #ARC80 .arc-img-overlay {
+                    background: linear-gradient(0deg, rgba(10,22,12,.75) 0%, transparent 50%);
+                }
+            }
+            #ARC80 .arc-img-pill { color: rgba(140,185,120,.9); }
+            #ARC80 .arc-img-dot { background: #7ab560; }
+            #ARC80 .arc-body::after { content: '1780'; color: rgba(100,140,80,.05); }
+            #ARC80 .arc-tag {
+                color: #5a8040;
+                border: 1px solid rgba(90,128,64,.25);
+                background: rgba(90,128,64,.07);
+            }
+            [data-theme="dark"] #ARC80 .arc-tag { color: #8dc870; border-color: rgba(120,185,90,.25); background: rgba(120,185,90,.07); }
+            #ARC80 .arc-title { color: var(--color-text, #1a1000); }
+            #ARC80 .arc-title em { color: #5a8040; }
+            [data-theme="dark"] #ARC80 .arc-title { color: #e8dbb5; }
+            [data-theme="dark"] #ARC80 .arc-title em { color: #8dc870; }
+            #ARC80 .arc-quote {
+                background: rgba(90,128,64,.06);
+                border-left: 3px solid rgba(90,128,64,.45);
+            }
+            #ARC80 .arc-quote::before { color: #5a8040; }
+            #ARC80 .arc-quote-text { color: var(--color-text, #1a1000); }
+            [data-theme="dark"] #ARC80 .arc-quote-text { color: #e8dbb5; }
+            #ARC80 .arc-hook strong { color: var(--color-text, #1a1000); }
+            [data-theme="dark"] #ARC80 .arc-hook strong { color: #a8d490; }
+            #ARC80 .arc-hook-icon { background: rgba(90,128,64,.1); border: 1px solid rgba(90,128,64,.2); }
+            #ARC80 .arc-stats {
+                border-color: rgba(90,128,64,.18);
+                background: rgba(90,128,64,.04);
+            }
+            #ARC80 .arc-stat { border-color: rgba(90,128,64,.14); }
+            #ARC80 .arc-stat-num { color: #5a8040; }
+            [data-theme="dark"] #ARC80 .arc-stat-num { color: #8dc870; }
+            #ARC80 .arc-stat-key { color: #5a7040; }
+            #ARC80 .arc-cta {
+                background: #1c2a14; color: #dff0d0;
+            }
+            #ARC80 .arc-card:hover .arc-cta {
+                background: #5a8040; color: #fff;
+                box-shadow: 0 4px 20px rgba(90,128,64,.35);
+            }
+            [data-theme="dark"] #ARC80 .arc-cta { background: #6aaa4a; color: #0a1408; }
+            #ARC80 .arc-wip {
+                display: inline-flex; align-items: center; gap: .5rem;
+                padding: .3rem .85rem;
+                background: rgba(90,128,64,.08); border: 1px solid rgba(90,128,64,.2);
+                border-radius: 100px;
+                font-family: 'DM Sans', sans-serif; font-size: .56rem;
+                letter-spacing: .12em; text-transform: uppercase; color: #5a8040;
+                width: fit-content; margin-bottom: .5rem;
+            }
+            [data-theme="dark"] #ARC80 .arc-wip { color: #8dc870; border-color: rgba(120,185,90,.25); background: rgba(120,185,90,.07); }
+            #ARC80 .arc-wip::before {
+                content: ''; width: 6px; height: 6px; border-radius: 50%;
+                background: #7ab560; animation: wip80pulse 2s ease infinite; flex-shrink: 0;
+            }
+            @keyframes wip80pulse { 0%,100%{opacity:1} 50%{opacity:.25} }
+
+            /* ─────────────────────────────────────
+               CARD 3 — SKARGA 1650 (Crimson/War)
+               ───────────────────────────────────── */
+            #ARC50 .arc-card {
+                border: 1px solid rgba(139,32,32,.22);
+                box-shadow: 0 6px 40px rgba(0,0,0,.08);
+            }
+            #ARC50 .arc-card:hover {
+                box-shadow: 0 16px 60px rgba(0,0,0,.14), 0 0 0 3px rgba(139,32,32,.1);
+            }
+            #ARC50 .arc-card::before {
+                content: '';
+                position: absolute; top: 0; left: 0; right: 0; height: 3px;
+                background: linear-gradient(90deg, #8b2020, rgba(201,162,39,.6), #8b2020);
+                z-index: 2; pointer-events: none;
+            }
+            #ARC50 .arc-img { filter: sepia(.35) contrast(1.07) brightness(.8); }
+            #ARC50 .arc-card:hover .arc-img { filter: sepia(.15) contrast(1.09) brightness(.9); }
+            #ARC50 .arc-img-overlay {
+                background: linear-gradient(90deg, transparent 50%, rgba(20,4,4,.72) 100%),
+                            linear-gradient(0deg, rgba(20,4,4,.78) 0%, transparent 40%);
+            }
+            @media(max-width:900px){
+                #ARC50 .arc-img-overlay {
+                    background: linear-gradient(0deg, rgba(20,4,4,.8) 0%, transparent 50%);
+                }
+            }
+            #ARC50 .arc-img-pill { color: rgba(255,160,140,.85); }
+            #ARC50 .arc-img-dot { background: #c04040; animation: bloodpulse 2.5s ease infinite; }
+            @keyframes bloodpulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+            #ARC50 .arc-body::after { content: '1650'; color: rgba(139,32,32,.05); }
+            #ARC50 .arc-tag {
+                color: #8b2020;
+                border: 1px solid rgba(139,32,32,.3);
+                background: rgba(139,32,32,.07);
+            }
+            [data-theme="dark"] #ARC50 .arc-tag { color: #e08080; border-color: rgba(200,70,70,.3); background: rgba(200,70,70,.08); }
+            #ARC50 .arc-title { color: var(--color-text, #1a1000); }
+            #ARC50 .arc-title em { color: #8b2020; }
+            [data-theme="dark"] #ARC50 .arc-title { color: #e8dbb5; }
+            [data-theme="dark"] #ARC50 .arc-title em { color: #e08080; }
+            #ARC50 .arc-quote {
+                background: rgba(139,32,32,.06);
+                border-left: 3px solid rgba(139,32,32,.5);
+            }
+            #ARC50 .arc-quote::before { color: #8b2020; }
+            #ARC50 .arc-quote-text { color: var(--color-text, #1a1000); }
+            [data-theme="dark"] #ARC50 .arc-quote-text { color: #e8dbb5; }
+            #ARC50 .arc-hook strong { color: var(--color-text, #1a1000); }
+            [data-theme="dark"] #ARC50 .arc-hook strong { color: #e08080; }
+            #ARC50 .arc-hook-icon { background: rgba(139,32,32,.08); border: 1px solid rgba(139,32,32,.18); }
+            #ARC50 .arc-stats {
+                border-color: rgba(139,32,32,.16);
+                background: rgba(139,32,32,.04);
+            }
+            #ARC50 .arc-stat { border-color: rgba(139,32,32,.12); }
+            #ARC50 .arc-stat-num { color: #8b2020; }
+            [data-theme="dark"] #ARC50 .arc-stat-num { color: #e08080; }
+            #ARC50 .arc-stat-key { color: #6a3030; }
+            [data-theme="dark"] #ARC50 .arc-stat-key { color: #b08080; }
+            #ARC50 .arc-cta {
+                background: #8b2020; color: #f5eed8;
+            }
+            #ARC50 .arc-card:hover .arc-cta {
+                background: #6a1515; color: #fff;
+                box-shadow: 0 4px 20px rgba(139,32,32,.4);
+            }
+            [data-theme="dark"] #ARC50 .arc-cta { background: #c04040; color: #f5eed8; }
+            /* ARC65 — Реєстр 1665 — Rust/Umber */
+            #ARC65 .arc-img-year { color: #c87a45; }
+            #ARC65 .arc-badge { background: rgba(123,58,32,.1); color: #7b3a20; border-color: rgba(123,58,32,.22); }
+            [data-theme="dark"] #ARC65 .arc-badge { background: rgba(200,122,69,.12); color: #c87a45; border-color: rgba(200,122,69,.25); }
+            #ARC65 .arc-title { color: var(--color-text, #1a1000); }
+            #ARC65 .arc-quote { border-left-color: #7b3a20; background: rgba(123,58,32,.05); }
+            #ARC65 .arc-quote-text { color: var(--color-text-faded, #4a3c20); }
+            [data-theme="dark"] #ARC65 .arc-quote-text { color: #e8dbb5; }
+            #ARC65 .arc-hook strong { color: var(--color-text, #1a1000); }
+            [data-theme="dark"] #ARC65 .arc-hook strong { color: #d08060; }
+            #ARC65 .arc-hook-icon { background: rgba(123,58,32,.08); border: 1px solid rgba(123,58,32,.18); }
+            #ARC65 .arc-stats {
+                background: rgba(123,58,32,.06);
+                border-color: rgba(123,58,32,.15);
+            }
+            #ARC65 .arc-stat { border-color: rgba(123,58,32,.12); }
+            #ARC65 .arc-stat-num { color: #7b3a20; }
+            [data-theme="dark"] #ARC65 .arc-stat-num { color: #c87a45; }
+            #ARC65 .arc-stat-key { color: #5a3020; }
+            [data-theme="dark"] #ARC65 .arc-stat-key { color: #b07050; }
+            #ARC65 .arc-cta {
+                background: #7b3a20; color: white;
+            }
+            #ARC65 .arc-card:hover .arc-cta {
+                background: #9a4a28;
+            }
+            [data-theme="dark"] #ARC65 .arc-cta { background: #c87a45; color: #1a0a04; }
+            </style>
+
+            <!-- ── Section heading ── -->
+            <div class="arc-section-head" style="margin-bottom:3rem;">
+                <div>
+                    <div class="arc-section-label">Першоджерела · XVII–XVIII ст.</div>
+                    <div class="arc-section-title">Оцифровані архівні документи</div>
                 </div>
+                <div class="arc-section-head-line"></div>
+            </div>
 
-                <a href="sumariusz-1642.html" class="d42-card">
-                    <!-- Single scan - page 1, full quality -->
-                    <div class="d42-scans">
-                        <img class="d42-scan-thumb" src="https://i.imgur.com/eCkmrb3l.jpeg" alt="Сумаріуш Дубровиця 1642 — сторінка 1">
-                        <div class="d42-scan-overlay-badge">3 сторінки · Anno 1642</div>
-                    </div>
-
-                    <!-- Content column -->
-                    <div class="d42-body">
-                        <div>
-                            <div class="d42-tag">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:10px;height:10px;"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                                Першоджерело · Грудень 1642
-                            </div>
-                            <h3 class="d42-title">
-                                Сумаріуш маєтку<br><em>Дубровиця</em>
-                            </h3>
-                            <p class="d42-subtitle">Sumariusz Maietności Dąbrowice · Anno 1642 Decemb.</p>
-                            <p class="d42-excerpt">
-                                Унікальний рукописний документ Речі Посполитої — детальний господарський звіт міста Дубровиця 
-                                за грудень 1642 року. Містить відомості про замок над Горинню, залізні рудні, поташне 
-                                виробництво, судноплавство та повну фінансову картину маєтку. Загальний дохід склав 
-                                <strong>11&nbsp;586 злотих, 7 грошів, 18 денаріїв</strong>.
-                            </p>
-                            <div class="d42-stats">
-                                <div class="d42-stat">
-                                    <div class="d42-stat-num">1642</div>
-                                    <div class="d42-stat-key">Рік складання</div>
-                                </div>
-                                <div class="d42-stat">
-                                    <div class="d42-stat-num">11&thinsp;586</div>
-                                    <div class="d42-stat-key">Злотих доходу</div>
-                                </div>
-                                <div class="d42-stat">
-                                    <div class="d42-stat-num">3</div>
-                                    <div class="d42-stat-key">Сторінки</div>
-                                </div>
-                                <div class="d42-stat">
-                                    <div class="d42-stat-num">20</div>
-                                    <div class="d42-stat-key">Озер у маєтку</div>
-                                </div>
+            <!-- 1642 DOCUMENT TEASER -->
+            <div id="ARC42" style="padding:0 0 2rem;">
+                <a href="sumariusz-1642.html" class="arc-card">
+                    <div class="arc-img-panel">
+                        <img class="arc-img" src="https://i.imgur.com/eCkmrb3l.jpeg" alt="Сумаріуш Дубровиця 1642">
+                        <div class="arc-img-overlay"></div>
+                        <div class="arc-img-badge">
+                            <div class="arc-img-pill">
+                                <div class="arc-img-dot"></div>
+                                3 сторінки · Anno 1642
                             </div>
                         </div>
-                        <div class="d42-cta">
-                            Переглянути документ
-                            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+                    </div>
+                    <div class="arc-body">
+                        <div class="arc-tag">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                            Господарський звіт · Грудень 1642
+                        </div>
+                        <h3 class="arc-title">Сумаріуш маєтку<br><em>Дубровиця</em></h3>
+                        <div class="arc-quote">
+                            <div class="arc-quote-text">11&thinsp;586 злотих річного доходу — залізні рудні, 20 озер, поташня, замок. Дубровиця 1642 року.</div>
+                            <div class="arc-quote-attr">— Sumariusz Maietności Dąbrowice, Grudzień Anno 1642</div>
+                        </div>
+                        <div class="arc-hooks">
+                            <div class="arc-hook">
+                                <div class="arc-hook-icon">🏰</div>
+                                <div><strong>Замок над Горинню</strong> — детальний опис укріплень, млинів і рудень, яких більше не існує</div>
+                            </div>
+                            <div class="arc-hook">
+                                <div class="arc-hook-icon">💰</div>
+                                <div><strong>Точна бухгалтерія до гроша</strong> — повний баланс маєтку за три місяці до початку катастрофи Хмельниччини</div>
+                            </div>
+                            <div class="arc-hook">
+                                <div class="arc-hook-icon">🐟</div>
+                                <div><strong>20 озер у маєтку</strong>, поташня, судноплавство — Дубровиця як промисловий центр Полісся</div>
+                            </div>
+                        </div>
+                        <div class="arc-stats">
+                            <div class="arc-stat">
+                                <div class="arc-stat-num">1642</div>
+                                <div class="arc-stat-key">Рік</div>
+                            </div>
+                            <div class="arc-stat">
+                                <div class="arc-stat-num">11&thinsp;586</div>
+                                <div class="arc-stat-key">Злотих</div>
+                            </div>
+                            <div class="arc-stat">
+                                <div class="arc-stat-num">20</div>
+                                <div class="arc-stat-key">Озер</div>
+                            </div>
+                            <div class="arc-stat">
+                                <div class="arc-stat-num">3</div>
+                                <div class="arc-stat-key">Сторінки</div>
+                            </div>
+                        </div>
+                        <div class="arc-cta-row">
+                            <div class="arc-cta">
+                                Читати документ
+                                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+                            </div>
+                            <span class="arc-cta-hint">Транскрипція · Переклад · Глосарій</span>
                         </div>
                     </div>
                 </a>
             </div>
 
             <!-- 1780 INVENTAR TEASER -->
-            <div id="DOC1780" style="margin-top:3rem;padding:0 0 2rem;">
-                <style>
-                #DOC1780 {
-                    --d-parchment: #f5eed8;
-                    --d-ink: #1c160a;
-                    --d-sepia: #c9a227;
-                    --d-ruling: rgba(139,111,62,.18);
-                }
-                [data-theme="dark"] #DOC1780 {
-                    --d-parchment: #1a1408;
-                    --d-ink: #e8dbb5;
-                    --d-sepia: #c9a553;
-                    --d-ruling: rgba(201,165,83,.12);
-                }
-                .d80-card {
-                    display: grid;
-                    grid-template-columns: 1fr 1.6fr;
-                    gap: 0;
-                    border: 1px solid var(--d-ruling);
-                    border-radius: 14px;
-                    overflow: hidden;
-                    background: var(--d-parchment);
-                    box-shadow: 0 4px 32px rgba(0,0,0,.07);
-                    text-decoration: none;
-                    transition: box-shadow .4s ease, transform .5s cubic-bezier(.16,1,.3,1);
-                }
-                @media (max-width: 700px) { .d80-card { grid-template-columns: 1fr; } .d80-scans { min-height: 220px; } .d80-body { padding: 1.4rem 1.2rem; } }
-                .d80-card:hover {
-                    box-shadow: 0 12px 48px rgba(0,0,0,.12);
-                    transform: translateY(-3px);
-                }
-                .d80-scans {
-                    position: relative; overflow: hidden;
-                    background: #1a1408;
-                    min-height: 340px;
-                }
-                .d80-scan-thumb {
-                    width: 100%; height: 100%;
-                    object-fit: cover; object-position: top center;
-                    filter: sepia(.2) contrast(1.05) brightness(.92);
-                    transition: filter .6s ease, transform .8s cubic-bezier(.16,1,.3,1);
-                    display: block;
-                }
-                .d80-card:hover .d80-scan-thumb {
-                    filter: sepia(.1) contrast(1.08) brightness(.96);
-                    transform: scale(1.02);
-                }
-                .d80-scan-overlay-badge {
-                    position: absolute; bottom: 1rem; left: 1rem;
-                    display: flex; align-items: center; gap: .5rem;
-                    background: rgba(26,20,8,.8); backdrop-filter: blur(8px);
-                    border: 1px solid rgba(201,165,83,.25);
-                    border-radius: 6px; padding: .4rem .8rem;
-                    font-family: 'DM Sans', sans-serif;
-                    font-size: .58rem; letter-spacing: .15em; text-transform: uppercase;
-                    color: rgba(201,165,83,.8);
-                }
-                .d80-scan-overlay-badge::before {
-                    content: '';
-                    width: 6px; height: 6px; border-radius: 50%;
-                    background: #c9a227; flex-shrink: 0;
-                }
-                .d80-body {
-                    padding: 2.2rem 2.4rem;
-                    display: flex; flex-direction: column; justify-content: space-between;
-                    position: relative; overflow: hidden;
-                    min-width: 0;
-                }
-                .d80-body::before {
-                    content: '1780';
-                    position: absolute; right: -1rem; bottom: -3rem;
-                    font-family: 'Cormorant Garamond', serif;
-                    font-size: 9rem; font-weight: 300; line-height: 1;
-                    color: rgba(201,162,39,.06); pointer-events: none;
-                    user-select: none;
-                }
-                .d80-tag {
-                    display: inline-flex; align-items: center; gap: .5rem;
-                    font-family: 'DM Sans', sans-serif;
-                    font-size: .55rem; letter-spacing: .22em; text-transform: uppercase;
-                    color: var(--d-sepia);
-                    border: 1px solid rgba(201,162,39,.25);
-                    border-radius: 100px; padding: .3rem .85rem;
-                    margin-bottom: 1.2rem; width: fit-content;
-                    background: rgba(201,162,39,.06);
-                }
-                .d80-title {
-                    font-family: 'Cormorant Garamond', serif;
-                    font-size: clamp(1.4rem, 3vw, 2rem);
-                    font-weight: 300; line-height: 1.15;
-                    color: var(--d-ink); margin-bottom: .6rem;
-                }
-                .d80-title em { font-style: italic; color: var(--d-sepia); }
-                [data-theme="dark"] .d80-title { color: #e8dbb5; }
-                .d80-subtitle {
-                    font-family: 'DM Sans', sans-serif;
-                    font-size: .8rem; font-style: italic;
-                    color: rgba(139,111,62,.7); margin-bottom: 1.5rem;
-                }
-                .d80-excerpt {
-                    font-family: 'DM Sans', sans-serif;
-                    font-size: .8rem; line-height: 1.85;
-                    color: rgba(44,30,10,.6); margin-bottom: 1.8rem;
-                    flex: 1;
-                }
-                [data-theme="dark"] .d80-excerpt { color: rgba(200,185,155,.5); }
-                .d80-stats {
-                    display: flex; gap: 1.5rem; margin-bottom: 1.8rem;
-                    padding: 1rem 1.2rem;
-                    background: rgba(201,162,39,.06);
-                    border: 1px solid rgba(201,162,39,.15);
-                    border-radius: 8px;
-                    flex-wrap: wrap;
-                }
-                .d80-stat { text-align: center; }
-                .d80-stat-num {
-                    font-family: 'Cormorant Garamond', serif;
-                    font-size: 1.4rem; font-weight: 300;
-                    color: var(--d-sepia); line-height: 1;
-                }
-                .d80-stat-key {
-                    font-family: 'DM Sans', sans-serif;
-                    font-size: .55rem; letter-spacing: .1em; text-transform: uppercase;
-                    color: rgba(139,111,62,.6); margin-top: .2rem;
-                }
-                .d80-wip {
-                    display: inline-flex; align-items: center; gap: .5rem;
-                    padding: .35rem .85rem;
-                    background: rgba(201,162,39,.07);
-                    border: 1px solid rgba(201,162,39,.2);
-                    border-radius: 100px; margin-bottom: 1.6rem;
-                    font-family: 'DM Sans', sans-serif;
-                    font-size: .58rem; letter-spacing: .12em; text-transform: uppercase;
-                    color: rgba(139,111,62,.7);
-                    width: fit-content;
-                }
-                .d80-wip::before {
-                    content: '';
-                    width: 6px; height: 6px; border-radius: 50%;
-                    background: #c9a227; animation: d80pulse 2s ease infinite; flex-shrink: 0;
-                }
-                @keyframes d80pulse {
-                    0%,100% { opacity: 1; } 50% { opacity: .3; }
-                }
-                .d80-cta {
-                    display: inline-flex; align-items: center; gap: .7rem;
-                    padding: .75rem 1.5rem;
-                    background: var(--d-ink);
-                    color: var(--d-parchment);
-                    border-radius: 100px;
-                    font-family: 'DM Sans', sans-serif;
-                    font-size: .72rem; font-weight: 500; letter-spacing: .07em; text-transform: uppercase;
-                    transition: all .25s ease;
-                    width: fit-content;
-                }
-                [data-theme="dark"] .d80-cta { background: var(--d-sepia); color: #1a1000; }
-                .d80-card:hover .d80-cta {
-                    background: var(--d-sepia); color: #1a1000;
-                    box-shadow: 0 4px 16px rgba(201,162,39,.3);
-                }
-                .d80-cta svg { width: 14px; height: 14px; transition: transform .25s ease; }
-                .d80-card:hover .d80-cta svg { transform: translateX(3px); }
-                </style>
-
-                <div class="d42-header" style="margin-bottom:1.8rem;">
-                    <span class="d42-eyebrow">Архівний документ · Пам'ятка XVIII–XIX ст.</span>
-                </div>
-
-                <a href="inventar-1780.html" class="d80-card">
-                    <div class="d80-scans">
-                        <img class="d80-scan-thumb" src="https://i.imgur.com/fq9QEd3.jpeg" alt="Інвентар Дубровиця — опис вулиць">
-                        <div class="d80-scan-overlay-badge">200+ сторінок · 1780–1820</div>
-                    </div>
-
-                    <div class="d80-body">
-                        <div>
-                            <div class="d80-tag">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:10px;height:10px;"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                                Першоджерело · 1780–1820
+            <div id="ARC80" style="padding:0 0 2rem;">
+                <a href="inventar-1780.html" class="arc-card">
+                    <div class="arc-img-panel">
+                        <img class="arc-img" src="https://i.imgur.com/fq9QEd3.jpeg" alt="Інвентар Дубровиця 1780">
+                        <div class="arc-img-overlay"></div>
+                        <div class="arc-img-badge">
+                            <div class="arc-img-pill">
+                                <div class="arc-img-dot"></div>
+                                200+ сторінок · 1780–1820
                             </div>
-                            <h3 class="d80-title">
-                                Інвентар маєтку<br><em>Дубровиця</em>
-                            </h3>
-                            <p class="d80-subtitle">Folwark Worobin z Miastem Dombrowicą · Кін. XVIII – поч. XIX ст.</p>
-                            <div class="d80-wip">Публікується поступово — по мірі перекладу</div>
-                            <p class="d80-excerpt">
-                                Детальний інвентарний опис маєтку Дубровиця та приписаних сіл — написаний старопольською мовою 
-                                з вкрапленнями місцевих українських слів. Документ фіксує всі вулиці та провулки міста, 
-                                землеволодіння монастиря Піарів, межові камені <strong>1776 року</strong>, реєстр власників 
-                                ринкових ділянок та структуру обох передмість.
-                            </p>
-                            <div class="d80-stats">
-                                <div class="d80-stat">
-                                    <div class="d80-stat-num">200+</div>
-                                    <div class="d80-stat-key">Сторінок</div>
+                        </div>
+                    </div>
+                    <div class="arc-body">
+                        <div style="display:flex;flex-direction:column;gap:1rem;">
+                            <div class="arc-tag">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                                Топографічний опис · 1780–1820
+                            </div>
+                            <div class="arc-wip">Публікується поступово — по мірі перекладу</div>
+                            <h3 class="arc-title">Інвентар маєтку<br><em>Дубровиця</em></h3>
+                            <div class="arc-quote">
+                                <div class="arc-quote-text">Перший документ, де Дубровиця має вулиці з назвами. Хто жив на ринковій площі 240 років тому?</div>
+                                <div class="arc-quote-attr">— Folwark Worobin z Miastem Dombrowicą, кін. XVIII ст.</div>
+                            </div>
+                            <div class="arc-hooks">
+                                <div class="arc-hook">
+                                    <div class="arc-hook-icon">🗺️</div>
+                                    <div><strong>8 вулиць і провулків</strong> — перша докладна топографія Дубровиці з іменами власників кожної ділянки</div>
                                 </div>
-                                <div class="d80-stat">
-                                    <div class="d80-stat-num">8</div>
-                                    <div class="d80-stat-key">Вулиць описано</div>
+                                <div class="arc-hook">
+                                    <div class="arc-hook-icon">⛪</div>
+                                    <div><strong>Землеволодіння монастиря Піарів</strong> та межові камені 1776 р. — де проходив кордон міста</div>
                                 </div>
-                                <div class="d80-stat">
-                                    <div class="d80-stat-num">1776</div>
-                                    <div class="d80-stat-key">Рік межування</div>
-                                </div>
-                                <div class="d80-stat">
-                                    <div class="d80-stat-num">5</div>
-                                    <div class="d80-stat-key">Сканів</div>
+                                <div class="arc-hook">
+                                    <div class="arc-hook-icon">📍</div>
+                                    <div><strong>Ринок, два передмістя, фольварк Воробин</strong> — повна структура міста напередодні XIX ст.</div>
                                 </div>
                             </div>
                         </div>
-                        <div class="d80-cta">
-                            Переглянути документ
-                            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+                        <div>
+                            <div class="arc-stats" style="margin-bottom:1.4rem;">
+                                <div class="arc-stat">
+                                    <div class="arc-stat-num">200+</div>
+                                    <div class="arc-stat-key">Сторінок</div>
+                                </div>
+                                <div class="arc-stat">
+                                    <div class="arc-stat-num">8</div>
+                                    <div class="arc-stat-key">Вулиць</div>
+                                </div>
+                                <div class="arc-stat">
+                                    <div class="arc-stat-num">1776</div>
+                                    <div class="arc-stat-key">Межування</div>
+                                </div>
+                                <div class="arc-stat">
+                                    <div class="arc-stat-num">~40</div>
+                                    <div class="arc-stat-key">Р. перекладу</div>
+                                </div>
+                            </div>
+                            <div class="arc-cta-row">
+                                <div class="arc-cta">
+                                    Читати документ
+                                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+                                </div>
+                                <span class="arc-cta-hint">Скани · Переклад · Карта</span>
+                            </div>
                         </div>
                     </div>
                 </a>
             </div>
 
-            <!-- 1650 ZHALOBA TEASER -->
-            <div id="DOC1650" style="margin-top:3rem;padding:0 0 2rem;">
-                <style>
-                #DOC1650 {
-                    --d-parchment: #f5eed8;
-                    --d-ink: #1c160a;
-                    --d-sepia: #c9a227;
-                    --d-blood: #8b2020;
-                    --d-ruling: rgba(139,111,62,.18);
-                    --d-blood-pale: rgba(139,32,32,.1);
-                }
-                [data-theme="dark"] #DOC1650 {
-                    --d-parchment: #1a1408;
-                    --d-ink: #e8dbb5;
-                    --d-sepia: #c9a553;
-                    --d-blood: #c04040;
-                    --d-ruling: rgba(201,165,83,.12);
-                    --d-blood-pale: rgba(192,64,64,.08);
-                }
-                .d50-header {
-                    display: flex; align-items: center; gap: 1.2rem;
-                    margin-bottom: 2.5rem;
-                }
-                .d50-header::after {
-                    content: ''; flex: 1; height: 1px;
-                    background: linear-gradient(90deg, var(--d-ruling), transparent);
-                }
-                .d50-eyebrow {
-                    font-family: 'DM Sans', sans-serif;
-                    font-size: .55rem; letter-spacing: .3em; text-transform: uppercase;
-                    color: var(--d-sepia); white-space: nowrap;
-                }
-                .d50-card {
-                    display: grid;
-                    grid-template-columns: 1fr 1.6fr;
-                    gap: 0;
-                    border: 1px solid var(--d-ruling);
-                    border-radius: 14px;
-                    overflow: hidden;
-                    background: var(--d-parchment);
-                    box-shadow: 0 4px 32px rgba(0,0,0,.07);
-                    text-decoration: none;
-                    transition: box-shadow .4s ease, transform .5s cubic-bezier(.16,1,.3,1);
-                    position: relative;
-                }
-                .d50-card::before {
-                    content: '';
-                    position: absolute; top: 0; left: 0; right: 0; height: 3px;
-                    background: linear-gradient(90deg, rgba(139,32,32,.7), rgba(201,162,39,.5), rgba(139,32,32,.4));
-                    z-index: 1;
-                }
-                @media (max-width: 700px) { .d50-card { grid-template-columns: 1fr; } .d50-scans { min-height: 220px; } .d50-body { padding: 1.4rem 1.2rem; } }
-                .d50-card:hover {
-                    box-shadow: 0 12px 48px rgba(0,0,0,.12);
-                    transform: translateY(-3px);
-                }
-                .d50-scans {
-                    position: relative; overflow: hidden;
-                    background: #120a0a;
-                    min-height: 340px;
-                    display: grid;
-                    grid-template-columns: 1fr 1fr;
-                    grid-template-rows: 1fr 1fr;
-                    gap: 2px;
-                }
-                .d50-scan-thumb {
-                    width: 100%; height: 100%;
-                    object-fit: cover; object-position: top center;
-                    filter: sepia(.25) contrast(1.06) brightness(.85);
-                    transition: filter .6s ease, transform .8s cubic-bezier(.16,1,.3,1);
-                    display: block;
-                }
-                .d50-card:hover .d50-scan-thumb {
-                    filter: sepia(.1) contrast(1.08) brightness(.92);
-                    transform: scale(1.03);
-                }
-                .d50-scan-main {
-                    grid-column: 1 / -1;
-                    grid-row: 1;
-                }
-                .d50-scan-s1 { grid-row: 2; grid-column: 1; }
-                .d50-scan-s2 { grid-row: 2; grid-column: 2; }
-                .d50-scan-overlay-badge {
-                    position: absolute; bottom: 1rem; left: 1rem;
-                    display: flex; align-items: center; gap: .5rem;
-                    background: rgba(18,8,8,.85); backdrop-filter: blur(8px);
-                    border: 1px solid rgba(192,64,64,.3);
-                    border-radius: 6px; padding: .4rem .8rem;
-                    font-family: 'DM Sans', sans-serif;
-                    font-size: .58rem; letter-spacing: .15em; text-transform: uppercase;
-                    color: rgba(220,140,140,.85); z-index: 2;
-                }
-                .d50-scan-overlay-badge::before {
-                    content: '';
-                    width: 6px; height: 6px; border-radius: 50%;
-                    background: rgba(180,60,60,.9); flex-shrink: 0;
-                }
-                .d50-body {
-                    padding: 2.2rem 2.4rem;
-                    display: flex; flex-direction: column; justify-content: space-between;
-                    position: relative; overflow: hidden;
-                    min-width: 0;
-                }
-                .d50-body::before {
-                    content: '1650';
-                    position: absolute; right: -1rem; bottom: -3rem;
-                    font-family: 'Cormorant Garamond', serif;
-                    font-size: 9rem; font-weight: 300; line-height: 1;
-                    color: rgba(139,32,32,.05); pointer-events: none;
-                    user-select: none;
-                }
-                .d50-tag {
-                    display: inline-flex; align-items: center; gap: .5rem;
-                    font-family: 'DM Sans', sans-serif;
-                    font-size: .55rem; letter-spacing: .22em; text-transform: uppercase;
-                    color: rgba(180,60,60,.8);
-                    border: 1px solid rgba(139,32,32,.28);
-                    border-radius: 100px; padding: .3rem .85rem;
-                    margin-bottom: 1.2rem; width: fit-content;
-                    background: var(--d-blood-pale);
-                }
-                [data-theme="dark"] .d50-tag { color: rgba(220,120,120,.8); }
-                .d50-title {
-                    font-family: 'Cormorant Garamond', serif;
-                    font-size: clamp(1.4rem, 3vw, 2rem);
-                    font-weight: 300; line-height: 1.15;
-                    color: var(--d-ink); margin-bottom: .6rem;
-                }
-                .d50-title em { font-style: italic; color: var(--d-sepia); }
-                [data-theme="dark"] .d50-title { color: #e8dbb5; }
-                .d50-subtitle {
-                    font-family: 'DM Sans', sans-serif;
-                    font-size: .78rem; font-style: italic;
-                    color: rgba(139,111,62,.65); margin-bottom: 1.5rem;
-                }
-                .d50-excerpt {
-                    font-family: 'DM Sans', sans-serif;
-                    font-size: .8rem; line-height: 1.85;
-                    color: rgba(44,30,10,.6); margin-bottom: 1.8rem;
-                    flex: 1;
-                }
-                [data-theme="dark"] .d50-excerpt { color: rgba(200,185,155,.5); }
-                .d50-stats {
-                    display: flex; gap: 1rem; margin-bottom: 1.8rem;
-                    padding: 1rem 1.2rem;
-                    background: var(--d-blood-pale);
-                    border: 1px solid rgba(139,32,32,.18);
-                    border-radius: 8px;
-                    flex-wrap: wrap;
-                }
-                .d50-stat { text-align: center; }
-                .d50-stat-num {
-                    font-family: 'Cormorant Garamond', serif;
-                    font-size: 1.4rem; font-weight: 300;
-                    color: rgba(180,60,60,.9); line-height: 1;
-                }
-                [data-theme="dark"] .d50-stat-num { color: rgba(220,120,120,.9); }
-                .d50-stat-key {
-                    font-family: 'DM Sans', sans-serif;
-                    font-size: .55rem; letter-spacing: .1em; text-transform: uppercase;
-                    color: rgba(139,111,62,.55); margin-top: .2rem;
-                }
-                .d50-cta {
-                    display: inline-flex; align-items: center; gap: .7rem;
-                    padding: .75rem 1.5rem;
-                    background: var(--d-ink);
-                    color: var(--d-parchment);
-                    border-radius: 100px;
-                    font-family: 'DM Sans', sans-serif;
-                    font-size: .72rem; font-weight: 500; letter-spacing: .07em; text-transform: uppercase;
-                    transition: all .25s ease;
-                    width: fit-content;
-                }
-                [data-theme="dark"] .d50-cta { background: rgba(180,60,60,.85); color: #f5eed8; }
-                .d50-card:hover .d50-cta {
-                    background: rgba(139,32,32,.9); color: #f5eed8;
-                    box-shadow: 0 4px 16px rgba(139,32,32,.3);
-                }
-                .d50-cta svg { width: 14px; height: 14px; transition: transform .25s ease; }
-                .d50-card:hover .d50-cta svg { transform: translateX(3px); }
-                </style>
-
-                <div class="d50-header">
-                    <span class="d50-eyebrow">Архівний документ · Гродські книги Пінські · Пам'ятка XVII ст.</span>
-                </div>
-
-                <a href="zhaloba-1650.html" class="d50-card">
-                    <div class="d50-scans">
-                        <div class="d50-scan-main">
-                            <img class="d50-scan-thumb" src="https://i.imgur.com/yiAXkKrl.jpeg" alt="Жалоба 1650 — Реляція">
+            <!-- 1650 SKARGA TEASER -->
+            <div id="ARC50" style="padding:0 0 2rem;">
+                <a href="zhaloba-1650.html" class="arc-card">
+                    <div class="arc-img-panel">
+                        <img class="arc-img" src="https://i.imgur.com/yiAXkKrl.jpeg" alt="Скарга 1650 — Реляція">
+                        <div class="arc-img-overlay"></div>
+                        <div class="arc-img-badge">
+                            <div class="arc-img-pill">
+                                <div class="arc-img-dot"></div>
+                                12 сторінок · 3 документи · 1650
+                            </div>
                         </div>
-                        <div class="d50-scan-s1">
-                            <img class="d50-scan-thumb" src="https://i.imgur.com/gU3f28ol.jpeg" alt="Жалоба 1650 — Маніфестація">
-                        </div>
-                        <div class="d50-scan-s2">
-                            <img class="d50-scan-thumb" src="https://i.imgur.com/Opfu6Dvl.jpeg" alt="Жалоба 1650 — Атестація">
-                        </div>
-                        <div class="d50-scan-overlay-badge">12 сторінок · 3 документи · 1650</div>
                     </div>
-
-                    <div class="d50-body">
-                        <div>
-                            <div class="d50-tag">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:10px;height:10px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
-                                Воєнна документація · 1650
+                    <div class="arc-body">
+                        <div class="arc-tag">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                            Воєнна документація · 1650
+                        </div>
+                        <h3 class="arc-title">Скарга про спустошення<br><em>Дубровицького маєтку</em></h3>
+                        <div class="arc-quote">
+                            <div class="arc-quote-text">«Люди з голоду пухнуть і вмирають» — ці слова вписані до судових книг Пінського замку у 1650 році.</div>
+                            <div class="arc-quote-attr">— Маніфестація Миколая Березецького, 22 вересня 1650</div>
+                        </div>
+                        <div class="arc-hooks">
+                            <div class="arc-hook">
+                                <div class="arc-hook-icon">🔥</div>
+                                <div><strong>Два села спалені дощенту</strong> — Стрільськ і Глушиця знищені, але вже через кілька місяців відбудовані</div>
                             </div>
-                            <h3 class="d50-title">
-                                Жалоба про спустошення<br><em>Дубровицького маєтку</em>
-                            </h3>
-                            <p class="d50-subtitle">Relacja, Manifestacja i Atestacja dóbr Dąbrowickich · Anno Domini 1650</p>
-                            <p class="d50-excerpt">
-                                Унікальна судова справа з трьох документів — <strong>Реляція, Маніфестація та Атестація</strong> — подана до Гродських книг Пінського замку у 1650 р. Управитель Миколай Березецький від імені князя Стефана Четвертинського фіксує катастрофічне спустошення маєтку Дубровиця козаками, польськими жовнірами та татарськими хоругвами Стемпковського. Пряме свідчення: <strong>«люди з голоду пухнуть і вмирають»</strong>.
-                            </p>
-                            <div class="d50-stats">
-                                <div class="d50-stat">
-                                    <div class="d50-stat-num">1650</div>
-                                    <div class="d50-stat-key">Рік документу</div>
-                                </div>
-                                <div class="d50-stat">
-                                    <div class="d50-stat-num">3</div>
-                                    <div class="d50-stat-key">Частини справи</div>
-                                </div>
-                                <div class="d50-stat">
-                                    <div class="d50-stat-num">12</div>
-                                    <div class="d50-stat-key">Сторінок сканів</div>
-                                </div>
-                                <div class="d50-stat">
-                                    <div class="d50-stat-num">120+</div>
-                                    <div class="d50-stat-key">Порожніх господарств</div>
-                                </div>
+                            <div class="arc-hook">
+                                <div class="arc-hook-icon">⚔️</div>
+                                <div><strong>Чотири агресори одночасно</strong> — козаки, польські жовніри, литовці та татари Стемпковського</div>
+                            </div>
+                            <div class="arc-hook">
+                                <div class="arc-hook-icon">📊</div>
+                                <div><strong>120+ порожніх господарств</strong> — найточніший статистичний зріз Дубровиччини після Хмельниччини</div>
                             </div>
                         </div>
-                        <div class="d50-cta">
-                            Переглянути документ
-                            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+                        <div class="arc-stats">
+                            <div class="arc-stat">
+                                <div class="arc-stat-num">1650</div>
+                                <div class="arc-stat-key">Рік</div>
+                            </div>
+                            <div class="arc-stat">
+                                <div class="arc-stat-num">120+</div>
+                                <div class="arc-stat-key">Порожніх хат</div>
+                            </div>
+                            <div class="arc-stat">
+                                <div class="arc-stat-num">12</div>
+                                <div class="arc-stat-key">Сторінок</div>
+                            </div>
+                            <div class="arc-stat">
+                                <div class="arc-stat-num">3</div>
+                                <div class="arc-stat-key">Документи</div>
+                            </div>
+                        </div>
+                        <div class="arc-cta-row">
+                            <div class="arc-cta">
+                                Читати документ
+                                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+                            </div>
+                            <span class="arc-cta-hint">Реляція · Маніфестація · Атестація</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+        <!-- ARC65: Реєстр збитків 1665 -->
+            <div id="ARC65" style="padding:0 0 2rem;">
+                <a href="rejestr-1665.html" class="arc-card">
+                    <div class="arc-img-side">
+                        <img src="https://i.imgur.com/bd6XSvs.jpeg" alt="Реєстр збитків 1665 — оригінал">
+                        <div class="arc-img-overlay">
+                            <div class="arc-img-year">1665</div>
+                        </div>
+                    </div>
+                    <div class="arc-text-side">
+                        <div class="arc-meta-row">
+                            <span class="arc-badge">Гродський суд · Пінськ</span>
+                            <span class="arc-badge">ф. ІІ, од. зб. 12918</span>
+                        </div>
+                        <h2 class="arc-title">Реєстр збитків у маєтку Дубровицькому</h2>
+                        <div class="arc-quote">
+                            <p class="arc-quote-text">«Мені це вільно, як пану» — і ці слова вписані до судових книг Пінського суду у 1665 році. Пан Борко пограбував більш як 80 осіб у 14 селах.</p>
+                        </div>
+                        <ul class="arc-hooks">
+                            <li class="arc-hook"><span class="arc-hook-icon">⚖️</span><strong>12 сканів оригіналу</strong> — реєстр складений нотаріально: кожен злочин підписаний трьома шляхтичами-свідками під присягою</li>
+                            <li class="arc-hook"><span class="arc-hook-icon">🔥</span><strong>«Чорна книга» свавілля 1665 р.</strong> — вигадані звинувачення, тортури вогнем, привласнення державних податків, насильство над неповнолітніми</li>
+                            <li class="arc-hook"><span class="arc-hook-icon">👤</span><strong>80+ іменованих осіб</strong> — прізвища Заворовичів, Бахматовичів, Позняків, Довгих можуть бути витоками сучасних дубровицьких родин</li>
+                        </ul>
+                        <div class="arc-stats">
+                            <div class="arc-stat">
+                                <div class="arc-stat-num">1665</div>
+                                <div class="arc-stat-key">Рік</div>
+                            </div>
+                            <div class="arc-stat">
+                                <div class="arc-stat-num">14+</div>
+                                <div class="arc-stat-key">Сіл і місто</div>
+                            </div>
+                            <div class="arc-stat">
+                                <div class="arc-stat-num">80+</div>
+                                <div class="arc-stat-key">Постраждалих</div>
+                            </div>
+                            <div class="arc-stat">
+                                <div class="arc-stat-num">12</div>
+                                <div class="arc-stat-key">Сканів</div>
+                            </div>
+                        </div>
+                        <div class="arc-cta-row">
+                            <div class="arc-cta">
+                                Читати документ
+                                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+                            </div>
+                            <span class="arc-cta-hint">Транскрипція · Переклад · Особи · Контекст</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- ARC65: Реєстр збитків 1665 -->
+            <div id="ARC65" style="padding:0 0 2rem;">
+                <a href="rejestr-1665.html" class="arc-card">
+                    <div class="arc-img-side">
+                        <img src="https://i.imgur.com/bd6XSvs.jpeg" alt="Реєстр збитків 1665 — оригінал">
+                        <div class="arc-img-overlay">
+                            <div class="arc-img-year">1665</div>
+                        </div>
+                    </div>
+                    <div class="arc-text-side">
+                        <div class="arc-meta-row">
+                            <span class="arc-badge">Гродський суд · Пінськ</span>
+                            <span class="arc-badge">ф. ІІ, од. зб. 12918</span>
+                        </div>
+                        <h2 class="arc-title">Реєстр збитків у маєтку Дубровицькому</h2>
+                        <div class="arc-quote">
+                            <p class="arc-quote-text">«Мені це вільно, як пану» — і ці слова вписані до судових книг Пінського суду у 1665 р. Понад 80 осіб у 14 селах задокументовано пограбованими.</p>
+                        </div>
+                        <ul class="arc-hooks">
+                            <li class="arc-hook"><span class="arc-hook-icon">⚖️</span><strong>12 сканів оригіналу</strong> — кожен факт засвідчено нотаріально трьома шляхтичами під присягою у Пінському гродському суді</li>
+                            <li class="arc-hook"><span class="arc-hook-icon">🔥</span><strong>«Чорна книга» свавілля 1665 р.</strong> — тортури, вигадані провини, привласнення державних податків, насильство над дітьми</li>
+                            <li class="arc-hook"><span class="arc-hook-icon">👤</span><strong>80+ іменованих осіб</strong> — прізвища Заворовичів, Бахматовичів, Позняків, Довгих — XVII ст. генеалогія Дубровиці</li>
+                        </ul>
+                        <div class="arc-stats">
+                            <div class="arc-stat">
+                                <div class="arc-stat-num">1665</div>
+                                <div class="arc-stat-key">Рік</div>
+                            </div>
+                            <div class="arc-stat">
+                                <div class="arc-stat-num">14+</div>
+                                <div class="arc-stat-key">Сіл і місто</div>
+                            </div>
+                            <div class="arc-stat">
+                                <div class="arc-stat-num">80+</div>
+                                <div class="arc-stat-key">Постраждалих</div>
+                            </div>
+                            <div class="arc-stat">
+                                <div class="arc-stat-num">12</div>
+                                <div class="arc-stat-key">Сканів</div>
+                            </div>
+                        </div>
+                        <div class="arc-cta-row">
+                            <div class="arc-cta">
+                                Читати документ
+                                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+                            </div>
+                            <span class="arc-cta-hint">Транскрипція · Переклад · Особи · Контекст</span>
                         </div>
                     </div>
                 </a>
