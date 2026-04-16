@@ -202,10 +202,9 @@ a, button, [role="button"], input, select, textarea,
                 <a href="history.html" class="nav-link">Історія</a>
                 <a href="photo-archive.html" class="nav-link">Фотоархів</a>
                 <a href="architecture.html" class="nav-link">Пам'ятки</a>
-                <a href="metrychni-knyhy.html" class="nav-link">Метричні книги</a>
-                <a href="books.html" class="nav-link">Книги</a>
+                <a href="metrychni-knyhy.html" class="nav-link">Архівні справи</a>
                 <a href="jewish-history.html" class="nav-link">Єврейська спадщина</a>
-                <a href="contacts.html" class="nav-link">Контакти</a>
+                <a href="contacts.html" class="nav-link">Про проєкт</a>
             </nav>
 
             <button class="theme-toggle" id="themeToggle" aria-label="Перемкнути тему">
@@ -354,7 +353,7 @@ a, button, [role="button"], input, select, textarea,
 
                 <a href="metrychni-knyhy.html" class="card fade-in-up delay-2">
                     <div class="card-image">
-                        <img src="https://i.imgur.com/WeDmtIY.jpeg" alt="Метричні книги" loading="lazy">
+                        <img src="https://i.imgur.com/WeDmtIY.jpeg" alt="Архівні справи" loading="lazy">
                         <div class="card-image-overlay">
                             <span class="card-num">03</span>
                         </div>
@@ -363,28 +362,28 @@ a, button, [role="button"], input, select, textarea,
                         <div class="card-icon">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
                         </div>
-                        <h3 class="card-title">Метричні книги</h3>
+                        <h3 class="card-title">Архівні справи</h3>
                         <p class="card-description">
-                            Генеалогічні дослідження — метричні записи парафій регіону
+                            Метричні книги, сумаріуші, інвентарі, судові реєстри та бібліографія
                         </p>
                         <span class="card-link">Досліджуйте <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
                     </div>
                 </a>
 
-                <a href="books.html" class="card fade-in-up delay-3">
+                <a href="jewish-history.html" class="card fade-in-up delay-3">
                     <div class="card-image">
-                        <img src="https://i.imgur.com/SPhDh6n.jpeg" alt="Книги" loading="lazy">
+                        <img src="https://i.imgur.com/caTP3ND.jpeg" alt="Єврейська спадщина" loading="lazy">
                         <div class="card-image-overlay">
                             <span class="card-num">04</span>
                         </div>
                     </div>
                     <div class="card-content">
                         <div class="card-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                         </div>
-                        <h3 class="card-title">Книги про Дубровицю</h3>
+                        <h3 class="card-title">Єврейська спадщина</h3>
                         <p class="card-description">
-                            Бібліографія досліджень, спогадів та літератури про регіон
+                            Історія та пам'ять єврейської громади Дубровиці — від XVIII ст. до Голокосту
                         </p>
                         <span class="card-link">Читати <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
                     </div>
@@ -419,8 +418,143 @@ a, button, [role="button"], input, select, textarea,
                 </div>
             </div>
         </div>
+    </section>
 
+    <!-- ═══ FEATURED ARCHIVAL DOCUMENTS ═══ -->
+    <section class="featured-archives">
+    <style>
+    .featured-archives{padding:6.5rem 0 7rem;background:linear-gradient(180deg,var(--color-bg,#faf7f2) 0%,rgba(201,162,39,.03) 50%,var(--color-bg,#faf7f2) 100%);position:relative;overflow:hidden;border-top:1px solid var(--color-border-light,rgba(201,162,39,.12));border-bottom:1px solid var(--color-border-light,rgba(201,162,39,.12));}
+    .featured-archives::before{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");background-size:180px;opacity:.018;pointer-events:none;z-index:0;}
+    .fa-inner{max-width:1300px;margin:0 auto;padding:0 2rem;position:relative;z-index:1;}
+    @media(max-width:700px){.fa-inner{padding:0 1.2rem;}.featured-archives{padding:4.5rem 0;}}
+    .fa-head{text-align:center;margin-bottom:3.5rem;}
+    .fa-eyebrow{display:flex;align-items:center;justify-content:center;gap:1rem;margin-bottom:1rem;}
+    .fa-eyebrow span{font-family:'DM Sans',sans-serif;font-size:.52rem;letter-spacing:.34em;text-transform:uppercase;color:rgba(201,162,39,.72);}
+    .fa-eyebrow-ln{width:38px;height:1px;background:linear-gradient(90deg,transparent,rgba(201,162,39,.55));}
+    .fa-eyebrow-ln:last-child{transform:scaleX(-1);}
+    .fa-title{font-family:'Cormorant Garamond',serif;font-weight:300;line-height:.95;letter-spacing:-.035em;font-size:clamp(2.4rem,4.8vw,3.8rem);color:var(--color-text,#1a1000);margin-bottom:.9rem;}
+    .fa-title em{font-style:italic;color:#c9a227;}
+    .fa-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,1.7vw,1.2rem);font-weight:300;font-style:italic;color:var(--color-text-light,#8b6f3e);max-width:640px;margin:0 auto;}
+    .fa-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem;}
+    @media(max-width:1000px){.fa-grid{grid-template-columns:repeat(2,1fr);}}
+    @media(max-width:560px){.fa-grid{grid-template-columns:1fr;}}
+    .fa-card{position:relative;display:block;padding:2rem 1.7rem 1.8rem;background:var(--color-bg-card,#fcf9f2);border:1px solid var(--color-border-light,rgba(201,162,39,.15));border-radius:12px;overflow:hidden;text-decoration:none;color:inherit;transition:transform .4s cubic-bezier(.16,1,.3,1),box-shadow .4s ease,border-color .3s ease;}
+    [data-theme="dark"] .fa-card{background:#12100c;border-color:rgba(201,162,39,.18);}
+    .fa-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--fa-accent,#c9a227),transparent);opacity:.55;}
+    .fa-card::after{content:'';position:absolute;inset:0;border-radius:12px;pointer-events:none;background:radial-gradient(circle at 20% 0%,var(--fa-glow,rgba(201,162,39,.07)),transparent 50%);}
+    .fa-card:hover{transform:translateY(-5px);box-shadow:0 22px 55px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.05);border-color:var(--fa-accent,#c9a227);}
+    [data-theme="dark"] .fa-card:hover{box-shadow:0 22px 55px rgba(0,0,0,.5);}
+    .fa-year{position:absolute;top:1.5rem;right:1.7rem;font-family:'Cormorant Garamond',serif;font-size:.82rem;color:var(--fa-accent,#c9a227);opacity:.72;font-style:italic;letter-spacing:.04em;}
+    .fa-num{font-family:'DM Sans',sans-serif;font-size:.5rem;letter-spacing:.24em;text-transform:uppercase;color:var(--color-text-muted,#a89880);font-weight:600;margin-bottom:1.4rem;}
+    .fa-icon{width:42px;height:42px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--fa-glow,rgba(201,162,39,.12)),rgba(201,162,39,.05));border-radius:10px;margin-bottom:1.1rem;border:1px solid var(--fa-accent-border,rgba(201,162,39,.2));}
+    .fa-icon svg{width:19px;height:19px;stroke:var(--fa-accent,#c9a227);}
+    .fa-label{font-family:'DM Sans',sans-serif;font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--fa-accent,#c9a227);font-weight:500;margin-bottom:.6rem;}
+    .fa-name{font-family:'Cormorant Garamond',serif;font-size:1.42rem;font-weight:400;color:var(--color-text,#1a1000);line-height:1.22;margin-bottom:.8rem;letter-spacing:-.015em;}
+    .fa-desc{font-family:'Cormorant Garamond',serif;font-size:.95rem;line-height:1.65;color:var(--color-text-secondary,#5a4a2e);margin-bottom:1.4rem;min-height:3.3em;}
+    .fa-stats-row{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.2rem;}
+    .fa-stat-pill{display:inline-flex;align-items:center;gap:.3rem;padding:.25rem .6rem;background:var(--color-bg,#faf7f2);border:1px solid var(--color-border-light,rgba(201,162,39,.18));border-radius:100px;font-family:'DM Sans',sans-serif;font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;color:var(--color-text-muted,#a89880);}
+    [data-theme="dark"] .fa-stat-pill{background:#0e0c0a;}
+    .fa-cta{display:inline-flex;align-items:center;gap:.5rem;font-family:'DM Sans',sans-serif;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--fa-accent,#c9a227);font-weight:600;padding-top:1rem;border-top:1px solid var(--color-border-light,rgba(201,162,39,.1));transition:gap .3s ease;}
+    .fa-cta svg{width:13px;height:13px;stroke:var(--fa-accent,#c9a227);transition:transform .3s ease;}
+    .fa-card:hover .fa-cta{gap:.75rem;}
+    .fa-card:hover .fa-cta svg{transform:translateX(3px);}
 
+    /* Color variants per document */
+    .fa-card--gold{--fa-accent:#c9a227;--fa-glow:rgba(201,162,39,.1);--fa-accent-border:rgba(201,162,39,.25);}
+    .fa-card--crimson{--fa-accent:#8b2020;--fa-glow:rgba(139,32,32,.08);--fa-accent-border:rgba(139,32,32,.25);}
+    .fa-card--rust{--fa-accent:#a0521f;--fa-glow:rgba(160,82,31,.08);--fa-accent-border:rgba(160,82,31,.25);}
+    .fa-card--forest{--fa-accent:#4a6a33;--fa-glow:rgba(74,106,51,.08);--fa-accent-border:rgba(74,106,51,.25);}
+    [data-theme="dark"] .fa-card--crimson{--fa-accent:#d05050;}
+    [data-theme="dark"] .fa-card--rust{--fa-accent:#d4844a;}
+    [data-theme="dark"] .fa-card--forest{--fa-accent:#86a86a;}
+
+    .fa-footer-link{text-align:center;margin-top:3rem;}
+    .fa-footer-link a{display:inline-flex;align-items:center;gap:.6rem;font-family:'DM Sans',sans-serif;font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--color-text,#1a1000);text-decoration:none;padding:1rem 2rem;background:transparent;border:1px solid var(--color-border,rgba(201,162,39,.3));border-radius:100px;font-weight:500;transition:background .3s ease,border-color .3s ease,transform .2s ease;}
+    .fa-footer-link a:hover{background:rgba(201,162,39,.06);border-color:#c9a227;transform:translateY(-2px);}
+    .fa-footer-link a svg{width:13px;height:13px;transition:transform .3s ease;}
+    .fa-footer-link a:hover svg{transform:translateX(3px);}
+    </style>
+        <div class="fa-inner">
+            <div class="fa-head fade-in-up">
+                <div class="fa-eyebrow"><span class="fa-eyebrow-ln"></span><span>Унікальні джерела</span><span class="fa-eyebrow-ln"></span></div>
+                <h2 class="fa-title">Історичні <em>документи</em></h2>
+                <p class="fa-sub">Оригінальні архівні справи XVII–XVIII ст. — з транскрипцією, перекладом та коментарями</p>
+            </div>
+
+            <div class="fa-grid">
+                <a href="sumariusz-1642.html" class="fa-card fa-card--gold fade-in-up">
+                    <span class="fa-year">1642</span>
+                    <div class="fa-num">01 · Документ</div>
+                    <div class="fa-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+                    </div>
+                    <div class="fa-label">Сумаріуш</div>
+                    <h3 class="fa-name">Господарський звіт маєтку Дубровиця</h3>
+                    <p class="fa-desc">11 586 злотих річного доходу: залізні рудні, 20 озер, поташня, замок. Детальний опис маєтку.</p>
+                    <div class="fa-stats-row">
+                        <span class="fa-stat-pill">3 стор.</span>
+                        <span class="fa-stat-pill">Anno 1642</span>
+                    </div>
+                    <div class="fa-cta">Читати <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8h10M9 4l4 4-4 4"/></svg></div>
+                </a>
+
+                <a href="zhaloba-1650.html" class="fa-card fa-card--crimson fade-in-up delay-1">
+                    <span class="fa-year">1650</span>
+                    <div class="fa-num">02 · Документ</div>
+                    <div class="fa-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                    </div>
+                    <div class="fa-label">Скарга · Реляція</div>
+                    <h3 class="fa-name">«Люди з голоду пухнуть і вмирають»</h3>
+                    <p class="fa-desc">Воєнна документація часів Хмельниччини. Маніфестація Миколая Березецького у гродському суді Пінська.</p>
+                    <div class="fa-stats-row">
+                        <span class="fa-stat-pill">12 стор.</span>
+                        <span class="fa-stat-pill">3 документи</span>
+                    </div>
+                    <div class="fa-cta">Читати <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8h10M9 4l4 4-4 4"/></svg></div>
+                </a>
+
+                <a href="rejestr-1665.html" class="fa-card fa-card--rust fade-in-up delay-2">
+                    <span class="fa-year">1665</span>
+                    <div class="fa-num">03 · Документ</div>
+                    <div class="fa-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
+                    </div>
+                    <div class="fa-label">Судовий реєстр</div>
+                    <h3 class="fa-name">Реєстр збитків у маєтку Дубровицькому</h3>
+                    <p class="fa-desc">«Чорна книга» свавілля пана Борка: тортури, вигадані провини, понад 80 постраждалих. 14+ сіл.</p>
+                    <div class="fa-stats-row">
+                        <span class="fa-stat-pill">12 сканів</span>
+                        <span class="fa-stat-pill">80+ осіб</span>
+                    </div>
+                    <div class="fa-cta">Читати <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8h10M9 4l4 4-4 4"/></svg></div>
+                </a>
+
+                <a href="inventar-1780.html" class="fa-card fa-card--forest fade-in-up delay-3">
+                    <span class="fa-year">1780</span>
+                    <div class="fa-num">04 · Документ</div>
+                    <div class="fa-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    </div>
+                    <div class="fa-label">Інвентар</div>
+                    <h3 class="fa-name">Топографічний опис Дубровиці</h3>
+                    <p class="fa-desc">200+ сторінок, 1780–1820. Детальний інвентар маєтку: будівлі, землі, мешканці, господарство.</p>
+                    <div class="fa-stats-row">
+                        <span class="fa-stat-pill">200+ стор.</span>
+                        <span class="fa-stat-pill">1780–1820</span>
+                    </div>
+                    <div class="fa-cta">Читати <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8h10M9 4l4 4-4 4"/></svg></div>
+                </a>
+            </div>
+
+            <div class="fa-footer-link fade-in-up">
+                <a href="metrychni-knyhy.html">
+                    Переглянути всі архівні справи
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+                </a>
+            </div>
+        </div>
+    </section>
 
     <!-- ═══ THIS DAY IN HISTORY + FACTS ═══ -->
     <section id="TDIH">
@@ -6172,8 +6306,8 @@ a, button, [role="button"], input, select, textarea,
                     <nav class="footer-nav">
                         <a href="history.html">Історія</a>
                         <a href="photo-archive.html">Фотоархів</a>
-                        <a href="metrychni-knyhy.html">Метричні книги</a>
-                        <a href="books.html">Книги</a>
+                        <a href="metrychni-knyhy.html">Архівні справи</a>
+                        <a href="jewish-history.html">Єврейська спадщина</a>
                     </nav>
                 </div>
                 <div class="footer-section">

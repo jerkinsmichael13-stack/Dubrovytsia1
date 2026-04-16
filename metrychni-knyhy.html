@@ -16,7 +16,7 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="manifest" href="site.webmanifest">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Метричні книги — Дубровиця</title>
+    <title>Архівні справи — Дубровиця</title>
     <script>!function(){var t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t)}()</script>
     <link rel="stylesheet" href="app.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -233,10 +233,9 @@ a, button, [role="button"], input, select, textarea,
                 <a href="history.html" class="nav-link">Історія</a>
                 <a href="photo-archive.html" class="nav-link">Фотоархів</a>
                 <a href="architecture.html" class="nav-link">Пам'ятки</a>
-                <a href="metrychni-knyhy.html" class="nav-link active">Метричні книги</a>
-                <a href="books.html" class="nav-link">Книги</a>
+                <a href="metrychni-knyhy.html" class="nav-link active">Архівні справи</a>
                 <a href="jewish-history.html" class="nav-link">Єврейська спадщина</a>
-                <a href="contacts.html" class="nav-link">Контакти</a>
+                <a href="contacts.html" class="nav-link">Про проєкт</a>
             </nav>
 
             <button class="theme-toggle" id="themeToggle" aria-label="Перемкнути тему">
@@ -278,7 +277,7 @@ a, button, [role="button"], input, select, textarea,
         <div class="mk-hero-content">
             <div class="mk-eyebrow">
                 <div class="mk-eyebrow-ln"></div>
-                <span>Генеалогічні дослідження · Дубровиця</span>
+                <span>Архівні справи · Дубровиця</span>
                 <div class="mk-eyebrow-ln"></div>
             </div>
 
@@ -295,8 +294,8 @@ a, button, [role="button"], input, select, textarea,
             </div>
 
             <h1 class="mk-title">
-                <span class="t-top">Метричні</span>
-                <span class="t-bot">книги</span>
+                <span class="t-top">Архівні</span>
+                <span class="t-bot">справи</span>
             </h1>
 
             <div class="mk-ornament">
@@ -309,22 +308,22 @@ a, button, [role="button"], input, select, textarea,
 
             <div class="mk-stats">
                 <div class="mk-stat">
+                    <span class="mk-stat-num"><em>4</em></span>
+                    <span class="mk-stat-label">Історичних документа</span>
+                </div>
+                <span class="mk-stat-sep">·</span>
+                <div class="mk-stat">
                     <span class="mk-stat-num"><em>3</em></span>
-                    <span class="mk-stat-label">Конфесії</span>
+                    <span class="mk-stat-label">Конфесії · Метрики</span>
                 </div>
                 <span class="mk-stat-sep">·</span>
                 <div class="mk-stat">
-                    <span class="mk-stat-num"><em>8+</em></span>
-                    <span class="mk-stat-label">Документів</span>
-                </div>
-                <span class="mk-stat-sep">·</span>
-                <div class="mk-stat">
-                    <span class="mk-stat-num"><em>1820–1910</em></span>
+                    <span class="mk-stat-num"><em>1642–1910</em></span>
                     <span class="mk-stat-label">Роки охоплення</span>
                 </div>
             </div>
 
-            <p class="mk-sub">Народження · Шлюби · Смерті — хроніка поколінь</p>
+            <p class="mk-sub">Метричні книги · Сумаріуші · Інвентарі · Судові реєстри · Бібліографія</p>
         </div>
 
         <div class="mk-scroll-cue">
@@ -1727,6 +1726,98 @@ a, button, [role="button"], input, select, textarea,
         </div>
     </section>
 
+    <!-- ══ BOOKS CATALOG (merged from books.html) ══ -->
+    <section class="mk-books-section" id="booksCatalog">
+        <style>
+        .mk-books-section{padding:6rem 0 7rem;background:linear-gradient(180deg,var(--color-bg,#faf7f2) 0%,rgba(201,162,39,.03) 100%);position:relative;border-top:1px solid var(--color-border-light,rgba(201,162,39,.15));}
+        .mk-books-section::before{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");background-size:180px;opacity:.018;pointer-events:none;z-index:0;}
+        .mk-books-inner{max-width:1320px;margin:0 auto;padding:0 2rem;position:relative;z-index:1;}
+        @media(max-width:700px){.mk-books-inner{padding:0 1.2rem;}.mk-books-section{padding:4rem 0 5rem;}}
+        .mk-books-head{text-align:center;margin-bottom:3.5rem;}
+        .mk-books-eyebrow{display:flex;align-items:center;justify-content:center;gap:1rem;margin-bottom:1rem;}
+        .mk-books-eyebrow span{font-family:'DM Sans',sans-serif;font-size:.52rem;letter-spacing:.34em;text-transform:uppercase;color:rgba(201,162,39,.72);}
+        .mk-books-eyebrow-ln{width:38px;height:1px;background:linear-gradient(90deg,transparent,rgba(201,162,39,.55));}
+        .mk-books-eyebrow-ln:last-child{transform:scaleX(-1);}
+        .mk-books-title{font-family:'Cormorant Garamond',serif;font-weight:300;line-height:.95;letter-spacing:-.035em;font-size:clamp(2.4rem,4.8vw,3.8rem);color:var(--color-text,#1a1000);margin-bottom:.9rem;}
+        .mk-books-title em{font-style:italic;color:#c9a227;}
+        .mk-books-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,1.7vw,1.2rem);font-weight:300;font-style:italic;color:var(--color-text-light,#8b6f3e);max-width:640px;margin:0 auto;}
+        /* Filters */
+        .mk-bk-filters{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;justify-content:center;margin-bottom:3rem;}
+        .mk-bk-filters-label{font-family:'DM Sans',sans-serif;font-size:.5rem;letter-spacing:.22em;text-transform:uppercase;color:var(--color-text-muted,#a89880);flex-shrink:0;margin-right:.4rem;}
+        /* Grid */
+        .mk-bk-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:1px solid var(--color-border-light,rgba(201,162,39,.15));}
+        @media(max-width:900px){.mk-bk-grid{grid-template-columns:1fr;}}
+        .bk-card{display:grid;grid-template-columns:160px 1fr;gap:0;border-bottom:1px solid var(--color-border-light,rgba(201,162,39,.15));padding:2.4rem 2.2rem;background:var(--color-bg-card,#fcf9f2);transition:background .25s ease;position:relative;overflow:visible;}
+        .mk-bk-grid>.bk-card:nth-child(odd){border-right:1px solid var(--color-border-light,rgba(201,162,39,.15));}
+        @media(max-width:900px){.mk-bk-grid>.bk-card:nth-child(odd){border-right:none;}}
+        .bk-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#c9a227,transparent);opacity:0;transition:opacity .3s ease;}
+        .bk-card:hover{background:var(--color-bg-alt,rgba(201,162,39,.04));}
+        .bk-card:hover::before{opacity:1;}
+        [data-theme="dark"] .bk-card{background:#0f0d0b;}
+        [data-theme="dark"] .bk-card:hover{background:#161210;}
+        .bk-cover-col{display:flex;flex-direction:column;align-items:flex-start;gap:1rem;padding-right:1.8rem;}
+        .bk-cover-img{width:120px;height:172px;object-fit:cover;object-position:center top;border-radius:3px;display:block;box-shadow:6px 10px 30px rgba(0,0,0,.18),2px 4px 8px rgba(0,0,0,.12);border:1px solid rgba(0,0,0,.08);transition:transform .35s ease,box-shadow .35s ease;flex-shrink:0;}
+        .bk-card:hover .bk-cover-img{transform:translateY(-3px) rotate(-.5deg);box-shadow:10px 16px 40px rgba(0,0,0,.24),3px 6px 12px rgba(0,0,0,.14);}
+        .bk-cover-placeholder{width:120px;height:172px;border-radius:3px;background:linear-gradient(160deg,var(--color-bg-secondary,#f5f1e8),var(--color-bg-alt,rgba(201,162,39,.04)));border:1px solid var(--color-border-light,rgba(201,162,39,.15));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;flex-shrink:0;}
+        .bk-cover-placeholder svg{opacity:.3;}
+        .bk-cover-placeholder span{font-family:'DM Sans',sans-serif;font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:var(--color-text-muted,#a89880);opacity:.6;}
+        .bk-badge{display:inline-flex;align-items:center;gap:.3rem;padding:.25rem .7rem;border-radius:100px;border:1px solid var(--color-border,rgba(201,162,39,.2));font-family:'DM Sans',sans-serif;font-size:.48rem;letter-spacing:.18em;text-transform:uppercase;color:var(--color-text-muted,#a89880);background:var(--color-bg,#faf7f2);white-space:nowrap;}
+        [data-theme="dark"] .bk-badge{background:#0e0c0a;}
+        .bk-info{display:flex;flex-direction:column;gap:0;}
+        .bk-num{font-family:'Cormorant Garamond',serif;font-size:.78rem;color:#c9a227;opacity:.5;letter-spacing:.1em;margin-bottom:.4rem;}
+        .bk-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.15rem,2vw,1.55rem);font-weight:400;line-height:1.2;color:var(--color-text,#1a1000);margin-bottom:.5rem;letter-spacing:-.01em;}
+        .bk-author-row{display:flex;align-items:center;gap:.6rem;margin-bottom:1rem;}
+        .bk-author-line{width:16px;height:1px;background:#c9a227;opacity:.5;flex-shrink:0;}
+        .bk-author{font-family:'DM Sans',sans-serif;font-size:.72rem;color:var(--color-accent-dark,#8b6f1c);font-weight:500;letter-spacing:.04em;}
+        [data-theme="dark"] .bk-author{color:#e0bd5a;}
+        .bk-year{font-family:'DM Sans',sans-serif;font-size:.65rem;color:var(--color-text-muted,#a89880);margin-left:.3rem;}
+        .bk-desc{font-family:'Cormorant Garamond',serif;font-size:.95rem;line-height:1.72;color:var(--color-text-secondary,#5a4a2e);margin-bottom:1.2rem;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;}
+        .bk-desc-full{-webkit-line-clamp:unset;overflow:visible;display:block;}
+        .bk-read-more{background:none;border:none;padding:0;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:#c9a227;display:inline-flex;align-items:center;gap:.3rem;margin-bottom:1rem;transition:gap .2s ease;}
+        .bk-read-more:hover{gap:.5rem;}
+        .bk-location{margin-top:auto;display:flex;align-items:center;gap:.5rem;padding-top:1rem;border-top:1px solid var(--color-border-light,rgba(201,162,39,.1));}
+        .bk-location a{font-family:'DM Sans',sans-serif;font-size:.66rem;letter-spacing:.05em;color:var(--color-accent-dark,#8b6f1c);text-decoration:none;display:inline-flex;align-items:center;gap:.35rem;transition:gap .2s ease;}
+        [data-theme="dark"] .bk-location a{color:#e0bd5a;}
+        .bk-location a:hover{gap:.55rem;}
+        .bk-empty{display:none;text-align:center;padding:5rem 1rem;font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-style:italic;color:var(--color-text-muted,#a89880);grid-column:1 / -1;}
+        @media(max-width:520px){.bk-card{grid-template-columns:90px 1fr;padding:1.6rem 1.2rem;gap:0;}.bk-cover-col{padding-right:1.2rem;}.bk-cover-img{width:90px;height:128px;}.bk-cover-placeholder{width:90px;height:128px;}.bk-badge{display:none;}.bk-title{font-size:1.05rem;}.bk-desc{-webkit-line-clamp:3;}}
+        @media(max-width:400px){.bk-card{grid-template-columns:1fr;padding:1.4rem 1rem;}.bk-cover-col{flex-direction:row;align-items:center;gap:1rem;padding-right:0;margin-bottom:1rem;}.bk-cover-img{width:72px;height:103px;flex-shrink:0;}.bk-cover-placeholder{width:72px;height:103px;flex-shrink:0;}.bk-badge{display:inline-block;}.bk-num{display:none;}}
+        </style>
+
+        <div class="mk-books-inner">
+            <div class="mk-books-head">
+                <div class="mk-books-eyebrow">
+                    <span class="mk-books-eyebrow-ln"></span>
+                    <span>Бібліографія · Дослідження · Спогади</span>
+                    <span class="mk-books-eyebrow-ln"></span>
+                </div>
+                <h2 class="mk-books-title">Книги <em>про Дубровицю</em></h2>
+                <p class="mk-books-sub">Опубліковані дослідження, збірки документів, мемуари та літературні роботи, присвячені історії міста</p>
+            </div>
+
+            <div class="mk-bk-filters">
+                <span class="mk-bk-filters-label">Тематика:</span>
+                <div class="catalog-filter-group" style="flex-wrap:wrap;">
+                    <button class="catalog-filter-btn active" data-book-filter="all">Усі книги</button>
+                    <button class="catalog-filter-btn" data-book-filter="history">Історія</button>
+                    <button class="catalog-filter-btn" data-book-filter="culture">Культура</button>
+                    <button class="catalog-filter-btn" data-book-filter="war">Друга світова</button>
+                    <button class="catalog-filter-btn" data-book-filter="religion">Релігія</button>
+                    <button class="catalog-filter-btn" data-book-filter="people">Постаті</button>
+                    <button class="catalog-filter-btn" data-book-filter="documents">Документи</button>
+                    <button class="catalog-filter-btn" data-book-filter="folklore">Фольклор</button>
+                </div>
+            </div>
+
+            <div class="mk-bk-grid" id="booksGrid">
+                <!-- populated from books.json via app.js -->
+            </div>
+            <div id="booksEmptyMsg" class="bk-empty">
+                Книг за обраною темою ще не додано.
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
@@ -1743,8 +1834,8 @@ a, button, [role="button"], input, select, textarea,
                     <nav class="footer-nav">
                         <a href="history.html">Історія</a>
                         <a href="photo-archive.html">Фотоархів</a>
-                        <a href="metrychni-knyhy.html">Метричні книги</a>
-                        <a href="books.html">Книги</a>
+                        <a href="metrychni-knyhy.html">Архівні справи</a>
+                        <a href="jewish-history.html">Єврейська спадщина</a>
                     </nav>
                 </div>
                 <div class="footer-section">

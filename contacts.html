@@ -16,40 +16,206 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="manifest" href="site.webmanifest">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Контакти — Дубровиця</title>
+    <meta name="description" content="Про проєкт «Цифровий архів Дубровиці» — некомерційна краєзнавча ініціатива. Команда, методологія, подяки та форма зворотного зв'язку.">
+    <meta property="og:title" content="Про проєкт — Цифровий архів Дубровиці">
+    <meta property="og:description" content="Некомерційна краєзнавча ініціатива зі збереження історичної спадщини міста Дубровиця">
+    <meta property="og:type" content="website">
+    <title>Про проєкт — Цифровий архів Дубровиці</title>
     <script>!function(){var t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t)}()</script>
     <link rel="stylesheet" href="app.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
 <style>
-.cont-hero{position:relative;min-height:55vh;display:flex;flex-direction:column;justify-content:center;align-items:center;overflow:hidden;background:var(--color-bg,#faf7f2);}
-.cont-hero-bg{position:absolute;inset:0;background-image:url('https://i.imgur.com/5MMG5vh.jpeg');background-size:cover;background-position:center 30%;filter:sepia(0.55) brightness(0.48) contrast(1.1) saturate(0.38);transform:scale(1.05);opacity:0;transition:transform 12s ease-out, opacity 0.8s ease;z-index:0;will-change:transform;}
-:root:not([data-theme="dark"]) .cont-hero-bg{filter:sepia(0.45) brightness(0.6) contrast(1.07) saturate(0.4);}
-.cont-hero.hero-loaded .cont-hero-bg{transform:scale(1); opacity:1;}
-.cont-hero-grain{position:absolute;inset:-80px;width:calc(100% + 160px);height:calc(100% + 160px);opacity:0.055;pointer-events:none;z-index:1;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)'/%3E%3C/svg%3E");background-size:220px 220px;animation:cgrain 0.55s steps(1) infinite;}
-@keyframes cgrain{0%{transform:translate(0,0)}33%{transform:translate(5px,3px)}66%{transform:translate(-4px,6px)}100%{transform:translate(3px,-4px)}}
-.cont-hero-vignette{position:absolute;inset:0;z-index:2;pointer-events:none;background:radial-gradient(ellipse 70% 60% at 50% 50%,transparent 20%,rgba(0,0,0,0.3) 100%),linear-gradient(180deg,rgba(0,0,0,0.28) 0%,rgba(0,0,0,0.04) 28%,rgba(0,0,0,0.42) 70%,var(--color-bg,#faf7f2) 100%);}
-.cont-hero-content{position:relative;z-index:10;text-align:center;padding:2rem 2rem 6rem;max-width:760px;width:100%;display:flex;flex-direction:column;align-items:center;}
-.cont-eyebrow{display:flex;align-items:center;justify-content:center;gap:1rem;margin-bottom:2rem;opacity:0;animation:cup 0.85s cubic-bezier(0.16,1,0.3,1) 0.15s forwards;}
-.cont-eyebrow span{font-family:'DM Sans',sans-serif;font-size:0.5rem;letter-spacing:0.32em;text-transform:uppercase;color:rgba(201,162,39,0.75);}
-.cont-eyebrow-ln{width:32px;height:1px;flex-shrink:0;}
-.cont-eyebrow-ln:first-child{background:linear-gradient(90deg,transparent,rgba(201,162,39,0.55));}
-.cont-eyebrow-ln:last-child{background:linear-gradient(270deg,transparent,rgba(201,162,39,0.55));}
-.cont-title{font-family:'Cormorant Garamond',serif;font-weight:300;line-height:0.9;letter-spacing:-0.02em;margin-bottom:1.4rem;opacity:0;animation:cup 1s cubic-bezier(0.16,1,0.3,1) 0.3s forwards;}
-.cont-title .t-top{display:block;font-size:clamp(3rem,8vw,7rem);color:#fff;text-shadow:0 2px 40px rgba(0,0,0,0.55);}
-.cont-title .t-bot{display:block;font-size:clamp(2.2rem,6vw,5rem);font-style:italic;color:#c9a227;text-shadow:0 0 70px rgba(201,162,39,0.28);}
-.cont-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(0.9rem,1.5vw,1.1rem);font-weight:300;font-style:italic;color:rgba(255,255,255,0.42);opacity:0;animation:cup 0.85s cubic-bezier(0.16,1,0.3,1) 0.5s forwards;}
-@keyframes cup{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
-[data-theme="dark"] .cont-hero-bg{filter:sepia(0.65) brightness(0.2) contrast(1.25) saturate(0.32);}
-</style>
-<style>
+/* ══════════════════════════════════════════════════════════════════
+   CONTACTS — EDITORIAL REDESIGN · Premium non-profit aesthetic
+   ══════════════════════════════════════════════════════════════════ */
+
+/* Reading progress */
+#ct-progress{position:fixed;top:0;left:0;z-index:9999;height:2px;width:0%;background:linear-gradient(90deg,#a8841c,#c9a227,#e0bd5a);transition:width .08s linear;pointer-events:none;box-shadow:0 0 8px rgba(201,162,39,.5);}
+
+/* ── Cinematic Hero ─────────────────────────────────────── */
+.ct-hero{position:relative;min-height:92svh;display:flex;flex-direction:column;justify-content:center;align-items:center;overflow:hidden;background:var(--color-bg,#faf7f2);}
+.ct-hero-bg{position:absolute;inset:0;background-image:url('https://i.imgur.com/zef8WRy.jpeg');background-size:cover;background-position:center 40%;filter:sepia(.6) brightness(.34) contrast(1.15) saturate(.38);transform:scale(1.06);opacity:0;transition:transform 14s ease-out,opacity 1s ease;z-index:0;will-change:transform;}
+.ct-hero.loaded .ct-hero-bg{transform:scale(1);opacity:1;}
+:root:not([data-theme="dark"]) .ct-hero-bg{filter:sepia(.45) brightness(.48) contrast(1.1) saturate(.42);}
+[data-theme="dark"] .ct-hero-bg{filter:sepia(.7) brightness(.18) contrast(1.25) saturate(.32);}
+.ct-hero-grain{position:absolute;inset:-80px;width:calc(100% + 160px);height:calc(100% + 160px);opacity:.055;pointer-events:none;z-index:1;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)'/%3E%3C/svg%3E");background-size:220px 220px;animation:ctg .55s steps(1) infinite;}
+@keyframes ctg{0%{transform:translate(0,0)}33%{transform:translate(5px,3px)}66%{transform:translate(-4px,6px)}100%{transform:translate(3px,-4px)}}
+.ct-hero-vignette{position:absolute;inset:0;z-index:2;pointer-events:none;background:radial-gradient(ellipse 72% 58% at 50% 50%,transparent 18%,rgba(0,0,0,.38) 100%),linear-gradient(180deg,rgba(0,0,0,.35) 0%,rgba(0,0,0,.08) 30%,rgba(0,0,0,.55) 74%,var(--color-bg,#faf7f2) 100%);}
+.ct-hero-content{position:relative;z-index:10;text-align:center;padding:3rem 2rem 7rem;max-width:900px;width:100%;display:flex;flex-direction:column;align-items:center;}
+.ct-eyebrow{display:flex;align-items:center;justify-content:center;gap:1.2rem;margin-bottom:2.2rem;opacity:0;animation:ctup .9s cubic-bezier(.16,1,.3,1) .2s forwards;}
+.ct-eyebrow span{font-family:'DM Sans',sans-serif;font-size:.55rem;letter-spacing:.36em;text-transform:uppercase;color:rgba(201,162,39,.85);}
+.ct-eyebrow-ln{width:42px;height:1px;flex-shrink:0;background:linear-gradient(90deg,transparent,rgba(201,162,39,.6));}
+.ct-eyebrow-ln:last-child{transform:scaleX(-1);}
+.ct-title{font-family:'Cormorant Garamond',serif;font-weight:300;line-height:.9;letter-spacing:-.025em;margin-bottom:1.5rem;opacity:0;animation:ctup 1.05s cubic-bezier(.16,1,.3,1) .35s forwards;}
+.ct-title .t-top{display:block;font-size:clamp(2.8rem,7.5vw,6.5rem);color:#fff;text-shadow:0 2px 42px rgba(0,0,0,.6);}
+.ct-title .t-bot{display:block;font-size:clamp(2.2rem,6vw,5rem);font-style:italic;color:#c9a227;text-shadow:0 0 70px rgba(201,162,39,.32);}
+.ct-ornament{display:flex;align-items:center;justify-content:center;gap:.7rem;margin:1rem 0 1.5rem;opacity:0;animation:ctup .9s cubic-bezier(.16,1,.3,1) .5s forwards;}
+.ct-ornament-ln{width:52px;height:1px;background:linear-gradient(90deg,transparent,#c9a227 50%,transparent);}
+.ct-ornament-dot{width:4px;height:4px;border-radius:50%;background:#c9a227;box-shadow:0 0 10px rgba(201,162,39,.55);}
+.ct-ornament-diamond{width:8px;height:8px;background:#c9a227;transform:rotate(45deg);box-shadow:0 0 14px rgba(201,162,39,.5);}
+.ct-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(.95rem,1.6vw,1.25rem);font-weight:300;font-style:italic;color:rgba(255,255,255,.55);max-width:620px;line-height:1.6;opacity:0;animation:ctup .9s cubic-bezier(.16,1,.3,1) .65s forwards;}
+.ct-badge-row{margin-top:2.5rem;display:flex;flex-wrap:wrap;justify-content:center;gap:.9rem;opacity:0;animation:ctup .9s cubic-bezier(.16,1,.3,1) .85s forwards;}
+.ct-badge{display:inline-flex;align-items:center;gap:.55rem;padding:.45rem 1.1rem;border-radius:100px;border:1px solid rgba(201,162,39,.35);background:rgba(0,0,0,.25);backdrop-filter:blur(8px);font-family:'DM Sans',sans-serif;font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.72);}
+.ct-badge-dot{width:5px;height:5px;border-radius:50%;background:#c9a227;box-shadow:0 0 8px rgba(201,162,39,.6);}
+@keyframes ctup{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.ct-scroll-cue{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);z-index:10;opacity:0;animation:ctup 1s cubic-bezier(.16,1,.3,1) 1.2s forwards,ctscrollbob 2.6s ease-in-out infinite 2s;display:flex;flex-direction:column;align-items:center;gap:.6rem;pointer-events:none;}
+.ct-scroll-cue span{font-family:'DM Sans',sans-serif;font-size:.48rem;letter-spacing:.34em;text-transform:uppercase;color:rgba(255,255,255,.38);}
+.ct-scroll-track{width:1px;height:32px;background:linear-gradient(180deg,rgba(201,162,39,.55),transparent);}
+@keyframes ctscrollbob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,6px)}}
+
+/* ── Shared Section ─────────────────────────────────────── */
+.ct-section{padding:6.5rem 0;background:var(--color-bg,#faf7f2);position:relative;}
+.ct-section--alt{background:linear-gradient(180deg,var(--color-bg,#faf7f2) 0%,rgba(201,162,39,.025) 50%,var(--color-bg,#faf7f2) 100%);}
+.ct-section--dark{background:linear-gradient(160deg,#0d0b06 0%,#181309 50%,#0d0b06 100%);color:#e8ddbf;}
+.ct-section::before{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");background-size:180px;opacity:.018;pointer-events:none;z-index:0;}
+.ct-section--dark::before{opacity:.04;}
+.ct-inner{max-width:1200px;margin:0 auto;padding:0 2rem;position:relative;z-index:1;}
+@media(max-width:700px){.ct-inner{padding:0 1.2rem;}.ct-section{padding:4.5rem 0;}}
+.ct-section-hd{text-align:center;margin-bottom:4rem;}
+.ct-section-hd .ct-sh-eyebrow{display:flex;align-items:center;justify-content:center;gap:1rem;margin-bottom:1rem;}
+.ct-section-hd .ct-sh-eyebrow span{font-family:'DM Sans',sans-serif;font-size:.52rem;letter-spacing:.34em;text-transform:uppercase;color:rgba(201,162,39,.72);}
+.ct-sh-ln{display:block;width:38px;height:1px;background:linear-gradient(90deg,transparent,rgba(201,162,39,.55));}
+.ct-sh-ln:last-child{transform:scaleX(-1);}
+.ct-sh-title{font-family:'Cormorant Garamond',serif;font-weight:300;line-height:.95;letter-spacing:-.035em;font-size:clamp(2.4rem,4.8vw,3.8rem);color:var(--color-text,#1a1000);margin-bottom:.9rem;}
+.ct-sh-title em{font-style:italic;color:#c9a227;}
+.ct-section--dark .ct-sh-title{color:#f5eace;}
+.ct-sh-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,1.7vw,1.2rem);font-weight:300;font-style:italic;color:var(--color-text-light,#8b6f3e);max-width:640px;margin:0 auto;}
+.ct-section--dark .ct-sh-sub{color:rgba(232,221,191,.68);}
+
+/* ── Mission / Credo ────────────────────────────────────── */
+.ct-credo{max-width:780px;margin:0 auto;text-align:center;}
+.ct-credo-quote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.3rem,2.4vw,1.8rem);line-height:1.5;color:var(--color-text,#1a1000);margin:2.5rem 0;position:relative;padding:0 2rem;}
+.ct-credo-quote::before,.ct-credo-quote::after{content:'';position:absolute;top:50%;width:60px;height:1px;background:linear-gradient(90deg,transparent,rgba(201,162,39,.4),transparent);}
+.ct-credo-quote::before{left:-40px;}
+.ct-credo-quote::after{right:-40px;transform:scaleX(-1);}
+@media(max-width:760px){.ct-credo-quote::before,.ct-credo-quote::after{display:none;}.ct-credo-quote{padding:0;}}
+.ct-credo-body{font-family:'Cormorant Garamond',serif;font-size:1.08rem;line-height:1.85;color:var(--color-text-secondary,#5a4a2e);}
+.ct-credo-body p{margin-bottom:1.4rem;}
+.ct-credo-body strong{color:var(--color-text,#1a1000);font-weight:500;}
+
+/* ── Team cards ─────────────────────────────────────── */
+.ct-team-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2rem;max-width:1000px;margin:0 auto;}
+@media(max-width:800px){.ct-team-grid{grid-template-columns:1fr;gap:1.4rem;}}
+.ct-team-card{background:var(--color-bg-card,#fcf9f2);border:1px solid var(--color-border-light,rgba(201,162,39,.15));border-radius:14px;padding:2.4rem 2rem 2rem;position:relative;overflow:hidden;transition:transform .4s cubic-bezier(.16,1,.3,1),box-shadow .4s ease,border-color .3s ease;}
+[data-theme="dark"] .ct-team-card{background:#12100c;border-color:rgba(201,162,39,.18);}
+.ct-team-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,#c9a227,transparent);opacity:.6;}
+.ct-team-card::after{content:'';position:absolute;inset:0;border-radius:14px;pointer-events:none;background:radial-gradient(circle at 20% 0%,rgba(201,162,39,.07),transparent 50%);}
+.ct-team-card:hover{transform:translateY(-4px);box-shadow:0 20px 50px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.05);border-color:rgba(201,162,39,.38);}
+[data-theme="dark"] .ct-team-card:hover{box-shadow:0 20px 50px rgba(0,0,0,.5);}
+.ct-team-avatar{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-style:italic;color:#fff;background:linear-gradient(135deg,#c9a227,#e0bd5a);box-shadow:0 8px 20px rgba(201,162,39,.35);margin-bottom:1.3rem;letter-spacing:-.02em;}
+.ct-team-name{font-family:'Cormorant Garamond',serif;font-size:1.65rem;font-weight:400;color:var(--color-text,#1a1000);margin-bottom:.25rem;letter-spacing:-.01em;}
+.ct-team-role{font-family:'DM Sans',sans-serif;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:#c9a227;margin-bottom:1.2rem;font-weight:500;}
+.ct-team-bio{font-family:'Cormorant Garamond',serif;font-size:1rem;line-height:1.72;color:var(--color-text-secondary,#5a4a2e);margin-bottom:1.4rem;}
+.ct-team-contact{display:flex;align-items:center;gap:.5rem;padding-top:1.2rem;border-top:1px solid var(--color-border-light,rgba(201,162,39,.12));}
+.ct-team-contact svg{width:14px;height:14px;stroke:#c9a227;flex-shrink:0;}
+.ct-team-contact a{font-family:'DM Sans',sans-serif;font-size:.78rem;color:var(--color-accent-dark,#8b6f1c);text-decoration:none;transition:color .2s ease;word-break:break-all;}
+[data-theme="dark"] .ct-team-contact a{color:#e0bd5a;}
+.ct-team-contact a:hover{color:#c9a227;}
+
+/* ── Methodology — dark panel ────────────────────────── */
+.ct-method-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:3rem;}
+@media(max-width:900px){.ct-method-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:520px){.ct-method-grid{grid-template-columns:1fr;}}
+.ct-method-card{padding:2rem 1.6rem;background:rgba(201,162,39,.04);border:1px solid rgba(201,162,39,.15);border-radius:10px;transition:background .3s ease,border-color .3s ease,transform .3s ease;}
+.ct-method-card:hover{background:rgba(201,162,39,.08);border-color:rgba(201,162,39,.35);transform:translateY(-3px);}
+.ct-method-icon{width:38px;height:38px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(201,162,39,.15),rgba(201,162,39,.06));border-radius:8px;margin-bottom:1.2rem;}
+.ct-method-icon svg{width:18px;height:18px;stroke:#e0bd5a;}
+.ct-method-num{font-family:'Cormorant Garamond',serif;font-size:.78rem;color:#c9a227;opacity:.65;letter-spacing:.12em;margin-bottom:.3rem;}
+.ct-method-title{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:500;color:#f5eace;margin-bottom:.6rem;letter-spacing:-.01em;}
+.ct-method-desc{font-family:'Cormorant Garamond',serif;font-size:.94rem;line-height:1.65;color:rgba(232,221,191,.72);}
+
+/* ── Countries bar ────────────────────────────── */
+.ct-countries{margin-top:3.5rem;padding:2rem;background:rgba(201,162,39,.03);border-top:1px solid rgba(201,162,39,.15);border-bottom:1px solid rgba(201,162,39,.15);border-left:0;border-right:0;text-align:center;}
+.ct-countries-label{font-family:'DM Sans',sans-serif;font-size:.52rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(224,189,90,.65);margin-bottom:1.3rem;}
+.ct-countries-list{display:flex;flex-wrap:wrap;justify-content:center;gap:1.6rem 2.4rem;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.15rem;color:rgba(245,234,206,.88);}
+.ct-countries-list span{position:relative;padding:0 .3rem;}
+.ct-countries-list span:not(:last-child)::after{content:'·';position:absolute;right:-1.4rem;color:rgba(201,162,39,.4);font-style:normal;}
+
+/* ── WWII Gallery ────────────────────────────── */
+.ct-gallery-intro{max-width:780px;margin:0 auto 3.2rem;text-align:center;font-family:'Cormorant Garamond',serif;font-size:1.1rem;line-height:1.8;color:var(--color-text-secondary,#5a4a2e);}
+.ct-gallery-intro em{color:#c9a227;font-style:italic;}
+.ct-gallery-grid{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:260px 260px;gap:1rem;max-width:1200px;margin:0 auto;}
+@media(max-width:900px){.ct-gallery-grid{grid-template-columns:1fr 1fr;grid-template-rows:220px 220px 220px;}}
+@media(max-width:520px){.ct-gallery-grid{grid-template-columns:1fr;grid-template-rows:240px 240px 240px 240px;}}
+.ct-gal-item{position:relative;overflow:hidden;border-radius:8px;cursor:pointer;background:#1a1308;}
+.ct-gal-item img{width:100%;height:100%;object-fit:cover;filter:sepia(.2) contrast(1.04);transition:transform .7s cubic-bezier(.16,1,.3,1),filter .4s ease;}
+.ct-gal-item:hover img{transform:scale(1.06);filter:sepia(0) contrast(1.08);}
+.ct-gal-item:nth-child(1){grid-row:1 / 3;}
+@media(max-width:900px){.ct-gal-item:nth-child(1){grid-column:1 / 3;grid-row:auto;}}
+@media(max-width:520px){.ct-gal-item:nth-child(1){grid-column:1;}}
+.ct-gal-caption{position:absolute;left:0;right:0;bottom:0;padding:1rem 1.2rem;background:linear-gradient(0deg,rgba(0,0,0,.85) 0%,transparent 100%);color:#f5eace;font-family:'Cormorant Garamond',serif;font-size:.85rem;font-style:italic;line-height:1.4;letter-spacing:.01em;text-shadow:0 1px 6px rgba(0,0,0,.7);opacity:0;transform:translateY(8px);transition:opacity .35s ease,transform .35s ease;}
+.ct-gal-item:hover .ct-gal-caption{opacity:1;transform:translateY(0);}
+.ct-gal-item:nth-child(1) .ct-gal-caption{font-size:.95rem;padding:1.2rem 1.5rem;}
+.ct-gal-date{display:inline-block;font-family:'DM Sans',sans-serif;font-size:.52rem;letter-spacing:.28em;text-transform:uppercase;color:#e0bd5a;margin-bottom:.4rem;font-style:normal;}
+.ct-gal-credit{text-align:center;margin-top:2rem;font-family:'DM Sans',sans-serif;font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;color:var(--color-text-muted,#a89880);}
+.ct-gal-credit strong{color:#c9a227;letter-spacing:.12em;font-weight:500;}
+
+/* ── Contact Form ──────────────────────────── */
+.ct-form-wrap{max-width:720px;margin:0 auto;background:var(--color-bg-card,#fcf9f2);border:1px solid var(--color-border-light,rgba(201,162,39,.18));border-radius:16px;padding:3rem 2.8rem;position:relative;box-shadow:0 24px 60px rgba(0,0,0,.06),0 2px 6px rgba(0,0,0,.03);}
+[data-theme="dark"] .ct-form-wrap{background:#12100c;border-color:rgba(201,162,39,.22);box-shadow:0 24px 60px rgba(0,0,0,.4);}
+@media(max-width:600px){.ct-form-wrap{padding:2rem 1.4rem;}}
+.ct-form-wrap::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:80px;height:3px;background:linear-gradient(90deg,transparent,#c9a227,transparent);}
+.ct-form-intro{text-align:center;margin-bottom:2.4rem;font-family:'Cormorant Garamond',serif;font-size:1.02rem;line-height:1.7;color:var(--color-text-secondary,#5a4a2e);}
+.ct-form{display:flex;flex-direction:column;gap:1.4rem;}
+.ct-form-row{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;}
+@media(max-width:600px){.ct-form-row{grid-template-columns:1fr;}}
+.ct-form-group{display:flex;flex-direction:column;gap:.4rem;}
+.ct-form-label{font-family:'DM Sans',sans-serif;font-size:.58rem;letter-spacing:.26em;text-transform:uppercase;color:var(--color-accent-dark,#8b6f1c);font-weight:600;}
+[data-theme="dark"] .ct-form-label{color:#e0bd5a;}
+.ct-form-label .req{color:#c9a227;margin-left:.2rem;}
+.ct-form-input,.ct-form-select,.ct-form-textarea{font-family:'Cormorant Garamond',serif;font-size:1.02rem;padding:.85rem 1rem;background:var(--color-bg,#faf7f2);border:1px solid var(--color-border,rgba(201,162,39,.2));border-radius:8px;color:var(--color-text,#1a1000);transition:border-color .2s ease,background .2s ease,box-shadow .2s ease;width:100%;font-weight:400;}
+[data-theme="dark"] .ct-form-input,[data-theme="dark"] .ct-form-select,[data-theme="dark"] .ct-form-textarea{background:#0e0c08;border-color:rgba(201,162,39,.25);color:#f5eace;}
+.ct-form-input:focus,.ct-form-select:focus,.ct-form-textarea:focus{outline:0;border-color:#c9a227;box-shadow:0 0 0 3px rgba(201,162,39,.15);background:#fff;}
+[data-theme="dark"] .ct-form-input:focus,[data-theme="dark"] .ct-form-select:focus,[data-theme="dark"] .ct-form-textarea:focus{background:#181310;}
+.ct-form-textarea{resize:vertical;min-height:140px;line-height:1.55;}
+.ct-form-select{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c9a227' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center;padding-right:2.6rem;}
+.ct-form-hint{font-family:'DM Sans',sans-serif;font-size:.68rem;color:var(--color-text-muted,#a89880);font-style:italic;margin-top:.2rem;}
+.ct-form-submit{margin-top:.8rem;padding:1.1rem 2.4rem;background:linear-gradient(135deg,#c9a227 0%,#a8841c 100%);color:#fff;border:0;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.68rem;letter-spacing:.28em;text-transform:uppercase;font-weight:600;cursor:pointer;transition:transform .2s ease,box-shadow .3s ease,background .3s ease;display:inline-flex;align-items:center;justify-content:center;gap:.8rem;box-shadow:0 8px 24px rgba(201,162,39,.28),0 1px 2px rgba(0,0,0,.08);}
+.ct-form-submit:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 14px 32px rgba(201,162,39,.38),0 1px 2px rgba(0,0,0,.08);}
+.ct-form-submit:active:not(:disabled){transform:translateY(0);}
+.ct-form-submit:disabled{opacity:.5;cursor:not-allowed;}
+.ct-form-submit svg{width:14px;height:14px;stroke:#fff;transition:transform .3s ease;}
+.ct-form-submit:hover:not(:disabled) svg{transform:translateX(3px);}
+.ct-form-spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:ctspin .7s linear infinite;display:none;}
+@keyframes ctspin{to{transform:rotate(360deg)}}
+.ct-form-submit.loading .ct-form-spinner{display:block;}
+.ct-form-submit.loading svg{display:none;}
+.ct-form-status{padding:1.1rem 1.4rem;border-radius:8px;font-family:'Cormorant Garamond',serif;font-size:1rem;line-height:1.5;display:none;animation:ctstatus .4s ease;}
+@keyframes ctstatus{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+.ct-form-status.success{display:block;background:rgba(39,145,82,.08);border:1px solid rgba(39,145,82,.3);color:#1f6640;}
+.ct-form-status.error{display:block;background:rgba(180,42,42,.08);border:1px solid rgba(180,42,42,.3);color:#8a2a2a;}
+[data-theme="dark"] .ct-form-status.success{background:rgba(39,145,82,.12);color:#5ec584;}
+[data-theme="dark"] .ct-form-status.error{background:rgba(180,42,42,.15);color:#e68585;}
+.ct-form-status strong{font-weight:600;}
+.ct-form-alt{margin-top:1.8rem;text-align:center;padding-top:1.6rem;border-top:1px solid var(--color-border-light,rgba(201,162,39,.12));font-family:'Cormorant Garamond',serif;font-size:.95rem;color:var(--color-text-muted,#a89880);font-style:italic;}
+.ct-form-alt a{color:var(--color-accent-dark,#8b6f1c);text-decoration:none;font-weight:500;}
+[data-theme="dark"] .ct-form-alt a{color:#e0bd5a;}
+.ct-form-alt a:hover{text-decoration:underline;}
+
+/* ── Closing / Thanks ────────────────────────────── */
+.ct-closing{text-align:center;max-width:780px;margin:0 auto;}
+.ct-closing-mark{display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;border:1px solid rgba(201,162,39,.35);border-radius:50%;margin-bottom:2rem;background:rgba(201,162,39,.06);}
+.ct-closing-mark::after{content:'';width:10px;height:10px;background:#c9a227;transform:rotate(45deg);}
+.ct-closing-body{font-family:'Cormorant Garamond',serif;font-size:1.08rem;line-height:1.82;color:var(--color-text-secondary,#5a4a2e);}
+.ct-closing-body p{margin-bottom:1.4rem;}
+.ct-closing-signature{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:#c9a227;margin-top:2rem;letter-spacing:.02em;}
+
 /* Footer copyright — match index.html width */
-.footer-copyright-notice { max-width: 1100px !important; width: 100% !important; padding: 0 1rem !important; }
-.footer-copyright-row { width: 100% !important; }
+.footer-copyright-notice{max-width:1100px!important;width:100%!important;padding:0 1rem!important;}
+.footer-copyright-row{width:100%!important;}
+
+/* Fade-in on scroll */
+.ct-reveal{opacity:0;transform:translateY(22px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1);}
+.ct-reveal.in{opacity:1;transform:translateY(0);}
 </style>
 </head>
 <body>
+    <!-- Reading progress -->
+    <div id="ct-progress"></div>
+
     <!-- Header -->
     <header class="header">
         <div class="header-container">
@@ -66,23 +232,18 @@
                 <a href="history.html" class="nav-link">Історія</a>
                 <a href="photo-archive.html" class="nav-link">Фотоархів</a>
                 <a href="architecture.html" class="nav-link">Пам'ятки</a>
-                <a href="metrychni-knyhy.html" class="nav-link">Метричні книги</a>
-                <a href="books.html" class="nav-link">Книги</a>
+                <a href="metrychni-knyhy.html" class="nav-link">Архівні справи</a>
                 <a href="jewish-history.html" class="nav-link">Єврейська спадщина</a>
-                <a href="contacts.html" class="nav-link active">Контакти</a>
+                <a href="contacts.html" class="nav-link active">Про проєкт</a>
             </nav>
 
             <button class="theme-toggle" id="themeToggle" aria-label="Перемкнути тему">
                 <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <circle cx="12" cy="12" r="5"></circle>
-                    <line x1="12" y1="1" x2="12" y2="3"></line>
-                    <line x1="12" y1="21" x2="12" y2="23"></line>
-                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                    <line x1="1" y1="12" x2="3" y2="12"></line>
-                    <line x1="21" y1="12" x2="23" y2="12"></line>
-                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    <line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
                 </svg>
                 <svg class="theme-icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
@@ -90,118 +251,303 @@
             </button>
 
             <button class="mobile-toggle" id="mobileToggle" aria-label="Відкрити меню">
-                <span></span>
-                <span></span>
-                <span></span>
+                <span></span><span></span><span></span>
             </button>
         </div>
     </header>
 
-    <!-- CINEMATIC HERO -->
-    <section class="cont-hero" id="contHero">
-        <div class="cont-hero-bg"></div>
-        <div class="cont-hero-grain"></div>
-        <div class="cont-hero-vignette"></div>
-        <div class="cont-hero-content">
-            <div class="cont-eyebrow">
-                <div class="cont-eyebrow-ln"></div>
-                <span>Цифровий архів · Дубровиця</span>
-                <div class="cont-eyebrow-ln"></div>
+    <!-- ══ CINEMATIC HERO ══ -->
+    <section class="ct-hero" id="ctHero">
+        <div class="ct-hero-bg"></div>
+        <div class="ct-hero-grain"></div>
+        <div class="ct-hero-vignette"></div>
+        <div class="ct-hero-content">
+            <div class="ct-eyebrow">
+                <div class="ct-eyebrow-ln"></div>
+                <span>Некомерційна краєзнавча ініціатива</span>
+                <div class="ct-eyebrow-ln"></div>
             </div>
-            <h1 class="cont-title">
+            <h1 class="ct-title">
                 <span class="t-top">Про</span>
                 <span class="t-bot">проєкт</span>
             </h1>
-            <p class="cont-sub">Команда, контакти та подяки</p>
+            <div class="ct-ornament">
+                <div class="ct-ornament-ln"></div>
+                <div class="ct-ornament-dot"></div>
+                <div class="ct-ornament-diamond"></div>
+                <div class="ct-ornament-dot"></div>
+                <div class="ct-ornament-ln"></div>
+            </div>
+            <p class="ct-sub">Команда, методологія, подяки та зворотний зв'язок. Усе, створене з любові до рідного міста.</p>
+            <div class="ct-badge-row">
+                <div class="ct-badge"><span class="ct-badge-dot"></span>Без реклами</div>
+                <div class="ct-badge"><span class="ct-badge-dot"></span>Відкритий доступ</div>
+                <div class="ct-badge"><span class="ct-badge-dot"></span>Безкоштовно</div>
+            </div>
+        </div>
+        <div class="ct-scroll-cue">
+            <span>Гортайте</span>
+            <div class="ct-scroll-track"></div>
         </div>
     </section>
 
-    <!-- Contact Content -->
-    <section class="article-content">
-        <div class="container">
-            <div class="article-text">
-
-                <div class="history-section fade-in-up">
-                    <h3>Мета проєкту</h3>
+    <!-- ══ MISSION / CREDO ══ -->
+    <section class="ct-section ct-section--alt">
+        <div class="ct-inner">
+            <div class="ct-section-hd ct-reveal">
+                <div class="ct-sh-eyebrow"><span class="ct-sh-ln"></span><span>Наше кредо</span><span class="ct-sh-ln"></span></div>
+                <h2 class="ct-sh-title">Чому ми <em>робимо</em> це</h2>
+                <p class="ct-sh-sub">Минуле не зберігається само собою — воно потребує людей, які цим перейматимуться</p>
+            </div>
+            <div class="ct-credo ct-reveal">
+                <p class="ct-credo-quote">«Народ, який не знає своєї історії, приречений прожити її знову».</p>
+                <div class="ct-credo-body">
                     <p>
-                        Цифровий архів Дубровиці — громадський проєкт, метою якого є збереження, 
-                        систематизація та популяризація історичної спадщини міста Дубровиця та 
-                        навколишніх населених пунктів. Інформація та матеріали зібрані з відкритих 
-                        джерел в інтернеті, а також отримані від небайдужих людей, яким дорога 
-                        пам'ять про рідний край.
+                        <strong>Цифровий архів Дубровиці</strong> — це <strong>некомерційний краєзнавчий проєкт</strong>, створений групою ентузіастів, яким небайдужа доля рідного міста та його історична пам'ять. Ми не приймаємо пожертв, не продаємо рекламу, не отримуємо прибутку — і ніколи не будемо цього робити.
                     </p>
                     <p>
-                        Ми прагнемо зробити історичні матеріали, фотографії та документи доступними 
-                        для широкого загалу — та зберегти пам'ять про минуле для майбутніх поколінь.
+                        У Дубровиці, як і в багатьох поліських містечках, історична пам'ять століттями передавалася усно. З часом — через війни, еміграцію, режимні репресії, пожежі в архівах, депортації та розстріли — рвалися тоненькі ниточки, які пов'язували покоління. Сьогодні, коли останні свідки минулого століття поступово йдуть від нас, ми намагаємося зберегти ці ниточки хоча б у цифровому вигляді.
+                    </p>
+                    <p>
+                        Наша мета проста: <strong>зробити історичні матеріали про Дубровицю та околиці доступними всім</strong>. Фотографії, метричні книги, судові реєстри, спогади, мапи, інвентарі — усе, що можна знайти, перевірити та опублікувати. Щоб будь-який мешканець міста, будь-який нащадок дубровицької родини, будь-який дослідник чи просто допитлива людина могли сісти з кавою, відкрити наш сайт, і дізнатися щось нове про це прекрасне місто на Поліссі.
+                    </p>
+                    <p>
+                        Якщо цей архів допомагає хоча б одній людині знайти своє коріння, хоча б одній сім'ї — відновити імена предків, хоча б одному школяреві — полюбити історію власного міста, — ми вважатимемо, що <strong>все зроблено не дарма</strong>.
                     </p>
                 </div>
+            </div>
+        </div>
+    </section>
 
-                <div class="history-section fade-in-up delay-1">
-                    <h3>Команда проєкту</h3>
-                    <p>
-                        Над створенням та наповненням цифрового архіву Дубровиці доклали руку:
+    <!-- ══ TEAM ══ -->
+    <section class="ct-section">
+        <div class="ct-inner">
+            <div class="ct-section-hd ct-reveal">
+                <div class="ct-sh-eyebrow"><span class="ct-sh-ln"></span><span>Команда проєкту</span><span class="ct-sh-ln"></span></div>
+                <h2 class="ct-sh-title">Двоє, які <em>це</em> створили</h2>
+                <p class="ct-sh-sub">Засновники, дослідники, упорядники — і просто люди, яким дороге це місто</p>
+            </div>
+            <div class="ct-team-grid">
+                <div class="ct-team-card ct-reveal">
+                    <div class="ct-team-avatar">ТК</div>
+                    <div class="ct-team-name">Тарас Красько</div>
+                    <div class="ct-team-role">Засновник · Дослідник · Розробник сайту</div>
+                    <p class="ct-team-bio">
+                        Один із засновників проєкту, ініціатор ідеї цифрового архіву. <strong>Розробник сайту</strong> — усі сторінки, дизайн, функціональність та технічна підтримка. Дослідник історичних матеріалів, упорядник документів та транскрипцій.
                     </p>
-                    <ul style="margin-left: 1.5rem; line-height: 2.2; margin-top: 0.5rem;">
-                        <li>
-                            <strong>Столярець Назарій</strong> — один із засновників проєкту, дослідник 
-                            та упорядник матеріалів. Окрема подяка Назарію за замовлення великої кількості 
-                            архівних знімків міста Дубровиці, зокрема унікальних фотографій часів 
-                            німецької окупації.
-                        </li>
-                        <li>
-                            <strong>Красько Тарас</strong> — один із засновників проєкту, дослідник, упорядник матеріалів та розробник сайту.
-                        </li>
-                    </ul>
+                    <div class="ct-team-contact">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                        <a href="mailto:taraskrasko@gmail.com">taraskrasko@gmail.com</a>
+                    </div>
                 </div>
-
-                <div class="history-section fade-in-up delay-2">
-                    <h3>Маєте фото чи інформацію?</h3>
-                    <p>
-                        Якщо у вас є історичні фотографії, документи, спогади або будь-яка інша 
-                        інформація, пов'язана з історією Дубровиці — пишіть нам на електронну пошту. 
-                        Кожен матеріал є цінним і допомагає зберегти спільну пам'ять.
+                <div class="ct-team-card ct-reveal">
+                    <div class="ct-team-avatar">НС</div>
+                    <div class="ct-team-name">Назарій Столярець</div>
+                    <div class="ct-team-role">Засновник · Дослідник · Архівіст</div>
+                    <p class="ct-team-bio">
+                        Один із засновників проєкту, співініціатор. Завдяки Назарію до архіву потрапили <strong>унікальні аерофотознімки Дубровиці періоду 1943–1944 років</strong> — знімки, замовлені в німецьких архівах Люфтваффе. Окрема подяка за наполегливість у пошуку та готовність вкладати власні ресурси.
                     </p>
+                    <div class="ct-team-contact">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                        <a href="mailto:nazar.stolyarec13@gmail.com">nazar.stolyarec13@gmail.com</a>
+                    </div>
                 </div>
+            </div>
+        </div>
+    </section>
 
-                <div class="history-section fade-in-up delay-3">
-                    <h3>Контактна інформація</h3>
-                    <p>
-                        <strong>Тарас Красько:</strong><br>
-                        <a href="/cdn-cgi/l/email-protection#6f1b0e1d0e1c41041d0e1c04002f08020e0603410c0002" style="color: var(--color-primary); text-decoration: none; font-weight: 500;"><span class="__cf_email__" data-cfemail="acd8cddecddf82c7decddfc7c3eccbc1cdc5c082cfc3c1">[email&#160;protected]</span></a>
-                    </p>
-                    <p style="margin-top: 0.75rem;">
-                        <strong>Назарій Столярець:</strong><br>
-                        <a href="/cdn-cgi/l/email-protection#83ede2f9e2f1f0f7eceffae2f1e6f7f0b2b0c3e4eee2eaefade0ecee" style="color: var(--color-primary); text-decoration: none; font-weight: 500;"><span class="__cf_email__" data-cfemail="b8d6d9c2d9cacbccd7d4c1d9caddcccb898bf8dfd5d9d1d496dbd7d5">[email&#160;protected]</span></a>
-                    </p>
+    <!-- ══ METHODOLOGY · DARK SECTION ══ -->
+    <section class="ct-section ct-section--dark">
+        <div class="ct-inner">
+            <div class="ct-section-hd ct-reveal">
+                <div class="ct-sh-eyebrow"><span class="ct-sh-ln"></span><span>Як це робилося</span><span class="ct-sh-ln"></span></div>
+                <h2 class="ct-sh-title">Методологія <em>пошуку</em></h2>
+                <p class="ct-sh-sub">Сотні сайтів, десятки архівних справ замовлених за власний кошт, роки копіткої роботи</p>
+            </div>
+
+            <div class="ct-method-grid ct-reveal">
+                <div class="ct-method-card">
+                    <div class="ct-method-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                    </div>
+                    <div class="ct-method-num">01 · Пошук</div>
+                    <h3 class="ct-method-title">Відкриті джерела</h3>
+                    <p class="ct-method-desc">Матеріали збиралися у вільній мережі: соціальні мережі, тематичні блоги, родинні сайти, генеалогічні форуми. Були обшукані <strong>сотні сайтів</strong> в пошуках навіть поодиноких згадок про Дубровицю.</p>
                 </div>
-
-                <div class="history-section fade-in-up delay-4">
-                    <h3>Підтримайте проєкт</h3>
-                    <p>
-                        Ви можете долучитися до розвитку архіву кількома способами:
-                    </p>
-                    <ul style="margin-left: 1.5rem; line-height: 1.8;">
-                        <li>Поділіться з нами історичними фото чи документами</li>
-                        <li>Розкажіть про архів друзям та родичам</li>
-                        <li>Напишіть спогад або розповідь про місто</li>
-                    </ul>
+                <div class="ct-method-card">
+                    <div class="ct-method-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7v13h18V7"/><path d="M3 7l9-5 9 5"/><path d="M8 12h8M8 16h8"/></svg>
+                    </div>
+                    <div class="ct-method-num">02 · Архіви</div>
+                    <h3 class="ct-method-title">Державні архіви</h3>
+                    <p class="ct-method-desc">Замовлення десятків архівних справ <strong>за власний кошт</strong> з архівів різних країн. Метричні книги, інвентарі, судові реєстри, сумаріуші маєтків, воєнні справи — усе оцифровано та викладено у вільний доступ.</p>
                 </div>
-
-                <div class="history-section fade-in-up delay-5">
-                    <h3>Подяки</h3>
-                    <p>
-                        Щира подяка всім, хто долучився до наповнення цього архіву: місцевим 
-                        жителям, які поділилися своїми сімейними фотографіями та спогадами, 
-                        та всім небайдужим, хто підтримав цей проєкт.
-                    </p>
-                    <p>
-                        Окрема та особлива подяка <strong>Назарію Столярцю</strong> за замовлення 
-                        та надання унікальних архівних знімків Дубровиці часів Другої світової війни 
-                        і німецької окупації — матеріалів, які є справжньою цінністю для збереження 
-                        пам'яті про ті трагічні роки.
-                    </p>
+                <div class="ct-method-card">
+                    <div class="ct-method-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v20M2 12h20"/><circle cx="12" cy="12" r="10"/></svg>
+                    </div>
+                    <div class="ct-method-num">03 · Географія</div>
+                    <h3 class="ct-method-title">Сім країн</h3>
+                    <p class="ct-method-desc">Пошук вівся одночасно в різних країнах, де могли зберегтися матеріали про Дубровицю: США, Ізраїль, Німеччина, Польща, Австрія, Україна, а також архіви діаспори.</p>
                 </div>
+                <div class="ct-method-card">
+                    <div class="ct-method-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12l2 2 4-4"/><path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9c2.5 0 4.76 1.02 6.4 2.66"/></svg>
+                    </div>
+                    <div class="ct-method-num">04 · Верифікація</div>
+                    <h3 class="ct-method-title">Перевірка даних</h3>
+                    <p class="ct-method-desc">Кожен документ, фото, транскрипція проходять ретельну верифікацію. Старопольські та латинські тексти перекладаються сучасною українською з примітками історика.</p>
+                </div>
+            </div>
 
+            <div class="ct-countries ct-reveal">
+                <div class="ct-countries-label">Країни, чиї архіви було задіяно</div>
+                <div class="ct-countries-list">
+                    <span>🇺🇸 США</span>
+                    <span>🇮🇱 Ізраїль</span>
+                    <span>🇩🇪 Німеччина</span>
+                    <span>🇵🇱 Польща</span>
+                    <span>🇦🇹 Австрія</span>
+                    <span>🇺🇦 Україна</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ WWII GALLERY ══ -->
+    <section class="ct-section ct-section--alt">
+        <div class="ct-inner">
+            <div class="ct-section-hd ct-reveal">
+                <div class="ct-sh-eyebrow"><span class="ct-sh-ln"></span><span>Особлива подяка</span><span class="ct-sh-ln"></span></div>
+                <h2 class="ct-sh-title">Аерофотознімки <em>1943–1944</em></h2>
+                <p class="ct-sh-sub">Унікальні знімки Дубровиці періоду німецької окупації, замовлені Назарієм Столярцем</p>
+            </div>
+
+            <p class="ct-gallery-intro ct-reveal">
+                Ці матеріали — <em>справжня цінність</em>. Аерофотознімки Дубровиці, зроблені літаками Люфтваффе в 1943–1944 роках, зберігалися в німецьких військових архівах десятиліттями. Завдяки наполегливості <strong>Назарія Столярця</strong>, який особисто замовив ці знімки за власний кошт, ми маємо унікальну можливість побачити наше місто з висоти пташиного польоту в один із найтрагічніших періодів XX століття.
+            </p>
+
+            <div class="ct-gallery-grid ct-reveal">
+                <div class="ct-gal-item">
+                    <img src="https://i.imgur.com/zef8WRy.jpeg" alt="Аерофотознімок Дубровиці 1943" loading="lazy">
+                    <div class="ct-gal-caption">
+                        <div class="ct-gal-date">1943 · Люфтваффе</div>
+                        Аерофотознімок Дубровиці та навколишніх сіл
+                    </div>
+                </div>
+                <div class="ct-gal-item">
+                    <img src="https://i.imgur.com/CImFE7S.jpeg" alt="Аерофотознімок Дубровиці 1944" loading="lazy">
+                    <div class="ct-gal-caption">
+                        <div class="ct-gal-date">1944</div>
+                        Аерофотознімок Дубровиці
+                    </div>
+                </div>
+                <div class="ct-gal-item">
+                    <img src="https://cdn.imgchest.com/files/dc3db85d5b42.jpg" alt="Аерофотознімок залізничної станції" loading="lazy">
+                    <div class="ct-gal-caption">
+                        <div class="ct-gal-date">1943–1944</div>
+                        Залізнична станція Дубровиця
+                    </div>
+                </div>
+                <div class="ct-gal-item">
+                    <img src="https://i.imgur.com/RmDup4y.jpeg" alt="Німецький солдат біля мосту 1943" loading="lazy">
+                    <div class="ct-gal-caption">
+                        <div class="ct-gal-date">1943</div>
+                        Спалений партизанами міст у Дубровиці
+                    </div>
+                </div>
+                <div class="ct-gal-item">
+                    <img src="https://i.imgur.com/21nLCZC.jpeg" alt="Капличка Воробин 1944" loading="lazy">
+                    <div class="ct-gal-caption">
+                        <div class="ct-gal-date">1944</div>
+                        Знищена церковна капличка біля Воробину
+                    </div>
+                </div>
+            </div>
+
+            <p class="ct-gal-credit ct-reveal">
+                Фотоматеріали · Колекція <strong>Назарія Столярця</strong> · Люфтваффе, Бундесархів
+            </p>
+        </div>
+    </section>
+
+    <!-- ══ CONTACT FORM ══ -->
+    <section class="ct-section" id="form">
+        <div class="ct-inner">
+            <div class="ct-section-hd ct-reveal">
+                <div class="ct-sh-eyebrow"><span class="ct-sh-ln"></span><span>Зв'язок</span><span class="ct-sh-ln"></span></div>
+                <h2 class="ct-sh-title">Маєте пропозицію <em>чи матеріали?</em></h2>
+                <p class="ct-sh-sub">Кожна фотографія, спогад або документ — цінні для нашої спільної пам'яті</p>
+            </div>
+
+            <div class="ct-form-wrap ct-reveal">
+                <p class="ct-form-intro">
+                    Якщо ви маєте старі фотографії, документи, спогади або будь-яку інформацію, пов'язану з історією Дубровиці — напишіть нам. Ми відповімо якомога швидше.
+                </p>
+
+                <form id="ctForm" class="ct-form" action="https://formspree.io/f/xwvalwlb" method="POST" novalidate>
+                    <div class="ct-form-row">
+                        <div class="ct-form-group">
+                            <label class="ct-form-label" for="fName">Ім'я <span class="req">*</span></label>
+                            <input class="ct-form-input" type="text" id="fName" name="name" required maxlength="100" autocomplete="name">
+                        </div>
+                        <div class="ct-form-group">
+                            <label class="ct-form-label" for="fEmail">Email <span class="req">*</span></label>
+                            <input class="ct-form-input" type="email" id="fEmail" name="email" required maxlength="120" autocomplete="email">
+                        </div>
+                    </div>
+
+                    <div class="ct-form-group">
+                        <label class="ct-form-label" for="fTopic">Тема звернення</label>
+                        <select class="ct-form-select" id="fTopic" name="topic">
+                            <option value="Пропозиція / матеріали">Маю фото, документи або спогади</option>
+                            <option value="Генеалогічний запит">Генеалогічний запит</option>
+                            <option value="Виправлення / помилка">Виправлення або помилка на сайті</option>
+                            <option value="Співпраця">Пропозиція співпраці</option>
+                            <option value="Авторське право">Авторське право</option>
+                            <option value="Інше">Інше</option>
+                        </select>
+                    </div>
+
+                    <div class="ct-form-group">
+                        <label class="ct-form-label" for="fMessage">Повідомлення <span class="req">*</span></label>
+                        <textarea class="ct-form-textarea" id="fMessage" name="message" required maxlength="3000" placeholder="Розкажіть, чим ми можемо бути корисні один одному…"></textarea>
+                        <span class="ct-form-hint">Якщо надсилаєте фото або документи — прикріпіть їх до листа після отримання відповіді на ваш email</span>
+                    </div>
+
+                    <!-- Honeypot anti-spam -->
+                    <input type="text" name="_gotcha" style="display:none!important" tabindex="-1" autocomplete="off">
+
+                    <button type="submit" class="ct-form-submit" id="ctSubmit">
+                        <span class="ct-form-spinner"></span>
+                        <span>Надіслати повідомлення</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </button>
+
+                    <div class="ct-form-status" id="ctStatus" role="status" aria-live="polite"></div>
+                </form>
+
+                <p class="ct-form-alt">
+                    Або напишіть напряму: <a href="mailto:taraskrasko@gmail.com">taraskrasko@gmail.com</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ CLOSING THANKS ══ -->
+    <section class="ct-section ct-section--alt">
+        <div class="ct-inner">
+            <div class="ct-closing ct-reveal">
+                <div class="ct-closing-mark"></div>
+                <div class="ct-closing-body">
+                    <p>
+                        <strong>Щира подяка</strong> всім, хто прямо чи опосередковано долучився до цього проєкту — місцевим жителям, які поділилися своїми сімейними фотографіями; нащадкам дубровичан у діаспорі, які надсилали спогади; працівникам архівів, які терпеливо шукали потрібні справи; невідомим людям, які розміщували історичні матеріали в мережі.
+                    </p>
+                    <p>
+                        Разом ми зберігаємо те, що інакше було б втрачено назавжди.
+                    </p>
+                    <div class="ct-closing-signature">— З вдячністю, команда проєкту</div>
+                </div>
             </div>
         </div>
     </section>
@@ -222,8 +568,8 @@
                     <nav class="footer-nav">
                         <a href="history.html">Історія</a>
                         <a href="photo-archive.html">Фотоархів</a>
-                        <a href="metrychni-knyhy.html">Метричні книги</a>
-                        <a href="books.html">Книги</a>
+                        <a href="metrychni-knyhy.html">Архівні справи</a>
+                        <a href="jewish-history.html">Єврейська спадщина</a>
                     </nav>
                 </div>
                 <div class="footer-section">
@@ -234,36 +580,105 @@
                     </p>
                 </div>
             </div>
-                <div class="footer-copyright-row">
-            <div class="footer-copyright-ornament">
-                <div class="footer-copyright-ornament-line"></div>
-                <div class="footer-copyright-ornament-diamond"></div>
-                <div class="footer-copyright-ornament-line"></div>
+            <div class="footer-copyright-row">
+                <div class="footer-copyright-ornament">
+                    <div class="footer-copyright-ornament-line"></div>
+                    <div class="footer-copyright-ornament-diamond"></div>
+                    <div class="footer-copyright-ornament-line"></div>
+                </div>
+                <p class="footer-copyright-main">
+                    &copy; 2026 <a href="https://dubrovytsia.site">dubrovytsia.site</a> — Цифровий архів Дубровиці, Рівненська область, Україна.<br>
+                    Сайт є некомерційним краєзнавчим проєктом, створеним з любові до міста та його історії.
+                </p>
+                <p class="footer-copyright-notice">
+                    Публікуючи ці матеріали, ми прагнемо зберегти та популяризувати культурну й історичну спадщину міста Дубровиця для нинішніх і майбутніх поколінь.
+                    Усі фотографії, документи та архівні матеріали розміщено виключно в освітніх, краєзнавчих і науково-дослідних цілях.
+                    Відтворення, поширення або комерційне використання будь-яких матеріалів без письмового дозволу адміністрації сайту — заборонено.
+                    При цитуванні або використанні матеріалів у будь-якому форматі — обов'язкове активне посилання на <em>dubrovytsia.site</em>.
+                    Якщо ви є власником авторських прав на будь-які з опублікованих матеріалів і маєте заперечення щодо їх розміщення —
+                    будь ласка, <a href="contacts.html">зв'яжіться з нами</a> і ми негайно розглянемо ваш запит.
+                    Фотографії, завантажені з архіву, містять водяний знак сайту і не можуть публікуватись без нього.
+                </p>
             </div>
-            <p class="footer-copyright-main">
-                &copy; 2026 <a href="https://dubrovytsia.site">dubrovytsia.site</a> — Цифровий архів Дубровиці, Рівненська область, Україна.<br>
-                Сайт є некомерційним краєзнавчим проєктом, створеним з любові до міста та його історії.
-            </p>
-            <p class="footer-copyright-notice">
-                Публікуючи ці матеріали, ми прагнемо зберегти та популяризувати культурну й історичну спадщину міста Дубровиця для нинішніх і майбутніх поколінь.
-                Усі фотографії, документи та архівні матеріали розміщено виключно в освітніх, краєзнавчих і науково-дослідних цілях.
-                Відтворення, поширення або комерційне використання будь-яких матеріалів без письмового дозволу адміністрації сайту — заборонено.
-                При цитуванні або використанні матеріалів у будь-якому форматі — обов'язкове активне посилання на <em>dubrovytsia.site</em>.
-                Якщо ви є власником авторських прав на будь-які з опублікованих матеріалів і маєте заперечення щодо їх розміщення —
-                будь ласка, <a href="contacts.html">зв'яжіться з нами</a> і ми негайно розглянемо ваш запит.
-                Фотографії, завантажені з архіву, містять водяний знак сайту і не можуть публікуватись без нього.
-            </p>
-        </div>
-        </div>
         </div>
     </footer>
 
     <script src="app.js"></script>
     <script>
+    // Reading progress
     (function(){
-        var hero=document.getElementById('contHero');
-        if(!hero)return;
-        setTimeout(function(){hero.classList.add('hero-loaded');},80);
+        var bar=document.getElementById('ct-progress');
+        if(!bar)return;
+        window.addEventListener('scroll',function(){
+            var s=document.documentElement;
+            bar.style.width=Math.min(100,(window.pageYOffset/(s.scrollHeight-s.clientHeight))*100).toFixed(1)+'%';
+        },{passive:true});
+    })();
+
+    // Hero reveal
+    (function(){
+        var hero=document.getElementById('ctHero');
+        if(hero)setTimeout(function(){hero.classList.add('loaded');},80);
+    })();
+
+    // Scroll reveal (IntersectionObserver)
+    (function(){
+        var els=document.querySelectorAll('.ct-reveal');
+        if(!els.length||!('IntersectionObserver' in window)){
+            els.forEach(function(e){e.classList.add('in');});return;
+        }
+        var io=new IntersectionObserver(function(entries){
+            entries.forEach(function(en){
+                if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}
+            });
+        },{threshold:.12,rootMargin:'0px 0px -60px 0px'});
+        els.forEach(function(e){io.observe(e);});
+    })();
+
+    // ── FORMSPREE AJAX SUBMISSION ──
+    (function(){
+        var form=document.getElementById('ctForm');
+        var status=document.getElementById('ctStatus');
+        var submit=document.getElementById('ctSubmit');
+        if(!form)return;
+
+        form.addEventListener('submit',function(e){
+            e.preventDefault();
+            status.className='ct-form-status';
+            status.textContent='';
+            submit.disabled=true;
+            submit.classList.add('loading');
+
+            var fd=new FormData(form);
+
+            fetch(form.action,{
+                method:'POST',
+                body:fd,
+                headers:{'Accept':'application/json'}
+            }).then(function(response){
+                if(response.ok){
+                    status.className='ct-form-status success';
+                    status.innerHTML='<strong>Повідомлення надіслано!</strong> Дякуємо за звернення — ми відповімо найближчим часом на вказану вами пошту.';
+                    form.reset();
+                }else{
+                    return response.json().then(function(data){
+                        var msg='Не вдалося надіслати повідомлення.';
+                        if(data && data.errors && data.errors.length){
+                            msg=data.errors.map(function(e){return e.message;}).join(', ');
+                        }
+                        status.className='ct-form-status error';
+                        status.innerHTML='<strong>Помилка:</strong> '+msg+' Спробуйте ще раз або напишіть напряму: <a href="mailto:taraskrasko@gmail.com">taraskrasko@gmail.com</a>';
+                    });
+                }
+            }).catch(function(){
+                status.className='ct-form-status error';
+                status.innerHTML='<strong>Помилка мережі.</strong> Перевірте з\'єднання або напишіть напряму: <a href="mailto:taraskrasko@gmail.com">taraskrasko@gmail.com</a>';
+            }).finally(function(){
+                submit.disabled=false;
+                submit.classList.remove('loading');
+                status.scrollIntoView({behavior:'smooth',block:'center'});
+            });
+        });
     })();
     </script>
 </body>
