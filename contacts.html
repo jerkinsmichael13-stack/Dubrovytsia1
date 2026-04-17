@@ -37,10 +37,10 @@
 
 /* ── Cinematic Hero ─────────────────────────────────────── */
 .ct-hero{position:relative;min-height:92svh;display:flex;flex-direction:column;justify-content:center;align-items:center;overflow:hidden;background:var(--color-bg,#faf7f2);}
-.ct-hero-bg{position:absolute;inset:0;background-image:url('https://i.imgur.com/zef8WRy.jpeg');background-size:cover;background-position:center 40%;filter:sepia(.6) brightness(.34) contrast(1.15) saturate(.38);transform:scale(1.06);opacity:0;transition:transform 14s ease-out,opacity 1s ease;z-index:0;will-change:transform;}
+.ct-hero-bg{position:absolute;inset:0;background-image:url('https://i.imgur.com/CImFE7S.jpeg');background-size:cover;background-position:center 40%;filter:sepia(.12) brightness(.62) contrast(1.05) saturate(.9);transform:scale(1.06);opacity:0;transition:transform 14s ease-out,opacity 1s ease;z-index:0;will-change:transform;}
 .ct-hero.loaded .ct-hero-bg{transform:scale(1);opacity:1;}
-:root:not([data-theme="dark"]) .ct-hero-bg{filter:sepia(.45) brightness(.48) contrast(1.1) saturate(.42);}
-[data-theme="dark"] .ct-hero-bg{filter:sepia(.7) brightness(.18) contrast(1.25) saturate(.32);}
+:root:not([data-theme="dark"]) .ct-hero-bg{filter:sepia(.08) brightness(.68) contrast(1.04) saturate(.95);}
+[data-theme="dark"] .ct-hero-bg{filter:sepia(.15) brightness(.38) contrast(1.1) saturate(.75);}
 .ct-hero-grain{position:absolute;inset:-80px;width:calc(100% + 160px);height:calc(100% + 160px);opacity:.055;pointer-events:none;z-index:1;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)'/%3E%3C/svg%3E");background-size:220px 220px;animation:ctg .55s steps(1) infinite;}
 @keyframes ctg{0%{transform:translate(0,0)}33%{transform:translate(5px,3px)}66%{transform:translate(-4px,6px)}100%{transform:translate(3px,-4px)}}
 .ct-hero-vignette{position:absolute;inset:0;z-index:2;pointer-events:none;background:radial-gradient(ellipse 72% 58% at 50% 50%,transparent 18%,rgba(0,0,0,.38) 100%),linear-gradient(180deg,rgba(0,0,0,.35) 0%,rgba(0,0,0,.08) 30%,rgba(0,0,0,.55) 74%,var(--color-bg,#faf7f2) 100%);}
@@ -279,11 +279,6 @@
                 <div class="ct-ornament-ln"></div>
             </div>
             <p class="ct-sub">Команда, методологія, подяки та зворотний зв'язок. Усе, створене з любові до рідного міста.</p>
-            <div class="ct-badge-row">
-                <div class="ct-badge"><span class="ct-badge-dot"></span>Без реклами</div>
-                <div class="ct-badge"><span class="ct-badge-dot"></span>Відкритий доступ</div>
-                <div class="ct-badge"><span class="ct-badge-dot"></span>Безкоштовно</div>
-            </div>
         </div>
         <div class="ct-scroll-cue">
             <span>Гортайте</span>
@@ -420,53 +415,39 @@
             <div class="ct-section-hd ct-reveal">
                 <div class="ct-sh-eyebrow"><span class="ct-sh-ln"></span><span>Особлива подяка</span><span class="ct-sh-ln"></span></div>
                 <h2 class="ct-sh-title">Аерофотознімки <em>1943–1944</em></h2>
-                <p class="ct-sh-sub">Унікальні знімки Дубровиці періоду німецької окупації, замовлені Назарієм Столярцем</p>
+                <p class="ct-sh-sub">Унікальні знімки Дубровиці, замовлені Назарієм Столярцем з американського архіву NARA</p>
             </div>
 
             <p class="ct-gallery-intro ct-reveal">
-                Ці матеріали — <em>справжня цінність</em>. Аерофотознімки Дубровиці, зроблені літаками Люфтваффе в 1943–1944 роках, зберігалися в німецьких військових архівах десятиліттями. Завдяки наполегливості <strong>Назарія Столярця</strong>, який особисто замовив ці знімки за власний кошт, ми маємо унікальну можливість побачити наше місто з висоти пташиного польоту в один із найтрагічніших періодів XX століття.
+                Ці матеріали — <em>справжня цінність</em>. Аерофотознімки Дубровиці 1943–1944 років зберігалися в американському архіві NARA (National Archives and Records Administration) десятиліттями. Завдяки наполегливості <strong>Назарія Столярця</strong>, який особисто замовив ці знімки за власний кошт, ми маємо унікальну можливість побачити наше місто з висоти пташиного польоту в один із найтрагічніших періодів XX століття.
             </p>
 
             <div class="ct-gallery-grid ct-reveal">
                 <div class="ct-gal-item">
                     <img src="https://i.imgur.com/zef8WRy.jpeg" alt="Аерофотознімок Дубровиці 1943" loading="lazy">
                     <div class="ct-gal-caption">
-                        <div class="ct-gal-date">1943 · Люфтваффе</div>
-                        Аерофотознімок Дубровиці та навколишніх сіл
+                        <div class="ct-gal-date">1943 · NARA</div>
+                        Аерофотознімок міста Дубровиця та навколишніх сіл
                     </div>
                 </div>
                 <div class="ct-gal-item">
                     <img src="https://i.imgur.com/CImFE7S.jpeg" alt="Аерофотознімок Дубровиці 1944" loading="lazy">
                     <div class="ct-gal-caption">
-                        <div class="ct-gal-date">1944</div>
-                        Аерофотознімок Дубровиці
+                        <div class="ct-gal-date">1944 · NARA</div>
+                        Аерофотознімок міста Дубровиця
                     </div>
                 </div>
                 <div class="ct-gal-item">
-                    <img src="https://cdn.imgchest.com/files/dc3db85d5b42.jpg" alt="Аерофотознімок залізничної станції" loading="lazy">
+                    <img src="https://i.imgur.com/qcjgN1I.jpeg" alt="Центр міста Дубровиця 1920-ті" loading="lazy">
                     <div class="ct-gal-caption">
-                        <div class="ct-gal-date">1943–1944</div>
-                        Залізнична станція Дубровиця
-                    </div>
-                </div>
-                <div class="ct-gal-item">
-                    <img src="https://i.imgur.com/YIRm8Rt.jpeg" alt="Масова маніфестація, 1920" loading="lazy">
-                    <div class="ct-gal-caption">
-                        <div class="ct-gal-date">1920</div>
-                        Масова маніфестація на підтримку Сіону
-                    </div>
-                </div>
-                <div class="ct-gal-item">
-                    <img src="https://i.imgur.com/DBD4YZW.jpeg" alt="Площа перед костелом 1931" loading="lazy">
-                    <div class="ct-gal-caption">
-                        <div class="ct-gal-date">1931</div>
-                        Площа перед костелом
+                        <div class="ct-gal-date">1920–1930-ті</div>
+                        Центр міста Дубровиця
                     </div>
                 </div>
             </div>
 
             <p class="ct-gal-credit ct-reveal">
-                Фотоматеріали · Колекція <strong>Назарія Столярця</strong> · Люфтваффе, Бундесархів
+                Аерофотознімки 1943–1944 рр. · Замовлено <strong>Назарієм Столярцем</strong> · NARA (National Archives and Records Administration, USA)
             </p>
         </div>
     </section>
