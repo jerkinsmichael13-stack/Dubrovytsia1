@@ -174,28 +174,55 @@
 .rj-breadcrumb a { color: inherit; text-decoration: none; }
 .rj-breadcrumb a:hover { opacity: 1; text-decoration: underline; }
 
+/* ── Tabs wrapper — sticky, full-width visually ── */
+.rj-tabs-wrap {
+    position: sticky; top: 76px; z-index: 40;
+    background: var(--parchment);
+    margin: 0 -2rem 2.5rem;
+    padding: 0 2rem;
+    border-bottom: 1px solid var(--ruling);
+    box-shadow: 0 2px 12px rgba(0,0,0,.06);
+}
+[data-theme="dark"] .rj-tabs-wrap { background: #1c1610; box-shadow: 0 2px 16px rgba(0,0,0,.25); }
+@media(max-width:768px){
+    .rj-tabs-wrap { top: 68px; margin: 0 -1.2rem 2rem; padding: 0 1.2rem; }
+}
+@media(max-width:600px){
+    .rj-tabs-wrap { top: 60px; margin: 0 -1.2rem 1.5rem; padding: 0 1rem; }
+}
 /* ── Tabs ── */
 .rj-tabs {
-    display: flex; gap: .4rem; flex-wrap: wrap;
-    border-bottom: 1px solid var(--ruling);
-    margin-bottom: 2.5rem; padding-bottom: 0;
+    display: flex; gap: 0;
     overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+    border-bottom: none;
 }
 .rj-tabs::-webkit-scrollbar { display: none; }
 .rj-tab {
-    display: flex; align-items: center; gap: .55rem;
-    padding: .75rem 1.2rem;
+    display: flex; align-items: center; gap: .5rem;
+    padding: .85rem 1.15rem;
     font-family: 'DM Sans', sans-serif;
-    font-size: .68rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase;
+    font-size: .67rem; font-weight: 500; letter-spacing: .09em; text-transform: uppercase;
     color: var(--sepia); background: none; border: none;
     border-bottom: 2px solid transparent; margin-bottom: -1px;
-    cursor: pointer; border-radius: 6px 6px 0 0;
-    transition: all .2s ease; white-space: nowrap; flex-shrink: 0;
+    cursor: pointer; border-radius: 0;
+    transition: color .18s ease, background .18s ease, border-color .18s ease;
+    white-space: nowrap; flex-shrink: 0;
 }
-.rj-tab svg { width: 14px; height: 14px; flex-shrink: 0; }
+.rj-tab svg { width: 13px; height: 13px; flex-shrink: 0; opacity: .65; transition: opacity .18s; }
 .rj-tab:hover { color: var(--rust-light); background: var(--rust-pale); }
-.rj-tab.active { color: var(--ink); border-bottom-color: #c87a45; background: var(--rust-pale); }
+.rj-tab:hover svg { opacity: 1; }
+.rj-tab.active { color: var(--rust); border-bottom-color: #c87a45; font-weight: 600; }
+.rj-tab.active svg { opacity: 1; color: var(--rust); }
 [data-theme="dark"] .rj-tab.active { color: var(--rust-light); }
+[data-theme="dark"] .rj-tab.active svg { color: var(--rust-light); }
+@media(max-width:700px){
+    .rj-tab { padding: .75rem .8rem; font-size: .62rem; gap: .35rem; }
+    .rj-tab svg { width: 12px; height: 12px; }
+}
+@media(max-width:460px){
+    .rj-tab { padding: .7rem .6rem; font-size: .58rem; letter-spacing: .05em; gap: .28rem; }
+    .rj-tab svg { width: 11px; height: 11px; }
+}
 
 .rj-panel { display: none; }
 .rj-panel.active { display: block; }
@@ -538,6 +565,103 @@
 }
 .rj-timeline-text strong { color: var(--ink); font-weight: 500; }
 
+/* ── Panel interior improvements ── */
+.rj-panel.active { padding-top: .5rem; }
+
+/* Eyebrow polish */
+.rj-eyebrow {
+    margin-bottom: 2rem;
+}
+
+/* Part nav improvements */
+.rj-part-nav {
+    background: var(--sepia-pale); border: 1px solid var(--ruling);
+    border-radius: 10px; padding: .6rem .8rem;
+    gap: .35rem;
+}
+[data-theme="dark"] .rj-part-nav { background: rgba(255,255,255,.03); }
+.rj-part-btn {
+    border-radius: 7px;
+}
+
+/* People search improvements */
+.rj-people-search input {
+    border-radius: 8px;
+    font-size: .8rem;
+    padding: .8rem 1rem .8rem 2.7rem;
+}
+.rj-people-search input::placeholder { color: rgba(120,95,55,.45); }
+[data-theme="dark"] .rj-people-search input::placeholder { color: rgba(200,175,130,.3); }
+
+/* People count badge */
+.rj-people-count {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .62rem; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--sepia); opacity: .7;
+    margin-top: -.8rem; margin-bottom: 1.8rem;
+    padding-left: .2rem;
+}
+
+/* Section head refinements */
+.rj-people-section-head {
+    font-size: 1rem; letter-spacing: .01em;
+    padding-bottom: .65rem;
+}
+
+/* Card grid — min 220px for better proportions on all screens */
+.rj-people-grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: .65rem;
+}
+
+/* Glossary improvements */
+.rj-gloss-grid {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: .85rem;
+}
+.rj-gloss-item {
+    border-radius: 9px;
+    padding: 1.1rem 1.3rem;
+}
+.rj-gloss-term {
+    font-size: .88rem; margin-bottom: .15rem;
+}
+.rj-gloss-orig {
+    font-size: .7rem; margin-bottom: .45rem;
+}
+.rj-gloss-def {
+    font-size: .76rem; line-height: 1.7;
+}
+
+/* Context card polish */
+.rj-context-card {
+    border-radius: 11px;
+}
+.rj-context-head {
+    font-size: 1.05rem;
+}
+.rj-context-body {
+    font-size: .79rem; line-height: 1.88;
+}
+
+/* Note box — slightly tighter on mobile */
+@media(max-width:600px){
+    .rj-note { padding: 1.1rem 1.2rem; gap: .8rem; }
+    .rj-note-text { font-size: .77rem; }
+    .rj-people-grid { grid-template-columns: 1fr 1fr; gap: .5rem; }
+    .rj-people-section-head { font-size: .9rem; }
+    .rj-gloss-grid { grid-template-columns: 1fr; }
+    .rj-context-grid { grid-template-columns: 1fr; }
+    .rj-person-name { font-size: .77rem; }
+    .rj-person-role { font-size: .65rem; }
+    .rj-part-nav { padding: .5rem .6rem; }
+    .rj-transcript { gap: 1.2rem; }
+}
+@media(max-width:380px){
+    .rj-people-grid { grid-template-columns: 1fr; }
+    .rj-person-card { padding: .75rem .9rem; }
+}
+
 /* ── Crime categories ── */
 .rj-crime-grid {
     display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: .9rem; margin: 1.5rem 0;
@@ -685,10 +809,7 @@ html,body,a,button,[role="button"],input,select,textarea,
             <div class="rj-hero-meta-key">Постраждалих осіб</div>
         </div>
     </div>
-    <div class="rj-hero-alert">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-        Документ містить описи тортур, насильства та зґвалтувань неповнолітніх
-    </div>
+    
     <div class="rj-hero-bottom"></div>
 </div>
 
@@ -702,6 +823,7 @@ html,body,a,button,[role="button"],input,select,textarea,
     </div>
 
     <!-- TABS -->
+    <div class="rj-tabs-wrap">
     <div class="rj-tabs" role="tablist">
         <button class="rj-tab active" data-panel="scans" role="tab">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
@@ -728,8 +850,7 @@ html,body,a,button,[role="button"],input,select,textarea,
             Контекст
         </button>
     </div>
-
-    <!-- ══ PANEL: SCANS ══ -->
+    </div><!-- /rj-tabs-wrap -->
     <div class="rj-panel active" id="panel-scans">
         <div class="rj-eyebrow"><span>Оригінальні скани · 12 сторінок · 1665 р.</span></div>
         <div class="rj-note">
@@ -1699,7 +1820,7 @@ Regestr szkód poddanych J.P. Borków z Roku 1665.</div>
                 <div class="rj-person-card" data-village="берестя"><div class="rj-person-name">Явор Янушевич</div><div class="rj-person-orig">Jawor Januszewicz</div><div class="rj-person-role">«Бобра спіймав» (вигадка, бо полювання на бобрів — феодальна регалія) — <strong>50 злотих</strong>.</div><span class="rj-person-tag">Берестя</span></div>
                 <div class="rj-person-card" data-village="берестя"><div class="rj-person-name">Степан Краско</div><div class="rj-person-orig">Stepan Krasko</div><div class="rj-person-role">Без вини — <strong>7 злотих</strong>.</div><span class="rj-person-tag">Берестя</span></div>
                 <div class="rj-person-card" data-village="берестя"><div class="rj-person-name">Гордій Семенович</div><div class="rj-person-orig">Hordiy Semenowicz</div><div class="rj-person-role">Без вини — <strong>80 злотих</strong>.</div><span class="rj-person-tag">Берестя</span></div>
-                <div class="rj-person-card" data-village="берестя"><div class="rj-person-name">Артем Бортник</div><div class="rj-person-orig">Artem Bortnik</div><div class="rj-person-role"><strong>Лісовий бджоляр</strong> (бортник — шанована професія). Без жодної причини: двічі по 20 злотих = <strong>40 злотих</strong>.</div><span class="rj-person-tag">Бортник · Берестя</span></div>
+                <div class="rj-person-card" data-village="берестя"><div class="rj-person-name">Артем Бортник</div><div class="rj-person-orig">Artem Bortnik</div><div class="rj-person-role"><strong>Прізвище</strong>, що, найімовірніше, походить від роду занять предків — <em>бортництва</em> (лісове бджільництво, шанована й прибуткова професія на Поліссі). Без жодної причини: двічі по 20 злотих = <strong>40 злотих</strong>.</div><span class="rj-person-tag">Бортник · Берестя</span></div>
                 <div class="rj-person-card" data-village="берестя"><div class="rj-person-name">Іван Клюйка</div><div class="rj-person-orig">Iwan Kluiki (Kliuiko)</div><div class="rj-person-role"><em>«Byle o kazycka, бо селянин заможний»</em> (просто так, через примху) — <strong>500 злотих</strong>. Колосальна сума: за неї можна було купити невелике стадо корів.</div><span class="rj-person-tag">Найбагатший · Берестя</span></div>
                 <div class="rj-person-card" data-village="берестя"><div class="rj-person-name">Громада Берестецька</div><div class="rj-person-orig">Gromada Berestecka</div><div class="rj-person-role">Колективний потерпілий. Через побори громада продавала майно панові Борку. Загальні збори за роки: <strong>1000 злотих</strong>.</div><span class="rj-person-tag">Громада · Берестя</span></div>
                 <div class="rj-person-card" data-village="берестя"><div class="rj-person-name">Рудник</div><div class="rj-person-orig">Rudnik</div><div class="rj-person-role"><strong>Власник рудні</strong> (виробництва заліза з болотної руди). Без вини, у різний час: <strong>479 злотих</strong> готівкою. Окрім цього — <em>«заліза тако багато возами брав у нього, а не платив»</em>. Цілеспрямоване знищення промислового виробництва.</div><span class="rj-person-tag">Промисловець · Берестя</span></div>
@@ -1788,7 +1909,7 @@ Regestr szkód poddanych J.P. Borków z Roku 1665.</div>
             <div class="rj-gloss-item"><div class="rj-gloss-term">Алкір</div><div class="rj-gloss-orig">Alkirz</div><div class="rj-gloss-def">Невелика кімната поруч із головною залою, або окрема спальня/ніша. До алькіра ґвалтом забрали 11-річну Оришку Дубину.</div></div>
             <div class="rj-gloss-item"><div class="rj-gloss-term">При куделі</div><div class="rj-gloss-orig">Przy kądzieli</div><div class="rj-gloss-def">Під приводом <strong>прядіння</strong> (роботи з вовною або льоном). Це був поширений спосіб заманити дівчат і молодих жінок до панського двору. Під цим приводом учинено ґвалти над Мрлушкою Тишівною та Хвеською Борисівною.</div></div>
             <div class="rj-gloss-item"><div class="rj-gloss-term">Рудник</div><div class="rj-gloss-orig">Rudnik</div><div class="rj-gloss-def">Власник або майстер «рудні» — підприємства з видобутку та переробки болотної руди на залізо. Поліський традиційний промисел XVI–XVIII ст. Борко вивозив залізо «возами» й не платив, що свідчить про масштаб грабунку промисловості.</div></div>
-            <div class="rj-gloss-item"><div class="rj-gloss-term">Бортник</div><div class="rj-gloss-orig">Bortnik</div><div class="rj-gloss-def">Лісовий бджоляр. Шанована і зазвичай небідна категорія населення. Артем Бортник з Берестя став жертвою Борка «без дання причини» двічі по 20 злотих.</div></div>
+            <div class="rj-gloss-item"><div class="rj-gloss-term">Бортник</div><div class="rj-gloss-orig">Bortnik</div><div class="rj-gloss-def">Прізвище Артема, що найімовірніше походить від стародавньої поліської професії — бортництва (лісового бджільництва). Бортники тримали бджіл у спеціальних дуплах-бортях у лісі, це була шанована й небідна категорія населення. Артем Бортник з Берестя став жертвою Борка «без дання причини» двічі по 20 злотих.</div></div>
             <div class="rj-gloss-item"><div class="rj-gloss-term">Byle o kazycka</div><div class="rj-gloss-orig">Byle o kazycka</div><div class="rj-gloss-def">Діалектний зворот, що означає «через примху», «просто так», «скориставшись випадком». Контекст: «через примху, бо селянин заможний» — за цією формулою у Івана Клюйки відібрали 500 злотих.</div></div>
             <div class="rj-gloss-item"><div class="rj-gloss-term">Lada occasio</div><div class="rj-gloss-orig">Lada occasio</div><div class="rj-gloss-def">Латинізм: «будь-яка нагода», «перший-ліпший привід». Так укладачі реєстру описують метод Борка проти Рудника — здирав у різний час 479 злотих «давши будь-який привід».</div></div>
             <div class="rj-gloss-item"><div class="rj-gloss-term">Бобер як привід</div><div class="rj-gloss-orig">Bobr</div><div class="rj-gloss-def">У XVII ст. полювання на бобрів було суворою феодальною регалією (монополією пана). Селянам категорично заборонялося їх ловити. Звинувачення у «спійманні» чи «продажу» бобра — типовий привід для великих штрафів (50 злотих за особу у Берестечку).</div></div>
