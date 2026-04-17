@@ -673,27 +673,12 @@
     inset: 0;
     pointer-events: none;
     z-index: 5;
-    /* Large upper watermark via SVG background */
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 70'%3E%3Cdefs%3E%3Cfilter id='sh'%3E%3CfeDropShadow dx='0' dy='1' stdDeviation='3.5' flood-color='%23000' flood-opacity='.88'/%3E%3C/filter%3E%3C/defs%3E%3Ctext x='250' y='46' text-anchor='middle' font-family='Arial%2Csans-serif' font-weight='700' font-size='30' letter-spacing='3' fill='white' fill-opacity='.26' filter='url(%23sh)'%3EDUBROVYTSIA.SITE%3C/text%3E%3C/svg%3E");
-    background-size: 88% auto;
-    background-position: center 20%;
-    background-repeat: no-repeat;
+    /* Watermark hidden on cards — visible only in lightbox */
+    background-image: none;
 }
-/* Left-side small rotated text */
+/* Left-side small rotated text — hidden on cards */
 .photo-wm-overlay::before {
-    content: 'dubrovytsia.site';
-    position: absolute;
-    left: -16px;
-    top: 50%;
-    transform: translateY(-50%) rotate(-90deg);
-    font-family: 'DM Sans', 'Arial', sans-serif;
-    font-size: 0.42rem;
-    font-weight: 600;
-    letter-spacing: 0.13em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.42);
-    text-shadow: 0 1px 5px rgba(0,0,0,0.95);
-    white-space: nowrap;
+    display: none;
 }
 
 /* ── Lightbox watermark ── */
