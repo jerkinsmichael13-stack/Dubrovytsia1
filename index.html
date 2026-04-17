@@ -6293,6 +6293,7 @@ a, button, [role="button"], input, select, textarea,
   <div id="ULB-VP">
     <div id="ULB-LOADER"></div>
     <img id="ULB-IMG" src="" alt="" draggable="false">
+    <div class="wm-layer-fs" id="ULB-WM" style="display:none;"></div>
     <div id="ULB-ZOOM-PAD">
       <button class="ulb-btn" onclick="ULB.zoomOut()" title="Зменшити (−)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="8" y1="11" x2="14" y2="11"/></svg></button>
       <span id="ULB-ZVAL">1.0&times;</span>
@@ -6625,11 +6626,13 @@ function open(arr,i2){
   document.body.style.top='-'+savedY+'px';
   document.body.style.width='100%';
   lb.classList.add('on');
+  var wm=gel('ULB-WM');if(wm)wm.style.display='block';
   requestAnimationFrame(function(){computeBase();loadItem(cur);});
 }
 function close(){
   var lb=gel('ULB');if(!lb)return;
   lb.classList.remove('on');
+  var wm=gel('ULB-WM');if(wm)wm.style.display='none';
   document.body.style.overflow='';
   document.body.style.position='';
   document.body.style.top='';
