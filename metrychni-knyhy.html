@@ -984,7 +984,89 @@ a, button, [role="button"], input, select, textarea,
 </script>
 
 
-    <!-- INFO STRIP + DOCUMENT TEASER -->
+    <!-- ══ VOTER LIST 1938 FEATURED TEASER ══ -->
+    <section style="padding:3rem 0 4rem;">
+        <div class="container">
+            <style>
+            .v38-card{display:grid;grid-template-columns:1fr 1fr;border-radius:24px;overflow:hidden;border:1px solid rgba(201,162,39,.2);box-shadow:0 30px 80px rgba(0,0,0,.18);text-decoration:none;}
+            @media(max-width:860px){.v38-card{grid-template-columns:1fr;}}
+            .v38-img{position:relative;min-height:400px;overflow:hidden;}
+            @media(max-width:860px){.v38-img{min-height:260px;}}
+            .v38-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 35%;filter:brightness(.72) contrast(1.1) saturate(.7);transition:transform 8s ease,filter .5s ease;}
+            .v38-card:hover .v38-img img{transform:scale(1.04);filter:brightness(.8) contrast(1.08);}
+            .v38-img-grade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(5,3,1,.55) 0%,transparent 55%),linear-gradient(0deg,rgba(5,3,1,.85) 0%,transparent 45%);}
+            @media(max-width:860px){.v38-img-grade{background:linear-gradient(0deg,rgba(5,3,1,.9) 0%,rgba(5,3,1,.3) 60%,transparent 100%);}}
+            .v38-img-bdg{position:absolute;bottom:1.5rem;left:1.5rem;display:flex;align-items:center;gap:.6rem;font-family:'DM Sans',sans-serif;font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.5);background:rgba(5,3,1,.6);backdrop-filter:blur(8px);border:1px solid rgba(201,162,39,.22);border-radius:100px;padding:.42rem 1rem;}
+            .v38-dot{width:5px;height:5px;border-radius:50%;background:#c9a227;animation:v38pulse 2.4s ease-in-out infinite;}
+            @keyframes v38pulse{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.3)}}
+            .v38-body{background:linear-gradient(135deg,#0d0a06 0%,#141008 100%);padding:3rem 3.2rem;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;}
+            @media(max-width:600px){.v38-body{padding:2rem 1.6rem;}}
+            .v38-body::before{content:'1938';position:absolute;right:-.5rem;bottom:-2rem;font-family:'Cormorant Garamond',serif;font-size:9rem;font-weight:700;color:rgba(201,162,39,.04);line-height:1;pointer-events:none;letter-spacing:-.04em;}
+            .v38-eye{font-family:'DM Sans',sans-serif;font-size:.48rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(201,162,39,.6);border:1px solid rgba(201,162,39,.2);border-radius:100px;padding:.3rem .8rem;display:inline-flex;align-items:center;gap:.5rem;margin-bottom:1.5rem;width:fit-content;}
+            .v38-ti{font-family:'Cormorant Garamond',serif;font-size:clamp(1.9rem,3.2vw,2.7rem);font-weight:300;line-height:.95;letter-spacing:-.025em;color:#e8dbb5;margin-bottom:1.2rem;}
+            .v38-ti em{display:block;font-style:italic;color:#c9a227;}
+            .v38-desc{font-family:'DM Sans',sans-serif;font-size:.77rem;line-height:1.7;color:rgba(232,219,181,.45);margin-bottom:1.8rem;}
+            .v38-feats{display:flex;flex-direction:column;gap:.7rem;margin-bottom:2rem;}
+            .v38-feat{display:flex;align-items:flex-start;gap:.8rem;}
+            .v38-ficon{width:28px;height:28px;border-radius:8px;background:rgba(201,162,39,.1);border:1px solid rgba(201,162,39,.16);display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0;margin-top:.1rem;}
+            .v38-ftxt{font-family:'DM Sans',sans-serif;font-size:.74rem;line-height:1.55;color:rgba(232,219,181,.5);}
+            .v38-ftxt strong{color:#e8dbb5;font-weight:600;}
+            .v38-nums{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(201,162,39,.1);border-radius:12px;overflow:hidden;margin-bottom:2rem;}
+            .v38-num{background:#0d0a06;padding:.9rem .8rem;text-align:center;}
+            .v38-num-n{display:block;font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:300;color:#c9a227;line-height:1;}
+            .v38-num-l{display:block;font-family:'DM Sans',sans-serif;font-size:.42rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.2);margin-top:.28rem;}
+            .v38-cta{display:inline-flex;align-items:center;gap:.8rem;background:linear-gradient(135deg,#c9a227,#a07c10);color:#0a0805;font-family:'DM Sans',sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;text-decoration:none;padding:.85rem 2rem;border-radius:100px;transition:all .28s cubic-bezier(.16,1,.3,1);box-shadow:0 6px 24px rgba(201,162,39,.28);}
+            .v38-cta:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(201,162,39,.4);color:#0a0805;}
+            .v38-cta svg{transition:transform .25s ease;}
+            .v38-cta:hover svg{transform:translateX(4px);}
+            .v38-hint{font-family:'DM Sans',sans-serif;font-size:.62rem;color:rgba(201,162,39,.4);margin-left:.5rem;}
+            </style>
+
+            <div style="text-align:center;margin-bottom:2rem;">
+                <div style="display:flex;align-items:center;justify-content:center;gap:1rem;margin-bottom:.8rem;">
+                    <div style="flex:1;max-width:80px;height:1px;background:linear-gradient(90deg,transparent,rgba(201,162,39,.4));"></div>
+                    <span style="font-family:'DM Sans',sans-serif;font-size:.47rem;letter-spacing:.34em;text-transform:uppercase;color:rgba(201,162,39,.55);">Унікальний документ</span>
+                    <div style="flex:1;max-width:80px;height:1px;background:linear-gradient(270deg,transparent,rgba(201,162,39,.4));"></div>
+                </div>
+                <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3.5vw,3rem);font-weight:300;letter-spacing:-.03em;color:var(--color-text,#1a1000);line-height:.95;margin:0;">Список виборців <em style="font-style:italic;color:#c9a227;">1938 року</em></h2>
+                <p style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;color:var(--color-text-light,#8b6f3e);margin-top:.5rem;">Фонд 263 ДАРО · 8 619 мешканців · 25 населених пунктів</p>
+            </div>
+
+            <a href="vyborchi-1938.html" class="v38-card">
+                <div class="v38-img">
+                    <img src="https://i.imgur.com/wsXwXHc.jpeg" alt="Список виборців 1938">
+                    <div class="v38-img-grade"></div>
+                    <div class="v38-img-bdg"><div class="v38-dot"></div>8 619 записів · 1938</div>
+                </div>
+                <div class="v38-body">
+                    <div class="v38-eye">
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                        Генеалогічний реєстр · Фонд 263 ДАРО
+                    </div>
+                    <h3 class="v38-ti">Список виборців<em>Дубровиці 1938 р.</em></h3>
+                    <p class="v38-desc">Понад вісім тисяч мешканців Дубровиці та навколишніх сіл — поіменно, з датами народження, родом занять та точними адресами.</p>
+                    <div class="v38-feats">
+                        <div class="v38-feat"><div class="v38-ficon">🔍</div><div class="v38-ftxt"><strong>Пошук і фільтрація</strong> — за прізвищем, населеним пунктом, родом занять</div></div>
+                        <div class="v38-feat"><div class="v38-ficon">📊</div><div class="v38-ftxt"><strong>Статистика громади</strong> — розподіл по пунктах, прізвища, хвиля переселення</div></div>
+                        <div class="v38-feat"><div class="v38-ficon">📂</div><div class="v38-ftxt"><strong>Фонд 263 ДАРО</strong> — Берестя · Заріччя · Дубровиця · Антонін · Селець</div></div>
+                    </div>
+                    <div class="v38-nums">
+                        <div class="v38-num"><span class="v38-num-n">8 619</span><span class="v38-num-l">Записів</span></div>
+                        <div class="v38-num"><span class="v38-num-n">1938</span><span class="v38-num-l">Рік</span></div>
+                        <div class="v38-num"><span class="v38-num-n">25</span><span class="v38-num-l">Пунктів</span></div>
+                        <div class="v38-num"><span class="v38-num-n">65+</span><span class="v38-num-l">Професій</span></div>
+                    </div>
+                    <div style="display:flex;align-items:center;flex-wrap:wrap;gap:1rem;">
+                        <span class="v38-cta">Переглянути реєстр <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+                        <span class="v38-hint">Пошук · Статистика · 8 619 записів</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </section>
+
+
+        <!-- INFO STRIP + DOCUMENT TEASER -->
     <section class="catalog-section" style="padding-top:3rem;">
         <div class="container">
 
@@ -1723,87 +1805,6 @@ a, button, [role="button"], input, select, textarea,
                 </a>
             </div>
 
-        </div>
-    </section>
-
-    <!-- ══ VOTER LIST 1938 FEATURED TEASER ══ -->
-    <section style="padding:0 0 4rem;">
-        <div class="container">
-            <style>
-            .v38-card{display:grid;grid-template-columns:1fr 1fr;border-radius:24px;overflow:hidden;border:1px solid rgba(201,162,39,.2);box-shadow:0 30px 80px rgba(0,0,0,.18);text-decoration:none;}
-            @media(max-width:860px){.v38-card{grid-template-columns:1fr;}}
-            .v38-img{position:relative;min-height:400px;overflow:hidden;}
-            @media(max-width:860px){.v38-img{min-height:260px;}}
-            .v38-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 35%;filter:brightness(.72) contrast(1.1) saturate(.7);transition:transform 8s ease,filter .5s ease;}
-            .v38-card:hover .v38-img img{transform:scale(1.04);filter:brightness(.8) contrast(1.08);}
-            .v38-img-grade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(5,3,1,.55) 0%,transparent 55%),linear-gradient(0deg,rgba(5,3,1,.85) 0%,transparent 45%);}
-            @media(max-width:860px){.v38-img-grade{background:linear-gradient(0deg,rgba(5,3,1,.9) 0%,rgba(5,3,1,.3) 60%,transparent 100%);}}
-            .v38-img-bdg{position:absolute;bottom:1.5rem;left:1.5rem;display:flex;align-items:center;gap:.6rem;font-family:'DM Sans',sans-serif;font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.5);background:rgba(5,3,1,.6);backdrop-filter:blur(8px);border:1px solid rgba(201,162,39,.22);border-radius:100px;padding:.42rem 1rem;}
-            .v38-dot{width:5px;height:5px;border-radius:50%;background:#c9a227;animation:v38pulse 2.4s ease-in-out infinite;}
-            @keyframes v38pulse{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.3)}}
-            .v38-body{background:linear-gradient(135deg,#0d0a06 0%,#141008 100%);padding:3rem 3.2rem;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;}
-            @media(max-width:600px){.v38-body{padding:2rem 1.6rem;}}
-            .v38-body::before{content:'1938';position:absolute;right:-.5rem;bottom:-2rem;font-family:'Cormorant Garamond',serif;font-size:9rem;font-weight:700;color:rgba(201,162,39,.04);line-height:1;pointer-events:none;letter-spacing:-.04em;}
-            .v38-eye{font-family:'DM Sans',sans-serif;font-size:.48rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(201,162,39,.6);border:1px solid rgba(201,162,39,.2);border-radius:100px;padding:.3rem .8rem;display:inline-flex;align-items:center;gap:.5rem;margin-bottom:1.5rem;width:fit-content;}
-            .v38-ti{font-family:'Cormorant Garamond',serif;font-size:clamp(1.9rem,3.2vw,2.7rem);font-weight:300;line-height:.95;letter-spacing:-.025em;color:#e8dbb5;margin-bottom:1.2rem;}
-            .v38-ti em{display:block;font-style:italic;color:#c9a227;}
-            .v38-desc{font-family:'DM Sans',sans-serif;font-size:.77rem;line-height:1.7;color:rgba(232,219,181,.45);margin-bottom:1.8rem;}
-            .v38-feats{display:flex;flex-direction:column;gap:.7rem;margin-bottom:2rem;}
-            .v38-feat{display:flex;align-items:flex-start;gap:.8rem;}
-            .v38-ficon{width:28px;height:28px;border-radius:8px;background:rgba(201,162,39,.1);border:1px solid rgba(201,162,39,.16);display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0;margin-top:.1rem;}
-            .v38-ftxt{font-family:'DM Sans',sans-serif;font-size:.74rem;line-height:1.55;color:rgba(232,219,181,.5);}
-            .v38-ftxt strong{color:#e8dbb5;font-weight:600;}
-            .v38-nums{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(201,162,39,.1);border-radius:12px;overflow:hidden;margin-bottom:2rem;}
-            .v38-num{background:#0d0a06;padding:.9rem .8rem;text-align:center;}
-            .v38-num-n{display:block;font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:300;color:#c9a227;line-height:1;}
-            .v38-num-l{display:block;font-family:'DM Sans',sans-serif;font-size:.42rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.2);margin-top:.28rem;}
-            .v38-cta{display:inline-flex;align-items:center;gap:.8rem;background:linear-gradient(135deg,#c9a227,#a07c10);color:#0a0805;font-family:'DM Sans',sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;text-decoration:none;padding:.85rem 2rem;border-radius:100px;transition:all .28s cubic-bezier(.16,1,.3,1);box-shadow:0 6px 24px rgba(201,162,39,.28);}
-            .v38-cta:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(201,162,39,.4);color:#0a0805;}
-            .v38-cta svg{transition:transform .25s ease;}
-            .v38-cta:hover svg{transform:translateX(4px);}
-            .v38-hint{font-family:'DM Sans',sans-serif;font-size:.62rem;color:rgba(201,162,39,.4);margin-left:.5rem;}
-            </style>
-
-            <div style="text-align:center;margin-bottom:2rem;">
-                <div style="display:flex;align-items:center;justify-content:center;gap:1rem;margin-bottom:.8rem;">
-                    <div style="flex:1;max-width:80px;height:1px;background:linear-gradient(90deg,transparent,rgba(201,162,39,.4));"></div>
-                    <span style="font-family:'DM Sans',sans-serif;font-size:.47rem;letter-spacing:.34em;text-transform:uppercase;color:rgba(201,162,39,.55);">Унікальний документ</span>
-                    <div style="flex:1;max-width:80px;height:1px;background:linear-gradient(270deg,transparent,rgba(201,162,39,.4));"></div>
-                </div>
-                <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3.5vw,3rem);font-weight:300;letter-spacing:-.03em;color:var(--color-text,#1a1000);line-height:.95;margin:0;">Список виборців <em style="font-style:italic;color:#c9a227;">1938 року</em></h2>
-                <p style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;color:var(--color-text-light,#8b6f3e);margin-top:.5rem;">Фонд 263 ДАРО · 8 619 мешканців · 25 населених пунктів</p>
-            </div>
-
-            <a href="vyborchi-1938.html" class="v38-card">
-                <div class="v38-img">
-                    <img src="https://i.imgur.com/wsXwXHc.jpeg" alt="Список виборців 1938">
-                    <div class="v38-img-grade"></div>
-                    <div class="v38-img-bdg"><div class="v38-dot"></div>8 619 записів · 1938</div>
-                </div>
-                <div class="v38-body">
-                    <div class="v38-eye">
-                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-                        Генеалогічний реєстр · Фонд 263 ДАРО
-                    </div>
-                    <h3 class="v38-ti">Список виборців<em>Дубровиці 1938 р.</em></h3>
-                    <p class="v38-desc">Понад вісім тисяч мешканців Дубровиці та навколишніх сіл — поіменно, з датами народження, родом занять та точними адресами.</p>
-                    <div class="v38-feats">
-                        <div class="v38-feat"><div class="v38-ficon">🔍</div><div class="v38-ftxt"><strong>Пошук і фільтрація</strong> — за прізвищем, населеним пунктом, родом занять</div></div>
-                        <div class="v38-feat"><div class="v38-ficon">📊</div><div class="v38-ftxt"><strong>Статистика громади</strong> — розподіл по пунктах, прізвища, хвиля переселення</div></div>
-                        <div class="v38-feat"><div class="v38-ficon">📂</div><div class="v38-ftxt"><strong>Фонд 263 ДАРО</strong> — Берестя · Заріччя · Дубровиця · Антонін · Селець</div></div>
-                    </div>
-                    <div class="v38-nums">
-                        <div class="v38-num"><span class="v38-num-n">8 619</span><span class="v38-num-l">Записів</span></div>
-                        <div class="v38-num"><span class="v38-num-n">1938</span><span class="v38-num-l">Рік</span></div>
-                        <div class="v38-num"><span class="v38-num-n">25</span><span class="v38-num-l">Пунктів</span></div>
-                        <div class="v38-num"><span class="v38-num-n">65+</span><span class="v38-num-l">Професій</span></div>
-                    </div>
-                    <div style="display:flex;align-items:center;flex-wrap:wrap;gap:1rem;">
-                        <span class="v38-cta">Переглянути реєстр <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
-                        <span class="v38-hint">Пошук · Статистика · 8 619 записів</span>
-                    </div>
-                </div>
-            </a>
         </div>
     </section>
 
