@@ -270,6 +270,7 @@ html,body{touch-action:manipulation;}
 .sb3{background:rgba(100,180,120,.12);color:rgba(130,210,150,.8);}.sb4{background:rgba(180,120,60,.12);color:rgba(220,160,80,.8);}
 @media(max-width:1200px){.vbr-t .td-since{display:none;}}
 @media(max-width:960px){.vbr-t .td-addr,.vbr-t .td-src{display:none;}}
+@media(max-width:600px){.vbr-t .td-addr{display:block;}.vbr-t .td-since{display:block;}}
 @media(max-width:700px){.vbr-t .td-n,.vbr-t .td-born{display:none;}.vbr-t td{padding:.7rem .75rem;}.vbr-t thead th{padding:.8rem .75rem .65rem;}}
 @media(max-width:500px){.vbr-t{min-width:unset;}.vbr-t .td-fst{display:none;}}
 
@@ -280,7 +281,7 @@ html,body{touch-action:manipulation;}
   .vbr-t thead{display:none;}
   .vbr-t tbody tr{
     display:grid;
-    grid-template-areas:'sur sur' 'fst born' 'prof vil';
+    grid-template-areas:'sur sur' 'fst born' 'addr since' 'prof vil';
     grid-template-columns:1fr auto;
     padding:.9rem 1rem;
     border-bottom:1px solid rgba(201,162,39,.07);
@@ -292,10 +293,11 @@ html,body{touch-action:manipulation;}
   .vbr-t .td-sur{display:block;grid-area:sur;font-size:1.02rem;white-space:unset;}
   .vbr-t .td-fst{display:block;grid-area:fst;font-size:.78rem;color:rgba(232,219,181,.55);white-space:unset;align-self:center;}
   .vbr-t .td-born{display:block;grid-area:born;font-size:.72rem;color:rgba(232,219,181,.4);text-align:right;align-self:center;white-space:nowrap;}
+  .vbr-t .td-addr{display:block;grid-area:addr;font-size:.68rem;color:rgba(232,219,181,.38);white-space:unset;max-width:unset;align-self:center;}
+  .vbr-t .td-since{display:block;grid-area:since;font-size:.68rem;color:rgba(232,219,181,.32);text-align:right;align-self:center;white-space:nowrap;}
   .vbr-t .td-prof{display:block;grid-area:prof;align-self:center;}
   .vbr-t .td-village{display:block;grid-area:vil;text-align:right;align-self:center;}
   .vbr-t .td-prof .pp{font-size:.58rem;}
-  .vbr-t .td-since{display:none;}
   [data-theme="light"] .vbr-t .td-fst{color:rgba(40,25,5,.55);}
   [data-theme="light"] .vbr-t .td-born{color:rgba(80,55,15,.45);}
 }
