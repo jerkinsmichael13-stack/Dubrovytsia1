@@ -144,7 +144,8 @@ html,body{touch-action:manipulation;}
 /* Cards grid */
 .vbg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.2rem;}
 @media(max-width:480px){.vbg-grid{grid-template-columns:1fr;}}
-.vbg-card{background:var(--color-bg-card,#fcf9f2);border:1px solid rgba(201,162,39,.12);border-radius:16px;padding:1.6rem;display:flex;flex-direction:column;gap:0;transition:border-color .25s,box-shadow .25s,transform .25s;cursor:pointer;position:relative;overflow:hidden;}
+.vbg-card{background:var(--color-bg-card,#fcf9f2);border:1px solid rgba(201,162,39,.12);border-radius:16px;padding:1.6rem;display:flex;flex-direction:column;gap:0;transition:border-color .25s,box-shadow .25s,transform .25s;cursor:default;position:relative;overflow:hidden;}
+.vbg-card.vbg-card-click{cursor:pointer;}
 .vbg-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(201,162,39,.25),transparent);opacity:0;transition:opacity .25s;}
 .vbg-card:hover{border-color:rgba(201,162,39,.3);box-shadow:0 12px 40px rgba(0,0,0,.1);transform:translateY(-2px);}
 .vbg-card:hover::before{opacity:1;}
@@ -686,27 +687,29 @@ fetch('voters.json')
 (function(){
   var activeCat='all';
 
-  // Map from glossary key → data-prof filter key (for entries that differ)
+  // Entries where glossary name ≠ data-prof filter key
   var GLOSS_TO_FILTER = {
     'адвокат':'юрист','рабин':'священник','православний священник':'священник',
     'диякон':'священник','чоботар':'швець','халявник':'швець','гарбар':'кушнір',
     'канцелярист':'урядовець','писар':'урядовець','купець':'торгівля',
     'помічник торговця':'торгівля','власник готелю':'власник',
-    'власник аптеки':'власник','директор банку':'власник'
+    'власник аптеки':'власник','директор банку':'власник',
+    'управитель маєтку':'власник'
   };
+
+  // Entries with no filter button — fall back to searching Polish raw term
+  var POLISH_SEARCH = {"горілчаний майстер": "gorzelniczy", "доглядач водойм": "dozorca", "капелюшниця": "kapelusznica", "коминяр": "kominiarz", "маляр": "malarz", "мірничий": "mierniczy geometra", "палітурник": "introligator", "панчішник": "pończosznik", "пенсіонер": "emeryt", "при синові": "synie", "ракарник": "rakarz", "римар": "rymarz", "скарбовий комірник": "komornik", "служниця": "służąca", "учень": "uczeń", "чесальник": "gręplarz", "інвалід": "inwalida"};
 
   function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
-  function filterByProf(profName){
-    var filterKey=GLOSS_TO_FILTER[profName]||profName;
-    var btn=document.querySelector('[data-prof="'+filterKey+'"]');
-    if(!btn) return false;
-    document.querySelectorAll('[data-prof]').forEach(function(b){b.classList.remove('on');});
-    btn.classList.add('on');
-    btn.dispatchEvent(new MouseEvent('click',{bubbles:true}));
-    var reg=document.querySelector('.vbr');
-    if(reg) reg.scrollIntoView({behavior:'smooth',block:'start'});
-    return true;
+  function handleClick(profName){
+    var filterKey = GLOSS_TO_FILTER[profName] || profName;
+    var reg = document.querySelector('.vbr');
+    if(window.vbrSearch) window.vbrSearch('');
+    if(window.vbrSetProfFilter){
+      window.vbrSetProfFilter(filterKey);
+      if(reg) reg.scrollIntoView({behavior:'smooth',block:'start'});
+    }
   }
 
   function render(){
@@ -724,9 +727,11 @@ fetch('voters.json')
       var p=kv[1];
       var profKey=kv[0];
       var filterKey=GLOSS_TO_FILTER[profKey]||profKey;
-      var hasFilter=!!document.querySelector('[data-prof="'+filterKey+'"]');
+      var hasFilt=!!document.querySelector('[data-prof="'+filterKey+'"]');
+      var hasSearch=!!POLISH_SEARCH[profKey];
+      var isClickable=true; // all professions are clickable — filter works even without a dedicated button
       var countLbl=p.count>0?p.count+' '+(p.count===1?'особа':p.count<5?'особи':'осіб'):'';
-      h+='<div class="vbg-card'+(hasFilter?'':' no-filter')+'" data-profkey="'+esc(profKey)+'">'
+      h+='<div class="vbg-card'+(isClickable?' vbg-card-click':'')+'" data-profkey="'+esc(profKey)+'">'
         +'<div class="vbg-card-top">'
         +'<div class="vbg-icon">'+p.icon+'</div>'
         +'<div class="vbg-card-titles">'
@@ -738,14 +743,14 @@ fetch('voters.json')
         +'<div class="vbg-divider"></div>'
         +'<div class="vbg-short">'+esc(p.short)+'</div>'
         +'<div class="vbg-desc">'+p.desc+'</div>'
-        +(hasFilter?'<div class="vbg-filter-hint">🔍 Показати у реєстрі ↑</div>':'')
+        +(isClickable?'<div class="vbg-filter-hint">🔍 Показати у реєстрі ↑</div>':'')
         +'</div>';
     });
     grid.innerHTML=h;
 
-    grid.querySelectorAll('.vbg-card:not(.no-filter)').forEach(function(card){
+    grid.querySelectorAll('.vbg-card-click').forEach(function(card){
       card.addEventListener('click',function(){
-        filterByProf(this.getAttribute('data-profkey'));
+        handleClick(this.getAttribute('data-profkey'));
       });
     });
   }
@@ -760,7 +765,6 @@ fetch('voters.json')
   });
   render();
 })();
-
 
 // ── DONUT CHARTS ─────────────────────────────────────────
 (function(){
@@ -879,7 +883,8 @@ function mS(r){
   return r.surname.toLowerCase().indexOf(lq)>=0
       || r.first.toLowerCase().indexOf(lq)>=0
       || r.addr.toLowerCase().indexOf(lq)>=0
-      || r.born.toLowerCase().indexOf(lq)>=0;
+      || r.born.toLowerCase().indexOf(lq)>=0
+      || (r.prof||'').toLowerCase().indexOf(lq)>=0;
 }
 
 function doF(){
@@ -1045,6 +1050,29 @@ document.getElementById('vbrSrch').addEventListener('input',function(){
   var v=this.value;
   st=setTimeout(function(){ q=v; doF(); }, 190);
 });
+
+// ── Exposed API for glossary click ────────────────────────────────────
+window.vbrSetProfFilter = function(profName) {
+  selectedProfs = [];
+  pf = 'all';
+  document.querySelectorAll('[data-prof]').forEach(function(x){ x.classList.remove('on'); });
+  var allBtn = document.querySelector('[data-prof="all"]');
+  if (allBtn) allBtn.classList.add('on');
+  if (profName) {
+    // Always set the filter, even if there's no dedicated DOM button (rare professions)
+    selectedProfs = [profName];
+    pf = [profName];
+    if (allBtn) allBtn.classList.remove('on');
+    var btn = document.querySelector('[data-prof="' + profName + '"]');
+    if (btn) btn.classList.add('on');
+  }
+  updateFilterHint();
+  doF();
+};
+window.vbrSearch = function(text) {
+  var inp = document.getElementById('vbrSrch');
+  if (inp) { inp.value = text; q = text; doF(); }
+};
 
 doF();
 })();
