@@ -312,8 +312,20 @@ html,body{touch-action:manipulation;}
 .vbr-filter-label{font-family:'DM Sans',sans-serif;font-size:.5rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(201,162,39,.45);margin-bottom:.55rem;display:flex;align-items:center;gap:.5rem;}
 .vbr-filter-label svg{opacity:.6;flex-shrink:0;}
 
-/* ── LIGHT THEME OVERRIDES for dark-coded sections ── */
-[data-theme="light"] .vbc{background:var(--color-bg,#faf7f2);border-bottom:1px solid rgba(201,162,39,.12);}
+/* ── MAP SECTION ── */
+.vb-map-sec{background:#050302;padding:0;overflow:hidden;}
+.vb-map-wrap{position:relative;max-height:88vh;overflow:hidden;}
+.vb-map-img{width:100%;display:block;filter:sepia(.18) contrast(1.06) brightness(.92);transform-origin:center;transition:transform 22s ease-out;object-fit:cover;}
+.vb-map-sec:hover .vb-map-img{transform:scale(1.025);}
+.vb-map-wrap::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,3,2,.55) 0%,transparent 18%,transparent 75%,rgba(5,3,2,.7) 100%);z-index:1;pointer-events:none;}
+.vb-map-cap{position:absolute;bottom:2.2rem;left:50%;transform:translateX(-50%);z-index:2;display:flex;align-items:center;gap:1.2rem;white-space:nowrap;}
+.vb-map-cap-line{display:block;width:60px;height:1px;background:rgba(201,162,39,.4);}
+.vb-map-cap-txt{font-family:'Cormorant Garamond',serif;font-size:.75rem;font-style:italic;font-weight:300;color:rgba(201,162,39,.75);letter-spacing:.12em;}
+@media(max-width:600px){.vb-map-cap-line{width:28px;}.vb-map-cap-txt{font-size:.65rem;}.vb-map-wrap{max-height:60vh;}}
+</style>
+</head>
+<body>
+<style>
 [data-theme="light"] .vbc-card{background:#fff;border:1px solid rgba(201,162,39,.14);box-shadow:0 4px 20px rgba(0,0,0,.04);}
 [data-theme="light"] .vbc-ico{background:rgba(201,162,39,.07);border-color:rgba(201,162,39,.18);}
 [data-theme="light"] .vbc-ttl{color:#1a1000;}
@@ -415,8 +427,6 @@ html,body{touch-action:manipulation;}
 /* scroll bar label */
 [data-theme="light"] .vbs-rare-hd div[style*="height:1px"]{background:linear-gradient(90deg,rgba(201,162,39,.25),transparent) !important;}
 </style>
-</head>
-<body>
 <header class="header">
   <div class="header-container">
     <a href="index.html" class="logo"><img src="https://i.imgur.com/mXCrjjG.png" alt="Герб" class="logo-img"><div class="logo-text"><span class="logo-city">Дубровиця</span><span class="logo-subtitle">Цифровий архів</span></div></a>
@@ -458,6 +468,17 @@ html,body{touch-action:manipulation;}
     </div>
   </div>
   <div class="vbh-sc"><span>Scroll</span><div class="vbh-sc-t"></div></div>
+</section>
+
+<section class="vb-map-sec">
+  <div class="vb-map-wrap">
+    <img src="https://i.imgur.com/UsBqTTF.jpeg" alt="Карта Дубровиці та околиць 1928 р." class="vb-map-img">
+    <div class="vb-map-cap">
+      <span class="vb-map-cap-line"></span>
+      <span class="vb-map-cap-txt">Карта Дубровиці та околиць · 1928 р.</span>
+      <span class="vb-map-cap-line"></span>
+    </div>
+  </div>
 </section>
 
 <section class="vbc">
