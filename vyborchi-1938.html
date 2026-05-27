@@ -272,6 +272,8 @@ html,body{touch-action:manipulation;}
 @media(max-width:700px){.vbr-t .td-n,.vbr-t .td-born{display:none;}.vbr-t td{padding:.7rem .75rem;}.vbr-t thead th{padding:.8rem .75rem .65rem;}}
 @media(max-width:500px){.vbr-t{min-width:unset;}.vbr-t .td-fst{display:none;}}
 @media(max-width:600px){.vbs-grid{grid-template-columns:1fr;}.vbr-hd-row{flex-direction:column;gap:.8rem;}.vbr-bdg{align-self:flex-start;}.vbs-strip{grid-template-columns:repeat(2,1fr);}}
+.vbs-rare-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;}
+@media(max-width:760px){.vbs-rare-grid-3{grid-template-columns:1fr;}}
 
 .vbs-donuts{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-top:1.5rem;}
 @media(max-width:900px){.vbs-donuts{grid-template-columns:1fr 1fr;}}
@@ -372,13 +374,13 @@ html,body{touch-action:manipulation;}
     </div>
     <div class="vbs-strip">
       <div class="vbs-sn"><span class="vbs-sn-n">8 619</span><span class="vbs-sn-l">Всього осіб</span></div>
-      <div class="vbs-sn"><span class="vbs-sn-n">35.7%</span><span class="vbs-sn-l">Рільники</span></div>
-      <div class="vbs-sn"><span class="vbs-sn-n">15.8%</span><span class="vbs-sn-l">Дом. господарство</span></div>
+      <div class="vbs-sn"><span class="vbs-sn-n">48.9%</span><span class="vbs-sn-l">Рільники</span></div>
+      <div class="vbs-sn"><span class="vbs-sn-n">18.3%</span><span class="vbs-sn-l">Дом. господарство</span></div>
       <div class="vbs-sn"><span class="vbs-sn-n">89.1%</span><span class="vbs-sn-l">Місцеві від народж.</span></div>
     </div>
     <div class="vbs-grid">
       <div class="vbs-card"><div class="vbs-chd">Розподіл по населених пунктах</div><div class="vbs-brows" id="vbsVil"></div></div>
-      <div class="vbs-card"><div class="vbs-chd">Рід занять · топ-10</div><div class="vbs-brows" id="vbsProf"></div></div>
+      <div class="vbs-card"><div class="vbs-chd">Рід занять · топ-20</div><div class="vbs-brows" id="vbsProf"></div></div>
       <div class="vbs-card"><div class="vbs-chd">Найпоширеніші прізвища</div><div class="vbs-srows" id="vbsSurn"></div></div>
       <div class="vbs-card">
         <div class="vbs-chd">Хвиля переселення · 922 осіб</div>
@@ -392,6 +394,40 @@ html,body{touch-action:manipulation;}
       </div>
     </div>
 
+      <!-- ЦІКАВІ ПРОФЕСІЇ -->
+      <div class="vbs-rare-hd" style="margin:2.5rem 0 1.2rem;display:flex;align-items:center;gap:.8rem;">
+        <span style="font-family:'DM Sans',sans-serif;font-size:.46rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(201,162,39,.42);">Рідкісне · Незвичайне</span>
+        <div style="flex:1;height:1px;background:linear-gradient(90deg,rgba(201,162,39,.15),transparent);"></div>
+        <span style="font-family:'Cormorant Garamond',serif;font-size:.9rem;font-style:italic;color:rgba(201,162,39,.35);">Топ&#x2011;3 найцікавіші професії</span>
+      </div>
+      <div class="vbs-rare-grid-3" style="margin-bottom:2rem;">
+
+        <div style="background:rgba(201,162,39,.05);border:1px solid rgba(201,162,39,.18);border-radius:16px;padding:1.6rem 1.5rem;position:relative;overflow:hidden;">
+          <div style="position:absolute;top:-.5rem;right:-.5rem;font-size:3.5rem;opacity:.08;pointer-events:none;">🦴</div>
+          <div style="font-size:1.6rem;margin-bottom:.7rem;">🦴</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:500;color:#e8dbb5;margin-bottom:.2rem;">Ракарник</div>
+          <div style="font-family:'DM Sans',sans-serif;font-size:.58rem;color:rgba(201,162,39,.55);letter-spacing:.08em;margin-bottom:.9rem;font-style:italic;">rakarz · 1 особа</div>
+          <div style="font-family:'DM Sans',sans-serif;font-size:.72rem;line-height:1.7;color:rgba(232,219,181,.5);">Найменш престижна, але незамінна посада. <strong style="color:#e8dbb5;">Збирав трупи тварин</strong> з вулиць та полів, утилізовував їх або переробляв на добриво і клей. Санітар міста.</div>
+        </div>
+
+        <div style="background:rgba(120,80,180,.05);border:1px solid rgba(140,90,200,.18);border-radius:16px;padding:1.6rem 1.5rem;position:relative;overflow:hidden;">
+          <div style="position:absolute;top:-.5rem;right:-.5rem;font-size:3.5rem;opacity:.08;pointer-events:none;">🍶</div>
+          <div style="font-size:1.6rem;margin-bottom:.7rem;">🍶</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:500;color:#e8dbb5;margin-bottom:.2rem;">Горілчаний майстер</div>
+          <div style="font-family:'DM Sans',sans-serif;font-size:.58rem;color:rgba(201,162,39,.55);letter-spacing:.08em;margin-bottom:.9rem;font-style:italic;">gorzelniczy · 1 особа</div>
+          <div style="font-family:'DM Sans',sans-serif;font-size:.72rem;line-height:1.7;color:rgba(232,219,181,.5);">Фахівець горілчаного виробництва. <strong style="color:#e8dbb5;">Гуральня</strong> — типове підприємство поміщицьких маєтків Полісся. Виробництво горілки у 1930-х часто підконтрольне єврейським орендарям або шляхті.</div>
+        </div>
+
+        <div style="background:rgba(60,160,80,.05);border:1px solid rgba(60,160,80,.18);border-radius:16px;padding:1.6rem 1.5rem;position:relative;overflow:hidden;">
+          <div style="position:absolute;top:-.5rem;right:-.5rem;font-size:3.5rem;opacity:.08;pointer-events:none;">👒</div>
+          <div style="font-size:1.6rem;margin-bottom:.7rem;">👒</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:500;color:#e8dbb5;margin-bottom:.2rem;">Капелюшниця</div>
+          <div style="font-family:'DM Sans',sans-serif;font-size:.58rem;color:rgba(201,162,39,.55);letter-spacing:.08em;margin-bottom:.9rem;font-style:italic;">kapelusznica · 1 особа</div>
+          <div style="font-family:'DM Sans',sans-serif;font-size:.72rem;line-height:1.7;color:rgba(232,219,181,.5);">Єдина жінка-майстриня на виробництво <strong style="color:#e8dbb5;">модних дамських капелюхів</strong>. Обслуговувала дружин чиновників і заможних торговців. «Міське» ремесло у сільській місцевості.</div>
+        </div>
+
+      </div>
+
       <!-- DONUT CHARTS -->
       <div class="vbs-donuts">
         <!-- Chart 1: Profession breakdown -->
@@ -400,7 +436,7 @@ html,body{touch-action:manipulation;}
           <div class="donut-wrap">
             <div class="donut-svg-wrap">
               <svg class="donut-svg" id="donut1" viewBox="0 0 36 36"></svg>
-              <div class="donut-center"><span class="donut-center-n">6 357</span><span class="donut-center-l">осіб</span></div>
+              <div class="donut-center"><span class="donut-center-n">8 619</span><span class="donut-center-l">осіб</span></div>
             </div>
             <div class="donut-legend" id="legend1"></div>
           </div>
@@ -422,7 +458,7 @@ html,body{touch-action:manipulation;}
           <div class="donut-wrap">
             <div class="donut-svg-wrap">
               <svg class="donut-svg" id="donut3" viewBox="0 0 36 36"></svg>
-              <div class="donut-center"><span class="donut-center-n">89.8%</span><span class="donut-center-l">місцевих</span></div>
+              <div class="donut-center"><span class="donut-center-n">89.1%</span><span class="donut-center-l">місцевих</span></div>
             </div>
             <div class="donut-legend" id="legend3"></div>
           </div>
@@ -642,7 +678,7 @@ fetch('voters.json')
 // ── STATS ─────────────────────────────────────────────────
 (function(){
   var VC={'Берестя':'#c9a227','Заріччя (ст. Дубровиця)':'#5a9e6f','Дубровиця':'#5a7abf','Фільварк Антонін':'#bf6a48','Селець':'#8a6abf'};
-  var PC={'рільник':'#c9a227','домашнє господарство':'#9b72bf','торгівля':'#4a9e60','робітник':'#bf6040','швець':'#8a7a5a','кравець':'#9a6a8a','різник':'#bf5050','вчитель':'#5a7abf','столяр':'#8a7a40','візник':'#6a8a6a'};
+  var PC={'рільник':'#c9a227','домашнє господарство':'#9b72bf','Не вказано':'rgba(255,255,255,0.3)','торгівля':'#4a9e60','робітник':'#bf6040','без професії':'rgba(180,180,180,0.45)','швець':'#8a7a5a','кравець':'#9a6a8a','вчитель':'#5a7abf','різник':'#bf5050','столяр':'#8a7a40','коваль':'#c86420','урядовець':'#4a7aaf','візник':'#6a8a6a','залізничник':'#3a6a9f','браківник':'#7a6a40','шапкар':'#9a7a50','лісник':'#4a8a50','поліцейський':'#3a5a9f','священник':'#9a8060'};
 
   function brows(data,cmap,big,h){
     var es=Object.entries(data).filter(function(kv){return kv[0]&&kv[0]!=='';}).sort(function(a,b){return b[1]-a[1];});
@@ -654,10 +690,54 @@ fetch('voters.json')
     }).join('');
   }
   document.getElementById('vbsVil').innerHTML=brows(STATS.villages,VC,true,7);
-  var pf={};Object.entries(STATS.profs).filter(function(kv){return kv[0]&&kv[0]!=='';}).slice(0,10).forEach(function(kv){
-    var displayKey = kv[0]==='—' ? 'Не вказано (ймовірно рільник/госп.)' : kv[0];
-    pf[displayKey]=kv[1];
+  // Aggregate raw profs (Polish abbrevs + Ukrainian) into canonical names
+  var ABBR={
+    'rol.':'рільник','roln.':'рільник','rol':'рільник','rolnik':'рільник','Rolnik':'рільник',
+    'rol. (rolnik)':'рільник','roln. (селянин)':'рільник','l. roln.':'рільник','agronom':'рільник',
+    'gosp.':'домашнє господарство','gosp. dom.':'домашнє господарство','gosp.dom.':'домашнє господарство',
+    'gosp. dom':'домашнє господарство','gosp.dom':'домашнє господарство',
+    'gosp. dom. (домогосп.)':'домашнє господарство','gospod.':'домашнє господарство',
+    'gobp.':'домашнє господарство','g s.':'домашнє господарство',
+    'gosp. (gospodyni)':'домашнє господарство','при родині':'домашнє господарство',
+    'przy rodz.':'домашнє господарство','przy mężu':'домашнє господарство','przy mezu':'домашнє господарство',
+    'hand.':'торгівля','handel':'торгівля','handl.':'торгівля','handlarz':'торгівля',
+    'handlarz (торговець)':'торгівля','hand. (handlarz)':'торгівля','купець':'торгівля',
+    'robot.':'робітник','rob.':'робітник','robotnik':'робітник','robotn.':'робітник',
+    'pracownik':'робітник','robot. (робітник)':'робітник',
+    'szewc':'швець','чоботар':'швець','халявник':'швець','kamaszni':'швець',
+    'krawiec':'кравець','kraw.':'кравець',
+    'rzeźnik':'різник','rzeznik':'різник',"м'ясник":"різник",
+    'naucz.':'вчитель','naucz. relig.':'вчитель','naucz. (nauczyciel)':'вчитель','вчителька':'вчитель',
+    'stolarz':'столяр',
+    'kowal':'коваль',
+    'cieśla':'тесля','cieśla (тесляр)':'тесля',
+    'urzednik':'урядовець','Urzednik Panstwowy':'урядовець','канцелярист':'урядовець',
+    'писар':'урядовець','службовець':'урядовець','діловод':'урядовець',
+    'brakarz':'браківник',
+    'czapnik':'шапкар','czapni':'шапкар',
+    'gajowy':'лісник','lesniczy':'лісник','nadleśn.':'лісник','nadleśn. (лісничий)':'лісник','podlesniczy':'лісник',
+    'policjant':'поліцейський','poster. P.P.':'поліцейський','kom. p.p.':'поліцейський',
+    'ksiądz':'священник','rabin':'священник','rabin duch':'священник',
+    'fryzjer':'перукар',
+    'blacharz':'бляхар',
+    'murarz':'муляр',
+    'młynarz':'мельник','młyn.':'мельник','młynarz (мірошник)':'мельник',
+    'piekarz':'пекар',
+    'dorożkarz':'візник','doroż. (dorożkarz)':'візник','фурман':'візник',
+    '-':'без професії','brak zaw.':'без професії','bez zawodu':'без професії','[brak zaw.]':'без професії',
+    '—':'Не вказано'
+  };
+  var aggPf={};
+  Object.entries(STATS.profs).forEach(function(kv){
+    var raw=kv[0],cnt=kv[1];
+    if(raw===''||raw===null||raw===undefined)return;
+    var canon=ABBR[raw]||(raw===''?null:raw);
+    if(!canon)return;
+    aggPf[canon]=(aggPf[canon]||0)+cnt;
   });
+  var pfEntries=Object.entries(aggPf).sort(function(a,b){return b[1]-a[1];}).slice(0,20);
+  var pf={};
+  pfEntries.forEach(function(kv){pf[kv[0]]=kv[1];});
   document.getElementById('vbsProf').innerHTML=brows(pf,PC,false,5);
   var sE=Object.entries(STATS.surnames).sort(function(a,b){return b[1]-a[1];});
   var mxS=sE[0][1],sH='';
@@ -793,14 +873,14 @@ fetch('voters.json')
     leg.innerHTML=legH;
   }
 
-  // Chart 1 — Professions
+  // Chart 1 — Professions (aggregated, including Polish abbreviations)
   var profSegs=[
-    {label:"Рільник",v:3079,color:"#c9a227"},
-    {label:"Дом. господарство",v:1359,color:"#9b72bf"},
+    {label:"Рільник",v:4217,color:"#c9a227"},
+    {label:"Дом. господарство",v:1579,color:"#9b72bf"},
     {label:"Не вказано",v:1721,color:"rgba(255,255,255,0.18)"},
-    {label:"Торгівля",v:296,color:"#4a9e60"},
-    {label:"Робітник",v:182,color:"#bf6040"},
-    {label:"Інші",v:1982,color:"rgba(201,162,39,0.35)"},
+    {label:"Торгівля",v:370,color:"#4a9e60"},
+    {label:"Робітник",v:244,color:"#bf6040"},
+    {label:"Інші",v:488,color:"rgba(201,162,39,0.35)"},
   ];
   drawDonut('donut1','legend1',profSegs);
 
