@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="uk" data-theme="light">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WGBZ0BD23K"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WGBZ0BD23K');</script>
+<meta charset="UTF-8">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="manifest" href="site.webmanifest">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Список виборців 1938 — Дубровиця</title>
+<meta name="description" content="Список виборців Дубровиці 1938 — 6 357 записів, 60+ професій, Фонд 263 ДАРО">
+<script>!function(){document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')||'light')}()</script>
+<link rel="stylesheet" href="app.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{touch-action:manipulation;}
+#vbProg{position:fixed;top:0;left:0;z-index:9999;height:2px;width:0%;background:linear-gradient(90deg,#5a3800,#c9a227,#5a3800);transition:width .06s linear;pointer-events:none;box-shadow:0 0 10px rgba(201,162,39,.6);}
+/* HERO */
+.vbh{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;background:#050302;}
+.vbh-bg{position:absolute;inset:0;background:url('https://i.imgur.com/wsXwXHc.jpeg') center 35%/cover no-repeat;opacity:0;transform:scale(1.07);transition:opacity 1.2s ease,transform 18s ease-out;}
+.vbh.loaded .vbh-bg{opacity:1;transform:scale(1);}
+.vbh-grade{position:absolute;inset:0;background:linear-gradient(155deg,rgba(3,2,1,.92) 0%,rgba(3,2,1,.72) 45%,rgba(3,2,1,.88) 100%),linear-gradient(0deg,#050302 0%,rgba(5,3,2,.7) 35%,transparent 62%);}
+.vbh-grain{position:absolute;inset:-50px;width:calc(100% + 100px);height:calc(100% + 100px);opacity:.04;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");background-size:200px;animation:grain .5s steps(1) infinite;}
+@keyframes grain{0%{transform:translate(0,0)}20%{transform:translate(-5px,-5px)}40%{transform:translate(5px,4px)}60%{transform:translate(-4px,6px)}80%{transform:translate(6px,-3px)}100%{transform:translate(2px,-6px)}}
+.vbh-rul{position:absolute;inset:0;background:repeating-linear-gradient(180deg,transparent 0,transparent 28px,rgba(201,162,39,.015) 28px,rgba(201,162,39,.015) 29px);}
+.vbh-c{position:relative;z-index:10;padding:0 3rem 5rem;max-width:1200px;width:100%;}
+@media(max-width:680px){.vbh-c{padding:0 1.4rem 4rem;}}
+.vbh-yr{font-family:'Cormorant Garamond',serif;font-size:clamp(5rem,12vw,11rem);font-weight:300;line-height:.82;letter-spacing:-.05em;color:rgba(201,162,39,.88);opacity:0;animation:up .9s cubic-bezier(.16,1,.3,1) .1s forwards;}
+.vbh-ti{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4.5vw,4rem);font-weight:300;line-height:1.05;letter-spacing:-.022em;color:#fff;margin-top:.2rem;opacity:0;animation:up 1s cubic-bezier(.16,1,.3,1) .28s forwards;}
+.vbh-ti em{font-style:italic;color:rgba(255,255,255,.5);}
+.vbh-rl{display:flex;align-items:center;gap:.8rem;margin:1.6rem 0 1.5rem;opacity:0;animation:up .8s cubic-bezier(.16,1,.3,1) .42s forwards;max-width:460px;}
+.vbh-rl-l{flex:1;height:1px;background:linear-gradient(90deg,rgba(201,162,39,.45),transparent);}
+.vbh-rl-d{width:5px;height:5px;background:rgba(201,162,39,.55);transform:rotate(45deg);flex-shrink:0;}
+.vbh-meta{display:flex;flex-wrap:wrap;gap:.5rem;opacity:0;animation:up .8s cubic-bezier(.16,1,.3,1) .5s forwards;}
+.vbh-tag{font-family:'DM Sans',sans-serif;font-size:.6rem;letter-spacing:.09em;padding:.38rem 1rem;border:1px solid rgba(201,162,39,.2);border-radius:100px;color:rgba(255,255,255,.45);background:rgba(0,0,0,.3);backdrop-filter:blur(8px);}
+.vbh-tag b{color:#c9a227;font-weight:600;}
+.vbh-stats{display:flex;flex-wrap:wrap;gap:0;margin-top:2.8rem;opacity:0;animation:up .8s cubic-bezier(.16,1,.3,1) .6s forwards;}
+.vbh-st{padding:1rem 2rem 1rem 0;margin-right:2rem;border-right:1px solid rgba(201,162,39,.12);}
+.vbh-st:last-child{border:none;margin-right:0;}
+.vbh-stn{display:block;font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:300;color:#c9a227;line-height:1;letter-spacing:-.03em;}
+.vbh-stl{display:block;font-family:'DM Sans',sans-serif;font-size:.43rem;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.22);margin-top:.3rem;}
+.vbh-sc{position:absolute;right:2.5rem;bottom:2.5rem;z-index:10;display:flex;flex-direction:column;align-items:center;gap:.5rem;opacity:0;animation:fadein 1s ease 1.6s forwards;}
+.vbh-sc span{font-family:'DM Sans',sans-serif;font-size:.4rem;letter-spacing:.38em;text-transform:uppercase;color:rgba(255,255,255,.18);writing-mode:vertical-lr;}
+.vbh-sc-t{width:1px;height:44px;background:linear-gradient(180deg,rgba(201,162,39,.45),transparent);animation:drip 2.4s ease-in-out infinite;}
+@keyframes drip{0%,100%{opacity:.3;transform:scaleY(1)}50%{opacity:1;transform:scaleY(.4) translateY(16px)}}
+@keyframes up{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+@media(max-width:600px){.vbh-st{padding:.8rem 1.2rem .8rem 0;margin-right:1.2rem;}}
+/* CONTEXT */
+.vbc{background:#050302;padding:4rem 0;border-bottom:1px solid rgba(201,162,39,.07);}
+.vbc-in{max-width:1280px;margin:0 auto;padding:0 2.5rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem;}
+@media(max-width:640px){.vbc-in{padding:0 1.2rem;gap:1rem;grid-template-columns:1fr;}}
+.vbc-card{background:rgba(255,255,255,.025);border:1px solid rgba(201,162,39,.09);border-radius:16px;padding:1.8rem 2rem;display:flex;gap:1.1rem;align-items:flex-start;transition:border-color .3s,box-shadow .3s;}
+.vbc-card:hover{border-color:rgba(201,162,39,.2);box-shadow:0 12px 40px rgba(0,0,0,.3);}
+.vbc-ico{width:38px;height:38px;border-radius:10px;background:rgba(201,162,39,.09);border:1px solid rgba(201,162,39,.14);display:flex;align-items:center;justify-content:center;font-size:1.05rem;flex-shrink:0;margin-top:.1rem;}
+.vbc-ttl{font-family:'Cormorant Garamond',serif;font-size:1.08rem;font-weight:500;color:#e8dbb5;margin-bottom:.4rem;}
+.vbc-txt{font-family:'DM Sans',sans-serif;font-size:.75rem;line-height:1.7;color:rgba(232,219,181,.42);}
+.vbc-txt em{color:rgba(201,162,39,.68);font-style:normal;}
+/* STATS */
+.vbs{background:#050302;padding:5.5rem 0 6.5rem;position:relative;overflow:hidden;}
+.vbs::before{content:'';position:absolute;top:-15%;left:50%;transform:translateX(-50%);width:900px;height:500px;background:radial-gradient(ellipse,rgba(201,162,39,.04) 0%,transparent 65%);pointer-events:none;z-index:0;}
+.vbs-in{max-width:1280px;margin:0 auto;padding:0 2.5rem;position:relative;z-index:1;}
+@media(max-width:640px){.vbs-in{padding:0 1.2rem;}}
+.sec-hd{text-align:center;margin-bottom:3.5rem;}
+.sec-hd-ey{display:flex;align-items:center;justify-content:center;gap:1rem;margin-bottom:1rem;}
+.sec-hd-ey::before,.sec-hd-ey::after{content:'';display:block;width:44px;height:1px;background:rgba(201,162,39,.2);}
+.sec-hd-ey span{font-family:'DM Sans',sans-serif;font-size:.47rem;letter-spacing:.36em;text-transform:uppercase;color:rgba(201,162,39,.4);}
+.sec-hd-ti{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,4.5vw,3.8rem);font-weight:300;color:#e8dbb5;letter-spacing:-.03em;line-height:.92;}
+.sec-hd-ti em{font-style:italic;color:#c9a227;}
+/* STRIP */
+.vbs-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(201,162,39,.07);border-radius:18px;overflow:hidden;margin-bottom:2rem;border:1px solid rgba(201,162,39,.07);}
+@media(max-width:680px){.vbs-strip{grid-template-columns:repeat(2,1fr);}}
+.vbs-sn{background:#050302;padding:1.8rem 1.5rem;text-align:center;}
+.vbs-sn-n{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,3.5vw,3rem);font-weight:300;color:#c9a227;line-height:1;display:block;letter-spacing:-.03em;}
+.vbs-sn-l{font-family:'DM Sans',sans-serif;font-size:.44rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.2);display:block;margin-top:.45rem;}
+/* GRID */
+.vbs-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+@media(max-width:900px){.vbs-grid{grid-template-columns:1fr;}}
+.vbs-card{background:rgba(255,255,255,.02);border:1px solid rgba(201,162,39,.09);border-radius:18px;padding:2rem 2.2rem;transition:border-color .3s,box-shadow .3s;}
+@media(max-width:640px){.vbs-card{padding:1.5rem 1.4rem;}}
+.vbs-card:hover{border-color:rgba(201,162,39,.16);box-shadow:0 24px 60px rgba(0,0,0,.4);}
+.vbs-chd{font-family:'DM Sans',sans-serif;font-size:.46rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(201,162,39,.42);margin-bottom:1.6rem;display:flex;align-items:center;gap:.8rem;}
+.vbs-chd::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,rgba(201,162,39,.12),transparent);}
+.vbs-brows{display:flex;flex-direction:column;gap:1rem;}
+.vbs-brow{display:grid;grid-template-columns:1fr auto;align-items:center;gap:1.2rem;}
+.vbs-bl{display:flex;flex-direction:column;gap:.38rem;}
+.vbs-bname{font-family:'DM Sans',sans-serif;font-size:.7rem;color:rgba(232,219,181,.62);}
+.vbs-bname.big{font-family:'Cormorant Garamond',serif;font-size:.95rem;color:#e8dbb5;}
+.vbs-btrk{background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden;}
+.vbs-bfil{border-radius:3px;width:0;transition:width 1.2s cubic-bezier(.16,1,.3,1);}
+.vbs-bnum{font-family:'DM Sans',sans-serif;font-size:.67rem;color:rgba(201,162,39,.48);text-align:right;flex-shrink:0;min-width:34px;}
+.vbs-srows{display:flex;flex-direction:column;gap:.7rem;}
+.vbs-srow-item{display:grid;grid-template-columns:1fr auto;align-items:center;gap:1.1rem;}
+.vbs-sl{display:flex;flex-direction:column;gap:.32rem;}
+.vbs-sname{font-family:'Cormorant Garamond',serif;font-size:.98rem;color:#e8dbb5;}
+.vbs-strk{height:4px;background:rgba(255,255,255,.04);border-radius:2px;overflow:hidden;}
+.vbs-sfil{height:100%;border-radius:2px;width:0;min-width:4px;transition:width 1.15s cubic-bezier(.16,1,.3,1);}
+.vbs-snum{font-family:'DM Sans',sans-serif;font-size:.65rem;color:rgba(201,162,39,.45);text-align:right;flex-shrink:0;}
+/* ARRIVALS */
+.vbs-osad{background:rgba(201,162,39,.04);border:1px solid rgba(201,162,39,.1);border-radius:10px;padding:1rem 1.2rem;margin-bottom:1.5rem;}
+.vbs-osad-ti{font-family:'Cormorant Garamond',serif;font-size:.95rem;font-weight:500;color:#c9a227;margin-bottom:.4rem;}
+.vbs-osad-tx{font-family:'DM Sans',sans-serif;font-size:.72rem;line-height:1.65;color:rgba(232,219,181,.45);}
+.vbs-osad-tx em{color:rgba(201,162,39,.7);font-style:normal;}
+.arr-dec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin-bottom:1.5rem;}
+@media(max-width:540px){.arr-dec-grid{grid-template-columns:repeat(2,1fr);}}
+.arr-dec-cell{background:rgba(255,255,255,.03);border:1px solid rgba(201,162,39,.1);border-radius:12px;padding:1rem;text-align:center;}
+.arr-dec-cell.peak{background:rgba(201,162,39,.08);border-color:rgba(201,162,39,.28);}
+.arr-dec-yr{font-family:'Cormorant Garamond',serif;font-size:.78rem;font-style:italic;color:rgba(201,162,39,.5);display:block;margin-bottom:.3rem;}
+.arr-dec-n{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:#e8dbb5;line-height:1;display:block;}
+.arr-dec-cell.peak .arr-dec-n{color:#c9a227;}
+.arr-dec-sub{font-family:'DM Sans',sans-serif;font-size:.48rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.22);display:block;margin-top:.3rem;}
+.arr-dec-bar{height:3px;background:rgba(255,255,255,.06);border-radius:2px;margin-top:.7rem;overflow:hidden;}
+.arr-dec-fill{height:100%;background:linear-gradient(90deg,rgba(201,162,39,.4),rgba(201,162,39,.7));border-radius:2px;width:0;min-width:3px;transition:width 1.2s cubic-bezier(.16,1,.3,1);}
+.arr-top-hd{font-family:'DM Sans',sans-serif;font-size:.48rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(201,162,39,.4);margin-bottom:.9rem;}
+.arr-top-rows{display:flex;flex-direction:column;gap:.55rem;}
+.arr-top-row{display:grid;grid-template-columns:40px 1fr 28px;align-items:center;gap:.8rem;}
+.arr-top-yr{font-family:'DM Sans',sans-serif;font-size:.65rem;font-weight:600;color:rgba(201,162,39,.65);text-align:right;}
+.arr-top-bar{height:8px;background:rgba(255,255,255,.05);border-radius:4px;overflow:hidden;}
+.arr-top-fill{height:100%;background:linear-gradient(90deg,rgba(201,162,39,.35),rgba(201,162,39,.7));border-radius:4px;width:0;min-width:4px;transition:width 1.1s cubic-bezier(.16,1,.3,1);}
+.arr-top-fill.t1{background:linear-gradient(90deg,#8b6010,#c9a227);}
+.arr-top-n{font-family:'DM Sans',sans-serif;font-size:.62rem;color:rgba(201,162,39,.5);text-align:right;}
+
+/* ══ PROFESSION GLOSSARY ══════════════════════════════════ */
+.vbg{background:var(--color-bg,#faf7f2);padding:6rem 0 7rem;position:relative;}
+[data-theme="dark"] .vbg{background:#0a0805;}
+.vbg-in{max-width:1340px;margin:0 auto;padding:0 2.5rem;}
+@media(max-width:640px){.vbg-in{padding:0 1rem;}}
+.vbg-sec-hd .sec-hd-ey::before,.vbg-sec-hd .sec-hd-ey::after{background:rgba(201,162,39,.18);}
+.vbg-sec-hd .sec-hd-ti{color:var(--color-text,#1a1000);}
+[data-theme="dark"] .vbg-sec-hd .sec-hd-ti{color:#e8dbb5;}
+/* Filter bar */
+.vbg-filters{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2.5rem;justify-content:center;}
+.vbg-fp{display:inline-flex;align-items:center;gap:.45rem;font-family:'DM Sans',sans-serif;font-size:.62rem;font-weight:500;padding:.44rem .95rem;border-radius:100px;cursor:pointer;border:1.5px solid rgba(201,162,39,.18);background:transparent;color:var(--color-text-secondary,#5a4a2e);transition:all .22s;white-space:nowrap;}
+.vbg-fp:hover{border-color:rgba(201,162,39,.45);background:rgba(201,162,39,.07);color:var(--color-text,#1a1000);}
+.vbg-fp.on{background:linear-gradient(135deg,#c9a227,#9d7b0c);color:#0a0805;border-color:transparent;font-weight:700;box-shadow:0 4px 18px rgba(201,162,39,.28);}
+[data-theme="dark"] .vbg-fp{background:rgba(255,255,255,.05);color:rgba(255,255,255,.6);border-color:rgba(255,255,255,.1);}
+[data-theme="dark"] .vbg-fp.on{background:linear-gradient(135deg,#c9a227,#9d7b0c);color:#0a0805;border-color:transparent;}
+/* Cards grid */
+.vbg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.2rem;}
+@media(max-width:480px){.vbg-grid{grid-template-columns:1fr;}}
+.vbg-card{background:var(--color-bg-card,#fcf9f2);border:1px solid rgba(201,162,39,.12);border-radius:16px;padding:1.6rem;display:flex;flex-direction:column;gap:0;transition:border-color .25s,box-shadow .25s,transform .25s;cursor:default;position:relative;overflow:hidden;}
+.vbg-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(201,162,39,.25),transparent);opacity:0;transition:opacity .25s;}
+.vbg-card:hover{border-color:rgba(201,162,39,.3);box-shadow:0 12px 40px rgba(0,0,0,.1);transform:translateY(-2px);}
+.vbg-card:hover::before{opacity:1;}
+[data-theme="dark"] .vbg-card{background:#0f0d0a;border-color:rgba(201,162,39,.1);}
+[data-theme="dark"] .vbg-card:hover{box-shadow:0 12px 40px rgba(0,0,0,.4);}
+.vbg-card-top{display:flex;align-items:center;gap:1rem;margin-bottom:1rem;}
+.vbg-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;background:rgba(201,162,39,.08);border:1px solid rgba(201,162,39,.15);}
+.vbg-card-titles{flex:1;min-width:0;}
+.vbg-prof-name{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:500;color:var(--color-text,#1a1000);line-height:1.15;}
+[data-theme="dark"] .vbg-prof-name{color:#e8dbb5;}
+.vbg-prof-pl{font-family:'DM Sans',sans-serif;font-size:.62rem;color:rgba(201,162,39,.6);margin-top:.15rem;}
+.vbg-badge{font-family:'DM Sans',sans-serif;font-size:.55rem;font-weight:700;letter-spacing:.06em;padding:.22rem .65rem;border-radius:100px;background:rgba(201,162,39,.12);color:#c9a227;border:1px solid rgba(201,162,39,.2);white-space:nowrap;flex-shrink:0;}
+.vbg-divider{height:1px;background:linear-gradient(90deg,rgba(201,162,39,.15),transparent);margin-bottom:1rem;}
+.vbg-short{font-family:'Cormorant Garamond',serif;font-size:.92rem;font-style:italic;color:var(--color-text-light,#8b6f3e);margin-bottom:.75rem;line-height:1.4;}
+.vbg-desc{font-family:'DM Sans',sans-serif;font-size:.75rem;line-height:1.72;color:var(--color-text-muted,#a89880);}
+.vbg-desc strong{color:var(--color-text,#1a1000);font-weight:600;}
+[data-theme="dark"] .vbg-desc strong{color:#e8dbb5;}
+.vbg-desc em{color:rgba(201,162,39,.75);font-style:italic;}
+.vbg-empty-msg{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-style:italic;color:rgba(201,162,39,.35);text-align:center;padding:3rem 1rem;grid-column:1/-1;}
+
+/* REGISTRY */
+.vbr{background:var(--color-bg,#faf7f2);padding:5rem 0 7rem;position:relative;}
+[data-theme="dark"] .vbr{background:#0a0805;}
+.vbr-in{max-width:1400px;margin:0 auto;padding:0 2.5rem;position:relative;z-index:1;}
+@media(max-width:640px){.vbr-in{padding:0 1rem;}}
+.vbr-hd{margin-bottom:2.5rem;}
+.vbr-hd-sup{font-family:'DM Sans',sans-serif;font-size:.47rem;letter-spacing:.34em;text-transform:uppercase;color:rgba(201,162,39,.5);margin-bottom:.7rem;}
+.vbr-hd-row{display:flex;align-items:flex-start;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;}
+.vbr-hd-ti{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,4.5vw,3.5rem);font-weight:300;letter-spacing:-.03em;line-height:.9;color:var(--color-text,#1a1000);}
+.vbr-hd-ti em{font-style:italic;color:#c9a227;}
+[data-theme="dark"] .vbr-hd-ti{color:#e8dbb5;}
+.vbr-hd-sub{font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;color:var(--color-text-light,#8b6f3e);margin-top:.55rem;}
+.vbr-bdg{background:linear-gradient(135deg,#c9a227,#a07c10);color:#0a0805;font-family:'DM Sans',sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.07em;padding:.6rem 1.3rem;border-radius:100px;white-space:nowrap;flex-shrink:0;box-shadow:0 4px 20px rgba(201,162,39,.22);}
+.vbr-tabs{display:flex;border-bottom:2px solid rgba(201,162,39,.1);margin-bottom:1.6rem;overflow-x:auto;scrollbar-width:none;}
+.vbr-tabs::-webkit-scrollbar{display:none;}
+.vbr-tab{font-family:'DM Sans',sans-serif;font-size:.6rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;padding:.7rem 1.6rem;cursor:pointer;border:none;background:transparent;color:var(--color-text-muted,#a89880);border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .22s;white-space:nowrap;flex-shrink:0;}
+.vbr-tab:hover{color:var(--color-text,#1a1000);}
+.vbr-tab.on{color:#c9a227;border-bottom-color:#c9a227;font-weight:700;}
+[data-theme="dark"] .vbr-tab:hover{color:#e8dbb5;}
+.vbr-fp{display:flex;flex-wrap:wrap;gap:.5rem;padding:.4rem 0 1.5rem;}
+.fp{display:inline-flex;align-items:center;gap:.45rem;font-family:'DM Sans',sans-serif;font-size:.63rem;font-weight:500;padding:.46rem 1rem;border-radius:100px;cursor:pointer;border:1.5px solid rgba(201,162,39,.15);background:transparent;color:var(--color-text-secondary,#5a4a2e);transition:all .22s cubic-bezier(.16,1,.3,1);white-space:nowrap;}
+.fp:hover{border-color:rgba(201,162,39,.38);background:rgba(201,162,39,.07);color:var(--color-text,#1a1000);}
+.fp.on{background:linear-gradient(135deg,#c9a227,#9d7b0c);color:#0a0805;border-color:transparent;font-weight:700;box-shadow:0 4px 18px rgba(201,162,39,.28);}
+.fp-ic{font-size:.82em;}
+.fp-ct{font-size:.55rem;opacity:.65;margin-left:.1rem;}
+[data-theme="dark"] .fp{background:rgba(255,255,255,.05);color:rgba(255,255,255,.58);border-color:rgba(255,255,255,.1);}
+[data-theme="dark"] .fp.on{background:linear-gradient(135deg,#c9a227,#9d7b0c);color:#0a0805;border-color:transparent;}
+.vbr-sw{position:relative;margin-bottom:1rem;}
+.vbr-sico{position:absolute;left:1rem;top:50%;transform:translateY(-50%);color:rgba(201,162,39,.38);pointer-events:none;}
+.vbr-si{width:100%;padding:.82rem 1rem .82rem 2.8rem;background:var(--color-bg-card,#fcf9f2);border:1.5px solid rgba(201,162,39,.16);border-radius:14px;font-family:'DM Sans',sans-serif;font-size:.8rem;color:var(--color-text,#1a1000);outline:none;transition:border-color .25s,box-shadow .25s;box-sizing:border-box;}
+.vbr-si::placeholder{color:rgba(138,111,62,.42);}
+.vbr-si:focus{border-color:rgba(201,162,39,.48);box-shadow:0 0 0 4px rgba(201,162,39,.08);}
+[data-theme="dark"] .vbr-si{background:#100d09;color:#e8dbb5;border-color:rgba(201,162,39,.13);}
+.vbr-ib{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.8rem;padding:.65rem 1.3rem;background:var(--color-bg-card,#fcf9f2);border:1px solid rgba(201,162,39,.09);border-radius:10px;margin-bottom:1.2rem;}
+[data-theme="dark"] .vbr-ib{background:#100d09;}
+.vbr-ib-c{font-family:'DM Sans',sans-serif;font-size:.73rem;color:var(--color-text-muted,#a89880);}
+.vbr-ib-c strong{color:#c9a227;font-weight:700;}
+.vbr-ib-p{font-family:'DM Sans',sans-serif;font-size:.68rem;color:var(--color-text-muted,#a89880);}
+/* TABLE */
+.vbr-tw{position:relative;border-radius:20px;overflow:hidden;isolation:isolate;box-shadow:0 24px 70px rgba(0,0,0,.28);}
+.vbr-tw-bg{position:absolute;inset:0;background:#0d0b08;z-index:0;}
+.vbr-t-wrap{position:relative;z-index:1;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.vbr-t{width:100%;border-collapse:collapse;min-width:640px;}
+.vbr-t thead{background:#0d0b08;}
+.vbr-t thead th{font-family:'DM Sans',sans-serif;font-size:.44rem;letter-spacing:.28em;text-transform:uppercase;font-weight:600;color:rgba(201,162,39,.42);padding:1rem 1.1rem .85rem;border-bottom:1px solid rgba(201,162,39,.1);text-align:left;white-space:nowrap;cursor:pointer;user-select:none;transition:color .2s;background:#0d0b08;}
+.vbr-t thead th:hover{color:rgba(201,162,39,.75);}
+.vbr-t thead th .si{display:inline-block;margin-left:.3em;opacity:.28;transition:opacity .2s,transform .2s;}
+.vbr-t thead th.sa .si{opacity:1;transform:rotate(180deg);}
+.vbr-t thead th.sd .si{opacity:1;}
+.vbr-t tbody{background:#0d0b08;}
+.vbr-t tbody tr{border-bottom:1px solid rgba(201,162,39,.06);transition:background .14s;}
+.vbr-t tbody tr:last-child{border-bottom:none;}
+.vbr-t tbody tr:hover{background:rgba(201,162,39,.04);}
+.vbr-t td{padding:.82rem 1.1rem;vertical-align:top;background:transparent;}
+.td-n{font-family:'Cormorant Garamond',serif;font-size:.78rem;color:rgba(201,162,39,.3);white-space:nowrap;}
+.td-sur{font-family:'Cormorant Garamond',serif;font-size:1rem;color:#e8dbb5;white-space:nowrap;font-weight:400;}
+.td-sur mark{background:rgba(201,162,39,.22);color:#e8dbb5;border-radius:2px;padding:0 2px;}
+.td-fst{font-family:'Cormorant Garamond',serif;font-size:.95rem;color:rgba(232,219,181,.7);white-space:nowrap;}
+.td-fst mark{background:rgba(201,162,39,.2);color:rgba(232,219,181,.9);border-radius:2px;padding:0 2px;}
+.td-born{font-family:'DM Sans',sans-serif;font-size:.68rem;color:rgba(232,219,181,.45);white-space:nowrap;}
+.td-prof .pp{display:inline-block;padding:.13rem .48rem;border-radius:100px;font-family:'DM Sans',sans-serif;font-size:.56rem;font-weight:500;white-space:nowrap;letter-spacing:.04em;}
+.pp-ril{background:rgba(201,162,39,.1);color:rgba(201,162,39,.7);border:1px solid rgba(201,162,39,.16);}
+.pp-rob{background:rgba(180,80,60,.12);color:rgba(230,130,100,.75);border:1px solid rgba(180,80,60,.2);}
+.pp-hnd{background:rgba(60,160,80,.12);color:rgba(100,200,120,.75);border:1px solid rgba(60,160,80,.2);}
+.pp-gsp{background:rgba(140,100,160,.12);color:rgba(195,155,215,.75);border:1px solid rgba(140,100,160,.2);}
+.pp-zal{background:rgba(60,100,190,.12);color:rgba(110,155,235,.75);border:1px solid rgba(60,100,190,.2);}
+.pp-oth{background:rgba(120,130,120,.1);color:rgba(170,180,160,.7);border:1px solid rgba(120,130,120,.16);}
+.td-addr{font-family:'DM Sans',sans-serif;font-size:.66rem;color:rgba(232,219,181,.38);line-height:1.45;max-width:135px;}
+.td-src .src-p{display:inline-block;padding:.1rem .44rem;border-radius:4px;font-family:'DM Sans',sans-serif;font-size:.53rem;font-weight:700;letter-spacing:.06em;}
+.src-1{background:rgba(201,162,39,.1);color:rgba(201,162,39,.6);}
+.src-2{background:rgba(100,160,220,.1);color:rgba(140,190,240,.65);}
+.src-3{background:rgba(100,180,120,.1);color:rgba(130,210,150,.65);}.src-4{background:rgba(180,120,60,.1);color:rgba(220,160,80,.65);}
+.td-village .vp{display:inline-block;padding:.17rem .55rem;border-radius:100px;font-family:'DM Sans',sans-serif;font-size:.57rem;font-weight:500;letter-spacing:.05em;white-space:nowrap;}
+.vp-b{background:rgba(201,162,39,.12);color:rgba(201,162,39,.75);border:1px solid rgba(201,162,39,.18);}
+.vp-z{background:rgba(72,132,90,.12);color:rgba(130,200,150,.75);border:1px solid rgba(72,132,90,.22);}
+.vp-d{background:rgba(80,100,180,.12);color:rgba(140,165,230,.75);border:1px solid rgba(80,100,180,.22);}
+.vp-a{background:rgba(180,80,60,.12);color:rgba(225,140,110,.75);border:1px solid rgba(180,80,60,.22);}
+.vp-s{background:rgba(120,80,180,.12);color:rgba(180,155,225,.75);border:1px solid rgba(120,80,180,.22);}
+.td-since{font-family:'DM Sans',sans-serif;font-size:.64rem;color:rgba(232,219,181,.32);white-space:nowrap;}
+.vbr-empty{padding:5rem 1rem;text-align:center;font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-style:italic;color:rgba(201,162,39,.28);background:#0d0b08;}
+.vbr-pag{display:flex;align-items:center;justify-content:center;gap:.4rem;margin-top:2rem;flex-wrap:wrap;}
+.pg{min-width:36px;height:36px;padding:0 .5rem;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-size:.7rem;font-weight:500;cursor:pointer;border:1px solid rgba(201,162,39,.14);background:var(--color-bg-card,#fcf9f2);color:var(--color-text-secondary,#5a4a2e);transition:all .2s;flex-shrink:0;}
+.pg:hover:not(:disabled){background:rgba(201,162,39,.09);border-color:rgba(201,162,39,.35);color:#c9a227;}
+.pg.on{background:linear-gradient(135deg,#c9a227,#9d7b0c);color:#0a0805;border-color:transparent;font-weight:700;box-shadow:0 4px 16px rgba(201,162,39,.25);}
+.pg:disabled{opacity:.22;cursor:not-allowed;}
+.pg-dots{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--color-text-muted,#a89880);padding:0 .2rem;}
+[data-theme="dark"] .pg{background:#100d09;color:rgba(232,219,181,.42);border-color:rgba(201,162,39,.09);}
+[data-theme="dark"] .pg.on{background:linear-gradient(135deg,#c9a227,#9d7b0c);color:#0a0805;}
+.vbr-note{font-family:'DM Sans',sans-serif;font-size:.7rem;color:var(--color-text-muted,#a89880);text-align:center;margin-top:2.8rem;line-height:1.8;}
+.vbr-note a{color:#c9a227;text-decoration:none;}
+.sbdg{display:inline-block;padding:.1rem .44rem;border-radius:4px;font-size:.6rem;font-weight:700;letter-spacing:.04em;margin:0 .1rem;}
+.sb1{background:rgba(201,162,39,.12);color:rgba(201,162,39,.8);}
+.sb2{background:rgba(100,160,220,.12);color:rgba(140,190,240,.8);}
+.sb3{background:rgba(100,180,120,.12);color:rgba(130,210,150,.8);}.sb4{background:rgba(180,120,60,.12);color:rgba(220,160,80,.8);}
+@media(max-width:1200px){.vbr-t .td-since{display:none;}}
+@media(max-width:960px){.vbr-t .td-addr,.vbr-t .td-src{display:none;}}
+@media(max-width:700px){.vbr-t .td-n,.vbr-t .td-born{display:none;}.vbr-t td{padding:.7rem .75rem;}.vbr-t thead th{padding:.8rem .75rem .65rem;}}
+@media(max-width:500px){.vbr-t{min-width:unset;}.vbr-t .td-fst{display:none;}}
+@media(max-width:600px){.vbs-grid{grid-template-columns:1fr;}.vbr-hd-row{flex-direction:column;gap:.8rem;}.vbr-bdg{align-self:flex-start;}.vbs-strip{grid-template-columns:repeat(2,1fr);}}
+
+.vbs-donuts{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-top:1.5rem;}
+@media(max-width:900px){.vbs-donuts{grid-template-columns:1fr 1fr;}}
+@media(max-width:560px){.vbs-donuts{grid-template-columns:1fr;}}
+.vbs-donut-card{background:rgba(255,255,255,.02);border:1px solid rgba(201,162,39,.09);border-radius:18px;padding:1.5rem 1.6rem;transition:border-color .3s,box-shadow .3s;}
+.vbs-donut-card:hover{border-color:rgba(201,162,39,.16);box-shadow:0 20px 50px rgba(0,0,0,.4);}
+.donut-wrap{display:flex;align-items:center;gap:1.2rem;margin-top:.9rem;}
+.donut-svg-wrap{position:relative;flex-shrink:0;width:84px;height:84px;}
+.donut-svg{width:84px;height:84px;transform:rotate(-90deg);}
+.donut-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;}
+.donut-center-n{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:300;color:#c9a227;line-height:1;}
+.donut-center-l{font-family:'DM Sans',sans-serif;font-size:.38rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.28);margin-top:.15rem;}
+.donut-legend{display:flex;flex-direction:column;gap:.42rem;flex:1;min-width:0;}
+.donut-leg-row{display:grid;grid-template-columns:8px 1fr auto;align-items:center;gap:.45rem;}
+.donut-leg-dot{width:7px;height:7px;border-radius:50%;display:block;flex-shrink:0;}
+.donut-leg-label{font-family:'DM Sans',sans-serif;font-size:.61rem;color:rgba(232,219,181,.62);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.donut-leg-pct{font-family:'DM Sans',sans-serif;font-size:.61rem;color:rgba(201,162,39,.72);font-weight:600;white-space:nowrap;}
+
+/* ── MULTI-SELECT FILTER ── */
+.vbr-fp{display:flex;flex-wrap:wrap;gap:.45rem;padding:.4rem 0 1.2rem;align-items:center;}
+.fp{display:inline-flex;align-items:center;gap:.4rem;font-family:'DM Sans',sans-serif;font-size:.62rem;font-weight:500;padding:.42rem .9rem;border-radius:8px;cursor:pointer;border:1.5px solid rgba(201,162,39,.15);background:transparent;color:var(--color-text-secondary,#5a4a2e);transition:all .2s cubic-bezier(.16,1,.3,1);white-space:nowrap;user-select:none;}
+.fp:hover{border-color:rgba(201,162,39,.4);background:rgba(201,162,39,.07);color:var(--color-text,#1a1000);}
+.fp.on{background:linear-gradient(135deg,#c9a227,#9d7b0c);color:#0a0805;border-color:transparent;font-weight:700;box-shadow:0 3px 12px rgba(201,162,39,.28);}
+.fp.on:hover{box-shadow:0 4px 18px rgba(201,162,39,.4);}
+.fp-ic{font-size:.8em;}
+.fp-ct{font-size:.54rem;opacity:.7;margin-left:.05rem;}
+[data-theme="dark"] .fp{background:rgba(255,255,255,.05);color:rgba(255,255,255,.55);border-color:rgba(255,255,255,.1);}
+[data-theme="dark"] .fp:hover{color:#fff;border-color:rgba(201,162,39,.32);background:rgba(201,162,39,.07);}
+[data-theme="dark"] .fp.on{background:linear-gradient(135deg,#c9a227,#9d7b0c);color:#0a0805;border-color:transparent;}
+.fp-all-clear{display:inline-flex;align-items:center;gap:.4rem;font-family:'DM Sans',sans-serif;font-size:.58rem;padding:.38rem .75rem;border-radius:8px;cursor:pointer;border:1px dashed rgba(201,162,39,.3);background:transparent;color:rgba(201,162,39,.6);transition:all .2s;white-space:nowrap;}
+.fp-all-clear:hover{border-color:rgba(201,162,39,.6);color:#c9a227;background:rgba(201,162,39,.06);}
+.vbr-filter-hint{font-family:'DM Sans',sans-serif;font-size:.6rem;color:rgba(201,162,39,.4);padding:.2rem 0 .8rem;font-style:italic;}
+
+.vbr-filter-block{margin-bottom:.8rem;}
+.vbr-filter-row{margin-bottom:.6rem;}
+.vbr-filter-label{font-family:'DM Sans',sans-serif;font-size:.5rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(201,162,39,.45);margin-bottom:.55rem;display:flex;align-items:center;gap:.5rem;}
+.vbr-filter-label svg{opacity:.6;flex-shrink:0;}
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="header-container">
+    <a href="index.html" class="logo"><img src="https://i.imgur.com/mXCrjjG.png" alt="Герб" class="logo-img"><div class="logo-text"><span class="logo-city">Дубровиця</span><span class="logo-subtitle">Цифровий архів</span></div></a>
+    <nav class="nav" id="mainNav">
+      <a href="index.html" class="nav-link">Головна</a>
+      <a href="history.html" class="nav-link">Історія</a>
+      <a href="photo-archive.html" class="nav-link">Фотоархів</a>
+      <a href="architecture.html" class="nav-link">Пам'ятки</a>
+      <a href="metrychni-knyhy.html" class="nav-link active">Архівні справи</a>
+      <a href="jewish-history.html" class="nav-link">Єврейська спадщина</a>
+      <a href="contacts.html" class="nav-link">Про проєкт</a>
+    </nav>
+    <button class="theme-toggle" id="themeToggle" aria-label="Перемкнути тему">
+      <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      <svg class="theme-icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+    <button class="mobile-toggle" id="mobileToggle" aria-label="Відкрити меню"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<div id="vbProg"></div>
+
+<section class="vbh" id="vbHero">
+  <div class="vbh-bg"></div><div class="vbh-grade"></div><div class="vbh-grain"></div><div class="vbh-rul"></div>
+  <div class="vbh-c">
+    <div class="vbh-yr">1938</div>
+    <h1 class="vbh-ti">Список виборців<br><em>міста Дубровиця</em></h1>
+    <div class="vbh-rl"><div class="vbh-rl-l"></div><div class="vbh-rl-d"></div></div>
+    <div class="vbh-meta">
+      <span class="vbh-tag"><b>8 619</b> записів</span>
+      <span class="vbh-tag"><b>25</b> населених пунктів</span>
+      <span class="vbh-tag"><b>65+</b> професій</span>
+      <span class="vbh-tag">Фонд 263 ДАРО · 1938 р.</span>
+    </div>
+    <div class="vbh-stats">
+      <div class="vbh-st"><span class="vbh-stn">8 619</span><span class="vbh-stl">Записів</span></div>
+      <div class="vbh-st"><span class="vbh-stn">89.1%</span><span class="vbh-stl">Місцевих</span></div>
+      <div class="vbh-st"><span class="vbh-stn">922</span><span class="vbh-stl">Переселенців</span></div>
+      <div class="vbh-st"><span class="vbh-stn" style="font-size:clamp(1.4rem,2.2vw,1.9rem);">Kraśko</span><span class="vbh-stl">Топ прізвище · 185 ос.</span></div>
+    </div>
+  </div>
+  <div class="vbh-sc"><span>Scroll</span><div class="vbh-sc-t"></div></div>
+</section>
+
+<section class="vbc">
+  <div class="vbc-in">
+    <div class="vbc-card"><div class="vbc-ico">🗺️</div><div><div class="vbc-ttl">Польський період</div><div class="vbc-txt">У 1938 р. Дубровиця входила до Польської Республіки. Список складався для парламентських виборів і фіксував дорослих мешканців з правом голосу.</div></div></div>
+    <div class="vbc-card"><div class="vbc-ico">📋</div><div><div class="vbc-ttl">Що містить список</div><div class="vbc-txt">Прізвище та ім'я, дата народження, <em>рід занять</em>, адреса та дата поселення. Понад <em>65+ різних професій</em> зафіксовано в реєстрі.</div></div></div>
+    <div class="vbc-card"><div class="vbc-ico">🔍</div><div><div class="vbc-ttl">Для генеалогічних досліджень</div><div class="vbc-txt">Унікальне першоджерело для пошуку предків 1930-х. Пошук за прізвищем або ім'ям, фільтр за пунктом або родом занять.</div></div></div>
+    <div class="vbc-card"><div class="vbc-ico">📂</div><div><div class="vbc-ttl">Архівне джерело</div><div class="vbc-txt"><em>Фонд 263 ДАРО</em> — Державний архів Рівненської обл. П'ять описів: місто Домбровіца, гміна Домбровіца та навколишні села: Соломіївка, Орв'яниця, Селець, Ясинець, Воробин та інші.</div></div></div>
+  </div>
+</section>
+
+<section class="vbs" id="vbStats">
+  <div class="vbs-in">
+    <div class="sec-hd">
+      <div class="sec-hd-ey"><span>Статистика реєстру 1938</span></div>
+      <h2 class="sec-hd-ti">Портрет <em>громади</em></h2>
+    </div>
+    <div class="vbs-strip">
+      <div class="vbs-sn"><span class="vbs-sn-n">8 619</span><span class="vbs-sn-l">Всього осіб</span></div>
+      <div class="vbs-sn"><span class="vbs-sn-n">35.7%</span><span class="vbs-sn-l">Рільники</span></div>
+      <div class="vbs-sn"><span class="vbs-sn-n">15.8%</span><span class="vbs-sn-l">Дом. господарство</span></div>
+      <div class="vbs-sn"><span class="vbs-sn-n">89.1%</span><span class="vbs-sn-l">Місцеві від народж.</span></div>
+    </div>
+    <div class="vbs-grid">
+      <div class="vbs-card"><div class="vbs-chd">Розподіл по населених пунктах</div><div class="vbs-brows" id="vbsVil"></div></div>
+      <div class="vbs-card"><div class="vbs-chd">Рід занять · топ-10</div><div class="vbs-brows" id="vbsProf"></div></div>
+      <div class="vbs-card"><div class="vbs-chd">Найпоширеніші прізвища</div><div class="vbs-srows" id="vbsSurn"></div></div>
+      <div class="vbs-card">
+        <div class="vbs-chd">Хвиля переселення · 922 осіб</div>
+        <div class="vbs-osad">
+          <div class="vbs-osad-ti">Осадництво (1919–1938)</div>
+          <div class="vbs-osad-tx">Польська <em>політика осадництва</em> — виділення земель ветеранам і колоністам на «Кресах». Переселенці — <em>10.7%</em> реєстру.</div>
+        </div>
+        <div class="arr-dec-grid" id="arrDecGrid"></div>
+        <div class="arr-top-hd">Найактивніші роки переселення <span style="font-size:.5rem;color:rgba(255,255,255,.25);letter-spacing:0;text-transform:none;font-weight:400;">(629 з 642 мають конкретний рік)</span></div>
+        <div class="arr-top-rows" id="arrTopRows"></div>
+      </div>
+    </div>
+
+      <!-- DONUT CHARTS -->
+      <div class="vbs-donuts">
+        <!-- Chart 1: Profession breakdown -->
+        <div class="vbs-donut-card">
+          <div class="vbs-chd">Розподіл занять</div>
+          <div class="donut-wrap">
+            <div class="donut-svg-wrap">
+              <svg class="donut-svg" id="donut1" viewBox="0 0 36 36"></svg>
+              <div class="donut-center"><span class="donut-center-n">6 357</span><span class="donut-center-l">осіб</span></div>
+            </div>
+            <div class="donut-legend" id="legend1"></div>
+          </div>
+        </div>
+        <!-- Chart 2: Village groups -->
+        <div class="vbs-donut-card">
+          <div class="vbs-chd">Місто та села</div>
+          <div class="donut-wrap">
+            <div class="donut-svg-wrap">
+              <svg class="donut-svg" id="donut2" viewBox="0 0 36 36"></svg>
+              <div class="donut-center"><span class="donut-center-n">16</span><span class="donut-center-l">пунктів</span></div>
+            </div>
+            <div class="donut-legend" id="legend2"></div>
+          </div>
+        </div>
+        <!-- Chart 3: Local vs arrivals -->
+        <div class="vbs-donut-card">
+          <div class="vbs-chd">Корінні та переселенці</div>
+          <div class="donut-wrap">
+            <div class="donut-svg-wrap">
+              <svg class="donut-svg" id="donut3" viewBox="0 0 36 36"></svg>
+              <div class="donut-center"><span class="donut-center-n">89.8%</span><span class="donut-center-l">місцевих</span></div>
+            </div>
+            <div class="donut-legend" id="legend3"></div>
+          </div>
+        </div>
+      </div>
+  </div>
+</section>
+
+<!-- ══ PROFESSION GLOSSARY ══════════════════════════════ -->
+<section class="vbg" id="vbGlossary">
+  <div class="vbg-in">
+    <div class="sec-hd vbg-sec-hd" style="margin-bottom:2.5rem;">
+      <div class="sec-hd-ey"><span>Дубровиця та навколишні села 1938 · Ремесла та заняття</span></div>
+      <h2 class="sec-hd-ti" style="color:var(--color-text,#1a1000);">Словник <em>професій</em></h2>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;color:var(--color-text-light,#8b6f3e);margin-top:.6rem;">Хто ким був у Дубровиці та навколишніх селах — кожна професія з поясненням та контекстом 1938 року</p>
+    </div>
+    <div class="vbg-filters" id="vbgFilters">
+      <button class="vbg-fp on" data-cat="all">Усі</button>
+      <button class="vbg-fp" data-cat="agri">🌾 Землеробство</button>
+      <button class="vbg-fp" data-cat="craft">🔨 Ремесло</button>
+      <button class="vbg-fp" data-cat="trade">🛒 Торгівля</button>
+      <button class="vbg-fp" data-cat="food">🍞 Харчування</button>
+      <button class="vbg-fp" data-cat="transport">🐴 Транспорт</button>
+      <button class="vbg-fp" data-cat="intell">📚 Освіта і наука</button>
+      <button class="vbg-fp" data-cat="medical">🏥 Медицина</button>
+      <button class="vbg-fp" data-cat="state">📋 Держава</button>
+      <button class="vbg-fp" data-cat="relig">⛪ Духовенство</button>
+      <button class="vbg-fp" data-cat="service">✂️ Послуги</button>
+      <button class="vbg-fp" data-cat="industry">🪵 Промисловість</button>
+      <button class="vbg-fp" data-cat="labor">⚒️ Праця</button>
+      <button class="vbg-fp" data-cat="home">🏠 Дом. господарство</button>
+    </div>
+    <div class="vbg-grid" id="vbgGrid"></div>
+  </div>
+</section>
+
+<section class="vbr">
+  <div class="vbr-in">
+    <div class="vbr-hd">
+      <div class="vbr-hd-sup">Фонд 263 ДАРО · Польська Республіка 1938 · 25 населених пунктів</div>
+      <div class="vbr-hd-row">
+        <div><h2 class="vbr-hd-ti">Реєстр <em>виборців</em></h2><p class="vbr-hd-sub">Пошук за прізвищем або ім'ям, фільтр за пунктом або родом занять</p></div>
+        <div class="vbr-bdg">8 619 записів</div>
+      </div>
+    </div>
+        <!-- MULTI-FILTER -->
+    <div class="vbr-filter-block">
+      <div class="vbr-filter-row">
+        <div class="vbr-filter-label">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Населений пункт
+        </div>
+        <div class="vbr-fp" id="tVil">
+          <button class="fp on" data-village="all">📍 Усі населені пункти<span class="fp-ct">6357</span></button>
+          <button class="fp" data-village="Дубровиця"><span class="fp-ic">🏙️</span>Дубровиця<span class="fp-ct">2630</span></button>
+<button class="fp" data-village="Селець"><span class="fp-ic">🌾</span>Селець<span class="fp-ct">907</span></button>
+<button class="fp" data-village="Берестя"><span class="fp-ic">🌿</span>Берестя<span class="fp-ct">831</span></button>
+<button class="fp" data-village="Орв'яниця"><span class="fp-ic">🌾</span>Орв'яниця<span class="fp-ct">771</span></button>
+<button class="fp" data-village="Соломіївка"><span class="fp-ic">🌾</span>Соломіївка<span class="fp-ct">405</span></button>
+<button class="fp" data-village="Заріччя (ст. Дубровиця)"><span class="fp-ic">🚂</span>Заріччя (ст. Дубровиця)<span class="fp-ct">220</span></button>
+<button class="fp" data-village="Ясинець"><span class="fp-ic">🌿</span>Ясинець<span class="fp-ct">192</span></button>
+<button class="fp" data-village="Осада Адольфув"><span class="fp-ic">🏡</span>Осада Адольфув<span class="fp-ct">104</span></button>
+<button class="fp" data-village="Pracuki"><span class="fp-ic">📍</span>Pracuki<span class="fp-ct">96</span></button>
+<button class="fp" data-village="Воробин"><span class="fp-ic">🏡</span>Воробин<span class="fp-ct">82</span></button>
+<button class="fp" data-village="Фільварк Антонін"><span class="fp-ic">🏡</span>Фільварк Антонін<span class="fp-ct">45</span></button>
+<button class="fp" data-village="Ремчиці"><span class="fp-ic">🌾</span>Ремчиці<span class="fp-ct">31</span></button>
+<button class="fp" data-village="Осова"><span class="fp-ic">🌾</span>Осова<span class="fp-ct">20</span></button>
+<button class="fp" data-village="Рудня"><span class="fp-ic">🌾</span>Рудня<span class="fp-ct">20</span></button>
+<button class="fp" data-village="Гай Каравиця"><span class="fp-ic">🌲</span>Гай Каравиця<span class="fp-ct">2</span></button>
+<button class="fp" data-village="Кураш"><span class="fp-ic">🌾</span>Кураш<span class="fp-ct">1</span></button>
+
+        </div>
+      </div>
+      <div class="vbr-filter-row">
+        <div class="vbr-filter-label">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+          Рід занять
+        </div>
+        <div class="vbr-fp" id="tProf">
+          <button class="fp on" data-prof="all">✦ Усі заняття</button>
+          <button class="fp on" data-prof="рільник">🌾 Рільник <span class="fp-ct">3 079</span></button>
+<button class="fp" data-prof="домашнє господарство">🏠 Дом. господарство <span class="fp-ct">1 359</span></button>
+<button class="fp" data-prof="торгівля">🛒 Торгівля <span class="fp-ct">296</span></button>
+<button class="fp" data-prof="робітник">⚒️ Робітник <span class="fp-ct">182</span></button>
+<button class="fp" data-prof="швець">👟 Швець <span class="fp-ct">34</span></button>
+<button class="fp" data-prof="кравець">🧵 Кравець <span class="fp-ct">32</span></button>
+<button class="fp" data-prof="вчитель">📖 Вчитель <span class="fp-ct">28+</span></button>
+<button class="fp" data-prof="різник">🔪 Різник <span class="fp-ct">25</span></button>
+<button class="fp" data-prof="столяр">🪑 Столяр <span class="fp-ct">15</span></button>
+<button class="fp" data-prof="коваль">⚒️ Коваль <span class="fp-ct">13</span></button>
+<button class="fp" data-prof="урядовець">📋 Урядовець <span class="fp-ct">13</span></button>
+<button class="fp" data-prof="візник">🐴 Візник <span class="fp-ct">12</span></button>
+<button class="fp" data-prof="залізничник">🚂 Залізничник <span class="fp-ct">9</span></button>
+<button class="fp" data-prof="браківник">🪵 Браківник <span class="fp-ct">8</span></button>
+<button class="fp" data-prof="шапкар">🎩 Шапкар <span class="fp-ct">8</span></button>
+<button class="fp" data-prof="лісник">🌲 Лісник <span class="fp-ct">3</span></button>
+<button class="fp" data-prof="без">— Не вказано <span class="fp-ct">1 101</span></button>
+        </div>
+      </div>
+      <div class="vbr-filter-hint" id="activeFiltersHint" style="display:none;">
+        Активні фільтри: <span id="activeFiltersText"></span> &nbsp;·&nbsp;
+        <button class="fp-all-clear" id="clearAllFilters">✕ Скинути всі</button>
+      </div>
+    </div>
+
+    <div class="vbr-sw">
+      <svg class="vbr-sico" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input class="vbr-si" id="vbrSrch" type="text" placeholder="Пошук за прізвищем, ім'ям, адресою…" autocomplete="off" spellcheck="false">
+    </div>
+    <div class="vbr-ib"><div class="vbr-ib-c" id="vbrCnt">Знайдено: <strong>6 357</strong> записів</div><div class="vbr-ib-p" id="vbrPi">Сторінка 1 з 150</div></div>
+    <div class="vbr-tw">
+      <div class="vbr-tw-bg"></div>
+      <div class="vbr-t-wrap">
+        <table class="vbr-t" id="vbrT">
+          <thead><tr>
+            <th data-col="n" class="sd">#<span class="si">▼</span></th>
+            <th data-col="surname">Прізвище<span class="si">▼</span></th>
+            <th data-col="first">Ім'я<span class="si">▼</span></th>
+            <th data-col="born">Дата нар.<span class="si">▼</span></th>
+            <th data-col="prof">Рід занять<span class="si">▼</span></th>
+            <th data-col="addr">Адреса<span class="si">▼</span></th>
+            <th data-col="village">Нас. пункт<span class="si">▼</span></th>
+            <th data-col="src" class="td-src">Дж.<span class="si">▼</span></th>
+            <th data-col="since">Поселився<span class="si">▼</span></th>
+          </tr></thead>
+          <tbody id="vbrBody"><tr><td colspan="9" class="vbr-empty">Завантаження…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="vbr-pag" id="vbrPag"></div>
+    <div class="vbr-note">
+      Прізвища та адреси — в оригінальному польськомовному написанні. Рід занять перекладено.<br>
+      <span class="sbdg sb1">Джерело І</span> &nbsp;·&nbsp; <span class="sbdg sb2">Джерело ІІ</span> &nbsp;·&nbsp; <span class="sbdg sb3">Джерело ІІІ</span> &nbsp;·&nbsp; <span class="sbdg sb4">Джерело IV</span><br>
+      <span style="opacity:.55;">Фонд 263, Державний архів Рівненської області (ДАРО)</span><br>
+      Помітили помилку? <a href="contacts.html">Зв'яжіться з нами</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-section"><h4 class="footer-title">Дубровиця</h4><p class="footer-text">Цифровий архів Дубровиці, Сарненський район, Рівненська область.</p></div>
+      <div class="footer-section"><h4 class="footer-title">Навігація</h4><nav class="footer-nav"><a href="history.html">Історія</a><a href="photo-archive.html">Фотоархів</a><a href="metrychni-knyhy.html">Архівні справи</a><a href="jewish-history.html">Єврейська спадщина</a></nav></div>
+      <div class="footer-section"><h4 class="footer-title">Контакти</h4><p class="footer-text"><a href="contacts.html" class="footer-link">Зв'яжіться з нами</a></p></div>
+    </div>
+    <div class="footer-copyright-row"><div class="footer-copyright-ornament"><div class="footer-copyright-ornament-line"></div><div class="footer-copyright-ornament-diamond"></div><div class="footer-copyright-ornament-line"></div></div><p class="footer-copyright-main">&copy; 2026 <a href="https://dubrovytsia.site">dubrovytsia.site</a></p></div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+<script>
+(function(){
+  var b=document.getElementById('vbProg');
+  if(b)window.addEventListener('scroll',function(){var s=document.documentElement;b.style.width=Math.min(100,window.pageYOffset/(s.scrollHeight-s.clientHeight)*100).toFixed(1)+'%';},{passive:true});
+  setTimeout(function(){var h=document.getElementById('vbHero');if(h)h.classList.add('loaded');},80);
+})();
+</script>
+<script>
+// Завантажуємо дані з окремого файлу
+fetch('voters.json')
+  .then(function(r){ return r.json(); })
+  .then(function(data){
+    var VOTERS = data.voters;
+    var STATS  = data.stats;
+    var PROFS  = data.profs;
+
+
+// ── STATS ─────────────────────────────────────────────────
+(function(){
+  var VC={'Берестя':'#c9a227','Заріччя (ст. Дубровиця)':'#5a9e6f','Дубровиця':'#5a7abf','Фільварк Антонін':'#bf6a48','Селець':'#8a6abf'};
+  var PC={'рільник':'#c9a227','домашнє господарство':'#9b72bf','торгівля':'#4a9e60','робітник':'#bf6040','швець':'#8a7a5a','кравець':'#9a6a8a','різник':'#bf5050','вчитель':'#5a7abf','столяр':'#8a7a40','візник':'#6a8a6a'};
+
+  function brows(data,cmap,big,h){
+    var es=Object.entries(data).filter(function(kv){return kv[0]&&kv[0]!=='';}).sort(function(a,b){return b[1]-a[1];});
+    if(!es.length)return'';var mx=es[0][1];
+    return es.map(function(kv){
+      var displayName=kv[0]==='—'?'Не вказано (ймовірно рільник або дом. госп.)':kv[0];
+      var p=(kv[1]/mx*100).toFixed(1),c=cmap[kv[0]]||'rgba(201,162,39,.5)';
+      return '<div class="vbs-brow"><div class="vbs-bl"><div class="vbs-bname'+(big?' big':'')+'">'+displayName+'</div><div class="vbs-btrk" style="height:'+(h||5)+'px"><div class="vbs-bfil" data-w="'+p+'" style="height:'+(h||5)+'px;background:'+c+'"></div></div></div><div class="vbs-bnum">'+kv[1]+'</div></div>';
+    }).join('');
+  }
+  document.getElementById('vbsVil').innerHTML=brows(STATS.villages,VC,true,7);
+  var pf={};Object.entries(STATS.profs).filter(function(kv){return kv[0]&&kv[0]!=='';}).slice(0,10).forEach(function(kv){
+    var displayKey = kv[0]==='—' ? 'Не вказано (ймовірно рільник/госп.)' : kv[0];
+    pf[displayKey]=kv[1];
+  });
+  document.getElementById('vbsProf').innerHTML=brows(pf,PC,false,5);
+  var sE=Object.entries(STATS.surnames).sort(function(a,b){return b[1]-a[1];});
+  var mxS=sE[0][1],sH='';
+  sE.slice(0,12).forEach(function(kv,i){
+    var p=(kv[1]/mxS*100).toFixed(1);
+    sH+='<div class="vbs-srow-item"><div class="vbs-sl"><div class="vbs-sname">'+kv[0]+'</div><div class="vbs-strk"><div class="vbs-sfil" data-w="'+p+'" style="background:#c9a227;opacity:'+(0.9-i*0.05).toFixed(2)+'"></div></div></div><div class="vbs-snum">'+kv[1]+'</div></div>';
+  });
+  document.getElementById('vbsSurn').innerHTML=sH;
+  var dE=Object.entries(STATS.dec_totals).sort(function(a,b){return a[0]-b[0];});
+  var mxD=Math.max.apply(null,dE.map(function(x){return x[1];}));
+  var dL={'1880':'1880–89','1890':'1890–99','1900':'1900–09','1910':'1910–19','1920':'1920–29','1930':'1930–38'};
+  var gH='';
+  dE.forEach(function(kv){
+    var pk=kv[1]===mxD,p=(kv[1]/mxD*100).toFixed(1);
+    gH+='<div class="arr-dec-cell'+(pk?' peak':'')+'"><span class="arr-dec-yr">'+(dL[kv[0]]||kv[0])+'</span><span class="arr-dec-n">'+kv[1]+'</span><span class="arr-dec-sub">осіб</span><div class="arr-dec-bar"><div class="arr-dec-fill" data-w="'+p+'"></div></div></div>';
+  });
+  document.getElementById('arrDecGrid').innerHTML=gH;
+  var tY=Object.entries(STATS.arrivals).sort(function(a,b){return b[1]-a[1];}).slice(0,6);
+  var mxT=tY[0][1],tH='';
+  tY.forEach(function(kv,i){tH+='<div class="arr-top-row"><div class="arr-top-yr">'+kv[0]+'</div><div class="arr-top-bar"><div class="arr-top-fill'+(i===0?' t1':'')+'" data-w="'+(kv[1]/mxT*100).toFixed(1)+'"></div></div><div class="arr-top-n">'+kv[1]+'</div></div>';});
+  document.getElementById('arrTopRows').innerHTML=tH;
+  var io=new IntersectionObserver(function(e){e.forEach(function(x){if(!x.isIntersecting)return;x.target.querySelectorAll('[data-w]').forEach(function(el){el.style.width=el.getAttribute('data-w')+'%';});io.unobserve(x.target);});},{threshold:.1});
+  ['vbsVil','vbsProf','vbsSurn','arrDecGrid','arrTopRows'].forEach(function(id){var el=document.getElementById(id);if(el)io.observe(el);});
+})();
+
+// ── GLOSSARY ─────────────────────────────────────────────
+(function(){
+  var activeCat='all';
+
+  function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+  function render(){
+    var grid=document.getElementById('vbgGrid');
+    var entries=Object.entries(PROFS).filter(function(kv){
+      return activeCat==='all'||kv[1].cat===activeCat;
+    }).sort(function(a,b){return b[1].count-a[1].count;});
+
+    if(!entries.length){
+      grid.innerHTML='<div class="vbg-empty-msg">Немає записів у цій категорії</div>';
+      return;
+    }
+    var h='';
+    entries.forEach(function(kv){
+      var p=kv[1];
+      var countLbl=p.count>0?p.count+' '+(p.count===1?'особа':p.count<5?'особи':'осіб'):'';
+      h+='<div class="vbg-card">'
+        +'<div class="vbg-card-top">'
+        +'<div class="vbg-icon">'+p.icon+'</div>'
+        +'<div class="vbg-card-titles">'
+        +'<div class="vbg-prof-name">'+esc(kv[0])+'</div>'
+        +'<div class="vbg-prof-pl">'+esc(p.pl)+'</div>'
+        +'</div>'
+        +(countLbl?'<div class="vbg-badge">'+countLbl+'</div>':'')
+        +'</div>'
+        +'<div class="vbg-divider"></div>'
+        +'<div class="vbg-short">'+esc(p.short)+'</div>'
+        +'<div class="vbg-desc">'+p.desc+'</div>'
+        +'</div>';
+    });
+    grid.innerHTML=h;
+  }
+
+  document.querySelectorAll('#vbgFilters .vbg-fp').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      document.querySelectorAll('#vbgFilters .vbg-fp').forEach(function(b){b.classList.remove('on');});
+      this.classList.add('on');
+      activeCat=this.getAttribute('data-cat');
+      render();
+    });
+  });
+  render();
+})();
+
+
+// ── DONUT CHARTS ─────────────────────────────────────────
+(function(){
+  function drawDonut(svgId, legendId, segments){
+    var svg=document.getElementById(svgId);
+    var leg=document.getElementById(legendId);
+    if(!svg||!leg)return;
+    var total=segments.reduce(function(s,x){return s+x.v;},0);
+    var cx=18,cy=18,r=15.5,stroke=4;
+    var circumference=2*Math.PI*r;
+    var offset=0;
+    var svgH='<circle cx="18" cy="18" r="15.5" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="4"/>';
+    segments.forEach(function(seg){
+      var pct=seg.v/total;
+      var dash=pct*circumference;
+      var gap=circumference-dash;
+      svgH+='<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="'+seg.color+'" stroke-width="'+stroke+'" stroke-dasharray="'+dash.toFixed(3)+' '+gap.toFixed(3)+'" stroke-dashoffset="'+(-offset*circumference).toFixed(3)+'" stroke-linecap="butt" style="transition:stroke-dasharray 1.2s cubic-bezier(.16,1,.3,1) '+(segments.indexOf(seg)*0.08)+'s"/>';
+      offset+=pct;
+    });
+    svg.innerHTML=svgH;
+    var legH='';
+    segments.forEach(function(seg){
+      var pct=(seg.v/total*100).toFixed(1);
+      legH+='<div class="donut-leg-row"><span class="donut-leg-dot" style="background:'+seg.color+'"></span><span class="donut-leg-label">'+seg.label+'</span><span class="donut-leg-pct">'+pct+'%</span></div>';
+    });
+    leg.innerHTML=legH;
+  }
+
+  // Chart 1 — Professions
+  var profSegs=[
+    {label:"Рільник",v:3079,color:"#c9a227"},
+    {label:"Дом. господарство",v:1359,color:"#9b72bf"},
+    {label:"Не вказано",v:1721,color:"rgba(255,255,255,0.18)"},
+    {label:"Торгівля",v:296,color:"#4a9e60"},
+    {label:"Робітник",v:182,color:"#bf6040"},
+    {label:"Інші",v:1982,color:"rgba(201,162,39,0.35)"},
+  ];
+  drawDonut('donut1','legend1',profSegs);
+
+  // Chart 2 — Villages grouped
+  var vilSegs=[
+    {label:"Дубровиця",v:2630,color:"#5a7abf"},
+    {label:"Бережниця",v:1177,color:"#bf9a40"},
+    {label:"Крупове",v:385,color:"#5a9e6f"},
+    {label:"Берестя",v:831,color:"#c9a227"},
+    {label:"Орв'яниця",v:771,color:"#bf6a48"},
+    {label:"Інші",v:2825,color:"rgba(201,162,39,0.3)"},
+  ];
+  drawDonut('donut2','legend2',vilSegs);
+
+  // Chart 3 — Local vs arrivals
+  var migSegs=[
+    {label:"Від народження",v:7677,color:"#c9a227"},
+    {label:"Переселенці (з роком)",v:922,color:"#5a7abf"},
+    {label:"Невідомо",v:20,color:"rgba(255,255,255,0.15)"},
+  ];
+  drawDonut('donut3','legend3',migSegs);
+})();
+
+// ── TABLE ─────────────────────────────────────────────────
+(function(){
+'use strict';
+var PAGE=25,cur=1,q='',vf='all',pf='all',sc='n',sd=1;var selectedVils=[],selectedProfs=[];
+var filtered=VOTERS.slice();
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function hl(s,q){if(!q)return esc(s);return esc(s).replace(new RegExp('('+q.replace(/[.*+?^${}()|[\\]\\]/g,'\\$&')+')','gi'),'<mark>$1</mark>');}
+function vpc(v){if(v.indexOf('Заріч')>=0)return 'vp-z';if(v.indexOf('Дубровиця')>=0)return 'vp-d';if(v.indexOf('Антонін')>=0)return 'vp-a';if(v.indexOf('Селець')>=0)return 'vp-s';return 'vp-b';}
+function ppc(p){if(!p)return'';if(p==='рільник')return'pp-ril';if(p==='торгівля')return'pp-hnd';if(p.indexOf('господарство')>=0)return'pp-gsp';if(p==='робітник')return'pp-rob';if(p==='залізничник')return'pp-zal';return'pp-oth';}
+function mV(r){
+  if(vf==='all'||!Array.isArray(vf)||vf.length===0) return true;
+  return vf.some(function(v){return r.village.indexOf(v)>=0;});
+}
+function mP(r){
+  if(pf==='all'||!Array.isArray(pf)||pf.length===0) return true;
+  return pf.some(function(p){
+    if(p==='без') return !r.prof;
+    return r.prof&&r.prof.toLowerCase().indexOf(p.toLowerCase())>=0;
+  });
+}
+function mS(r){
+  if(!q)return true;
+  var lq=q.toLowerCase();
+  return r.surname.toLowerCase().indexOf(lq)>=0||r.first.toLowerCase().indexOf(lq)>=0||r.addr.toLowerCase().indexOf(lq)>=0||r.born.toLowerCase().indexOf(lq)>=0;
+}
+function doF(){filtered=VOTERS.filter(function(r){return mV(r)&&mP(r)&&mS(r);});doS();}
+function doS(){var c=sc,d=sd;filtered.sort(function(a,b){var av=c==='n'?(a[c]||0):String(a[c]||'').toLowerCase();var bv=c==='n'?(b[c]||0):String(b[c]||'').toLowerCase();return av<bv?-d:av>bv?d:0;});cur=1;render();}
+function render(){
+  var tb=document.getElementById('vbrBody'),tot=filtered.length,pages=Math.max(1,Math.ceil(tot/PAGE));
+  if(cur>pages)cur=pages;
+  var sl=filtered.slice((cur-1)*PAGE,cur*PAGE),h='';
+  if(!sl.length)h='<tr><td colspan="9" class="vbr-empty">Записів не знайдено</td></tr>';
+  else sl.forEach(function(r){
+    var vc=vpc(r.village),pc=ppc(r.prof);
+    var pC=r.prof?'<span class="pp '+pc+'">'+esc(r.prof)+'</span>':'<span style="color:rgba(201,162,39,.18);font-size:.58rem;">—</span>';
+    var srcL=r.src===1?'І':r.src===2?'ІІ':r.src===3?'ІІІ':'IV';
+    h+='<tr><td class="td-n">'+r.n+'</td><td class="td-sur">'+hl(r.surname,q)+'</td><td class="td-fst">'+hl(r.first,q)+'</td><td class="td-born">'+esc(r.born)+'</td><td class="td-prof">'+pC+'</td><td class="td-addr">'+esc(r.addr)+'</td><td class="td-village"><span class="vp '+vc+'">'+esc(r.village)+'</span></td><td class="td-src"><span class="src-p src-'+r.src+'">'+srcL+'</span></td><td class="td-since">'+esc(r.since)+'</td></tr>';
+  });
+  tb.innerHTML=h;
+  var fmt=tot.toString().replace(/\B(?=(\d{3})+(?!\d))/g,'\u00a0');
+  document.getElementById('vbrCnt').innerHTML='Знайдено: <strong>'+fmt+'</strong> '+(tot===1?'запис':tot<5?'записи':'записів');
+  document.getElementById('vbrPi').textContent='Сторінка '+cur+' з '+pages;
+  rP(pages);
+}
+function sU(){document.querySelector('.vbr').scrollIntoView({behavior:'smooth',block:'start'});}
+function rP(pages){
+  var pg=document.getElementById('vbrPag');if(pages<=1){pg.innerHTML='';return;}
+  var h='<button class="pg" id="pgP"'+(cur<=1?' disabled':'')+'>&#8249;</button>';
+  var ns=[1];if(cur-2>2)ns.push('…');for(var i=Math.max(2,cur-2);i<=Math.min(pages-1,cur+2);i++)ns.push(i);if(cur+2<pages-1)ns.push('…');if(pages>1)ns.push(pages);
+  ns.forEach(function(n){h+=n==='…'?'<span class="pg-dots">…</span>':'<button class="pg'+(n===cur?' on':'')+'" data-p="'+n+'">'+n+'</button>';});
+  h+='<button class="pg" id="pgN"'+(cur>=pages?' disabled':'')+'>&#8250;</button>';
+  pg.innerHTML=h;
+  pg.querySelectorAll('[data-p]').forEach(function(b){b.addEventListener('click',function(){cur=parseInt(this.getAttribute('data-p'));render();sU();});});
+  var pp=document.getElementById('pgP'),np=document.getElementById('pgN');
+  if(pp)pp.addEventListener('click',function(){if(cur>1){cur--;render();sU();}});
+  if(np)np.addEventListener('click',function(){var p=Math.ceil(filtered.length/PAGE);if(cur<p){cur++;render();sU();}});
+}
+document.querySelectorAll('#vbrT thead th[data-col]').forEach(function(th){th.addEventListener('click',function(){var col=this.getAttribute('data-col');sc===col?sd*=-1:(sc=col,sd=1);document.querySelectorAll('#vbrT thead th').forEach(function(h){h.classList.remove('sa','sd');});this.classList.add(sd===1?'sa':'sd');doS();});});
+
+// ── Multi-select village filter ───────────────────────────
+// vf = array of village names, [] = all
+var selectedVils = [];
+var selectedProfs = [];
+
+function updateFilterHint(){
+  var hint = document.getElementById('activeFiltersHint');
+  var txt = document.getElementById('activeFiltersText');
+  if(!hint||!txt) return;
+  var parts = [];
+  if(selectedVils.length) parts.push(selectedVils.join(', '));
+  if(selectedProfs.length) parts.push(selectedProfs.join(', '));
+  if(parts.length){hint.style.display='';txt.textContent=parts.join(' · ');}
+  else{hint.style.display='none';}
+}
+
+document.querySelectorAll('[data-village]').forEach(function(b){
+  b.addEventListener('click',function(){
+    var v = this.getAttribute('data-village');
+    if(v === 'all'){
+      selectedVils = [];
+      document.querySelectorAll('[data-village]').forEach(function(x){x.classList.remove('on');});
+      document.querySelector('[data-village="all"]').classList.add('on');
+    } else {
+      document.querySelector('[data-village="all"]').classList.remove('on');
+      if(this.classList.contains('on')){
+        this.classList.remove('on');
+        selectedVils = selectedVils.filter(function(x){return x!==v;});
+        if(selectedVils.length===0) document.querySelector('[data-village="all"]').classList.add('on');
+      } else {
+        this.classList.add('on');
+        selectedVils.push(v);
+      }
+    }
+    vf = selectedVils.length ? selectedVils : 'all';
+    updateFilterHint();
+    doF();
+  });
+});
+document.querySelectorAll('[data-prof]').forEach(function(b){
+  b.addEventListener('click',function(){
+    var p = this.getAttribute('data-prof');
+    if(p === 'all'){
+      selectedProfs = [];
+      document.querySelectorAll('[data-prof]').forEach(function(x){x.classList.remove('on');});
+      document.querySelector('[data-prof="all"]').classList.add('on');
+    } else {
+      document.querySelector('[data-prof="all"]').classList.remove('on');
+      if(this.classList.contains('on')){
+        this.classList.remove('on');
+        selectedProfs = selectedProfs.filter(function(x){return x!==p;});
+        if(selectedProfs.length===0) document.querySelector('[data-prof="all"]').classList.add('on');
+      } else {
+        this.classList.add('on');
+        selectedProfs.push(p);
+      }
+    }
+    pf = selectedProfs.length ? selectedProfs : 'all';
+    updateFilterHint();
+    doF();
+  });
+});
+
+var clearBtn = document.getElementById('clearAllFilters');
+if(clearBtn) clearBtn.addEventListener('click',function(){
+  selectedVils=[]; selectedProfs=[];
+  vf='all'; pf='all';
+  document.querySelectorAll('[data-village]').forEach(function(x){x.classList.remove('on');});
+  document.querySelectorAll('[data-prof]').forEach(function(x){x.classList.remove('on');});
+  var allV=document.querySelector('[data-village="all"]');
+  var allP=document.querySelector('[data-prof="all"]');
+  if(allV) allV.classList.add('on');
+  if(allP) allP.classList.add('on');
+  updateFilterHint();
+  doF();
+});
+
+
+var st;document.getElementById('vbrSrch').addEventListener('input',function(){clearTimeout(st);var v=this.value;st=setTimeout(function(){q=v;doF();},190);});
+doF();
+})();
+
+  })
+  .catch(function(err){
+    document.getElementById('vbrBody').innerHTML =
+      '<tr><td colspan="9" style="padding:2rem;color:#c9a227;text-align:center">⚠ Не вдалося завантажити дані (voters.json): ' + err + '</td></tr>';
+  });
+</script>
+</body>
+</html>
