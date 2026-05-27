@@ -361,10 +361,59 @@ html,body{touch-action:manipulation;}
 [data-theme="light"] .donut-leg-label{color:rgba(60,40,10,.7);}
 [data-theme="light"] .donut-leg-pct{color:rgba(140,100,10,.8);}
 /* Interesting professions cards in light mode */
-[data-theme="light"] .vbs-rare-grid-3 > div{border-color:rgba(201,162,39,.28) !important;background:rgba(201,162,39,.04) !important;}
+[data-theme="light"] .vbs-rare-grid-3 > div{border-color:rgba(201,162,39,.3) !important;background:#fff !important;}
+[data-theme="light"] .vbs-rare-grid-3 > div > div[style*="font-family:'Cormorant"]{color:#1a1000 !important;}
+[data-theme="light"] .vbs-rare-grid-3 > div > div[style*="font-style:italic"]{color:rgba(140,90,10,.7) !important;}
+[data-theme="light"] .vbs-rare-grid-3 > div > div[style*="line-height:1.7"]{color:rgba(60,40,10,.72) !important;}
 [data-theme="light"] .vbs-rare-grid-3 strong{color:#1a1000 !important;}
-[data-theme="light"] .vbs-rare-grid-3 div[style*="rgba(120,80,180"]{border-color:rgba(140,90,200,.28) !important;background:rgba(120,80,180,.04) !important;}
-[data-theme="light"] .vbs-rare-grid-3 div[style*="rgba(60,160,80"]{border-color:rgba(60,160,80,.28) !important;background:rgba(60,160,80,.04) !important;}
+[data-theme="light"] .vbs-rare-grid-3 > div:nth-child(2){border-color:rgba(120,80,180,.28) !important;background:#fff !important;}
+[data-theme="light"] .vbs-rare-grid-3 > div:nth-child(3){border-color:rgba(60,160,80,.28) !important;background:#fff !important;}
+/* Rare section eyebrow */
+[data-theme="light"] .vbs-rare-hd span[style*="rgba(201"]{color:rgba(120,90,10,.65) !important;}
+[data-theme="light"] .vbs-rare-hd span[style*="font-style:italic"]{color:rgba(140,90,10,.55) !important;}
+
+/* ── TABLE — light theme ── */
+[data-theme="light"] .vbr-tw{box-shadow:0 8px 40px rgba(0,0,0,.1);}
+[data-theme="light"] .vbr-tw-bg{background:#fff;}
+[data-theme="light"] .vbr-t thead{background:#f5f0e8;}
+[data-theme="light"] .vbr-t thead th{background:#f5f0e8;color:rgba(100,70,10,.6);border-bottom:1px solid rgba(201,162,39,.18);}
+[data-theme="light"] .vbr-t thead th:hover{color:#a07c10;}
+[data-theme="light"] .vbr-t tbody{background:#fff;}
+[data-theme="light"] .vbr-t tbody tr{border-bottom:1px solid rgba(201,162,39,.08);}
+[data-theme="light"] .vbr-t tbody tr:hover{background:rgba(201,162,39,.05);}
+[data-theme="light"] .td-n{color:rgba(100,70,10,.35);}
+[data-theme="light"] .td-sur{color:#1a1000;}
+[data-theme="light"] .td-sur mark{background:rgba(201,162,39,.25);color:#1a1000;}
+[data-theme="light"] .td-fst{color:rgba(40,25,5,.7);}
+[data-theme="light"] .td-fst mark{background:rgba(201,162,39,.2);color:#1a1000;}
+[data-theme="light"] .td-born{color:rgba(80,55,15,.6);}
+[data-theme="light"] .td-addr{color:rgba(80,55,15,.55);}
+[data-theme="light"] .td-since{color:rgba(80,55,15,.5);}
+[data-theme="light"] .vbr-empty{background:#fff;color:rgba(140,100,20,.35);}
+/* profession badge tweaks in light */
+[data-theme="light"] .pp-ril{background:rgba(201,162,39,.15);color:#7a5a08;border-color:rgba(201,162,39,.3);}
+[data-theme="light"] .pp-rob{background:rgba(180,80,60,.1);color:#8a3020;border-color:rgba(180,80,60,.22);}
+[data-theme="light"] .pp-hnd{background:rgba(40,140,60,.1);color:#1a5a20;border-color:rgba(40,140,60,.22);}
+[data-theme="light"] .pp-gsp{background:rgba(100,60,140,.1);color:#4a2070;border-color:rgba(100,60,140,.22);}
+[data-theme="light"] .pp-zal{background:rgba(40,80,170,.1);color:#1a3080;border-color:rgba(40,80,170,.22);}
+[data-theme="light"] .pp-oth{background:rgba(80,80,80,.08);color:#3a3a3a;border-color:rgba(80,80,80,.18);}
+/* village badge in light */
+[data-theme="light"] .vp-b{background:rgba(201,162,39,.12);color:#7a5a08;border-color:rgba(201,162,39,.22);}
+[data-theme="light"] .vp-z{background:rgba(50,120,70,.1);color:#1a5030;border-color:rgba(50,120,70,.22);}
+[data-theme="light"] .vp-d{background:rgba(50,80,160,.1);color:#1a3070;border-color:rgba(50,80,160,.22);}
+[data-theme="light"] .vp-a{background:rgba(160,60,40,.1);color:#6a2010;border-color:rgba(160,60,40,.22);}
+[data-theme="light"] .vp-s{background:rgba(90,60,160,.1);color:#3a1870;border-color:rgba(90,60,160,.22);}
+/* source badges in light */
+[data-theme="light"] .src-1{background:rgba(201,162,39,.12);color:#7a5a08;}
+[data-theme="light"] .src-2{background:rgba(50,100,180,.1);color:#1a3578;}
+[data-theme="light"] .src-3{background:rgba(50,140,80,.1);color:#1a5828;}
+[data-theme="light"] .src-4{background:rgba(160,100,30,.1);color:#6a3a08;}
+/* info bar */
+[data-theme="light"] .vbr-ib-c{color:rgba(60,40,10,.65);}
+[data-theme="light"] .vbr-ib-c strong{color:#a07c10;}
+[data-theme="light"] .vbr-ib-p{color:rgba(60,40,10,.5);}
+/* scroll bar label */
+[data-theme="light"] .vbs-rare-hd div[style*="height:1px"]{background:linear-gradient(90deg,rgba(201,162,39,.25),transparent) !important;}
 </style>
 </head>
 <body>
@@ -405,7 +454,7 @@ html,body{touch-action:manipulation;}
       <div class="vbh-st"><span class="vbh-stn">8 619</span><span class="vbh-stl">Записів</span></div>
       <div class="vbh-st"><span class="vbh-stn">89.1%</span><span class="vbh-stl">Місцевих</span></div>
       <div class="vbh-st"><span class="vbh-stn">922</span><span class="vbh-stl">Переселенців</span></div>
-      <div class="vbh-st"><span class="vbh-stn" style="font-size:clamp(1.4rem,2.2vw,1.9rem);">Kraśko</span><span class="vbh-stl">Топ прізвище · 185 ос.</span></div>
+      <div class="vbh-st"><span class="vbh-stn">25</span><span class="vbh-stl">Населених пунктів</span></div>
     </div>
   </div>
   <div class="vbh-sc"><span>Scroll</span><div class="vbh-sc-t"></div></div>
@@ -501,7 +550,7 @@ html,body{touch-action:manipulation;}
           <div class="donut-wrap">
             <div class="donut-svg-wrap">
               <svg class="donut-svg" id="donut2" viewBox="0 0 36 36"></svg>
-              <div class="donut-center"><span class="donut-center-n">16</span><span class="donut-center-l">пунктів</span></div>
+              <div class="donut-center"><span class="donut-center-n">25</span><span class="donut-center-l">пунктів</span></div>
             </div>
             <div class="donut-legend" id="legend2"></div>
           </div>
