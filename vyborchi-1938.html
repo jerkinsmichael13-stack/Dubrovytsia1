@@ -144,7 +144,7 @@ html,body{touch-action:manipulation;}
 /* Cards grid */
 .vbg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.2rem;}
 @media(max-width:480px){.vbg-grid{grid-template-columns:1fr;}}
-.vbg-card{background:var(--color-bg-card,#fcf9f2);border:1px solid rgba(201,162,39,.12);border-radius:16px;padding:1.6rem;display:flex;flex-direction:column;gap:0;transition:border-color .25s,box-shadow .25s,transform .25s;cursor:default;position:relative;overflow:hidden;}
+.vbg-card{background:var(--color-bg-card,#fcf9f2);border:1px solid rgba(201,162,39,.12);border-radius:16px;padding:1.6rem;display:flex;flex-direction:column;gap:0;transition:border-color .25s,box-shadow .25s,transform .25s;cursor:pointer;position:relative;overflow:hidden;}
 .vbg-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(201,162,39,.25),transparent);opacity:0;transition:opacity .25s;}
 .vbg-card:hover{border-color:rgba(201,162,39,.3);box-shadow:0 12px 40px rgba(0,0,0,.1);transform:translateY(-2px);}
 .vbg-card:hover::before{opacity:1;}
@@ -164,6 +164,13 @@ html,body{touch-action:manipulation;}
 [data-theme="dark"] .vbg-desc strong{color:#e8dbb5;}
 .vbg-desc em{color:rgba(201,162,39,.75);font-style:italic;}
 .vbg-empty-msg{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-style:italic;color:rgba(201,162,39,.35);text-align:center;padding:3rem 1rem;grid-column:1/-1;}
+
+
+/* Glossary card filter hint */
+.vbg-filter-hint{display:inline-flex;align-items:center;gap:.35rem;margin-top:.9rem;font-family:'DM Sans',sans-serif;font-size:.55rem;color:rgba(201,162,39,.45);border:1px dashed rgba(201,162,39,.22);border-radius:100px;padding:.22rem .6rem;transition:all .2s;align-self:flex-start;}
+.vbg-card:hover .vbg-filter-hint{color:rgba(201,162,39,.85);border-color:rgba(201,162,39,.5);background:rgba(201,162,39,.06);}
+.vbg-card.no-filter{cursor:default;}
+.vbg-card.no-filter .vbg-filter-hint{display:none;}
 
 /* REGISTRY */
 .vbr{background:var(--color-bg,#faf7f2);padding:5rem 0 7rem;position:relative;}
@@ -423,34 +430,6 @@ html,body{touch-action:manipulation;}
   </div>
 </section>
 
-<!-- ══ PROFESSION GLOSSARY ══════════════════════════════ -->
-<section class="vbg" id="vbGlossary">
-  <div class="vbg-in">
-    <div class="sec-hd vbg-sec-hd" style="margin-bottom:2.5rem;">
-      <div class="sec-hd-ey"><span>Дубровиця та навколишні села 1938 · Ремесла та заняття</span></div>
-      <h2 class="sec-hd-ti" style="color:var(--color-text,#1a1000);">Словник <em>професій</em></h2>
-      <p style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;color:var(--color-text-light,#8b6f3e);margin-top:.6rem;">Хто ким був у Дубровиці та навколишніх селах — кожна професія з поясненням та контекстом 1938 року</p>
-    </div>
-    <div class="vbg-filters" id="vbgFilters">
-      <button class="vbg-fp on" data-cat="all">Усі</button>
-      <button class="vbg-fp" data-cat="agri">🌾 Землеробство</button>
-      <button class="vbg-fp" data-cat="craft">🔨 Ремесло</button>
-      <button class="vbg-fp" data-cat="trade">🛒 Торгівля</button>
-      <button class="vbg-fp" data-cat="food">🍞 Харчування</button>
-      <button class="vbg-fp" data-cat="transport">🐴 Транспорт</button>
-      <button class="vbg-fp" data-cat="intell">📚 Освіта і наука</button>
-      <button class="vbg-fp" data-cat="medical">🏥 Медицина</button>
-      <button class="vbg-fp" data-cat="state">📋 Держава</button>
-      <button class="vbg-fp" data-cat="relig">⛪ Духовенство</button>
-      <button class="vbg-fp" data-cat="service">✂️ Послуги</button>
-      <button class="vbg-fp" data-cat="industry">🪵 Промисловість</button>
-      <button class="vbg-fp" data-cat="labor">⚒️ Праця</button>
-      <button class="vbg-fp" data-cat="home">🏠 Дом. господарство</button>
-    </div>
-    <div class="vbg-grid" id="vbgGrid"></div>
-  </div>
-</section>
-
 
 <section class="vbr">
   <div class="vbr-in">
@@ -601,6 +580,36 @@ html,body{touch-action:manipulation;}
     </div>
   </div>
 </section>
+
+
+<!-- ══ PROFESSION GLOSSARY ══════════════════════════════ -->
+<section class="vbg" id="vbGlossary">
+  <div class="vbg-in">
+    <div class="sec-hd vbg-sec-hd" style="margin-bottom:2.5rem;">
+      <div class="sec-hd-ey"><span>Дубровиця та навколишні села 1938 · Ремесла та заняття</span></div>
+      <h2 class="sec-hd-ti" style="color:var(--color-text,#1a1000);">Словник <em>професій</em></h2>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;color:var(--color-text-light,#8b6f3e);margin-top:.6rem;">Хто ким був у Дубровиці та навколишніх селах — кожна професія з поясненням та контекстом 1938 року</p>
+    </div>
+    <div class="vbg-filters" id="vbgFilters">
+      <button class="vbg-fp on" data-cat="all">Усі</button>
+      <button class="vbg-fp" data-cat="agri">🌾 Землеробство</button>
+      <button class="vbg-fp" data-cat="craft">🔨 Ремесло</button>
+      <button class="vbg-fp" data-cat="trade">🛒 Торгівля</button>
+      <button class="vbg-fp" data-cat="food">🍞 Харчування</button>
+      <button class="vbg-fp" data-cat="transport">🐴 Транспорт</button>
+      <button class="vbg-fp" data-cat="intell">📚 Освіта і наука</button>
+      <button class="vbg-fp" data-cat="medical">🏥 Медицина</button>
+      <button class="vbg-fp" data-cat="state">📋 Держава</button>
+      <button class="vbg-fp" data-cat="relig">⛪ Духовенство</button>
+      <button class="vbg-fp" data-cat="service">✂️ Послуги</button>
+      <button class="vbg-fp" data-cat="industry">🪵 Промисловість</button>
+      <button class="vbg-fp" data-cat="labor">⚒️ Праця</button>
+      <button class="vbg-fp" data-cat="home">🏠 Дом. господарство</button>
+    </div>
+    <div class="vbg-grid" id="vbgGrid"></div>
+  </div>
+</section>
+
 <footer class="footer">
   <div class="container">
     <div class="footer-content">
@@ -677,7 +686,28 @@ fetch('voters.json')
 (function(){
   var activeCat='all';
 
+  // Map from glossary key → data-prof filter key (for entries that differ)
+  var GLOSS_TO_FILTER = {
+    'адвокат':'юрист','рабин':'священник','православний священник':'священник',
+    'диякон':'священник','чоботар':'швець','халявник':'швець','гарбар':'кушнір',
+    'канцелярист':'урядовець','писар':'урядовець','купець':'торгівля',
+    'помічник торговця':'торгівля','власник готелю':'власник',
+    'власник аптеки':'власник','директор банку':'власник'
+  };
+
   function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+  function filterByProf(profName){
+    var filterKey=GLOSS_TO_FILTER[profName]||profName;
+    var btn=document.querySelector('[data-prof="'+filterKey+'"]');
+    if(!btn) return false;
+    document.querySelectorAll('[data-prof]').forEach(function(b){b.classList.remove('on');});
+    btn.classList.add('on');
+    btn.dispatchEvent(new MouseEvent('click',{bubbles:true}));
+    var reg=document.querySelector('.vbr');
+    if(reg) reg.scrollIntoView({behavior:'smooth',block:'start'});
+    return true;
+  }
 
   function render(){
     var grid=document.getElementById('vbgGrid');
@@ -692,12 +722,15 @@ fetch('voters.json')
     var h='';
     entries.forEach(function(kv){
       var p=kv[1];
+      var profKey=kv[0];
+      var filterKey=GLOSS_TO_FILTER[profKey]||profKey;
+      var hasFilter=!!document.querySelector('[data-prof="'+filterKey+'"]');
       var countLbl=p.count>0?p.count+' '+(p.count===1?'особа':p.count<5?'особи':'осіб'):'';
-      h+='<div class="vbg-card">'
+      h+='<div class="vbg-card'+(hasFilter?'':' no-filter')+'" data-profkey="'+esc(profKey)+'">'
         +'<div class="vbg-card-top">'
         +'<div class="vbg-icon">'+p.icon+'</div>'
         +'<div class="vbg-card-titles">'
-        +'<div class="vbg-prof-name">'+esc(kv[0])+'</div>'
+        +'<div class="vbg-prof-name">'+esc(profKey)+'</div>'
         +'<div class="vbg-prof-pl">'+esc(p.pl)+'</div>'
         +'</div>'
         +(countLbl?'<div class="vbg-badge">'+countLbl+'</div>':'')
@@ -705,9 +738,16 @@ fetch('voters.json')
         +'<div class="vbg-divider"></div>'
         +'<div class="vbg-short">'+esc(p.short)+'</div>'
         +'<div class="vbg-desc">'+p.desc+'</div>'
+        +(hasFilter?'<div class="vbg-filter-hint">🔍 Показати у реєстрі ↑</div>':'')
         +'</div>';
     });
     grid.innerHTML=h;
+
+    grid.querySelectorAll('.vbg-card:not(.no-filter)').forEach(function(card){
+      card.addEventListener('click',function(){
+        filterByProf(this.getAttribute('data-profkey'));
+      });
+    });
   }
 
   document.querySelectorAll('#vbgFilters .vbg-fp').forEach(function(btn){
