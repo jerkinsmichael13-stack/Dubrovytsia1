@@ -264,7 +264,7 @@
 ══════════════════════════════════════════════ */
 .ph-back {
     position: fixed; inset: 0;
-    background: rgba(8,6,4,.75); backdrop-filter: blur(5px);
+    background: rgba(8,6,4,.78); backdrop-filter: blur(5px);
     z-index: 900; display: flex; align-items: center; justify-content: center;
     padding: 1rem;
     opacity: 0; pointer-events: none; transition: opacity .25s ease;
@@ -274,96 +274,136 @@
     background: var(--color-bg);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-xl);
-    width: 100%; max-width: 760px; max-height: 92vh;
+    width: 100%; max-width: 1020px; max-height: 94vh;
     overflow-y: auto; scrollbar-width: thin;
-    box-shadow: 0 40px 100px rgba(0,0,0,.45);
+    box-shadow: 0 40px 100px rgba(0,0,0,.5);
     transform: translateY(28px) scale(.97);
     transition: transform .35s cubic-bezier(.16,1,.3,1);
 }
 .ph-back.open .ph-modal { transform: none; }
 
-/* banner */
+/* banner — tall, crisp */
 .ph-mbanner {
-    position: relative; height: 240px; overflow: hidden;
-    background: var(--color-bg-secondary);
+    position: relative; height: 300px; overflow: hidden;
+    background: #0a0806;
     border-radius: var(--radius-xl) var(--radius-xl) 0 0;
     flex-shrink: 0;
 }
 .ph-mbanner-img {
     position: absolute; inset: 0; width: 100%; height: 100%;
-    object-fit: cover;
-    filter: sepia(.2) brightness(.72) contrast(1.05);
+    object-fit: cover; object-position: center top;
+    filter: sepia(.15) brightness(.65) contrast(1.1);
     cursor: zoom-in;
-    transition: transform .6s ease;
+    transition: transform .7s ease;
 }
-.ph-mbanner-img:hover { transform: scale(1.04); }
+.ph-mbanner-img:hover { transform: scale(1.03); }
 .ph-mbanner-ph {
     position: absolute; inset: 0;
     display: flex; align-items: center; justify-content: center;
-    font-family: var(--font-display); font-size: 6rem; font-weight: 300;
-    color: var(--color-accent); opacity: .1;
+    font-family: var(--font-display); font-size: 7rem; font-weight: 300;
+    color: var(--color-accent); opacity: .08;
 }
+/* gradient only at bottom so top of image stays readable */
 .ph-mbanner-grad {
-    position: absolute; bottom: 0; left: 0; right: 0; height: 140px;
-    background: linear-gradient(transparent, var(--color-bg));
+    position: absolute; bottom: 0; left: 0; right: 0; height: 160px;
+    background: linear-gradient(transparent 0%, rgba(8,6,4,.55) 60%, var(--color-bg) 100%);
     pointer-events: none;
 }
+/* year + source bottom-left, large and readable */
 .ph-mbanner-info {
-    position: absolute; bottom: 1.25rem; left: 1.5rem; right: 4rem; z-index: 2;
+    position: absolute; bottom: 1.5rem; left: 2rem; right: 5rem; z-index: 2;
 }
 .ph-mbanner-year {
     display: block; font-family: var(--font-display);
-    font-size: 3.2rem; font-weight: 300; font-style: italic;
-    color: rgba(255,255,255,.42); line-height: 1;
-    text-shadow: 0 2px 16px rgba(0,0,0,.5);
+    font-size: 5rem; font-weight: 300; font-style: italic; line-height: .95;
+    color: rgba(255,255,255,.22);
+    text-shadow: none; letter-spacing: -.02em;
 }
-.ph-mbanner-src { display: block; font-size: .75rem; font-style: italic; color: rgba(255,255,255,.5); margin-top: .1rem; text-shadow: 0 1px 8px rgba(0,0,0,.6); }
+.ph-mbanner-src {
+    display: block; font-size: .82rem; font-weight: 500;
+    font-style: italic; letter-spacing: .02em;
+    color: rgba(255,255,255,.75);
+    text-shadow: 0 1px 6px rgba(0,0,0,.8);
+    margin-top: .2rem;
+}
+.ph-mbanner-date {
+    display: block; font-size: .7rem; font-weight: 400;
+    letter-spacing: .08em; text-transform: uppercase;
+    color: rgba(201,162,39,.8);
+    text-shadow: 0 1px 6px rgba(0,0,0,.8);
+    margin-top: .15rem;
+}
 .ph-mclose {
     position: absolute; top: 1rem; right: 1rem; z-index: 3;
-    width: 34px; height: 34px; border-radius: 50%;
-    background: rgba(8,6,4,.6); backdrop-filter: blur(6px);
-    border: 1px solid rgba(255,255,255,.14); color: rgba(255,255,255,.75);
+    width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(8,6,4,.65); backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,.18); color: rgba(255,255,255,.8);
     font-size: .9rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
     transition: all var(--transition-fast);
 }
-.ph-mclose:hover { background: rgba(8,6,4,.9); color: #fff; }
+.ph-mclose:hover { background: rgba(8,6,4,.92); color: #fff; }
 
 /* body */
-.ph-mbody { padding: 1.5rem 1.75rem 2rem; }
+.ph-mbody { padding: 1.75rem 2rem 2.25rem; }
 .ph-mh {
-    font-family: var(--font-display); font-size: 1.7rem; font-weight: 600;
-    line-height: 1.2; color: var(--color-text); margin-bottom: .3rem;
+    font-family: var(--font-display); font-size: 1.9rem; font-weight: 600;
+    line-height: 1.15; color: var(--color-text); margin-bottom: .3rem;
 }
-.ph-msh { font-family: var(--font-display); font-size: 1.05rem; font-weight: 400; font-style: italic; color: var(--color-text-light); margin-bottom: .75rem; }
+.ph-msh { font-family: var(--font-display); font-size: 1.1rem; font-weight: 400; font-style: italic; color: var(--color-text-light); margin-bottom: .75rem; }
 .ph-mmeta { display: flex; align-items: center; gap: .45rem; flex-wrap: wrap; margin-bottom: 1.75rem; }
 .ph-mmeta span { font-size: .78rem; color: var(--color-text-light); }
 .ph-mmeta .acc { color: var(--color-accent); font-weight: 600; }
 .ph-mmeta .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--color-border); flex-shrink: 0; }
 
+/* two-column text layout */
+.ph-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    align-items: start;
+}
+@media (max-width: 720px) { .ph-cols { grid-template-columns: 1fr; } }
+
+.ph-col-orig, .ph-col-transl { display: flex; flex-direction: column; }
+
 .ph-slbl {
-    font-size: .64rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+    font-size: .63rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
     color: var(--color-text-muted);
-    display: flex; align-items: center; gap: .75rem; margin-bottom: .7rem;
+    display: flex; align-items: center; gap: .6rem; margin-bottom: .65rem;
 }
 .ph-slbl::after { content: ''; flex: 1; height: 1px; background: var(--color-border-light); }
 
 .ph-orig {
     background: var(--color-bg-alt); border: 1px solid var(--color-border-light);
     border-radius: var(--radius-md);
-    padding: 1.125rem 1.375rem;
-    font-family: var(--font-display); font-size: .93rem; font-style: italic;
+    padding: 1rem 1.25rem;
+    font-family: var(--font-display); font-size: .9rem; font-style: italic;
     color: var(--color-text-secondary); line-height: 1.85;
-    margin-bottom: 1.375rem; white-space: pre-wrap; word-break: break-word;
+    white-space: pre-wrap; word-break: break-word;
+    height: 100%;
 }
 .ph-transl {
-    background: rgba(44,95,63,.045);
+    background: rgba(44,95,63,.04);
     border-left: 3px solid var(--color-primary);
     border-radius: 0 var(--radius-md) var(--radius-md) 0;
-    padding: 1.125rem 1.375rem;
+    padding: 1rem 1.25rem;
+    font-size: .9rem; color: var(--color-text); line-height: 1.85;
+    white-space: pre-wrap; word-break: break-word;
+    height: 100%;
+}
+[data-theme="dark"] .ph-transl { background: rgba(44,95,63,.09); }
+
+/* single column fallback when no original */
+.ph-transl-full {
+    background: rgba(44,95,63,.04);
+    border-left: 3px solid var(--color-primary);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    padding: 1rem 1.25rem;
     font-size: .9rem; color: var(--color-text); line-height: 1.85;
     margin-bottom: 1.5rem; white-space: pre-wrap; word-break: break-word;
 }
-[data-theme="dark"] .ph-transl { background: rgba(44,95,63,.09); }
+[data-theme="dark"] .ph-transl-full { background: rgba(44,95,63,.09); }
 
 .ph-mtags { display: flex; gap: .35rem; flex-wrap: wrap; margin-bottom: 1.375rem; }
 
@@ -513,6 +553,7 @@
             <div class="ph-mbanner-info">
                 <span class="ph-mbanner-year" id="phMY"></span>
                 <span class="ph-mbanner-src" id="phMS"></span>
+                <span class="ph-mbanner-date" id="phMD"></span>
             </div>
             <button class="ph-mclose" id="phMX" aria-label="Закрити">✕</button>
         </div>
@@ -704,6 +745,7 @@ function modal(d){
     if(oldImg)oldImg.remove();
     document.getElementById('phMY').textContent=d.year;
     document.getElementById('phMS').textContent=d.source;
+    document.getElementById('phMD').textContent=fd(d.date);
     if(d.imageUrl){
         const img=document.createElement('img');
         img.className='ph-mbanner-img mb-img';
@@ -715,6 +757,22 @@ function modal(d){
     /* body */
     const ll=LF[d.language]||d.language;
     const tags=(d.tags||[]).map(t=>`<span class="ph-tag">${t}</span>`).join('');
+
+    /* two-column or single depending on whether original exists */
+    const textBlock = d.original
+        ? `<div class="ph-cols">
+            <div class="ph-col-orig">
+                <div class="ph-slbl">${FL[d.language]||''} Оригінал (${ll})</div>
+                <div class="ph-orig">${esc(d.original)}</div>
+            </div>
+            <div class="ph-col-transl">
+                <div class="ph-slbl">🇺🇦 Переклад українською</div>
+                <div class="ph-transl">${esc(d.translation||'')}</div>
+            </div>
+           </div>`
+        : `<div class="ph-slbl">🇺🇦 Переклад українською</div>
+           <div class="ph-transl-full">${esc(d.translation||'')}</div>`;
+
     document.getElementById('phMB').innerHTML=`
         <h2 class="ph-mh">${d.headline}</h2>
         ${d.subheadline?`<p class="ph-msh">${d.subheadline}</p>`:''}
@@ -727,11 +785,7 @@ function modal(d){
             ${d.volume?`<span class="dot"></span><span style="font-size:.72rem">${d.volume}</span>`:''}
             ${d.page?`<span class="dot"></span><span>стор. ${d.page}</span>`:''}
         </div>
-        ${d.original?`
-        <div class="ph-slbl">${FL[d.language]||''} Оригінал (${ll})</div>
-        <div class="ph-orig">${esc(d.original)}</div>`:''}
-        <div class="ph-slbl">🇺🇦 Переклад українською</div>
-        <div class="ph-transl">${esc(d.translation||'')}</div>
+        ${textBlock}
         ${tags?`<div class="ph-mtags">${tags}</div>`:''}
         <div class="ph-mactions">
             ${d.sourceUrl?`<a href="${d.sourceUrl}" target="_blank" rel="noopener" class="ph-btn ph-btn-p">
