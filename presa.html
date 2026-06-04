@@ -262,9 +262,12 @@
 /* ══════════════════════════════════════════════
    MODAL
 ══════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════
+   MODAL
+══════════════════════════════════════════════ */
 .ph-back {
     position: fixed; inset: 0;
-    background: rgba(8,6,4,.78); backdrop-filter: blur(5px);
+    background: rgba(8,6,4,.8); backdrop-filter: blur(5px);
     z-index: 900; display: flex; align-items: center; justify-content: center;
     padding: 1rem;
     opacity: 0; pointer-events: none; transition: opacity .25s ease;
@@ -276,75 +279,33 @@
     border-radius: var(--radius-xl);
     width: 100%; max-width: 1020px; max-height: 94vh;
     overflow-y: auto; scrollbar-width: thin;
-    box-shadow: 0 40px 100px rgba(0,0,0,.5);
+    box-shadow: 0 40px 100px rgba(0,0,0,.55);
     transform: translateY(28px) scale(.97);
     transition: transform .35s cubic-bezier(.16,1,.3,1);
 }
 .ph-back.open .ph-modal { transform: none; }
 
-/* banner — tall, crisp */
-.ph-mbanner {
-    position: relative; height: 300px; overflow: hidden;
-    background: #0a0806;
-    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
-    flex-shrink: 0;
-}
-.ph-mbanner-img {
-    position: absolute; inset: 0; width: 100%; height: 100%;
-    object-fit: cover; object-position: center top;
-    filter: sepia(.15) brightness(.65) contrast(1.1);
-    cursor: zoom-in;
-    transition: transform .7s ease;
-}
-.ph-mbanner-img:hover { transform: scale(1.03); }
-.ph-mbanner-ph {
-    position: absolute; inset: 0;
-    display: flex; align-items: center; justify-content: center;
-    font-family: var(--font-display); font-size: 7rem; font-weight: 300;
-    color: var(--color-accent); opacity: .08;
-}
-/* gradient only at bottom so top of image stays readable */
-.ph-mbanner-grad {
-    position: absolute; bottom: 0; left: 0; right: 0; height: 160px;
-    background: linear-gradient(transparent 0%, rgba(8,6,4,.55) 60%, var(--color-bg) 100%);
-    pointer-events: none;
-}
-/* year + source bottom-left, large and readable */
-.ph-mbanner-info {
-    position: absolute; bottom: 1.5rem; left: 2rem; right: 5rem; z-index: 2;
-}
-.ph-mbanner-year {
-    display: block; font-family: var(--font-display);
-    font-size: 5rem; font-weight: 300; font-style: italic; line-height: .95;
-    color: rgba(255,255,255,.22);
-    text-shadow: none; letter-spacing: -.02em;
-}
-.ph-mbanner-src {
-    display: block; font-size: .82rem; font-weight: 500;
-    font-style: italic; letter-spacing: .02em;
-    color: rgba(255,255,255,.75);
-    text-shadow: 0 1px 6px rgba(0,0,0,.8);
-    margin-top: .2rem;
-}
-.ph-mbanner-date {
-    display: block; font-size: .7rem; font-weight: 400;
-    letter-spacing: .08em; text-transform: uppercase;
-    color: rgba(201,162,39,.8);
-    text-shadow: 0 1px 6px rgba(0,0,0,.8);
-    margin-top: .15rem;
+/* sticky close header */
+.ph-mhead {
+    position: sticky; top: 0; z-index: 10;
+    display: flex; justify-content: flex-end;
+    padding: .875rem 1rem .5rem;
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-border-light);
 }
 .ph-mclose {
-    position: absolute; top: 1rem; right: 1rem; z-index: 3;
-    width: 36px; height: 36px; border-radius: 50%;
-    background: rgba(8,6,4,.65); backdrop-filter: blur(6px);
-    border: 1px solid rgba(255,255,255,.18); color: rgba(255,255,255,.8);
-    font-size: .9rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    width: 34px; height: 34px; border-radius: 50%;
+    background: var(--color-bg-alt);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-secondary);
+    font-size: .9rem; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
     transition: all var(--transition-fast);
 }
-.ph-mclose:hover { background: rgba(8,6,4,.92); color: #fff; }
+.ph-mclose:hover { background: var(--color-bg-secondary); color: var(--color-text); border-color: var(--color-border-hover); }
 
 /* body */
-.ph-mbody { padding: 1.75rem 2rem 2.25rem; }
+.ph-mbody { padding: 1.75rem 2rem 0; }
 .ph-mh {
     font-family: var(--font-display); font-size: 1.9rem; font-weight: 600;
     line-height: 1.15; color: var(--color-text); margin-bottom: .3rem;
@@ -355,16 +316,12 @@
 .ph-mmeta .acc { color: var(--color-accent); font-weight: 600; }
 .ph-mmeta .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--color-border); flex-shrink: 0; }
 
-/* two-column text layout */
+/* two-column text */
 .ph-cols {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-    margin-bottom: 1.5rem;
-    align-items: start;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1.5rem; margin-bottom: 1.5rem; align-items: start;
 }
 @media (max-width: 720px) { .ph-cols { grid-template-columns: 1fr; } }
-
 .ph-col-orig, .ph-col-transl { display: flex; flex-direction: column; }
 
 .ph-slbl {
@@ -376,30 +333,21 @@
 
 .ph-orig {
     background: var(--color-bg-alt); border: 1px solid var(--color-border-light);
-    border-radius: var(--radius-md);
-    padding: 1rem 1.25rem;
+    border-radius: var(--radius-md); padding: 1rem 1.25rem;
     font-family: var(--font-display); font-size: .9rem; font-style: italic;
     color: var(--color-text-secondary); line-height: 1.85;
-    white-space: pre-wrap; word-break: break-word;
-    height: 100%;
+    white-space: pre-wrap; word-break: break-word; height: 100%;
 }
 .ph-transl {
-    background: rgba(44,95,63,.04);
-    border-left: 3px solid var(--color-primary);
-    border-radius: 0 var(--radius-md) var(--radius-md) 0;
-    padding: 1rem 1.25rem;
+    background: rgba(44,95,63,.04); border-left: 3px solid var(--color-primary);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0; padding: 1rem 1.25rem;
     font-size: .9rem; color: var(--color-text); line-height: 1.85;
-    white-space: pre-wrap; word-break: break-word;
-    height: 100%;
+    white-space: pre-wrap; word-break: break-word; height: 100%;
 }
 [data-theme="dark"] .ph-transl { background: rgba(44,95,63,.09); }
-
-/* single column fallback when no original */
 .ph-transl-full {
-    background: rgba(44,95,63,.04);
-    border-left: 3px solid var(--color-primary);
-    border-radius: 0 var(--radius-md) var(--radius-md) 0;
-    padding: 1rem 1.25rem;
+    background: rgba(44,95,63,.04); border-left: 3px solid var(--color-primary);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0; padding: 1rem 1.25rem;
     font-size: .9rem; color: var(--color-text); line-height: 1.85;
     margin-bottom: 1.5rem; white-space: pre-wrap; word-break: break-word;
 }
@@ -409,8 +357,41 @@
 
 .ph-mactions {
     display: flex; gap: .75rem; flex-wrap: wrap;
-    padding-top: 1.25rem; border-top: 1px solid var(--color-border-light);
+    padding: 1.25rem 0; border-top: 1px solid var(--color-border-light);
 }
+
+/* ── photo at bottom ── */
+.ph-mphoto {
+    margin: 1.5rem -2rem 0;
+    position: relative; overflow: hidden;
+    background: #06050300;
+    cursor: zoom-in;
+}
+.ph-mphoto img {
+    display: block; width: 100%;
+    max-height: 600px; object-fit: contain;
+    filter: sepia(.1) contrast(1.05);
+    transition: filter .4s ease;
+    background: var(--color-bg-alt);
+}
+.ph-mphoto:hover img { filter: sepia(0) contrast(1.08); }
+.ph-mphoto-cap {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: .75rem 1.5rem;
+    background: linear-gradient(transparent, rgba(8,6,4,.6));
+    display: flex; align-items: center; justify-content: space-between;
+    pointer-events: none;
+}
+.ph-mphoto-cap span {
+    font-size: .72rem; font-style: italic; color: rgba(255,255,255,.65);
+    text-shadow: 0 1px 4px rgba(0,0,0,.6);
+}
+.ph-mphoto-zoom {
+    display: flex; align-items: center; gap: .3rem;
+    font-size: .68rem; font-weight: 500; letter-spacing: .07em; text-transform: uppercase;
+    color: rgba(201,162,39,.85); text-shadow: 0 1px 4px rgba(0,0,0,.6);
+}
+
 .ph-btn {
     height: 40px; padding: 0 1.25rem;
     border-radius: var(--radius-md); font-size: .82rem; font-weight: 500;
@@ -452,9 +433,9 @@
     .ph-stat-div { display: none; }
     .ph-grid { grid-template-columns: 1fr; }
     .ph-bar { top: 56px; }
-    .ph-mbanner { height: 170px; }
     .ph-mh { font-size: 1.35rem; }
-    .ph-mbody { padding: 1.25rem 1.25rem 1.5rem; }
+    .ph-mbody { padding: 1.25rem 1.25rem 0; }
+    .ph-mphoto { margin: 1.25rem -1.25rem 0; }
 }
 </style>
 </head>
@@ -547,14 +528,7 @@
 
 <div class="ph-back" id="phBack" role="dialog" aria-modal="true">
     <div class="ph-modal" id="phMod">
-        <div class="ph-mbanner" id="phMBan">
-            <div class="ph-mbanner-ph">Дб</div>
-            <div class="ph-mbanner-grad"></div>
-            <div class="ph-mbanner-info">
-                <span class="ph-mbanner-year" id="phMY"></span>
-                <span class="ph-mbanner-src" id="phMS"></span>
-                <span class="ph-mbanner-date" id="phMD"></span>
-            </div>
+        <div class="ph-mhead">
             <button class="ph-mclose" id="phMX" aria-label="Закрити">✕</button>
         </div>
         <div class="ph-mbody" id="phMB"></div>
@@ -739,26 +713,10 @@ function open(id){
 }
 
 function modal(d){
-    /* banner */
-    const ban=document.getElementById('phMBan');
-    const oldImg=ban.querySelector('.mb-img');
-    if(oldImg)oldImg.remove();
-    document.getElementById('phMY').textContent=d.year;
-    document.getElementById('phMS').textContent=d.source;
-    document.getElementById('phMD').textContent=fd(d.date);
-    if(d.imageUrl){
-        const img=document.createElement('img');
-        img.className='ph-mbanner-img mb-img';
-        img.alt=d.headline;
-        img.onclick=()=>lb(d.imageUrl);
-        img.src=d.imageUrl;
-        ban.insertBefore(img,ban.querySelector('.ph-mbanner-grad'));
-    }
     /* body */
     const ll=LF[d.language]||d.language;
     const tags=(d.tags||[]).map(t=>`<span class="ph-tag">${t}</span>`).join('');
 
-    /* two-column or single depending on whether original exists */
     const textBlock = d.original
         ? `<div class="ph-cols">
             <div class="ph-col-orig">
@@ -772,6 +730,19 @@ function modal(d){
            </div>`
         : `<div class="ph-slbl">🇺🇦 Переклад українською</div>
            <div class="ph-transl-full">${esc(d.translation||'')}</div>`;
+
+    const photoBlock = d.imageUrl
+        ? `<div class="ph-mphoto" onclick="phLbOpen('${d.imageUrl}')">
+               <img src="${d.imageUrl}" alt="${d.headline}">
+               <div class="ph-mphoto-cap">
+                   <span>${d.source}, ${d.year}${d.page ? ', стор. '+d.page : ''}</span>
+                   <span class="ph-mphoto-zoom">
+                       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                       Збільшити
+                   </span>
+               </div>
+           </div>`
+        : '';
 
     document.getElementById('phMB').innerHTML=`
         <h2 class="ph-mh">${d.headline}</h2>
@@ -791,24 +762,26 @@ function modal(d){
             ${d.sourceUrl?`<a href="${d.sourceUrl}" target="_blank" rel="noopener" class="ph-btn ph-btn-p">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
                 Джерело оригіналу</a>`:''}
-            ${d.imageUrl?`<button class="ph-btn ph-btn-g" onclick="lb('${d.imageUrl}')">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
-                Збільшити фото</button>`:''}
-            <button class="ph-btn ph-btn-g" onclick="close()">Закрити</button>
-        </div>`;
+            <button class="ph-btn ph-btn-g" onclick="phClose()">Закрити</button>
+        </div>
+        ${photoBlock}`;
+
+    /* scroll modal to top */
+    document.getElementById('phMod').scrollTop = 0;
 }
 
 function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-function close(){document.getElementById('phBack').classList.remove('open');document.body.style.overflow='';}
-function lb(url){document.getElementById('phLbI').src=url;document.getElementById('phLb').classList.add('open');}
+function phClose(){document.getElementById('phBack').classList.remove('open');document.body.style.overflow='';}
+function phLbOpen(url){document.getElementById('phLbI').src=url;document.getElementById('phLb').classList.add('open');}
+function phLbClose(){document.getElementById('phLb').classList.remove('open');}
 
 /* events */
-document.getElementById('phMX').addEventListener('click',close);
-document.getElementById('phBack').addEventListener('click',e=>{if(e.target===document.getElementById('phBack'))close();});
-document.getElementById('phLb').addEventListener('click',e=>{if(e.target!==document.getElementById('phLbI'))document.getElementById('phLb').classList.remove('open');});
-document.getElementById('phLbX').addEventListener('click',()=>document.getElementById('phLb').classList.remove('open'));
+document.getElementById('phMX').addEventListener('click', phClose);
+document.getElementById('phBack').addEventListener('click',e=>{if(e.target===document.getElementById('phBack'))phClose();});
+document.getElementById('phLb').addEventListener('click',e=>{if(e.target!==document.getElementById('phLbI'))phLbClose();});
+document.getElementById('phLbX').addEventListener('click', phLbClose);
 document.addEventListener('keydown',e=>{
-    if(e.key==='Escape'){close();document.getElementById('phLb').classList.remove('open');}
+    if(e.key==='Escape'){phClose();phLbClose();}
 });
 
 let st;
