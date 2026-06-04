@@ -1,14 +1,8 @@
 <!DOCTYPE html>
 <html lang="uk" data-theme="light">
 <head>
-<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-WGBZ0BD23K"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-WGBZ0BD23K');
-</script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WGBZ0BD23K');</script>
 <meta charset="UTF-8">
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
@@ -16,540 +10,416 @@
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <link rel="manifest" href="site.webmanifest">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Газетний архів — згадки про Дубровицю у пресі. Польські, російські та українські газети 1860–1990 рр.">
-<meta name="keywords" content="Дубровиця, газети, архів преси, Волинь, Полісся">
+<meta name="description" content="Газетний архів — згадки про Дубровицю у пресі 1860–1990 рр.">
 <title>Дубровиця у пресі — Газетний архів</title>
 <script>!function(){var t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t)}()</script>
 <link rel="stylesheet" href="app.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
 <style>
-
-/* ═══════════════════════════════════════
-   PRESS HERO — кінематографічна версія
-═══════════════════════════════════════ */
+/* ══════════════════════════════════════════════
+   HERO — cinematic dark, як history.html
+══════════════════════════════════════════════ */
 .ph-hero {
     position: relative;
-    min-height: 520px;
+    min-height: 540px;
     display: flex; flex-direction: column;
     justify-content: center; align-items: center;
-    overflow: hidden;
-    background: #09070500;
+    overflow: hidden; background: #080604;
 }
 .ph-hero-bg {
     position: absolute; inset: 0;
     background-image: url('https://i.imgur.com/kTYK0h1.jpeg');
-    background-size: cover;
-    background-position: center 40%;
-    filter: brightness(0.28) contrast(1.1) saturate(0.4) sepia(0.3);
-    z-index: 0;
-    transform: scale(1.04);
-    transition: transform 14s ease-out;
+    background-size: cover; background-position: center 35%;
+    filter: brightness(.24) contrast(1.12) saturate(.35) sepia(.25);
+    z-index: 0; transform: scale(1.05);
+    transition: transform 14s ease-out, opacity .8s ease;
+    opacity: 0;
 }
-.ph-hero.loaded .ph-hero-bg { transform: scale(1); }
-.ph-hero-vignette {
+.ph-hero.loaded .ph-hero-bg { transform: scale(1); opacity: 1; }
+.ph-hero-vig {
     position: absolute; inset: 0; z-index: 1; pointer-events: none;
-    background: radial-gradient(ellipse 85% 70% at 50% 50%, transparent 0%, rgba(4,3,2,.55) 100%);
+    background: radial-gradient(ellipse 90% 75% at 50% 50%, transparent 0%, rgba(4,3,2,.6) 100%);
 }
 .ph-hero-grain {
     position: absolute; inset: -60px;
     width: calc(100% + 120px); height: calc(100% + 120px);
-    opacity: .045; pointer-events: none; z-index: 2;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: .042; pointer-events: none; z-index: 2;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
     background-size: 200px 200px;
-    animation: ph-grain .5s steps(1) infinite;
+    animation: phgrain .5s steps(1) infinite;
 }
-@keyframes ph-grain {
+@keyframes phgrain {
     0%{transform:translate(0,0)} 20%{transform:translate(-4px,-5px)} 40%{transform:translate(5px,3px)}
     60%{transform:translate(-3px,6px)} 80%{transform:translate(6px,-3px)} 100%{transform:translate(2px,-6px)}
 }
 .ph-hero-scan {
     position: absolute; inset: 0; z-index: 2; pointer-events: none;
-    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,.03) 2px, rgba(0,0,0,.03) 4px);
-    opacity: .4;
+    background: repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.025) 2px,rgba(0,0,0,.025) 4px);
 }
 .ph-hero-content {
     position: relative; z-index: 3;
-    text-align: center; padding: 5rem 1.5rem 4rem;
-    max-width: 680px; margin: 0 auto;
+    text-align: center; padding: 5.5rem 1.5rem 4.5rem;
+    max-width: 660px; margin: 0 auto;
 }
 .ph-eyebrow {
     display: flex; align-items: center; justify-content: center;
     gap: .75rem; margin-bottom: 1.5rem;
 }
-.ph-eyebrow-line { width: 36px; height: 1px; background: rgba(201,162,39,.5); }
+.ph-eyebrow-line { width: 36px; height: 1px; background: rgba(201,162,39,.45); }
 .ph-eyebrow span {
     font-family: var(--font-body);
-    font-size: .68rem; font-weight: 500;
-    letter-spacing: .14em; text-transform: uppercase;
-    color: rgba(201,162,39,.7);
+    font-size: .67rem; font-weight: 500; letter-spacing: .15em;
+    text-transform: uppercase; color: rgba(201,162,39,.65);
 }
 .ph-title {
     font-family: var(--font-display);
-    font-size: clamp(2.8rem, 6vw, 4.8rem);
-    font-weight: 300; line-height: 1.0;
-    letter-spacing: -.025em;
-    color: #f5ede0;
-    margin-bottom: .6rem;
+    font-size: clamp(3rem, 6vw, 5rem);
+    font-weight: 300; line-height: .98; letter-spacing: -.025em;
+    color: #f2e8d8; margin-bottom: .65rem;
 }
 .ph-title em { font-style: italic; color: #c9a227; }
-.ph-subtitle {
-    font-size: .95rem; color: rgba(245,237,224,.55);
-    line-height: 1.7; margin-bottom: 2.5rem;
-    max-width: 440px; margin-left: auto; margin-right: auto;
+.ph-sub {
+    font-size: .93rem; color: rgba(242,232,216,.48);
+    line-height: 1.75; margin-bottom: 2.75rem;
+    max-width: 420px; margin-left: auto; margin-right: auto;
 }
-.ph-ornament {
+.ph-orn {
     display: flex; align-items: center; justify-content: center;
     gap: .5rem; margin-bottom: 2.5rem;
 }
-.ph-ornament-line { width: 32px; height: 1px; background: rgba(201,162,39,.3); }
-.ph-ornament-dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(201,162,39,.5); }
-.ph-ornament-diamond {
-    width: 6px; height: 6px;
-    border: 1px solid rgba(201,162,39,.6);
-    transform: rotate(45deg);
-}
+.ph-orn-line { width: 30px; height: 1px; background: rgba(201,162,39,.28); }
+.ph-orn-dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(201,162,39,.45); }
+.ph-orn-diamond { width: 6px; height: 6px; border: 1px solid rgba(201,162,39,.55); transform: rotate(45deg); }
 .ph-stats {
     display: flex; align-items: center; justify-content: center;
     gap: 2.5rem; flex-wrap: wrap;
 }
 .ph-stat { text-align: center; }
-.ph-stat-num {
-    display: block;
-    font-family: var(--font-display);
-    font-size: 2.2rem; font-weight: 300;
-    color: #c9a227; line-height: 1;
+.ph-stat-n {
+    display: block; font-family: var(--font-display);
+    font-size: 2.4rem; font-weight: 300; color: #c9a227; line-height: 1;
 }
-.ph-stat-lbl {
+.ph-stat-l {
     display: block; margin-top: .3rem;
-    font-size: .65rem; font-weight: 500;
-    letter-spacing: .1em; text-transform: uppercase;
-    color: rgba(245,237,224,.4);
+    font-size: .62rem; font-weight: 500; letter-spacing: .12em;
+    text-transform: uppercase; color: rgba(242,232,216,.35);
 }
-.ph-stat-div { width: 1px; height: 40px; background: rgba(201,162,39,.2); }
+.ph-stat-div { width: 1px; height: 42px; background: rgba(201,162,39,.18); }
 
-/* ═══════════════════════════════════════
-   CONTROLS BAR
-═══════════════════════════════════════ */
-.ph-controls {
+/* ══════════════════════════════════════════════
+   CONTROLS
+══════════════════════════════════════════════ */
+.ph-bar {
     background: var(--color-bg);
     border-bottom: 1px solid var(--color-border-light);
     padding: 1rem 0;
-    position: sticky; top: 62px; z-index: 40;
+    position: sticky; top: 76px; z-index: 40;
     transition: box-shadow var(--transition-fast);
 }
-.ph-controls.scrolled { box-shadow: var(--shadow-sm); }
-.ph-controls-inner {
-    display: flex; gap: .75rem; align-items: center; flex-wrap: wrap;
+.ph-bar.scrolled { box-shadow: var(--shadow-sm); }
+.ph-bar-inner { display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; }
+.ph-sw { flex: 1; min-width: 220px; position: relative; }
+.ph-sw svg { position: absolute; left: .875rem; top: 50%; transform: translateY(-50%); color: var(--color-text-muted); pointer-events: none; }
+.ph-si {
+    width: 100%; height: 40px; padding: 0 1rem 0 2.6rem;
+    background: var(--color-bg-card); border: 1px solid var(--color-border);
+    border-radius: var(--radius-full); font-size: .875rem; color: var(--color-text);
+    outline: none; transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
-.ph-search-wrap { flex: 1; min-width: 220px; position: relative; }
-.ph-search-ico {
-    position: absolute; left: .875rem; top: 50%;
-    transform: translateY(-50%);
-    color: var(--color-text-muted); pointer-events: none;
-}
-.ph-search {
-    width: 100%; height: 40px;
-    padding: 0 1rem 0 2.5rem;
-    background: var(--color-bg-card);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-full);
-    font-size: .875rem; color: var(--color-text);
-    outline: none;
-    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
-}
-.ph-search::placeholder { color: var(--color-text-muted); }
-.ph-search:focus {
-    border-color: var(--color-accent);
-    box-shadow: 0 0 0 3px rgba(201,162,39,.12);
-}
-.ph-filters { display: flex; gap: .4rem; flex-wrap: wrap; }
-.ph-fbtn {
+.ph-si::placeholder { color: var(--color-text-muted); }
+.ph-si:focus { border-color: var(--color-accent); box-shadow: 0 0 0 3px rgba(201,162,39,.12); }
+.ph-flt { display: flex; gap: .35rem; flex-wrap: wrap; }
+.ph-fb {
     height: 32px; padding: 0 .875rem;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-full);
-    background: transparent;
-    font-size: .75rem; color: var(--color-text-secondary);
-    cursor: pointer; white-space: nowrap;
-    transition: all var(--transition-fast);
+    border: 1px solid var(--color-border); border-radius: var(--radius-full);
+    background: transparent; font-size: .75rem; color: var(--color-text-secondary);
+    cursor: pointer; white-space: nowrap; transition: all var(--transition-fast);
 }
-.ph-fbtn:hover { border-color: var(--color-accent); color: var(--color-accent); background: rgba(201,162,39,.05); }
-.ph-fbtn.active { background: var(--color-accent); border-color: var(--color-accent); color: #fff; }
-.ph-count {
-    font-size: .8rem; color: var(--color-text-muted);
-    white-space: nowrap; margin-left: auto;
-}
-.ph-count b { color: var(--color-primary); font-weight: 600; }
+.ph-fb:hover { border-color: var(--color-accent); color: var(--color-accent); background: rgba(201,162,39,.05); }
+.ph-fb.on { background: var(--color-accent); border-color: var(--color-accent); color: #1a1000; font-weight: 600; }
+.ph-cnt { font-size: .8rem; color: var(--color-text-muted); white-space: nowrap; margin-left: auto; }
+.ph-cnt b { color: var(--color-primary); font-weight: 600; }
 
-/* ═══════════════════════════════════════
-   MAIN CONTENT
-═══════════════════════════════════════ */
+/* ══════════════════════════════════════════════
+   MAIN
+══════════════════════════════════════════════ */
 .ph-main { padding: 3.5rem 0 7rem; }
 
-/* decade separator */
-.ph-decade {
-    margin-bottom: 4rem;
+.ph-decade { margin-bottom: 4rem; }
+.ph-dec-hd { display: flex; align-items: center; gap: 1.25rem; margin-bottom: 1.75rem; }
+.ph-dec-n {
+    font-family: var(--font-display); font-size: 3.4rem; font-weight: 300;
+    color: rgba(201,162,39,.12); line-height: 1; white-space: nowrap; user-select: none;
 }
-.ph-decade-hd {
-    display: flex; align-items: center; gap: 1.25rem;
-    margin-bottom: 1.75rem;
-}
-.ph-decade-num {
-    font-family: var(--font-display);
-    font-size: 3.2rem; font-weight: 300;
-    color: rgba(201,162,39,.15);
-    line-height: 1; white-space: nowrap; user-select: none;
-}
-.ph-decade-line {
-    flex: 1; height: 1px;
-    background: linear-gradient(90deg, rgba(201,162,39,.2), transparent 65%);
-}
-.ph-decade-count {
-    font-size: .7rem; font-weight: 500; letter-spacing: .08em;
-    text-transform: uppercase; color: var(--color-text-muted);
-    white-space: nowrap;
-}
+.ph-dec-line { flex: 1; height: 1px; background: linear-gradient(90deg, rgba(201,162,39,.18), transparent 65%); }
+.ph-dec-c { font-size: .68rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--color-text-muted); white-space: nowrap; }
 
-/* grid */
-.ph-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1.5rem;
-}
+.ph-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px,1fr)); gap: 1.5rem; }
 
-/* ═══════════════════════════════════════
-   CARD — газетна вирізка
-═══════════════════════════════════════ */
+/* ══════════════════════════════════════════════
+   CARD
+══════════════════════════════════════════════ */
 .ph-card {
     background: var(--color-bg-card);
     border: 1px solid var(--color-border-light);
     border-radius: var(--radius-lg);
-    overflow: hidden;
-    cursor: pointer;
+    overflow: hidden; cursor: pointer;
     display: flex; flex-direction: column;
-    transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
     position: relative;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
 }
-.ph-card::before {
+.ph-card::after {
     content: '';
-    position: absolute; top: 0; left: 0; right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--color-accent), rgba(201,162,39,.2));
-    opacity: 0;
-    transition: opacity var(--transition-fast);
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--color-accent), rgba(201,162,39,.15));
+    opacity: 0; transition: opacity var(--transition-fast);
 }
-.ph-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
-    border-color: rgba(201,162,39,.25);
-}
-.ph-card:hover::before { opacity: 1; }
+.ph-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); border-color: rgba(201,162,39,.22); }
+.ph-card:hover::after { opacity: 1; }
 
-/* image area */
-.ph-card-img {
-    position: relative; height: 180px;
-    overflow: hidden; background: var(--color-bg-secondary); flex-shrink: 0;
+/* photo area */
+.ph-ci {
+    position: relative; height: 185px; overflow: hidden;
+    background: var(--color-bg-secondary); flex-shrink: 0;
 }
-.ph-card-img img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    filter: sepia(.35) contrast(1.08) brightness(.95);
-    transition: transform .7s ease, filter .4s ease;
+.ph-ci img {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; filter: sepia(.3) contrast(1.06) brightness(.95);
+    transition: transform .7s ease, filter .4s ease, opacity .4s ease;
+    opacity: 0;
 }
-.ph-card:hover .ph-card-img img {
-    transform: scale(1.06);
-    filter: sepia(.2) contrast(1.1) brightness(1);
-}
-.ph-card-img-ph {
-    width: 100%; height: 100%;
+.ph-ci img.loaded { opacity: 1; }
+.ph-card:hover .ph-ci img { transform: scale(1.06); filter: sepia(.15) contrast(1.1) brightness(1.02); }
+.ph-ci-ph {
+    position: absolute; inset: 0;
     display: flex; align-items: center; justify-content: center;
-    font-family: var(--font-display);
-    font-size: 4rem; font-weight: 300;
-    letter-spacing: .1em;
-    color: var(--color-accent); opacity: .15;
+    font-family: var(--font-display); font-size: 4.5rem; font-weight: 300;
+    letter-spacing: .08em; color: var(--color-accent); opacity: .12;
+    transition: opacity .3s ease;
 }
-/* year stamp on image */
-.ph-card-year {
-    position: absolute; bottom: .75rem; left: .875rem;
-    font-family: var(--font-display);
-    font-size: 1.5rem; font-weight: 300; font-style: italic;
-    color: rgba(255,255,255,.9);
-    text-shadow: 0 1px 8px rgba(0,0,0,.7);
-    line-height: 1; pointer-events: none;
+/* hide placeholder when image loaded */
+.ph-ci img.loaded ~ .ph-ci-ph { opacity: 0; }
+.ph-ci-year {
+    position: absolute; bottom: .75rem; left: 1rem;
+    font-family: var(--font-display); font-size: 1.6rem; font-weight: 300; font-style: italic;
+    color: rgba(255,255,255,.88); text-shadow: 0 2px 10px rgba(0,0,0,.75);
+    line-height: 1; pointer-events: none; z-index: 2;
 }
 .ph-lang {
-    position: absolute; top: .75rem; right: .75rem;
-    font-size: .62rem; font-weight: 700;
-    letter-spacing: .07em; text-transform: uppercase;
+    position: absolute; top: .75rem; right: .75rem; z-index: 2;
+    font-size: .62rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
     padding: .22rem .6rem; border-radius: var(--radius-full);
-    backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,.15);
+    backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,.12);
 }
-.lpl { background: rgba(30,64,175,.85); color: #bfdbfe; }
-.lru { background: rgba(153,27,27,.85); color: #fecaca; }
-.luk { background: rgba(22,101,52,.85); color: #bbf7d0; }
-.lde { background: rgba(120,53,15,.85); color: #fde68a; }
+.lpl { background: rgba(30,64,175,.82); color: #bfdbfe; }
+.lru { background: rgba(153,27,27,.82); color: #fecaca; }
+.luk { background: rgba(22,101,52,.82); color: #bbf7d0; }
+.lde { background: rgba(120,53,15,.82); color: #fde68a; }
 
-/* body */
-.ph-card-body {
-    padding: 1.125rem 1.25rem 1rem;
-    display: flex; flex-direction: column; flex: 1;
-}
-.ph-card-meta {
-    display: flex; align-items: center; gap: .5rem;
-    margin-bottom: .5rem; flex-wrap: wrap;
-}
-.ph-card-date {
-    font-size: .72rem; font-weight: 600;
-    letter-spacing: .05em; color: var(--color-accent);
-}
-.ph-card-sep {
-    width: 3px; height: 3px; border-radius: 50%;
-    background: var(--color-border);
-}
-.ph-card-src {
-    font-size: .72rem; color: var(--color-text-light);
-    font-style: italic; white-space: nowrap;
-    overflow: hidden; text-overflow: ellipsis; max-width: 200px;
-}
-.ph-card-title {
-    font-family: var(--font-display);
-    font-size: 1.15rem; font-weight: 600;
-    color: var(--color-text); line-height: 1.25;
-    margin-bottom: .5rem;
+.ph-cb { padding: 1.125rem 1.25rem 1rem; display: flex; flex-direction: column; flex: 1; }
+.ph-cm { display: flex; align-items: center; gap: .5rem; margin-bottom: .5rem; flex-wrap: wrap; }
+.ph-cd { font-size: .72rem; font-weight: 600; letter-spacing: .04em; color: var(--color-accent); }
+.ph-cdot { width: 3px; height: 3px; border-radius: 50%; background: var(--color-border); flex-shrink: 0; }
+.ph-cs { font-size: .72rem; color: var(--color-text-light); font-style: italic; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px; }
+.ph-ct {
+    font-family: var(--font-display); font-size: 1.15rem; font-weight: 600;
+    color: var(--color-text); line-height: 1.25; margin-bottom: .5rem;
     transition: color var(--transition-fast);
 }
-.ph-card:hover .ph-card-title { color: var(--color-primary); }
-.ph-card-excerpt {
-    font-size: .82rem; color: var(--color-text-secondary);
-    line-height: 1.6; flex: 1;
-    display: -webkit-box; -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical; overflow: hidden;
+.ph-card:hover .ph-ct { color: var(--color-primary); }
+.ph-cx {
+    font-size: .82rem; color: var(--color-text-secondary); line-height: 1.6; flex: 1;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
 }
-.ph-card-footer {
+.ph-cf {
     display: flex; align-items: center; justify-content: space-between;
     margin-top: 1rem; padding-top: .875rem;
-    border-top: 1px solid var(--color-border-light);
-    gap: .5rem;
+    border-top: 1px solid var(--color-border-light); gap: .5rem;
 }
-.ph-card-tags { display: flex; gap: .3rem; flex-wrap: wrap; }
+.ph-tags { display: flex; gap: .3rem; flex-wrap: wrap; }
 .ph-tag {
     font-size: .62rem; padding: .2rem .5rem;
-    background: var(--color-bg-alt);
-    border: 1px solid var(--color-border-light);
-    color: var(--color-text-light);
-    border-radius: var(--radius-sm);
+    background: var(--color-bg-alt); border: 1px solid var(--color-border-light);
+    color: var(--color-text-light); border-radius: var(--radius-sm);
 }
-.ph-card-cta {
+.ph-cta {
     font-size: .75rem; font-weight: 500; white-space: nowrap;
-    color: var(--color-primary);
-    display: flex; align-items: center; gap: .25rem;
+    color: var(--color-primary); display: flex; align-items: center; gap: .25rem;
     transition: gap var(--transition-fast);
 }
-.ph-card:hover .ph-card-cta { gap: .45rem; }
+.ph-card:hover .ph-cta { gap: .45rem; }
 
-/* ═══════════════════════════════════════
-   EMPTY STATE
-═══════════════════════════════════════ */
+/* ══════════════════════════════════════════════
+   EMPTY
+══════════════════════════════════════════════ */
 .ph-empty { text-align: center; padding: 6rem 1rem; display: none; }
-.ph-empty-ico { font-size: 3.5rem; opacity: .15; margin-bottom: 1.25rem; line-height: 1; }
-.ph-empty h3 {
-    font-family: var(--font-display);
-    font-size: 1.6rem; font-weight: 300;
-    color: var(--color-text-secondary); margin-bottom: .5rem;
-}
+.ph-empty-ico { font-size: 3.5rem; opacity: .14; margin-bottom: 1.25rem; }
+.ph-empty h3 { font-family: var(--font-display); font-size: 1.6rem; font-weight: 300; color: var(--color-text-secondary); margin-bottom: .5rem; }
 .ph-empty p { font-size: .875rem; color: var(--color-text-muted); }
 
-/* ═══════════════════════════════════════
+/* ══════════════════════════════════════════════
    MODAL
-═══════════════════════════════════════ */
-.ph-backdrop {
+══════════════════════════════════════════════ */
+.ph-back {
     position: fixed; inset: 0;
-    background: rgba(9,7,5,.72);
-    backdrop-filter: blur(4px);
-    z-index: 900;
-    display: flex; align-items: center; justify-content: center;
+    background: rgba(8,6,4,.75); backdrop-filter: blur(5px);
+    z-index: 900; display: flex; align-items: center; justify-content: center;
     padding: 1rem;
-    opacity: 0; pointer-events: none;
-    transition: opacity .25s ease;
+    opacity: 0; pointer-events: none; transition: opacity .25s ease;
 }
-.ph-backdrop.open { opacity: 1; pointer-events: auto; }
+.ph-back.open { opacity: 1; pointer-events: auto; }
 .ph-modal {
     background: var(--color-bg);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-xl);
-    width: 100%; max-width: 740px;
-    max-height: 92vh; overflow-y: auto;
-    box-shadow: 0 32px 80px rgba(0,0,0,.4);
-    transform: translateY(24px) scale(.97);
+    width: 100%; max-width: 760px; max-height: 92vh;
+    overflow-y: auto; scrollbar-width: thin;
+    box-shadow: 0 40px 100px rgba(0,0,0,.45);
+    transform: translateY(28px) scale(.97);
     transition: transform .35s cubic-bezier(.16,1,.3,1);
-    scrollbar-width: thin;
 }
-.ph-backdrop.open .ph-modal { transform: translateY(0) scale(1); }
+.ph-back.open .ph-modal { transform: none; }
 
-/* modal header with image banner */
-.ph-modal-banner {
-    position: relative; height: 220px; overflow: hidden;
-    background: var(--color-bg-secondary); flex-shrink: 0;
+/* banner */
+.ph-mbanner {
+    position: relative; height: 240px; overflow: hidden;
+    background: var(--color-bg-secondary);
     border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    flex-shrink: 0;
 }
-.ph-modal-banner img {
-    width: 100%; height: 100%; object-fit: cover;
-    filter: sepia(.25) brightness(.9);
+.ph-mbanner-img {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover;
+    filter: sepia(.2) brightness(.72) contrast(1.05);
     cursor: zoom-in;
     transition: transform .6s ease;
 }
-.ph-modal-banner img:hover { transform: scale(1.03); }
-.ph-modal-banner-ph {
-    width: 100%; height: 100%;
+.ph-mbanner-img:hover { transform: scale(1.04); }
+.ph-mbanner-ph {
+    position: absolute; inset: 0;
     display: flex; align-items: center; justify-content: center;
-    font-family: var(--font-display);
-    font-size: 5rem; font-weight: 300; color: var(--color-accent); opacity: .12;
+    font-family: var(--font-display); font-size: 6rem; font-weight: 300;
+    color: var(--color-accent); opacity: .1;
 }
-.ph-modal-banner-grad {
-    position: absolute; bottom: 0; left: 0; right: 0; height: 100px;
+.ph-mbanner-grad {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 140px;
     background: linear-gradient(transparent, var(--color-bg));
     pointer-events: none;
 }
-.ph-modal-banner-meta {
-    position: absolute; bottom: 1.25rem; left: 1.5rem; right: 3.5rem;
+.ph-mbanner-info {
+    position: absolute; bottom: 1.25rem; left: 1.5rem; right: 4rem; z-index: 2;
 }
-.ph-modal-banner-year {
-    font-family: var(--font-display);
-    font-size: 3rem; font-weight: 300; font-style: italic;
-    color: rgba(255,255,255,.5);
-    line-height: 1; display: block; margin-bottom: .2rem;
-    text-shadow: 0 2px 12px rgba(0,0,0,.5);
+.ph-mbanner-year {
+    display: block; font-family: var(--font-display);
+    font-size: 3.2rem; font-weight: 300; font-style: italic;
+    color: rgba(255,255,255,.42); line-height: 1;
+    text-shadow: 0 2px 16px rgba(0,0,0,.5);
 }
-.ph-modal-banner-src {
-    font-size: .75rem; font-style: italic;
-    color: rgba(255,255,255,.55);
-    text-shadow: 0 1px 6px rgba(0,0,0,.6);
+.ph-mbanner-src { display: block; font-size: .75rem; font-style: italic; color: rgba(255,255,255,.5); margin-top: .1rem; text-shadow: 0 1px 8px rgba(0,0,0,.6); }
+.ph-mclose {
+    position: absolute; top: 1rem; right: 1rem; z-index: 3;
+    width: 34px; height: 34px; border-radius: 50%;
+    background: rgba(8,6,4,.6); backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,.14); color: rgba(255,255,255,.75);
+    font-size: .9rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: all var(--transition-fast);
 }
-.ph-modal-close-abs {
-    position: absolute; top: 1rem; right: 1rem;
-    width: 32px; height: 32px; border-radius: 50%;
-    background: rgba(9,7,5,.55); backdrop-filter: blur(4px);
-    border: 1px solid rgba(255,255,255,.15);
-    color: rgba(255,255,255,.8); font-size: .9rem;
-    cursor: pointer; display: flex; align-items: center; justify-content: center;
-    z-index: 2;
-    transition: background var(--transition-fast);
-}
-.ph-modal-close-abs:hover { background: rgba(9,7,5,.8); color: #fff; }
+.ph-mclose:hover { background: rgba(8,6,4,.9); color: #fff; }
 
-/* modal body */
-.ph-modal-body { padding: 1.5rem; }
-.ph-modal-headline {
-    font-family: var(--font-display);
-    font-size: 1.6rem; font-weight: 600; line-height: 1.2;
-    color: var(--color-text); margin-bottom: .5rem;
+/* body */
+.ph-mbody { padding: 1.5rem 1.75rem 2rem; }
+.ph-mh {
+    font-family: var(--font-display); font-size: 1.7rem; font-weight: 600;
+    line-height: 1.2; color: var(--color-text); margin-bottom: .3rem;
 }
-.ph-modal-meta-row {
-    display: flex; align-items: center; gap: .5rem;
-    flex-wrap: wrap; margin-bottom: 1.5rem;
-}
-.ph-modal-meta-row span { font-size: .78rem; color: var(--color-text-light); }
-.ph-modal-meta-row .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--color-border); }
-.ph-modal-meta-row .accent { color: var(--color-accent); font-weight: 600; }
+.ph-msh { font-family: var(--font-display); font-size: 1.05rem; font-weight: 400; font-style: italic; color: var(--color-text-light); margin-bottom: .75rem; }
+.ph-mmeta { display: flex; align-items: center; gap: .45rem; flex-wrap: wrap; margin-bottom: 1.75rem; }
+.ph-mmeta span { font-size: .78rem; color: var(--color-text-light); }
+.ph-mmeta .acc { color: var(--color-accent); font-weight: 600; }
+.ph-mmeta .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--color-border); flex-shrink: 0; }
 
-.ph-sec-label {
-    font-size: .65rem; font-weight: 600;
-    letter-spacing: .11em; text-transform: uppercase;
+.ph-slbl {
+    font-size: .64rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
     color: var(--color-text-muted);
-    display: flex; align-items: center; gap: .75rem;
-    margin-bottom: .7rem;
+    display: flex; align-items: center; gap: .75rem; margin-bottom: .7rem;
 }
-.ph-sec-label::after { content: ''; flex: 1; height: 1px; background: var(--color-border-light); }
+.ph-slbl::after { content: ''; flex: 1; height: 1px; background: var(--color-border-light); }
 
-.ph-original {
-    background: var(--color-bg-alt);
-    border: 1px solid var(--color-border-light);
+.ph-orig {
+    background: var(--color-bg-alt); border: 1px solid var(--color-border-light);
     border-radius: var(--radius-md);
-    padding: 1.125rem 1.25rem;
-    font-family: var(--font-display);
-    font-size: .92rem; font-style: italic;
-    color: var(--color-text-secondary);
-    line-height: 1.8; margin-bottom: 1.25rem;
-    white-space: pre-wrap; word-break: break-word;
+    padding: 1.125rem 1.375rem;
+    font-family: var(--font-display); font-size: .93rem; font-style: italic;
+    color: var(--color-text-secondary); line-height: 1.85;
+    margin-bottom: 1.375rem; white-space: pre-wrap; word-break: break-word;
 }
-.ph-translation {
-    background: linear-gradient(135deg, rgba(44,95,63,.05), rgba(44,95,63,.02));
+.ph-transl {
+    background: rgba(44,95,63,.045);
     border-left: 3px solid var(--color-primary);
     border-radius: 0 var(--radius-md) var(--radius-md) 0;
-    padding: 1.125rem 1.25rem;
-    font-size: .9rem; color: var(--color-text);
-    line-height: 1.8; margin-bottom: 1.5rem;
-    white-space: pre-wrap; word-break: break-word;
+    padding: 1.125rem 1.375rem;
+    font-size: .9rem; color: var(--color-text); line-height: 1.85;
+    margin-bottom: 1.5rem; white-space: pre-wrap; word-break: break-word;
 }
-[data-theme="dark"] .ph-translation { background: linear-gradient(135deg, rgba(44,95,63,.1), rgba(44,95,63,.04)); }
+[data-theme="dark"] .ph-transl { background: rgba(44,95,63,.09); }
 
-.ph-modal-tags { display: flex; gap: .35rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+.ph-mtags { display: flex; gap: .35rem; flex-wrap: wrap; margin-bottom: 1.375rem; }
 
-.ph-modal-actions {
+.ph-mactions {
     display: flex; gap: .75rem; flex-wrap: wrap;
-    padding-top: 1.25rem;
-    border-top: 1px solid var(--color-border-light);
+    padding-top: 1.25rem; border-top: 1px solid var(--color-border-light);
 }
 .ph-btn {
-    height: 38px; padding: 0 1.125rem;
-    border-radius: var(--radius-md);
-    font-size: .8rem; font-weight: 500;
+    height: 40px; padding: 0 1.25rem;
+    border-radius: var(--radius-md); font-size: .82rem; font-weight: 500;
     cursor: pointer; display: inline-flex; align-items: center; gap: .4rem;
     text-decoration: none; transition: all var(--transition-fast);
 }
-.ph-btn-primary {
-    background: var(--color-primary); border: 1px solid var(--color-primary); color: #fff;
-}
-.ph-btn-primary:hover { background: var(--color-primary-hover); color: #fff; }
-.ph-btn-ghost {
-    background: transparent; border: 1px solid var(--color-border); color: var(--color-text-secondary);
-}
-.ph-btn-ghost:hover { border-color: var(--color-border-hover); color: var(--color-text); background: var(--color-bg-alt); }
+.ph-btn-p { background: var(--color-primary); border: 1px solid var(--color-primary); color: #fff; }
+.ph-btn-p:hover { background: var(--color-primary-hover); color: #fff; }
+.ph-btn-g { background: transparent; border: 1px solid var(--color-border); color: var(--color-text-secondary); }
+.ph-btn-g:hover { border-color: var(--color-border-hover); background: var(--color-bg-alt); color: var(--color-text); }
 
-/* ═══════════════════════════════════════
+/* ══════════════════════════════════════════════
    LIGHTBOX
-═══════════════════════════════════════ */
-.ph-lightbox {
+══════════════════════════════════════════════ */
+.ph-lb {
     position: fixed; inset: 0; z-index: 1000;
     background: rgba(4,3,2,.96);
     display: flex; align-items: center; justify-content: center;
-    cursor: zoom-out;
-    opacity: 0; pointer-events: none;
-    transition: opacity .2s ease;
+    cursor: zoom-out; opacity: 0; pointer-events: none; transition: opacity .2s ease;
 }
-.ph-lightbox.open { opacity: 1; pointer-events: auto; }
-.ph-lightbox img { max-width: 96vw; max-height: 96vh; object-fit: contain; border-radius: 4px; }
-.ph-lightbox-close {
+.ph-lb.open { opacity: 1; pointer-events: auto; }
+.ph-lb img { max-width: 96vw; max-height: 96vh; object-fit: contain; border-radius: 3px; }
+.ph-lb-x {
     position: absolute; top: 1.25rem; right: 1.25rem;
-    width: 36px; height: 36px; border-radius: 50%;
+    width: 38px; height: 38px; border-radius: 50%;
     background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2);
     color: rgba(255,255,255,.8); font-size: 1rem; cursor: pointer;
     display: flex; align-items: center; justify-content: center;
     transition: background var(--transition-fast);
 }
-.ph-lightbox-close:hover { background: rgba(255,255,255,.2); color: #fff; }
+.ph-lb-x:hover { background: rgba(255,255,255,.2); color: #fff; }
 
-/* ═══════════════════════════════════════
+/* ══════════════════════════════════════════════
    RESPONSIVE
-═══════════════════════════════════════ */
+══════════════════════════════════════════════ */
 @media (max-width: 640px) {
-    .ph-hero-content { padding: 3.5rem 1.25rem 3rem; }
-    .ph-title { font-size: 2.4rem; }
+    .ph-hero-content { padding: 4rem 1.25rem 3.5rem; }
+    .ph-title { font-size: 2.6rem; }
     .ph-stat-div { display: none; }
     .ph-grid { grid-template-columns: 1fr; }
-    .ph-controls { top: 56px; }
-    .ph-modal-banner { height: 160px; }
-    .ph-modal-headline { font-size: 1.3rem; }
+    .ph-bar { top: 56px; }
+    .ph-mbanner { height: 170px; }
+    .ph-mh { font-size: 1.35rem; }
+    .ph-mbody { padding: 1.25rem 1.25rem 1.5rem; }
 }
-
-/* footer nav fix */
-.footer-copyright-notice { max-width: 1100px !important; padding: 0 1rem !important; }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <header class="header">
     <div class="header-container">
         <a href="index.html" class="logo">
@@ -570,17 +440,16 @@
             <a href="contacts.html" class="nav-link">Про проєкт</a>
         </nav>
         <button class="theme-toggle" id="themeToggle" aria-label="Перемкнути тему">
-            <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-            <svg class="theme-icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            <svg class="theme-icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
         </button>
         <button class="mobile-toggle" id="mobileToggle" aria-label="Відкрити меню"><span></span><span></span><span></span></button>
     </div>
 </header>
 
-<!-- HERO -->
 <section class="ph-hero" id="phHero">
-    <div class="ph-hero-bg" id="phBg"></div>
-    <div class="ph-hero-vignette"></div>
+    <div class="ph-hero-bg"></div>
+    <div class="ph-hero-vig"></div>
     <div class="ph-hero-grain"></div>
     <div class="ph-hero-scan"></div>
     <div class="ph-hero-content">
@@ -590,57 +459,44 @@
             <div class="ph-eyebrow-line"></div>
         </div>
         <h1 class="ph-title">Дубровиця <em>у пресі</em></h1>
-        <p class="ph-subtitle">Газетні вирізки, в яких згадується Дубровиця — від регіональної хроніки до столичних видань Варшави, Вільна та Луцька.</p>
-        <div class="ph-ornament">
-            <div class="ph-ornament-line"></div>
-            <div class="ph-ornament-dot"></div>
-            <div class="ph-ornament-diamond"></div>
-            <div class="ph-ornament-dot"></div>
-            <div class="ph-ornament-line"></div>
+        <p class="ph-sub">Газетні вирізки, в яких згадується Дубровиця — від регіональної хроніки до столичних видань Варшави, Вільна та Луцька.</p>
+        <div class="ph-orn">
+            <div class="ph-orn-line"></div><div class="ph-orn-dot"></div>
+            <div class="ph-orn-diamond"></div>
+            <div class="ph-orn-dot"></div><div class="ph-orn-line"></div>
         </div>
         <div class="ph-stats">
-            <div class="ph-stat">
-                <span class="ph-stat-num" id="statTotal">—</span>
-                <span class="ph-stat-lbl">записів</span>
-            </div>
+            <div class="ph-stat"><span class="ph-stat-n" id="sN">—</span><span class="ph-stat-l">записів</span></div>
             <div class="ph-stat-div"></div>
-            <div class="ph-stat">
-                <span class="ph-stat-num" id="statSources">—</span>
-                <span class="ph-stat-lbl">видань</span>
-            </div>
+            <div class="ph-stat"><span class="ph-stat-n" id="sS">—</span><span class="ph-stat-l">видань</span></div>
             <div class="ph-stat-div"></div>
-            <div class="ph-stat">
-                <span class="ph-stat-num" id="statPeriod">—</span>
-                <span class="ph-stat-lbl">роки</span>
-            </div>
+            <div class="ph-stat"><span class="ph-stat-n" id="sP">—</span><span class="ph-stat-l">роки</span></div>
         </div>
     </div>
 </section>
 
-<!-- CONTROLS -->
-<div class="ph-controls" id="phControls">
+<div class="ph-bar" id="phBar">
     <div class="container">
-        <div class="ph-controls-inner">
-            <div class="ph-search-wrap">
-                <svg class="ph-search-ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-                <input type="search" class="ph-search" id="phSearch" placeholder="Пошук за текстом, виданням, тегом…" autocomplete="off">
+        <div class="ph-bar-inner">
+            <div class="ph-sw">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                <input type="search" class="ph-si" id="phQ" placeholder="Пошук за текстом, виданням, тегом…" autocomplete="off">
             </div>
-            <div class="ph-filters" id="phLangFilters">
-                <button class="ph-fbtn active" data-lang="all">Всі</button>
-                <button class="ph-fbtn" data-lang="pl">🇵🇱 Польська</button>
-                <button class="ph-fbtn" data-lang="ru">🇷🇺 Російська</button>
-                <button class="ph-fbtn" data-lang="uk">🇺🇦 Українська</button>
-                <button class="ph-fbtn" data-lang="de">🇩🇪 Німецька</button>
+            <div class="ph-flt" id="phLf">
+                <button class="ph-fb on" data-lang="all">Всі</button>
+                <button class="ph-fb" data-lang="pl">🇵🇱 Польська</button>
+                <button class="ph-fb" data-lang="ru">🇷🇺 Російська</button>
+                <button class="ph-fb" data-lang="uk">🇺🇦 Українська</button>
+                <button class="ph-fb" data-lang="de">🇩🇪 Німецька</button>
             </div>
-            <div class="ph-count" id="phCount"></div>
+            <div class="ph-cnt" id="phCnt"></div>
         </div>
     </div>
 </div>
 
-<!-- MAIN -->
 <main class="ph-main">
     <div class="container">
-        <div id="phContent"></div>
+        <div id="phList"></div>
         <div class="ph-empty" id="phEmpty">
             <div class="ph-empty-ico">📰</div>
             <h3>Нічого не знайдено</h3>
@@ -649,29 +505,26 @@
     </div>
 </main>
 
-<!-- MODAL -->
-<div class="ph-backdrop" id="phBackdrop" role="dialog" aria-modal="true">
-    <div class="ph-modal" id="phModal">
-        <div class="ph-modal-banner" id="phModalBanner">
-            <div class="ph-modal-banner-ph" id="phBannerPh">Дб</div>
-            <div class="ph-modal-banner-grad"></div>
-            <div class="ph-modal-banner-meta">
-                <span class="ph-modal-banner-year" id="phBannerYear"></span>
-                <span class="ph-modal-banner-src" id="phBannerSrc"></span>
+<div class="ph-back" id="phBack" role="dialog" aria-modal="true">
+    <div class="ph-modal" id="phMod">
+        <div class="ph-mbanner" id="phMBan">
+            <div class="ph-mbanner-ph">Дб</div>
+            <div class="ph-mbanner-grad"></div>
+            <div class="ph-mbanner-info">
+                <span class="ph-mbanner-year" id="phMY"></span>
+                <span class="ph-mbanner-src" id="phMS"></span>
             </div>
-            <button class="ph-modal-close-abs" id="phClose" aria-label="Закрити">✕</button>
+            <button class="ph-mclose" id="phMX" aria-label="Закрити">✕</button>
         </div>
-        <div class="ph-modal-body" id="phModalBody"></div>
+        <div class="ph-mbody" id="phMB"></div>
     </div>
 </div>
 
-<!-- LIGHTBOX -->
-<div class="ph-lightbox" id="phLightbox">
-    <button class="ph-lightbox-close" id="phLbClose" aria-label="Закрити">✕</button>
-    <img id="phLbImg" src="" alt="Газетна вирізка">
+<div class="ph-lb" id="phLb">
+    <button class="ph-lb-x" id="phLbX" aria-label="Закрити">✕</button>
+    <img id="phLbI" src="" alt="Газетна вирізка">
 </div>
 
-<!-- FOOTER -->
 <footer class="footer">
     <div class="container">
         <div class="footer-content">
@@ -691,9 +544,7 @@
             </div>
             <div class="footer-section">
                 <h4 class="footer-title">Контакти</h4>
-                <p class="footer-text">Маєте матеріали або пропозиції?<br>
-                    <a href="contacts.html" class="footer-link">Зв'яжіться з нами</a>
-                </p>
+                <p class="footer-text">Маєте матеріали або пропозиції?<br><a href="contacts.html" class="footer-link">Зв'яжіться з нами</a></p>
             </div>
         </div>
         <div class="footer-copyright-row">
@@ -702,307 +553,220 @@
                 <div class="footer-copyright-ornament-diamond"></div>
                 <div class="footer-copyright-ornament-line"></div>
             </div>
-            <p class="footer-copyright-main">
-                &copy; 2026 <a href="https://dubrovytsia.site">dubrovytsia.site</a> — Цифровий архів Дубровиці, Рівненська область, Україна.<br>
-                Сайт є некомерційним краєзнавчим проєктом, створеним з любові до міста та його історії.
-            </p>
-            <p class="footer-copyright-notice">
-                Публікуючи ці матеріали, ми прагнемо зберегти та популяризувати культурну й історичну спадщину міста Дубровиця для нинішніх і майбутніх поколінь. Усі фотографії, документи та архівні матеріали розміщено виключно в освітніх, краєзнавчих і науково-дослідних цілях. Відтворення, поширення або комерційне використання будь-яких матеріалів без письмового дозволу адміністрації сайту — заборонено. При цитуванні або використанні матеріалів у будь-якому форматі — обов'язкове активне посилання на <em>dubrovytsia.site</em>. Якщо ви є власником авторських прав на будь-які з опублікованих матеріалів і маєте заперечення щодо їх розміщення — будь ласка, <a href="contacts.html">зв'яжіться з нами</a> і ми негайно розглянемо ваш запит. Фотографії, завантажені з архіву, містять водяний знак сайту і не можуть публікуватись без нього.
-            </p>
+            <p class="footer-copyright-main">&copy; 2026 <a href="https://dubrovytsia.site">dubrovytsia.site</a> — Цифровий архів Дубровиці, Рівненська область, Україна.<br>Сайт є некомерційним краєзнавчим проєктом, створеним з любові до міста та його історії.</p>
+            <p class="footer-copyright-notice">Публікуючи ці матеріали, ми прагнемо зберегти та популяризувати культурну й історичну спадщину міста Дубровиця для нинішніх і майбутніх поколінь. Усі фотографії, документи та архівні матеріали розміщено виключно в освітніх, краєзнавчих і науково-дослідних цілях. Відтворення, поширення або комерційне використання будь-яких матеріалів без письмового дозволу адміністрації сайту — заборонено. При цитуванні або використанні матеріалів у будь-якому форматі — обов'язкове активне посилання на <em>dubrovytsia.site</em>. Якщо ви є власником авторських прав на будь-які з опублікованих матеріалів і маєте заперечення щодо їх розміщення — будь ласка, <a href="contacts.html">зв'яжіться з нами</a> і ми негайно розглянемо ваш запит. Фотографії, завантажені з архіву, містять водяний знак сайту і не можуть публікуватись без нього.</p>
         </div>
     </div>
 </footer>
 
 <script src="app.js"></script>
 <script>
-/* ═══════════════════════════════════════
-   PRESS ARCHIVE JS
-═══════════════════════════════════════ */
+/* ══════════════════════════════════════════
+   PRESS ARCHIVE — press-data.json edition
+══════════════════════════════════════════ */
+const DATA_URL = 'press-data.json';
+const LF = { pl:'польська', ru:'російська', uk:'українська', de:'німецька' };
+const FL = { pl:'🇵🇱', ru:'🇷🇺', uk:'🇺🇦', de:'🇩🇪' };
+const LC = { pl:'lpl', ru:'lru', uk:'luk', de:'lde' };
 
-const INDEX_URL = 'press-index.json';
-const ENTRY_BASE = '';
+let ALL=[], FIL=[], LANG='all', Q='';
 
-const LANG_LABEL = { pl:'польська', ru:'російська', uk:'українська', de:'німецька' };
-const LANG_FLAG  = { pl:'🇵🇱', ru:'🇷🇺', uk:'🇺🇦', de:'🇩🇪' };
-const LANG_CLASS = { pl:'lpl', ru:'lru', uk:'luk', de:'lde' };
-
-let allEntries = [], filtered = [], currentLang = 'all', query = '';
-const cache = {};
-
-/* date formatter */
-function fmtDate(s) {
-    const d = new Date(s + 'T12:00:00');
-    return d.toLocaleDateString('uk-UA', { day:'numeric', month:'long', year:'numeric' });
+function fd(s){
+    const d=new Date(s+'T12:00:00');
+    return d.toLocaleDateString('uk-UA',{day:'numeric',month:'long',year:'numeric'});
 }
-function fmtYear(s) { return s.slice(0,4); }
 
-/* hero bg fade-in */
-window.addEventListener('load', () => {
-    document.getElementById('phHero').classList.add('loaded');
-});
+/* hero bg */
+window.addEventListener('load',()=>document.getElementById('phHero').classList.add('loaded'));
 
-/* ── load index ── */
-async function loadIndex() {
-    try {
-        const r = await fetch(INDEX_URL);
-        if (!r.ok) throw new Error(r.status);
-        allEntries = await r.json();
-        setStats();
-        applyFilters();
-    } catch(e) {
-        document.getElementById('phContent').innerHTML =
-            '<p style="text-align:center;padding:4rem 1rem;color:var(--color-text-muted)">Не вдалося завантажити індекс.<br>Переконайтеся, що <code>press-index.json</code> є в тій самій папці що й <code>presa.html</code>.</p>';
+/* ── load ── */
+async function load(){
+    try{
+        const r=await fetch(DATA_URL);
+        if(!r.ok) throw new Error(r.status);
+        ALL=await r.json();
+        stats(); filter();
+    }catch(e){
+        document.getElementById('phList').innerHTML=
+            `<p style="text-align:center;padding:4rem 1rem;color:var(--color-text-muted)">
+            Не вдалося завантажити <code>press-data.json</code>.<br>
+            Переконайтеся що файл є в тій самій папці що й <code>presa.html</code>.</p>`;
     }
 }
 
-function setStats() {
-    const sources = new Set(allEntries.map(e => e.source));
-    const years = allEntries.map(e => e.year);
-    document.getElementById('statTotal').textContent   = allEntries.length;
-    document.getElementById('statSources').textContent = sources.size;
-    document.getElementById('statPeriod').textContent  = Math.min(...years) + '–' + Math.max(...years);
+function stats(){
+    const sr=new Set(ALL.map(e=>e.source));
+    const ys=ALL.map(e=>e.year);
+    document.getElementById('sN').textContent=ALL.length;
+    document.getElementById('sS').textContent=sr.size;
+    document.getElementById('sP').textContent=Math.min(...ys)+'–'+Math.max(...ys);
 }
 
-/* ── filters ── */
-function applyFilters() {
-    const q = query.toLowerCase().trim();
-    filtered = allEntries.filter(e => {
-        if (currentLang !== 'all' && e.language !== currentLang) return false;
-        if (!q) return true;
-        return (
-            (e.headline||'').toLowerCase().includes(q) ||
-            (e.source||'').toLowerCase().includes(q) ||
-            String(e.year).includes(q) ||
-            (e.tags||[]).some(t => t.toLowerCase().includes(q))
-        );
+function filter(){
+    const q=Q.toLowerCase().trim();
+    FIL=ALL.filter(e=>{
+        if(LANG!=='all'&&e.language!==LANG)return false;
+        if(!q)return true;
+        return (e.headline||'').toLowerCase().includes(q)||
+               (e.source||'').toLowerCase().includes(q)||
+               String(e.year).includes(q)||
+               (e.translation||'').toLowerCase().includes(q)||
+               (e.tags||[]).some(t=>t.toLowerCase().includes(q));
     });
     render();
 }
 
-/* ── render list ── */
-function render() {
-    const el = document.getElementById('phContent');
-    const empty = document.getElementById('phEmpty');
-    document.getElementById('phCount').innerHTML = `Знайдено: <b>${filtered.length}</b>`;
-
-    if (!filtered.length) { el.innerHTML = ''; empty.style.display = 'block'; return; }
-    empty.style.display = 'none';
-
-    const decades = {};
-    filtered.forEach(e => {
-        const d = Math.floor(e.year / 10) * 10;
-        (decades[d] = decades[d] || []).push(e);
-    });
-
-    el.innerHTML = Object.keys(decades).sort((a,b)=>a-b).map(d => {
-        const items = decades[d];
+function render(){
+    const el=document.getElementById('phList');
+    const em=document.getElementById('phEmpty');
+    document.getElementById('phCnt').innerHTML=`Знайдено: <b>${FIL.length}</b>`;
+    if(!FIL.length){el.innerHTML='';em.style.display='block';return;}
+    em.style.display='none';
+    const dec={};
+    FIL.forEach(e=>{const d=Math.floor(e.year/10)*10;(dec[d]=dec[d]||[]).push(e);});
+    el.innerHTML=Object.keys(dec).sort((a,b)=>a-b).map(d=>{
+        const its=dec[d];
+        const cnt=its.length;
+        const w=cnt===1?'запис':cnt<5?'записи':'записів';
         return `<div class="ph-decade">
-            <div class="ph-decade-hd">
-                <span class="ph-decade-num">${d}–${+d+9}</span>
-                <div class="ph-decade-line"></div>
-                <span class="ph-decade-count">${items.length} ${items.length === 1 ? 'запис' : items.length < 5 ? 'записи' : 'записів'}</span>
+            <div class="ph-dec-hd">
+                <span class="ph-dec-n">${d}–${+d+9}</span>
+                <div class="ph-dec-line"></div>
+                <span class="ph-dec-c">${cnt} ${w}</span>
             </div>
-            <div class="ph-grid">${items.map(cardHTML).join('')}</div>
+            <div class="ph-grid">${its.map(card).join('')}</div>
         </div>`;
     }).join('');
-
-    el.querySelectorAll('.ph-card').forEach(c => {
-        c.addEventListener('click', () => openEntry(c.dataset.id));
-        c.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' ') openEntry(c.dataset.id); });
+    el.querySelectorAll('.ph-card').forEach(c=>{
+        c.addEventListener('click',()=>open(c.dataset.id));
+        c.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')open(c.dataset.id);});
     });
-
-    setTimeout(lazyLoad, 60);
+    imgLazy();
 }
 
-function cardHTML(e) {
-    const tags = (e.tags||[]).slice(0,3).map(t=>`<span class="ph-tag">${t}</span>`).join('');
-    const lc = LANG_CLASS[e.language]||'lpl';
+function card(e){
+    const tags=(e.tags||[]).slice(0,3).map(t=>`<span class="ph-tag">${t}</span>`).join('');
+    const lc=LC[e.language]||'lpl';
+    const ex=(e.translation||'').replace(/\n/g,' ').slice(0,160)+'…';
     return `<article class="ph-card" data-id="${e.id}" tabindex="0" role="button" aria-label="${e.headline}">
-        <div class="ph-card-img">
-            <div class="ph-card-img-ph" id="iph-${e.id}">Дб</div>
-            <img id="img-${e.id}" src="" alt="${e.headline}" style="display:none" loading="lazy">
-            <span class="ph-card-year">${e.year}</span>
-            <span class="ph-lang ${lc}">${e.language.toUpperCase()}</span>
+        <div class="ph-ci">
+            <img data-src="${e.imageUrl||''}" alt="${e.headline}">
+            <div class="ph-ci-ph">Дб</div>
+            <span class="ph-ci-year">${e.year}</span>
+            <span class="ph-lang ${lc}">${(e.language||'').toUpperCase()}</span>
         </div>
-        <div class="ph-card-body">
-            <div class="ph-card-meta">
-                <span class="ph-card-date">${fmtDate(e.date)}</span>
-                <span class="ph-card-sep"></span>
-                <span class="ph-card-src">${e.source}</span>
+        <div class="ph-cb">
+            <div class="ph-cm">
+                <span class="ph-cd">${fd(e.date)}</span>
+                <span class="ph-cdot"></span>
+                <span class="ph-cs">${e.source}</span>
             </div>
-            <h3 class="ph-card-title">${e.headline}</h3>
-            <p class="ph-card-excerpt" id="exc-${e.id}">…</p>
-            <div class="ph-card-footer">
-                <div class="ph-card-tags">${tags}</div>
-                <span class="ph-card-cta">Читати →</span>
+            <h3 class="ph-ct">${e.headline}</h3>
+            <p class="ph-cx">${ex}</p>
+            <div class="ph-cf">
+                <div class="ph-tags">${tags}</div>
+                <span class="ph-cta">Читати →</span>
             </div>
         </div>
     </article>`;
 }
 
-/* ── lazy load images + excerpts ── */
-function lazyLoad() {
-    const obs = new IntersectionObserver(entries => {
-        entries.forEach(en => {
-            if (!en.isIntersecting) return;
-            const card = en.target;
-            const id = card.dataset.id;
-            obs.unobserve(card);
-            fetchEntry(id).then(data => {
-                if (!data) return;
-                /* image */
-                if (data.imageUrl) {
-                    const img = document.getElementById('img-' + id);
-                    const ph  = document.getElementById('iph-' + id);
-                    if (img) {
-                        img.onload = () => { img.style.display='block'; if(ph) ph.style.display='none'; };
-                        img.onerror = () => {};
-                        img.src = data.imageUrl;
-                    }
-                }
-                /* excerpt */
-                const ex = document.getElementById('exc-' + id);
-                if (ex && data.translation) {
-                    ex.textContent = data.translation.replace(/\n/g,' ').slice(0,180) + '…';
-                }
-            });
+/* lazy images — IntersectionObserver */
+function imgLazy(){
+    const obs=new IntersectionObserver(ents=>{
+        ents.forEach(en=>{
+            if(!en.isIntersecting)return;
+            const img=en.target;
+            const src=img.dataset.src;
+            if(!src){obs.unobserve(img);return;}
+            img.onload=()=>img.classList.add('loaded');
+            img.onerror=()=>{};
+            img.src=src;
+            obs.unobserve(img);
         });
-    }, { rootMargin: '280px' });
-    document.querySelectorAll('.ph-card').forEach(c => obs.observe(c));
-}
-
-/* ── fetch single entry ── */
-async function fetchEntry(id) {
-    if (cache[id]) return cache[id];
-    try {
-        const r = await fetch(ENTRY_BASE + id + '.json');
-        if (!r.ok) throw new Error(r.status);
-        cache[id] = await r.json();
-        return cache[id];
-    } catch(e) { return null; }
+    },{rootMargin:'300px'});
+    document.querySelectorAll('.ph-ci img[data-src]').forEach(i=>obs.observe(i));
 }
 
 /* ── open modal ── */
-async function openEntry(id) {
-    const data = await fetchEntry(id);
-    if (!data) { alert('Не вдалося завантажити запис.'); return; }
-    buildModal(data);
-    document.getElementById('phBackdrop').classList.add('open');
-    document.body.style.overflow = 'hidden';
+function open(id){
+    const d=ALL.find(e=>e.id===id);
+    if(!d)return;
+    modal(d);
+    document.getElementById('phBack').classList.add('open');
+    document.body.style.overflow='hidden';
 }
 
-function buildModal(d) {
+function modal(d){
     /* banner */
-    const banner = document.getElementById('phModalBanner');
-    const bannerPh = document.getElementById('phBannerPh');
-    document.getElementById('phBannerYear').textContent = d.year;
-    document.getElementById('phBannerSrc').textContent = d.source;
-
-    /* remove old banner img if any */
-    const oldImg = banner.querySelector('img.banner-img');
-    if (oldImg) oldImg.remove();
-    bannerPh.style.display = 'flex';
-
-    if (d.imageUrl) {
-        const img = document.createElement('img');
-        img.className = 'banner-img';
-        img.alt = d.headline;
-        img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:sepia(.25) brightness(.85);cursor:zoom-in;transition:transform .6s ease;';
-        img.onload = () => { bannerPh.style.display = 'none'; };
-        img.onclick = () => openLightbox(d.imageUrl);
-        img.src = d.imageUrl;
-        banner.insertBefore(img, banner.querySelector('.ph-modal-banner-grad'));
+    const ban=document.getElementById('phMBan');
+    const oldImg=ban.querySelector('.mb-img');
+    if(oldImg)oldImg.remove();
+    document.getElementById('phMY').textContent=d.year;
+    document.getElementById('phMS').textContent=d.source;
+    if(d.imageUrl){
+        const img=document.createElement('img');
+        img.className='ph-mbanner-img mb-img';
+        img.alt=d.headline;
+        img.onclick=()=>lb(d.imageUrl);
+        img.src=d.imageUrl;
+        ban.insertBefore(img,ban.querySelector('.ph-mbanner-grad'));
     }
-
     /* body */
-    const langLabel = LANG_LABEL[d.language] || d.language;
-    const tagsHtml = (d.tags||[]).map(t=>`<span class="ph-tag">${t}</span>`).join('');
-
-    document.getElementById('phModalBody').innerHTML = `
-        <h2 class="ph-modal-headline">${d.headline}${d.subheadline ? `<br><span style="font-size:.75em;font-weight:400;font-style:italic;color:var(--color-text-secondary)">${d.subheadline}</span>` : ''}</h2>
-        <div class="ph-modal-meta-row">
-            <span class="accent">${fmtDate(d.date)}</span>
+    const ll=LF[d.language]||d.language;
+    const tags=(d.tags||[]).map(t=>`<span class="ph-tag">${t}</span>`).join('');
+    document.getElementById('phMB').innerHTML=`
+        <h2 class="ph-mh">${d.headline}</h2>
+        ${d.subheadline?`<p class="ph-msh">${d.subheadline}</p>`:''}
+        <div class="ph-mmeta">
+            <span class="acc">${fd(d.date)}</span>
             <span class="dot"></span>
             <span><em>${d.source}</em></span>
             <span class="dot"></span>
-            <span>${LANG_FLAG[d.language]||''} ${langLabel}</span>
-            ${d.volume ? `<span class="dot"></span><span style="font-size:.72rem">${d.volume}</span>` : ''}
-            ${d.page ? `<span class="dot"></span><span>стор. ${d.page}</span>` : ''}
+            <span>${FL[d.language]||''} ${ll}</span>
+            ${d.volume?`<span class="dot"></span><span style="font-size:.72rem">${d.volume}</span>`:''}
+            ${d.page?`<span class="dot"></span><span>стор. ${d.page}</span>`:''}
         </div>
-        ${d.original ? `
-        <div class="ph-sec-label">${LANG_FLAG[d.language]||''} Оригінальний текст (${langLabel})</div>
-        <div class="ph-original">${esc(d.original)}</div>` : ''}
-        <div class="ph-sec-label">🇺🇦 Переклад українською</div>
-        <div class="ph-translation">${esc(d.translation)}</div>
-        ${tagsHtml ? `<div class="ph-modal-tags">${tagsHtml}</div>` : ''}
-        <div class="ph-modal-actions">
-            ${d.sourceUrl ? `<a href="${d.sourceUrl}" target="_blank" rel="noopener" class="ph-btn ph-btn-primary">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-                Джерело оригіналу
-            </a>` : ''}
-            ${d.imageUrl ? `<button class="ph-btn ph-btn-ghost" onclick="openLightbox('${d.imageUrl}')">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
-                Збільшити фото
-            </button>` : ''}
-            <button class="ph-btn ph-btn-ghost" onclick="closeModal()">Закрити</button>
+        ${d.original?`
+        <div class="ph-slbl">${FL[d.language]||''} Оригінал (${ll})</div>
+        <div class="ph-orig">${esc(d.original)}</div>`:''}
+        <div class="ph-slbl">🇺🇦 Переклад українською</div>
+        <div class="ph-transl">${esc(d.translation||'')}</div>
+        ${tags?`<div class="ph-mtags">${tags}</div>`:''}
+        <div class="ph-mactions">
+            ${d.sourceUrl?`<a href="${d.sourceUrl}" target="_blank" rel="noopener" class="ph-btn ph-btn-p">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                Джерело оригіналу</a>`:''}
+            ${d.imageUrl?`<button class="ph-btn ph-btn-g" onclick="lb('${d.imageUrl}')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                Збільшити фото</button>`:''}
+            <button class="ph-btn ph-btn-g" onclick="close()">Закрити</button>
         </div>`;
 }
 
-function esc(s) {
-    return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
+function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function close(){document.getElementById('phBack').classList.remove('open');document.body.style.overflow='';}
+function lb(url){document.getElementById('phLbI').src=url;document.getElementById('phLb').classList.add('open');}
 
-function closeModal() {
-    document.getElementById('phBackdrop').classList.remove('open');
-    document.body.style.overflow = '';
-}
-
-function openLightbox(url) {
-    document.getElementById('phLbImg').src = url;
-    document.getElementById('phLightbox').classList.add('open');
-}
-
-/* ── event bindings ── */
-document.getElementById('phClose').addEventListener('click', closeModal);
-document.getElementById('phBackdrop').addEventListener('click', e => {
-    if (e.target === document.getElementById('phBackdrop')) closeModal();
-});
-document.getElementById('phLightbox').addEventListener('click', e => {
-    if (e.target !== document.getElementById('phLbImg')) {
-        document.getElementById('phLightbox').classList.remove('open');
-    }
-});
-document.getElementById('phLbClose').addEventListener('click', () => {
-    document.getElementById('phLightbox').classList.remove('open');
-});
-document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') {
-        closeModal();
-        document.getElementById('phLightbox').classList.remove('open');
-    }
+/* events */
+document.getElementById('phMX').addEventListener('click',close);
+document.getElementById('phBack').addEventListener('click',e=>{if(e.target===document.getElementById('phBack'))close();});
+document.getElementById('phLb').addEventListener('click',e=>{if(e.target!==document.getElementById('phLbI'))document.getElementById('phLb').classList.remove('open');});
+document.getElementById('phLbX').addEventListener('click',()=>document.getElementById('phLb').classList.remove('open'));
+document.addEventListener('keydown',e=>{
+    if(e.key==='Escape'){close();document.getElementById('phLb').classList.remove('open');}
 });
 
-let searchTimer;
-document.getElementById('phSearch').addEventListener('input', e => {
-    clearTimeout(searchTimer);
-    searchTimer = setTimeout(() => { query = e.target.value; applyFilters(); }, 200);
+let st;
+document.getElementById('phQ').addEventListener('input',e=>{clearTimeout(st);st=setTimeout(()=>{Q=e.target.value;filter();},200);});
+document.getElementById('phLf').addEventListener('click',e=>{
+    const b=e.target.closest('.ph-fb');if(!b)return;
+    document.querySelectorAll('.ph-fb').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on');LANG=b.dataset.lang;filter();
 });
+window.addEventListener('scroll',()=>document.getElementById('phBar').classList.toggle('scrolled',scrollY>80),{passive:true});
 
-document.getElementById('phLangFilters').addEventListener('click', e => {
-    const btn = e.target.closest('.ph-fbtn');
-    if (!btn) return;
-    document.querySelectorAll('.ph-fbtn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    currentLang = btn.dataset.lang;
-    applyFilters();
-});
-
-window.addEventListener('scroll', () => {
-    document.getElementById('phControls').classList.toggle('scrolled', window.scrollY > 80);
-}, { passive: true });
-
-/* init */
-loadIndex();
+load();
 </script>
 </body>
 </html>
