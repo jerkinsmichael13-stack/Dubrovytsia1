@@ -1,0 +1,92 @@
+[
+  {
+    "id": "1932-06-26-dzien-dobry-listy",
+    "date": "1932-06-26",
+    "year": 1932,
+    "source": "Dzień Dobry",
+    "language": "pl",
+    "headline": "Дивні мандрівки листів",
+    "tags": ["пошта", "скарга", "адміністрація"]
+  },
+  {
+    "id": "1939-01-22-wolyn-uboj",
+    "date": "1939-01-22",
+    "year": 1939,
+    "source": "Wołyń",
+    "language": "pl",
+    "headline": "За незаконний забій",
+    "tags": ["поліція", "кримінал", "торгівля"]
+  },
+  {
+    "id": "1932-04-08-dzien-dobry-powodz",
+    "date": "1932-04-08",
+    "year": 1932,
+    "source": "Dzień Dobry",
+    "language": "pl",
+    "headline": "Лихо повені поширюється на сході Польщі",
+    "tags": ["стихія", "повінь", "мости", "залізниця"]
+  },
+  {
+    "id": "1934-12-08-express-mazowiecki-sandberg",
+    "date": "1934-12-08",
+    "year": 1934,
+    "source": "Express Mazowiecki",
+    "language": "pl",
+    "headline": "Дитина за 1 злотий",
+    "tags": ["суд", "медицина", "єврейська громада", "кримінал"]
+  },
+  {
+    "id": "1931-01-13-dzis-dezertiry",
+    "date": "1931-01-13",
+    "year": 1931,
+    "source": "Dziś",
+    "language": "pl",
+    "headline": "4 дезертири втекли на дрезині",
+    "tags": ["військо", "кримінал", "поліція", "КОП"]
+  },
+  {
+    "id": "1931-11-14-dzien-dobry-vbyvstvo",
+    "date": "1931-11-14",
+    "year": 1931,
+    "source": "Dzień Dobry",
+    "language": "pl",
+    "headline": "Убивство дружини",
+    "tags": ["кримінал", "вбивство"]
+  },
+  {
+    "id": "1911-07-29-slowo-plater",
+    "date": "1911-07-29",
+    "year": 1911,
+    "source": "Słowo",
+    "language": "pl",
+    "headline": "Некролог: граф Віктор Броель-Плятер",
+    "tags": ["некролог", "Плятери", "шляхта"]
+  },
+  {
+    "id": "1935-11-10-wolyn-pozhezhna",
+    "date": "1935-11-10",
+    "year": 1935,
+    "source": "Wołyń",
+    "language": "pl",
+    "headline": "35-річчя добровільної пожежної команди",
+    "tags": ["пожежна команда", "міське життя", "ювілей"]
+  },
+  {
+    "id": "1907-08-14-dziennik-wilenski-plater-hrob",
+    "date": "1907-08-14",
+    "year": 1907,
+    "source": "Dziennik Wileński",
+    "language": "pl",
+    "headline": "Осквернення могил графів Плятерів",
+    "tags": ["Плятери", "цвинтар", "злочин", "пожежа"]
+  },
+  {
+    "id": "1927-11-23-express-poranny-obraz",
+    "date": "1927-11-23",
+    "year": 1927,
+    "source": "Express Poranny",
+    "language": "pl",
+    "headline": "Осквернення образу Матері Божої",
+    "tags": ["костел", "релігія", "кримінал", "єврейська громада"]
+  }
+]
