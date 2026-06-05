@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="uk" data-theme="light">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WGBZ0BD23K"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WGBZ0BD23K');</script>
+<meta charset="UTF-8">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="manifest" href="site.webmanifest">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Дослідницькі інструменти архіву Дубровиці — глобальний пошук, хронологія, карта згадок та іменний покажчик.">
+<meta property="og:title" content="Дослідницькі інструменти — Архів Дубровиці">
+<meta property="og:description" content="Глобальний пошук по архіву, хронологічна шкала, карта згадок та іменний покажчик.">
+<meta property="og:image" content="https://i.imgur.com/mXCrjjG.png">
+<title>Дослідницькі інструменти — Дубровиця</title>
+<script>!function(){var t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t)}()</script>
+<link rel="stylesheet" href="app.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+<style>
+.dh-hero{position:relative;min-height:380px;display:flex;flex-direction:column;justify-content:center;align-items:center;overflow:hidden;background:#080604}
+.dh-hero-bg{position:absolute;inset:0;background-image:url('https://i.imgur.com/kTYK0h1.jpeg');background-size:cover;background-position:center 40%;filter:brightness(.22) contrast(1.12) saturate(.35) sepia(.25);z-index:0;transform:scale(1.05);transition:transform 14s ease-out,opacity .8s ease;opacity:0}
+.dh-hero.loaded .dh-hero-bg{transform:scale(1);opacity:1}
+.dh-hero-vig{position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse 90% 75% at 50% 50%,transparent 0%,rgba(4,3,2,.6) 100%)}
+.dh-hero-content{position:relative;z-index:3;text-align:center;padding:4.5rem 1.5rem 3.5rem;max-width:640px}
+.dh-eyebrow{display:flex;align-items:center;justify-content:center;gap:.75rem;margin-bottom:1.25rem}
+.dh-eyebrow-line{width:36px;height:1px;background:rgba(201,162,39,.45)}
+.dh-eyebrow span{font-family:var(--font-body);font-size:.67rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:rgba(201,162,39,.65)}
+.dh-title{font-family:var(--font-display);font-size:clamp(2.6rem,5vw,4rem);font-weight:300;line-height:1;letter-spacing:-.02em;color:#f2e8d8;margin-bottom:.6rem}
+.dh-title em{font-style:italic;color:#c9a227}
+.dh-sub{font-size:.92rem;color:rgba(242,232,216,.5);line-height:1.7;max-width:440px;margin:0 auto}
+.dh-tabs-bar{background:var(--color-bg);border-bottom:1px solid var(--color-border-light);position:sticky;top:76px;z-index:40;transition:box-shadow var(--transition-fast)}
+.dh-tabs-bar.scrolled{box-shadow:var(--shadow-sm)}
+.dh-tabs{display:flex;gap:.25rem;overflow-x:auto;scrollbar-width:none;padding:.5rem 0}
+.dh-tabs::-webkit-scrollbar{display:none}
+.dh-tab{flex-shrink:0;display:flex;align-items:center;gap:.5rem;height:44px;padding:0 1.25rem;border:none;background:transparent;font-family:var(--font-body);font-size:.85rem;font-weight:500;color:var(--color-text-light);cursor:pointer;border-radius:var(--radius-md);transition:all var(--transition-fast);white-space:nowrap}
+.dh-tab:hover{background:var(--color-bg-alt);color:var(--color-text)}
+.dh-tab.on{background:var(--color-primary);color:#fff}
+.dh-tab svg{width:17px;height:17px}
+.dh-tab-count{font-size:.7rem;opacity:.7;font-weight:600}
+.dh-main{padding:2.5rem 0 6rem;min-height:50vh}
+.dh-panel{display:none}
+.dh-panel.on{display:block;animation:dhfade .4s ease}
+@keyframes dhfade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.dh-panel-intro{text-align:center;max-width:560px;margin:0 auto 2rem}
+.dh-panel-intro h2{font-family:var(--font-display);font-size:1.8rem;font-weight:400;color:var(--color-text);margin-bottom:.4rem}
+.dh-panel-intro p{font-size:.88rem;color:var(--color-text-light);line-height:1.6}
+.dh-search-wrap{max-width:640px;margin:0 auto 2rem;position:relative}
+.dh-search-ico{position:absolute;left:1.125rem;top:50%;transform:translateY(-50%);color:var(--color-text-muted);pointer-events:none}
+.dh-search{width:100%;height:54px;padding:0 3rem;background:var(--color-bg-card);border:1px solid var(--color-border);border-radius:var(--radius-full);font-size:1rem;color:var(--color-text);outline:none;transition:border-color var(--transition-fast),box-shadow var(--transition-fast)}
+.dh-search:focus{border-color:var(--color-accent);box-shadow:0 0 0 4px rgba(201,162,39,.12)}
+.dh-search::placeholder{color:var(--color-text-muted)}
+.dh-search-clear{position:absolute;right:1.125rem;top:50%;transform:translateY(-50%);width:22px;height:22px;border-radius:50%;background:var(--color-text-muted);color:var(--color-bg);border:none;cursor:pointer;font-size:.75rem;display:none;align-items:center;justify-content:center}
+.dh-search-clear.vis{display:flex}
+.dh-search-hint{text-align:center;font-size:.8rem;color:var(--color-text-muted);margin-bottom:2rem}
+.dh-results-group{margin-bottom:2rem}
+.dh-rg-head{display:flex;align-items:center;gap:.6rem;margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid var(--color-border-light)}
+.dh-rg-icon{width:30px;height:30px;border-radius:var(--radius-md);background:var(--color-bg-alt);display:flex;align-items:center;justify-content:center;color:var(--color-accent);flex-shrink:0}
+.dh-rg-title{font-family:var(--font-display);font-size:1.2rem;font-weight:600;color:var(--color-text)}
+.dh-rg-count{font-size:.75rem;color:var(--color-text-muted);background:var(--color-bg-alt);padding:.15rem .5rem;border-radius:var(--radius-full)}
+.dh-res{display:block;padding:.875rem 1.125rem;background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-md);margin-bottom:.5rem;text-decoration:none;transition:all var(--transition-fast)}
+.dh-res:hover{border-color:var(--color-accent);transform:translateX(3px);box-shadow:var(--shadow-sm)}
+.dh-res-title{font-family:var(--font-display);font-size:1.05rem;font-weight:600;color:var(--color-text);margin-bottom:.2rem;line-height:1.3}
+.dh-res-meta{font-size:.75rem;color:var(--color-text-light)}
+.dh-res-snippet{font-size:.82rem;color:var(--color-text-secondary);line-height:1.55;margin-top:.35rem}
+.dh-hl{background:rgba(201,162,39,.3);border-radius:2px;padding:0 1px}
+[data-theme="dark"] .dh-hl{background:rgba(201,162,39,.25);color:#f5ede0}
+.dh-tl{position:relative;max-width:820px;margin:0 auto}
+.dh-tl::before{content:'';position:absolute;left:91px;top:10px;bottom:10px;width:2px;background:linear-gradient(180deg,transparent,var(--color-border) 5%,var(--color-border) 95%,transparent)}
+.dh-tl-item{position:relative;display:grid;grid-template-columns:80px 44px 1fr;align-items:start;margin-bottom:1.5rem;cursor:pointer}
+.dh-tl-year{font-family:var(--font-display);font-size:1.15rem;font-weight:600;color:var(--color-accent);text-align:right;padding-right:.5rem;padding-top:.35rem;line-height:1}
+.dh-tl-dot-wrap{display:flex;justify-content:center;padding-top:.4rem;position:relative;z-index:2}
+.dh-tl-dot{width:14px;height:14px;border-radius:50%;background:var(--color-bg);border:2px solid var(--color-accent);transition:all var(--transition-fast)}
+.dh-tl-item:hover .dh-tl-dot{background:var(--color-accent);transform:scale(1.3)}
+.dh-tl-card{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-md);padding:.875rem 1.125rem;transition:all var(--transition-fast)}
+.dh-tl-item:hover .dh-tl-card{border-color:var(--color-accent);transform:translateX(4px);box-shadow:var(--shadow-sm)}
+.dh-tl-date{font-size:.72rem;color:var(--color-accent);font-weight:600;margin-bottom:.2rem}
+.dh-tl-title{font-family:var(--font-display);font-size:1.1rem;font-weight:600;color:var(--color-text);line-height:1.3;margin-bottom:.15rem}
+.dh-tl-src{font-size:.75rem;color:var(--color-text-light);font-style:italic}
+.dh-tl-lang{display:inline-block;font-size:.6rem;font-weight:700;text-transform:uppercase;padding:.1rem .4rem;border-radius:var(--radius-full);margin-left:.4rem;vertical-align:middle}
+.lpl{background:rgba(30,64,175,.15);color:#1e40af}
+.lru{background:rgba(153,27,27,.15);color:#991b1b}
+.luk{background:rgba(22,101,52,.15);color:#166534}
+.lde{background:rgba(120,53,15,.15);color:#92400e}
+[data-theme="dark"] .lpl{background:rgba(96,165,250,.2);color:#93c5fd}
+[data-theme="dark"] .lru{background:rgba(248,113,113,.2);color:#fca5a5}
+[data-theme="dark"] .luk{background:rgba(74,222,128,.2);color:#86efac}
+[data-theme="dark"] .lde{background:rgba(251,191,36,.2);color:#fcd34d}
+#dhMap{height:560px;border-radius:var(--radius-lg);border:1px solid var(--color-border);overflow:hidden;z-index:1}
+.dh-map-note{text-align:center;font-size:.78rem;color:var(--color-text-muted);margin-top:.75rem}
+.leaflet-popup-content{font-family:var(--font-body);margin:.75rem .875rem}
+.dh-pop-place{font-family:var(--font-display);font-size:1.05rem;font-weight:600;color:#1c1917;margin-bottom:.35rem}
+.dh-pop-item{display:block;font-size:.8rem;color:#2c5f3f;text-decoration:none;padding:.2rem 0;border-top:1px solid #eee;cursor:pointer}
+.dh-pop-item:hover{color:#c9a227}
+.dh-alpha{display:flex;flex-wrap:wrap;gap:.25rem;justify-content:center;margin-bottom:2rem}
+.dh-alpha-btn{width:32px;height:32px;border:1px solid var(--color-border-light);border-radius:var(--radius-sm);background:transparent;font-size:.8rem;font-weight:600;color:var(--color-text-secondary);cursor:pointer;transition:all var(--transition-fast)}
+.dh-alpha-btn:hover:not(:disabled){border-color:var(--color-accent);color:var(--color-accent)}
+.dh-alpha-btn.on{background:var(--color-accent);border-color:var(--color-accent);color:#1a1000}
+.dh-alpha-btn:disabled{opacity:.25;cursor:default}
+.dh-people{column-count:3;column-gap:2rem;max-width:900px;margin:0 auto}
+@media(max-width:720px){.dh-people{column-count:1}}
+.dh-letter-group{break-inside:avoid;margin-bottom:1.5rem}
+.dh-letter{font-family:var(--font-display);font-size:1.6rem;font-weight:300;color:var(--color-accent);border-bottom:1px solid var(--color-border-light);margin-bottom:.5rem;padding-bottom:.2rem}
+.dh-person{padding:.3rem 0;cursor:pointer;font-size:.9rem;color:var(--color-text);transition:color var(--transition-fast);display:flex;justify-content:space-between;align-items:baseline;gap:.5rem}
+.dh-person:hover{color:var(--color-accent)}
+.dh-person-n{flex:1}
+.dh-person-c{font-size:.72rem;color:var(--color-text-muted);background:var(--color-bg-alt);border-radius:var(--radius-full);padding:.05rem .45rem;flex-shrink:0}
+.dh-back{position:fixed;inset:0;background:rgba(8,6,4,.8);backdrop-filter:blur(5px);z-index:1100;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;pointer-events:none;transition:opacity .25s ease}
+.dh-back.open{opacity:1;pointer-events:auto}
+.dh-modal{background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-xl);width:100%;max-width:560px;max-height:90vh;overflow-y:auto;box-shadow:0 40px 100px rgba(0,0,0,.55);transform:translateY(24px) scale(.97);transition:transform .35s cubic-bezier(.16,1,.3,1)}
+.dh-back.open .dh-modal{transform:none}
+.dh-modal-body{padding:1.75rem}
+.dh-modal-body h3{font-family:var(--font-display);font-size:1.5rem;font-weight:600;line-height:1.2;margin-bottom:.4rem;color:var(--color-text)}
+.dh-modal-meta{font-size:.78rem;color:var(--color-text-light);margin-bottom:1.25rem}
+.dh-modal-meta .acc{color:var(--color-accent);font-weight:600}
+.dh-modal-txt{font-size:.9rem;line-height:1.8;color:var(--color-text);white-space:pre-wrap;margin-bottom:1.25rem}
+.dh-modal-actions{display:flex;gap:.6rem;flex-wrap:wrap;padding-top:1rem;border-top:1px solid var(--color-border-light)}
+.dh-btn{height:38px;padding:0 1.1rem;border-radius:var(--radius-md);font-size:.8rem;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:.4rem;text-decoration:none;transition:all var(--transition-fast);border:1px solid transparent}
+.dh-btn-p{background:var(--color-primary);color:#fff;border-color:var(--color-primary)}
+.dh-btn-p:hover{background:var(--color-primary-hover);color:#fff}
+.dh-btn-g{background:transparent;border-color:var(--color-border);color:var(--color-text-secondary)}
+.dh-btn-g:hover{border-color:var(--color-border-hover);color:var(--color-text)}
+.dh-empty{text-align:center;padding:4rem 1rem;color:var(--color-text-muted)}
+.dh-empty-ico{font-size:3rem;opacity:.15;margin-bottom:1rem}
+@media(max-width:640px){
+    .dh-tabs-bar{top:56px}
+    .dh-tl::before{left:65px}
+    .dh-tl-item{grid-template-columns:54px 30px 1fr}
+    .dh-tl-year{font-size:.95rem}
+    #dhMap{height:420px}
+}
+</style>
+</head>
+<body>
+<header class="header">
+    <div class="header-container">
+        <a href="index.html" class="logo">
+            <img src="https://i.imgur.com/mXCrjjG.png" alt="Герб Дубровиці" class="logo-img" loading="lazy">
+            <div class="logo-text"><span class="logo-city">Дубровиця</span><span class="logo-subtitle">Цифровий архів</span></div>
+        </a>
+        <nav class="nav" id="mainNav">
+            <a href="index.html" class="nav-link">Головна</a>
+            <a href="history.html" class="nav-link">Історія</a>
+            <a href="photo-archive.html" class="nav-link">Фотоархів</a>
+            <a href="architecture.html" class="nav-link">Пам'ятки</a>
+            <a href="metrychni-knyhy.html" class="nav-link">Архівні справи</a>
+            <a href="jewish-history.html" class="nav-link">Єврейська спадщина</a>
+            <a href="presa.html" class="nav-link">Преса</a>
+            <a href="doslidnyk.html" class="nav-link active">Дослідник</a>
+            <a href="contacts.html" class="nav-link">Про проєкт</a>
+        </nav>
+        <button class="theme-toggle" id="themeToggle" aria-label="Перемкнути тему">
+            <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            <svg class="theme-icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Меню"><span></span><span></span><span></span></button>
+    </div>
+</header>
+
+<section class="dh-hero" id="dhHero">
+    <div class="dh-hero-bg"></div><div class="dh-hero-vig"></div>
+    <div class="dh-hero-content">
+        <div class="dh-eyebrow"><div class="dh-eyebrow-line"></div><span>Дубровиця · Цифровий архів</span><div class="dh-eyebrow-line"></div></div>
+        <h1 class="dh-title">Дослідницькі <em>інструменти</em></h1>
+        <p class="dh-sub">Глобальний пошук по архіву, хронологічна шкала подій, карта згадок та іменний покажчик усіх постатей.</p>
+    </div>
+</section>
+
+<div class="dh-tabs-bar" id="dhTabsBar">
+    <div class="container">
+        <div class="dh-tabs" id="dhTabs">
+            <button class="dh-tab on" data-tab="search">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                Пошук
+            </button>
+            <button class="dh-tab" data-tab="timeline">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="2" x2="12" y2="22"/><circle cx="12" cy="6" r="2"/><circle cx="12" cy="14" r="2"/></svg>
+                Хронологія <span class="dh-tab-count" id="tcTl"></span>
+            </button>
+            <button class="dh-tab" data-tab="map">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+                Карта <span class="dh-tab-count" id="tcMap"></span>
+            </button>
+            <button class="dh-tab" data-tab="people">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg>
+                Постаті <span class="dh-tab-count" id="tcPpl"></span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<main class="dh-main">
+    <div class="container">
+        <div class="dh-panel on" id="panel-search">
+            <div class="dh-search-wrap">
+                <svg class="dh-search-ico" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                <input type="search" class="dh-search" id="dhQ" placeholder="Шукати скрізь: прізвище, подія, рік, місце…" autocomplete="off">
+                <button class="dh-search-clear" id="dhQClear" aria-label="Очистити">✕</button>
+            </div>
+            <p class="dh-search-hint" id="dhHint">Пошук охоплює газетні статті та всі розділи архіву.</p>
+            <div id="dhResults"></div>
+        </div>
+        <div class="dh-panel" id="panel-timeline">
+            <div class="dh-panel-intro"><h2>Хронологія подій</h2><p>Усі газетні згадки про Дубровицю у часовій послідовності. Натисніть на подію, щоб прочитати.</p></div>
+            <div class="dh-tl" id="dhTl"></div>
+        </div>
+        <div class="dh-panel" id="panel-map">
+            <div class="dh-panel-intro"><h2>Карта згадок</h2><p>Місця, що згадуються в газетних статтях. Розмір позначки відповідає кількості згадок.</p></div>
+            <div id="dhMap"></div>
+            <p class="dh-map-note">Натисніть на позначку, щоб побачити пов'язані статті.</p>
+        </div>
+        <div class="dh-panel" id="panel-people">
+            <div class="dh-panel-intro"><h2>Іменний покажчик</h2><p>Усі особи, згадані в газетних публікаціях. Натисніть на ім'я, щоб побачити статті.</p></div>
+            <div class="dh-alpha" id="dhAlpha"></div>
+            <div class="dh-people" id="dhPeople"></div>
+        </div>
+    </div>
+</main>
+
+<div class="dh-back" id="dhBack" role="dialog" aria-modal="true">
+    <div class="dh-modal"><div class="dh-modal-body" id="dhModalBody"></div></div>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4 class="footer-title">Дубровиця</h4>
+                <p class="footer-text">Цифровий архів історичної спадщини міста Дубровиця, Сарненський район, Рівненська область, Україна.</p>
+            </div>
+            <div class="footer-section">
+                <h4 class="footer-title">Навігація</h4>
+                <nav class="footer-nav">
+                    <a href="history.html">Історія</a>
+                    <a href="presa.html">Преса</a>
+                    <a href="metrychni-knyhy.html">Архівні справи</a>
+                    <a href="jewish-history.html">Єврейська спадщина</a>
+                    <a href="doslidnyk.html">Дослідник</a>
+                </nav>
+            </div>
+            <div class="footer-section">
+                <h4 class="footer-title">Контакти</h4>
+                <p class="footer-text">Маєте матеріали або пропозиції?<br><a href="contacts.html" class="footer-link">Зв'яжіться з нами</a></p>
+            </div>
+        </div>
+        <div class="footer-copyright-row">
+            <div class="footer-copyright-ornament"><div class="footer-copyright-ornament-line"></div><div class="footer-copyright-ornament-diamond"></div><div class="footer-copyright-ornament-line"></div></div>
+            <p class="footer-copyright-main">&copy; 2026 <a href="https://dubrovytsia.site">dubrovytsia.site</a> — Цифровий архів Дубровиці, Рівненська область, Україна.<br>Сайт є некомерційним краєзнавчим проєктом, створеним з любові до міста та його історії.</p>
+        </div>
+    </div>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<script src="app.js"></script>
+<script>
+const PRESS_URL='press-data.json';
+const SITE_URL='site-index.json';
+const PLACE_COORDS={"Дубровиця": [51.5733, 26.5667], "Сарни": [51.3389, 26.6011], "Рівне": [50.6199, 26.2516], "Луцьк": [50.7472, 25.3254], "Варшава": [52.2297, 21.0122], "Люблін": [51.2465, 22.5684], "Рокитне": [51.2756, 27.2106], "Столин": [51.8889, 26.8519], "Антонівка": [51.2317, 26.0739], "Володимирець": [51.4231, 26.1442], "Лунинець": [52.2486, 26.8019], "Хиночі": [51.45, 26.4], "Працюки": [51.6, 26.65], "річка Горинь": [51.55, 26.55], "Гдиня": [54.5189, 18.5305], "Познань": [52.4064, 16.9252], "Бельмонт": [55.7, 26.7], "Бад-Наугейм": [50.3667, 8.75], "маєток Озера": [51.52, 26.5], "Шахи": [51.58, 26.62], "Глушиця": [51.5, 26.45], "Городець": [51.47, 26.53], "Стрільськ": [51.4, 26.7], "Бережки": [51.42, 26.68], "Мадюничі": [51.35, 26.4], "Жадень": [51.62, 26.6], "Росоха": [51.8, 26.8], "Сохи": [51.55, 26.7], "Крупове": [51.59, 26.5], "Мочулища": [51.61, 26.55], "Нивецьк": [51.63, 26.48], "Антонін": [51.6, 26.45], "Колки": [51.09, 25.7]};
+const LF={pl:'польська',ru:'російська',uk:'українська',de:'німецька'};
+const FL={pl:'🇵🇱',ru:'🇷🇺',uk:'🇺🇦',de:'🇩🇪'};
+const LC={pl:'lpl',ru:'lru',uk:'luk',de:'lde'};
+let PRESS=[], SITE=[], mapInited=false, dhMap=null;
+function fd(s){const d=new Date(s+'T12:00:00');return d.toLocaleDateString('uk-UA',{day:'numeric',month:'long',year:'numeric'});}
+function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function hl(text,q){if(!q||!q.trim())return esc(text);const safe=esc(text);const re=new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi');return safe.replace(re,'<mark class="dh-hl">$1</mark>');}
+window.addEventListener('load',function(){document.getElementById('dhHero').classList.add('loaded');});
+
+Promise.all([
+    fetch(PRESS_URL).then(function(r){return r.json();}).catch(function(){return [];}),
+    fetch(SITE_URL).then(function(r){return r.json();}).catch(function(){return [];})
+]).then(function(arr){
+    PRESS=arr[0]; SITE=arr[1];
+    document.getElementById('tcTl').textContent=PRESS.length;
+    var places=new Set();PRESS.forEach(function(e){(e.places||[]).forEach(function(p){places.add(p);});});
+    document.getElementById('tcMap').textContent=places.size;
+    var ppl=new Set();PRESS.forEach(function(e){(e.people||[]).forEach(function(p){ppl.add(p);});});
+    document.getElementById('tcPpl').textContent=ppl.size;
+    buildTimeline(); buildPeople();
+    var tab=new URLSearchParams(location.search).get('tab');
+    if(tab)switchTab(tab);
+});
+
+function switchTab(name){
+    document.querySelectorAll('.dh-tab').forEach(function(t){t.classList.toggle('on',t.dataset.tab===name);});
+    document.querySelectorAll('.dh-panel').forEach(function(p){p.classList.toggle('on',p.id==='panel-'+name);});
+    if(name==='map'&&!mapInited)setTimeout(initMap,100);
+    history.replaceState(null,'','?tab='+name);
+}
+document.getElementById('dhTabs').addEventListener('click',function(e){
+    var t=e.target.closest('.dh-tab');if(!t)return;switchTab(t.dataset.tab);
+});
+
+function doSearch(q){
+    var res=document.getElementById('dhResults');
+    var hint=document.getElementById('dhHint');
+    q=q.trim();
+    document.getElementById('dhQClear').classList.toggle('vis',!!q);
+    if(!q){res.innerHTML='';hint.style.display='block';return;}
+    hint.style.display='none';
+    var ql=q.toLowerCase();
+    var pressHits=PRESS.filter(function(e){
+        return (e.headline||'').toLowerCase().indexOf(ql)>=0||
+        (e.translation||'').toLowerCase().indexOf(ql)>=0||
+        (e.source||'').toLowerCase().indexOf(ql)>=0||
+        String(e.year).indexOf(ql)>=0||
+        (e.tags||[]).some(function(t){return t.toLowerCase().indexOf(ql)>=0;})||
+        (e.people||[]).some(function(p){return p.toLowerCase().indexOf(ql)>=0;})||
+        (e.places||[]).some(function(p){return p.toLowerCase().indexOf(ql)>=0;});
+    });
+    var siteHits=SITE.filter(function(s){
+        return s.section.toLowerCase().indexOf(ql)>=0||
+        s.summary.toLowerCase().indexOf(ql)>=0||
+        (s.keywords||[]).some(function(k){return k.toLowerCase().indexOf(ql)>=0;})||
+        (s.topics||[]).some(function(t){return t.title.toLowerCase().indexOf(ql)>=0;});
+    });
+    var html='';
+    if(pressHits.length){
+        html+='<div class="dh-results-group"><div class="dh-rg-head"><div class="dh-rg-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5M10 6h8v4h-8z"/></svg></div><span class="dh-rg-title">Преса</span><span class="dh-rg-count">'+pressHits.length+'</span></div>';
+        html+=pressHits.map(function(e){
+            var snip=snippet(e.translation,ql);
+            return '<a class="dh-res" onclick="openPress(\''+e.id+'\');return false;" href="presa.html?id='+e.id+'"><div class="dh-res-title">'+hl(e.headline,q)+'</div><div class="dh-res-meta">'+fd(e.date)+' · '+esc(e.source)+' '+(FL[e.language]||'')+'</div>'+(snip?'<div class="dh-res-snippet">'+snip+'</div>':'')+'</a>';
+        }).join('');
+        html+='</div>';
+    }
+    if(siteHits.length){
+        html+='<div class="dh-results-group"><div class="dh-rg-head"><div class="dh-rg-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><span class="dh-rg-title">Розділи архіву</span><span class="dh-rg-count">'+siteHits.length+'</span></div>';
+        html+=siteHits.map(function(s){
+            var topicHit=(s.topics||[]).filter(function(t){return t.title.toLowerCase().indexOf(ql)>=0;})[0];
+            return '<a class="dh-res" href="'+s.url+(topicHit&&topicHit.anchor?topicHit.anchor:'')+'"><div class="dh-res-title">'+hl(s.section,q)+'</div><div class="dh-res-snippet">'+hl(s.summary,q)+'</div>'+(topicHit?'<div class="dh-res-meta" style="margin-top:.3rem">↳ '+hl(topicHit.title,q)+'</div>':'')+'</a>';
+        }).join('');
+        html+='</div>';
+    }
+    if(!html)html='<div class="dh-empty"><div class="dh-empty-ico">🔍</div><p>За запитом «'+esc(q)+'» нічого не знайдено.</p></div>';
+    res.innerHTML=html;
+}
+function snippet(text,ql){
+    if(!text)return'';
+    var t=text.replace(/\n/g,' ');
+    var i=t.toLowerCase().indexOf(ql);
+    if(i<0)return'';
+    var start=Math.max(0,i-50);
+    var end=Math.min(t.length,i+ql.length+90);
+    var s=(start>0?'…':'')+t.slice(start,end)+(end<t.length?'…':'');
+    return hl(s,ql);
+}
+var st;
+document.getElementById('dhQ').addEventListener('input',function(e){clearTimeout(st);st=setTimeout(function(){doSearch(e.target.value);},180);});
+document.getElementById('dhQClear').addEventListener('click',function(){document.getElementById('dhQ').value='';doSearch('');document.getElementById('dhQ').focus();});
+
+function buildTimeline(){
+    var el=document.getElementById('dhTl');
+    var sorted=PRESS.slice().sort(function(a,b){return a.date.localeCompare(b.date);});
+    el.innerHTML=sorted.map(function(e){
+        return '<div class="dh-tl-item" onclick="openPress(\''+e.id+'\')"><div class="dh-tl-year">'+e.year+'</div><div class="dh-tl-dot-wrap"><div class="dh-tl-dot"></div></div><div class="dh-tl-card"><div class="dh-tl-date">'+fd(e.date)+'</div><div class="dh-tl-title">'+esc(e.headline)+'<span class="dh-tl-lang '+(LC[e.language]||'lpl')+'">'+(e.language||'').toUpperCase()+'</span></div><div class="dh-tl-src">'+esc(e.source)+'</div></div></div>';
+    }).join('');
+}
+
+function initMap(){
+    mapInited=true;
+    dhMap=L.map('dhMap',{scrollWheelZoom:false}).setView([51.5,26.3],8);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'&copy; OpenStreetMap',maxZoom:18}).addTo(dhMap);
+    var byPlace={};
+    PRESS.forEach(function(e){(e.places||[]).forEach(function(p){
+        if(!PLACE_COORDS[p])return;
+        (byPlace[p]=byPlace[p]||[]).push(e);
+    });});
+    Object.keys(byPlace).forEach(function(place){
+        var arts=byPlace[place];
+        var c=PLACE_COORDS[place];
+        var n=arts.length;
+        var r=Math.min(9+n*2.5,26);
+        var isMain=place==='Дубровиця';
+        var marker=L.circleMarker([c[0],c[1]],{radius:r,fillColor:isMain?'#c9a227':'#2c5f3f',color:'#fff',weight:2,opacity:1,fillOpacity:.78}).addTo(dhMap);
+        var pop='<div class="dh-pop-place">'+esc(place)+' <span style="font-weight:400;font-size:.78rem;color:#888">· '+n+'</span></div>';
+        pop+=arts.slice(0,8).map(function(a){return '<span class="dh-pop-item" onclick="openPress(\''+a.id+'\')">'+a.year+' — '+esc(a.headline)+'</span>';}).join('');
+        if(arts.length>8)pop+='<span style="font-size:.72rem;color:#aaa;display:block;padding-top:.3rem">…та ще '+(arts.length-8)+'</span>';
+        marker.bindPopup(pop,{maxWidth:280});
+    });
+}
+
+function buildPeople(){
+    var idx={};
+    PRESS.forEach(function(e){(e.people||[]).forEach(function(name){(idx[name]=idx[name]||[]).push(e);});});
+    var names=Object.keys(idx).sort(function(a,b){return a.localeCompare(b,'uk');});
+    var groups={};
+    names.forEach(function(n){var L=n[0].toUpperCase();(groups[L]=groups[L]||[]).push(n);});
+    var alphabet='АБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЮЯ'.split('');
+    var present={};Object.keys(groups).forEach(function(k){present[k]=1;});
+    document.getElementById('dhAlpha').innerHTML='<button class="dh-alpha-btn on" data-l="all">Всі</button>'+alphabet.map(function(l){return '<button class="dh-alpha-btn" data-l="'+l+'" '+(present[l]?'':'disabled')+'>'+l+'</button>';}).join('');
+    window._peopleIdx=idx;
+    window._peopleGroups=groups;
+    renderPeople('all');
+    document.getElementById('dhAlpha').addEventListener('click',function(e){
+        var b=e.target.closest('.dh-alpha-btn');if(!b||b.disabled)return;
+        document.querySelectorAll('.dh-alpha-btn').forEach(function(x){x.classList.remove('on');});
+        b.classList.add('on');renderPeople(b.dataset.l);
+    });
+}
+function renderPeople(filter){
+    var groups=window._peopleGroups, idx=window._peopleIdx;
+    var el=document.getElementById('dhPeople');
+    var letters=Object.keys(groups).sort(function(a,b){return a.localeCompare(b,'uk');});
+    el.innerHTML=letters.filter(function(l){return filter==='all'||l===filter;}).map(function(L){
+        return '<div class="dh-letter-group"><div class="dh-letter">'+L+'</div>'+groups[L].map(function(n){
+            return '<div class="dh-person" onclick="showPerson(this.dataset.n)" data-n="'+esc(n)+'"><span class="dh-person-n">'+esc(n)+'</span><span class="dh-person-c">'+idx[n].length+'</span></div>';
+        }).join('')+'</div>';
+    }).join('');
+}
+function showPerson(name){
+    var arts=window._peopleIdx[name]||[];
+    var body=document.getElementById('dhModalBody');
+    body.innerHTML='<h3>'+esc(name)+'</h3><div class="dh-modal-meta">Згадується у <span class="acc">'+arts.length+'</span> '+(arts.length===1?'статті':'публікаціях')+'</div>'+arts.map(function(a){
+        return '<a class="dh-res" onclick="openPress(\''+a.id+'\');return false;" href="presa.html?id='+a.id+'" style="margin-bottom:.5rem"><div class="dh-res-title">'+esc(a.headline)+'</div><div class="dh-res-meta">'+fd(a.date)+' · '+esc(a.source)+'</div></a>';
+    }).join('')+'<div class="dh-modal-actions"><button class="dh-btn dh-btn-g" onclick="closeDhModal()">Закрити</button></div>';
+    document.getElementById('dhBack').classList.add('open');
+    document.body.style.overflow='hidden';
+}
+
+function openPress(id){
+    var d=null;for(var i=0;i<PRESS.length;i++){if(PRESS[i].id===id){d=PRESS[i];break;}}
+    if(!d){location.href='presa.html?id='+id;return;}
+    var ll=LF[d.language]||d.language;
+    var body=document.getElementById('dhModalBody');
+    body.innerHTML='<h3>'+esc(d.headline)+'</h3><div class="dh-modal-meta"><span class="acc">'+fd(d.date)+'</span> · <em>'+esc(d.source)+'</em> · '+(FL[d.language]||'')+' '+ll+'</div><div class="dh-modal-txt">'+esc((d.translation||'').slice(0,600))+((d.translation||'').length>600?'…':'')+'</div><div class="dh-modal-actions"><a class="dh-btn dh-btn-p" href="presa.html?id='+d.id+'">Читати повністю →</a><button class="dh-btn dh-btn-g" onclick="closeDhModal()">Закрити</button></div>';
+    document.getElementById('dhBack').classList.add('open');
+    document.body.style.overflow='hidden';
+}
+function closeDhModal(){document.getElementById('dhBack').classList.remove('open');document.body.style.overflow='';}
+document.getElementById('dhBack').addEventListener('click',function(e){if(e.target===document.getElementById('dhBack'))closeDhModal();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeDhModal();});
+window.addEventListener('scroll',function(){document.getElementById('dhTabsBar').classList.toggle('scrolled',scrollY>80);},{passive:true});
+</script>
+</body>
+</html>

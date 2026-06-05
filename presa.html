@@ -171,6 +171,20 @@
 /* share button */
 .ph-share-toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(10px);background:var(--color-text);color:var(--color-bg);font-size:.8rem;padding:.5rem 1.25rem;border-radius:var(--radius-full);opacity:0;pointer-events:none;transition:all .25s ease;z-index:2000;white-space:nowrap}
 .ph-share-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+/* citation modal */
+.ph-cite-back{position:fixed;inset:0;background:rgba(8,6,4,.7);backdrop-filter:blur(4px);z-index:1200;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;pointer-events:none;transition:opacity .25s ease}
+.ph-cite-back.open{opacity:1;pointer-events:auto}
+.ph-cite-modal{background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-xl);width:100%;max-width:560px;max-height:90vh;overflow-y:auto;box-shadow:0 32px 80px rgba(0,0,0,.5);transform:translateY(20px) scale(.97);transition:transform .3s cubic-bezier(.16,1,.3,1)}
+.ph-cite-back.open .ph-cite-modal{transform:none}
+.ph-cite-head{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 1.5rem;border-bottom:1px solid var(--color-border-light)}
+.ph-cite-head h3{font-family:var(--font-display);font-size:1.3rem;font-weight:600;color:var(--color-text)}
+.ph-cite-body{padding:1.25rem 1.5rem 1.5rem}
+.ph-cite-item{margin-bottom:1.25rem}
+.ph-cite-item:last-child{margin-bottom:0}
+.ph-cite-label{display:flex;align-items:center;justify-content:space-between;font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--color-text-muted);margin-bottom:.4rem}
+.ph-cite-copy{font-size:.68rem;color:var(--color-accent);cursor:pointer;border:none;background:none;display:flex;align-items:center;gap:.25rem;padding:0;font-weight:600;letter-spacing:.04em}
+.ph-cite-copy:hover{color:var(--color-accent-dark)}
+.ph-cite-text{background:var(--color-bg-alt);border:1px solid var(--color-border-light);border-radius:var(--radius-md);padding:.75rem .875rem;font-size:.82rem;line-height:1.6;color:var(--color-text-secondary);font-family:var(--font-display)}
 /* photo */
 .ph-mphoto{margin:1.5rem -2rem 0;position:relative;overflow:hidden;background:#060503;cursor:zoom-in}
 .ph-mphoto img{display:block;width:100%;max-height:600px;object-fit:contain;filter:sepia(.1) contrast(1.05);transition:filter .4s ease;background:var(--color-bg-alt)}
@@ -230,6 +244,7 @@
             <a href="metrychni-knyhy.html" class="nav-link">Архівні справи</a>
             <a href="jewish-history.html" class="nav-link">Єврейська спадщина</a>
             <a href="presa.html" class="nav-link active">Преса<span class="ph-nav-badge" id="navBadge"></span></a>
+            <a href="doslidnyk.html" class="nav-link">Дослідник</a>
             <a href="contacts.html" class="nav-link">Про проєкт</a>
         </nav>
         <button class="theme-toggle" id="themeToggle" aria-label="Перемкнути тему">
@@ -321,6 +336,16 @@
 </div>
 
 <div class="ph-share-toast" id="phToast">Посилання скопійовано ✓</div>
+
+<div class="ph-cite-back" id="phCiteBack" role="dialog" aria-modal="true">
+    <div class="ph-cite-modal">
+        <div class="ph-cite-head">
+            <h3>Цитування документа</h3>
+            <button class="ph-mclose" id="phCiteX" aria-label="Закрити">✕</button>
+        </div>
+        <div class="ph-cite-body" id="phCiteBody"></div>
+    </div>
+</div>
 
 <footer class="footer">
     <div class="container">
@@ -632,6 +657,9 @@ function buildModal(d){
             <button class="ph-btn ph-btn-g" onclick="phShare('${d.id}')">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
                 Поділитись</button>
+            <button class="ph-btn ph-btn-g" onclick="phCite('${d.id}')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>
+                Цитувати</button>
             <button class="ph-btn ph-btn-g" onclick="phClose()">Закрити</button>
         </div>
         ${photoBlock}`;
@@ -665,6 +693,62 @@ function showToast(){
     setTimeout(()=>t.classList.remove('show'),2200);
 }
 
+/* ── citation ── */
+function phCite(id){
+    const d=ALL.find(e=>e.id===id);
+    if(!d)return;
+    const url=location.origin+location.pathname+'?id='+id;
+    const today=new Date().toLocaleDateString('uk-UA',{day:'numeric',month:'long',year:'numeric'});
+    const dateFull=fd(d.date);
+    /* Academic UA style */
+    const academic=`«${d.headline}» // ${d.source}. — ${d.city||''}${d.city?', ':''}${dateFull}${d.volume?'. — '+d.volume:''}${d.page?'. — С. '+d.page:''}. — Цифровий архів Дубровиці. URL: ${url} (дата звернення: ${today}).`;
+    /* Short style */
+    const short=`${d.source} (${fmtYear(d.date)}). ${d.headline}. Цифровий архів Дубровиці. ${url}`;
+    /* Original source */
+    const original=d.sourceUrl?`Оригінал: ${d.source}, ${dateFull}${d.page?', стор. '+d.page:''}. ${d.sourceUrl}`:'';
+
+    const body=document.getElementById('phCiteBody');
+    body.innerHTML=`
+        <div class="ph-cite-item">
+            <div class="ph-cite-label">
+                <span>Академічне посилання</span>
+                <button class="ph-cite-copy" onclick="phCiteCopy(this,'academic')">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                    Копіювати
+                </button>
+            </div>
+            <div class="ph-cite-text" id="cite-academic">${esc(academic)}</div>
+        </div>
+        <div class="ph-cite-item">
+            <div class="ph-cite-label">
+                <span>Коротке посилання</span>
+                <button class="ph-cite-copy" onclick="phCiteCopy(this,'short')">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                    Копіювати
+                </button>
+            </div>
+            <div class="ph-cite-text" id="cite-short">${esc(short)}</div>
+        </div>
+        ${original?`<div class="ph-cite-item">
+            <div class="ph-cite-label">
+                <span>Першоджерело</span>
+                <button class="ph-cite-copy" onclick="phCiteCopy(this,'original')">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                    Копіювати
+                </button>
+            </div>
+            <div class="ph-cite-text" id="cite-original">${esc(original)}</div>
+        </div>`:''}`;
+    document.getElementById('phCiteBack').classList.add('open');
+}
+function phCiteCopy(btn,which){
+    const txt=document.getElementById('cite-'+which).textContent;
+    const done=()=>{const o=btn.innerHTML;btn.innerHTML='✓ Скопійовано';setTimeout(()=>btn.innerHTML=o,1500);};
+    if(navigator.clipboard){navigator.clipboard.writeText(txt).then(done);}
+    else{const el=document.createElement('textarea');el.value=txt;document.body.appendChild(el);el.select();document.execCommand('copy');document.body.removeChild(el);done();}
+}
+function phCiteClose(){document.getElementById('phCiteBack').classList.remove('open');}
+
 function phLbOpen(url){document.getElementById('phLbI').src=url;document.getElementById('phLb').classList.add('open');}
 function phLbClose(){document.getElementById('phLb').classList.remove('open');}
 
@@ -675,9 +759,12 @@ document.getElementById('phPrev').addEventListener('click',()=>{if(curIdx>0)phOp
 document.getElementById('phNext').addEventListener('click',()=>{if(curIdx<FIL.length-1)phOpen(curIdx+1);});
 document.getElementById('phLb').addEventListener('click',e=>{if(e.target!==document.getElementById('phLbI'))phLbClose();});
 document.getElementById('phLbX').addEventListener('click',phLbClose);
+document.getElementById('phCiteX').addEventListener('click',phCiteClose);
+document.getElementById('phCiteBack').addEventListener('click',e=>{if(e.target===document.getElementById('phCiteBack'))phCiteClose();});
 document.addEventListener('keydown',e=>{
     if(e.key==='Escape'){
-        if(document.getElementById('phLb').classList.contains('open'))phLbClose();
+        if(document.getElementById('phCiteBack').classList.contains('open'))phCiteClose();
+        else if(document.getElementById('phLb').classList.contains('open'))phLbClose();
         else phClose();
     }
     if(document.getElementById('phBack').classList.contains('open')){
