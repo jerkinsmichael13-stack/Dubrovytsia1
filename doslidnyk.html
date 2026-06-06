@@ -10,9 +10,9 @@
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <link rel="manifest" href="site.webmanifest">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Дослідницькі інструменти архіву Дубровиці — глобальний пошук, хронологія, карта згадок та іменний покажчик.">
+<meta name="description" content="Дослідницькі інструменти архіву Дубровиці — глобальний пошук, хронологія та іменний покажчик.">
 <meta property="og:title" content="Дослідницькі інструменти — Архів Дубровиці">
-<meta property="og:description" content="Глобальний пошук по архіву, хронологічна шкала, карта згадок та іменний покажчик.">
+<meta property="og:description" content="Глобальний пошук по архіву, хронологічна шкала та іменний покажчик.">
 <meta property="og:image" content="https://i.imgur.com/mXCrjjG.png">
 <title>Дослідницькі інструменти — Дубровиця</title>
 <script>!function(){var t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t)}()</script>
@@ -20,7 +20,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
 <style>
 .dh-hero{position:relative;min-height:380px;display:flex;flex-direction:column;justify-content:center;align-items:center;overflow:hidden;background:#080604}
 .dh-hero-bg{position:absolute;inset:0;background-image:url('https://i.imgur.com/kTYK0h1.jpeg');background-size:cover;background-position:center 40%;filter:brightness(.22) contrast(1.12) saturate(.35) sepia(.25);z-index:0;transform:scale(1.05);transition:transform 14s ease-out,opacity .8s ease;opacity:0}
@@ -69,6 +68,16 @@
 .dh-res-snippet{font-size:.82rem;color:var(--color-text-secondary);line-height:1.55;margin-top:.35rem}
 .dh-hl{background:rgba(201,162,39,.3);border-radius:2px;padding:0 1px}
 [data-theme="dark"] .dh-hl{background:rgba(201,162,39,.25);color:#f5ede0}
+/* photo result row with thumb */
+.dh-res-photo{display:flex;gap:.875rem;align-items:center}
+.dh-res-thumb{width:64px;height:48px;border-radius:var(--radius-sm);object-fit:cover;background:var(--color-bg-secondary);flex-shrink:0;filter:sepia(.15)}
+.dh-res-photo-body{flex:1;min-width:0}
+.dh-photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.75rem}
+.dh-photo-card{position:relative;border-radius:var(--radius-md);overflow:hidden;cursor:pointer;aspect-ratio:4/3;background:var(--color-bg-secondary);border:1px solid var(--color-border-light)}
+.dh-photo-card img{width:100%;height:100%;object-fit:cover;filter:sepia(.2) contrast(1.05);transition:transform .5s ease}
+.dh-photo-card:hover img{transform:scale(1.07)}
+.dh-photo-cap{position:absolute;left:0;right:0;bottom:0;padding:.6rem .7rem .5rem;background:linear-gradient(transparent,rgba(8,6,4,.85));color:#fff;font-size:.72rem;line-height:1.3}
+.dh-photo-cap-date{color:rgba(201,162,39,.95);font-size:.66rem;font-weight:600;margin-top:.1rem}
 .dh-tl{position:relative;max-width:820px;margin:0 auto}
 .dh-tl::before{content:'';position:absolute;left:91px;top:10px;bottom:10px;width:2px;background:linear-gradient(180deg,transparent,var(--color-border) 5%,var(--color-border) 95%,transparent)}
 .dh-tl-item{position:relative;display:grid;grid-template-columns:80px 44px 1fr;align-items:start;margin-bottom:1.5rem;cursor:pointer}
@@ -90,12 +99,6 @@
 [data-theme="dark"] .lru{background:rgba(248,113,113,.2);color:#fca5a5}
 [data-theme="dark"] .luk{background:rgba(74,222,128,.2);color:#86efac}
 [data-theme="dark"] .lde{background:rgba(251,191,36,.2);color:#fcd34d}
-#dhMap{height:560px;border-radius:var(--radius-lg);border:1px solid var(--color-border);overflow:hidden;z-index:1}
-.dh-map-note{text-align:center;font-size:.78rem;color:var(--color-text-muted);margin-top:.75rem}
-.leaflet-popup-content{font-family:var(--font-body);margin:.75rem .875rem}
-.dh-pop-place{font-family:var(--font-display);font-size:1.05rem;font-weight:600;color:#1c1917;margin-bottom:.35rem}
-.dh-pop-item{display:block;font-size:.8rem;color:#2c5f3f;text-decoration:none;padding:.2rem 0;border-top:1px solid #eee;cursor:pointer}
-.dh-pop-item:hover{color:#c9a227}
 .dh-alpha{display:flex;flex-wrap:wrap;gap:.25rem;justify-content:center;margin-bottom:2rem}
 .dh-alpha-btn{width:32px;height:32px;border:1px solid var(--color-border-light);border-radius:var(--radius-sm);background:transparent;font-size:.8rem;font-weight:600;color:var(--color-text-secondary);cursor:pointer;transition:all var(--transition-fast)}
 .dh-alpha-btn:hover:not(:disabled){border-color:var(--color-accent);color:var(--color-accent)}
@@ -118,6 +121,7 @@
 .dh-modal-meta{font-size:.78rem;color:var(--color-text-light);margin-bottom:1.25rem}
 .dh-modal-meta .acc{color:var(--color-accent);font-weight:600}
 .dh-modal-txt{font-size:.9rem;line-height:1.8;color:var(--color-text);white-space:pre-wrap;margin-bottom:1.25rem}
+.dh-modal-img{width:100%;border-radius:var(--radius-md);margin-bottom:1.25rem;filter:sepia(.1)}
 .dh-modal-actions{display:flex;gap:.6rem;flex-wrap:wrap;padding-top:1rem;border-top:1px solid var(--color-border-light)}
 .dh-btn{height:38px;padding:0 1.1rem;border-radius:var(--radius-md);font-size:.8rem;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:.4rem;text-decoration:none;transition:all var(--transition-fast);border:1px solid transparent}
 .dh-btn-p{background:var(--color-primary);color:#fff;border-color:var(--color-primary)}
@@ -126,12 +130,14 @@
 .dh-btn-g:hover{border-color:var(--color-border-hover);color:var(--color-text)}
 .dh-empty{text-align:center;padding:4rem 1rem;color:var(--color-text-muted)}
 .dh-empty-ico{font-size:3rem;opacity:.15;margin-bottom:1rem}
+.dh-lb{position:fixed;inset:0;z-index:1300;background:rgba(4,3,2,.96);display:flex;align-items:center;justify-content:center;cursor:zoom-out;opacity:0;pointer-events:none;transition:opacity .2s ease}
+.dh-lb.open{opacity:1;pointer-events:auto}
+.dh-lb img{max-width:96vw;max-height:96vh;object-fit:contain;border-radius:3px}
 @media(max-width:640px){
     .dh-tabs-bar{top:56px}
     .dh-tl::before{left:65px}
     .dh-tl-item{grid-template-columns:54px 30px 1fr}
     .dh-tl-year{font-size:.95rem}
-    #dhMap{height:420px}
 }
 </style>
 </head>
@@ -166,7 +172,7 @@
     <div class="dh-hero-content">
         <div class="dh-eyebrow"><div class="dh-eyebrow-line"></div><span>Дубровиця · Цифровий архів</span><div class="dh-eyebrow-line"></div></div>
         <h1 class="dh-title">Дослідницькі <em>інструменти</em></h1>
-        <p class="dh-sub">Глобальний пошук по архіву, хронологічна шкала подій, карта згадок та іменний покажчик усіх постатей.</p>
+        <p class="dh-sub">Глобальний пошук по всьому архіву, хронологічна шкала подій та іменний покажчик усіх постатей.</p>
     </div>
 </section>
 
@@ -181,10 +187,6 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="2" x2="12" y2="22"/><circle cx="12" cy="6" r="2"/><circle cx="12" cy="14" r="2"/></svg>
                 Хронологія <span class="dh-tab-count" id="tcTl"></span>
             </button>
-            <button class="dh-tab" data-tab="map">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
-                Карта <span class="dh-tab-count" id="tcMap"></span>
-            </button>
             <button class="dh-tab" data-tab="people">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg>
                 Постаті <span class="dh-tab-count" id="tcPpl"></span>
@@ -198,20 +200,15 @@
         <div class="dh-panel on" id="panel-search">
             <div class="dh-search-wrap">
                 <svg class="dh-search-ico" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-                <input type="search" class="dh-search" id="dhQ" placeholder="Шукати скрізь: прізвище, подія, рік, місце…" autocomplete="off">
-                <button class="dh-search-clear" id="dhQClear" aria-label="Очистити">✕</button>
+                <input type="search" class="dh-search" id="dhQ" placeholder="Шукати скрізь: прізвище, подія, рік, фото…" autocomplete="off">
+                <button class="dh-search-clear" id="dhQClear" aria-label="Очистити">&#10005;</button>
             </div>
-            <p class="dh-search-hint" id="dhHint">Пошук охоплює газетні статті та всі розділи архіву.</p>
+            <p class="dh-search-hint" id="dhHint">Пошук охоплює газетні статті, фотоархів, архівні документи та всі розділи сайту.</p>
             <div id="dhResults"></div>
         </div>
         <div class="dh-panel" id="panel-timeline">
             <div class="dh-panel-intro"><h2>Хронологія подій</h2><p>Усі газетні згадки про Дубровицю у часовій послідовності. Натисніть на подію, щоб прочитати.</p></div>
             <div class="dh-tl" id="dhTl"></div>
-        </div>
-        <div class="dh-panel" id="panel-map">
-            <div class="dh-panel-intro"><h2>Карта згадок</h2><p>Місця, що згадуються в газетних статтях. Розмір позначки відповідає кількості згадок.</p></div>
-            <div id="dhMap"></div>
-            <p class="dh-map-note">Натисніть на позначку, щоб побачити пов'язані статті.</p>
         </div>
         <div class="dh-panel" id="panel-people">
             <div class="dh-panel-intro"><h2>Іменний покажчик</h2><p>Усі особи, згадані в газетних публікаціях. Натисніть на ім'я, щоб побачити статті.</p></div>
@@ -224,6 +221,7 @@
 <div class="dh-back" id="dhBack" role="dialog" aria-modal="true">
     <div class="dh-modal"><div class="dh-modal-body" id="dhModalBody"></div></div>
 </div>
+<div class="dh-lb" id="dhLb"><img id="dhLbImg" src="" alt=""></div>
 
 <footer class="footer">
     <div class="container">
@@ -254,29 +252,29 @@
     </div>
 </footer>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 <script src="app.js"></script>
 <script>
-const PRESS_URL='press-data.json';
-const SITE_URL='site-index.json';
-const PLACE_COORDS={"Дубровиця": [51.5733, 26.5667], "Сарни": [51.3389, 26.6011], "Рівне": [50.6199, 26.2516], "Луцьк": [50.7472, 25.3254], "Варшава": [52.2297, 21.0122], "Люблін": [51.2465, 22.5684], "Рокитне": [51.2756, 27.2106], "Столин": [51.8889, 26.8519], "Антонівка": [51.2317, 26.0739], "Володимирець": [51.4231, 26.1442], "Лунинець": [52.2486, 26.8019], "Хиночі": [51.45, 26.4], "Працюки": [51.6, 26.65], "річка Горинь": [51.55, 26.55], "Гдиня": [54.5189, 18.5305], "Познань": [52.4064, 16.9252], "Бельмонт": [55.7, 26.7], "Бад-Наугейм": [50.3667, 8.75], "маєток Озера": [51.52, 26.5], "Шахи": [51.58, 26.62], "Глушиця": [51.5, 26.45], "Городець": [51.47, 26.53], "Стрільськ": [51.4, 26.7], "Бережки": [51.42, 26.68], "Мадюничі": [51.35, 26.4], "Жадень": [51.62, 26.6], "Росоха": [51.8, 26.8], "Сохи": [51.55, 26.7], "Крупове": [51.59, 26.5], "Мочулища": [51.61, 26.55], "Нивецьк": [51.63, 26.48], "Антонін": [51.6, 26.45], "Колки": [51.09, 25.7]};
-const LF={pl:'польська',ru:'російська',uk:'українська',de:'німецька'};
-const FL={pl:'🇵🇱',ru:'🇷🇺',uk:'🇺🇦',de:'🇩🇪'};
-const LC={pl:'lpl',ru:'lru',uk:'luk',de:'lde'};
-let PRESS=[], SITE=[], mapInited=false, dhMap=null;
-function fd(s){const d=new Date(s+'T12:00:00');return d.toLocaleDateString('uk-UA',{day:'numeric',month:'long',year:'numeric'});}
+var PRESS_URL='press-data.json', SITE_URL='site-index.json', PHOTOS_URL='photos-data.json', DOCS_URL='docs-data.json';
+var LF={pl:'польська',ru:'російська',uk:'українська',de:'німецька'};
+var FL={pl:'\u{1F1F5}\u{1F1F1}',ru:'\u{1F1F7}\u{1F1FA}',uk:'\u{1F1FA}\u{1F1E6}',de:'\u{1F1E9}\u{1F1EA}'};
+var LC={pl:'lpl',ru:'lru',uk:'luk',de:'lde'};
+var PRESS=[], SITE=[], PHOTOS=[], DOCS=[];
+
+function fd(s){var d=new Date(s+'T12:00:00');return d.toLocaleDateString('uk-UA',{day:'numeric',month:'long',year:'numeric'});}
 function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-function hl(text,q){if(!q||!q.trim())return esc(text);const safe=esc(text);const re=new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi');return safe.replace(re,'<mark class="dh-hl">$1</mark>');}
+function rxEsc(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');}
+function hl(text,q){if(!q||!q.trim())return esc(text);var safe=esc(text);var re=new RegExp('('+rxEsc(q)+')','gi');return safe.replace(re,'<mark class="dh-hl">$1</mark>');}
+
 window.addEventListener('load',function(){document.getElementById('dhHero').classList.add('loaded');});
 
 Promise.all([
     fetch(PRESS_URL).then(function(r){return r.json();}).catch(function(){return [];}),
-    fetch(SITE_URL).then(function(r){return r.json();}).catch(function(){return [];})
+    fetch(SITE_URL).then(function(r){return r.json();}).catch(function(){return [];}),
+    fetch(PHOTOS_URL).then(function(r){return r.json();}).catch(function(){return [];}),
+    fetch(DOCS_URL).then(function(r){return r.json();}).catch(function(){return [];})
 ]).then(function(arr){
-    PRESS=arr[0]; SITE=arr[1];
+    PRESS=arr[0]; SITE=arr[1]; PHOTOS=arr[2]; DOCS=arr[3];
     document.getElementById('tcTl').textContent=PRESS.length;
-    var places=new Set();PRESS.forEach(function(e){(e.places||[]).forEach(function(p){places.add(p);});});
-    document.getElementById('tcMap').textContent=places.size;
     var ppl=new Set();PRESS.forEach(function(e){(e.people||[]).forEach(function(p){ppl.add(p);});});
     document.getElementById('tcPpl').textContent=ppl.size;
     buildTimeline(); buildPeople();
@@ -287,12 +285,17 @@ Promise.all([
 function switchTab(name){
     document.querySelectorAll('.dh-tab').forEach(function(t){t.classList.toggle('on',t.dataset.tab===name);});
     document.querySelectorAll('.dh-panel').forEach(function(p){p.classList.toggle('on',p.id==='panel-'+name);});
-    if(name==='map'&&!mapInited)setTimeout(initMap,100);
     history.replaceState(null,'','?tab='+name);
 }
 document.getElementById('dhTabs').addEventListener('click',function(e){
     var t=e.target.closest('.dh-tab');if(!t)return;switchTab(t.dataset.tab);
 });
+
+function photoYear(p){
+    var d=(p.date||'').trim();
+    if(d==='2026'||d==='невідомо'||!d)return '';
+    return d;
+}
 
 function doSearch(q){
     var res=document.getElementById('dhResults');
@@ -302,6 +305,7 @@ function doSearch(q){
     if(!q){res.innerHTML='';hint.style.display='block';return;}
     hint.style.display='none';
     var ql=q.toLowerCase();
+
     var pressHits=PRESS.filter(function(e){
         return (e.headline||'').toLowerCase().indexOf(ql)>=0||
         (e.translation||'').toLowerCase().indexOf(ql)>=0||
@@ -311,32 +315,74 @@ function doSearch(q){
         (e.people||[]).some(function(p){return p.toLowerCase().indexOf(ql)>=0;})||
         (e.places||[]).some(function(p){return p.toLowerCase().indexOf(ql)>=0;});
     });
+    var photoHits=PHOTOS.filter(function(p){
+        return (p.title||'').toLowerCase().indexOf(ql)>=0||
+        String(p.date||'').toLowerCase().indexOf(ql)>=0;
+    });
+    var docHits=DOCS.filter(function(d){
+        return (d.title||'').toLowerCase().indexOf(ql)>=0||
+        (d.subtitle||'').toLowerCase().indexOf(ql)>=0||
+        (d.summary||'').toLowerCase().indexOf(ql)>=0||
+        (d.type||'').toLowerCase().indexOf(ql)>=0||
+        String(d.year||'').indexOf(ql)>=0||
+        (d.keywords||[]).some(function(k){return k.toLowerCase().indexOf(ql)>=0;});
+    });
     var siteHits=SITE.filter(function(s){
         return s.section.toLowerCase().indexOf(ql)>=0||
         s.summary.toLowerCase().indexOf(ql)>=0||
         (s.keywords||[]).some(function(k){return k.toLowerCase().indexOf(ql)>=0;})||
         (s.topics||[]).some(function(t){return t.title.toLowerCase().indexOf(ql)>=0;});
     });
+
     var html='';
+
     if(pressHits.length){
-        html+='<div class="dh-results-group"><div class="dh-rg-head"><div class="dh-rg-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5M10 6h8v4h-8z"/></svg></div><span class="dh-rg-title">Преса</span><span class="dh-rg-count">'+pressHits.length+'</span></div>';
+        html+=group('Преса',pressHits.length,'<path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5M10 6h8v4h-8z"/>');
         html+=pressHits.map(function(e){
             var snip=snippet(e.translation,ql);
-            return '<a class="dh-res" onclick="openPress(\''+e.id+'\');return false;" href="presa.html?id='+e.id+'"><div class="dh-res-title">'+hl(e.headline,q)+'</div><div class="dh-res-meta">'+fd(e.date)+' · '+esc(e.source)+' '+(FL[e.language]||'')+'</div>'+(snip?'<div class="dh-res-snippet">'+snip+'</div>':'')+'</a>';
+            return '<a class="dh-res" onclick="openPress(\''+e.id+'\');return false;" href="presa.html?id='+e.id+'"><div class="dh-res-title">'+hl(e.headline,q)+'</div><div class="dh-res-meta">'+fd(e.date)+' \u00b7 '+esc(e.source)+' '+(FL[e.language]||'')+'</div>'+(snip?'<div class="dh-res-snippet">'+snip+'</div>':'')+'</a>';
         }).join('');
         html+='</div>';
     }
+
+    if(docHits.length){
+        html+=group('Архівні документи',docHits.length,'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>');
+        html+=docHits.map(function(d){
+            return '<a class="dh-res" href="'+d.url+'"><div class="dh-res-title">'+hl(d.title,q)+'</div><div class="dh-res-meta">'+esc(d.type)+' \u00b7 '+d.year+' \u00b7 '+esc(d.archive||'')+'</div><div class="dh-res-snippet">'+hl(d.summary,q)+'</div></a>';
+        }).join('');
+        html+='</div>';
+    }
+
+    if(photoHits.length){
+        html+=group('Фотоархів',photoHits.length,'<rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>');
+        html+='<div class="dh-photo-grid">';
+        html+=photoHits.slice(0,24).map(function(p){
+            var idx=PHOTOS.indexOf(p);
+            var yr=photoYear(p);
+            return '<div class="dh-photo-card" onclick="openPhoto('+idx+')"><img src="'+p.imageUrl+'" alt="'+esc(p.title)+'" loading="lazy"><div class="dh-photo-cap">'+hl(p.title,q)+(yr?'<div class="dh-photo-cap-date">'+esc(yr)+'</div>':'')+'</div></div>';
+        }).join('');
+        html+='</div>';
+        if(photoHits.length>24)html+='<p style="text-align:center;font-size:.8rem;color:var(--color-text-muted);margin-top:1rem">Показано 24 з '+photoHits.length+'. <a href="photo-archive.html" style="color:var(--color-accent)">Усі фото у Фотоархіві &rarr;</a></p>';
+        html+='</div>';
+    }
+
     if(siteHits.length){
-        html+='<div class="dh-results-group"><div class="dh-rg-head"><div class="dh-rg-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><span class="dh-rg-title">Розділи архіву</span><span class="dh-rg-count">'+siteHits.length+'</span></div>';
+        html+=group('Розділи архіву',siteHits.length,'<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>');
         html+=siteHits.map(function(s){
             var topicHit=(s.topics||[]).filter(function(t){return t.title.toLowerCase().indexOf(ql)>=0;})[0];
-            return '<a class="dh-res" href="'+s.url+(topicHit&&topicHit.anchor?topicHit.anchor:'')+'"><div class="dh-res-title">'+hl(s.section,q)+'</div><div class="dh-res-snippet">'+hl(s.summary,q)+'</div>'+(topicHit?'<div class="dh-res-meta" style="margin-top:.3rem">↳ '+hl(topicHit.title,q)+'</div>':'')+'</a>';
+            return '<a class="dh-res" href="'+s.url+(topicHit&&topicHit.anchor?topicHit.anchor:'')+'"><div class="dh-res-title">'+hl(s.section,q)+'</div><div class="dh-res-snippet">'+hl(s.summary,q)+'</div>'+(topicHit?'<div class="dh-res-meta" style="margin-top:.3rem">\u21b3 '+hl(topicHit.title,q)+'</div>':'')+'</a>';
         }).join('');
         html+='</div>';
     }
-    if(!html)html='<div class="dh-empty"><div class="dh-empty-ico">🔍</div><p>За запитом «'+esc(q)+'» нічого не знайдено.</p></div>';
+
+    if(!html)html='<div class="dh-empty"><div class="dh-empty-ico">\u{1F50D}</div><p>За запитом &laquo;'+esc(q)+'&raquo; нічого не знайдено.</p></div>';
     res.innerHTML=html;
 }
+
+function group(title,count,svgInner){
+    return '<div class="dh-results-group"><div class="dh-rg-head"><div class="dh-rg-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">'+svgInner+'</svg></div><span class="dh-rg-title">'+title+'</span><span class="dh-rg-count">'+count+'</span></div>';
+}
+
 function snippet(text,ql){
     if(!text)return'';
     var t=text.replace(/\n/g,' ');
@@ -344,9 +390,10 @@ function snippet(text,ql){
     if(i<0)return'';
     var start=Math.max(0,i-50);
     var end=Math.min(t.length,i+ql.length+90);
-    var s=(start>0?'…':'')+t.slice(start,end)+(end<t.length?'…':'');
+    var s=(start>0?'\u2026':'')+t.slice(start,end)+(end<t.length?'\u2026':'');
     return hl(s,ql);
 }
+
 var st;
 document.getElementById('dhQ').addEventListener('input',function(e){clearTimeout(st);st=setTimeout(function(){doSearch(e.target.value);},180);});
 document.getElementById('dhQClear').addEventListener('click',function(){document.getElementById('dhQ').value='';doSearch('');document.getElementById('dhQ').focus();});
@@ -357,29 +404,6 @@ function buildTimeline(){
     el.innerHTML=sorted.map(function(e){
         return '<div class="dh-tl-item" onclick="openPress(\''+e.id+'\')"><div class="dh-tl-year">'+e.year+'</div><div class="dh-tl-dot-wrap"><div class="dh-tl-dot"></div></div><div class="dh-tl-card"><div class="dh-tl-date">'+fd(e.date)+'</div><div class="dh-tl-title">'+esc(e.headline)+'<span class="dh-tl-lang '+(LC[e.language]||'lpl')+'">'+(e.language||'').toUpperCase()+'</span></div><div class="dh-tl-src">'+esc(e.source)+'</div></div></div>';
     }).join('');
-}
-
-function initMap(){
-    mapInited=true;
-    dhMap=L.map('dhMap',{scrollWheelZoom:false}).setView([51.5,26.3],8);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'&copy; OpenStreetMap',maxZoom:18}).addTo(dhMap);
-    var byPlace={};
-    PRESS.forEach(function(e){(e.places||[]).forEach(function(p){
-        if(!PLACE_COORDS[p])return;
-        (byPlace[p]=byPlace[p]||[]).push(e);
-    });});
-    Object.keys(byPlace).forEach(function(place){
-        var arts=byPlace[place];
-        var c=PLACE_COORDS[place];
-        var n=arts.length;
-        var r=Math.min(9+n*2.5,26);
-        var isMain=place==='Дубровиця';
-        var marker=L.circleMarker([c[0],c[1]],{radius:r,fillColor:isMain?'#c9a227':'#2c5f3f',color:'#fff',weight:2,opacity:1,fillOpacity:.78}).addTo(dhMap);
-        var pop='<div class="dh-pop-place">'+esc(place)+' <span style="font-weight:400;font-size:.78rem;color:#888">· '+n+'</span></div>';
-        pop+=arts.slice(0,8).map(function(a){return '<span class="dh-pop-item" onclick="openPress(\''+a.id+'\')">'+a.year+' — '+esc(a.headline)+'</span>';}).join('');
-        if(arts.length>8)pop+='<span style="font-size:.72rem;color:#aaa;display:block;padding-top:.3rem">…та ще '+(arts.length-8)+'</span>';
-        marker.bindPopup(pop,{maxWidth:280});
-    });
 }
 
 function buildPeople(){
@@ -414,7 +438,7 @@ function showPerson(name){
     var arts=window._peopleIdx[name]||[];
     var body=document.getElementById('dhModalBody');
     body.innerHTML='<h3>'+esc(name)+'</h3><div class="dh-modal-meta">Згадується у <span class="acc">'+arts.length+'</span> '+(arts.length===1?'статті':'публікаціях')+'</div>'+arts.map(function(a){
-        return '<a class="dh-res" onclick="openPress(\''+a.id+'\');return false;" href="presa.html?id='+a.id+'" style="margin-bottom:.5rem"><div class="dh-res-title">'+esc(a.headline)+'</div><div class="dh-res-meta">'+fd(a.date)+' · '+esc(a.source)+'</div></a>';
+        return '<a class="dh-res" onclick="openPress(\''+a.id+'\');return false;" href="presa.html?id='+a.id+'" style="margin-bottom:.5rem"><div class="dh-res-title">'+esc(a.headline)+'</div><div class="dh-res-meta">'+fd(a.date)+' \u00b7 '+esc(a.source)+'</div></a>';
     }).join('')+'<div class="dh-modal-actions"><button class="dh-btn dh-btn-g" onclick="closeDhModal()">Закрити</button></div>';
     document.getElementById('dhBack').classList.add('open');
     document.body.style.overflow='hidden';
@@ -425,13 +449,27 @@ function openPress(id){
     if(!d){location.href='presa.html?id='+id;return;}
     var ll=LF[d.language]||d.language;
     var body=document.getElementById('dhModalBody');
-    body.innerHTML='<h3>'+esc(d.headline)+'</h3><div class="dh-modal-meta"><span class="acc">'+fd(d.date)+'</span> · <em>'+esc(d.source)+'</em> · '+(FL[d.language]||'')+' '+ll+'</div><div class="dh-modal-txt">'+esc((d.translation||'').slice(0,600))+((d.translation||'').length>600?'…':'')+'</div><div class="dh-modal-actions"><a class="dh-btn dh-btn-p" href="presa.html?id='+d.id+'">Читати повністю →</a><button class="dh-btn dh-btn-g" onclick="closeDhModal()">Закрити</button></div>';
+    body.innerHTML='<h3>'+esc(d.headline)+'</h3><div class="dh-modal-meta"><span class="acc">'+fd(d.date)+'</span> \u00b7 <em>'+esc(d.source)+'</em> \u00b7 '+(FL[d.language]||'')+' '+ll+'</div><div class="dh-modal-txt">'+esc((d.translation||'').slice(0,600))+((d.translation||'').length>600?'\u2026':'')+'</div><div class="dh-modal-actions"><a class="dh-btn dh-btn-p" href="presa.html?id='+d.id+'">Читати повністю &rarr;</a><button class="dh-btn dh-btn-g" onclick="closeDhModal()">Закрити</button></div>';
     document.getElementById('dhBack').classList.add('open');
     document.body.style.overflow='hidden';
 }
+
+function openPhoto(idx){
+    var p=PHOTOS[idx];if(!p)return;
+    var yr=photoYear(p);
+    var body=document.getElementById('dhModalBody');
+    body.innerHTML='<img class="dh-modal-img" src="'+p.imageUrl+'" alt="'+esc(p.title)+'" onclick="lbOpen(\''+p.imageUrl+'\')" style="cursor:zoom-in"><h3 style="font-size:1.25rem">'+esc(p.title)+'</h3><div class="dh-modal-meta">'+(yr?'<span class="acc">'+esc(yr)+'</span> \u00b7 ':'')+'Фотоархів</div><div class="dh-modal-actions"><a class="dh-btn dh-btn-p" href="photo-archive.html">Відкрити Фотоархів &rarr;</a><button class="dh-btn dh-btn-g" onclick="closeDhModal()">Закрити</button></div>';
+    document.getElementById('dhBack').classList.add('open');
+    document.body.style.overflow='hidden';
+}
+
+function lbOpen(url){document.getElementById('dhLbImg').src=url;document.getElementById('dhLb').classList.add('open');}
+function lbClose(){document.getElementById('dhLb').classList.remove('open');}
+document.getElementById('dhLb').addEventListener('click',lbClose);
+
 function closeDhModal(){document.getElementById('dhBack').classList.remove('open');document.body.style.overflow='';}
 document.getElementById('dhBack').addEventListener('click',function(e){if(e.target===document.getElementById('dhBack'))closeDhModal();});
-document.addEventListener('keydown',function(e){if(e.key==='Escape')closeDhModal();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){if(document.getElementById('dhLb').classList.contains('open'))lbClose();else closeDhModal();}});
 window.addEventListener('scroll',function(){document.getElementById('dhTabsBar').classList.toggle('scrolled',scrollY>80);},{passive:true});
 </script>
 </body>

@@ -73,7 +73,9 @@
 .ph-cnt b{color:var(--color-primary);font-weight:600}
 
 /* nav badge */
-.ph-nav-badge{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:16px;padding:0 4px;background:var(--color-accent);color:#1a1000;font-size:.6rem;font-weight:700;border-radius:99px;margin-left:.3rem;vertical-align:middle;line-height:1}
+.ph-nav-badge{display:none;align-items:center;justify-content:center;min-width:17px;height:15px;padding:0 4px;background:var(--color-accent);color:#1a1000;font-size:.58rem;font-weight:700;border-radius:99px;margin-left:.3rem;vertical-align:middle;line-height:1}
+.ph-nav-badge.ready{display:inline-flex}
+.nav-link[href="presa.html"]{white-space:nowrap}
 
 /* MAIN */
 .ph-main{padding:3.5rem 0 7rem}
@@ -435,7 +437,7 @@ function setStats(){
     document.getElementById('sS').textContent=sr.size;
     document.getElementById('sP').textContent=Math.min(...ys)+'–'+Math.max(...ys);
     const b=document.getElementById('navBadge');
-    if(b)b.textContent=ALL.length;
+    if(b){b.textContent=ALL.length;b.classList.add('ready');}
 }
 
 /* ── filter ── */
