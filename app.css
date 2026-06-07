@@ -295,6 +295,11 @@ input, textarea, select { font-family: var(--font-body); font-size: 1rem; }
     transition: all var(--transition-fast);
     letter-spacing: 0.10em;
     text-transform: uppercase;
+    /* Prevent any inline badge from wrapping the nav link text */
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    gap: 0;
 }
 
 .nav-link::after {
@@ -3369,4 +3374,198 @@ img[loading="lazy"] { transition: opacity 0.6s ease; }
     background: rgba(201,162,39,.9);
     transform: rotate(45deg);
     flex-shrink: 0;
+}
+
+/* ════════════════════════════════════════════════════════
+   GLOBAL ARCHIVE SEARCH — archiveSearchWrap
+   Used on doslidnyk.html + metrychni-knyhy.html
+════════════════════════════════════════════════════════ */
+
+.asrch-wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.asrch-field {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.asrch-field svg {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-text-muted);
+    pointer-events: none;
+    width: 18px; height: 18px;
+}
+
+.asrch-input {
+    width: 100%;
+    height: 52px;
+    padding: 0 3rem 0 3rem;
+    background: var(--color-bg-card);
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-full);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    color: var(--color-text);
+    outline: none;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+.asrch-input::placeholder { color: var(--color-text-muted); }
+.asrch-input:focus {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(201,162,39,.14);
+}
+
+.asrch-clear {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--color-text-muted);
+    color: var(--color-bg);
+    font-size: 0.7rem;
+    border: none;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    transition: background var(--transition-fast);
+}
+.asrch-clear:hover { background: var(--color-text); }
+
+.asrch-count {
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    color: var(--color-text-muted);
+    letter-spacing: 0.06em;
+    margin-bottom: 1.5rem;
+}
+
+.asrch-group {
+    margin-bottom: 2rem;
+}
+
+.asrch-group-hd {
+    font-family: var(--font-body);
+    font-size: 0.58rem;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--color-border-light);
+}
+
+.asrch-card {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr auto;
+    gap: 0.75rem;
+    align-items: start;
+    padding: 1rem 1.1rem;
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    color: inherit;
+    margin-bottom: 0.5rem;
+    transition: border-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+.asrch-card:hover {
+    border-color: var(--color-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(0,0,0,.08);
+}
+
+.asrch-card--person { border-left: 3px solid #c9a227; }
+.asrch-card--doc    { border-left: 3px solid #8b6f1c; }
+.asrch-card--press  { border-left: 3px solid #4a7c59; }
+.asrch-card--book   { border-left: 3px solid #5a6ea8; }
+
+.asrch-card-icon {
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 0.1rem;
+    flex-shrink: 0;
+}
+
+.asrch-card-body { min-width: 0; }
+
+.asrch-card-label {
+    font-family: var(--font-body);
+    font-size: 0.58rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin-bottom: 0.2rem;
+}
+
+.asrch-card-title {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--color-text);
+    line-height: 1.25;
+    margin-bottom: 0.2rem;
+}
+
+.asrch-card-sub {
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0.35rem;
+}
+
+.asrch-card-desc {
+    font-family: var(--font-display);
+    font-size: 0.82rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.asrch-card-cta {
+    font-family: var(--font-body);
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    font-weight: 600;
+    white-space: nowrap;
+    padding-top: 0.25rem;
+    flex-shrink: 0;
+    transition: gap var(--transition-fast);
+}
+
+.asrch-empty {
+    text-align: center;
+    padding: 4rem 1rem;
+    color: var(--color-text-muted);
+    font-family: var(--font-body);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.875rem;
+    line-height: 1.65;
+}
+
+@media (max-width: 600px) {
+    .asrch-card {
+        grid-template-columns: 2rem 1fr;
+    }
+    .asrch-card-cta { display: none; }
+    .asrch-card-icon { font-size: 1.1rem; }
 }

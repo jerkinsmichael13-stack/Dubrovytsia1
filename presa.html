@@ -73,8 +73,37 @@
 .ph-cnt b{color:var(--color-primary);font-weight:600}
 
 /* nav badge */
-.ph-nav-badge{display:none;align-items:center;justify-content:center;min-width:17px;height:15px;padding:0 4px;background:var(--color-accent);color:#1a1000;font-size:.58rem;font-weight:700;border-radius:99px;margin-left:.3rem;vertical-align:middle;line-height:1}
+/* Nav badge — fixes wrapping issue by forcing flex on the link */
+.nav-link:has(.ph-nav-badge){
+    display:inline-flex;
+    align-items:center;
+    white-space:nowrap;
+    flex-wrap:nowrap;
+}
+.ph-nav-badge{
+    display:none;
+    align-items:center;
+    justify-content:center;
+    min-width:17px;
+    height:15px;
+    padding:0 4px;
+    background:var(--color-accent);
+    color:#1a1000;
+    font-size:.58rem;
+    font-weight:700;
+    border-radius:99px;
+    margin-left:.3rem;
+    line-height:1;
+    flex-shrink:0;
+    white-space:nowrap;
+}
 .ph-nav-badge.ready{display:inline-flex}
+/* Fallback for browsers that don't support :has() */
+.nav-link-with-badge{
+    display:inline-flex!important;
+    align-items:center!important;
+    white-space:nowrap!important;
+}
 .nav-link[href="presa.html"]{white-space:nowrap}
 
 /* MAIN */
@@ -245,7 +274,7 @@
             <a href="architecture.html" class="nav-link">Пам'ятки</a>
             <a href="metrychni-knyhy.html" class="nav-link">Архівні справи</a>
             <a href="jewish-history.html" class="nav-link">Єврейська спадщина</a>
-            <a href="presa.html" class="nav-link active">Преса<span class="ph-nav-badge" id="navBadge"></span></a>
+            <a href="presa.html" class="nav-link active nav-link-with-badge">Преса<span class="ph-nav-badge" id="navBadge"></span></a>
             <a href="doslidnyk.html" class="nav-link">Дослідник</a>
             <a href="contacts.html" class="nav-link">Про проєкт</a>
         </nav>

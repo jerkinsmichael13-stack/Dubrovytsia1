@@ -931,6 +931,188 @@ function initBackToTop() {
 }
 
 // ================================================
+// ГЛОБАЛЬНИЙ ПОШУК (архівні справи + персоналії)
+// ================================================
+
+let SEARCH_DOCS       = [];
+let SEARCH_PERSONALIA = [];
+let SEARCH_PRESS      = [];
+let SEARCH_BOOKS      = [];
+let SEARCH_METRICS    = [];
+
+async function initArchiveSearch() {
+    const container = document.getElementById('archiveSearchWrap');
+    if (!container) return;
+
+    // Load all data sources in parallel
+    const [docsRes, personRes, pressRes, booksRes] = await Promise.allSettled([
+        fetch(GITHUB_RAW + 'docs-data.json?v=' + Date.now()).then(r => r.ok ? r.json() : []),
+        fetch(GITHUB_RAW + 'personalia.json?v=' + Date.now()).then(r => r.ok ? r.json() : []),
+        fetch(GITHUB_RAW + 'press-index.json?v=' + Date.now()).then(r => r.ok ? r.json() : []),
+        fetch(GITHUB_RAW + 'books.json?v=' + Date.now()).then(r => r.ok ? r.json() : []),
+    ]);
+
+    SEARCH_DOCS       = docsRes.status === 'fulfilled'   ? docsRes.value   : [];
+    SEARCH_PERSONALIA = personRes.status === 'fulfilled' ? personRes.value : [];
+    SEARCH_PRESS      = pressRes.status === 'fulfilled'  ? pressRes.value  : [];
+    SEARCH_BOOKS      = booksRes.status === 'fulfilled'  ? booksRes.value  : [];
+
+    renderArchiveSearch('');
+
+    const input = document.getElementById('archiveSearchInput');
+    const clear = document.getElementById('archiveSearchClear');
+    if (!input) return;
+
+    input.addEventListener('input', () => {
+        const q = input.value.trim();
+        clear && (clear.style.display = q ? 'flex' : 'none');
+        renderArchiveSearch(q);
+    });
+    clear && clear.addEventListener('click', () => {
+        input.value = '';
+        clear.style.display = 'none';
+        input.focus();
+        renderArchiveSearch('');
+    });
+}
+
+function archiveSearchMatch(q, ...fields) {
+    if (!q) return true;
+    const ql = q.toLowerCase();
+    return fields.some(f => f && String(f).toLowerCase().includes(ql));
+}
+
+function renderArchiveSearch(q) {
+    const list = document.getElementById('archiveSearchResults');
+    if (!list) return;
+
+    const results = [];
+
+    // 1. Personalia — people
+    SEARCH_PERSONALIA.forEach(p => {
+        if (archiveSearchMatch(q, p.name, p.role, p.description, p.period,
+                               ...(p.keywords || []), ...(p.tags || []))) {
+            results.push({
+                type:    'person',
+                icon:    '👤',
+                label:   'Персоналія',
+                title:   p.name,
+                sub:     p.role + (p.years ? ' · ' + p.years : ''),
+                desc:    p.description,
+                url:     p.sourceUrl || '#',
+                urlText: p.sourceTitle || 'Джерело',
+                score:   q && p.name.toLowerCase().includes(q.toLowerCase()) ? 2 : 1,
+            });
+        }
+    });
+
+    // 2. Archival docs
+    SEARCH_DOCS.forEach(d => {
+        if (archiveSearchMatch(q, d.title, d.subtitle, d.summary, d.type, d.archive,
+                               ...(d.keywords || []))) {
+            results.push({
+                type:    'doc',
+                icon:    '📜',
+                label:   d.type || 'Документ',
+                title:   d.title,
+                sub:     d.year + (d.archive ? ' · ' + d.archive : ''),
+                desc:    d.summary,
+                url:     d.url || '#',
+                urlText: 'Читати документ',
+                score:   1,
+            });
+        }
+    });
+
+    // 3. Press index
+    SEARCH_PRESS.forEach(p => {
+        if (archiveSearchMatch(q, p.headline, p.source, String(p.year),
+                               ...(p.tags || []))) {
+            results.push({
+                type:    'press',
+                icon:    '📰',
+                label:   p.source + ' · ' + p.year,
+                title:   p.headline,
+                sub:     p.date ? p.date.split('-').reverse().join('.') : p.year,
+                desc:    (p.tags || []).join(', '),
+                url:     'presa.html?id=' + p.id,
+                urlText: 'Читати статтю',
+                score:   1,
+            });
+        }
+    });
+
+    // 4. Books
+    SEARCH_BOOKS.forEach(b => {
+        if (archiveSearchMatch(q, b.title, b.author, b.description)) {
+            results.push({
+                type:    'book',
+                icon:    '📚',
+                label:   'Книга · ' + (b.year || ''),
+                title:   b.title,
+                sub:     b.author || '',
+                desc:    (b.description || '').slice(0, 120) + '…',
+                url:     b.location || b.downloadUrl || 'metrychni-knyhy.html#booksCatalog',
+                urlText: 'Переглянути',
+                score:   1,
+            });
+        }
+    });
+
+    // Sort: exact name matches first
+    results.sort((a, b) => b.score - a.score);
+
+    const el = document.getElementById('archiveSearchCount');
+    if (el) el.textContent = q
+        ? `Знайдено: ${results.length}`
+        : `Всього в індексі: ${SEARCH_DOCS.length + SEARCH_PERSONALIA.length + SEARCH_PRESS.length + SEARCH_BOOKS.length}`;
+
+    if (!results.length) {
+        list.innerHTML = `<div class="asrch-empty">
+            <span style="font-size:2rem">🔍</span>
+            <p>За запитом <strong>«${q}»</strong> нічого не знайдено.<br>
+            Спробуйте інше написання або ключове слово.</p>
+        </div>`;
+        return;
+    }
+
+    const typeOrder = { person: 0, doc: 1, press: 2, book: 3 };
+    const grouped = {};
+    results.forEach(r => {
+        (grouped[r.type] = grouped[r.type] || []).push(r);
+    });
+
+    const typeLabels = {
+        person: '👤 Персоналії',
+        doc:    '📜 Архівні документи',
+        press:  '📰 Преса',
+        book:   '📚 Книги та дослідження',
+    };
+
+    let html = '';
+    Object.keys(typeOrder).forEach(type => {
+        const items = grouped[type];
+        if (!items || !items.length) return;
+        html += `<div class="asrch-group">
+            <div class="asrch-group-hd">${typeLabels[type] || type}</div>
+            ${items.map(r => `
+            <a href="${r.url}" class="asrch-card asrch-card--${r.type}" ${r.url.startsWith('http') ? 'target="_blank" rel="noopener"' : ''}>
+                <div class="asrch-card-icon">${r.icon}</div>
+                <div class="asrch-card-body">
+                    <div class="asrch-card-label">${r.label}</div>
+                    <div class="asrch-card-title">${r.title}</div>
+                    ${r.sub ? `<div class="asrch-card-sub">${r.sub}</div>` : ''}
+                    ${r.desc ? `<div class="asrch-card-desc">${r.desc}</div>` : ''}
+                </div>
+                <div class="asrch-card-cta">${r.urlText} →</div>
+            </a>`).join('')}
+        </div>`;
+    });
+
+    list.innerHTML = html;
+}
+
+// ================================================
 // ІНІЦІАЛІЗАЦІЯ
 // ================================================
 
@@ -959,6 +1141,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (document.getElementById('metricsGrid'))   initMetricsPage();
     if (document.getElementById('adminLoginBtn')) initAdmin();
     if (document.getElementById('aerialMap'))     initAerialMap();
+    if (document.getElementById('archiveSearchWrap')) initArchiveSearch();
 
     // Динамічний лічильник фото на головній — завжди анімує до реального числа
     const stat = document.getElementById('photoCountStat');
