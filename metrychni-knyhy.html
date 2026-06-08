@@ -451,71 +451,199 @@ a, button, [role="button"], input, select, textarea,
 'use strict';
 const GH='https://raw.githubusercontent.com/jerkinsmichael13-stack/Dubrovytsia1/main/';
 const PER=50;
-function thumbUrl(u){return u?u.replace('/upload/','/upload/w_600,q_auto,f_auto/'):'';}
-function fullUrl(u){return u?u.replace('/upload/','/upload/w_1400,q_auto/'):'';}
-let ALL=[],shown=[],pg=1,fType='all',q='';
-const $=id=>document.getElementById(id);
-const esc=s=>String(s||'').replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':'&quot;',"'":'\'39;}')[c]);
-const causeClass=c=>{if(!c)return'';if(/загин|залиш/.test(c))return'k';if(/полон/.test(c))return'p';if(/поранен|хворів|помер|зник/.test(c))return'h';return'';};
+
+function fullUrl(u){
+    if(!u) return '';
+    return u.replace('/upload/','/upload/w_1400,q_auto/');
+}
+
+var ALL=[], shown=[], pg=1, fType='all', q='';
+
+function $(id){ return document.getElementById(id); }
+
+function causeClass(c){
+    if(!c) return '';
+    if(/загин|залиш/.test(c)) return 'k';
+    if(/полон/.test(c)) return 'p';
+    if(/поранен|хворів|помер|зник/.test(c)) return 'h';
+    return '';
+}
+
+function he(s){
+    return String(s||'')
+        .replace(/&/g,'&amp;')
+        .replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;')
+        .replace(/"/g,'&quot;');
+}
+
 function renderTable(){
-    const wrap=$("ww1TableWrap"),start=(pg-1)*PER,slice=shown.slice(start,start+PER);
-    if(!slice.length){wrap.innerHTML='<div class="ww1-loading" style="padding:3rem;">Нічого не знайдено</div>';$('ww1Pag').innerHTML='';return;}
-    let html='<table class="ww1-table"><thead><tr><th>Прізвище та ім\u2019я</th><th>Військова частина</th><th>Звання</th><th>Статус</th><th></th></tr></thead><tbody>';
-    slice.forEach(r=>{
-        const name=[r.last_name,r.first_name,r.middle_name].filter(Boolean).join(' ');
-        const cc=causeClass(r.cause);
-        html+=`<tr onclick="ww1Open('${r.id}')"><td><div class="ww1-td-name">${name||'—'}</div><div style="font-size:.68rem;color:var(--color-text-muted,#a8a29e);margin-top:.15rem;">${r.doc_type||''}</div></td><td>${r.military_unit||'—'}</td><td>${r.rank||'—'}</td><td>${r.cause?`<span class="ww1-td-cause ${cc}">${r.cause}</span>`:'—'}</td><td><button class="ww1-btn-view" onclick="event.stopPropagation();ww1Open('${r.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>Переглянути</button></td></tr>`;
-    });
+    var wrap=$('ww1TableWrap');
+    var start=(pg-1)*PER;
+    var slice=shown.slice(start,start+PER);
+    if(!slice.length){
+        wrap.innerHTML='<div class="ww1-loading" style="padding:3rem;">Нічого не знайдено</div>';
+        $('ww1Pag').innerHTML='';
+        return;
+    }
+    var html='<table class="ww1-table"><thead><tr>';
+    html+='<th>Прізвище та ім’я</th>';
+    html+='<th>Військова частина</th>';
+    html+='<th>Звання</th>';
+    html+='<th>Статус</th>';
+    html+='<th></th>';
+    html+='</tr></thead><tbody>';
+
+    for(var i=0;i<slice.length;i++){
+        var r=slice[i];
+        var name=[r.last_name,r.first_name,r.middle_name].filter(Boolean).join(' ');
+        var cc=causeClass(r.cause);
+        var causeHtml=r.cause?'<span class="ww1-td-cause '+cc+'">'+he(r.cause)+'</span>':'—';
+        html+='<tr onclick="ww1Open(\'' +r.id+ '\')">';
+        html+='<td>';
+        html+='<div class="ww1-td-name">'+he(name||'—')+'</div>';
+        html+='<div style="font-size:.68rem;color:var(--color-text-muted,#a8a29e);margin-top:.15rem;">'+he(r.doc_type||'')+'</div>';
+        html+='</td>';
+        html+='<td>'+he(r.military_unit||'—')+'</td>';
+        html+='<td>'+he(r.rank||'—')+'</td>';
+        html+='<td>'+causeHtml+'</td>';
+        html+='<td><button class="ww1-btn-view" onclick="event.stopPropagation();ww1Open(\'' +r.id+ '\')">';
+        html+='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+        html+='Переглянути</button></td>';
+        html+='</tr>';
+    }
     html+='</tbody></table>';
     wrap.innerHTML=html;
     renderPag();
 }
+
 function renderPag(){
-    const total=Math.ceil(shown.length/PER),pag=$('ww1Pag');
+    var total=Math.ceil(shown.length/PER);
+    var pag=$('ww1Pag');
     if(total<=1){pag.innerHTML='';return;}
-    let h=`<button class="ww1-pbtn" onclick="ww1Pg(${pg-1})" ${pg===1?'disabled':''}>&#8249;</button>`;
-    const range=[];
-    for(let i=1;i<=total;i++){if(i===1||i===total||Math.abs(i-pg)<=2)range.push(i);else if(range[range.length-1]!=='…')range.push('…');}
-    range.forEach(p=>{if(p==='…')h+='<span class="ww1-pbtn" style="cursor:default;border:none;pointer-events:none;">…</span>';else h+=`<button class="ww1-pbtn ${p===pg?'on':''}" onclick="ww1Pg(${p})">${p}</button>`;});
-    h+=`<button class="ww1-pbtn" onclick="ww1Pg(${pg+1})" ${pg===Math.ceil(shown.length/PER)?'disabled':''}>&#8250;</button>`;
+    var h='<button class="ww1-pbtn" onclick="ww1Pg('+(pg-1)+')" '+(pg===1?'disabled':'')+'>‹</button>';
+    var range=[];
+    for(var i=1;i<=total;i++){
+        if(i===1||i===total||Math.abs(i-pg)<=2) range.push(i);
+        else if(range[range.length-1]!=='…') range.push('…');
+    }
+    for(var j=0;j<range.length;j++){
+        var p=range[j];
+        if(p==='…') h+='<span class="ww1-pbtn" style="cursor:default;border:none;pointer-events:none;">…</span>';
+        else h+='<button class="ww1-pbtn '+(p===pg?'on':'')+'" onclick="ww1Pg('+p+')">'+p+'</button>';
+    }
+    h+='<button class="ww1-pbtn" onclick="ww1Pg('+(pg+1)+')" '+(pg===total?'disabled':'')+'>›</button>';
     pag.innerHTML=h;
 }
-window.ww1Pg=function(p){const t=Math.ceil(shown.length/PER);if(p<1||p>t)return;pg=p;renderTable();$('ww1Section').scrollIntoView({behavior:'smooth',block:'start'});};
+
+window.ww1Pg=function(p){
+    var total=Math.ceil(shown.length/PER);
+    if(p<1||p>total) return;
+    pg=p;
+    renderTable();
+    $('ww1Section').scrollIntoView({behavior:'smooth',block:'start'});
+};
+
 function applyFilters(){
-    const qq=q.toLowerCase().trim();
-    shown=ALL.filter(r=>{
-        if(fType!=='all'&&r.entity!==fType)return false;
-        if(qq){const hay=[r.last_name,r.first_name,r.middle_name].join(' ').toLowerCase();if(!hay.includes(qq))return false;}
+    var qq=q.toLowerCase().trim();
+    shown=ALL.filter(function(r){
+        if(fType!=='all'&&r.entity!==fType) return false;
+        if(qq){
+            var hay=[r.last_name,r.first_name,r.middle_name].join(' ').toLowerCase();
+            if(hay.indexOf(qq)===-1) return false;
+        }
         return true;
     });
-    pg=1;$('ww1CountLbl').textContent='Знайдено: '+shown.length.toLocaleString('uk');renderTable();
-}
-let stimer;
-$('ww1Search').addEventListener('input',()=>{clearTimeout(stimer);stimer=setTimeout(()=>{q=$('ww1Search').value;applyFilters();},300);});
-document.querySelectorAll('.ww1-fbtn').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('.ww1-fbtn').forEach(b=>b.classList.remove('on'));btn.classList.add('on');fType=btn.dataset.f;applyFilters();});});
-window.ww1Open=function(id){
-    const r=ALL.find(x=>x.id===id);if(!r)return;
-    const name=[r.last_name,r.first_name,r.middle_name].filter(Boolean).join(' ');
-    const imgCol=$('ww1ProfImg'),info=$('ww1ProfInfo');
-    imgCol.innerHTML=r.image_url
-        ?`<button class="ww1-prof-close" onclick="ww1Close()">&#x2715;</button><img class="ww1-prof-img" src="${fullUrl(r.image_url)}" alt="${name}" loading="lazy">`
-        :'<button class="ww1-prof-close" onclick="ww1Close()">&#x2715;</button><div class="ww1-prof-no-img"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg><div style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:rgba(201,162,39,.3);">Скан недоступний</div></div>';
-    const fields=[['Прізвище',r.last_name],['Ім\u2019я',[r.first_name,r.middle_name].filter(Boolean).join(' ')],['Звання',r.rank],['Військова частина',r.military_unit],['Причина вибуття',r.cause],['Тип документа',r.doc_type]].filter(([,v])=>v);
-    info.innerHTML='<div class="ww1-prof-eyebrow">Дубровиця та навколишні села · 1914–1918</div>'+'<div class="ww1-prof-name">'+( name||'(без імені)')+'</div><div class="ww1-prof-divider"></div>'+fields.map(([l,v])=>'<div class="ww1-prof-row"><span class="ww1-prof-label">'+l+'</span><span class="ww1-prof-val">'+v+'</span></div>').join('')+'<div class="ww1-prof-footer">Архівний документ · Перша світова війна · 1914–1918</div>';
-    $('ww1Overlay').classList.add('open');document.body.style.overflow='hidden';
-};
-window.ww1Close=function(){$('ww1Overlay').classList.remove('open');document.body.style.overflow='';};
-$('ww1Overlay').addEventListener('click',e=>{if(e.target===$('ww1Overlay'))ww1Close();});
-document.addEventListener('keydown',e=>{if(e.key==='Escape')ww1Close();});
-fetch(GH+'ww1.json?v='+Date.now()).then(r=>r.ok?r.json():Promise.reject()).then(data=>{
-    ALL=data;shown=data;
-    $('ww1StatTotal').textContent=data.length.toLocaleString('uk');
-    $('ww1StatDon').textContent=data.filter(r=>r.entity==='chelovek_donesenie').length.toLocaleString('uk');
-    $('ww1StatHosp').textContent=data.filter(r=>r.entity==='chelovek_gospital').length.toLocaleString('uk');
-    $('ww1StatPlen').textContent=data.filter(r=>r.entity==='chelovek_plen').length.toLocaleString('uk');
-    $('ww1CountLbl').textContent='Знайдено: '+data.length.toLocaleString('uk');
+    pg=1;
+    $('ww1CountLbl').textContent='Знайдено: '+shown.length.toLocaleString('uk');
     renderTable();
-}).catch(()=>{$('ww1TableWrap').innerHTML='<div class="ww1-loading">Помилка завантаження даних</div>';});
+}
+
+var stimer;
+$('ww1Search').addEventListener('input',function(){
+    clearTimeout(stimer);
+    stimer=setTimeout(function(){q=$('ww1Search').value;applyFilters();},300);
+});
+
+document.querySelectorAll('.ww1-fbtn').forEach(function(btn){
+    btn.addEventListener('click',function(){
+        document.querySelectorAll('.ww1-fbtn').forEach(function(b){b.classList.remove('on');});
+        btn.classList.add('on');
+        fType=btn.dataset.f;
+        applyFilters();
+    });
+});
+
+window.ww1Open=function(id){
+    var r=null;
+    for(var i=0;i<ALL.length;i++){if(ALL[i].id===id){r=ALL[i];break;}}
+    if(!r) return;
+    var name=[r.last_name,r.first_name,r.middle_name].filter(Boolean).join(' ');
+    var imgCol=$('ww1ProfImg');
+    var info=$('ww1ProfInfo');
+
+    if(r.image_url){
+        imgCol.innerHTML='<button class="ww1-prof-close" onclick="ww1Close()">✕</button>'
+            +'<img class="ww1-prof-img" src="'+he(fullUrl(r.image_url))+'" alt="'+he(name)+'" loading="lazy">';
+    } else {
+        imgCol.innerHTML='<button class="ww1-prof-close" onclick="ww1Close()">✕</button>'
+            +'<div class="ww1-prof-no-img"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>'
+            +'<div style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:rgba(201,162,39,.3);">Скан недоступний</div></div>';
+    }
+
+    var fields=[
+        ['Прізвище', r.last_name],
+        ['Ім’я', [r.first_name,r.middle_name].filter(Boolean).join(' ')],
+        ['Звання', r.rank],
+        ['Військова частина', r.military_unit],
+        ['Причина вибуття', r.cause],
+        ['Тип документа', r.doc_type]
+    ].filter(function(f){return f[1];});
+
+    var infoHtml='<div class="ww1-prof-eyebrow">Дубровиця та навколишні села · 1914–1918</div>';
+    infoHtml+='<div class="ww1-prof-name">'+he(name||'(без імені)')+'</div>';
+    infoHtml+='<div class="ww1-prof-divider"></div>';
+    for(var i=0;i<fields.length;i++){
+        infoHtml+='<div class="ww1-prof-row">'
+            +'<span class="ww1-prof-label">'+he(fields[i][0])+'</span>'
+            +'<span class="ww1-prof-val">'+he(fields[i][1])+'</span>'
+            +'</div>';
+    }
+    infoHtml+='<div class="ww1-prof-footer">Архівний документ · Перша світова війна · 1914–1918</div>';
+    info.innerHTML=infoHtml;
+
+    $('ww1Overlay').classList.add('open');
+    document.body.style.overflow='hidden';
+};
+
+window.ww1Close=function(){
+    $('ww1Overlay').classList.remove('open');
+    document.body.style.overflow='';
+};
+
+$('ww1Overlay').addEventListener('click',function(e){
+    if(e.target===$('ww1Overlay')) ww1Close();
+});
+
+document.addEventListener('keydown',function(e){
+    if(e.key==='Escape') ww1Close();
+});
+
+fetch(GH+'ww1.json?v='+Date.now())
+    .then(function(r){if(r.ok)return r.json();throw new Error('fetch failed');})
+    .then(function(data){
+        ALL=data; shown=data;
+        $('ww1StatTotal').textContent=data.length.toLocaleString('uk');
+        $('ww1StatDon').textContent=data.filter(function(r){return r.entity==='chelovek_donesenie';}).length.toLocaleString('uk');
+        $('ww1StatHosp').textContent=data.filter(function(r){return r.entity==='chelovek_gospital';}).length.toLocaleString('uk');
+        $('ww1StatPlen').textContent=data.filter(function(r){return r.entity==='chelovek_plen';}).length.toLocaleString('uk');
+        $('ww1CountLbl').textContent='Знайдено: '+data.length.toLocaleString('uk');
+        renderTable();
+    })
+    .catch(function(err){
+        console.error('WW1 load error:',err);
+        $('ww1TableWrap').innerHTML='<div class="ww1-loading">Помилка завантаження даних</div>';
+    });
 })();
 </script>
 
