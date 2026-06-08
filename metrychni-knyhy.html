@@ -594,10 +594,13 @@ window.ww1Open=function(id){
     var fields=[
         ['Прізвище', r.last_name],
         ['Ім’я', [r.first_name,r.middle_name].filter(Boolean).join(' ')],
+        ['Населений пункт', r.birth_place],
         ['Звання', r.rank],
         ['Військова частина', r.military_unit],
         ['Причина вибуття', r.cause],
-        ['Тип документа', r.doc_type]
+        ['Тип документа', r.doc_type],
+        ['Архів', r.archive],
+        ['Фонд / Опис / Справа', [r.fond,r.opis,r.delo].filter(Boolean).join(' / ')]
     ].filter(function(f){return f[1];});
 
     var infoHtml='<div class="ww1-prof-eyebrow">Дубровиця та навколишні села · 1914–1918</div>';
