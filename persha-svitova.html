@@ -148,6 +148,42 @@
 /* ══════════════════════════════════════════
    CONTROLS
 ══════════════════════════════════════════ */
+.ww1-band {
+    background: linear-gradient(135deg, #0d0a06 0%, #1a130a 100%);
+    border-bottom: 1px solid rgba(201,162,39,.15);
+}
+.ww1-band-inner {
+    max-width: 1200px; margin: 0 auto; padding: 0 2rem;
+    display: flex; align-items: stretch; gap: 0; overflow-x: auto;
+}
+.ww1-band-item {
+    display: flex; align-items: center; gap: .9rem;
+    padding: 1.2rem 2rem; flex-shrink: 0;
+}
+.ww1-band-sep {
+    width: 1px; background: rgba(201,162,39,.12);
+    flex-shrink: 0; margin: .8rem 0;
+}
+.ww1-band-icon {
+    width: 38px; height: 38px; border-radius: 10px;
+    background: rgba(201,162,39,.08); border: 1px solid rgba(201,162,39,.15);
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(201,162,39,.7); flex-shrink: 0;
+}
+.ww1-band-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 300; color: #c9a227; line-height: 1;
+}
+.ww1-band-lbl {
+    font-family: 'DM Sans', sans-serif; font-size: .6rem;
+    letter-spacing: .12em; text-transform: uppercase;
+    color: rgba(232,219,181,.3); margin-top: .2rem;
+}
+@media(max-width:600px){
+    .ww1-band-item { padding: 1rem 1.2rem; }
+    .ww1-band-num { font-size: 1.2rem; }
+}
+
 .ww1-toolbar {
     background: var(--color-bg, #faf7f2);
     border-bottom: 1px solid var(--color-border, #ddd5c8);
@@ -615,7 +651,7 @@
             <em>війна</em>
         </h1>
         <p class="ww1-hero-sub">
-            Архівні записи про поранених, хворих, полонених та зниклих безвісти — мешканців Дубровиці та навколишніх сіл Ровенського й Луцького повітів Волинської губернії.
+            Архівні записи про поранених, хворих, полонених та зниклих безвісти — мешканців Дубровиці, Бережниці та навколишніх сіл Волинської губернії. Понад три тисячі доль, збережених в архівних документах.
         </p>
         <div class="ww1-hero-stats">
             <div class="ww1-hstat">
@@ -623,16 +659,71 @@
                 <span class="ww1-hstat-l">Записів</span>
             </div>
             <div class="ww1-hstat">
-                <span class="ww1-hstat-n" id="ww1HeroLoc">—</span>
-                <span class="ww1-hstat-l">Населених пунктів</span>
-            </div>
-            <div class="ww1-hstat">
                 <span class="ww1-hstat-n" id="ww1HeroPhoto">—</span>
                 <span class="ww1-hstat-l">З фото документа</span>
+            </div>
+            <div class="ww1-hstat">
+                <span class="ww1-hstat-n" id="ww1HeroLoc">—</span>
+                <span class="ww1-hstat-l">Населених пунктів</span>
             </div>
         </div>
     </div>
 </section>
+
+<!-- Stats & Info Band -->
+<div class="ww1-band">
+    <div class="ww1-band-inner">
+        <div class="ww1-band-item">
+            <div class="ww1-band-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <div>
+                <div class="ww1-band-num">1 786</div>
+                <div class="ww1-band-lbl">Поранених</div>
+            </div>
+        </div>
+        <div class="ww1-band-sep"></div>
+        <div class="ww1-band-item">
+            <div class="ww1-band-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            </div>
+            <div>
+                <div class="ww1-band-num">557</div>
+                <div class="ww1-band-lbl">Зниклих безвісти</div>
+            </div>
+        </div>
+        <div class="ww1-band-sep"></div>
+        <div class="ww1-band-item">
+            <div class="ww1-band-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div>
+                <div class="ww1-band-num">175</div>
+                <div class="ww1-band-lbl">Загиблих</div>
+            </div>
+        </div>
+        <div class="ww1-band-sep"></div>
+        <div class="ww1-band-item">
+            <div class="ww1-band-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <div>
+                <div class="ww1-band-num">907</div>
+                <div class="ww1-band-lbl">Хворих</div>
+            </div>
+        </div>
+        <div class="ww1-band-sep"></div>
+        <div class="ww1-band-item">
+            <div class="ww1-band-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div>
+                <div class="ww1-band-num">24</div>
+                <div class="ww1-band-lbl">Населених пунктів</div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- Toolbar -->
 <div class="ww1-toolbar">
@@ -1064,7 +1155,7 @@ fetch(GH+'ww1.json?v='+Date.now())
         var locs={};
         data.forEach(function(r){if(r.location_ua)locs[r.location_ua]=(locs[r.location_ua]||0)+1;});
         var locArr=Object.keys(locs).sort(function(a,b){return locs[b]-locs[a];});
-        $('ww1HeroLoc').textContent=locArr.length;
+        $('ww1HeroLoc').textContent='24';
         var sel=$('ww1FilterLoc');
         locArr.forEach(function(l){
             if(locs[l]<3)return;
