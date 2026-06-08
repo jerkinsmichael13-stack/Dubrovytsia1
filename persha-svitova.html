@@ -388,11 +388,10 @@
 
 /* Фото з зумом */
 .ww1-prof-img-col {
-    background: #080604;
+    background: #0a0806;
     position: relative;
-    min-height: 500px;
     display: flex;
-    align-items: flex-start;
+    align-items: stretch;
     justify-content: center;
     overflow: hidden;
 }
@@ -400,15 +399,18 @@
     width: 100%;
     overflow: hidden;
     position: relative;
-    min-height: 500px;
     cursor: grab;
     user-select: none;
     touch-action: none;
+    display: flex;
+    align-items: flex-start;
 }
 .ww1-prof-img-wrap.dragging { cursor: grabbing; }
 .ww1-prof-img {
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: contain;
+    object-position: top;
     display: block;
     pointer-events: none;
     transform-origin: 0 0;
@@ -1015,8 +1017,7 @@ window.ww1Open=function(id){
         ['Військова частина', r.military_unit],
         ['Причина вибуття', r.cause],
         ['Тип документа', r.doc_type],
-        ['Архів', r.archive],
-        ['Фонд / Опис / Справа', [r.fond,r.opis,r.delo].filter(Boolean).join(' / ')]
+        // Архів і фонд приховано
     ].filter(function(f){return f[1];});
 
     var ih='<div class="ww1-prof-eyebrow">Дубровиця та навколишні села \u00b7 1914\u20131918</div>';
