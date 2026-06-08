@@ -392,13 +392,12 @@
     position: relative;
     min-height: 320px;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     overflow: hidden;
 }
 .ww1-prof-img-wrap {
     width: 100%;
-    height: 100%;
     overflow: hidden;
     position: relative;
     min-height: 320px;
@@ -409,8 +408,7 @@
 .ww1-prof-img-wrap.dragging { cursor: grabbing; }
 .ww1-prof-img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: auto;
     display: block;
     pointer-events: none;
     transform-origin: 0 0;
@@ -850,16 +848,19 @@ var _MIN=1, _MAX=5, _STEP=0.8;
 function zoomApply(animate){
     var img=_zoom.img;
     if(!img)return;
-    var w=_zoom.wrap.offsetWidth, h=_zoom.wrap.offsetHeight;
-    // Clamp offsets
-    var maxX=Math.max(0, w*_zoom.scale - w);
-    var maxY=Math.max(0, h*_zoom.scale - h);
+    var w=_zoom.wrap.offsetWidth;
+    var ih=img.naturalHeight||img.offsetHeight||500;
+    var iw=img.naturalWidth||img.offsetWidth||400;
+    var renderedH=(ih/iw)*w*_zoom.scale;
+    var renderedW=w*_zoom.scale;
+    // Clamp offsets so image stays in view
+    var maxX=Math.max(0, renderedW - w);
+    var maxY=Math.max(0, renderedH - _zoom.wrap.offsetHeight);
     _zoom.ox=Math.max(-maxX, Math.min(0, _zoom.ox));
     _zoom.oy=Math.max(-maxY, Math.min(0, _zoom.oy));
     img.style.transition=animate?'transform .25s ease':'none';
     img.style.transform='translate('+_zoom.ox+'px,'+_zoom.oy+'px) scale('+_zoom.scale+')';
     _zoom.wrap.style.cursor=_zoom.scale>1?(_zoom.drag?'grabbing':'grab'):'default';
-    // hint
     var hint=_zoom.wrap.querySelector('.ww1-zoom-hint');
     if(hint) hint.style.opacity=_zoom.scale>1?'0':'1';
 }
