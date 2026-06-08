@@ -373,24 +373,24 @@
     border: 1px solid rgba(201,162,39,.2);
     border-radius: 22px;
     overflow: hidden;
-    max-width: 920px;
+    max-width: 1200px;
     width: 100%;
-    max-height: 92vh;
+    max-height: 95vh;
     overflow-y: auto;
     display: grid;
-    grid-template-columns: 420px 1fr;
+    grid-template-columns: 55% 1fr;
     box-shadow: 0 40px 120px rgba(0,0,0,.6);
     transform: translateY(24px) scale(.98);
     transition: transform .32s cubic-bezier(.16,1,.3,1);
 }
 .ww1-overlay.open .ww1-profile { transform: translateY(0) scale(1); }
-@media(max-width:680px){ .ww1-profile { grid-template-columns: 1fr; } }
+@media(max-width:900px){ .ww1-profile { grid-template-columns: 1fr; max-height: 98vh; } }
 
 /* Фото з зумом */
 .ww1-prof-img-col {
     background: #080604;
     position: relative;
-    min-height: 320px;
+    min-height: 500px;
     display: flex;
     align-items: flex-start;
     justify-content: center;
@@ -400,7 +400,7 @@
     width: 100%;
     overflow: hidden;
     position: relative;
-    min-height: 320px;
+    min-height: 500px;
     cursor: grab;
     user-select: none;
     touch-action: none;
