@@ -400,20 +400,22 @@
     width: 100%;
     height: 100%;
     overflow: hidden;
-    cursor: zoom-in;
     position: relative;
     min-height: 320px;
+    cursor: grab;
+    user-select: none;
+    touch-action: none;
 }
-.ww1-prof-img-wrap.zoomed { cursor: zoom-out; }
+.ww1-prof-img-wrap.dragging { cursor: grabbing; }
 .ww1-prof-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
-    transition: transform .4s cubic-bezier(.16,1,.3,1);
-    transform-origin: center center;
+    pointer-events: none;
+    transform-origin: 0 0;
+    will-change: transform;
 }
-.ww1-prof-img-wrap.zoomed .ww1-prof-img { transform: scale(2.5); }
 .ww1-zoom-hint {
     position: absolute;
     bottom: .8rem;
@@ -429,8 +431,33 @@
     padding: .25rem .7rem;
     pointer-events: none;
     transition: opacity .3s;
+    white-space: nowrap;
 }
-.ww1-prof-img-wrap.zoomed .ww1-zoom-hint { opacity: 0; }
+.ww1-zoom-controls {
+    position: absolute;
+    bottom: .8rem;
+    right: .8rem;
+    display: flex;
+    flex-direction: column;
+    gap: .3rem;
+    z-index: 5;
+}
+.ww1-zoom-btn {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: rgba(0,0,0,.55);
+    border: 1px solid rgba(201,162,39,.25);
+    color: #c9a227;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: 300;
+    line-height: 1;
+    transition: background .2s;
+}
+.ww1-zoom-btn:hover { background: rgba(201,162,39,.2); }
 .ww1-prof-no-img {
     display: flex;
     flex-direction: column;
@@ -816,6 +843,134 @@ $('ww1FilterLoc').addEventListener('change',function(){fLoc=this.value;applyFilt
 $('ww1FilterType').addEventListener('change',function(){fType=this.value;applyFilters();});
 $('ww1FilterCause').addEventListener('change',function(){fCause=this.value;applyFilters();});
 
+// ── Zoom / Pan logic ──
+var _zoom={scale:1,ox:0,oy:0,drag:false,sx:0,sy:0,wrap:null,img:null};
+var _MIN=1, _MAX=5, _STEP=0.8;
+
+function zoomApply(animate){
+    var img=_zoom.img;
+    if(!img)return;
+    var w=_zoom.wrap.offsetWidth, h=_zoom.wrap.offsetHeight;
+    // Clamp offsets
+    var maxX=Math.max(0, w*_zoom.scale - w);
+    var maxY=Math.max(0, h*_zoom.scale - h);
+    _zoom.ox=Math.max(-maxX, Math.min(0, _zoom.ox));
+    _zoom.oy=Math.max(-maxY, Math.min(0, _zoom.oy));
+    img.style.transition=animate?'transform .25s ease':'none';
+    img.style.transform='translate('+_zoom.ox+'px,'+_zoom.oy+'px) scale('+_zoom.scale+')';
+    _zoom.wrap.style.cursor=_zoom.scale>1?(_zoom.drag?'grabbing':'grab'):'default';
+    // hint
+    var hint=_zoom.wrap.querySelector('.ww1-zoom-hint');
+    if(hint) hint.style.opacity=_zoom.scale>1?'0':'1';
+}
+
+function zoomIn(){
+    _zoom.scale=Math.min(_MAX, _zoom.scale+_STEP);
+    zoomApply(true);
+}
+function zoomOut(){
+    _zoom.scale=Math.max(_MIN, _zoom.scale-_STEP);
+    if(_zoom.scale===_MIN){_zoom.ox=0;_zoom.oy=0;}
+    zoomApply(true);
+}
+function zoomReset(){
+    _zoom.scale=1;_zoom.ox=0;_zoom.oy=0;
+    zoomApply(true);
+}
+
+function zoomInitWrap(wrap){
+    _zoom.wrap=wrap;
+    _zoom.img=wrap.querySelector('.ww1-prof-img');
+    _zoom.scale=1;_zoom.ox=0;_zoom.oy=0;_zoom.drag=false;
+    zoomApply(false);
+
+    // Mouse wheel
+    wrap.addEventListener('wheel',function(e){
+        e.preventDefault();
+        var delta=e.deltaY<0?_STEP:-_STEP;
+        var newScale=Math.max(_MIN,Math.min(_MAX,_zoom.scale+delta));
+        // Zoom towards cursor
+        var rect=wrap.getBoundingClientRect();
+        var mx=e.clientX-rect.left, my=e.clientY-rect.top;
+        var factor=newScale/_zoom.scale;
+        _zoom.ox=mx-(mx-_zoom.ox)*factor;
+        _zoom.oy=my-(my-_zoom.oy)*factor;
+        _zoom.scale=newScale;
+        if(_zoom.scale===_MIN){_zoom.ox=0;_zoom.oy=0;}
+        zoomApply(false);
+    },{passive:false});
+
+    // Mouse drag
+    wrap.addEventListener('mousedown',function(e){
+        if(_zoom.scale<=1)return;
+        _zoom.drag=true;
+        _zoom.sx=e.clientX-_zoom.ox;
+        _zoom.sy=e.clientY-_zoom.oy;
+        wrap.classList.add('dragging');
+        e.preventDefault();
+    });
+    document.addEventListener('mousemove',function(e){
+        if(!_zoom.drag)return;
+        _zoom.ox=e.clientX-_zoom.sx;
+        _zoom.oy=e.clientY-_zoom.sy;
+        zoomApply(false);
+    });
+    document.addEventListener('mouseup',function(){
+        if(!_zoom.drag)return;
+        _zoom.drag=false;
+        if(_zoom.wrap)_zoom.wrap.classList.remove('dragging');
+    });
+
+    // Double click to zoom
+    wrap.addEventListener('dblclick',function(e){
+        if(_zoom.scale>1){zoomReset();}
+        else{
+            var rect=wrap.getBoundingClientRect();
+            var mx=e.clientX-rect.left, my=e.clientY-rect.top;
+            _zoom.scale=2.5;
+            _zoom.ox=-(mx*2.5-mx);
+            _zoom.oy=-(my*2.5-my);
+            zoomApply(true);
+        }
+    });
+
+    // Touch pinch
+    var _tc={dist:0,ox:0,oy:0};
+    wrap.addEventListener('touchstart',function(e){
+        if(e.touches.length===2){
+            var dx=e.touches[0].clientX-e.touches[1].clientX;
+            var dy=e.touches[0].clientY-e.touches[1].clientY;
+            _tc.dist=Math.hypot(dx,dy);
+        } else if(e.touches.length===1&&_zoom.scale>1){
+            _zoom.drag=true;
+            _zoom.sx=e.touches[0].clientX-_zoom.ox;
+            _zoom.sy=e.touches[0].clientY-_zoom.oy;
+        }
+    },{passive:true});
+    wrap.addEventListener('touchmove',function(e){
+        if(e.touches.length===2){
+            e.preventDefault();
+            var dx=e.touches[0].clientX-e.touches[1].clientX;
+            var dy=e.touches[0].clientY-e.touches[1].clientY;
+            var dist=Math.hypot(dx,dy);
+            var factor=dist/_tc.dist;
+            _tc.dist=dist;
+            _zoom.scale=Math.max(_MIN,Math.min(_MAX,_zoom.scale*factor));
+            if(_zoom.scale===_MIN){_zoom.ox=0;_zoom.oy=0;}
+            zoomApply(false);
+        } else if(e.touches.length===1&&_zoom.drag){
+            _zoom.ox=e.touches[0].clientX-_zoom.sx;
+            _zoom.oy=e.touches[0].clientY-_zoom.sy;
+            zoomApply(false);
+        }
+    },{passive:false});
+    wrap.addEventListener('touchend',function(){_zoom.drag=false;});
+}
+
+window.ww1ZoomIn=function(){zoomIn();};
+window.ww1ZoomOut=function(){zoomOut();};
+window.ww1ZoomReset=function(){zoomReset();};
+
 // Open profile
 window.ww1Open=function(id){
     var r=null;
@@ -828,10 +983,20 @@ window.ww1Open=function(id){
     if(r.image_url){
         imgCol.innerHTML=
             '<button class="ww1-prof-close" onclick="ww1Close()">\u2715</button>'+
-            '<div class="ww1-prof-img-wrap" id="ww1ImgWrap" onclick="ww1Zoom()">'+
+            '<div class="ww1-prof-img-wrap" id="ww1ImgWrap">'+
             '<img class="ww1-prof-img" id="ww1Img" src="'+he(fullUrl(r.image_url))+'" alt="'+he(name)+'" loading="lazy">'+
-            '<div class="ww1-zoom-hint">Натисніть для збільшення</div>'+
+            '<div class="ww1-zoom-hint">Scroll/pinch — зум &nbsp;·&nbsp; Drag — переміщення &nbsp;·&nbsp; 2×click — скинути</div>'+
+            '</div>'+
+            '<div class="ww1-zoom-controls">'+
+            '<button class="ww1-zoom-btn" onclick="ww1ZoomIn()" title="Збільшити">+</button>'+
+            '<button class="ww1-zoom-btn" onclick="ww1ZoomOut()" title="Зменшити">−</button>'+
+            '<button class="ww1-zoom-btn" onclick="ww1ZoomReset()" title="Скинути" style="font-size:.7rem;">↺</button>'+
             '</div>';
+        // Init zoom after DOM update
+        setTimeout(function(){
+            var wrap=document.getElementById('ww1ImgWrap');
+            if(wrap) zoomInitWrap(wrap);
+        },50);
     } else {
         imgCol.innerHTML=
             '<button class="ww1-prof-close" onclick="ww1Close()">\u2715</button>'+
@@ -869,10 +1034,7 @@ window.ww1Open=function(id){
     document.body.style.overflow='hidden';
 };
 
-window.ww1Zoom=function(){
-    var wrap=document.getElementById('ww1ImgWrap');
-    if(wrap) wrap.classList.toggle('zoomed');
-};
+// zoom handled by zoomInitWrap
 
 window.ww1Close=function(){
     $('ww1Overlay').classList.remove('open');
