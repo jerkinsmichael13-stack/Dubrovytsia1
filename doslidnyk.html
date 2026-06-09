@@ -222,13 +222,10 @@
     </div>
 
         <div class="dh-panel" id="panel-archive">
-            <div class="dh-panel-intro" style="margin-bottom:3rem;">
+            <div class="dh-panel-intro" style="margin-bottom:2.5rem;">
                 <h2>Першоджерела XVII–XVIII ст.</h2>
-                <p>Оцифровані архівні документи — сумаріуші, інвентарі, судові реєстри. Пошук по архівних індексах та іменному покажчику.</p>
+                <p>Глобальний пошук по архівних індексах — знаходьте прізвища, населені пункти та документи одночасно по всіх оцифрованих першоджерелах.</p>
             </div>
-            <!-- ══════════════════════════════════════════
-                 АРХІВНІ ДОКУМЕНТИ — REDESIGNED TEASERS
-                 ══════════════════════════════════════════ -->
             <style>
             /* ── Section header ── */
             .arc-section-head {
@@ -663,16 +660,7 @@
             }
             [data-theme="dark"] #ARC65 .arc-cta { background: #c87a45; color: #1a0a04; }
             </style>
-
-            <!-- ── Section heading ── -->
-            <div class="arc-section-head" style="margin-bottom:2rem;">
-                <div>
-                    <div class="arc-section-label">Першоджерела · XVII–XVIII ст.</div>
-                    <div class="arc-section-title">Оцифровані архівні документи</div>
-                </div>
-                <div class="arc-section-head-line"></div>
-            </div>
-
+            <!-- ── GLOBAL ARCHIVE SEARCH ── -->
             <!-- ── GLOBAL ARCHIVE SEARCH ── -->
             <div id="archiveSearchWrap" class="asrch-wrap" style="margin-bottom:3rem;padding:0;">
                 <div class="asrch-field">
@@ -685,273 +673,23 @@
                 <div class="asrch-count" id="archiveSearchCount">Завантаження індексу…</div>
                 <div id="archiveSearchResults"></div>
             </div>
-
-            <!-- 1642 DOCUMENT TEASER -->
-            <div id="ARC42" style="padding:0 0 2rem;">
-                <a href="sumariusz-1642.html" class="arc-card">
-                    <div class="arc-img-panel">
-                        <img class="arc-img" src="https://i.imgur.com/eCkmrb3l.jpeg" alt="Сумаріуш Дубровиця 1642">
-                        <div class="arc-img-overlay"></div>
-                        <div class="arc-img-badge">
-                            <div class="arc-img-pill">
-                                <div class="arc-img-dot"></div>
-                                3 сторінки · Anno 1642
-                            </div>
-                        </div>
-                    </div>
-                    <div class="arc-body">
-                        <div class="arc-tag">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                            Господарський звіт · Грудень 1642
-                        </div>
-                        <h3 class="arc-title">Сумаріуш маєтку<br><em>Дубровиця</em></h3>
-                        <div class="arc-quote">
-                            <div class="arc-quote-text">11&thinsp;586 злотих річного доходу — залізні рудні, 20 озер, поташня, замок. Дубровиця 1642 року.</div>
-                            <div class="arc-quote-attr">— Sumariusz Maietności Dąbrowice, Grudzień Anno 1642</div>
-                        </div>
-                        <div class="arc-hooks">
-                            <div class="arc-hook">
-                                <div class="arc-hook-icon">🏰</div>
-                                <div><strong>Замок над Горинню</strong> — детальний опис укріплень, млинів і рудень, яких більше не існує</div>
-                            </div>
-                            <div class="arc-hook">
-                                <div class="arc-hook-icon">💰</div>
-                                <div><strong>Точна бухгалтерія до гроша</strong> — повний баланс маєтку за три місяці до початку катастрофи Хмельниччини</div>
-                            </div>
-                            <div class="arc-hook">
-                                <div class="arc-hook-icon">🐟</div>
-                                <div><strong>20 озер у маєтку</strong>, поташня, судноплавство — Дубровиця як промисловий центр Полісся</div>
-                            </div>
-                        </div>
-                        <div class="arc-stats">
-                            <div class="arc-stat">
-                                <div class="arc-stat-num">1642</div>
-                                <div class="arc-stat-key">Рік</div>
-                            </div>
-                            <div class="arc-stat">
-                                <div class="arc-stat-num">11&thinsp;586</div>
-                                <div class="arc-stat-key">Злотих</div>
-                            </div>
-                            <div class="arc-stat">
-                                <div class="arc-stat-num">20</div>
-                                <div class="arc-stat-key">Озер</div>
-                            </div>
-                            <div class="arc-stat">
-                                <div class="arc-stat-num">3</div>
-                                <div class="arc-stat-key">Сторінки</div>
-                            </div>
-                        </div>
-                        <div class="arc-cta-row">
-                            <div class="arc-cta">
-                                Читати документ
-                                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-                            </div>
-                            <span class="arc-cta-hint">Транскрипція · Переклад · Глосарій</span>
-                        </div>
-                    </div>
+            <!-- Links to the individual document pages -->
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.2rem;margin-top:2rem;">
+                <a href="sumariusz-1642.html" style="display:flex;align-items:center;gap:1rem;padding:1.2rem 1.4rem;background:var(--color-bg-card);border:1px solid rgba(201,162,39,.18);border-radius:12px;text-decoration:none;transition:all .2s;">
+                    <span style="font-size:1.5rem;">📜</span>
+                    <div><div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--color-text);">Сумаріуш 1642</div><div style="font-family:'DM Sans',sans-serif;font-size:.7rem;color:#c9a227;">Господарський звіт маєтку</div></div>
                 </a>
-            </div>
-
-            <!-- 1780 INVENTAR TEASER -->
-            <div id="ARC80" style="padding:0 0 2rem;">
-                <a href="inventar-1780.html" class="arc-card">
-                    <div class="arc-img-panel">
-                        <img class="arc-img" src="https://i.imgur.com/fq9QEd3.jpeg" alt="Інвентар Дубровиця 1780">
-                        <div class="arc-img-overlay"></div>
-                        <div class="arc-img-badge">
-                            <div class="arc-img-pill">
-                                <div class="arc-img-dot"></div>
-                                200+ сторінок · 1780–1820
-                            </div>
-                        </div>
-                    </div>
-                    <div class="arc-body">
-                        <div style="display:flex;flex-direction:column;gap:1rem;">
-                            <div class="arc-tag">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-                                Топографічний опис · 1780–1820
-                            </div>
-                            <div class="arc-wip">Публікується поступово — по мірі перекладу</div>
-                            <h3 class="arc-title">Інвентар маєтку<br><em>Дубровиця</em></h3>
-                            <div class="arc-quote">
-                                <div class="arc-quote-text">Перший документ, де Дубровиця має вулиці з назвами. Хто жив на ринковій площі 240 років тому?</div>
-                                <div class="arc-quote-attr">— Folwark Worobin z Miastem Dombrowicą, кін. XVIII ст.</div>
-                            </div>
-                            <div class="arc-hooks">
-                                <div class="arc-hook">
-                                    <div class="arc-hook-icon">🗺️</div>
-                                    <div><strong>8 вулиць і провулків</strong> — перша докладна топографія Дубровиці з іменами власників кожної ділянки</div>
-                                </div>
-                                <div class="arc-hook">
-                                    <div class="arc-hook-icon">⛪</div>
-                                    <div><strong>Землеволодіння монастиря Піарів</strong> та межові камені 1776 р. — де проходив кордон міста</div>
-                                </div>
-                                <div class="arc-hook">
-                                    <div class="arc-hook-icon">📍</div>
-                                    <div><strong>Ринок, два передмістя, фольварк Воробин</strong> — повна структура міста напередодні XIX ст.</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="arc-stats" style="margin-bottom:1.4rem;">
-                                <div class="arc-stat">
-                                    <div class="arc-stat-num">200+</div>
-                                    <div class="arc-stat-key">Сторінок</div>
-                                </div>
-                                <div class="arc-stat">
-                                    <div class="arc-stat-num">8</div>
-                                    <div class="arc-stat-key">Вулиць</div>
-                                </div>
-                                <div class="arc-stat">
-                                    <div class="arc-stat-num">1776</div>
-                                    <div class="arc-stat-key">Межування</div>
-                                </div>
-                                <div class="arc-stat">
-                                    <div class="arc-stat-num">~40</div>
-                                    <div class="arc-stat-key">Р. перекладу</div>
-                                </div>
-                            </div>
-                            <div class="arc-cta-row">
-                                <div class="arc-cta">
-                                    Читати документ
-                                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-                                </div>
-                                <span class="arc-cta-hint">Скани · Переклад · Карта</span>
-                            </div>
-                        </div>
-                    </div>
+                <a href="inventar-1780.html" style="display:flex;align-items:center;gap:1rem;padding:1.2rem 1.4rem;background:var(--color-bg-card);border:1px solid rgba(90,128,64,.18);border-radius:12px;text-decoration:none;transition:all .2s;">
+                    <span style="font-size:1.5rem;">🗺️</span>
+                    <div><div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--color-text);">Інвентар 1780</div><div style="font-family:'DM Sans',sans-serif;font-size:.7rem;color:#5a8040;">Топографічний опис міста</div></div>
                 </a>
-            </div>
-
-            <!-- 1650 SKARGA TEASER -->
-            <div id="ARC50" style="padding:0 0 2rem;">
-                <a href="zhaloba-1650.html" class="arc-card">
-                    <div class="arc-img-panel">
-                        <img class="arc-img" src="https://i.imgur.com/yiAXkKrl.jpeg" alt="Скарга 1650 — Реляція">
-                        <div class="arc-img-overlay"></div>
-                        <div class="arc-img-badge">
-                            <div class="arc-img-pill">
-                                <div class="arc-img-dot"></div>
-                                12 сторінок · 3 документи · 1650
-                            </div>
-                        </div>
-                    </div>
-                    <div class="arc-body">
-                        <div class="arc-tag">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                            Воєнна документація · 1650
-                        </div>
-                        <h3 class="arc-title">Скарга про спустошення<br><em>Дубровицького маєтку</em></h3>
-                        <div class="arc-quote">
-                            <div class="arc-quote-text">«Люди з голоду пухнуть і вмирають» — ці слова вписані до судових книг Пінського замку у 1650 році.</div>
-                            <div class="arc-quote-attr">— Маніфестація Миколая Березецького, 22 вересня 1650</div>
-                        </div>
-                        <div class="arc-hooks">
-                            <div class="arc-hook">
-                                <div class="arc-hook-icon">🔥</div>
-                                <div><strong>Два села спалені дощенту</strong> — Стрільськ і Глушиця знищені, але вже через кілька місяців відбудовані</div>
-                            </div>
-                            <div class="arc-hook">
-                                <div class="arc-hook-icon">⚔️</div>
-                                <div><strong>Чотири агресори одночасно</strong> — козаки, польські жовніри, литовці та татари Стемпковського</div>
-                            </div>
-                            <div class="arc-hook">
-                                <div class="arc-hook-icon">📊</div>
-                                <div><strong>120+ порожніх господарств</strong> — найточніший статистичний зріз Дубровиччини після Хмельниччини</div>
-                            </div>
-                        </div>
-                        <div class="arc-stats">
-                            <div class="arc-stat">
-                                <div class="arc-stat-num">1650</div>
-                                <div class="arc-stat-key">Рік</div>
-                            </div>
-                            <div class="arc-stat">
-                                <div class="arc-stat-num">120+</div>
-                                <div class="arc-stat-key">Порожніх хат</div>
-                            </div>
-                            <div class="arc-stat">
-                                <div class="arc-stat-num">12</div>
-                                <div class="arc-stat-key">Сторінок</div>
-                            </div>
-                            <div class="arc-stat">
-                                <div class="arc-stat-num">3</div>
-                                <div class="arc-stat-key">Документи</div>
-                            </div>
-                        </div>
-                        <div class="arc-cta-row">
-                            <div class="arc-cta">
-                                Читати документ
-                                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-                            </div>
-                            <span class="arc-cta-hint">Реляція · Маніфестація · Атестація</span>
-                        </div>
-                    </div>
+                <a href="zhaloba-1650.html" style="display:flex;align-items:center;gap:1rem;padding:1.2rem 1.4rem;background:var(--color-bg-card);border:1px solid rgba(139,32,32,.18);border-radius:12px;text-decoration:none;transition:all .2s;">
+                    <span style="font-size:1.5rem;">⚔️</span>
+                    <div><div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--color-text);">Скарга 1650</div><div style="font-family:'DM Sans',sans-serif;font-size:.7rem;color:#8b2020;">Воєнна документація</div></div>
                 </a>
-            </div>
-
-            <!-- 1665 REJESTR TEASER -->
-            <div id="ARC65" style="padding:0 0 2rem;">
-                <a href="rejestr-1665.html" class="arc-card">
-                    <div class="arc-img-panel">
-                        <img class="arc-img" src="https://i.imgur.com/bd6XSvs.jpeg" alt="Реєстр збитків 1665">
-                        <div class="arc-img-overlay"></div>
-                        <div class="arc-img-badge">
-                            <div class="arc-img-pill">
-                                <div class="arc-img-dot"></div>
-                                12 сторінок · Anno 1665
-                            </div>
-                        </div>
-                    </div>
-                    <div class="arc-body">
-                        <div class="arc-tag">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>
-                            Судовий реєстр збитків · Пінськ 1665
-                        </div>
-                        <h3 class="arc-title">Реєстр збитків у маєтку<br><em>Дубровицькому</em></h3>
-                        <div class="arc-quote">
-                            <div class="arc-quote-text">«Мені це вільно, як пану» — ці слова вписані до судових книг Пінського суду у 1665 році.</div>
-                            <div class="arc-quote-attr">— Regestr Szkód w Majętności Dąbrowickiej, Anno 1665</div>
-                        </div>
-                        <div class="arc-hooks">
-                            <div class="arc-hook">
-                                <div class="arc-hook-icon">⚖️</div>
-                                <div><strong>12 сканів оригіналу</strong> — реєстр засвідчений нотаріально трьома шляхтичами під присягою у Пінському гродському суді</div>
-                            </div>
-                            <div class="arc-hook">
-                                <div class="arc-hook-icon">🔥</div>
-                                <div><strong>«Чорна книга» свавілля</strong> — тортури вогнем, вигадані провини, привласнення державних податків, насильство</div>
-                            </div>
-                            <div class="arc-hook">
-                                <div class="arc-hook-icon">👤</div>
-                                <div><strong>80+ іменованих осіб</strong> — Лаворовичі, Бахматовичі, Позняки, Довгі: корені сучасних дубровицьких родин</div>
-                            </div>
-                        </div>
-                        <div class="arc-stats">
-                            <div class="arc-stat">
-                                <div class="arc-stat-num">1665</div>
-                                <div class="arc-stat-key">Рік</div>
-                            </div>
-                            <div class="arc-stat">
-                                <div class="arc-stat-num">14+</div>
-                                <div class="arc-stat-key">Сіл і місто</div>
-                            </div>
-                            <div class="arc-stat">
-                                <div class="arc-stat-num">80+</div>
-                                <div class="arc-stat-key">Постраждалих</div>
-                            </div>
-                            <div class="arc-stat">
-                                <div class="arc-stat-num">12</div>
-                                <div class="arc-stat-key">Сканів</div>
-                            </div>
-                        </div>
-                        <div class="arc-cta-row">
-                            <div class="arc-cta">
-                                Читати документ
-                                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-                            </div>
-                            <span class="arc-cta-hint">Транскрипція · Переклад · Особи · Контекст</span>
-                        </div>
-                    </div>
+                <a href="rejestr-1665.html" style="display:flex;align-items:center;gap:1rem;padding:1.2rem 1.4rem;background:var(--color-bg-card);border:1px solid rgba(123,58,32,.18);border-radius:12px;text-decoration:none;transition:all .2s;">
+                    <span style="font-size:1.5rem;">⚖️</span>
+                    <div><div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--color-text);">Реєстр збитків 1665</div><div style="font-family:'DM Sans',sans-serif;font-size:.7rem;color:#7b3a20;">Судовий реєстр Пінська</div></div>
                 </a>
             </div>
         </div>

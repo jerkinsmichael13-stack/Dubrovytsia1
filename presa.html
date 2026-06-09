@@ -451,9 +451,9 @@ async function load(){
 function setStats(){
     const sr=new Set(ALL.map(e=>e.source));
     const ys=ALL.map(e=>e.year);
-    document.getElementById('sN').textContent=ALL.length;
-    document.getElementById('sS').textContent=sr.size;
-    document.getElementById('sP').textContent=Math.min(...ys)+'–'+Math.max(...ys);
+    const eN=document.getElementById('sN'); if(eN) eN.textContent=ALL.length;
+    const eS=document.getElementById('sS'); if(eS) eS.textContent=sr.size;
+    const eP=document.getElementById('sP'); if(eP) eP.textContent=Math.min(...ys)+'–'+Math.max(...ys);
     const b=document.getElementById('navBadge');
     if(b){b.textContent=ALL.length;b.classList.add('ready');}
 }
