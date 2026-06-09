@@ -1131,8 +1131,9 @@ fetch(GH+'ww1.json?v='+Date.now())
         $('ww1CountBadge').textContent='Знайдено: '+data.length.toLocaleString('uk');
         renderTable();
     })
-    .catch(function(){
-        $('ww1TableWrap').innerHTML='<div class="ww1-loading">Помилка завантаження даних</div>';
+    .catch(function(err){
+        console.error('[ww1] fetch error:', err);
+        $('ww1TableWrap').innerHTML='<div class="ww1-loading">Помилка завантаження даних: ' + (err&&err.message?err.message:'network error') + '</div>';
     });
 })();
 </script>
