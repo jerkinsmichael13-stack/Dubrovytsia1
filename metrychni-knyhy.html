@@ -877,12 +877,7 @@ a, button, [role="button"], input, select, textarea,
                 </div>
             </div>
 
-            
-        </div>
-    </section>
-
-
-<!-- ══════════════════════════════════════════
+            <!-- ══════════════════════════════════════════
                  АРХІВНІ ДОКУМЕНТИ — REDESIGNED TEASERS
                  ══════════════════════════════════════════ -->
             <style>
@@ -1329,6 +1324,19 @@ a, button, [role="button"], input, select, textarea,
                 <div class="arc-section-head-line"></div>
             </div>
 
+            <!-- ── GLOBAL ARCHIVE SEARCH ── -->
+            <div id="archiveSearchWrap" class="asrch-wrap" style="margin-bottom:3rem;padding:0;">
+                <div class="asrch-field">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                    <input type="search" id="archiveSearchInput" class="asrch-input"
+                        placeholder="Шукати по архіву: Красько, Борк, Фірлей, Плятер, Четвертинський…"
+                        autocomplete="off" autocorrect="off" spellcheck="false">
+                    <button class="asrch-clear" id="archiveSearchClear" aria-label="Очистити">✕</button>
+                </div>
+                <div class="asrch-count" id="archiveSearchCount">Завантаження індексу…</div>
+                <div id="archiveSearchResults"></div>
+            </div>
+
             <!-- 1642 DOCUMENT TEASER -->
             <div id="ARC42" style="padding:0 0 2rem;">
                 <a href="sumariusz-1642.html" class="arc-card">
@@ -1601,8 +1609,8 @@ a, button, [role="button"], input, select, textarea,
         </div>
     </section>
 
-    
-<section class="mkcal-section" id="mkcalSection">
+    <!-- ══ BOOKS CATALOG (merged from books.html) ══ -->
+    <section class="mkcal-section" id="mkcalSection">
     <div class="mkcal-inner">
 
         <!-- Header -->
