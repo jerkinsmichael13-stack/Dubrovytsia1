@@ -815,17 +815,17 @@ function renderTable(){
         var causeD=r.cause?'<span class="ww1-tag '+cc+'">'+he(r.cause)+'</span>':'—';
 
         // Desktop row
-        tbl+='<tr onclick="ww1Open(''+r.id+'')">';
+        tbl+='<tr onclick="ww1Open(\''+r.id+'\')">';
         tbl+='<td><div class="ww1-td-name">'+he(name||'—')+'</div><div class="ww1-td-sub">'+he(r.doc_type||'')+'</div></td>';
         tbl+='<td>'+locD+'</td>';
         tbl+='<td>'+he(r.military_unit||'—')+'</td>';
         tbl+='<td>'+he(r.rank||'—')+'</td>';
         tbl+='<td>'+causeD+'</td>';
-        tbl+='<td><button class="ww1-btn-view" onclick="event.stopPropagation();ww1Open(''+r.id+'')">'+eyeSvg+'Картка</button></td>';
+        tbl+='<td><button class="ww1-btn-view" onclick="event.stopPropagation();ww1Open(\''+r.id+'\')">'+eyeSvg+'Картка</button></td>';
         tbl+='</tr>';
 
         // Mobile card
-        mob+='<div class="ww1-card-row" onclick="ww1Open(''+r.id+'')">';
+        mob+='<div class="ww1-card-row" onclick="ww1Open(\''+r.id+'\')">';
         mob+='<div class="ww1-card-row-body">';
         mob+='<div class="ww1-card-row-name">'+he(name||'—')+'</div>';
         mob+='<div class="ww1-card-row-meta">';
