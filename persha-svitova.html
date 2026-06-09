@@ -26,7 +26,7 @@
 
 <style>
 /* ══════════════════════════════════════════
-   ПЕРША СВІТОВА — HERO SECTION (REDESIGNED)
+   ПЕРША СВІТОВА — HERO SECTION
 ══════════════════════════════════════════ */
 .ww1-page-hero {
     position: relative;
@@ -34,74 +34,36 @@
     display: flex;
     align-items: flex-end;
     overflow: hidden;
-    background: #050403;
+    background: #080604;
 }
 .ww1-hero-bg {
     position: absolute;
     inset: 0;
     background-image: url('https://i.imgur.com/wsXwXHc.jpeg');
     background-size: cover;
-    background-position: center 25%;
-    filter: brightness(.28) contrast(1.15) sepia(.45);
-    transform: scale(1.06);
-    transition: transform 14s ease;
-    will-change: transform;
+    background-position: center 30%;
+    filter: brightness(.3) contrast(1.1) sepia(.3);
+    transform: scale(1.04);
+    transition: transform 14s ease, opacity 0.8s ease;
+opacity: 0;
 }
-.ww1-page-hero.hero-loaded .ww1-hero-bg { transform: scale(1.0); }
+.ww1-page-hero.hero-loaded .ww1-hero-bg { transform: scale(1.0); opacity: 1; }
 .ww1-hero-grain {
     position: absolute;
-    inset: -80px;
-    width: calc(100% + 160px);
-    height: calc(100% + 160px);
-    opacity: 0.06;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
     pointer-events: none;
-    z-index: 1;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)'/%3E%3C/svg%3E");
-    background-size: 220px;
-    animation: ww1grain .55s steps(1) infinite;
-}
-@keyframes ww1grain {
-    0%{transform:translate(0,0)}16%{transform:translate(-4px,-6px)}33%{transform:translate(6px,3px)}
-    50%{transform:translate(-3px,7px)}66%{transform:translate(7px,-4px)}100%{transform:translate(3px,-5px)}
 }
 .ww1-hero-vignette {
     position: absolute;
     inset: 0;
-    z-index: 2;
-    pointer-events: none;
-    background:
-        radial-gradient(ellipse 80% 60% at 50% 40%, transparent 20%, rgba(0,0,0,.45) 100%),
-        linear-gradient(180deg,
-            rgba(0,0,0,.5) 0%,
-            rgba(0,0,0,.1) 25%,
-            rgba(0,0,0,.55) 65%,
-            rgba(5,4,3,1) 100%);
-}
-/* Horizontal scan lines for archival feel */
-.ww1-hero-scan {
-    position: absolute; inset: 0; z-index: 2; pointer-events: none;
-    background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,.012) 3px, rgba(0,0,0,.012) 4px);
-}
-/* Year watermark */
-.ww1-hero-year-bg {
-    position: absolute;
-    right: -2rem;
-    top: 50%;
-    transform: translateY(-50%);
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(12rem, 25vw, 22rem);
-    font-weight: 700;
-    color: rgba(201,162,39,.05);
-    line-height: 1;
-    pointer-events: none;
-    z-index: 3;
-    letter-spacing: -.05em;
-    user-select: none;
+    background: radial-gradient(ellipse at 50% 100%, rgba(8,6,4,.9) 0%, transparent 70%),
+                linear-gradient(0deg, rgba(8,6,4,1) 0%, transparent 60%);
 }
 .ww1-hero-content {
     position: relative;
-    z-index: 10;
-    padding: 0 2rem 4.5rem;
+    z-index: 2;
+    padding: 3rem 2rem 3.5rem;
     max-width: 1200px;
     margin: 0 auto;
     width: 100%;
@@ -114,13 +76,11 @@
     font-size: .47rem;
     letter-spacing: .3em;
     text-transform: uppercase;
-    color: rgba(201,162,39,.65);
-    border: 1px solid rgba(201,162,39,.22);
+    color: rgba(201,162,39,.6);
+    border: 1px solid rgba(201,162,39,.2);
     border-radius: 100px;
     padding: .3rem .9rem;
-    margin-bottom: 1.5rem;
-    opacity: 0;
-    animation: ww1up .9s cubic-bezier(.16,1,.3,1) .2s forwards;
+    margin-bottom: 1.2rem;
 }
 .ww1-hero-dot {
     width: 5px; height: 5px;
@@ -131,46 +91,32 @@
 @keyframes ww1pulse { 0%,100%{opacity:.5;transform:scale(1)} 50%{opacity:1;transform:scale(1.3)} }
 .ww1-hero-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(3rem, 8vw, 7rem);
+    font-size: clamp(2.2rem, 5vw, 4rem);
     font-weight: 300;
-    line-height: .88;
+    line-height: .9;
     letter-spacing: -.03em;
     color: #e8dbb5;
-    margin: 0 0 1.2rem;
-    opacity: 0;
-    animation: ww1up 1.05s cubic-bezier(.16,1,.3,1) .35s forwards;
+    margin: 0 0 1rem;
 }
 .ww1-hero-title em { display: block; font-style: italic; color: #c9a227; }
-/* Ornament divider */
-.ww1-hero-orn {
-    display: flex; align-items: center; gap: .8rem;
-    width: 280px; margin: 0 0 1.4rem;
-    opacity: 0; animation: ww1up .8s cubic-bezier(.16,1,.3,1) .48s forwards;
-}
-.ww1-hero-orn-line { flex: 1; height: 1px; background: linear-gradient(90deg, rgba(201,162,39,.5), transparent); }
-.ww1-hero-orn-diamond { width: 5px; height: 5px; background: rgba(201,162,39,.55); transform: rotate(45deg); flex-shrink: 0; }
 .ww1-hero-sub {
     font-family: 'DM Sans', sans-serif;
-    font-size: .85rem;
-    color: rgba(232,219,181,.42);
-    line-height: 1.7;
-    max-width: 500px;
-    margin-bottom: 2.5rem;
-    opacity: 0;
-    animation: ww1up .9s cubic-bezier(.16,1,.3,1) .55s forwards;
+    font-size: .82rem;
+    color: rgba(232,219,181,.4);
+    line-height: 1.6;
+    max-width: 540px;
+    margin-bottom: 2rem;
 }
 .ww1-hero-stats {
     display: flex;
-    gap: 2.5rem;
+    gap: 2rem;
     flex-wrap: wrap;
-    opacity: 0;
-    animation: ww1up .85s cubic-bezier(.16,1,.3,1) .68s forwards;
 }
 .ww1-hstat { text-align: left; }
 .ww1-hstat-n {
     display: block;
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    font-size: 2rem;
     font-weight: 300;
     color: #c9a227;
     line-height: 1;
@@ -178,22 +124,12 @@
 .ww1-hstat-l {
     display: block;
     font-family: 'DM Sans', sans-serif;
-    font-size: .48rem;
+    font-size: .5rem;
     letter-spacing: .18em;
     text-transform: uppercase;
     color: rgba(232,219,181,.3);
     margin-top: .2rem;
 }
-/* Scroll cue */
-.ww1-scroll-cue {
-    position: absolute; bottom: 2rem; left: 2rem; z-index: 10;
-    display: flex; flex-direction: column; align-items: flex-start; gap: .6rem;
-    opacity: 0; animation: ww1fadein 1s ease 1.4s forwards; pointer-events: none;
-}
-.ww1-scroll-cue span { font-family: 'DM Sans', sans-serif; font-size: .46rem; letter-spacing: .3em; text-transform: uppercase; color: rgba(255,255,255,.22); }
-.ww1-scroll-track { width: 1px; height: 40px; background: linear-gradient(180deg,rgba(201,162,39,.5) 0%,transparent 100%); animation: ww1drip 2s ease-in-out infinite; }
-@keyframes ww1drip { 0%,100%{opacity:.3;transform:scaleY(1) translateY(0)} 50%{opacity:1;transform:scaleY(.5) translateY(10px)} }
-
 .ww1-breadcrumb {
     position: absolute;
     top: 1.2rem;
@@ -204,67 +140,50 @@
     font-family: 'DM Sans', sans-serif;
     font-size: .65rem;
     color: rgba(232,219,181,.3);
-    z-index: 11;
+    z-index: 3;
 }
 .ww1-breadcrumb a { color: rgba(201,162,39,.5); text-decoration: none; }
 .ww1-breadcrumb a:hover { color: #c9a227; }
 .ww1-breadcrumb span { color: rgba(232,219,181,.2); }
 
-@keyframes ww1up { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
-@keyframes ww1fadein { from{opacity:0} to{opacity:1} }
-
-/* ══════════════════════════════════════════
-   CONTEXT NARRATIVE BAND (new)
-══════════════════════════════════════════ */
-.ww1-narrative {
-    background: linear-gradient(135deg, #0a0805 0%, #140e07 50%, #0a0805 100%);
-    border-bottom: 1px solid rgba(201,162,39,.12);
-    padding: 3.5rem 0;
-}
-.ww1-narrative-inner {
-    max-width: 1200px; margin: 0 auto; padding: 0 2rem;
-    display: grid;
-    grid-template-columns: 1fr 2px 1fr 2px 1fr;
-    gap: 2.5rem;
-    align-items: start;
-}
-@media(max-width:800px){
-    .ww1-narrative-inner { grid-template-columns: 1fr; gap: 2rem; }
-    .ww1-narrative-sep { display: none !important; }
-}
-.ww1-narrative-sep {
-    width: 1px; background: linear-gradient(180deg, transparent, rgba(201,162,39,.2), transparent);
-    height: 100%; align-self: stretch;
-}
-.ww1-nar-block { display: flex; flex-direction: column; gap: .65rem; }
-.ww1-nar-label {
-    font-family: 'DM Sans', sans-serif;
-    font-size: .48rem; letter-spacing: .28em; text-transform: uppercase;
-    color: rgba(201,162,39,.55);
-}
-.ww1-nar-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2.2rem, 4vw, 3.2rem);
-    font-weight: 300; line-height: 1; letter-spacing: -.03em;
-    color: #c9a227;
-}
-.ww1-nar-num span { font-size: 55%; color: rgba(201,162,39,.5); }
-.ww1-nar-text {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(.92rem, 1.4vw, 1.05rem);
-    font-style: italic; font-weight: 300;
-    line-height: 1.7;
-    color: rgba(232,219,181,.45);
-}
-.ww1-nar-text strong { font-style: normal; color: rgba(232,219,181,.75); font-weight: 400; }
-
 /* ══════════════════════════════════════════
    CONTROLS
 ══════════════════════════════════════════ */
 .ww1-band {
-    display: none; /* removed old band - replaced by narrative */
+    background: linear-gradient(135deg, #0d0a06 0%, #1a130a 100%);
+    border-bottom: 1px solid rgba(201,162,39,.15);
 }
-.ww1-band-inner { display: none; }
+.ww1-band-inner {
+    max-width: 1200px; margin: 0 auto; padding: 0 2rem;
+    display: flex; align-items: stretch; gap: 0; overflow-x: auto;
+}
+.ww1-band-item {
+    display: flex; align-items: center; gap: .9rem;
+    padding: 1.2rem 2rem; flex-shrink: 0;
+}
+.ww1-band-sep {
+    width: 1px; background: rgba(201,162,39,.12);
+    flex-shrink: 0; margin: .8rem 0;
+}
+.ww1-band-icon {
+    width: 38px; height: 38px; border-radius: 10px;
+    background: rgba(201,162,39,.08); border: 1px solid rgba(201,162,39,.15);
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(201,162,39,.7); flex-shrink: 0;
+}
+.ww1-band-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 300; color: #c9a227; line-height: 1;
+}
+.ww1-band-lbl {
+    font-family: 'DM Sans', sans-serif; font-size: .6rem;
+    letter-spacing: .12em; text-transform: uppercase;
+    color: rgba(232,219,181,.3); margin-top: .2rem;
+}
+@media(max-width:600px){
+    .ww1-band-item { padding: 1rem 1.2rem; }
+    .ww1-band-num { font-size: 1.2rem; }
+}
 
 .ww1-toolbar {
     background: var(--color-bg, #faf7f2);
@@ -303,7 +222,12 @@
     box-sizing: border-box;
 }
 .ww1-search:focus { border-color: rgba(201,162,39,.5); }
-.ww1-selects { display: flex; gap: .5rem; flex-wrap: wrap; }
+
+.ww1-selects {
+    display: flex;
+    gap: .5rem;
+    flex-wrap: wrap;
+}
 .ww1-select {
     padding: .6rem 1rem;
     background: var(--color-bg-card, #fff);
@@ -318,6 +242,7 @@
     max-width: 180px;
 }
 .ww1-select:focus { border-color: rgba(201,162,39,.5); }
+
 .ww1-count-badge {
     font-family: 'DM Sans', sans-serif;
     font-size: .7rem;
@@ -326,6 +251,332 @@
     padding: .4rem .8rem;
     background: var(--color-bg-secondary, #ede7db);
     border-radius: 100px;
+}
+
+/* ══════════════════════════════════════════
+   TABLE
+══════════════════════════════════════════ */
+.ww1-main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+.ww1-table-wrap {
+    border: 1px solid var(--color-border, #ddd5c8);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+}
+.ww1-table { width: 100%; border-collapse: collapse; }
+.ww1-table thead th {
+    background: var(--color-bg-secondary, #ede7db);
+    padding: .75rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .58rem; letter-spacing: .15em; text-transform: uppercase;
+    color: var(--color-text-light, #78716c);
+    text-align: left; font-weight: 500;
+    border-bottom: 1px solid var(--color-border, #ddd5c8);
+    white-space: nowrap;
+}
+.ww1-table tbody tr {
+    border-bottom: 1px solid var(--color-border-light, #ede7db);
+    transition: background .15s; cursor: pointer;
+}
+.ww1-table tbody tr:last-child { border-bottom: none; }
+.ww1-table tbody tr:hover { background: rgba(201,162,39,.05); }
+.ww1-table td {
+    padding: .8rem 1rem;
+    font-family: 'DM Sans', sans-serif; font-size: .78rem;
+    color: var(--color-text, #1c1917); vertical-align: middle;
+}
+.ww1-td-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem; font-weight: 500;
+    color: var(--color-text, #1c1917); line-height: 1.2;
+}
+.ww1-td-sub { font-size: .65rem; color: var(--color-text-muted, #a8a29e); margin-top: .15rem; }
+.ww1-td-loc { display: inline-flex; align-items: center; gap: .3rem; font-size: .68rem; color: var(--color-text-secondary, #44403c); }
+.ww1-td-loc svg { color: rgba(201,162,39,.6); flex-shrink: 0; }
+.ww1-tag { display: inline-block; font-size: .58rem; letter-spacing: .06em; text-transform: uppercase; padding: .2rem .55rem; border-radius: 100px; background: rgba(201,162,39,.08); border: 1px solid rgba(201,162,39,.2); color: rgba(140,100,20,.9); white-space: nowrap; }
+.ww1-tag.k { background: rgba(180,40,40,.07); border-color: rgba(180,40,40,.2); color: rgba(150,30,30,.9); }
+.ww1-tag.p { background: rgba(40,80,180,.07); border-color: rgba(40,80,180,.2); color: rgba(30,60,150,.9); }
+.ww1-tag.h { background: rgba(30,140,80,.07); border-color: rgba(30,140,80,.2); color: rgba(20,110,60,.9); }
+.ww1-btn-view { display: inline-flex; align-items: center; gap: .4rem; padding: .4rem .9rem; background: transparent; border: 1px solid rgba(201,162,39,.35); border-radius: 100px; font-family: 'DM Sans', sans-serif; font-size: .62rem; color: #a07c10; cursor: pointer; transition: all .18s; white-space: nowrap; }
+.ww1-btn-view:hover { background: #c9a227; border-color: #c9a227; color: #0a0805; }
+/* Desktop — hide some columns on medium */
+@media(max-width:900px){
+    .ww1-table thead th:nth-child(3),
+    .ww1-table thead th:nth-child(4),
+    .ww1-table tbody td:nth-child(3),
+    .ww1-table tbody td:nth-child(4) { display: none; }
+}
+/* Mobile — switch to card layout */
+@media(max-width:600px){ .ww1-table { display: none; } }
+/* Mobile card rows */
+.ww1-cards { display: none; }
+@media(max-width:600px){ .ww1-cards { display: block; } }
+.ww1-card-row {
+    display: flex; align-items: center; gap: .8rem;
+    padding: .9rem 1rem;
+    border-bottom: 1px solid var(--color-border-light, #ede7db);
+    cursor: pointer; transition: background .15s;
+    -webkit-tap-highlight-color: transparent;
+}
+.ww1-card-row:last-child { border-bottom: none; }
+.ww1-card-row:active { background: rgba(201,162,39,.06); }
+.ww1-card-row-body { flex: 1; min-width: 0; }
+.ww1-card-row-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem; font-weight: 500;
+    color: var(--color-text, #1c1917); line-height: 1.2;
+}
+.ww1-card-row-meta { display: flex; align-items: center; gap: .5rem; margin-top: .3rem; flex-wrap: wrap; }
+.ww1-card-row-loc { display: inline-flex; align-items: center; gap: .25rem; font-family: 'DM Sans', sans-serif; font-size: .68rem; color: var(--color-text-secondary, #44403c); }
+.ww1-card-row-loc svg { color: rgba(201,162,39,.6); }
+.ww1-card-row-arrow { width: 30px; height: 30px; border-radius: 50%; background: rgba(201,162,39,.08); border: 1px solid rgba(201,162,39,.2); display: flex; align-items: center; justify-content: center; color: #c9a227; flex-shrink: 0; transition: all .2s; }
+.ww1-card-row:active .ww1-card-row-arrow { background: #c9a227; color: #0a0805; }
+
+/* ══════════════════════════════════════════
+   PAGINATION
+══════════════════════════════════════════ */
+.ww1-pag {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .4rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+.ww1-pbtn {
+    min-width: 36px; height: 36px;
+    padding: 0 .8rem;
+    background: var(--color-bg-card, #fff);
+    border: 1px solid var(--color-border, #ddd5c8);
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .75rem;
+    color: var(--color-text-secondary, #44403c);
+    cursor: pointer;
+    transition: all .15s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.ww1-pbtn:hover { border-color: rgba(201,162,39,.4); }
+.ww1-pbtn.on { background: #c9a227; border-color: #c9a227; color: #0a0805; font-weight: 700; }
+.ww1-pbtn:disabled { opacity: .3; cursor: not-allowed; }
+
+/* ══════════════════════════════════════════
+   MODAL / PROFILE
+══════════════════════════════════════════ */
+.ww1-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9100;
+    background: rgba(8,6,3,.92);
+    backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s;
+}
+.ww1-overlay.open { opacity: 1; pointer-events: all; }
+.ww1-profile {
+    background: var(--color-bg-card, #fff);
+    border: 1px solid rgba(201,162,39,.2);
+    border-radius: 22px;
+    overflow: hidden;
+    max-width: 1200px;
+    width: 100%;
+    max-height: 95vh;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: 55% 1fr;
+    box-shadow: 0 40px 120px rgba(0,0,0,.6);
+    transform: translateY(24px) scale(.98);
+    transition: transform .32s cubic-bezier(.16,1,.3,1);
+}
+.ww1-overlay.open .ww1-profile { transform: translateY(0) scale(1); }
+@media(max-width:900px){ .ww1-profile { grid-template-columns: 1fr; max-height: 98vh; } }
+
+/* Фото з зумом */
+.ww1-prof-img-col {
+    background: #0a0806;
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    overflow: hidden;
+}
+.ww1-prof-img-wrap {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    cursor: grab;
+    user-select: none;
+    touch-action: none;
+    display: flex;
+    align-items: flex-start;
+}
+.ww1-prof-img-wrap.dragging { cursor: grabbing; }
+.ww1-prof-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: top;
+    display: block;
+    pointer-events: none;
+    transform-origin: 0 0;
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+.ww1-zoom-hint {
+    position: absolute;
+    bottom: .8rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'DM Sans', sans-serif;
+    font-size: .55rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.35);
+    background: rgba(0,0,0,.4);
+    border-radius: 100px;
+    padding: .25rem .7rem;
+    pointer-events: none;
+    transition: opacity .3s;
+    white-space: nowrap;
+}
+.ww1-zoom-controls {
+    position: absolute;
+    bottom: .8rem;
+    right: .8rem;
+    display: flex;
+    flex-direction: column;
+    gap: .3rem;
+    z-index: 5;
+}
+.ww1-zoom-btn {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: rgba(0,0,0,.55);
+    border: 1px solid rgba(201,162,39,.25);
+    color: #c9a227;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: 300;
+    line-height: 1;
+    transition: background .2s;
+}
+.ww1-zoom-btn:hover { background: rgba(201,162,39,.2); }
+.ww1-prof-no-img {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    color: rgba(201,162,39,.2);
+    padding: 3rem 2rem;
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+}
+.ww1-prof-close {
+    position: absolute;
+    top: .8rem; right: .8rem;
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: rgba(0,0,0,.55);
+    border: 1px solid rgba(201,162,39,.25);
+    color: #c9a227;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    z-index: 10;
+    transition: all .2s;
+}
+.ww1-prof-close:hover { background: rgba(201,162,39,.2); }
+.ww1-prof-info { padding: 2.2rem 2rem; overflow-y: auto; }
+.ww1-prof-eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .47rem;
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    color: rgba(201,162,39,.6);
+    margin-bottom: .7rem;
+}
+.ww1-prof-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.5rem,3vw,2.2rem);
+    font-weight: 400;
+    color: var(--color-text, #1c1917);
+    line-height: 1.05;
+    margin: 0 0 1.4rem;
+}
+.ww1-prof-divider { height: 1px; background: var(--color-border, #ddd5c8); margin: 1.1rem 0; }
+.ww1-prof-row {
+    display: flex;
+    gap: .8rem;
+    margin-bottom: .75rem;
+    align-items: baseline;
+}
+.ww1-prof-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .6rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--color-text-muted, #a8a29e);
+    min-width: 115px;
+    flex-shrink: 0;
+}
+.ww1-prof-val {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .82rem;
+    color: var(--color-text, #1c1917);
+    line-height: 1.5;
+}
+.ww1-prof-footer {
+    margin-top: 1.4rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-border-light, #ede7db);
+    font-family: 'DM Sans', sans-serif;
+    font-size: .65rem;
+    color: var(--color-text-muted, #a8a29e);
+    line-height: 1.6;
+}
+
+/* ══════════════════════════════════════════
+   LOADING / EMPTY
+══════════════════════════════════════════ */
+.ww1-loading {
+    text-align: center;
+    padding: 4rem 2rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    color: var(--color-text-muted, #a8a29e);
+}
+.ww1-spinner {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    border: 2px solid rgba(201,162,39,.15);
+    border-top-color: #c9a227;
+    animation: ww1sp .8s linear infinite;
+    margin: 0 auto 1rem;
+}
+@keyframes ww1sp { to { transform: rotate(360deg); } }
+
+@media(max-width:600px){
+    .ww1-main { padding: 1.2rem; }
+    .ww1-toolbar-inner { padding: 0 1rem; }
+    .ww1-hero-content { padding: 2rem 1.2rem 2.5rem; }
 }
 </style>
 </head>
@@ -366,9 +617,9 @@
 <section class="ww1-page-hero" id="ww1Hero">
     <div class="ww1-hero-bg"></div>
     <div class="ww1-hero-grain"></div>
-    <div class="ww1-hero-scan"></div>
     <div class="ww1-hero-vignette"></div>
-    <div class="ww1-hero-year-bg">1914</div>
+    <div style="position:absolute;inset:0;z-index:2;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.012) 3px,rgba(0,0,0,.012) 4px);"></div>
+    <div style="position:absolute;right:-2rem;top:50%;transform:translateY(-50%);font-family:'Cormorant Garamond',serif;font-size:clamp(12rem,25vw,22rem);font-weight:700;color:rgba(201,162,39,.04);line-height:1;pointer-events:none;z-index:3;letter-spacing:-.05em;user-select:none;">1914</div>
     <div class="ww1-breadcrumb">
         <a href="metrychni-knyhy.html">Архівні справи</a>
         <span>›</span>
@@ -383,10 +634,7 @@
             Перша світова
             <em>війна</em>
         </h1>
-        <div class="ww1-hero-orn">
-            <div class="ww1-hero-orn-line"></div>
-            <div class="ww1-hero-orn-diamond"></div>
-        </div>
+        <div style="display:flex;align-items:center;gap:.8rem;width:280px;margin:0 0 1.4rem;"><div style="flex:1;height:1px;background:linear-gradient(90deg,rgba(201,162,39,.5),transparent);"></div><div style="width:5px;height:5px;background:rgba(201,162,39,.55);transform:rotate(45deg);flex-shrink:0;"></div></div>
         <p class="ww1-hero-sub">
             Архівні записи про поранених, хворих, полонених та зниклих безвісти — мешканців Дубровиці, Бережниці та навколишніх сіл Волинської губернії. Понад три тисячі доль, збережених в архівних документах.
         </p>
@@ -405,31 +653,31 @@
             </div>
         </div>
     </div>
-    <div class="ww1-scroll-cue">
-        <span>Гортайте</span>
-        <div class="ww1-scroll-track"></div>
+    <div style="position:absolute;bottom:2rem;left:2rem;z-index:10;display:flex;flex-direction:column;align-items:flex-start;gap:.6rem;pointer-events:none;">
+        <span style="font-family:'DM Sans',sans-serif;font-size:.46rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.22);">Гортайте</span>
+        <div style="width:1px;height:40px;background:linear-gradient(180deg,rgba(201,162,39,.5) 0%,transparent 100%);"></div>
     </div>
 </section>
 
 <!-- Narrative context band -->
-<div class="ww1-narrative">
-    <div class="ww1-narrative-inner">
-        <div class="ww1-nar-block">
-            <div class="ww1-nar-label">Розмах трагедії</div>
-            <div class="ww1-nar-num">3 747</div>
-            <div class="ww1-nar-text">Понад <strong>три тисячі сімей</strong> Дубровиці та навколишніх сіл зазнали втрат у Першій світовій. Кожен запис — це ім'я, дата, село. За кожним записом — доля.</div>
+<div class="ww1-narrative" style="background:linear-gradient(135deg,#0a0805 0%,#140e07 50%,#0a0805 100%);border-bottom:1px solid rgba(201,162,39,.12);padding:3.5rem 0;">
+    <div style="max-width:1200px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1fr 2px 1fr 2px 1fr;gap:2.5rem;align-items:start;">
+        <div style="display:flex;flex-direction:column;gap:.65rem;">
+            <div style="font-family:'DM Sans',sans-serif;font-size:.48rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(201,162,39,.55);">Розмах трагедії</div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,4vw,3.2rem);font-weight:300;line-height:1;letter-spacing:-.03em;color:#c9a227;">3 747</div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(.92rem,1.4vw,1.05rem);font-style:italic;font-weight:300;line-height:1.7;color:rgba(232,219,181,.45);">Понад <strong style="font-style:normal;color:rgba(232,219,181,.75);font-weight:400;">три тисячі сімей</strong> Дубровиці та навколишніх сіл. Кожен запис — це ім'я, дата, село.</div>
         </div>
-        <div class="ww1-narrative-sep"></div>
-        <div class="ww1-nar-block">
-            <div class="ww1-nar-label">Катастрофа 1914–1918</div>
-            <div class="ww1-nar-num">1 786 <span>пораненими</span></div>
-            <div class="ww1-nar-text">Фронт у 1915–1916 рр. прокотився через Волинь двічі. <strong>Дубровиця і 108 навколишніх сіл</strong> опинились у зоні боїв або окупації. Хворі, полонені, зниклі — все задокументовано у царських архівах.</div>
+        <div style="width:1px;background:linear-gradient(180deg,transparent,rgba(201,162,39,.2),transparent);"></div>
+        <div style="display:flex;flex-direction:column;gap:.65rem;">
+            <div style="font-family:'DM Sans',sans-serif;font-size:.48rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(201,162,39,.55);">Катастрофа 1914–1918</div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,4vw,3.2rem);font-weight:300;line-height:1;letter-spacing:-.03em;color:#c9a227;">1 786 <span style="font-size:55%;color:rgba(201,162,39,.5);">пораненими</span></div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(.92rem,1.4vw,1.05rem);font-style:italic;font-weight:300;line-height:1.7;color:rgba(232,219,181,.45);">Фронт пройшов через Волинь двічі. <strong style="font-style:normal;color:rgba(232,219,181,.75);font-weight:400;">Дубровиця і 108 сіл</strong> — у зоні боїв. Все задокументовано в архівах.</div>
         </div>
-        <div class="ww1-narrative-sep"></div>
-        <div class="ww1-nar-block">
-            <div class="ww1-nar-label">Архівна база</div>
-            <div class="ww1-nar-num">3 670 <span>зі сканами</span></div>
-            <div class="ww1-nar-text">Майже кожен запис супроводжується <strong>сканом оригінального документа</strong> — картки поранених, списки полонених, повідомлення про загиблих з архівів Росії та Австро-Угорщини.</div>
+        <div style="width:1px;background:linear-gradient(180deg,transparent,rgba(201,162,39,.2),transparent);"></div>
+        <div style="display:flex;flex-direction:column;gap:.65rem;">
+            <div style="font-family:'DM Sans',sans-serif;font-size:.48rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(201,162,39,.55);">Архівна база</div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,4vw,3.2rem);font-weight:300;line-height:1;letter-spacing:-.03em;color:#c9a227;">3 670 <span style="font-size:55%;color:rgba(201,162,39,.5);">зі сканами</span></div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(.92rem,1.4vw,1.05rem);font-style:italic;font-weight:300;line-height:1.7;color:rgba(232,219,181,.45);">Кожен запис — зі <strong style="font-style:normal;color:rgba(232,219,181,.75);font-weight:400;">сканом оригінального документа</strong> з архівів Росії та Австро-Угорщини.</div>
         </div>
     </div>
 </div>
@@ -889,10 +1137,12 @@ fetch(GH+'ww1.json?v='+Date.now())
 })();
 </script>
 <script>
-// Hero cinematic load
 (function(){
-    var h = document.getElementById('ww1Hero');
-    if(h) setTimeout(function(){ h.classList.add('hero-loaded'); }, 80);
+    var h=document.getElementById('ww1Hero');
+    if(h) setTimeout(function(){h.classList.add('hero-loaded');},80);
+    // Also animate bg on load
+    var bg=h&&h.querySelector('.ww1-hero-bg');
+    if(bg){bg.style.transition='transform 14s ease, opacity 0.8s ease';}
 })();
 </script>
 </body>
