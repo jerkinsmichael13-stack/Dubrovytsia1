@@ -271,90 +271,69 @@
     background: var(--color-bg-secondary, #ede7db);
     padding: .75rem 1rem;
     font-family: 'DM Sans', sans-serif;
-    font-size: .58rem;
-    letter-spacing: .15em;
-    text-transform: uppercase;
+    font-size: .58rem; letter-spacing: .15em; text-transform: uppercase;
     color: var(--color-text-light, #78716c);
-    text-align: left;
-    font-weight: 500;
+    text-align: left; font-weight: 500;
     border-bottom: 1px solid var(--color-border, #ddd5c8);
     white-space: nowrap;
 }
 .ww1-table tbody tr {
     border-bottom: 1px solid var(--color-border-light, #ede7db);
-    transition: background .15s;
-    cursor: pointer;
+    transition: background .15s; cursor: pointer;
 }
 .ww1-table tbody tr:last-child { border-bottom: none; }
 .ww1-table tbody tr:hover { background: rgba(201,162,39,.05); }
 .ww1-table td {
     padding: .8rem 1rem;
-    font-family: 'DM Sans', sans-serif;
-    font-size: .78rem;
-    color: var(--color-text, #1c1917);
-    vertical-align: middle;
+    font-family: 'DM Sans', sans-serif; font-size: .78rem;
+    color: var(--color-text, #1c1917); vertical-align: middle;
 }
 .ww1-td-name {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 1.05rem;
-    font-weight: 500;
-    color: var(--color-text, #1c1917);
-    line-height: 1.2;
+    font-size: 1.05rem; font-weight: 500;
+    color: var(--color-text, #1c1917); line-height: 1.2;
 }
-.ww1-td-sub {
-    font-size: .65rem;
-    color: var(--color-text-muted, #a8a29e);
-    margin-top: .15rem;
-}
-.ww1-td-loc {
-    display: inline-flex;
-    align-items: center;
-    gap: .3rem;
-    font-size: .68rem;
-    color: var(--color-text-secondary, #44403c);
-}
+.ww1-td-sub { font-size: .65rem; color: var(--color-text-muted, #a8a29e); margin-top: .15rem; }
+.ww1-td-loc { display: inline-flex; align-items: center; gap: .3rem; font-size: .68rem; color: var(--color-text-secondary, #44403c); }
 .ww1-td-loc svg { color: rgba(201,162,39,.6); flex-shrink: 0; }
-.ww1-tag {
-    display: inline-block;
-    font-size: .58rem;
-    letter-spacing: .06em;
-    text-transform: uppercase;
-    padding: .2rem .55rem;
-    border-radius: 100px;
-    background: rgba(201,162,39,.08);
-    border: 1px solid rgba(201,162,39,.2);
-    color: rgba(140,100,20,.9);
-    white-space: nowrap;
-}
+.ww1-tag { display: inline-block; font-size: .58rem; letter-spacing: .06em; text-transform: uppercase; padding: .2rem .55rem; border-radius: 100px; background: rgba(201,162,39,.08); border: 1px solid rgba(201,162,39,.2); color: rgba(140,100,20,.9); white-space: nowrap; }
 .ww1-tag.k { background: rgba(180,40,40,.07); border-color: rgba(180,40,40,.2); color: rgba(150,30,30,.9); }
 .ww1-tag.p { background: rgba(40,80,180,.07); border-color: rgba(40,80,180,.2); color: rgba(30,60,150,.9); }
 .ww1-tag.h { background: rgba(30,140,80,.07); border-color: rgba(30,140,80,.2); color: rgba(20,110,60,.9); }
-.ww1-btn-view {
-    display: inline-flex;
-    align-items: center;
-    gap: .4rem;
-    padding: .4rem .9rem;
-    background: transparent;
-    border: 1px solid rgba(201,162,39,.35);
-    border-radius: 100px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: .62rem;
-    color: #a07c10;
-    cursor: pointer;
-    transition: all .18s;
-    white-space: nowrap;
-}
+.ww1-btn-view { display: inline-flex; align-items: center; gap: .4rem; padding: .4rem .9rem; background: transparent; border: 1px solid rgba(201,162,39,.35); border-radius: 100px; font-family: 'DM Sans', sans-serif; font-size: .62rem; color: #a07c10; cursor: pointer; transition: all .18s; white-space: nowrap; }
 .ww1-btn-view:hover { background: #c9a227; border-color: #c9a227; color: #0a0805; }
-@media(max-width:800px){
+/* Desktop — hide some columns on medium */
+@media(max-width:900px){
+    .ww1-table thead th:nth-child(3),
     .ww1-table thead th:nth-child(4),
+    .ww1-table tbody td:nth-child(3),
     .ww1-table tbody td:nth-child(4) { display: none; }
 }
-@media(max-width:600px){
-    .ww1-table thead th:nth-child(3),
-    .ww1-table tbody td:nth-child(3),
-    .ww1-table thead th:nth-child(5),
-    .ww1-table tbody td:nth-child(5) { display: none; }
+/* Mobile — switch to card layout */
+@media(max-width:600px){ .ww1-table { display: none; } }
+/* Mobile card rows */
+.ww1-cards { display: none; }
+@media(max-width:600px){ .ww1-cards { display: block; } }
+.ww1-card-row {
+    display: flex; align-items: center; gap: .8rem;
+    padding: .9rem 1rem;
+    border-bottom: 1px solid var(--color-border-light, #ede7db);
+    cursor: pointer; transition: background .15s;
+    -webkit-tap-highlight-color: transparent;
 }
+.ww1-card-row:last-child { border-bottom: none; }
+.ww1-card-row:active { background: rgba(201,162,39,.06); }
+.ww1-card-row-body { flex: 1; min-width: 0; }
+.ww1-card-row-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem; font-weight: 500;
+    color: var(--color-text, #1c1917); line-height: 1.2;
+}
+.ww1-card-row-meta { display: flex; align-items: center; gap: .5rem; margin-top: .3rem; flex-wrap: wrap; }
+.ww1-card-row-loc { display: inline-flex; align-items: center; gap: .25rem; font-family: 'DM Sans', sans-serif; font-size: .68rem; color: var(--color-text-secondary, #44403c); }
+.ww1-card-row-loc svg { color: rgba(201,162,39,.6); }
+.ww1-card-row-arrow { width: 30px; height: 30px; border-radius: 50%; background: rgba(201,162,39,.08); border: 1px solid rgba(201,162,39,.2); display: flex; align-items: center; justify-content: center; color: #c9a227; flex-shrink: 0; transition: all .2s; }
+.ww1-card-row:active .ww1-card-row-arrow { background: #c9a227; color: #0a0805; }
 
 /* ══════════════════════════════════════════
    PAGINATION
@@ -451,6 +430,8 @@
     pointer-events: none;
     transform-origin: 0 0;
     will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 }
 .ww1-zoom-hint {
     position: absolute;
@@ -837,47 +818,53 @@ function renderTable(){
     var start=(pg-1)*PER;
     var slice=shown.slice(start,start+PER);
     if(!slice.length){
-        wrap.innerHTML='<div class="ww1-loading" style="padding:3rem;grid-column:1/-1;">Нічого не знайдено</div>';
+        wrap.innerHTML='<div class="ww1-loading" style="padding:3rem;">Нічого не знайдено</div>';
         $('ww1Pag').innerHTML='';
         return;
     }
-    var html='<table class="ww1-table"><thead><tr>';
-    html+='<th>Прізвище та ім\u2019я</th>';
-    html+='<th>Населений пункт</th>';
-    html+='<th>Військова частина</th>';
-    html+='<th>Звання</th>';
-    html+='<th>Статус</th>';
-    html+='<th></th>';
-    html+='</tr></thead><tbody>';
+
+    var locSvg='<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>';
+    var arrSvg='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>';
+    var eyeSvg='<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+
+    var tbl='<table class="ww1-table"><thead><tr><th>Прізвище та ім’я</th><th>Населений пункт</th><th>Військова частина</th><th>Звання</th><th>Статус</th><th></th></tr></thead><tbody>';
+    var mob='<div class="ww1-cards">';
 
     for(var i=0;i<slice.length;i++){
         var r=slice[i];
         var name=[r.last_name,r.first_name,r.middle_name].filter(Boolean).join(' ');
         var cc=causeClass(r.cause);
         var loc=r.location_ua||'';
-        html+='<tr onclick="ww1Open(\''+r.id+'\')">';
-        html+='<td>';
-        html+='<div class="ww1-td-name">'+he(name||'—')+'</div>';
-        html+='<div class="ww1-td-sub">'+he(r.doc_type||'')+'</div>';
-        html+='</td>';
-        html+='<td>';
-        if(loc){
-            html+='<div class="ww1-td-loc">';
-            html+='<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>';
-            html+=he(loc);
-            html+='</div>';
-        } else { html+='—'; }
-        html+='</td>';
-        html+='<td>'+he(r.military_unit||'—')+'</td>';
-        html+='<td>'+he(r.rank||'—')+'</td>';
-        html+='<td>'+(r.cause?'<span class="ww1-tag '+cc+'">'+he(r.cause)+'</span>':'—')+'</td>';
-        html+='<td><button class="ww1-btn-view" onclick="event.stopPropagation();ww1Open(\''+r.id+'\')">';
-        html+='<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
-        html+='Картка</button></td>';
-        html+='</tr>';
+        var locD=loc?'<div class="ww1-td-loc">'+locSvg+he(loc)+'</div>':'—';
+        var causeD=r.cause?'<span class="ww1-tag '+cc+'">'+he(r.cause)+'</span>':'—';
+
+        // Desktop row
+        tbl+='<tr onclick="ww1Open(''+r.id+'')">';
+        tbl+='<td><div class="ww1-td-name">'+he(name||'—')+'</div><div class="ww1-td-sub">'+he(r.doc_type||'')+'</div></td>';
+        tbl+='<td>'+locD+'</td>';
+        tbl+='<td>'+he(r.military_unit||'—')+'</td>';
+        tbl+='<td>'+he(r.rank||'—')+'</td>';
+        tbl+='<td>'+causeD+'</td>';
+        tbl+='<td><button class="ww1-btn-view" onclick="event.stopPropagation();ww1Open(''+r.id+'')">'+eyeSvg+'Картка</button></td>';
+        tbl+='</tr>';
+
+        // Mobile card
+        mob+='<div class="ww1-card-row" onclick="ww1Open(''+r.id+'')">';
+        mob+='<div class="ww1-card-row-body">';
+        mob+='<div class="ww1-card-row-name">'+he(name||'—')+'</div>';
+        mob+='<div class="ww1-card-row-meta">';
+        if(loc) mob+='<span class="ww1-card-row-loc">'+locSvg+he(loc)+'</span>';
+        if(r.cause) mob+='<span class="ww1-tag '+cc+'" style="font-size:.52rem;padding:.15rem .45rem;">'+he(r.cause)+'</span>';
+        mob+='</div>';
+        mob+='<div style="font-family:'DM Sans',sans-serif;font-size:.62rem;color:var(--color-text-muted,#a8a29e);margin-top:.15rem;">'+he(r.doc_type||'')+'</div>';
+        mob+='</div>';
+        mob+='<div class="ww1-card-row-arrow">'+arrSvg+'</div>';
+        mob+='</div>';
     }
-    html+='</tbody></table>';
-    wrap.innerHTML=html;
+    tbl+='</tbody></table>';
+    mob+='</div>';
+
+    wrap.innerHTML=tbl+mob;
     renderPag();
 }
 
@@ -952,7 +939,7 @@ function zoomApply(animate){
     _zoom.ox=Math.max(-maxX, Math.min(0, _zoom.ox));
     _zoom.oy=Math.max(-maxY, Math.min(0, _zoom.oy));
     img.style.transition=animate?'transform .25s ease':'none';
-    img.style.transform='translate('+_zoom.ox+'px,'+_zoom.oy+'px) scale('+_zoom.scale+')';
+    img.style.transform='translate3d('+_zoom.ox+'px,'+_zoom.oy+'px,0) scale('+_zoom.scale+')';
     _zoom.wrap.style.cursor=_zoom.scale>1?(_zoom.drag?'grabbing':'grab'):'default';
     var hint=_zoom.wrap.querySelector('.ww1-zoom-hint');
     if(hint) hint.style.opacity=_zoom.scale>1?'0':'1';
