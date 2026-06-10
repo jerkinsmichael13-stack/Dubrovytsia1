@@ -473,7 +473,7 @@
 
 .pa-hero-strip {
     display: grid;
-    grid-template-columns: 1fr 1.12fr 1.28fr .9fr;
+    grid-template-columns: repeat(4, 1fr);
     gap: .6rem;
 }
 @media(max-width:900px){ .pa-hero-strip { grid-template-columns:1fr 1fr; } }
@@ -1484,9 +1484,9 @@ ALL_PHOTOS=[{"imageUrl":"https://i.imgur.com/xUe22Gn.jpeg","title":"Портре
 var HERO=[
   {src:'https://i.imgur.com/67HOTtf.jpeg',cap:'Група людей перед костелом · 1915 рік'},
   {src:'https://i.imgur.com/LVWPxA0.jpeg',cap:'Міське кладовище. Невідомий похорон · 1920 рік'},
-  {src:'https://i.imgur.com/UxBBvE4.jpeg',cap:"Дерев'яний міст через р. Горинь · 1930-ті рр."},
-  {src:'https://i.imgur.com/n74FSvK.jpeg',cap:'Костел Іоана Хрестителя · 1929 рік'},
-  {src:'https://i.imgur.com/op2tNhY.jpeg',cap:'Фотолистівка · 1910 рік'}
+  {src:'https://i.imgur.com/dNUzn5L.jpeg',cap:'Вид на місто з висоти пташиного польоту · Радянський період'},
+  {src:'https://i.imgur.com/gPOUodw.jpeg',cap:'Повінь · Радянський період'},
+  {src:'https://i.imgur.com/4x4jAID.jpeg',cap:'Горинь біля Дубровиці · Нім. розвідувальний альбом · 1941'}
 ];
 document.querySelectorAll('[data-hero-idx]').forEach(function(el){
   el.addEventListener('click',function(){
