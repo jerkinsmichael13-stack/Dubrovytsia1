@@ -2055,7 +2055,7 @@
     "imageUrl": "https://i.imgur.com/dVUHDAn.jpeg",
     "title": "Вид від старого банку. 1920–1930-ті",
     "period": "1900-1939",
-    "category": "aerial",
+    "category": "streets",
     "date": "1920",
     "trap": true
   },
@@ -2295,7 +2295,7 @@
     "imageUrl": "https://i.imgur.com/dNUzn5L.jpeg",
     "title": "Вид на місто з висоти пташиного польоту",
     "period": "1945-1991",
-    "category": "streets",
+    "category": "aerial",
     "date": "Радянський період",
     "trap": true
   }
