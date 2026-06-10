@@ -698,8 +698,8 @@ opacity: 0;
 
 <style>
 #ww1StatStrip { background: var(--color-bg, #faf7f2); border-bottom: 1px solid var(--color-border-light, rgba(201,162,39,.1)); }
-.ww1-statstrip { max-width: 1200px; margin: 0 auto; padding: .9rem 2rem; display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.2rem; }
-@media(max-width: 700px) { .ww1-statstrip { grid-template-columns: repeat(2, 1fr); } }
+.ww1-statstrip { max-width: 1200px; margin: 0 auto; padding: .9rem 2rem; display: grid; grid-template-columns: repeat(7, 1fr); gap: 1rem; }
+@media(max-width: 700px) { .ww1-statstrip { grid-template-columns: repeat(3, 1fr); gap:.7rem; } }
 .ww1-sstat { display: flex; flex-direction: column; gap: .25rem; }
 .ww1-sstat-n { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 300; color: var(--color-text, #1a1000); line-height: 1; }
 .ww1-sstat-lbl { font-family: 'DM Sans', sans-serif; font-size: .58rem; color: var(--color-text-muted, #a89880); letter-spacing: .04em; }
@@ -726,13 +726,23 @@ opacity: 0;
         </div>
         <div class="ww1-sstat">
             <div class="ww1-sstat-n" id="ss4">—</div>
-            <div class="ww1-sstat-lbl">Полонені</div>
-            <div class="ww1-sstat-bar"><div class="ww1-sstat-fill" id="sf4" style="background:#6b7fa8;"></div></div>
+            <div class="ww1-sstat-lbl">Загиблі</div>
+            <div class="ww1-sstat-bar"><div class="ww1-sstat-fill" id="sf4" style="background:#8b3a3a;"></div></div>
         </div>
         <div class="ww1-sstat">
             <div class="ww1-sstat-n" id="ss5">—</div>
-            <div class="ww1-sstat-lbl">Інші записи</div>
-            <div class="ww1-sstat-bar"><div class="ww1-sstat-fill" id="sf5" style="background:#a89880;"></div></div>
+            <div class="ww1-sstat-lbl">Полонені</div>
+            <div class="ww1-sstat-bar"><div class="ww1-sstat-fill" id="sf5" style="background:#6b7fa8;"></div></div>
+        </div>
+        <div class="ww1-sstat">
+            <div class="ww1-sstat-n" id="ss6">—</div>
+            <div class="ww1-sstat-lbl">Нагородження</div>
+            <div class="ww1-sstat-bar"><div class="ww1-sstat-fill" id="sf6" style="background:#9b7fa8;"></div></div>
+        </div>
+        <div class="ww1-sstat">
+            <div class="ww1-sstat-n" id="ss7">—</div>
+            <div class="ww1-sstat-lbl">Інші</div>
+            <div class="ww1-sstat-bar"><div class="ww1-sstat-fill" id="sf7" style="background:#a89880;"></div></div>
         </div>
     </div>
 </div>
@@ -791,6 +801,11 @@ opacity: 0;
 </div>
 <script>
 (function(){
+    var scale=1, ox=0, oy=0;
+    var dragging=false, lastX=0, lastY=0;
+    var pinchDist=0, lastPinchScale=1;
+    var rafId=null;
+
     function openMap(){
         var lb=document.getElementById('ww1MapLightbox');
         lb.classList.add('open');
@@ -802,26 +817,23 @@ opacity: 0;
         document.body.style.overflow='';
         resetZoom();
     }
-    function resetZoom(){
-        scale=1; ox=0; oy=0;
-        applyTransform();
-    }
+    function resetZoom(){scale=1;ox=0;oy=0;applyTransform();}
     window.ww1OpenMap=openMap;
     window.ww1CloseMap=closeMap;
 
-    var scale=1, ox=0, oy=0;
-    var dragging=false, lastX=0, lastY=0;
-    var pinchDist=0;
-
     function applyTransform(){
         var img=document.getElementById('ww1MapLbImg');
-        if(img) img.style.transform='translate('+ox+'px,'+oy+'px) scale('+scale+')';
+        if(img) img.style.transform='translate3d('+ox+'px,'+oy+'px,0) scale('+scale+')';
+    }
+    function scheduleTransform(){
+        if(rafId) return;
+        rafId=requestAnimationFrame(function(){rafId=null;applyTransform();});
     }
     function clampOffset(){
         var img=document.getElementById('ww1MapLbImg');
-        if(!img) return;
-        var maxX=Math.max(0,(img.offsetWidth*(scale-1))/2);
-        var maxY=Math.max(0,(img.offsetHeight*(scale-1))/2);
+        if(!img)return;
+        var maxX=Math.max(0,img.offsetWidth*(scale-1)/2);
+        var maxY=Math.max(0,img.offsetHeight*(scale-1)/2);
         ox=Math.max(-maxX,Math.min(maxX,ox));
         oy=Math.max(-maxY,Math.min(maxY,oy));
     }
@@ -829,61 +841,91 @@ opacity: 0;
     document.addEventListener('DOMContentLoaded',function(){
         var img=document.getElementById('ww1MapLbImg');
         var lb=document.getElementById('ww1MapLightbox');
-        if(!img||!lb) return;
+        if(!img||!lb)return;
 
-        // Mouse wheel zoom
+        // Disable img transitions for smooth zoom
+        img.style.transition='none';
+        img.style.willChange='transform';
+
+        // Wheel zoom (desktop)
         lb.addEventListener('wheel',function(e){
             e.preventDefault();
-            var delta=e.deltaY>0?0.85:1.18;
-            scale=Math.max(1,Math.min(6,scale*delta));
+            scale=Math.max(1,Math.min(6,scale*(e.deltaY>0?0.88:1.14)));
             if(scale===1){ox=0;oy=0;}
-            clampOffset(); applyTransform();
+            clampOffset();scheduleTransform();
         },{passive:false});
 
         // Mouse drag
-        img.addEventListener('mousedown',function(e){dragging=true;lastX=e.clientX;lastY=e.clientY;e.preventDefault();});
+        img.addEventListener('mousedown',function(e){
+            if(scale<=1)return;
+            dragging=true;lastX=e.clientX;lastY=e.clientY;
+            img.style.cursor='grabbing';
+            e.preventDefault();
+        });
         document.addEventListener('mousemove',function(e){
             if(!dragging)return;
-            ox+=e.clientX-lastX; oy+=e.clientY-lastY;
-            lastX=e.clientX; lastY=e.clientY;
-            clampOffset(); applyTransform();
+            ox+=e.clientX-lastX;oy+=e.clientY-lastY;
+            lastX=e.clientX;lastY=e.clientY;
+            clampOffset();scheduleTransform();
         });
-        document.addEventListener('mouseup',function(){dragging=false;});
+        document.addEventListener('mouseup',function(){
+            dragging=false;
+            if(img)img.style.cursor=scale>1?'grab':'default';
+        });
 
-        // Touch pinch + drag
+        // Touch handling — pinch zoom + drag, NO double-tap zoom
+        var lastTouchEnd=0;
+        lb.addEventListener('touchend',function(e){
+            // Prevent double-tap browser zoom
+            var now=Date.now();
+            if(now-lastTouchEnd<300){e.preventDefault();}
+            lastTouchEnd=now;
+        },{passive:false});
+
         lb.addEventListener('touchstart',function(e){
             if(e.touches.length===2){
-                pinchDist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
-            } else if(e.touches.length===1){
-                dragging=true; lastX=e.touches[0].clientX; lastY=e.touches[0].clientY;
+                dragging=false;
+                pinchDist=Math.hypot(
+                    e.touches[0].clientX-e.touches[1].clientX,
+                    e.touches[0].clientY-e.touches[1].clientY
+                );
+                lastPinchScale=scale;
+            } else if(e.touches.length===1&&scale>1){
+                dragging=true;
+                lastX=e.touches[0].clientX;
+                lastY=e.touches[0].clientY;
             }
         },{passive:true});
+
         lb.addEventListener('touchmove',function(e){
+            e.preventDefault();
             if(e.touches.length===2){
-                e.preventDefault();
-                var d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
-                scale=Math.max(1,Math.min(6,scale*(d/pinchDist)));
-                pinchDist=d;
+                var d=Math.hypot(
+                    e.touches[0].clientX-e.touches[1].clientX,
+                    e.touches[0].clientY-e.touches[1].clientY
+                );
+                scale=Math.max(1,Math.min(6,lastPinchScale*(d/pinchDist)));
                 if(scale===1){ox=0;oy=0;}
-                clampOffset(); applyTransform();
+                clampOffset();scheduleTransform();
             } else if(e.touches.length===1&&dragging){
-                e.preventDefault();
-                ox+=e.touches[0].clientX-lastX; oy+=e.touches[0].clientY-lastY;
-                lastX=e.touches[0].clientX; lastY=e.touches[0].clientY;
-                clampOffset(); applyTransform();
+                ox+=e.touches[0].clientX-lastX;
+                oy+=e.touches[0].clientY-lastY;
+                lastX=e.touches[0].clientX;
+                lastY=e.touches[0].clientY;
+                clampOffset();scheduleTransform();
             }
         },{passive:false});
-        lb.addEventListener('touchend',function(){dragging=false;});
 
-        // Double tap to reset
-        var lastTap=0;
         lb.addEventListener('touchend',function(e){
-            var now=Date.now();
-            if(now-lastTap<300){scale=scale>1?1:2.5;if(scale===1){ox=0;oy=0;}clampOffset();applyTransform();}
-            lastTap=now;
-        });
+            if(e.touches.length<2){dragging=false;}
+            if(e.touches.length===1){
+                pinchDist=0;
+                lastX=e.touches[0].clientX;
+                lastY=e.touches[0].clientY;
+            }
+        },{passive:true});
 
-        // Close on backdrop click
+        // Close on backdrop
         lb.addEventListener('click',function(e){if(e.target===lb)closeMap();});
         document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMap();});
     });
@@ -1106,7 +1148,6 @@ function applyFilters(){
     pg=1;
     $('ww1CountBadge').textContent='Знайдено: '+shown.length.toLocaleString('uk');
     renderTable();
-    updateStatStrip(shown);
 }
 
 var stimer;
@@ -1119,27 +1160,24 @@ $('ww1FilterType').addEventListener('change',function(){fType=this.value;applyFi
 $('ww1FilterCause').addEventListener('change',function(){fCause=this.value;applyFilters();});
 
 
-function updateStatStrip(data){
-    if(!data.length)return;
+function updateStatStrip(){
     var strip=document.getElementById('ww1StatStrip');
-    strip.style.display='block';
-    var cats={
-        wounded:data.filter(function(r){return /поранен/i.test(r.cause||'');}),
-        sick:data.filter(function(r){return /хворів|помер/i.test(r.cause||'');}),
-        missing:data.filter(function(r){return /зник/i.test(r.cause||'');}),
-        plen:data.filter(function(r){return /полон/i.test(r.cause||'');}),
-        other:data.filter(function(r){return !/поранен|хворів|помер|зник|полон/i.test(r.cause||'');})
-    };
-    var max=Math.max(cats.wounded.length,cats.sick.length,cats.missing.length,cats.plen.length,cats.other.length,1);
-    var pairs=[
-        ['ss1','sf1',cats.wounded],['ss2','sf2',cats.sick],
-        ['ss3','sf3',cats.missing],['ss4','sf4',cats.plen],['ss5','sf5',cats.other]
+    if(strip) strip.style.display='block';
+    var vals=[
+        ['ss1','sf1',1786],
+        ['ss2','sf2',907],
+        ['ss3','sf3',557],
+        ['ss4','sf4',263],
+        ['ss5','sf5',64],
+        ['ss6','sf6',8],
+        ['ss7','sf7',162]
     ];
-    pairs.forEach(function(p){
+    var max=1786;
+    vals.forEach(function(p){
         var el=document.getElementById(p[0]);
         var bar=document.getElementById(p[1]);
-        if(el)el.textContent=p[2].length.toLocaleString('uk');
-        if(bar)setTimeout(function(){bar.style.width=Math.round(p[2].length/max*100)+'%';},100);
+        if(el) el.textContent=p[2].toLocaleString('uk');
+        if(bar) setTimeout(function(){bar.style.width=Math.round(p[2]/max*100)+'%';},150);
     });
 }
 
@@ -1377,7 +1415,7 @@ fetch(GH+'ww1.json?v='+Date.now())
 
         $('ww1CountBadge').textContent='Знайдено: '+data.length.toLocaleString('uk');
         renderTable();
-        updateStatStrip(data);
+        updateStatStrip();
     })
     .catch(function(err){
         console.error('[ww1] fetch error:', err);
