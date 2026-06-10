@@ -1,1230 +1,2168 @@
 [
- {
-  "imageUrl": "https://i.imgur.com/i5lqAQb.jpeg",
-  "title": "Воробин, малюнок Наполеона Орди",
-  "period": "before-1900",
-  "category": "drawings",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/Loj6Lt7.jpeg",
-  "title": "Свято Хрещення на р. Горинь",
-  "period": "1900-1939",
-  "category": "events",
-  "date": "19.01.1939"
- },
- {
-  "imageUrl": "https://i.imgur.com/mtP64cQ.jpeg",
-  "title": "Річка Горинь, малюнок М. Конончука",
-  "period": "1945-1991",
-  "category": "drawings",
-  "date": "1970-ті"
- },
- {
-  "imageUrl": "https://i.imgur.com/lkab4i5.jpeg",
-  "title": "Печатка колегіуму піарів у Дубровиці",
-  "period": "before-1900",
-  "category": "churches",
-  "date": "19 століття"
- },
- {
-  "imageUrl": "https://i.imgur.com/02XGZbO.jpeg",
-  "title": "Кам'яна церква",
-  "period": "1945-1991",
-  "category": "architecture",
-  "date": "1970-ті"
- },
- {
-  "imageUrl": "https://i.imgur.com/XCpLZBM.jpeg",
-  "title": "Костел",
-  "period": "1945-1991",
-  "category": "architecture",
-  "date": "1970-ті"
- },
- {
-  "imageUrl": "https://i.imgur.com/FQDb63M.jpeg",
-  "title": "Панорама міста",
-  "period": "1945-1991",
-  "category": "architecture",
-  "date": "приблизно 1970-ті"
- },
- {
-  "imageUrl": "https://i.imgur.com/iAbZWDN.jpeg",
-  "title": "Аерофотознімок м. Сарни",
-  "period": "1900-1939",
-  "category": "aerial",
-  "date": "12.06.1917"
- },
- {
-  "imageUrl": "https://i.imgur.com/lOm4oOK.jpeg",
-  "title": "Аерофотознімок м. Сарни",
-  "period": "1900-1939",
-  "category": "aerial",
-  "date": "12.06.1917"
- },
- {
-  "imageUrl": "https://i.imgur.com/kTbphjO.jpeg",
-  "title": "Аеорофотознімок м. Сарни",
-  "period": "1900-1939",
-  "category": "aerial",
-  "date": "12.06.1917"
- },
- {
-  "imageUrl": "https://i.imgur.com/0HCy6qL.jpeg",
-  "title": "Аерофотознімок с. Жадень 04.04.1944",
-  "period": "1939-1945",
-  "category": "aerial",
-  "date": "04.04.1944"
- },
- {
-  "imageUrl": "https://i.imgur.com/BUqMboL.jpeg",
-  "title": "Аерофотознімок с. Берестя 24.01.1944",
-  "period": "1939-1945",
-  "category": "aerial",
-  "date": "24.01.1944"
- },
- {
-  "imageUrl": "https://i.imgur.com/ZSpQJUA.jpeg",
-  "title": "Аерофотознімок м. Дубровиця, с. Острівці, с. Мочулище, с. Крупове, маєток Воробин 23.10.1943",
-  "period": "1939-1945",
-  "category": "aerial",
-  "date": "23.10.1943"
- },
- {
-  "imageUrl": "https://i.imgur.com/nDjoqlo.jpeg",
-  "title": "Аерофотознімок с. Берестя 25.01.1944",
-  "period": "1939-1945",
-  "category": "aerial",
-  "date": "25.01.1944"
- },
- {
-  "imageUrl": "https://i.imgur.com/y4MaW4i.jpeg",
-  "title": "Аерофотознімок Північної частини міста та маєтку Воробин 14.04.1944",
-  "period": "1939-1945",
-  "category": "aerial",
-  "date": "14.04.1944"
- },
- {
-  "imageUrl": "https://i.imgur.com/3zKeWfo.jpeg",
-  "title": "Аерофотознімок Дубровиці 10.07.1944",
-  "period": "1939-1945",
-  "category": "aerial",
-  "date": "10.07.1944"
- },
- {
-  "imageUrl": "https://i.imgur.com/fE5ZqB9.jpeg",
-  "title": "Центральна площа міста",
-  "period": "1900-1939",
-  "category": "streets",
-  "date": "1920"
- },
- {
-  "imageUrl": "https://i.imgur.com/J8TYmGH.jpeg",
-  "title": "Центральна площа міста",
-  "period": "1900-1939",
-  "category": "streets",
-  "date": "1920"
- },
- {
-  "imageUrl": "https://i.imgur.com/4PIL6wx.jpeg",
-  "title": "Аерофотознімок міста",
-  "period": "1900-1939",
-  "category": "aerial",
-  "date": "1917"
- },
- {
-  "imageUrl": "https://i.imgur.com/WuEOc5y.jpeg",
-  "title": "Аерофотознімок міста",
-  "period": "1900-1939",
-  "category": "aerial",
-  "date": "1917"
- },
- {
-  "imageUrl": "https://i.imgur.com/LqUu7Fd.jpeg",
-  "title": "Костел, малюнок Наполеона Орди",
-  "period": "before-1900",
-  "category": "drawings",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/FW0aEIK.png",
-  "title": "Синагога та Бейт-Мідраш, приміщення де читали і вчили Тору, Талмуд.",
-  "period": "1945-1991",
-  "category": "churches",
-  "date": "1970"
- },
- {
-  "imageUrl": "https://i.imgur.com/8XI39rN.jpeg",
-  "title": "Церква Святого Миколая",
-  "period": "1900-1939",
-  "category": "churches",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/ORhdtgr.jpeg",
-  "title": "Центральна площа",
-  "period": "1900-1939",
-  "category": "streets",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/TBm8LfX.jpeg",
-  "title": "Невідома вулиця міста",
-  "period": "1900-1939",
-  "category": "streets",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/cjFxwYf.jpeg",
-  "title": "Центральна площа",
-  "period": "1900-1939",
-  "category": "streets",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/t48hyzG.jpeg",
-  "title": "Площа перед костелом",
-  "period": "1900-1939",
-  "category": "streets",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/xUe22Gn.jpeg",
-  "title": "Портрет Ks. Konstanty Jakucewicz, написаний в костелі міста",
-  "period": "before-1900",
-  "category": "drawings",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/DRaB4CW.jpeg",
-  "title": "Портрет Ks. Maciej Kupść, написаний в костелі міста",
-  "period": "before-1900",
-  "category": "drawings",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/csirjoF.jpeg",
-  "title": "План міста",
-  "period": "before-1900",
-  "category": "aerial",
-  "date": "1855"
- },
- {
-  "imageUrl": "https://i.imgur.com/I0bdUdp.jpeg",
-  "title": "План станції Дубровиця",
-  "period": "1900-1939",
-  "category": "aerial",
-  "date": "1915"
- },
- {
-  "imageUrl": "https://i.imgur.com/YxFni3M.png",
-  "title": "1 світова війна, солдати біля міста Дубровиця",
-  "period": "1900-1939",
-  "category": "people",
-  "date": "1914-1916"
- },
- {
-  "imageUrl": "https://i.imgur.com/67HOTtf.jpeg",
-  "title": "Група людей перед костелом",
-  "period": "1900-1939",
-  "category": "architecture",
-  "date": "1915"
- },
- {
-  "imageUrl": "https://i.imgur.com/1DIq3cL.jpeg",
-  "title": "Центральна площа",
-  "period": "1945-1991",
-  "category": "streets",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/0FTy7QQ.jpeg",
-  "title": "Стадіон \"Горинь\"",
-  "period": "1945-1991",
-  "category": "streets",
-  "date": "1970"
- },
- {
-  "imageUrl": "https://i.imgur.com/tpzxriy.jpeg",
-  "title": "Центральна площа",
-  "period": "1945-1991",
-  "category": "streets",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/T5u5LZz.jpeg",
-  "title": "Святкова демонстрація",
-  "period": "1945-1991",
-  "category": "streets",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/81g11dx.jpeg",
-  "title": "Річка Горинь, старе русло",
-  "period": "1945-1991",
-  "category": "streets",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/E5qlHAs.jpeg",
-  "title": "Вознесення мощей Іулянії Гольшанської",
-  "period": "1900-1939",
-  "category": "churches",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/O1ePrRv.jpeg",
-  "title": "Залізнична станція",
-  "period": "1900-1939",
-  "category": "streets",
-  "date": "1918"
- },
- {
-  "imageUrl": "https://i.imgur.com/GoysWer.jpeg",
-  "title": "Вулиці міста, похорон",
-  "period": "1900-1939",
-  "category": "streets",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/4k6vEvj.jpeg",
-  "title": "Центральна площа",
-  "period": "1900-1939",
-  "category": "streets",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/dV20PSx.jpeg",
-  "title": "Готель Готліба",
-  "period": "1900-1939",
-  "category": "architecture",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/fhWj8PF.jpeg",
-  "title": "Пам'ятник Леніну, на задньому плані синагога та костел",
-  "period": "1945-1991",
-  "category": "streets",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/t5zySGY.jpeg",
-  "title": "Будинок побуту \"Полісся\"",
-  "period": "1945-1991",
-  "category": "architecture",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/Sez1sH2.jpeg",
-  "title": "Будинок",
-  "period": "1900-1939",
-  "category": "architecture",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/0myPz10.jpeg",
-  "title": "Дерев'яний міст через річку Горинь",
-  "period": "1900-1939",
-  "category": "architecture",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/FbtIR3Q.jpeg",
-  "title": "Святкова демонстрація",
-  "period": "1945-1991",
-  "category": "streets",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/z6rnZ1h.jpeg",
-  "title": "Будинок пошти",
-  "period": "1945-1991",
-  "category": "architecture",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/fUKwHFo.jpeg",
-  "title": "Будинок культури",
-  "period": "1945-1991",
-  "category": "architecture",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/60SSg7B.jpeg",
-  "title": "Святкова демонстрація",
-  "period": "1900-1939",
-  "category": "streets",
-  "date": "1938"
- },
- {
-  "imageUrl": "https://i.imgur.com/GyNm2qs.jpeg",
-  "title": "Кінотеатр",
-  "period": "1945-1991",
-  "category": "architecture",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/tIKvapP.jpeg",
-  "title": "Вулиці міста, на задньому плані мала та велика синагоги",
-  "period": "1945-1991",
-  "category": "streets",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/L87Rka0.jpeg",
-  "title": "Святкова демонстрація",
-  "period": "1945-1991",
-  "category": "streets",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/MOvjB9c.jpeg",
-  "title": "Святкова демонстрація",
-  "period": "1945-1991",
-  "category": "streets",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/ALPbzhV.jpeg",
-  "title": "Побудова моста через річку Горинь",
-  "period": "1945-1991",
-  "category": "architecture",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/NKpzDFw.jpeg",
-  "title": "Будівництво дев'ятиповерхівки",
-  "period": "1945-1991",
-  "category": "architecture",
-  "date": "1982"
- },
- {
-  "imageUrl": "https://i.imgur.com/MtGj18L.jpeg",
-  "title": "Ресторан \"Горинь\"",
-  "period": "1945-1991",
-  "category": "streets",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/jeSVGjj.jpeg",
-  "title": "Святкова демонстрація",
-  "period": "1945-1991",
-  "category": "streets",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/Xb8FYnK.jpeg",
-  "title": "Вулиці міста",
-  "period": "1945-1991",
-  "category": "streets",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/G5T8ebG.jpeg",
-  "title": "Вулиці міста",
-  "period": "1945-1991",
-  "category": "streets",
-  "date": "1950"
- },
- {
-  "imageUrl": "https://i.imgur.com/faIkqmZ.jpeg",
-  "title": "Міський парк, центр",
-  "period": "1900-1939",
-  "category": "streets",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/SIiSYZf.jpeg",
-  "title": "Вулиці міста",
-  "period": "1945-1991",
-  "category": "streets",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/FckBe6G.jpeg",
-  "title": "Панорама міста",
-  "period": "after-1991",
-  "category": "streets",
-  "date": "2002"
- },
- {
-  "imageUrl": "https://i.imgur.com/V4FfjVc.jpeg",
-  "title": "Ресторан \"Горинь\"",
-  "period": "1945-1991",
-  "category": "streets",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/ccWOjJT.jpeg",
-  "title": "Пам'ятник Німецько-радянській війні",
-  "period": "1945-1991",
-  "category": "architecture",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/gd4I25B.jpeg",
-  "title": "Вулиці міста",
-  "period": "1945-1991",
-  "category": "streets",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/VfYue8J.jpeg",
-  "title": "Пам'ятник учасникам Дубровицького повстання",
-  "period": "1945-1991",
-  "category": "events",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/JgXJ9Ql.jpeg",
-  "title": "Промисловий комплекс Дубровицького лісгоспу",
-  "period": "1945-1991",
-  "category": "streets",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/MCu0vpb.jpeg",
-  "title": "Вулиця міста",
-  "period": "1945-1991",
-  "category": "streets",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/DBD4YZW.jpeg",
-  "title": "Площа перед костелом",
-  "period": "1900-1939",
-  "category": "events",
-  "date": "1931"
- },
- {
-  "imageUrl": "https://i.imgur.com/YuMklQj.jpeg",
-  "title": "Центральна площа",
-  "period": "1945-1991",
-  "category": "streets",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/Vl9hT1Q.jpeg",
-  "title": "Пам'ятник Дубровицькому повстанню",
-  "period": "1945-1991",
-  "category": "events",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/H9f4yVN.jpeg",
-  "title": "Універмаг",
-  "period": "1945-1991",
-  "category": "architecture",
-  "date": "1982"
- },
- {
-  "imageUrl": "https://i.imgur.com/MOOViTH.jpeg",
-  "title": "Вулиця міста",
-  "period": "1945-1991",
-  "category": "streets",
-  "date": "невідомо"
- },
- {
-  "imageUrl": "https://i.imgur.com/bd5ZbDp.jpeg",
-  "title": "Стадіон Горинь",
-  "period": "1945-1991",
-  "category": "events",
-  "date": "1976"
- },
- {
-  "imageUrl": "https://i.imgur.com/05wXfWI.jpeg",
-  "title": "Дубровиця, будинок",
-  "period": "1945-1991",
-  "category": "architecture",
-  "date": "1954"
- },
- {
-  "imageUrl": "https://i.imgur.com/MfGzR8D.jpeg",
-  "title": "Костел, інтер'єр",
-  "period": "1900-1939",
-  "category": "churches",
-  "date": "1905"
- },
- {
-  "imageUrl": "https://i.imgur.com/LVWPxA0.jpeg",
-  "title": "Міське кладовище. Невідомий похорон",
-  "period": "1900-1939",
-  "category": "streets",
-  "date": "1920"
- },
- {
-  "imageUrl": "https://i.imgur.com/00xKSRM.png",
-  "title": "Міський суд",
-  "period": "1900-1939",
-  "category": "streets",
-  "date": "1930"
- },
- {
-  "imageUrl": "https://i.imgur.com/op2tNhY.jpeg",
-  "title": "Фотолистівка",
-  "period": "1900-1939",
-  "category": "architecture",
-  "date": "1910"
- },
- {
-  "imageUrl": "https://i.imgur.com/71NjCcc.jpeg",
-  "title": "Церква Різдва Пресвятої Богородиці",
-  "period": "1945-1991",
-  "category": "churches",
-  "date": "1977"
- },
- {
-  "imageUrl": "https://i.imgur.com/g0nSa1I.jpeg",
-  "title": "Церква Різдва Пресвятої Богородиці",
-  "period": "1945-1991",
-  "category": "churches",
-  "date": "1977"
- },
- {
-  "imageUrl": "https://i.imgur.com/2Kp3cLR.jpeg",
-  "title": "Церква Різдва Пресвятої Богородиці",
-  "period": "1945-1991",
-  "category": "churches",
-  "date": "1977"
- },
- {
-  "imageUrl": "https://i.imgur.com/KhiHYSV.jpeg",
-  "title": "Церква Різдва Пресвятої Богородиці",
-  "period": "1945-1991",
-  "category": "churches",
-  "date": "1977"
- },
- {
-  "imageUrl": "https://i.imgur.com/fEA0QwQ.jpeg",
-  "title": "Церква Різдва Пресвятої Богородиці",
-  "period": "1900-1939",
-  "category": "churches",
-  "date": "невідомо"
- },
- {
-  "imageUrl": "https://i.imgur.com/PrOxw4k.png",
-  "title": "Склад миловарного заводу Комітету Всеросійського земського союзу Південно-Західного фронту в містечку Домбровиці",
-  "period": "1900-1939",
-  "category": "people",
-  "date": "1916"
- },
- {
-  "imageUrl": "https://i.imgur.com/LAZURTF.png",
-  "title": "Лабораторія миловарного заводу Комітету Всеросійського земського союзу Південно-Західного фронту в містечку Домбровиці",
-  "period": "1900-1939",
-  "category": "people",
-  "date": "1916"
- },
- {
-  "imageUrl": "https://i.imgur.com/8yh2dGz.png",
-  "title": "Працівники канцелярії миловарного заводу Комітету Всеросійського земського союзу Південно-Західного фронту в містечку Домбровиці",
-  "period": "1900-1939",
-  "category": "people",
-  "date": "1916"
- },
- {
-  "imageUrl": "https://i.imgur.com/sQbvtWb.png",
-  "title": "Будівля миловарного заводу Комітету Всеросійського земського союзу Південно-Західного фронту в містечку Домбровиці",
-  "period": "1900-1939",
-  "category": "people",
-  "date": "1916"
- },
- {
-  "imageUrl": "https://i.imgur.com/Ec2YvCZ.png",
-  "title": "Внутрішній вид складу матеріалів Комітету Всеросійського земського союзу Південно-Західного фронту в містечку Домбровиці",
-  "period": "1900-1939",
-  "category": "people",
-  "date": "1916"
- },
- {
-  "imageUrl": "https://i.imgur.com/swUEVWE.png",
-  "title": "рацівники Комітету Всеросійського земського союзу Південно-Західного фронту в містечку Домбровиці",
-  "period": "1900-1939",
-  "category": "people",
-  "date": "1916"
- },
- {
-  "imageUrl": "https://i.imgur.com/LXL6sb2.png",
-  "title": "Приміщення бактеріологічної лабораторії головного евакуаційного пункту № 17 Комітету Всеросійського земського союзу П-Західного фронту в містечку Домбровиці",
-  "period": "1900-1939",
-  "category": "people",
-  "date": "1916"
- },
- {
-  "imageUrl": "https://i.imgur.com/UxBBvE4.jpeg",
-  "title": "Дерев'яний міст через р. Горинь",
-  "period": "1900-1939",
-  "category": "streets",
-  "date": "1930-1939"
- },
- {
-  "imageUrl": "https://i.imgur.com/n74FSvK.jpeg",
-  "title": "Костел Іоана Хрестителя",
-  "period": "1900-1939",
-  "category": "churches",
-  "date": "1929"
- },
- {
-  "imageUrl": "https://i.imgur.com/S3COXmq.jpeg",
-  "title": "Дерев'яна хата",
-  "period": "1900-1939",
-  "category": "streets",
-  "date": "1929"
- },
- {
-  "imageUrl": "https://i.imgur.com/88VtNiX.jpeg",
-  "title": "Корчма",
-  "period": "1900-1939",
-  "category": "streets",
-  "date": "1929"
- },
- {
-  "imageUrl": "https://i.imgur.com/TfEzOmr.jpeg",
-  "title": "Дерев'яні хати",
-  "period": "1900-1939",
-  "category": "streets",
-  "date": "1929"
- },
- {
-  "imageUrl": "https://i.imgur.com/trildJW.jpeg",
-  "title": "Костел Іоана Хрестителя, вхідна брама",
-  "period": "1900-1939",
-  "category": "churches",
-  "date": "1929"
- },
- {
-  "imageUrl": "https://i.imgur.com/3bLmxz5.jpeg",
-  "title": "Костел Іоана Хрестителя, фото зсередини",
-  "period": "1900-1939",
-  "category": "churches",
-  "date": "1929"
- },
- {
-  "imageUrl": "https://i.imgur.com/zbKrwKN.jpeg",
-  "title": "Костел Іоана Хрестителя, фото зсередини",
-  "period": "1900-1939",
-  "category": "churches",
-  "date": "1929"
- },
- {
-  "imageUrl": "https://i.imgur.com/0igOEVC.jpeg",
-  "title": "Костел Іоана Хрестителя, фото зсередини",
-  "period": "1900-1939",
-  "category": "churches",
-  "date": "1929"
- },
- {
-  "imageUrl": "https://i.imgur.com/gnTjNCA.jpeg",
-  "title": "Костел Іоана Хрестителя, фото зсередини",
-  "period": "1900-1939",
-  "category": "churches",
-  "date": "1929"
- },
- {
-  "imageUrl": "https://i.imgur.com/q3SmLO9.jpeg",
-  "title": "Костел Іоана Хрестителя, фото зсередини",
-  "period": "1900-1939",
-  "category": "churches",
-  "date": "1929"
- },
- {
-  "imageUrl": "https://i.imgur.com/tOUTvDh.jpeg",
-  "title": "Костел Іоана Хрестителя, фото зсередини",
-  "period": "1900-1939",
-  "category": "churches",
-  "date": "1929"
- },
- {
-  "imageUrl": "https://i.imgur.com/LbvFW0Z.jpeg",
-  "title": "Костел Іоана Хрестителя, фото зсередини",
-  "period": "1900-1939",
-  "category": "churches",
-  "date": "1929"
- },
- {
-  "imageUrl": "https://i.imgur.com/3SPjwUS.jpeg",
-  "title": "Костел Іоана Хрестителя, фото зсередини",
-  "period": "1939-1945",
-  "category": "churches",
-  "date": "1929"
- },
- {
-  "imageUrl": "https://i.imgur.com/ssqiAZi.jpeg",
-  "title": "Костел Іоана Хрестителя",
-  "period": "1900-1939",
-  "category": "churches",
-  "date": "1929"
- },
- {
-  "imageUrl": "https://i.imgur.com/DQGw0QT.jpeg",
-  "title": "Костел Іоана Хрестителя",
-  "period": "1900-1939",
-  "category": "churches",
-  "date": "1929"
- },
- {
-  "imageUrl": "https://i.imgur.com/r24PUh2.jpeg",
-  "title": "Костел Іоана Хрестителя, фото зсередини",
-  "period": "1900-1939",
-  "category": "churches",
-  "date": "1929"
- },
- {
-  "imageUrl": "https://i.imgur.com/zef8WRy.jpeg",
-  "title": "Аерофотознімок Дубровиці та навколишніх сіл",
-  "period": "1939-1945",
-  "category": "aerial",
-  "date": "1943"
- },
- {
-  "imageUrl": "https://cdn.imgchest.com/files/dc3db85d5b42.jpg",
-  "title": "Аерофотознімок залізничної станції Дубровиця",
-  "period": "1939-1945",
-  "category": "aerial",
-  "date": "2026",
-  "originalUrl": "https://drive.google.com/file/d/1U0SUtcARmzWSTdwsH1kT8okxbdi5sPry/view?usp=sharing"
- },
- {
-  "imageUrl": "https://i.imgur.com/0HyroRq.jpeg",
-  "title": "Церква Різдва Богородиці",
-  "period": "1900-1939",
-  "category": "churches",
-  "date": "1929",
-  "originalUrl": "https://drive.google.com/file/d/17WW9my9uAtPylJzPO3F_5BYTVvpYIdTN/view?usp=drive_link"
- },
- {
-  "imageUrl": "https://i.imgur.com/WzMH0hh.jpeg",
-  "title": "Будинок в місті",
-  "period": "1900-1939",
-  "category": "streets",
-  "date": "1929",
-  "originalUrl": "https://drive.google.com/file/d/1AH4mP9QToKbieeaa0VeXRRXAsEklAsTx/view?usp=drive_link"
- },
- {
-  "imageUrl": "https://i.imgur.com/ZKkcU77.jpeg",
-  "title": "Костел Іоана Хрестителя",
-  "period": "1900-1939",
-  "category": "streets",
-  "date": "1920"
- },
- {
-  "imageUrl": "https://i.imgur.com/stST9GC.jpeg",
-  "title": "Пам'ятник В. Леніну, центральна площа",
-  "period": "1945-1991",
-  "category": "people",
-  "date": "1980"
- },
- {
-  "imageUrl": "https://i.imgur.com/qcjgN1I.jpeg",
-  "title": "Центр міста",
-  "period": "1900-1939",
-  "category": "streets",
-  "date": "1920-1939"
- },
- {
-  "imageUrl": "https://i.imgur.com/QTP89kg.jpeg",
-  "title": "Костел Іоанна Хрестителя",
-  "period": "1900-1939",
-  "category": "churches",
-  "date": "1930"
- },
- {
-  "imageUrl": "https://i.imgur.com/3aWJiOy.jpeg",
-  "title": "Площа перед Костелом",
-  "period": "1900-1939",
-  "category": "streets",
-  "date": "1925-1930"
- },
- {
-  "imageUrl": "https://i.imgur.com/YIRm8Rt.jpeg",
-  "title": "Масова маніфестація на підтримку Сіону, 1920",
-  "period": "1900-1939",
-  "category": "events",
-  "date": "1920"
- },
- {
-  "imageUrl": "https://i.imgur.com/caTP3ND.jpeg",
-  "title": "Ринкова площа в суботу — єврейські крамниці зачинені",
-  "period": "1900-1939",
-  "category": "streets",
-  "date": "1930-1939"
- },
- {
-  "imageUrl": "https://i.imgur.com/ol9vPuF.jpeg",
-  "title": "Куточок Ринкової площі, біля Плянтів, 1939",
-  "period": "1900-1939",
-  "category": "streets",
-  "date": "1939"
- },
- {
-  "imageUrl": "https://i.imgur.com/TUFVsb8.jpeg",
-  "title": "Дубровиця, вулиця 3-го Травня",
-  "period": "1900-1939",
-  "category": "streets",
-  "date": "1930-1939"
- },
- {
-  "imageUrl": "https://i.imgur.com/h6fG9oK.jpeg",
-  "title": "Футбольна команда «Шомрія», 1925 рік",
-  "period": "1900-1939",
-  "category": "people",
-  "date": "1925"
- },
- {
-  "imageUrl": "https://i.imgur.com/lbNIamW.jpeg",
-  "title": "Школа «Тарбут», нова будівля, 1936 рік",
-  "period": "1900-1939",
-  "category": "architecture",
-  "date": "1936"
- },
- {
-  "imageUrl": "https://i.imgur.com/d1e0JX9.jpeg",
-  "title": "Вчителі та учні школи «Мевенінь», 1930 рік",
-  "period": "1900-1939",
-  "category": "people",
-  "date": "1930"
- },
- {
-  "imageUrl": "https://i.imgur.com/nLCM0i2.jpeg",
-  "title": "Лісопилка Горація Геллера — провідний єврейський підприємець",
-  "period": "1900-1939",
-  "category": "architecture",
-  "date": "1920-1939"
- },
- {
-  "imageUrl": "https://i.imgur.com/fqLDM6s.jpeg",
-  "title": "Біля виборчої дільниці, вибори до польського Сейму, 1935",
-  "period": "1900-1939",
-  "category": "events",
-  "date": "1935"
- },
- {
-  "imageUrl": "https://i.imgur.com/rVnHRb1.jpeg",
-  "title": "Єврейська пара біля мосту через Горинь, 1884 рік",
-  "period": "before-1900",
-  "category": "people",
-  "date": "1884"
- },
- {
-  "imageUrl": "https://i.imgur.com/hPI1Xdo.jpeg",
-  "title": "Молодь на човні річкою Горинь — мирні дні",
-  "period": "1900-1939",
-  "category": "people",
-  "date": "1930-1939"
- },
- {
-  "imageUrl": "https://i.imgur.com/aeImat4.jpeg",
-  "title": "Похорон у містечку. Братство «Хевра Кадіша»",
-  "period": "1900-1939",
-  "category": "events",
-  "date": "1920-1939"
- },
- {
-  "imageUrl": "https://i.imgur.com/6Wqyivm.jpeg",
-  "title": "Будинок Слуцького — Ринкова площа, Дубровиця",
-  "period": "1900-1939",
-  "category": "streets",
-  "date": "1930-1939"
- },
- {
-  "imageUrl": "https://i.imgur.com/O4fNbW7.jpeg",
-  "title": "Аерофотознімок · Дубровицька міська громада · 51.746, 26.4015",
-  "period": "after-1991",
-  "category": "aerial",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/EmYg5TN.jpeg",
-  "title": "Аерофотознімок · Дубровицька міська громада · 51.6407, 26.5377",
-  "period": "after-1991",
-  "category": "aerial",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/ZXsoaCw.jpeg",
-  "title": "Аерофотознімок · Дубровицька міська громада · 51.638, 26.3054",
-  "period": "after-1991",
-  "category": "aerial",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/h6sJS2Q.jpeg",
-  "title": "Аерофотознімок · Милячська сільська громада · 51.7568, 27.1887",
-  "period": "after-1991",
-  "category": "aerial",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/vlOoWgm.jpeg",
-  "title": "Аерофотознімок · Милячська сільська громада · 51.7534, 26.8496",
-  "period": "after-1991",
-  "category": "aerial",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/gvPyXUT.jpeg",
-  "title": "Аерофотознімок · Дубровицька міська громада · 51.7469, 26.3574",
-  "period": "after-1991",
-  "category": "aerial",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/KaP1fS9.jpeg",
-  "title": "Аерофотознімок · Старе Село · 51.6481, 27.1274",
-  "period": "after-1991",
-  "category": "aerial",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/AzKqDxt.jpeg",
-  "title": "Аерофотознімок · Старосільська сільська громада · 51.6515, 27.1699",
-  "period": "after-1991",
-  "category": "aerial",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/Mo8tJ62.jpeg",
-  "title": "Аерофотознімок · Старосільська сільська громада · 51.6493, 27.0822",
-  "period": "after-1991",
-  "category": "aerial",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/DdWri2a.jpeg",
-  "title": "Аерофотознімок · Милячська сільська громада · 51.6451, 26.8966",
-  "period": "after-1991",
-  "category": "aerial",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/gmpIkLF.jpeg",
-  "title": "Аерофотознімок · Милячська сільська громада · 51.6438, 26.8571",
-  "period": "after-1991",
-  "category": "aerial",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/D5wtN0F.jpeg",
-  "title": "Аерофотознімок · Дубровицька міська громада · 51.6419, 26.4507",
-  "period": "after-1991",
-  "category": "aerial",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/J3eTc04.jpeg",
-  "title": "Аерофотознімок · Дубровицька міська громада · 51.6417, 26.3506",
-  "period": "after-1991",
-  "category": "aerial",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/ahm4Oqs.jpeg",
-  "title": "Аерофотознімок · Милячська сільська громада · 51.7591, 27.1101",
-  "period": "after-1991",
-  "category": "aerial",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/uO2JQlu.jpeg",
-  "title": "Аерофотознімок · Милячська сільська громада · 51.7576, 27.1535",
-  "period": "after-1991",
-  "category": "aerial",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/iM6IUxk.jpeg",
-  "title": "Аерофотознімок · Біле · 51.6437, 26.7163",
-  "period": "after-1991",
-  "category": "aerial",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/l9qTbk5.jpeg",
-  "title": "Аерофотознімок · Кривиця · 51.6432, 26.3972",
-  "period": "after-1991",
-  "category": "aerial",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/Oy72sUg.jpeg",
-  "title": "Аерофотознімок · Дубровицька міська громада · 51.6408, 26.4888",
-  "period": "after-1991",
-  "category": "aerial",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/GEXtMrp.jpeg",
-  "title": "Аерофотознімок · Ясинець · 51.6437, 26.5829",
-  "period": "after-1991",
-  "category": "aerial",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/mRa7z6f.jpeg",
-  "title": "Аерофотознімок · Бродець · 51.7531, 26.6695",
-  "period": "after-1991",
-  "category": "aerial",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/w0g3uTk.jpeg",
-  "title": "Аерофотознімок · Вербівка · 51.7464, 26.5336",
-  "period": "after-1991",
-  "category": "aerial",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/tBSigKD.jpeg",
-  "title": "Аерофотознімок · Лютинськ · 51.6443, 26.6243",
-  "period": "after-1991",
-  "category": "aerial",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/lQyJK8I.jpeg",
-  "title": "Аерофотознімок · Переброди · 51.7603, 26.9849",
-  "period": "after-1991",
-  "category": "aerial",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/ACyNQzp.jpeg",
-  "title": "Аерофотознімок · Тумень · 51.8047, 26.6439",
-  "period": "after-1991",
-  "category": "aerial",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/q35yQCH.jpeg",
-  "title": "Аерофотознімок · Переходичі · 51.648, 27.0346",
-  "period": "after-1991",
-  "category": "aerial",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/hWVnajf.jpeg",
-  "title": "Аерофотознімок · Переходичі · 51.6492, 26.9944",
-  "period": "after-1991",
-  "category": "aerial",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/Kz50WeF.jpeg",
-  "title": "Аерофотознімок · Миляч · 51.6468, 26.7641",
-  "period": "after-1991",
-  "category": "aerial",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/esxXvRs.jpeg",
-  "title": "Аерофотознімок · Городище · 51.8081, 26.6805",
-  "period": "after-1991",
-  "category": "aerial",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/FE38uih.jpeg",
-  "title": "Аерофотознімок · Удрицьк · 51.7481, 26.7106",
-  "period": "after-1991",
-  "category": "aerial",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/yBVYokQ.jpeg",
-  "title": "Аерофотознімок · Дроздинь · 51.649, 27.2172",
-  "period": "after-1991",
-  "category": "aerial",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/WyzfS4h.jpeg",
-  "title": "Аерофотознімок · Будимля · 51.6467, 26.9467",
-  "period": "after-1991",
-  "category": "aerial",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/OL6foxW.jpeg",
-  "title": "Аерофотознімок · Бродець · 51.754, 26.6255",
-  "period": "after-1991",
-  "category": "aerial",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/ezQCZU4.jpeg",
-  "title": "Аерофотознімок · Вербівка · 51.7469, 26.5815",
-  "period": "after-1991",
-  "category": "aerial",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/m5wHAs5.jpeg",
-  "title": "Аерофотознімок · Городище · 51.8084, 26.7332",
-  "period": "after-1991",
-  "category": "aerial",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/1b609xw.jpeg",
-  "title": "Аерофотознімок · Милячська сільська громада · 51.6449, 26.8109",
-  "period": "after-1991",
-  "category": "aerial",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/kWpDpmf.jpeg",
-  "title": "Аерофотознімок · Милячська сільська громада · 51.7581, 27.0613",
-  "period": "after-1991",
-  "category": "aerial",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/NjDMkmi.jpeg",
-  "title": "Аерофотознімок · Висоцька сільська громада · 51.8061, 26.5921",
-  "period": "after-1991",
-  "category": "aerial",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/1lT5eyn.jpeg",
-  "title": "Аерофотознімок · Старосільська сільська громада · 51.6505, 27.2716",
-  "period": "after-1991",
-  "category": "aerial",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/dFHylm8.jpeg",
-  "title": "Аерофотознімок · Висоцька сільська громада · 51.7509, 26.4579",
-  "period": "after-1991",
-  "category": "aerial",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/lleYhO4.jpeg",
-  "title": "Аерофотознімок · Милячська сільська громада · 51.752, 27.0216",
-  "period": "after-1991",
-  "category": "aerial",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/Y1uQFpR.jpeg",
-  "title": "Аерофотознімок · Висоцька сільська громада · 51.7509, 26.498",
-  "period": "after-1991",
-  "category": "aerial",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/RZRU4C0.jpeg",
-  "title": "Аерофотознімок · Милячська сільська громада · 51.7571, 27.0632",
-  "period": "after-1991",
-  "category": "aerial",
-  "date": "2026"
- },
- {
-  "imageUrl": "https://i.imgur.com/Zjde0ff.jpeg",
-  "title": "Аерофотознімок · Милячська сільська громада · 51.7604, 27.0317",
-  "period": "after-1991",
-  "category": "aerial",
-  "date": "2026"
- }
+  {
+    "imageUrl": "https://i.imgur.com/i5lqAQb.jpeg",
+    "title": "Воробин, малюнок Наполеона Орди",
+    "period": "before-1900",
+    "category": "drawings",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/Loj6Lt7.jpeg",
+    "title": "Свято Хрещення на р. Горинь",
+    "period": "1900-1939",
+    "category": "events",
+    "date": "19.01.1939"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/mtP64cQ.jpeg",
+    "title": "Річка Горинь, малюнок М. Конончука",
+    "period": "1945-1991",
+    "category": "drawings",
+    "date": "1970-ті"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/lkab4i5.jpeg",
+    "title": "Печатка колегіуму піарів у Дубровиці",
+    "period": "before-1900",
+    "category": "churches",
+    "date": "19 століття"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/02XGZbO.jpeg",
+    "title": "Кам'яна церква",
+    "period": "1945-1991",
+    "category": "architecture",
+    "date": "1970-ті"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/XCpLZBM.jpeg",
+    "title": "Костел",
+    "period": "1945-1991",
+    "category": "architecture",
+    "date": "1970-ті"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/FQDb63M.jpeg",
+    "title": "Панорама міста",
+    "period": "1945-1991",
+    "category": "architecture",
+    "date": "приблизно 1970-ті"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/iAbZWDN.jpeg",
+    "title": "Аерофотознімок м. Сарни",
+    "period": "1900-1939",
+    "category": "aerial",
+    "date": "12.06.1917"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/lOm4oOK.jpeg",
+    "title": "Аерофотознімок м. Сарни",
+    "period": "1900-1939",
+    "category": "aerial",
+    "date": "12.06.1917"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/kTbphjO.jpeg",
+    "title": "Аеорофотознімок м. Сарни",
+    "period": "1900-1939",
+    "category": "aerial",
+    "date": "12.06.1917"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/0HCy6qL.jpeg",
+    "title": "Аерофотознімок с. Жадень 04.04.1944",
+    "period": "1939-1945",
+    "category": "aerial",
+    "date": "04.04.1944"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/BUqMboL.jpeg",
+    "title": "Аерофотознімок с. Берестя 24.01.1944",
+    "period": "1939-1945",
+    "category": "aerial",
+    "date": "24.01.1944"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/ZSpQJUA.jpeg",
+    "title": "Аерофотознімок м. Дубровиця, с. Острівці, с. Мочулище, с. Крупове, маєток Воробин 23.10.1943",
+    "period": "1939-1945",
+    "category": "aerial",
+    "date": "23.10.1943"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/nDjoqlo.jpeg",
+    "title": "Аерофотознімок с. Берестя 25.01.1944",
+    "period": "1939-1945",
+    "category": "aerial",
+    "date": "25.01.1944"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/y4MaW4i.jpeg",
+    "title": "Аерофотознімок Північної частини міста та маєтку Воробин 14.04.1944",
+    "period": "1939-1945",
+    "category": "aerial",
+    "date": "14.04.1944"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/3zKeWfo.jpeg",
+    "title": "Аерофотознімок Дубровиці 10.07.1944",
+    "period": "1939-1945",
+    "category": "aerial",
+    "date": "10.07.1944"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/fE5ZqB9.jpeg",
+    "title": "Центральна площа міста",
+    "period": "1900-1939",
+    "category": "streets",
+    "date": "1920"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/J8TYmGH.jpeg",
+    "title": "Центральна площа міста",
+    "period": "1900-1939",
+    "category": "streets",
+    "date": "1920"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/4PIL6wx.jpeg",
+    "title": "Аерофотознімок міста",
+    "period": "1900-1939",
+    "category": "aerial",
+    "date": "1917"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/WuEOc5y.jpeg",
+    "title": "Аерофотознімок міста",
+    "period": "1900-1939",
+    "category": "aerial",
+    "date": "1917"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/LqUu7Fd.jpeg",
+    "title": "Костел, малюнок Наполеона Орди",
+    "period": "before-1900",
+    "category": "drawings",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/FW0aEIK.png",
+    "title": "Синагога та Бейт-Мідраш, приміщення де читали і вчили Тору, Талмуд.",
+    "period": "1945-1991",
+    "category": "churches",
+    "date": "1970"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/8XI39rN.jpeg",
+    "title": "Церква Святого Миколая",
+    "period": "1900-1939",
+    "category": "churches",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/ORhdtgr.jpeg",
+    "title": "Центральна площа",
+    "period": "1900-1939",
+    "category": "streets",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/TBm8LfX.jpeg",
+    "title": "Невідома вулиця міста",
+    "period": "1900-1939",
+    "category": "streets",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/cjFxwYf.jpeg",
+    "title": "Центральна площа",
+    "period": "1900-1939",
+    "category": "streets",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/t48hyzG.jpeg",
+    "title": "Площа перед костелом",
+    "period": "1900-1939",
+    "category": "streets",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/xUe22Gn.jpeg",
+    "title": "Портрет Ks. Konstanty Jakucewicz, написаний в костелі міста",
+    "period": "before-1900",
+    "category": "drawings",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/DRaB4CW.jpeg",
+    "title": "Портрет Ks. Maciej Kupść, написаний в костелі міста",
+    "period": "before-1900",
+    "category": "drawings",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/csirjoF.jpeg",
+    "title": "План міста",
+    "period": "before-1900",
+    "category": "aerial",
+    "date": "1855"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/I0bdUdp.jpeg",
+    "title": "План станції Дубровиця",
+    "period": "1900-1939",
+    "category": "aerial",
+    "date": "1915"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/YxFni3M.png",
+    "title": "1 світова війна, солдати біля міста Дубровиця",
+    "period": "1900-1939",
+    "category": "people",
+    "date": "1914-1916"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/67HOTtf.jpeg",
+    "title": "Група людей перед костелом",
+    "period": "1900-1939",
+    "category": "architecture",
+    "date": "1915"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/1DIq3cL.jpeg",
+    "title": "Центральна площа",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/0FTy7QQ.jpeg",
+    "title": "Стадіон \"Горинь\"",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "1970"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/tpzxriy.jpeg",
+    "title": "Центральна площа",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/T5u5LZz.jpeg",
+    "title": "Святкова демонстрація",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/81g11dx.jpeg",
+    "title": "Річка Горинь, старе русло",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/E5qlHAs.jpeg",
+    "title": "Вознесення мощей Іулянії Гольшанської",
+    "period": "1900-1939",
+    "category": "churches",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/O1ePrRv.jpeg",
+    "title": "Залізнична станція",
+    "period": "1900-1939",
+    "category": "streets",
+    "date": "1918"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/GoysWer.jpeg",
+    "title": "Вулиці міста, похорон",
+    "period": "1900-1939",
+    "category": "streets",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/4k6vEvj.jpeg",
+    "title": "Центральна площа",
+    "period": "1900-1939",
+    "category": "streets",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/dV20PSx.jpeg",
+    "title": "Готель Готліба",
+    "period": "1900-1939",
+    "category": "architecture",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/fhWj8PF.jpeg",
+    "title": "Пам'ятник Леніну, на задньому плані синагога та костел",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/t5zySGY.jpeg",
+    "title": "Будинок побуту \"Полісся\"",
+    "period": "1945-1991",
+    "category": "architecture",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/Sez1sH2.jpeg",
+    "title": "Будинок",
+    "period": "1900-1939",
+    "category": "architecture",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/0myPz10.jpeg",
+    "title": "Дерев'яний міст через річку Горинь",
+    "period": "1900-1939",
+    "category": "architecture",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/FbtIR3Q.jpeg",
+    "title": "Святкова демонстрація",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/z6rnZ1h.jpeg",
+    "title": "Будинок пошти",
+    "period": "1945-1991",
+    "category": "architecture",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/fUKwHFo.jpeg",
+    "title": "Будинок культури",
+    "period": "1945-1991",
+    "category": "architecture",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/60SSg7B.jpeg",
+    "title": "Святкова демонстрація",
+    "period": "1900-1939",
+    "category": "streets",
+    "date": "1938"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/GyNm2qs.jpeg",
+    "title": "Кінотеатр",
+    "period": "1945-1991",
+    "category": "architecture",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/tIKvapP.jpeg",
+    "title": "Вулиці міста, на задньому плані мала та велика синагоги",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/L87Rka0.jpeg",
+    "title": "Святкова демонстрація",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/MOvjB9c.jpeg",
+    "title": "Святкова демонстрація",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/ALPbzhV.jpeg",
+    "title": "Побудова моста через річку Горинь",
+    "period": "1945-1991",
+    "category": "architecture",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/NKpzDFw.jpeg",
+    "title": "Будівництво дев'ятиповерхівки",
+    "period": "1945-1991",
+    "category": "architecture",
+    "date": "1982"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/MtGj18L.jpeg",
+    "title": "Ресторан \"Горинь\"",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/jeSVGjj.jpeg",
+    "title": "Святкова демонстрація",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/Xb8FYnK.jpeg",
+    "title": "Вулиці міста",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/G5T8ebG.jpeg",
+    "title": "Вулиці міста",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "1950"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/faIkqmZ.jpeg",
+    "title": "Міський парк, центр",
+    "period": "1900-1939",
+    "category": "streets",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/SIiSYZf.jpeg",
+    "title": "Вулиці міста",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/FckBe6G.jpeg",
+    "title": "Панорама міста",
+    "period": "after-1991",
+    "category": "streets",
+    "date": "2002"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/V4FfjVc.jpeg",
+    "title": "Ресторан \"Горинь\"",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/ccWOjJT.jpeg",
+    "title": "Пам'ятник Німецько-радянській війні",
+    "period": "1945-1991",
+    "category": "architecture",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/gd4I25B.jpeg",
+    "title": "Вулиці міста",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/VfYue8J.jpeg",
+    "title": "Пам'ятник учасникам Дубровицького повстання",
+    "period": "1945-1991",
+    "category": "events",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/JgXJ9Ql.jpeg",
+    "title": "Промисловий комплекс Дубровицького лісгоспу",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/MCu0vpb.jpeg",
+    "title": "Вулиця міста",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/DBD4YZW.jpeg",
+    "title": "Площа перед костелом",
+    "period": "1900-1939",
+    "category": "events",
+    "date": "1931"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/YuMklQj.jpeg",
+    "title": "Центральна площа",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/Vl9hT1Q.jpeg",
+    "title": "Пам'ятник Дубровицькому повстанню",
+    "period": "1945-1991",
+    "category": "events",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/H9f4yVN.jpeg",
+    "title": "Універмаг",
+    "period": "1945-1991",
+    "category": "architecture",
+    "date": "1982"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/MOOViTH.jpeg",
+    "title": "Вулиця міста",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "невідомо"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/bd5ZbDp.jpeg",
+    "title": "Стадіон Горинь",
+    "period": "1945-1991",
+    "category": "events",
+    "date": "1976"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/05wXfWI.jpeg",
+    "title": "Дубровиця, будинок",
+    "period": "1945-1991",
+    "category": "architecture",
+    "date": "1954"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/MfGzR8D.jpeg",
+    "title": "Костел, інтер'єр",
+    "period": "1900-1939",
+    "category": "churches",
+    "date": "1905"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/LVWPxA0.jpeg",
+    "title": "Міське кладовище. Невідомий похорон",
+    "period": "1900-1939",
+    "category": "streets",
+    "date": "1920"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/00xKSRM.png",
+    "title": "Міський суд",
+    "period": "1900-1939",
+    "category": "streets",
+    "date": "1930"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/op2tNhY.jpeg",
+    "title": "Фотолистівка",
+    "period": "1900-1939",
+    "category": "architecture",
+    "date": "1910"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/71NjCcc.jpeg",
+    "title": "Церква Різдва Пресвятої Богородиці",
+    "period": "1945-1991",
+    "category": "churches",
+    "date": "1977"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/g0nSa1I.jpeg",
+    "title": "Церква Різдва Пресвятої Богородиці",
+    "period": "1945-1991",
+    "category": "churches",
+    "date": "1977"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/2Kp3cLR.jpeg",
+    "title": "Церква Різдва Пресвятої Богородиці",
+    "period": "1945-1991",
+    "category": "churches",
+    "date": "1977"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/KhiHYSV.jpeg",
+    "title": "Церква Різдва Пресвятої Богородиці",
+    "period": "1945-1991",
+    "category": "churches",
+    "date": "1977"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/fEA0QwQ.jpeg",
+    "title": "Церква Різдва Пресвятої Богородиці",
+    "period": "1900-1939",
+    "category": "churches",
+    "date": "невідомо"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/PrOxw4k.png",
+    "title": "Склад миловарного заводу Комітету Всеросійського земського союзу Південно-Західного фронту в містечку Домбровиці",
+    "period": "1900-1939",
+    "category": "people",
+    "date": "1916"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/LAZURTF.png",
+    "title": "Лабораторія миловарного заводу Комітету Всеросійського земського союзу Південно-Західного фронту в містечку Домбровиці",
+    "period": "1900-1939",
+    "category": "people",
+    "date": "1916"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/8yh2dGz.png",
+    "title": "Працівники канцелярії миловарного заводу Комітету Всеросійського земського союзу Південно-Західного фронту в містечку Домбровиці",
+    "period": "1900-1939",
+    "category": "people",
+    "date": "1916"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/sQbvtWb.png",
+    "title": "Будівля миловарного заводу Комітету Всеросійського земського союзу Південно-Західного фронту в містечку Домбровиці",
+    "period": "1900-1939",
+    "category": "people",
+    "date": "1916"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/Ec2YvCZ.png",
+    "title": "Внутрішній вид складу матеріалів Комітету Всеросійського земського союзу Південно-Західного фронту в містечку Домбровиці",
+    "period": "1900-1939",
+    "category": "people",
+    "date": "1916"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/swUEVWE.png",
+    "title": "рацівники Комітету Всеросійського земського союзу Південно-Західного фронту в містечку Домбровиці",
+    "period": "1900-1939",
+    "category": "people",
+    "date": "1916"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/LXL6sb2.png",
+    "title": "Приміщення бактеріологічної лабораторії головного евакуаційного пункту № 17 Комітету Всеросійського земського союзу П-Західного фронту в містечку Домбровиці",
+    "period": "1900-1939",
+    "category": "people",
+    "date": "1916"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/UxBBvE4.jpeg",
+    "title": "Дерев'яний міст через р. Горинь",
+    "period": "1900-1939",
+    "category": "streets",
+    "date": "1930-1939"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/n74FSvK.jpeg",
+    "title": "Костел Іоана Хрестителя",
+    "period": "1900-1939",
+    "category": "churches",
+    "date": "1929"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/S3COXmq.jpeg",
+    "title": "Дерев'яна хата",
+    "period": "1900-1939",
+    "category": "streets",
+    "date": "1929"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/88VtNiX.jpeg",
+    "title": "Корчма",
+    "period": "1900-1939",
+    "category": "streets",
+    "date": "1929"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/TfEzOmr.jpeg",
+    "title": "Дерев'яні хати",
+    "period": "1900-1939",
+    "category": "streets",
+    "date": "1929"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/trildJW.jpeg",
+    "title": "Костел Іоана Хрестителя, вхідна брама",
+    "period": "1900-1939",
+    "category": "churches",
+    "date": "1929"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/3bLmxz5.jpeg",
+    "title": "Костел Іоана Хрестителя, фото зсередини",
+    "period": "1900-1939",
+    "category": "churches",
+    "date": "1929"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/zbKrwKN.jpeg",
+    "title": "Костел Іоана Хрестителя, фото зсередини",
+    "period": "1900-1939",
+    "category": "churches",
+    "date": "1929"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/0igOEVC.jpeg",
+    "title": "Костел Іоана Хрестителя, фото зсередини",
+    "period": "1900-1939",
+    "category": "churches",
+    "date": "1929"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/gnTjNCA.jpeg",
+    "title": "Костел Іоана Хрестителя, фото зсередини",
+    "period": "1900-1939",
+    "category": "churches",
+    "date": "1929"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/q3SmLO9.jpeg",
+    "title": "Костел Іоана Хрестителя, фото зсередини",
+    "period": "1900-1939",
+    "category": "churches",
+    "date": "1929"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/tOUTvDh.jpeg",
+    "title": "Костел Іоана Хрестителя, фото зсередини",
+    "period": "1900-1939",
+    "category": "churches",
+    "date": "1929"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/LbvFW0Z.jpeg",
+    "title": "Костел Іоана Хрестителя, фото зсередини",
+    "period": "1900-1939",
+    "category": "churches",
+    "date": "1929"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/3SPjwUS.jpeg",
+    "title": "Костел Іоана Хрестителя, фото зсередини",
+    "period": "1939-1945",
+    "category": "churches",
+    "date": "1929"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/ssqiAZi.jpeg",
+    "title": "Костел Іоана Хрестителя",
+    "period": "1900-1939",
+    "category": "churches",
+    "date": "1929"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/DQGw0QT.jpeg",
+    "title": "Костел Іоана Хрестителя",
+    "period": "1900-1939",
+    "category": "churches",
+    "date": "1929"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/r24PUh2.jpeg",
+    "title": "Костел Іоана Хрестителя, фото зсередини",
+    "period": "1900-1939",
+    "category": "churches",
+    "date": "1929"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/zef8WRy.jpeg",
+    "title": "Аерофотознімок Дубровиці та навколишніх сіл",
+    "period": "1939-1945",
+    "category": "aerial",
+    "date": "1943"
+  },
+  {
+    "imageUrl": "https://cdn.imgchest.com/files/dc3db85d5b42.jpg",
+    "title": "Аерофотознімок залізничної станції Дубровиця",
+    "period": "1939-1945",
+    "category": "aerial",
+    "date": "2026",
+    "originalUrl": "https://drive.google.com/file/d/1U0SUtcARmzWSTdwsH1kT8okxbdi5sPry/view?usp=sharing"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/0HyroRq.jpeg",
+    "title": "Церква Різдва Богородиці",
+    "period": "1900-1939",
+    "category": "churches",
+    "date": "1929",
+    "originalUrl": "https://drive.google.com/file/d/17WW9my9uAtPylJzPO3F_5BYTVvpYIdTN/view?usp=drive_link"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/WzMH0hh.jpeg",
+    "title": "Будинок в місті",
+    "period": "1900-1939",
+    "category": "streets",
+    "date": "1929",
+    "originalUrl": "https://drive.google.com/file/d/1AH4mP9QToKbieeaa0VeXRRXAsEklAsTx/view?usp=drive_link"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/ZKkcU77.jpeg",
+    "title": "Костел Іоана Хрестителя",
+    "period": "1900-1939",
+    "category": "streets",
+    "date": "1920"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/stST9GC.jpeg",
+    "title": "Пам'ятник В. Леніну, центральна площа",
+    "period": "1945-1991",
+    "category": "people",
+    "date": "1980"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/qcjgN1I.jpeg",
+    "title": "Центр міста",
+    "period": "1900-1939",
+    "category": "streets",
+    "date": "1920-1939"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/QTP89kg.jpeg",
+    "title": "Костел Іоанна Хрестителя",
+    "period": "1900-1939",
+    "category": "churches",
+    "date": "1930"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/3aWJiOy.jpeg",
+    "title": "Площа перед Костелом",
+    "period": "1900-1939",
+    "category": "streets",
+    "date": "1925-1930"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/YIRm8Rt.jpeg",
+    "title": "Масова маніфестація на підтримку Сіону, 1920",
+    "period": "1900-1939",
+    "category": "events",
+    "date": "1920"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/caTP3ND.jpeg",
+    "title": "Ринкова площа в суботу — єврейські крамниці зачинені",
+    "period": "1900-1939",
+    "category": "streets",
+    "date": "1930-1939"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/ol9vPuF.jpeg",
+    "title": "Куточок Ринкової площі, біля Плянтів, 1939",
+    "period": "1900-1939",
+    "category": "streets",
+    "date": "1939"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/TUFVsb8.jpeg",
+    "title": "Дубровиця, вулиця 3-го Травня",
+    "period": "1900-1939",
+    "category": "streets",
+    "date": "1930-1939"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/h6fG9oK.jpeg",
+    "title": "Футбольна команда «Шомрія», 1925 рік",
+    "period": "1900-1939",
+    "category": "people",
+    "date": "1925"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/lbNIamW.jpeg",
+    "title": "Школа «Тарбут», нова будівля, 1936 рік",
+    "period": "1900-1939",
+    "category": "architecture",
+    "date": "1936"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/d1e0JX9.jpeg",
+    "title": "Вчителі та учні школи «Мевенінь», 1930 рік",
+    "period": "1900-1939",
+    "category": "people",
+    "date": "1930"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/nLCM0i2.jpeg",
+    "title": "Лісопилка Горація Геллера — провідний єврейський підприємець",
+    "period": "1900-1939",
+    "category": "architecture",
+    "date": "1920-1939"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/fqLDM6s.jpeg",
+    "title": "Біля виборчої дільниці, вибори до польського Сейму, 1935",
+    "period": "1900-1939",
+    "category": "events",
+    "date": "1935"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/rVnHRb1.jpeg",
+    "title": "Єврейська пара біля мосту через Горинь, 1884 рік",
+    "period": "before-1900",
+    "category": "people",
+    "date": "1884"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/hPI1Xdo.jpeg",
+    "title": "Молодь на човні річкою Горинь — мирні дні",
+    "period": "1900-1939",
+    "category": "people",
+    "date": "1930-1939"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/aeImat4.jpeg",
+    "title": "Похорон у містечку. Братство «Хевра Кадіша»",
+    "period": "1900-1939",
+    "category": "events",
+    "date": "1920-1939"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/6Wqyivm.jpeg",
+    "title": "Будинок Слуцького — Ринкова площа, Дубровиця",
+    "period": "1900-1939",
+    "category": "streets",
+    "date": "1930-1939"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/O4fNbW7.jpeg",
+    "title": "Аерофотознімок · Дубровицька міська громада · 51.746, 26.4015",
+    "period": "after-1991",
+    "category": "aerial",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/EmYg5TN.jpeg",
+    "title": "Аерофотознімок · Дубровицька міська громада · 51.6407, 26.5377",
+    "period": "after-1991",
+    "category": "aerial",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/ZXsoaCw.jpeg",
+    "title": "Аерофотознімок · Дубровицька міська громада · 51.638, 26.3054",
+    "period": "after-1991",
+    "category": "aerial",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/h6sJS2Q.jpeg",
+    "title": "Аерофотознімок · Милячська сільська громада · 51.7568, 27.1887",
+    "period": "after-1991",
+    "category": "aerial",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/vlOoWgm.jpeg",
+    "title": "Аерофотознімок · Милячська сільська громада · 51.7534, 26.8496",
+    "period": "after-1991",
+    "category": "aerial",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/gvPyXUT.jpeg",
+    "title": "Аерофотознімок · Дубровицька міська громада · 51.7469, 26.3574",
+    "period": "after-1991",
+    "category": "aerial",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/KaP1fS9.jpeg",
+    "title": "Аерофотознімок · Старе Село · 51.6481, 27.1274",
+    "period": "after-1991",
+    "category": "aerial",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/AzKqDxt.jpeg",
+    "title": "Аерофотознімок · Старосільська сільська громада · 51.6515, 27.1699",
+    "period": "after-1991",
+    "category": "aerial",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/Mo8tJ62.jpeg",
+    "title": "Аерофотознімок · Старосільська сільська громада · 51.6493, 27.0822",
+    "period": "after-1991",
+    "category": "aerial",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/DdWri2a.jpeg",
+    "title": "Аерофотознімок · Милячська сільська громада · 51.6451, 26.8966",
+    "period": "after-1991",
+    "category": "aerial",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/gmpIkLF.jpeg",
+    "title": "Аерофотознімок · Милячська сільська громада · 51.6438, 26.8571",
+    "period": "after-1991",
+    "category": "aerial",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/D5wtN0F.jpeg",
+    "title": "Аерофотознімок · Дубровицька міська громада · 51.6419, 26.4507",
+    "period": "after-1991",
+    "category": "aerial",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/J3eTc04.jpeg",
+    "title": "Аерофотознімок · Дубровицька міська громада · 51.6417, 26.3506",
+    "period": "after-1991",
+    "category": "aerial",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/ahm4Oqs.jpeg",
+    "title": "Аерофотознімок · Милячська сільська громада · 51.7591, 27.1101",
+    "period": "after-1991",
+    "category": "aerial",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/uO2JQlu.jpeg",
+    "title": "Аерофотознімок · Милячська сільська громада · 51.7576, 27.1535",
+    "period": "after-1991",
+    "category": "aerial",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/iM6IUxk.jpeg",
+    "title": "Аерофотознімок · Біле · 51.6437, 26.7163",
+    "period": "after-1991",
+    "category": "aerial",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/l9qTbk5.jpeg",
+    "title": "Аерофотознімок · Кривиця · 51.6432, 26.3972",
+    "period": "after-1991",
+    "category": "aerial",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/Oy72sUg.jpeg",
+    "title": "Аерофотознімок · Дубровицька міська громада · 51.6408, 26.4888",
+    "period": "after-1991",
+    "category": "aerial",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/GEXtMrp.jpeg",
+    "title": "Аерофотознімок · Ясинець · 51.6437, 26.5829",
+    "period": "after-1991",
+    "category": "aerial",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/mRa7z6f.jpeg",
+    "title": "Аерофотознімок · Бродець · 51.7531, 26.6695",
+    "period": "after-1991",
+    "category": "aerial",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/w0g3uTk.jpeg",
+    "title": "Аерофотознімок · Вербівка · 51.7464, 26.5336",
+    "period": "after-1991",
+    "category": "aerial",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/tBSigKD.jpeg",
+    "title": "Аерофотознімок · Лютинськ · 51.6443, 26.6243",
+    "period": "after-1991",
+    "category": "aerial",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/lQyJK8I.jpeg",
+    "title": "Аерофотознімок · Переброди · 51.7603, 26.9849",
+    "period": "after-1991",
+    "category": "aerial",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/ACyNQzp.jpeg",
+    "title": "Аерофотознімок · Тумень · 51.8047, 26.6439",
+    "period": "after-1991",
+    "category": "aerial",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/q35yQCH.jpeg",
+    "title": "Аерофотознімок · Переходичі · 51.648, 27.0346",
+    "period": "after-1991",
+    "category": "aerial",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/hWVnajf.jpeg",
+    "title": "Аерофотознімок · Переходичі · 51.6492, 26.9944",
+    "period": "after-1991",
+    "category": "aerial",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/Kz50WeF.jpeg",
+    "title": "Аерофотознімок · Миляч · 51.6468, 26.7641",
+    "period": "after-1991",
+    "category": "aerial",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/esxXvRs.jpeg",
+    "title": "Аерофотознімок · Городище · 51.8081, 26.6805",
+    "period": "after-1991",
+    "category": "aerial",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/FE38uih.jpeg",
+    "title": "Аерофотознімок · Удрицьк · 51.7481, 26.7106",
+    "period": "after-1991",
+    "category": "aerial",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/yBVYokQ.jpeg",
+    "title": "Аерофотознімок · Дроздинь · 51.649, 27.2172",
+    "period": "after-1991",
+    "category": "aerial",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/WyzfS4h.jpeg",
+    "title": "Аерофотознімок · Будимля · 51.6467, 26.9467",
+    "period": "after-1991",
+    "category": "aerial",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/OL6foxW.jpeg",
+    "title": "Аерофотознімок · Бродець · 51.754, 26.6255",
+    "period": "after-1991",
+    "category": "aerial",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/ezQCZU4.jpeg",
+    "title": "Аерофотознімок · Вербівка · 51.7469, 26.5815",
+    "period": "after-1991",
+    "category": "aerial",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/m5wHAs5.jpeg",
+    "title": "Аерофотознімок · Городище · 51.8084, 26.7332",
+    "period": "after-1991",
+    "category": "aerial",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/1b609xw.jpeg",
+    "title": "Аерофотознімок · Милячська сільська громада · 51.6449, 26.8109",
+    "period": "after-1991",
+    "category": "aerial",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/kWpDpmf.jpeg",
+    "title": "Аерофотознімок · Милячська сільська громада · 51.7581, 27.0613",
+    "period": "after-1991",
+    "category": "aerial",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/NjDMkmi.jpeg",
+    "title": "Аерофотознімок · Висоцька сільська громада · 51.8061, 26.5921",
+    "period": "after-1991",
+    "category": "aerial",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/1lT5eyn.jpeg",
+    "title": "Аерофотознімок · Старосільська сільська громада · 51.6505, 27.2716",
+    "period": "after-1991",
+    "category": "aerial",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/dFHylm8.jpeg",
+    "title": "Аерофотознімок · Висоцька сільська громада · 51.7509, 26.4579",
+    "period": "after-1991",
+    "category": "aerial",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/lleYhO4.jpeg",
+    "title": "Аерофотознімок · Милячська сільська громада · 51.752, 27.0216",
+    "period": "after-1991",
+    "category": "aerial",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/Y1uQFpR.jpeg",
+    "title": "Аерофотознімок · Висоцька сільська громада · 51.7509, 26.498",
+    "period": "after-1991",
+    "category": "aerial",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/RZRU4C0.jpeg",
+    "title": "Аерофотознімок · Милячська сільська громада · 51.7571, 27.0632",
+    "period": "after-1991",
+    "category": "aerial",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/Zjde0ff.jpeg",
+    "title": "Аерофотознімок · Милячська сільська громада · 51.7604, 27.0317",
+    "period": "after-1991",
+    "category": "aerial",
+    "date": "2026"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/Qrlo7Qq.jpeg",
+    "title": "Дубровиця біля Сарн. Військова урочистість перед римо-католицьким костелом св. Іоанна Хрестителя. 1930",
+    "period": "1900-1939",
+    "category": "churches",
+    "date": "1930"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/D3i91ZV.jpeg",
+    "title": "Волинь. Військова урочистість у Дубровиці. Близько 1933",
+    "period": "1900-1939",
+    "category": "events",
+    "date": "1933"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/DVMXFe0.jpeg",
+    "title": "Військова підготовка у Дубровиці. Стрілецькі змагання. Після 1930",
+    "period": "1900-1939",
+    "category": "events",
+    "date": "1930"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/adwrP8P.jpeg",
+    "title": "Військова урочистість у Дубровиці. Жіноча військова підготовка. Близько 1933",
+    "period": "1900-1939",
+    "category": "events",
+    "date": "1933"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/tYxTx6p.jpeg",
+    "title": "Корпус охорони прикордоння (KOP) у Дубровиці. Близько 1932",
+    "period": "1900-1939",
+    "category": "people",
+    "date": "1932"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/3pguYWs.jpeg",
+    "title": "Учасники Військової підготовки в Дубровиці. Близько 1932",
+    "period": "1900-1939",
+    "category": "events",
+    "date": "1932"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/9Fv59Su.jpeg",
+    "title": "Портрет учасників урочистості перед входом до ресторану. Близько 1933",
+    "period": "1900-1939",
+    "category": "events",
+    "date": "1933"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/ltUlKDu.jpeg",
+    "title": "Освячення стрільбища в Дубровиці. Поручник Станіслав Берак. 1932",
+    "period": "1900-1939",
+    "category": "events",
+    "date": "1932"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/orbv541.jpeg",
+    "title": "Освячення стрільбища в Дубровиці. Урочисте розрізання стрічки. 1932",
+    "period": "1900-1939",
+    "category": "events",
+    "date": "1932"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/mt1Te3a.jpeg",
+    "title": "Військова підготовка у Дубровиці. Група учасників на шляху до стрільбища. Після 1930",
+    "period": "1900-1939",
+    "category": "events",
+    "date": "1930"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/JTOXnFj.jpeg",
+    "title": "Військова підготовка у Дубровиці. Стрілецькі змагання. Після 1930",
+    "period": "1900-1939",
+    "category": "events",
+    "date": "1930"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/OeIPzmT.jpeg",
+    "title": "Дубровиця. Дівчата у формі Жіночої військової підготовки. Близько 1933",
+    "period": "1900-1939",
+    "category": "events",
+    "date": "1933"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/WP3glAH.jpeg",
+    "title": "Дубровиця. Дівчата у формі Жіночої військової підготовки. Близько 1933",
+    "period": "1900-1939",
+    "category": "events",
+    "date": "1933"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/jMhT8Mz.jpeg",
+    "title": "I Лижний рейд Стрілецького союзу, відділ Дубровиця. Близько 1935",
+    "period": "1900-1939",
+    "category": "events",
+    "date": "1935"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/cHpsj5i.jpeg",
+    "title": "I Лижний рейд Стрілецького союзу, відділ Дубровиця. Близько 1935",
+    "period": "1900-1939",
+    "category": "events",
+    "date": "1935"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/5vxgGHV.jpeg",
+    "title": "Військова підготовка у Дубровиці. Стрілецькі змагання. Після 1930",
+    "period": "1900-1939",
+    "category": "events",
+    "date": "1930"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/kmKQ9AY.jpeg",
+    "title": "Портрет групи військових і цивільних осіб. Близько 1925",
+    "period": "1900-1939",
+    "category": "people",
+    "date": "1925"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/HcnwKUj.jpeg",
+    "title": "Відкриття стрільбища в Дубровиці над Горинню. 1932",
+    "period": "1900-1939",
+    "category": "events",
+    "date": "1932"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/4ZF6pKS.jpeg",
+    "title": "Перенесення мощей Святої Уляни Гольшанської Дубровицької. 1910–1930-ті",
+    "period": "1900-1939",
+    "category": "churches",
+    "date": "1910"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/BOQzQlu.jpeg",
+    "title": "Дубровичанин Рабешко Андрій (Куций). 1913",
+    "period": "1900-1939",
+    "category": "people",
+    "date": "1913"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/WjRiILR.jpeg",
+    "title": "Петро Дука, Харків, служба в армії. 1914",
+    "period": "1900-1939",
+    "category": "people",
+    "date": "1914"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/l86cE2i.jpeg",
+    "title": "Петро Дука, Харків, служба в армії. 1914",
+    "period": "1900-1939",
+    "category": "people",
+    "date": "1914"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/YSuviUe.jpeg",
+    "title": "Дубровиця, крайній справа — Куций. 1914–1920-ті",
+    "period": "1900-1939",
+    "category": "people",
+    "date": "1914"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/d5xjvm5.jpeg",
+    "title": "Костел Іоанна Хрестителя. 1916",
+    "period": "1900-1939",
+    "category": "churches",
+    "date": "1916"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/rVz9V16.jpeg",
+    "title": "Костел Іоанна Хрестителя. 1916",
+    "period": "1900-1939",
+    "category": "churches",
+    "date": "1916"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/cG8LhUv.jpeg",
+    "title": "Станція Домбровиця. 1918",
+    "period": "1900-1939",
+    "category": "people",
+    "date": "1918"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/ExAjxjK.jpeg",
+    "title": "Центр міста Дубровиця. 1920–1930-ті",
+    "period": "1900-1939",
+    "category": "streets",
+    "date": "1920"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/yamDJ5H.jpeg",
+    "title": "Хор Дубровицької церкви. 1923",
+    "period": "1900-1939",
+    "category": "people",
+    "date": "1923"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/0tshOBW.jpeg",
+    "title": "Міст через річку Горинь, Дубровиця. 1930",
+    "period": "1900-1939",
+    "category": "streets",
+    "date": "1930"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/lYu0tms.jpeg",
+    "title": "Дубровиця, базар. 1930-ті",
+    "period": "1900-1939",
+    "category": "streets",
+    "date": "1930"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/hzlsE1N.jpeg",
+    "title": "Дубровиця, перша футбольна команда. 1931",
+    "period": "1900-1939",
+    "category": "people",
+    "date": "1931"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/srvAMu8.jpeg",
+    "title": "Костел Іоанна Хрестителя. 1931",
+    "period": "1900-1939",
+    "category": "churches",
+    "date": "1931"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/ESEnzPb.jpeg",
+    "title": "Костел Іоанна Хрестителя. 1931",
+    "period": "1900-1939",
+    "category": "churches",
+    "date": "1931"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/hPUMWFR.jpeg",
+    "title": "Міський парк. 1931",
+    "period": "1900-1939",
+    "category": "streets",
+    "date": "1931"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/5RaWLIN.jpeg",
+    "title": "Дубровиця, сільськогосподарська виставка. 1935",
+    "period": "1900-1939",
+    "category": "events",
+    "date": "1935"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/wPPnPnm.jpeg",
+    "title": "Дубровиця, дерев'яна каплиця на кладовищі. 1936",
+    "period": "1900-1939",
+    "category": "churches",
+    "date": "1936"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/RcQunmX.jpeg",
+    "title": "Дубровиця, будівництво будинку. 1938",
+    "period": "1900-1939",
+    "category": "people",
+    "date": "1938"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/2Lh6aSf.jpeg",
+    "title": "Дубровиця, дитячий будинок. 1940–1950-ті",
+    "period": "1939-1945",
+    "category": "streets",
+    "date": "1940"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/l9FrfpP.jpeg",
+    "title": "Вид на костел. 1950–1960-ті",
+    "period": "1945-1991",
+    "category": "churches",
+    "date": "1950"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/i44qJOZ.jpeg",
+    "title": "Річка Горинь, міський пляж. 1960-ті",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "1960"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/RvuZjrF.jpeg",
+    "title": "Річка Горинь. 1960-ті",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "1960"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/8jT5zpe.jpeg",
+    "title": "Кінотеатр. 1960-ті",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "1960"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/u8soy4k.jpeg",
+    "title": "Райвузол зв'язку. 1960-ті",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "1960"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/NzgJ0Gh.jpeg",
+    "title": "Стадіон, мотобол. 1960-ті",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "1960"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/xjcqZMt.jpeg",
+    "title": "Універмаг. 1960-ті",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "1960"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/FAskq1s.jpeg",
+    "title": "Горинь, міський пляж. 1968",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "1968"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/BaXLhj7.jpeg",
+    "title": "Горинь, річковий флот. 1970–1980-ті",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "1970"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/swOswYf.jpeg",
+    "title": "Горинь, річковий флот. 1970–1980-ті",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "1970"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/vv81xDY.jpeg",
+    "title": "Горинь, річковий флот. 1970–1980-ті",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "1970"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/SNrlGHX.jpeg",
+    "title": "Горинь, річковий флот. 1970–1980-ті",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "1970"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/1UfFhba.jpeg",
+    "title": "Горинь, річковий флот. 1970–1980-ті",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "1970"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/xVor4xY.jpeg",
+    "title": "Горинь, річковий флот. 1970–1980-ті",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "1970"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/EpeeqQP.jpeg",
+    "title": "Пам'ятник Леніну, площа Домбровицького збройного повстання. 1970-ті",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "1970"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/2ywFGgL.jpeg",
+    "title": "Святкова маніфестація. 1970-ті",
+    "period": "1945-1991",
+    "category": "events",
+    "date": "1970"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/B1Ehybp.jpeg",
+    "title": "Ресторан «Чайка». 1970-ті",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "1970"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/J9MDEgl.jpeg",
+    "title": "Стадіон Горинь, День фізкультурника. 1976",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "1976"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/LOBMF7V.jpeg",
+    "title": "Стадіон Горинь, День фізкультурника. 1976",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "1976"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/Fx16Vxp.jpeg",
+    "title": "Стадіон Горинь, День фізкультурника. 1976",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "1976"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/Qmz5RLo.jpeg",
+    "title": "Стадіон Горинь, День фізкультурника. 1976",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "1976"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/hYUWzHI.jpeg",
+    "title": "Стадіон Горинь. 1976",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "1976"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/MgdAt85.jpeg",
+    "title": "Дубровиця, зупинка громадського транспорту. 1978",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "1978"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/k7ikexD.jpeg",
+    "title": "Річка Горинь. 1980",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "1980"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/e5G1yPe.jpeg",
+    "title": "Горинь, пристань. 1980-ті",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "1980"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/RVpoLOA.jpeg",
+    "title": "Дубровиця, святкування 800-річчя. 1983",
+    "period": "1945-1991",
+    "category": "events",
+    "date": "1983"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/KummH9v.jpeg",
+    "title": "Дубровиця, святкування 800-річчя. 1983",
+    "period": "1945-1991",
+    "category": "events",
+    "date": "1983"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/79puKse.jpeg",
+    "title": "Райвиконком. 1985",
+    "period": "1945-1991",
+    "category": "people",
+    "date": "1985"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/YbgpJXH.jpeg",
+    "title": "Дубровиця, автовокзал",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/IxnCK6V.jpeg",
+    "title": "Дубровиця, базар",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/ZOkpoFS.jpeg",
+    "title": "Дубровиця, біля райвиконкому",
+    "period": "1945-1991",
+    "category": "people",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/KQAYDBu.jpeg",
+    "title": "Дубровиця, біля райвиконкому",
+    "period": "1945-1991",
+    "category": "people",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/3MXn5Iv.jpeg",
+    "title": "Воробинський спиртзавод",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "Міжвоєнний період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/E91Q5bF.jpeg",
+    "title": "Вулиця Воробинська",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "Міжвоєнний період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/4EtChDY.jpeg",
+    "title": "Вулиця Воробинська",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "Міжвоєнний період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/LNGP9W3.jpeg",
+    "title": "Дитячий будинок (приміщення санстанції)",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/jOCznN0.jpeg",
+    "title": "Дубровиця, картина радянського періоду",
+    "period": "1945-1991",
+    "category": "people",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/eMRUGQK.jpeg",
+    "title": "Кладовище, пам'ятник воїнам",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/7QgehfE.jpeg",
+    "title": "Невідома будівля",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/qkVZ3Jp.jpeg",
+    "title": "Палац графів де Броель-Плятерів у Воробині",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "Міжвоєнний період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/36zzADz.jpeg",
+    "title": "Пам'ятник воїнам, мітинг",
+    "period": "1945-1991",
+    "category": "events",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/UzIDxqW.jpeg",
+    "title": "Пам'ятник воїнам",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/INdhahV.jpeg",
+    "title": "Пам'ятник Леніну, прийняття в піонери",
+    "period": "1945-1991",
+    "category": "events",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/bJiCs3i.jpeg",
+    "title": "Пам'ятник Леніну",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/a4qirPv.jpeg",
+    "title": "Пам'ятник-стела на в'їзді до міста",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/vSVKQpF.jpeg",
+    "title": "Парад",
+    "period": "1945-1991",
+    "category": "events",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/hm47p9S.jpeg",
+    "title": "Парад",
+    "period": "1945-1991",
+    "category": "events",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/nLgBaa2.jpeg",
+    "title": "Парад",
+    "period": "1945-1991",
+    "category": "events",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/PkdELaR.jpeg",
+    "title": "Парад",
+    "period": "1945-1991",
+    "category": "events",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/P6q9AlZ.jpeg",
+    "title": "Парад",
+    "period": "1945-1991",
+    "category": "events",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/Rj5y4OR.jpeg",
+    "title": "Парад",
+    "period": "1945-1991",
+    "category": "events",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/RVuJdty.jpeg",
+    "title": "Площа",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/OAfBtpp.jpeg",
+    "title": "Площа, меморіал Другої світової",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/IWp36S0.jpeg",
+    "title": "Площа, малюнок на асфальті",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/rRiPrWz.jpeg",
+    "title": "РБК, хор",
+    "period": "1945-1991",
+    "category": "people",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/EnNXdws.jpeg",
+    "title": "Сквер (Ленінський парк)",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/DP9CXgB.jpeg",
+    "title": "Стадіон",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/FYtjUOp.jpeg",
+    "title": "Стадіон",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/mq3m25w.jpeg",
+    "title": "Стадіон, мотобол",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/Ng6Yczu.jpeg",
+    "title": "Стадіон, мотобол",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/L6nZf1D.jpeg",
+    "title": "Церковний хор",
+    "period": "1945-1991",
+    "category": "people",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/NF6TLl1.jpeg",
+    "title": "Школа №1",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/xIiY22v.jpeg",
+    "title": "Школа №1",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/8siEKn2.jpeg",
+    "title": "Школа №1, випускний",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/YrJBD88.jpeg",
+    "title": "Школа №1",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/dVUHDAn.jpeg",
+    "title": "Вид від старого банку. 1920–1930-ті",
+    "period": "1900-1939",
+    "category": "aerial",
+    "date": "1920"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/lmSozAd.jpeg",
+    "title": "Школа №1. 1920–1930-ті",
+    "period": "1900-1939",
+    "category": "streets",
+    "date": "1920"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/6MYlBLU.jpeg",
+    "title": "Вулиця Леніна",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/Pa27qs0.jpeg",
+    "title": "Річка Горинь, січень 1957",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "1957"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/RGllOge.jpeg",
+    "title": "Пляж, річка Горинь, міст на задньому плані",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/torczVl.jpeg",
+    "title": "Райунівермаг",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/y6L8Elr.jpeg",
+    "title": "Річка Горинь",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/2x1yJny.jpeg",
+    "title": "На стадіоні Горинь",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/HGHu9nH.jpeg",
+    "title": "На стадіоні Горинь",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/kqkaL3a.jpeg",
+    "title": "Святкова демонстрація",
+    "period": "1945-1991",
+    "category": "events",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/CJiZdfz.jpeg",
+    "title": "Аеродром",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/VCSl7YC.jpeg",
+    "title": "Пляж",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/I5vCx72.jpeg",
+    "title": "Святомиколаївська церква. Січень 1957",
+    "period": "1945-1991",
+    "category": "churches",
+    "date": "1957"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/CQaf8Rl.jpeg",
+    "title": "Вулиці міста, демонстрація. Травень 1957",
+    "period": "1945-1991",
+    "category": "events",
+    "date": "1957"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/mHhGKUw.jpeg",
+    "title": "Вид з мосту на місто та річку",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/gPOUodw.jpeg",
+    "title": "Повінь",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/i4HLE8B.jpeg",
+    "title": "Вид на річку та міст",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/LIucYVX.jpeg",
+    "title": "Крамниця Дубровицького ССТ",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/I7Q3yCu.jpeg",
+    "title": "Святкова демонстрація",
+    "period": "1945-1991",
+    "category": "events",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/1zhMTa1.jpeg",
+    "title": "Святкова демонстрація",
+    "period": "1945-1991",
+    "category": "events",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/f5YjyEy.jpeg",
+    "title": "Стадіон Горинь",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/8YrZ82T.jpeg",
+    "title": "Стадіон Горинь",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/UROVUtT.jpeg",
+    "title": "Вид на місто",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "Радянський період"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/jA2SB1d.jpeg",
+    "title": "Кам'яна церква",
+    "period": "1945-1991",
+    "category": "churches",
+    "date": ""
+  },
+  {
+    "imageUrl": "https://i.imgur.com/hmhX0m9.jpeg",
+    "title": "Костел",
+    "period": "1945-1991",
+    "category": "churches",
+    "date": ""
+  },
+  {
+    "imageUrl": "https://i.imgur.com/JPACz8S.jpeg",
+    "title": "Ремонт костелу, приблизно 1908 р.",
+    "period": "1900-1939",
+    "category": "churches",
+    "date": "1908"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/sdxqxjo.jpeg",
+    "title": "Ремонт костелу, приблизно 1908 р.",
+    "period": "1900-1939",
+    "category": "churches",
+    "date": "1908"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/4x4jAID.jpeg",
+    "title": "Горинь поблизу Домбровиці. Німецький розвідувальний фотоальбом",
+    "period": "1939-1945",
+    "category": "streets",
+    "date": "1941"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/Kx2909P.jpeg",
+    "title": "Висоцьк. Аграрне містечко. Німецький розвідувальний фотоальбом",
+    "period": "1939-1945",
+    "category": "streets",
+    "date": "1941"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/RoAXptr.jpeg",
+    "title": "Колки біля Дубровиці. Залізнична лінія Рівне — Барановичі. Німецький розвідувальний фотоальбом",
+    "period": "1939-1945",
+    "category": "people",
+    "date": "1941"
+  },
+  {
+    "imageUrl": "https://i.imgur.com/dNUzn5L.jpeg",
+    "title": "Вид на місто з висоти пташиного польоту",
+    "period": "1945-1991",
+    "category": "streets",
+    "date": "Радянський період"
+  }
 ]
