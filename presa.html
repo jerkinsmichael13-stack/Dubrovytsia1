@@ -270,6 +270,29 @@
 /* ── card type indicator ── */
 .ph-card-era{position:absolute;top:.6rem;right:.6rem;font-size:.45rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.18rem .45rem;border-radius:3px;pointer-events:none}
 .ph-card{position:relative}
+
+/* ═══ THIS DAY IN ARCHIVE ═══ */
+#phThisDay{border-bottom:1px solid var(--color-border-light);background:linear-gradient(135deg,rgba(201,162,39,.05) 0%,transparent 60%);display:none}
+#phThisDay.visible{display:block}
+.td-inner{max-width:1200px;margin:0 auto;padding:1.4rem 2rem}
+.td-header{display:flex;align-items:center;gap:.8rem;margin-bottom:1.1rem}
+.td-icon{width:36px;height:36px;border-radius:50%;background:rgba(201,162,39,.12);border:1px solid rgba(201,162,39,.25);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.td-title{font-family:var(--font-display);font-size:1rem;font-weight:500;color:var(--color-text)}
+.td-title em{color:#c9a227;font-style:normal}
+.td-subtitle{font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--color-text-muted);margin-top:.1rem}
+.td-cards{display:flex;gap:1rem;overflow-x:auto;padding-bottom:.4rem;scrollbar-width:none}
+.td-cards::-webkit-scrollbar{display:none}
+.td-card{flex-shrink:0;width:240px;background:var(--color-bg-card);border:1px solid var(--color-border);border-radius:12px;overflow:hidden;cursor:pointer;transition:transform .2s,border-color .2s;display:flex;flex-direction:column}
+.td-card:hover{transform:translateY(-2px);border-color:rgba(201,162,39,.35)}
+.td-card-img{height:100px;overflow:hidden;position:relative;background:#0a0805}
+.td-card-img img{width:100%;height:100%;object-fit:cover;opacity:.75;filter:sepia(.3)}
+.td-card-year{position:absolute;bottom:.4rem;left:.6rem;font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:#c9a227;text-shadow:0 1px 4px rgba(0,0,0,.9);background:rgba(0,0,0,.4);padding:.05rem .3rem;border-radius:3px;line-height:1}
+.td-card-body{padding:.65rem .8rem;flex:1;display:flex;flex-direction:column}
+.td-card-src{font-size:.58rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#c9a227;margin-bottom:.3rem}
+.td-card-headline{font-family:var(--font-display);font-size:.85rem;font-weight:500;line-height:1.35;color:var(--color-text);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;flex:1}
+.td-close{margin-left:auto;background:none;border:none;color:var(--color-text-muted);cursor:pointer;font-size:.9rem;padding:.2rem .4rem;border-radius:4px;flex-shrink:0}
+.td-close:hover{color:var(--color-text)}
+@media(max-width:700px){.td-inner{padding:1rem}; .td-card{width:200px}}
 </style>
 </head>
 <body>
@@ -352,6 +375,24 @@
         </div>
     </div>
 </div>
+
+
+<!-- ═══ THIS DAY IN ARCHIVE ═══ -->
+<section id="phThisDay">
+    <div class="td-inner">
+        <div class="td-header">
+            <div class="td-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c9a227" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </div>
+            <div>
+                <div class="td-title">Цей день в архіві: <em id="tdDateLabel"></em></div>
+                <div class="td-subtitle">Статті опубліковані <span id="tdDateFull"></span> — у різні роки</div>
+            </div>
+            <button class="td-close" onclick="document.getElementById('phThisDay').classList.remove('visible')" title="Сховати">✕</button>
+        </div>
+        <div class="td-cards" id="tdCards"></div>
+    </div>
+</section>
 
 <main class="ph-main">
     <div class="container">
@@ -463,6 +504,7 @@ async function load(){
         /* check URL for direct link */
         const urlId=new URLSearchParams(location.search).get('id');
         filter();
+        initThisDay();
         if(urlId){
             const idx=FIL.findIndex(e=>e.id===urlId);
             if(idx>=0)phOpen(idx);
@@ -825,6 +867,73 @@ function phCiteCopy(btn,which){
     if(navigator.clipboard){navigator.clipboard.writeText(txt).then(done);}
     else{const el=document.createElement('textarea');el.value=txt;document.body.appendChild(el);el.select();document.execCommand('copy');document.body.removeChild(el);done();}
 }
+/* ═══ THIS DAY IN ARCHIVE ═══ */
+function initThisDay(){
+    if(!ALL.length) return;
+    const now=new Date();
+    const mm=String(now.getMonth()+1).padStart(2,'0');
+    const dd=String(now.getDate()).padStart(2,'0');
+    const monthNames=['січня','лютого','березня','квітня','травня','червня','липня','серпня','вересня','жовтня','листопада','грудня'];
+    const monthNamesNom=['Січень','Лютий','Березень','Квітень','Травень','Червень','Липень','Серпень','Вересень','Жовтень','Листопад','Грудень'];
+
+    /* Match by month-day, skip xx dates */
+    const matches=ALL.filter(e=>{
+        if(!e.date||e.date.includes('xx'))return false;
+        const parts=e.date.split('-');
+        if(parts.length<3)return false;
+        return parts[1]===mm && parts[2]===dd;
+    });
+
+    /* Also show same-month articles if few exact matches */
+    let pool=matches;
+    if(pool.length<2){
+        const sameMonth=ALL.filter(e=>{
+            if(!e.date||e.date.includes('xx'))return false;
+            const parts=e.date.split('-');
+            return parts[1]===mm && !matches.find(m=>m.id===e.id);
+        });
+        /* Add up to 3 same-month */
+        pool=[...matches,...sameMonth.slice(0,Math.max(0,5-matches.length))];
+    }
+
+    if(!pool.length)return;
+
+    const label=dd===String(now.getDate()).padStart(2,'0')
+        ?`${parseInt(dd)} ${monthNames[parseInt(mm)-1]}`
+        :`${monthNamesNom[parseInt(mm)-1]}`;
+
+    document.getElementById('tdDateLabel').textContent=label;
+    document.getElementById('tdDateFull').textContent=
+        matches.length
+            ? `${parseInt(dd)} ${monthNames[parseInt(mm)-1]}`
+            : monthNamesNom[parseInt(mm)-1];
+
+    const cards=pool.map((e,i)=>{
+        const isSameDay=matches.find(m=>m.id===e.id);
+        const imgHtml=e.imageUrl
+            ?`<img src="${e.imageUrl}" alt="${esc(e.headline)}" loading="lazy">`
+            :`<div style="width:100%;height:100%;background:linear-gradient(135deg,#12100a,#1e1a10)"></div>`;
+        return `<div class="td-card${isSameDay?'':' td-card-month'}" onclick="tdOpenArticle('${e.id}')" title="${esc(e.headline)}">
+            <div class="td-card-img">
+                ${imgHtml}
+                <div class="td-card-year">${e.year}</div>
+            </div>
+            <div class="td-card-body">
+                <div class="td-card-src">${esc(e.source)}</div>
+                <div class="td-card-headline">${esc(e.headline)}</div>
+            </div>
+        </div>`;
+    }).join('');
+
+    document.getElementById('tdCards').innerHTML=cards;
+    document.getElementById('phThisDay').classList.add('visible');
+}
+
+function tdOpenArticle(id){
+    const idx=ALL.findIndex(e=>e.id===id);
+    if(idx>=0)phOpen(idx);
+}
+
 function phCiteClose(){document.getElementById('phCiteBack').classList.remove('open');}
 
 function phLbOpen(url){document.getElementById('phLbI').src=url;document.getElementById('phLb').classList.add('open');}
