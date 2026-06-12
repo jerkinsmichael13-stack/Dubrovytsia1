@@ -108,15 +108,15 @@
 
 /* MAIN */
 .ph-main{padding:3.5rem 0 7rem}
-.ph-decade{margin-bottom:4rem}
-.ph-dec-hd{display:flex;align-items:center;gap:1.25rem;margin-bottom:1.75rem}
-.ph-dec-n{font-family:var(--font-display);font-size:3.4rem;font-weight:300;color:rgba(201,162,39,.12);line-height:1;white-space:nowrap;user-select:none}
-.ph-dec-line{flex:1;height:1px;background:linear-gradient(90deg,rgba(201,162,39,.18),transparent 65%)}
-.ph-dec-c{font-size:.68rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--color-text-muted);white-space:nowrap}
-.ph-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem}
+.ph-decade{margin-bottom:5rem}
+.ph-dec-hd{display:flex;align-items:center;gap:1.4rem;margin-bottom:2rem;padding:1.1rem 1.6rem;background:linear-gradient(135deg,var(--color-bg-secondary,#ede7db) 0%,transparent 100%);border-left:3px solid #c9a227;border-radius:0 12px 12px 0;position:sticky;top:0;z-index:10;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);}
+.ph-dec-n{font-family:var(--font-display);font-size:2rem;font-weight:600;color:#c9a227;line-height:1;white-space:nowrap;user-select:none;letter-spacing:-.02em;}
+.ph-dec-line{flex:1;height:1px;background:linear-gradient(90deg,rgba(201,162,39,.3),transparent)}
+.ph-dec-c{font-size:.65rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--color-text);white-space:nowrap;background:rgba(201,162,39,.12);border:1px solid rgba(201,162,39,.25);padding:.25rem .75rem;border-radius:100px;}
+.ph-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.6rem}
 
 /* CARD */
-.ph-card{background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;display:flex;flex-direction:column;position:relative;transition:transform var(--transition-fast),box-shadow var(--transition-fast),border-color var(--transition-fast)}
+.ph-card{background:var(--color-bg-card);border:1px solid var(--color-border);border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;transition:transform .2s,box-shadow .2s,border-color .2s;box-shadow:0 2px 8px rgba(0,0,0,.05);display:flex;flex-direction:column;outline:none}
 .ph-card::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--color-accent),rgba(201,162,39,.15));opacity:0;transition:opacity var(--transition-fast)}
 .ph-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:rgba(201,162,39,.22)}
 .ph-card:hover::after{opacity:1}
@@ -126,17 +126,17 @@
 .ph-card:hover .ph-ci img{transform:scale(1.06);filter:sepia(.15) contrast(1.1) brightness(1.02)}
 .ph-ci-ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:4.5rem;font-weight:300;letter-spacing:.08em;color:var(--color-accent);opacity:.12;transition:opacity .3s ease}
 .ph-ci img.loaded~.ph-ci-ph{opacity:0}
-.ph-ci-year{position:absolute;bottom:.75rem;left:1rem;font-family:var(--font-display);font-size:1.6rem;font-weight:300;font-style:italic;color:rgba(255,255,255,.88);text-shadow:0 2px 10px rgba(0,0,0,.75);line-height:1;pointer-events:none;z-index:2}
-.ph-lang{position:absolute;top:.75rem;right:.75rem;z-index:2;font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.22rem .6rem;border-radius:var(--radius-full);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.12)}
+.ph-ci-year{position:absolute;bottom:.75rem;left:1rem;font-family:var(--font-display);font-size:1.5rem;font-weight:600;color:#c9a227;text-shadow:0 2px 8px rgba(0,0,0,.95),0 0 20px rgba(0,0,0,.8);line-height:1;letter-spacing:-.01em}
+.ph-lang{position:absolute;top:.65rem;right:.65rem;font-size:.48rem;font-weight:800;letter-spacing:.12em;padding:.2rem .55rem;border-radius:6px;text-transform:uppercase;line-height:1.4}
 .lpl{background:rgba(30,64,175,.82);color:#bfdbfe}
 .lru{background:rgba(153,27,27,.82);color:#fecaca}
 .luk{background:rgba(22,101,52,.82);color:#bbf7d0}
 .lde{background:rgba(120,53,15,.82);color:#fde68a}
 .ph-cb{padding:1.125rem 1.25rem 1rem;display:flex;flex-direction:column;flex:1}
 .ph-cm{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap}
-.ph-cd{font-size:.72rem;font-weight:600;letter-spacing:.04em;color:var(--color-accent)}
+.ph-cd{font-size:.7rem;color:var(--color-text-secondary);font-weight:500}
 .ph-cdot{width:3px;height:3px;border-radius:50%;background:var(--color-border);flex-shrink:0}
-.ph-cs{font-size:.72rem;color:var(--color-text-light);font-style:italic;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px}
+.ph-cs{font-size:.72rem;font-weight:700;color:#c9a227;font-style:normal}
 .ph-ct{font-family:var(--font-display);font-size:1.15rem;font-weight:600;color:var(--color-text);line-height:1.25;margin-bottom:.5rem;transition:color var(--transition-fast)}
 .ph-card:hover .ph-ct{color:var(--color-primary)}
 /* search highlight */
@@ -297,7 +297,18 @@
         </div>
         <h1 class="ph-title">Дубровиця <em>у пресі</em></h1>
         <p class="ph-sub">Газетні вирізки, в яких згадується Дубровиця — від регіональної хроніки до столичних видань Варшави, Вільна та Луцька.</p>
-
+        <div class="ph-orn">
+            <div class="ph-orn-line"></div><div class="ph-orn-dot"></div>
+            <div class="ph-orn-diamond"></div>
+            <div class="ph-orn-dot"></div><div class="ph-orn-line"></div>
+        </div>
+        <div class="ph-stats">
+            <div class="ph-stat"><span class="ph-stat-n" id="sN">—</span><span class="ph-stat-l">записів</span></div>
+            <div class="ph-stat-div"></div>
+            <div class="ph-stat"><span class="ph-stat-n" id="sS">—</span><span class="ph-stat-l">видань</span></div>
+            <div class="ph-stat-div"></div>
+            <div class="ph-stat"><span class="ph-stat-n" id="sP">—</span><span class="ph-stat-l">роки</span></div>
+        </div>
     </div>
 </section>
 
@@ -409,7 +420,7 @@
    prev/next nav, note block, reset, nav badge,
    mobile orig toggle, share button
 ══════════════════════════════════════════ */
-const DATA_URL='press-data.json';
+const DATA_URL='https://raw.githubusercontent.com/jerkinsmichael13-stack/Dubrovytsia1/main/press-data.json';
 const LF={pl:'польська',ru:'російська',uk:'українська',de:'німецька'};
 const FL={pl:'🇵🇱',ru:'🇷🇺',uk:'🇺🇦',de:'🇩🇪'};
 const LC={pl:'lpl',ru:'lru',uk:'luk',de:'lde'};
@@ -451,9 +462,9 @@ async function load(){
 function setStats(){
     const sr=new Set(ALL.map(e=>e.source));
     const ys=ALL.map(e=>e.year);
-    const eN=document.getElementById('sN'); if(eN) eN.textContent=ALL.length;
-    const eS=document.getElementById('sS'); if(eS) eS.textContent=sr.size;
-    const eP=document.getElementById('sP'); if(eP) eP.textContent=Math.min(...ys)+'–'+Math.max(...ys);
+    document.getElementById('sN').textContent=ALL.length;
+    document.getElementById('sS').textContent=sr.size;
+    document.getElementById('sP').textContent=Math.min(...ys)+'–'+Math.max(...ys);
     const b=document.getElementById('navBadge');
     if(b){b.textContent=ALL.length;b.classList.add('ready');}
 }
@@ -546,6 +557,7 @@ function cardHTML(e,q){
         `<span class="ph-tag clickable${TAG===t?' active-tag':''}" data-tag="${t}">${t}</span>`
     ).join('');
     const lc=LC[e.language]||'lpl';
+    const hasNote=!!(e.historicalNote);
     /* smart excerpt: first sentence or 160 chars */
     const raw=(e.translation||'').replace(/\n/g,' ');
     const dot=raw.search(/[.!?]/);
@@ -569,7 +581,7 @@ function cardHTML(e,q){
             <p class="ph-cx">${hlEx}</p>
             <div class="ph-cf">
                 <div class="ph-tags">${tags}</div>
-                <span class="ph-cta">Читати →</span>
+                <span class="ph-cta">${hasNote?'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>':''} Читати →</span>
             </div>
         </div>
     </article>`;
