@@ -400,99 +400,6 @@
 </section>
 
 
-<!-- ═══ PRESS LOCATIONS MAP ═══ -->
-<section id="phMapSection" style="border-bottom:1px solid var(--color-border-light);background:var(--color-bg)">
-    <div style="max-width:1200px;margin:0 auto;padding:1.2rem 2rem">
-        <details id="phMapDetails">
-            <summary style="cursor:pointer;list-style:none;display:flex;align-items:center;gap:.7rem;user-select:none">
-                <div style="width:30px;height:30px;border-radius:50%;background:rgba(201,162,39,.12);border:1px solid rgba(201,162,39,.25);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c9a227" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                </div>
-                <div>
-                    <span style="font-family:var(--font-display);font-size:.95rem;font-weight:500;color:var(--color-text)">Географія архіву</span>
-                    <span style="font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--color-text-muted);margin-left:.6rem">Населені пункти зі статей</span>
-                </div>
-                <span style="margin-left:auto;font-size:.7rem;color:var(--color-text-muted)" id="phMapToggleLabel">▼ Показати карту</span>
-            </summary>
-            <div id="phMapWrap" style="margin-top:1rem;border-radius:12px;overflow:hidden;height:360px;border:1px solid var(--color-border)">
-                <div id="phMap" style="width:100%;height:100%"></div>
-            </div>
-        </details>
-    </div>
-</section>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script>
-(function(){
-    const details=document.getElementById('phMapDetails');
-    const lbl=document.getElementById('phMapToggleLabel');
-    let mapInit=false;
-    details.addEventListener('toggle',function(){
-        lbl.textContent=details.open?'▲ Сховати карту':'▼ Показати карту';
-        if(!details.open||mapInit)return;
-        mapInit=true;
-        setTimeout(initMap,50);
-    });
-    function initMap(){
-        const map=L.map('phMap',{scrollWheelZoom:false}).setView([51.52,26.55],9);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-            attribution:'© OpenStreetMap',maxZoom:17
-        }).addTo(map);
-
-        /* Locations with article counts */
-        const locs=[
-            {name:'Дубровиця',lat:51.5667,lng:26.5667,cnt:84,main:true},
-            {name:'Сарни',lat:51.3378,lng:26.6215,cnt:22,main:true},
-            {name:'Рівне',lat:50.6199,lng:26.2516,cnt:13,main:true},
-            {name:'Колки',lat:51.3469,lng:26.3681,cnt:8,main:false},
-            {name:'Висоцьк',lat:51.7044,lng:26.5200,cnt:5,main:false},
-            {name:'Бережниця',lat:51.5028,lng:26.6858,cnt:5,main:false},
-            {name:'Луцьк',lat:50.7472,lng:25.3254,cnt:4,main:true},
-            {name:'Бережки',lat:51.5889,lng:26.5222,cnt:4,main:false},
-            {name:'Трипутні',lat:51.4239,lng:26.4839,cnt:3,main:false},
-            {name:'Воробин',lat:51.5939,lng:26.5283,cnt:3,main:false},
-            {name:'Берестя',lat:51.5606,lng:26.6450,cnt:3,main:false},
-            {name:'Селець',lat:51.5317,lng:26.5944,cnt:3,main:false},
-            {name:'Лунинець',lat:52.2494,lng:26.8056,cnt:2,main:false},
-            {name:'Пінськ',lat:52.1204,lng:26.1015,cnt:2,main:false},
-            {name:'Стрільськ',lat:51.6456,lng:26.7342,cnt:2,main:false},
-            {name:'Рокитне',lat:51.2822,lng:27.2014,cnt:2,main:false},
-            {name:'Рафалівка',lat:51.2717,lng:26.2539,cnt:2,main:false},
-            {name:'Кривиця',lat:51.5014,lng:26.4008,cnt:2,main:false},
-            {name:'Ясинець',lat:51.5208,lng:26.5072,cnt:2,main:false},
-            {name:'Хиночі',lat:51.3822,lng:26.6814,cnt:2,main:false},
-            {name:'Сохи',lat:51.5522,lng:26.6528,cnt:1,main:false},
-            {name:'Жадень',lat:51.7019,lng:26.6811,cnt:1,main:false},
-            {name:'Орв\'яниця',lat:51.4869,lng:26.5078,cnt:1,main:false},
-            {name:'Мілячі',lat:51.6058,lng:26.4494,cnt:1,main:false},
-        ];
-
-        locs.forEach(function(l){
-            const r=l.main?12:Math.max(6,4+l.cnt*1.5);
-            const color=l.main?'#c9a227':l.cnt>3?'#8b9e6a':'#888';
-            const marker=L.circleMarker([l.lat,l.lng],{
-                radius:r,fillColor:color,color:'#fff',
-                weight:l.main?2:1,opacity:.9,fillOpacity:.75
-            }).addTo(map);
-            marker.bindPopup(
-                `<strong>${l.name}</strong><br><span style="font-size:.75rem;color:#888">${l.cnt} ${l.cnt===1?'стаття':l.cnt<5?'статті':'статей'} в архіві</span>`,
-                {maxWidth:160}
-            );
-            if(l.main||l.cnt>=3){
-                L.tooltip({permanent:true,direction:'top',className:'ph-map-label'})
-                    .setContent(l.name)
-                    .setLatLng([l.lat,l.lng])
-                    .addTo(map);
-            }
-        });
-    }
-})();
-</script>
-<style>
-.ph-map-label{background:rgba(255,255,255,.9);border:none;box-shadow:none;font-size:.65rem;font-weight:600;padding:.15rem .35rem;border-radius:3px;white-space:nowrap;color:#333}
-.leaflet-popup-content-wrapper{border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,.15)}
-</style>
-
 <main class="ph-main">
     <div class="container">
         <div id="phList"></div>
@@ -582,7 +489,7 @@ const LF={pl:'польська',ru:'російська',uk:'українська
 const FL={pl:'🇵🇱',ru:'🇷🇺',uk:'🇺🇦',de:'🇩🇪'};
 const LC={pl:'lpl',ru:'lru',uk:'luk',de:'lde'};
 
-let ALL=[],FIL=[],LANG='all',Q='',TAG='',curIdx=-1;
+let ALL=[],FIL=[],ERA='all',Q='',TAG='',curIdx=-1;
 
 function fd(s){
     const d=new Date(s+'T12:00:00');
