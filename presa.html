@@ -254,6 +254,22 @@
     .ph-mphoto{margin:1.25rem -1.25rem 0}
     .ph-mnav-btn span{display:none}
 }
+
+/* ── era filter new labels ── */
+.ph-fb[data-era]{font-size:.7rem}
+/* ── multi-image gallery ── */
+.ph-img-gallery{display:flex;gap:.5rem;overflow-x:auto;padding:.4rem 0 .6rem;scrollbar-width:thin;margin-top:.6rem}
+.ph-img-gallery img{height:80px;width:auto;border-radius:5px;cursor:pointer;flex-shrink:0;opacity:.55;transition:opacity .2s,border-color .2s;border:2px solid transparent}
+.ph-img-gallery img.gal-active{opacity:1;border-color:var(--color-accent,#c9a227)}
+.ph-img-gallery img:hover{opacity:.8}
+.ph-img-pages{font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--color-text-muted);margin-top:.2rem}
+/* ── historical note in modal ── */
+.ph-hist-note{background:linear-gradient(135deg,rgba(201,162,39,.07) 0%,rgba(201,162,39,.02) 100%);border-left:3px solid rgba(201,162,39,.45);border-radius:0 8px 8px 0;padding:.9rem 1.2rem;margin-top:1.4rem}
+.ph-hist-note-lbl{font-size:.52rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:rgba(201,162,39,.85);margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem}
+.ph-hist-note-text{font-family:var(--font-display);font-size:.95rem;font-style:italic;font-weight:300;line-height:1.75;color:var(--color-text-secondary)}
+/* ── card type indicator ── */
+.ph-card-era{position:absolute;top:.6rem;right:.6rem;font-size:.45rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.18rem .45rem;border-radius:3px;pointer-events:none}
+.ph-card{position:relative}
 </style>
 </head>
 <body>
@@ -321,11 +337,12 @@
                 <button class="ph-sclear" id="phQClear" aria-label="Очистити пошук">✕</button>
             </div>
             <div class="ph-flt" id="phLf">
-                <button class="ph-fb on" data-lang="all">Всі</button>
-                <button class="ph-fb" data-lang="pl">🇵🇱 Польська</button>
-                <button class="ph-fb" data-lang="ru">🇷🇺 Російська</button>
-                <button class="ph-fb" data-lang="uk">🇺🇦 Українська</button>
-                <button class="ph-fb" data-lang="de">🇩🇪 Німецька</button>
+                <button class="ph-fb on" data-era="all">Всі</button>
+                <button class="ph-fb" data-era="empire">🏰 Імперія</button>
+                <button class="ph-fb" data-era="interwar">🗺 Міжвоєнна</button>
+                <button class="ph-fb" data-era="soviet">☭ Радянська</button>
+                <button class="ph-fb" data-era="science">🔬 Наука</button>
+                <button class="ph-fb" data-era="crime">⚖️ Кримінал</button>
             </div>
             <button class="ph-reset" id="phReset" aria-label="Скинути фільтри">
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg>
@@ -473,7 +490,14 @@ function setStats(){
 function filter(){
     const q=Q.toLowerCase().trim();
     FIL=ALL.filter(e=>{
-        if(LANG!=='all'&&e.language!==LANG)return false;
+        if(ERA!=='all'){
+            const y=e.year;
+            if(ERA==='empire'&&!(y<1917))return false;
+            if(ERA==='interwar'&&!(y>=1917&&y<1939))return false;
+            if(ERA==='soviet'&&!(y>=1939&&y<1992))return false;
+            if(ERA==='science'&&!((e.tags||[]).some(t=>t.includes('наука') || t.includes('природозн') || t.includes('антропо') || t.includes('географ'))))return false;
+            if(ERA==='crime'&&!((e.tags||[]).some(t=>t.includes('кримін') || t.includes('суд') || t.includes('погром'))))return false;
+        }
         if(TAG&&!(e.tags||[]).includes(TAG))return false;
         if(!q)return true;
         return (e.headline||'').toLowerCase().includes(q)||
@@ -487,16 +511,16 @@ function filter(){
 }
 
 function updateResetBtn(){
-    const active=LANG!=='all'||Q.trim()||TAG;
+    const active=ERA!=='all'||Q.trim()||TAG;
     document.getElementById('phReset').classList.toggle('vis',!!active);
     document.getElementById('phQClear').classList.toggle('vis',!!Q.trim());
 }
 
 function resetAll(){
-    Q='';TAG='';LANG='all';
+    Q='';TAG='';ERA='all';
     document.getElementById('phQ').value='';
     document.querySelectorAll('.ph-fb').forEach(b=>b.classList.remove('on'));
-    document.querySelector('.ph-fb[data-lang="all"]').classList.add('on');
+    document.querySelector('.ph-fb[data-era="all"]').classList.add('on');
     filter();
 }
 
@@ -655,17 +679,28 @@ function buildModal(d){
         :`<div class="ph-slbl">🇺🇦 Переклад українською</div>
           <div class="ph-transl-full">${esc(d.translation||'')}</div>`;
 
-    const photoBlock=d.imageUrl
-        ?`<div class="ph-mphoto" onclick="phLbOpen('${d.imageUrl}')">
-               <img src="${d.imageUrl}" alt="${d.headline}">
-               <div class="ph-mphoto-cap">
-                   <span>${d.source}, ${d.year}${d.page?', стор. '+d.page:''}</span>
-                   <span class="ph-mphoto-zoom">
-                       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
-                       Збільшити
-                   </span>
-               </div>
-           </div>`:'';
+    /* multi-image gallery or single image */
+    let photoBlock='';
+    if(d.imageUrls&&d.imageUrls.length>1){
+        const thumbs=d.imageUrls.map((u,i)=>`<img src="${u}" data-src="${u}" class="${i===0?'gal-active':''}" onclick="phGalSelect(this,'${u}')" alt="Сторінка ${i+1}">`).join('');
+        photoBlock=`<div class="ph-mphoto" id="phMainImg" onclick="phLbOpen(this.querySelector('img').src)">
+            <img src="${d.imageUrls[0]}" alt="${d.headline}" id="phMainImgEl">
+            <div class="ph-mphoto-cap">
+                <span>${d.source}, ${d.year}${d.page?', стор. '+d.page:''}</span>
+                <span class="ph-mphoto-zoom"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg> Збільшити</span>
+            </div>
+        </div>
+        <div class="ph-img-gallery" id="phGallery">${thumbs}</div>
+        <div class="ph-img-pages">${d.imageUrls.length} сторінок документа</div>`;
+    } else if(d.imageUrl){
+        photoBlock=`<div class="ph-mphoto" onclick="phLbOpen('${d.imageUrl}')">
+            <img src="${d.imageUrl}" alt="${d.headline}">
+            <div class="ph-mphoto-cap">
+                <span>${d.source}, ${d.year}${d.page?', стор. '+d.page:''}</span>
+                <span class="ph-mphoto-zoom"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg> Збільшити</span>
+            </div>
+        </div>`;
+    }
 
     document.getElementById('phMB').innerHTML=`
         <h2 class="ph-mh">${esc(d.headline)}</h2>
@@ -682,6 +717,7 @@ function buildModal(d){
         ${noteBlock}
         ${textBlock}
         ${tags?`<div class="ph-mtags">${tags}</div>`:''}
+        ${d.historicalNote?`<div class="ph-hist-note"><div class="ph-hist-note-lbl"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Історична ремарка</div><div class="ph-hist-note-text">${esc(d.historicalNote)}</div></div>`:''}
         <div class="ph-mactions">
             ${d.sourceUrl?`<a href="${d.sourceUrl}" target="_blank" rel="noopener" class="ph-btn ph-btn-p">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
@@ -816,7 +852,7 @@ document.getElementById('phQClear').addEventListener('click',()=>{
 document.getElementById('phLf').addEventListener('click',e=>{
     const b=e.target.closest('.ph-fb');if(!b)return;
     document.querySelectorAll('.ph-fb').forEach(x=>x.classList.remove('on'));
-    b.classList.add('on');LANG=b.dataset.lang;filter();
+    b.classList.add('on');ERA=b.dataset.era;filter();
 });
 document.getElementById('phReset').addEventListener('click',resetAll);
 window.addEventListener('scroll',()=>document.getElementById('phBar').classList.toggle('scrolled',scrollY>80),{passive:true});
