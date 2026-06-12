@@ -293,6 +293,11 @@
 .td-close{margin-left:auto;background:none;border:none;color:var(--color-text-muted);cursor:pointer;font-size:.9rem;padding:.2rem .4rem;border-radius:4px;flex-shrink:0}
 .td-close:hover{color:var(--color-text)}
 @media(max-width:700px){.td-inner{padding:1rem}; .td-card{width:200px}}
+
+/* ── card zoom button ── */
+.ph-zoom-btn{position:absolute;top:.5rem;left:.5rem;width:26px;height:26px;border-radius:50%;background:rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.8);cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;z-index:2}
+.ph-card:hover .ph-zoom-btn{opacity:1}
+.ph-zoom-btn:hover{background:rgba(201,162,39,.7);border-color:rgba(201,162,39,.5)}
 </style>
 </head>
 <body>
@@ -393,6 +398,100 @@
         <div class="td-cards" id="tdCards"></div>
     </div>
 </section>
+
+
+<!-- ═══ PRESS LOCATIONS MAP ═══ -->
+<section id="phMapSection" style="border-bottom:1px solid var(--color-border-light);background:var(--color-bg)">
+    <div style="max-width:1200px;margin:0 auto;padding:1.2rem 2rem">
+        <details id="phMapDetails">
+            <summary style="cursor:pointer;list-style:none;display:flex;align-items:center;gap:.7rem;user-select:none">
+                <div style="width:30px;height:30px;border-radius:50%;background:rgba(201,162,39,.12);border:1px solid rgba(201,162,39,.25);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c9a227" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                </div>
+                <div>
+                    <span style="font-family:var(--font-display);font-size:.95rem;font-weight:500;color:var(--color-text)">Географія архіву</span>
+                    <span style="font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--color-text-muted);margin-left:.6rem">Населені пункти зі статей</span>
+                </div>
+                <span style="margin-left:auto;font-size:.7rem;color:var(--color-text-muted)" id="phMapToggleLabel">▼ Показати карту</span>
+            </summary>
+            <div id="phMapWrap" style="margin-top:1rem;border-radius:12px;overflow:hidden;height:360px;border:1px solid var(--color-border)">
+                <div id="phMap" style="width:100%;height:100%"></div>
+            </div>
+        </details>
+    </div>
+</section>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+(function(){
+    const details=document.getElementById('phMapDetails');
+    const lbl=document.getElementById('phMapToggleLabel');
+    let mapInit=false;
+    details.addEventListener('toggle',function(){
+        lbl.textContent=details.open?'▲ Сховати карту':'▼ Показати карту';
+        if(!details.open||mapInit)return;
+        mapInit=true;
+        setTimeout(initMap,50);
+    });
+    function initMap(){
+        const map=L.map('phMap',{scrollWheelZoom:false}).setView([51.55,26.57],9);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+            attribution:'© OpenStreetMap',maxZoom:17
+        }).addTo(map);
+
+        /* Locations with article counts */
+        const locs=[
+            {name:'Дубровиця',lat:51.5667,lng:26.5667,cnt:84,main:true},
+            {name:'Сарни',lat:51.3378,lng:26.6215,cnt:22,main:true},
+            {name:'Рівне',lat:50.6199,lng:26.2516,cnt:13,main:true},
+            {name:'Колки',lat:51.3186,lng:25.9758,cnt:8},
+            {name:'Висоцьк',lat:51.7167,lng:26.5333,cnt:5},
+            {name:'Бережниця',lat:51.48,lng:26.61,cnt:5},
+            {name:'Луцьк',lat:50.7472,lng:25.3254,cnt:4},
+            {name:'Бережки',lat:51.59,lng:26.53,cnt:4},
+            {name:'Трипутні',lat:51.44,lng:26.49,cnt:3},
+            {name:'Воробин',lat:51.61,lng:26.51,cnt:3},
+            {name:'Берестя',lat:51.55,lng:26.62,cnt:3},
+            {name:'Селець',lat:51.53,lng:26.58,cnt:3},
+            {name:'Лунинець',lat:52.2333,lng:26.8,cnt:2},
+            {name:'Пінськ',lat:52.1204,lng:26.1015,cnt:2},
+            {name:'Стрільськ',lat:51.65,lng:26.75,cnt:2},
+            {name:'Рокитне',lat:51.2667,lng:27.2,cnt:2},
+            {name:'Рафалівка',lat:51.2667,lng:26.2667,cnt:2},
+            {name:'Кривиця',lat:51.52,lng:26.44,cnt:2},
+            {name:'Ясинець',lat:51.51,lng:26.56,cnt:2},
+            {name:'Хиночі',lat:51.39,lng:26.66,cnt:2},
+            {name:'Сохи',lat:51.56,lng:26.64,cnt:1},
+            {name:'Жадень',lat:51.72,lng:26.68,cnt:1},
+            {name:'Орв'яниця',lat:51.45,lng:26.53,cnt:1},
+            {name:'Мілячі',lat:51.62,lng:26.44,cnt:1},
+        ];
+
+        locs.forEach(function(l){
+            const r=l.main?12:Math.max(6,4+l.cnt*1.5);
+            const color=l.main?'#c9a227':l.cnt>3?'#8b9e6a':'#888';
+            const marker=L.circleMarker([l.lat,l.lng],{
+                radius:r,fillColor:color,color:'#fff',
+                weight:l.main?2:1,opacity:.9,fillOpacity:.75
+            }).addTo(map);
+            marker.bindPopup(
+                `<strong>${l.name}</strong><br><span style="font-size:.75rem;color:#888">${l.cnt} ${l.cnt===1?'стаття':l.cnt<5?'статті':'статей'} в архіві</span>`,
+                {maxWidth:160}
+            );
+            if(l.main||l.cnt>=3){
+                L.tooltip({permanent:true,direction:'top',className:'ph-map-label'})
+                    .setContent(l.name)
+                    .setLatLng([l.lat,l.lng])
+                    .addTo(map);
+            }
+        });
+    }
+})();
+</script>
+<style>
+.ph-map-label{background:rgba(255,255,255,.9);border:none;box-shadow:none;font-size:.65rem;font-weight:600;padding:.15rem .35rem;border-radius:3px;white-space:nowrap;color:#333}
+.leaflet-popup-content-wrapper{border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,.15)}
+</style>
 
 <main class="ph-main">
     <div class="container">
@@ -497,7 +596,10 @@ window.addEventListener('load',()=>document.getElementById('phHero').classList.a
 /* ── load ── */
 async function load(){
     try{
-        const r=await fetch(DATA_URL);
+        /* Try relative path first (local dev), then GitHub */
+        let r;
+        try{r=await fetch('press-data.json');}catch(e){r={ok:false};}
+        if(!r.ok) r=await fetch(DATA_URL);
         if(!r.ok)throw new Error(r.status);
         ALL=await r.json();
         setStats();
@@ -645,6 +747,7 @@ function cardHTML(e,q){
             <img data-src="${e.imageUrl||''}" alt="${e.headline}">
             <div class="ph-ci-ph">Дб</div>
             <span class="ph-ci-year">${e.year}</span>
+            ${e.imageUrl?`<button class="ph-zoom-btn" onclick="event.stopPropagation();phLbOpen('${e.imageUrl}')" title="Збільшити"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></button>`:''}
             
         </div>
         <div class="ph-cb">
@@ -714,7 +817,8 @@ function buildModal(d){
         ?`<div class="ph-note"><span class="ph-note-ico">⚠️</span><div>${esc(d.note)}</div></div>`:'';
 
     /* text layout */
-    const textBlock=d.original
+    /* If article has original text — show two columns; if only translation — full width */
+    const textBlock=d.original&&d.original.trim().length>30
         ?`<div class="ph-cols">
             <div class="ph-col-orig">
                 <button class="ph-col-orig-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'▲ Сховати оригінал':'▼ Показати оригінал (${ll})'">▼ Показати оригінал (${ll})</button>
@@ -728,8 +832,7 @@ function buildModal(d){
                 <div class="ph-transl">${esc(d.translation||'')}</div>
             </div>
           </div>`
-        :`<div class="ph-slbl">🇺🇦 Переклад українською</div>
-          <div class="ph-transl-full">${esc(d.translation||'')}</div>`;
+        :`<div class="ph-transl-full">${esc(d.translation||'')}</div>`;
 
     /* multi-image gallery or single image */
     let photoBlock='';
