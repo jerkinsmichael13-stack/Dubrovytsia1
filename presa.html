@@ -582,10 +582,20 @@ function cardHTML(e,q){
     ).join('');
     const lc=LC[e.language]||'lpl';
     const hasNote=!!(e.historicalNote);
-    /* smart excerpt: first sentence or 160 chars */
-    const raw=(e.translation||'').replace(/\n/g,' ');
-    const dot=raw.search(/[.!?]/);
-    const ex=dot>0&&dot<180?raw.slice(0,dot+1):raw.slice(0,160)+'…';
+    /* smart excerpt: skip headers/labels, find first meaningful line */
+    const ex=(function(tr){
+        const lines=tr.split('\n').map(l=>l.trim()).filter(Boolean);
+        for(const l of lines){
+            if(l===l.toUpperCase()&&l.length<80)continue;
+            if(l.length<20)continue;
+            if(l.endsWith(':')&&l.length<50)continue;
+            if(/^[А-ЯҐЄІЇa-яґєії\s\.]+\.$/.test(l)&&l.length<30)continue;
+            if(l.includes('кореспондент повідомляє')&&l.length<60)continue;
+            return l.length>160?l.slice(0,158)+'…':l;
+        }
+        const fb=tr.replace(/\n/g,' ').trim();
+        return fb.length>160?fb.slice(0,158)+'…':fb;
+    })(e.translation||'');
     const hlHead=q?hl(e.headline,q):esc(e.headline);
     const hlEx=q?hl(ex,q):esc(ex);
     return `<article class="ph-card" data-id="${e.id}" tabindex="0" role="button" aria-label="${e.headline}">
