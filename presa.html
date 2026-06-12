@@ -434,7 +434,7 @@
         setTimeout(initMap,50);
     });
     function initMap(){
-        const map=L.map('phMap',{scrollWheelZoom:false}).setView([51.55,26.57],9);
+        const map=L.map('phMap',{scrollWheelZoom:false}).setView([51.52,26.55],9);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
             attribution:'© OpenStreetMap',maxZoom:17
         }).addTo(map);
@@ -444,27 +444,27 @@
             {name:'Дубровиця',lat:51.5667,lng:26.5667,cnt:84,main:true},
             {name:'Сарни',lat:51.3378,lng:26.6215,cnt:22,main:true},
             {name:'Рівне',lat:50.6199,lng:26.2516,cnt:13,main:true},
-            {name:'Колки',lat:51.3186,lng:25.9758,cnt:8},
-            {name:'Висоцьк',lat:51.7167,lng:26.5333,cnt:5},
-            {name:'Бережниця',lat:51.48,lng:26.61,cnt:5},
-            {name:'Луцьк',lat:50.7472,lng:25.3254,cnt:4},
-            {name:'Бережки',lat:51.59,lng:26.53,cnt:4},
-            {name:'Трипутні',lat:51.44,lng:26.49,cnt:3},
-            {name:'Воробин',lat:51.61,lng:26.51,cnt:3},
-            {name:'Берестя',lat:51.55,lng:26.62,cnt:3},
-            {name:'Селець',lat:51.53,lng:26.58,cnt:3},
-            {name:'Лунинець',lat:52.2333,lng:26.8,cnt:2},
-            {name:'Пінськ',lat:52.1204,lng:26.1015,cnt:2},
-            {name:'Стрільськ',lat:51.65,lng:26.75,cnt:2},
-            {name:'Рокитне',lat:51.2667,lng:27.2,cnt:2},
-            {name:'Рафалівка',lat:51.2667,lng:26.2667,cnt:2},
-            {name:'Кривиця',lat:51.52,lng:26.44,cnt:2},
-            {name:'Ясинець',lat:51.51,lng:26.56,cnt:2},
-            {name:'Хиночі',lat:51.39,lng:26.66,cnt:2},
-            {name:'Сохи',lat:51.56,lng:26.64,cnt:1},
-            {name:'Жадень',lat:51.72,lng:26.68,cnt:1},
-            {name:'Орв\'яниця',lat:51.45,lng:26.53,cnt:1},
-            {name:'Мілячі',lat:51.62,lng:26.44,cnt:1},
+            {name:'Колки',lat:51.3469,lng:26.3681,cnt:8,main:false},
+            {name:'Висоцьк',lat:51.7044,lng:26.5200,cnt:5,main:false},
+            {name:'Бережниця',lat:51.5028,lng:26.6858,cnt:5,main:false},
+            {name:'Луцьк',lat:50.7472,lng:25.3254,cnt:4,main:true},
+            {name:'Бережки',lat:51.5889,lng:26.5222,cnt:4,main:false},
+            {name:'Трипутні',lat:51.4239,lng:26.4839,cnt:3,main:false},
+            {name:'Воробин',lat:51.5939,lng:26.5283,cnt:3,main:false},
+            {name:'Берестя',lat:51.5606,lng:26.6450,cnt:3,main:false},
+            {name:'Селець',lat:51.5317,lng:26.5944,cnt:3,main:false},
+            {name:'Лунинець',lat:52.2494,lng:26.8056,cnt:2,main:false},
+            {name:'Пінськ',lat:52.1204,lng:26.1015,cnt:2,main:false},
+            {name:'Стрільськ',lat:51.6456,lng:26.7342,cnt:2,main:false},
+            {name:'Рокитне',lat:51.2822,lng:27.2014,cnt:2,main:false},
+            {name:'Рафалівка',lat:51.2717,lng:26.2539,cnt:2,main:false},
+            {name:'Кривиця',lat:51.5014,lng:26.4008,cnt:2,main:false},
+            {name:'Ясинець',lat:51.5208,lng:26.5072,cnt:2,main:false},
+            {name:'Хиночі',lat:51.3822,lng:26.6814,cnt:2,main:false},
+            {name:'Сохи',lat:51.5522,lng:26.6528,cnt:1,main:false},
+            {name:'Жадень',lat:51.7019,lng:26.6811,cnt:1,main:false},
+            {name:'Орв\'яниця',lat:51.4869,lng:26.5078,cnt:1,main:false},
+            {name:'Мілячі',lat:51.6058,lng:26.4494,cnt:1,main:false},
         ];
 
         locs.forEach(function(l){
