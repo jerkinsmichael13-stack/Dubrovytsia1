@@ -126,7 +126,7 @@
 .ph-card:hover .ph-ci img{transform:scale(1.06);filter:sepia(.15) contrast(1.1) brightness(1.02)}
 .ph-ci-ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:4.5rem;font-weight:300;letter-spacing:.08em;color:var(--color-accent);opacity:.12;transition:opacity .3s ease}
 .ph-ci img.loaded~.ph-ci-ph{opacity:0}
-.ph-ci-year{position:absolute;bottom:.75rem;left:1rem;font-family:var(--font-display);font-size:1.5rem;font-weight:600;color:#c9a227;text-shadow:0 2px 8px rgba(0,0,0,.95),0 0 20px rgba(0,0,0,.8);line-height:1;letter-spacing:-.01em}
+.ph-ci-year{position:absolute;bottom:.75rem;left:1rem;font-family:var(--font-display);font-size:1.3rem;font-weight:700;color:#f0d060;text-shadow:0 1px 3px rgba(0,0,0,1),0 2px 12px rgba(0,0,0,1),0 0 30px rgba(0,0,0,.9);line-height:1;letter-spacing:-.01em;background:rgba(0,0,0,.45);padding:.1rem .4rem;border-radius:4px}
 .ph-lang{position:absolute;top:.65rem;right:.65rem;font-size:.48rem;font-weight:800;letter-spacing:.12em;padding:.2rem .55rem;border-radius:6px;text-transform:uppercase;line-height:1.4}
 .lpl{background:rgba(30,64,175,.82);color:#bfdbfe}
 .lru{background:rgba(153,27,27,.82);color:#fecaca}
@@ -442,7 +442,7 @@ const LF={pl:'польська',ru:'російська',uk:'українська
 const FL={pl:'🇵🇱',ru:'🇷🇺',uk:'🇺🇦',de:'🇩🇪'};
 const LC={pl:'lpl',ru:'lru',uk:'luk',de:'lde'};
 
-let ALL=[],FIL=[],ERA='all',Q='',TAG='',curIdx=-1;
+let ALL=[],FIL=[],LANG='all',Q='',TAG='',curIdx=-1;
 
 function fd(s){
     const d=new Date(s+'T12:00:00');
@@ -603,7 +603,7 @@ function cardHTML(e,q){
             <img data-src="${e.imageUrl||''}" alt="${e.headline}">
             <div class="ph-ci-ph">Дб</div>
             <span class="ph-ci-year">${e.year}</span>
-            <span class="ph-lang ${lc}">${(e.language||'').toUpperCase()}</span>
+            
         </div>
         <div class="ph-cb">
             <div class="ph-cm">
@@ -781,7 +781,7 @@ function phCite(id){
     /* Academic UA style */
     const academic=`«${d.headline}» // ${d.source}. — ${d.city||''}${d.city?', ':''}${dateFull}${d.volume?'. — '+d.volume:''}${d.page?'. — С. '+d.page:''}. — Цифровий архів Дубровиці. URL: ${url} (дата звернення: ${today}).`;
     /* Short style */
-    const short=`${d.source} (${fmtYear(d.date)}). ${d.headline}. Цифровий архів Дубровиці. ${url}`;
+    const short=`${d.source} (${d.year}). ${d.headline}. Цифровий архів Дубровиці. ${url}`;
     /* Original source */
     const original=d.sourceUrl?`Оригінал: ${d.source}, ${dateFull}${d.page?', стор. '+d.page:''}. ${d.sourceUrl}`:'';
 
