@@ -857,7 +857,7 @@ function buildModal(d){
 
 /* ── share ── */
 function phShare(id){
-    const url=location.origin+location.pathname+'?id='+id;
+    const url='https://dubrovytsia.site/presa.html?id='+id;
     if(navigator.clipboard){
         navigator.clipboard.writeText(url).then(()=>showToast());
     }else{
@@ -877,7 +877,7 @@ function showToast(){
 function phCite(id){
     const d=ALL.find(e=>e.id===id);
     if(!d)return;
-    const url=location.origin+location.pathname+'?id='+id;
+    const url='https://dubrovytsia.site/presa.html?id='+id;
     const today=new Date().toLocaleDateString('uk-UA',{day:'numeric',month:'long',year:'numeric'});
     const dateFull=fd(d.date);
     /* Academic UA style */
