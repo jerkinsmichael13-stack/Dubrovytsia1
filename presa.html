@@ -746,11 +746,14 @@ function buildModal(d){
     const isUk = d.language === 'uk';
     const hasOriginal = d.original && d.original.trim().length > 30;
     let textBlock;
-    if(isUk && hasOriginal){
-        /* Ukrainian — show only the original, full width, no "translation" column */
+    if(isUk){
+        /* Ukrainian original — show the longer of original/translation (translation usually has full text) */
+        const ukText = (d.translation||'').length >= (d.original||'').length
+            ? (d.translation||'')
+            : (d.original||'');
         textBlock=`<div class="ph-transl-full">
             <div class="ph-slbl" style="margin-bottom:.75rem">🇺🇦 Оригінал (українська)</div>
-            ${esc(d.original)}
+            ${esc(ukText)}
         </div>`;
     } else if(!isUk && hasOriginal){
         /* Foreign language — two columns: collapsible original + translation */
