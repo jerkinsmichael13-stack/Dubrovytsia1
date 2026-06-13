@@ -738,9 +738,23 @@ function buildModal(d){
         ?`<div class="ph-note"><span class="ph-note-ico">⚠️</span><div>${esc(d.note)}</div></div>`:'';
 
     /* text layout */
-    /* If article has original text — show two columns; if only translation — full width */
-    const textBlock=d.original&&d.original.trim().length>30
-        ?`<div class="ph-cols">
+    /* Three cases:
+       1. Ukrainian original (lang=uk): show single column "Оригінал" — no redundant translation
+       2. Foreign original exists: two columns (collapsible original + translation)
+       3. No original: single full-width translation
+    */
+    const isUk = d.language === 'uk';
+    const hasOriginal = d.original && d.original.trim().length > 30;
+    let textBlock;
+    if(isUk && hasOriginal){
+        /* Ukrainian — show only the original, full width, no "translation" column */
+        textBlock=`<div class="ph-transl-full">
+            <div class="ph-slbl" style="margin-bottom:.75rem">🇺🇦 Оригінал (українська)</div>
+            ${esc(d.original)}
+        </div>`;
+    } else if(!isUk && hasOriginal){
+        /* Foreign language — two columns: collapsible original + translation */
+        textBlock=`<div class="ph-cols">
             <div class="ph-col-orig">
                 <button class="ph-col-orig-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'▲ Сховати оригінал':'▼ Показати оригінал (${ll})'">▼ Показати оригінал (${ll})</button>
                 <div class="ph-orig-wrap">
@@ -752,8 +766,11 @@ function buildModal(d){
                 <div class="ph-slbl">🇺🇦 Переклад українською</div>
                 <div class="ph-transl">${esc(d.translation||'')}</div>
             </div>
-          </div>`
-        :`<div class="ph-transl-full">${esc(d.translation||'')}</div>`;
+          </div>`;
+    } else {
+        /* No original stored — show translation full width */
+        textBlock=`<div class="ph-transl-full">${esc(d.translation||'')}</div>`;
+    }
 
     /* multi-image gallery or single image */
     let photoBlock='';
@@ -980,7 +997,7 @@ let _lbScale=1,_lbDrag=false,_lbDragX=0,_lbDragY=0,_lbTransX=0,_lbTransY=0;
 function phLbOpen(url){
     _lbScale=1;_lbTransX=0;_lbTransY=0;
     const img=document.getElementById('phLbI');
-    img.src=url;img.style.transform='scale(1) translate(0,0)';img.style.cursor='zoom-in';
+    img.src=url;img.style.transform='scale(1) translate(0,0)';img.style.cursor='zoom-in';_lbTransX=0;_lbTransY=0;
     document.getElementById('phLb').classList.add('open');
     // If called directly (not via phLbOpenGallery), reset lb nav
     if(!_lbUrls.length){
@@ -993,9 +1010,64 @@ function phLbZoom(dir){
     if(dir===0){_lbScale=1;_lbTransX=0;_lbTransY=0;}
     else if(dir>0){_lbScale=Math.min(_lbScale*1.4,8);}
     else{_lbScale=Math.max(_lbScale/1.4,.5);if(_lbScale<=1){_lbTransX=0;_lbTransY=0;}}
-    img.style.transform=`scale(${_lbScale}) translate(${_lbTransX/_lbScale}px,${_lbTransY/_lbScale}px)`;
-    img.style.cursor=_lbScale>1?'grab':'zoom-in';
+    _lbApplyTransform();
 }
+function _lbApplyTransform(){
+    const img=document.getElementById('phLbI');
+    if(!img)return;
+    img.style.transform=`scale(${_lbScale}) translate(${_lbTransX/_lbScale}px,${_lbTransY/_lbScale}px)`;
+    img.style.cursor=_lbScale>1?'grabbing':'zoom-in';
+}
+
+/* ── Lightbox pan/drag (mouse) ── */
+(function(){
+    const lb=document.getElementById('phLb');
+    if(!lb)return;
+    let dragging=false, startX=0, startY=0, startTX=0, startTY=0;
+    lb.addEventListener('mousedown',e=>{
+        if(e.target.id!=='phLbI')return;
+        if(_lbScale<=1)return;
+        dragging=true;
+        startX=e.clientX; startY=e.clientY;
+        startTX=_lbTransX; startTY=_lbTransY;
+        e.preventDefault();
+        document.getElementById('phLbI').style.cursor='grabbing';
+    });
+    window.addEventListener('mousemove',e=>{
+        if(!dragging)return;
+        _lbTransX=startTX+(e.clientX-startX);
+        _lbTransY=startTY+(e.clientY-startY);
+        _lbApplyTransform();
+    });
+    window.addEventListener('mouseup',()=>{
+        if(dragging){
+            dragging=false;
+            const img=document.getElementById('phLbI');
+            if(img)img.style.cursor=_lbScale>1?'grab':'zoom-in';
+        }
+    });
+})();
+
+/* ── Lightbox pan/drag (touch, single finger when zoomed) ── */
+(function(){
+    const lb=document.getElementById('phLb');
+    if(!lb)return;
+    let dragging=false,startX=0,startY=0,startTX=0,startTY=0;
+    lb.addEventListener('touchstart',e=>{
+        if(e.touches.length!==1||_lbScale<=1)return;
+        dragging=true;
+        startX=e.touches[0].clientX; startY=e.touches[0].clientY;
+        startTX=_lbTransX; startTY=_lbTransY;
+    },{passive:true});
+    lb.addEventListener('touchmove',e=>{
+        if(!dragging||e.touches.length!==1)return;
+        _lbTransX=startTX+(e.touches[0].clientX-startX);
+        _lbTransY=startTY+(e.touches[0].clientY-startY);
+        _lbApplyTransform();
+        e.preventDefault();
+    },{passive:false});
+    lb.addEventListener('touchend',()=>{dragging=false;});
+})();
 /* ── Gallery thumbnail selector ── */
 let _galCurrentIdx=0, _galUrls=[];
 function phGalSelect(thumb, url, idx){
@@ -1147,8 +1219,8 @@ document.addEventListener('keydown',e=>{
             const d0=Math.hypot(_pt2.x-_pt1.x,_pt2.y-_pt1.y);
             const d1=Math.hypot(e.touches[1].clientX-e.touches[0].clientX,e.touches[1].clientY-e.touches[0].clientY);
             _lbScale=Math.min(8,Math.max(0.5,_pinchStartScale*(d1/d0)));
-            img.style.transform=`scale(${_lbScale}) translate(0,0)`;
-            img.style.cursor=_lbScale>1?'grab':'zoom-in';
+            _lbTransX=0;_lbTransY=0; /* reset pan on pinch */
+            _lbApplyTransform();
             e.preventDefault();
         }
     },{passive:false});
