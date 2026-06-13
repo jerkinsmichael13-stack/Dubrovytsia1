@@ -728,7 +728,6 @@ function phClose(){
 }
 
 function buildModal(d){
-    _galCurrentIdx=0; _galUrls=[];
     const ll=LF[d.language]||d.language;
     const tags=(d.tags||[]).map(t=>
         `<span class="ph-tag clickable${TAG===t?' active-tag':''}" data-tag="${t}" style="cursor:pointer">${t}</span>`
@@ -759,19 +758,20 @@ function buildModal(d){
     /* multi-image gallery or single image */
     let photoBlock='';
     if(d.imageUrls&&d.imageUrls.length>1){
-        const _urls=d.imageUrls;
-        const thumbs=_urls.map((u,i)=>`<img src="${u}" data-src="${u}" class="${i===0?'gal-active':''}" onclick="phGalSelect(this,'${u}',${i})" alt="Сторінка ${i+1}" title="Сторінка ${i+1}">`).join('');
+        /* Store URLs globally — avoid JSON.stringify in onclick attrs (breaks on double quotes) */
+        _galUrls=d.imageUrls; _galCurrentIdx=0;
+        const thumbs=d.imageUrls.map((u,i)=>`<img src="${u}" data-src="${u}" class="${i===0?'gal-active':''}" onclick="phGalSelect(this,'${u}',${i})" alt="Сторінка ${i+1}" title="Сторінка ${i+1}">`).join('');
         photoBlock=`<div class="ph-mphoto" id="phMainImg">
-            <img src="${_urls[0]}" alt="${d.headline}" id="phMainImgEl" style="cursor:zoom-in" onclick="phLbOpenGallery(${JSON.stringify(_urls)},0)">
-            <button class="ph-gal-prev" id="phGalPrev" onclick="phGalNav(-1,${JSON.stringify(_urls)})" title="Попередня сторінка">‹</button>
-            <button class="ph-gal-next" id="phGalNext" onclick="phGalNav(1,${JSON.stringify(_urls)})" title="Наступна сторінка">›</button>
+            <img src="${d.imageUrls[0]}" alt="${d.headline}" id="phMainImgEl" style="cursor:zoom-in" onclick="phLbOpenGallery(_galUrls,0)">
+            <button class="ph-gal-prev" id="phGalPrev" onclick="phGalNav(-1)" title="Попередня сторінка">‹</button>
+            <button class="ph-gal-next" id="phGalNext" onclick="phGalNav(1)" title="Наступна сторінка">›</button>
             <div class="ph-mphoto-cap">
                 <span>${d.source}, ${d.year}${d.page?', стор. '+d.page:''}</span>
-                <span class="ph-mphoto-zoom" onclick="phLbOpenGallery(${JSON.stringify(_urls)},0)" style="cursor:pointer"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg> Збільшити</span>
+                <span class="ph-mphoto-zoom" onclick="phLbOpenGallery(_galUrls,0)" style="cursor:pointer"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg> Збільшити</span>
             </div>
         </div>
         <div class="ph-img-gallery" id="phGallery">${thumbs}</div>
-        <div class="ph-img-pages" id="phGalCount">Сторінка 1 з ${_urls.length}</div>`;
+        <div class="ph-img-pages" id="phGalCount">Сторінка 1 з ${d.imageUrls.length}</div>`;
     } else if(d.imageUrl){
         photoBlock=`<div class="ph-mphoto" onclick="phLbOpen('${d.imageUrl}')">
             <img src="${d.imageUrl}" alt="${d.headline}">
@@ -812,12 +812,8 @@ function buildModal(d){
         </div>
         ${photoBlock}`;
 
-    /* Init gallery URLs */
-    if(d.imageUrls&&d.imageUrls.length>1){
-        _galUrls=d.imageUrls; _galCurrentIdx=0;
-    } else {
-        _galUrls=[]; _galCurrentIdx=0;
-    }
+    /* _galUrls already set above when building photoBlock, or reset for single-image */
+    if(!d.imageUrls||d.imageUrls.length<=1){ _galUrls=[]; _galCurrentIdx=0; }
     /* tag clicks in modal */
     document.querySelectorAll('#phMB .ph-tag.clickable').forEach(t=>{
         t.addEventListener('click',()=>{
@@ -986,6 +982,10 @@ function phLbOpen(url){
     const img=document.getElementById('phLbI');
     img.src=url;img.style.transform='scale(1) translate(0,0)';img.style.cursor='zoom-in';
     document.getElementById('phLb').classList.add('open');
+    // If called directly (not via phLbOpenGallery), reset lb nav
+    if(!_lbUrls.length){
+        _updateLbNav();
+    }
 }
 function phLbClose(){document.getElementById('phLb').classList.remove('open');_lbScale=1;}
 function phLbZoom(dir){
@@ -1019,9 +1019,8 @@ function phGalSelect(thumb, url, idx){
     const counter=document.getElementById('phGalCount');
     if(counter && _galUrls.length>1) counter.textContent=`Сторінка ${_galCurrentIdx+1} з ${_galUrls.length}`;
 }
-function phGalNav(dir, urls){
-    if(urls) _galUrls=urls;
-    if(!_galUrls.length) return;
+function phGalNav(dir){
+    if(!_galUrls||!_galUrls.length) return;
     _galCurrentIdx=(_galCurrentIdx+dir+_galUrls.length)%_galUrls.length;
     const url=_galUrls[_galCurrentIdx];
     const thumbs=document.querySelectorAll('.ph-img-gallery img');
@@ -1031,7 +1030,8 @@ function phGalNav(dir, urls){
 /* ── Lightbox with gallery nav ── */
 let _lbUrls=[], _lbIdx=0;
 function phLbOpenGallery(urls, startIdx){
-    _lbUrls=urls; _lbIdx=startIdx!==undefined?startIdx:0;
+    if(!urls||!urls.length)return;
+    _lbUrls=urls; _lbIdx=startIdx!==undefined?startIdx:_galCurrentIdx;
     // sync with gallery
     _galUrls=urls; _galCurrentIdx=_lbIdx;
     phLbOpen(urls[_lbIdx]);
