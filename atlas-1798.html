@@ -173,21 +173,25 @@
 .atl-part-btn .soon { font-size: .55rem; text-transform: uppercase; letter-spacing: .1em; opacity: .7; }
 
 /* hero-map wrapper — map fills the entire field, no letterboxing */
-#atl-map-wrapper, #atl-map-wrapper-2 {
+#atl-map-wrapper, #atl-map-wrapper-2, #atl-map-wrapper-3, #atl-map-wrapper-4 {
     position: relative; width: 100%; height: 78vh; min-height: 480px; max-height: 760px;
     background: #e8e3d5; border-radius: 20px; overflow: hidden;
     border: 1px solid rgba(201,162,39,.2);
     box-shadow: 0 20px 60px rgba(0,0,0,.12);
 }
-[data-theme="dark"] #atl-map-wrapper, [data-theme="dark"] #atl-map-wrapper-2 { background: #1a1811; border-color: rgba(201,162,39,.15); }
-#atl-map, #atl-map-2 { width: 100%; height: 100%; background: #e8e3d5; }
-[data-theme="dark"] #atl-map, [data-theme="dark"] #atl-map-2 { background: #1a1811; }
+[data-theme="dark"] #atl-map-wrapper, [data-theme="dark"] #atl-map-wrapper-2, [data-theme="dark"] #atl-map-wrapper-3, [data-theme="dark"] #atl-map-wrapper-4 { background: #1a1811; border-color: rgba(201,162,39,.15); }
+#atl-map, #atl-map-2, #atl-map-3, #atl-map-4 { width: 100%; height: 100%; background: #e8e3d5; }
+[data-theme="dark"] #atl-map, [data-theme="dark"] #atl-map-2, [data-theme="dark"] #atl-map-3, [data-theme="dark"] #atl-map-4 { background: #1a1811; }
 
 /* hide Leaflet's own zoom +/- control everywhere on these maps — only pins stay on the canvas */
 #atl-map-wrapper .leaflet-control-zoom,
 #atl-map-wrapper-2 .leaflet-control-zoom,
+#atl-map-wrapper-3 .leaflet-control-zoom,
+#atl-map-wrapper-4 .leaflet-control-zoom,
 #atl-map-wrapper .leaflet-control-container,
-#atl-map-wrapper-2 .leaflet-control-container { display: none !important; }
+#atl-map-wrapper-2 .leaflet-control-container,
+#atl-map-wrapper-3 .leaflet-control-container,
+#atl-map-wrapper-4 .leaflet-control-container { display: none !important; }
 
 /* meta bar BELOW the map: fragment title/description + legend, neatly in one card */
 .atl-map-meta {
