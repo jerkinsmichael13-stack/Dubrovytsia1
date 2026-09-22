@@ -638,18 +638,36 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
     // ЧАСТИНА 2 — фрагмент з Бережницею, Стрільськом і Сарнами
     var imgWidth = 2080, imgHeight = 2166;
     var bounds = [[0,0],[imgHeight, imgWidth]];
+    var wrapperEl2 = document.getElementById('atl-map-wrapper-2');
+
+    function coverZoom2(){
+        var w = wrapperEl2.clientWidth || 800, h = wrapperEl2.clientHeight || 600;
+        return Math.log2(Math.max(w / imgWidth, h / imgHeight));
+    }
+    var startZoom2 = coverZoom2();
 
     var map2 = L.map('atl-map-2', {
         crs: L.CRS.Simple,
-        minZoom: -2,
-        maxZoom: 2,
-        zoomSnap: 0.25,
-        attributionControl: false
+        minZoom: startZoom2,
+        maxZoom: startZoom2 + 2.5,
+        zoomSnap: 0,
+        zoomControl: false,
+        attributionControl: false,
+        maxBoundsViscosity: 1.0
     });
 
     L.imageOverlay('atlas-1798-chastyna-2.jpg', bounds).addTo(map2);
-    map2.fitBounds(bounds);
-    map2.setMaxBounds(bounds.map(function(p,i){return i===0?[p[0]-400,p[1]-400]:[p[0]+400,p[1]+400];}));
+    map2.setMaxBounds(bounds);
+    map2.setView([imgHeight/2, imgWidth/2], startZoom2);
+
+    function recalcCover2(){
+        if (wrapperEl2.offsetParent === null) return;
+        var z = coverZoom2();
+        map2.setMinZoom(z);
+        if (map2.getZoom() < z) map2.setView(map2.getCenter(), z);
+    }
+    window.addEventListener('resize', recalcCover2);
+    window.atlRecalcMap2 = recalcCover2;
     window.atlMap2 = map2;
 
     var icon = window.atlIcon;
@@ -658,38 +676,38 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
     // Поселення, підтверджені за таблицею "Економічних приміток" (та сама таблиця, що й для частини 1).
     // Координати — орієнтовні, "на око" з фрагмента; точні пікселі при кліку виводяться в консоль (див. нижче).
     var places2 = [
-        {name:'Бережниця', kind:'town', coords:[1516,291],
+        {slug:'berezhnytsia', name:'Бережниця', kind:'town', coords:[1516,291],
          owner:'Ротмістр Домінік Чацький', dvory:232, pop:949,
          note:'На лівому березі Горині, при гирлі Бережанки: дерев\u2019яна церква Різдва Богородиці, мурований костел латинського обряду, панський дім. Мешкають євреї та селяни, 2 ярмарки на рік.'},
-        {name:'Ремчиці (Римчицы)', kind:'village', coords:[1300,395],
+        {slug:'remchytsi', name:'Ремчиці (Римчицы)', kind:'village', coords:[1300,395],
          owner:'Ротмістр Домінік Чацький', dvory:127, pop:581,
          note:'На правому березі Горині: дерев\u2019яна церква Різдва Богородиці, панський дім, два борошняні млини на один камінь кожен.'},
-        {name:'Працюки (Працуки)', kind:'village', coords:[1971,229],
+        {slug:'pratsiuky', name:'Працюки (Працуки)', kind:'village', coords:[1971,229],
          owner:'Граф Антоній Плятер', dvory:3, pop:25,
          note:'На суходолі, при копаних криницях — доступу до річки не має.'},
-        {name:'Орв\u2019яниця (Орваниця)', kind:'village', coords:[2036,707],
+        {slug:'orvianytsia', name:'Орв\u2019яниця (Орваниця)', kind:'village', coords:[2036,707],
          owner:'Граф Антоній Плятер', dvory:61, pop:333,
          note:'На лівому березі Горині: борошняний млин на один камінь, діє цілий рік.'},
-        {name:'Любиковичі', kind:'village', coords:[1949,1165],
+        {slug:'liubykovychi', name:'Любиковичі', kind:'village', coords:[1949,1165],
          owner:'Князь Домінік Радзивіл', dvory:119, pop:658,
          note:'На лівому березі Случі: дерев\u2019яна церква Живоначальної Трійці, панський дім, борошняний млин на один камінь.'},
-        {name:'Кураш (Куранъ)', kind:'village', coords:[1560,624],
+        {slug:'kurash', name:'Кураш (Куранъ)', kind:'village', coords:[1560,624],
          owner:'Князь Домінік Радзивіл', dvory:31, pop:211,
          note:'На лівому березі Горині: дерев\u2019яна церква Преображення Господнього, панський дім, борошняний млин на один камінь.'},
-        {name:'Білятичі (Белятичи)', kind:'village', coords:[1754,915],
+        {slug:'biliatychi', name:'Білятичі (Белятичи)', kind:'village', coords:[1754,915],
          owner:'Князь Домінік Радзивіл', dvory:22, pop:566,
          note:'На правому березі Горині: борошняний млин на один камінь, діє цілий рік.'},
-        {name:'Стрільськ (Стрельскъ)', kind:'village', coords:[1365,1477],
+        {slug:'strilsk', name:'Стрільськ (Стрельскъ)', kind:'village', coords:[1365,1477],
          owner:'Домбровицький кляштор ксендзів Піарів', dvory:123, pop:942,
          note:'На лівому березі Случі, на гористому місці: дерев\u2019яна церква Різдва Богородиці, панський дім, два борошняні млини на один камінь кожен.'},
-        {name:'Глушиця (Глушица)', kind:'village', coords:[1040,1290],
+        {slug:'hlushytsia', name:'Глушиця (Глушица)', kind:'village', coords:[1040,1290],
          owner:'Домбровицький кляштор ксендзів Піарів', dvory:49, pop:283,
          note:'На лівому березі Случі: борошняний млин на один камінь.'},
-        {name:'Люхча', kind:'village', coords:[845,1248],
+        {slug:'liukhcha', name:'Люхча', kind:'village', coords:[845,1248],
          owner:'Підкоморій Теодор Урбановський', dvory:57, pop:331,
          note:'На лівому березі Случі: дерев\u2019яна церква Архістратига Михаїла, панський дім, борошняний млин на один камінь.'},
         // Назви зчитані з мапи, але поки не знайдені окремим рядком у таблиці "Економічних приміток" —
-        // дані не вигадані, лише напис з оригіналу.
+        // дані не вигадані, лише напис з оригіналу. Без slug — сторінки-картки поки немає.
         {name:'Трескини', kind:'unverified', coords:[1040,166], owner:null, dvory:null, pop:null,
          note:'Назва з мапи. Окремого запису в «Економічних примітках» поки не знайдено.'},
         {name:'Уродов', kind:'unverified', coords:[932,749], owner:null, dvory:null, pop:null,
@@ -725,6 +743,7 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
                     '</div>'+
                     '<div class="atl-popup-note">'+p.note+'</div>'+
                     '<div class="atl-popup-src">За «Економічними примітками», 1798 р.</div>'+
+                    (p.slug ? '<a class="atl-popup-more" href="sela-1798.html?v='+p.slug+'">Читати детальніше<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>' : '')+
                 '</div>';
         }
         marker.bindPopup(html, {className:'atl-popup', closeButton:true, maxWidth:270});
@@ -767,7 +786,7 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
             // Leaflet потребує invalidateSize() після того, як контейнер стає видимим
             setTimeout(function(){
                 if (part === '1' && window.atlMap1) { window.atlMap1.invalidateSize(); if (window.atlRecalcMap1) window.atlRecalcMap1(); }
-                if (part === '2' && window.atlMap2) window.atlMap2.invalidateSize();
+                if (part === '2' && window.atlMap2) { window.atlMap2.invalidateSize(); if (window.atlRecalcMap2) window.atlRecalcMap2(); }
             }, 60);
         });
     });
