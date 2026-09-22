@@ -172,7 +172,7 @@
 .atl-part-btn:disabled { cursor: default; opacity: .5; }
 .atl-part-btn .soon { font-size: .55rem; text-transform: uppercase; letter-spacing: .1em; opacity: .7; }
 
-/* hero-map wrapper */
+/* hero-map wrapper — map fills the entire field, no letterboxing */
 #atl-map-wrapper, #atl-map-wrapper-2 {
     position: relative; width: 100%; height: 78vh; min-height: 480px; max-height: 760px;
     background: #e8e3d5; border-radius: 20px; overflow: hidden;
@@ -183,33 +183,43 @@
 #atl-map, #atl-map-2 { width: 100%; height: 100%; background: #e8e3d5; }
 [data-theme="dark"] #atl-map, [data-theme="dark"] #atl-map-2 { background: #1a1811; }
 
-.atl-map-overlay-title {
-    position: absolute; top: 16px; left: 16px; z-index: 1000;
-    background: rgba(250,247,242,.94); backdrop-filter: blur(6px);
-    padding: 14px 20px; border-radius: 10px;
-    box-shadow: 0 6px 24px rgba(0,0,0,.12);
-    max-width: 300px; border: 1px solid rgba(201,162,39,.18);
-}
-[data-theme="dark"] .atl-map-overlay-title { background: rgba(20,17,10,.92); border-color: rgba(201,162,39,.2); }
-.atl-map-overlay-title h3 { margin: 0 0 4px; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 1.1rem; color: var(--color-text,#1a1000); }
-[data-theme="dark"] .atl-map-overlay-title h3 { color: #e8dbb5; }
-.atl-map-overlay-title p { margin: 0; font-family: 'DM Sans', sans-serif; font-size: .68rem; line-height: 1.5; color: var(--color-text-light,#8b6f3e); }
+/* hide Leaflet's own zoom +/- control everywhere on these maps — only pins stay on the canvas */
+#atl-map-wrapper .leaflet-control-zoom,
+#atl-map-wrapper-2 .leaflet-control-zoom,
+#atl-map-wrapper .leaflet-control-container,
+#atl-map-wrapper-2 .leaflet-control-container { display: none !important; }
 
-.atl-map-legend {
-    position: absolute; bottom: 16px; left: 16px; z-index: 1000;
-    background: rgba(250,247,242,.94); backdrop-filter: blur(6px);
-    border-radius: 10px; padding: 10px 14px;
-    border: 1px solid rgba(201,162,39,.18);
-    box-shadow: 0 6px 20px rgba(0,0,0,.1);
-    display: flex; flex-direction: column; gap: 6px;
+/* meta bar BELOW the map: fragment title/description + legend, neatly in one card */
+.atl-map-meta {
+    display: flex; align-items: center; justify-content: space-between; gap: 1.6rem; flex-wrap: wrap;
+    margin-top: 1.1rem; padding: 1rem 1.4rem;
+    background: var(--color-bg-card, #fff); border-radius: 14px;
+    border: 1px solid rgba(201,162,39,.16);
+    box-shadow: 0 6px 20px rgba(0,0,0,.05);
 }
-[data-theme="dark"] .atl-map-legend { background: rgba(20,17,10,.92); border-color: rgba(201,162,39,.2); }
-.atl-legend-row { display: flex; align-items: center; gap: 8px; font-family: 'DM Sans', sans-serif; font-size: .62rem; color: var(--color-text-light,#8b6f3e); }
+[data-theme="dark"] .atl-map-meta { background: #1a1408; border-color: rgba(201,162,39,.15); }
+.atl-map-meta-info h3 { margin: 0 0 3px; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 1.05rem; color: var(--color-text,#1a1000); }
+[data-theme="dark"] .atl-map-meta-info h3 { color: #e8dbb5; }
+.atl-map-meta-info p { margin: 0; font-family: 'DM Sans', sans-serif; font-size: .68rem; line-height: 1.5; color: var(--color-text-light,#8b6f3e); }
+
+.atl-map-legend { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1.2rem; }
+.atl-legend-row { display: flex; align-items: center; gap: 8px; font-family: 'DM Sans', sans-serif; font-size: .62rem; white-space: nowrap; color: var(--color-text-light,#8b6f3e); }
 .atl-legend-dot { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; border: 1.5px solid #1c2a30; }
 .atl-legend-dot.town { background: #c9a227; width: 14px; height: 14px; }
 .atl-legend-dot.village { background: #6b8f96; }
 .atl-legend-dot.folwark { background: #a8763a; }
 .atl-legend-dot.unverified { background: #b9b0a0; border-style: dashed; }
+
+/* "read more" link inside a popup */
+.atl-popup-more {
+    display: inline-flex; align-items: center; gap: .35rem;
+    margin-top: 9px; padding: .4rem .8rem; border-radius: 100px;
+    background: #1c2a30; color: #f0e6c8 !important; text-decoration: none !important;
+    font-family: 'DM Sans', sans-serif; font-size: .62rem; font-weight: 500; letter-spacing: .02em;
+    transition: background .2s ease;
+}
+.atl-popup-more:hover { background: #c9a227; color: #1c1000 !important; }
+.atl-popup-more svg { width: 11px; height: 11px; flex-shrink: 0; }
 
 /* leaflet popup skin */
 .atl-popup .leaflet-popup-content-wrapper { background: #faf7f2; border-radius: 10px; box-shadow: 0 8px 30px rgba(0,0,0,.18); }
@@ -379,7 +389,10 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
         </div>
 
         <div id="atl-map-wrapper" data-part-panel="1">
-            <div class="atl-map-overlay-title">
+            <div id="atl-map"></div>
+        </div>
+        <div class="atl-map-meta" data-meta-panel="1">
+            <div class="atl-map-meta-info">
                 <h3>Фрагмент мапи 1798 р.</h3>
                 <p>Дубровиця, Высоцьк та навколишні села Волинської губернії</p>
             </div>
@@ -388,11 +401,13 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
                 <div class="atl-legend-row"><span class="atl-legend-dot village"></span>Село</div>
                 <div class="atl-legend-row"><span class="atl-legend-dot folwark"></span>Фільварок</div>
             </div>
-            <div id="atl-map"></div>
         </div>
 
         <div id="atl-map-wrapper-2" data-part-panel="2" style="display:none;">
-            <div class="atl-map-overlay-title">
+            <div id="atl-map-2"></div>
+        </div>
+        <div class="atl-map-meta" data-meta-panel="2" style="display:none;">
+            <div class="atl-map-meta-info">
                 <h3>Фрагмент мапи 1798 р. — частина 2</h3>
                 <p>Бережниця, Стрільськ, Глушиця, Сарни та навколишні села</p>
             </div>
@@ -401,7 +416,6 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
                 <div class="atl-legend-row"><span class="atl-legend-dot village"></span>Село</div>
                 <div class="atl-legend-row"><span class="atl-legend-dot unverified"></span>Назва з мапи (дані уточнюються)</div>
             </div>
-            <div id="atl-map-2"></div>
         </div>
 
         <p class="atl-caption" id="atl-caption-text">Фрагмент історичної мапи Волинської губернії, 1798 рік · Частина 1 з 3</p>
@@ -474,18 +488,39 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
     // Розміри оригінального файлу карти (px)
     var imgWidth = 2351, imgHeight = 2595;
     var bounds = [[0,0],[imgHeight, imgWidth]];
+    var wrapperEl = document.getElementById('atl-map-wrapper');
 
+    // "cover"-масштаб: зображення заповнює всю область картки без білих полів по краях
+    function coverZoom(){
+        var w = wrapperEl.clientWidth || 800, h = wrapperEl.clientHeight || 600;
+        return Math.log2(Math.max(w / imgWidth, h / imgHeight));
+    }
+
+    var startZoom = coverZoom();
     var map = L.map('atl-map', {
         crs: L.CRS.Simple,
-        minZoom: -2,
-        maxZoom: 2,
-        zoomSnap: 0.25,
-        attributionControl: false
+        minZoom: startZoom,
+        maxZoom: startZoom + 2.5,
+        zoomSnap: 0,
+        zoomControl: false,
+        attributionControl: false,
+        maxBoundsViscosity: 1.0
     });
 
     L.imageOverlay('atlas-1798-chastyna-1.jpg', bounds).addTo(map);
-    map.fitBounds(bounds);
-    map.setMaxBounds(bounds.map(function(p,i){return i===0?[p[0]-400,p[1]-400]:[p[0]+400,p[1]+400];}));
+    map.setMaxBounds(bounds);
+    map.setView([imgHeight/2, imgWidth/2], startZoom);
+
+    // при зміні розміру вікна (або поверненні на цю вкладку) перераховуємо "cover"-зум,
+    // щоб мапа й далі заповнювала всю картку без білих полів
+    function recalcCover(){
+        if (wrapperEl.offsetParent === null) return; // панель зараз прихована
+        var z = coverZoom();
+        map.setMinZoom(z);
+        if (map.getZoom() < z) map.setView(map.getCenter(), z);
+    }
+    window.addEventListener('resize', recalcCover);
+    window.atlRecalcMap1 = recalcCover;
 
     function icon(kind){
         var size = kind==='town' ? 18 : (kind==='folwark' ? 12 : (kind==='unverified' ? 11 : 13));
@@ -503,67 +538,67 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
     // Поселення, прочитані з мапи + дані з "Економічних приміток" 1798 р.
     // координати приблизні — у пікселях від нижнього лівого кута зображення
     var places = [
-        {name:'Домбровиця (Дубровиця)', kind:'town', coords:[561,1062],
+        {slug:'dombrovytsia', name:'Домбровиця (Дубровиця)', kind:'town', coords:[561,1062],
          owner:'Граф Антоній Плятер', dvory:323, pop:1750,
          note:'На лівому березі Горині: три млини, дві дерев\u2019яні церкви (Св. Миколая і Різдва Богородиці), мурований костел із садом. Мешкали євреї та селяни, 4 ярмарки на рік.'},
-        {name:'Высоцкъ', kind:'town', coords:[2109,1594],
+        {slug:'vysotsk', name:'Высоцкъ', kind:'town', coords:[2109,1594],
          owner:'Майор Ілля, Ян, Вінцент, Казимир, Павло, Юзеф Вигановські', dvory:62, pop:398,
          note:'Між рукавами Горині: дерев\u2019яна церква Успіння Богородиці, костел латинського обряду, панський дім. 2 ярмарки на рік.'},
-        {name:'Удрыцкъ', kind:'village', coords:[2425,1966],
+        {slug:'udrytsk', name:'Удрыцкъ', kind:'village', coords:[2425,1966],
          owner:'Майор Ілля, Ян, Вінцент, Казимир, Павло, Юзеф Вигановські', dvory:36, pop:319,
          note:'На правому березі Горині: борошняний млин на один камінь (діє цілий рік), дерев\u2019яна церква Різдва Богородиці.'},
-        {name:'Людинъ', kind:'village', coords:[1804,802],
+        {slug:'liudyn', name:'Людинъ', kind:'village', coords:[1804,802],
          owner:'Граф Антоній Плятер', dvory:28, pop:175,
          note:'На суходолі, при копаних криницях — доступу до річки не має.'},
-        {name:'Рудня', kind:'village', coords:[1815,949],
+        {slug:'rudnia', name:'Рудня', kind:'village', coords:[1815,949],
          owner:'Граф Антоній Плятер', dvory:6, pop:35,
          note:'При безіменному струмку: борошняний млин на два камені, діє лише навесні.'},
-        {name:'Золотое', kind:'village', coords:[1668,294],
+        {slug:'zolote', name:'Золотое', kind:'village', coords:[1668,294],
          owner:'Граф Антоній Плятер', dvory:41, pop:236,
          note:'Дерев\u2019яний панський дім; млин на два камені, діє лише навесні.'},
-        {name:'Пузди (Пузня)', kind:'village', coords:[1657,791],
+        {slug:'puznia', name:'Пузди (Пузня)', kind:'village', coords:[1657,791],
          owner:'Граф Антоній Плятер', dvory:9, pop:53,
          note:'На лівому боці безіменного струмка.'},
-        {name:'Бѣлая', kind:'village', coords:[1646,1910],
+        {slug:'bila', name:'Бѣлая', kind:'village', coords:[1646,1910],
          owner:'Граф Антоній Плятер', dvory:25, pop:116,
          note:'На суходолі, при копаних криницях — доступу до річки не має.'},
-        {name:'Ясинецъ', kind:'village', coords:[1318,904],
+        {slug:'yasenets', name:'Ясинецъ', kind:'village', coords:[1318,904],
          owner:'Граф Антоній Плятер', dvory:4, pop:16,
          note:'На суходолі, при копаних криницях.'},
-        {name:'Лотвинскъ (Лютинськ)', kind:'village', coords:[1329,1187],
+        {slug:'liutynsk', name:'Лотвинскъ (Лютинськ)', kind:'village', coords:[1329,1187],
          owner:'Граф Антоній Плятер', dvory:45, pop:324,
          note:'На правому березі річки Дворка: борошняний млин, діє цілий рік.'},
-        {name:'Велюнь', kind:'village', coords:[1454,1469],
+        {slug:'veliun', name:'Велюнь', kind:'village', coords:[1454,1469],
          owner:'Граф Антоній Плятер', dvory:36, pop:236,
          note:'Входить до маєтку графа Плятера; окремого детального опису в «Економічних примітках» не збереглося.'},
-        {name:'Сельцо (Селець)', kind:'village', coords:[1160,1198],
+        {slug:'selets', name:'Сельцо (Селець)', kind:'village', coords:[1160,1198],
          owner:'Граф Антоній Плятер', dvory:66, pop:343,
          note:'На лівому березі Горині: дерев\u2019яна церква Святого Миколая.'},
-        {name:'Островцы', kind:'village', coords:[866,509],
+        {slug:'ostrivtsi', name:'Островцы', kind:'village', coords:[866,509],
          owner:'Граф Антоній Плятер', dvory:11, pop:65,
          note:'На суходолі, при копаних криницях.'},
-        {name:'Мачуляны (Мочулище)', kind:'village', coords:[787,215],
+        {slug:'mochulyshche', name:'Мачуляны (Мочулище)', kind:'village', coords:[787,215],
          owner:'Граф Антоній Плятер', dvory:22, pop:134,
          note:'На суходолі: дерев\u2019яний панський дім.'},
-        {name:'Крупе (Крупове)', kind:'village', coords:[584,407],
+        {slug:'krupove', name:'Крупе (Крупове)', kind:'village', coords:[584,407],
          owner:'Граф Антоній Плятер', dvory:35, pop:215,
          note:'На суходолі, при копаних криницях.'},
-        {name:'Колки', kind:'village', coords:[753,1187],
+        {slug:'kolky', name:'Колки', kind:'village', coords:[753,1187],
          owner:'Князь Домінік Радзивіл', dvory:78, pop:607,
          note:'На лівому березі Случі: борошняний млин на один камінь, діє цілий рік.'},
-        {name:'Берестье (Берестя)', kind:'village', coords:[245,881],
+        {slug:'berestia', name:'Берестье (Берестя)', kind:'village', coords:[245,881],
          owner:'Граф Антоній Плятер', dvory:46, pop:277,
          note:'На лівому березі Горині: борошняний млин, діє цілий рік.'},
-        {name:'Бережки', kind:'village', coords:[188,1062],
+        {slug:'berezhky', name:'Бережки', kind:'village', coords:[188,1062],
          owner:'Князь Домінік Радзивіл', dvory:69, pop:525,
          note:'На лівому березі Случі: дерев\u2019яна церква Успіння Богородиці, млин на один камінь.'},
-        {name:'Нивицкъ (Нивецьк)', kind:'village', coords:[120,102],
+        {slug:'nyvetsk', name:'Нивицкъ (Нивецьк)', kind:'village', coords:[120,102],
          owner:'Граф Антоній Плятер', dvory:37, pop:191,
          note:'На суходолі: дерев\u2019яний панський дім.'},
-        {name:'Сохи', kind:'village', coords:[109,249],
+        {slug:'sokhy', name:'Сохи', kind:'village', coords:[109,249],
          owner:'Граф Антоній Плятер', dvory:5, pop:28,
          note:'На суходолі: дерев\u2019яний панський дім.'},
-        {name:'Фольв. Воробинъ', kind:'folwark', coords:[855,949],
+        {slug:'vorobyn', name:'Фольв. Воробинъ', kind:'folwark', coords:[855,949],
          owner:'Граф Антоній Плятер', dvory:null, pop:57,
          note:'На правому березі річки Дворка: дерев\u2019яний панський дім — господарський фільварок містечка Домбровиці.'}
     ];
@@ -586,6 +621,7 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
                 '</div>'+
                 '<div class="atl-popup-note">'+p.note+'</div>'+
                 '<div class="atl-popup-src">За «Економічними примітками», 1798 р.</div>'+
+                (p.slug ? '<a class="atl-popup-more" href="sela-1798.html?v='+p.slug+'">Читати детальніше<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>' : '')+
             '</div>';
         marker.bindPopup(html, {className:'atl-popup', closeButton:true, maxWidth:270});
     });
@@ -708,6 +744,10 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
         '1': document.querySelector('[data-part-panel="1"]'),
         '2': document.querySelector('[data-part-panel="2"]')
     };
+    var metas = {
+        '1': document.querySelector('[data-meta-panel="1"]'),
+        '2': document.querySelector('[data-meta-panel="2"]')
+    };
     var captions = {
         '1': 'Фрагмент історичної мапи Волинської губернії, 1798 рік · Частина 1 з 3',
         '2': 'Фрагмент історичної мапи Волинської губернії, 1798 рік · Частина 2 з 3'
@@ -721,11 +761,12 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
             btn.classList.add('active');
             Object.keys(panels).forEach(function(key){
                 if (panels[key]) panels[key].style.display = (key === part) ? '' : 'none';
+                if (metas[key]) metas[key].style.display = (key === part) ? '' : 'none';
             });
             if (captionEl && captions[part]) captionEl.textContent = captions[part];
             // Leaflet потребує invalidateSize() після того, як контейнер стає видимим
             setTimeout(function(){
-                if (part === '1' && window.atlMap1) window.atlMap1.invalidateSize();
+                if (part === '1' && window.atlMap1) { window.atlMap1.invalidateSize(); if (window.atlRecalcMap1) window.atlRecalcMap1(); }
                 if (part === '2' && window.atlMap2) window.atlMap2.invalidateSize();
             }, 60);
         });
