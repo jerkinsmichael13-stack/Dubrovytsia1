@@ -1294,6 +1294,83 @@ a, button, [role="button"], input, select, textarea,
                 background: #9a4a28;
             }
             [data-theme="dark"] #ARC65 .arc-cta { background: #c87a45; color: #1a0a04; }
+
+            /* ─────────────────────────────────────
+               CARD 5 — АТЛАС 1798 (Cartographer teal)
+               ───────────────────────────────────── */
+            #ARC98 .arc-card {
+                border: 1px solid rgba(107,143,150,.28);
+                box-shadow: 0 6px 40px rgba(0,0,0,.07);
+            }
+            #ARC98 .arc-card:hover {
+                box-shadow: 0 16px 60px rgba(0,0,0,.12), 0 0 0 3px rgba(107,143,150,.14);
+            }
+            #ARC98 .arc-img { filter: sepia(.35) contrast(1.05) brightness(.82); }
+            #ARC98 .arc-card:hover .arc-img { filter: sepia(.18) contrast(1.07) brightness(.92); }
+            #ARC98 .arc-img-overlay {
+                background: linear-gradient(90deg, transparent 52%, rgba(10,20,22,.68) 100%),
+                            linear-gradient(0deg, rgba(10,20,22,.72) 0%, transparent 40%);
+            }
+            @media(max-width:900px){
+                #ARC98 .arc-img-overlay {
+                    background: linear-gradient(0deg, rgba(10,20,22,.78) 0%, transparent 50%);
+                }
+            }
+            #ARC98 .arc-img-pill { color: rgba(150,195,200,.9); }
+            #ARC98 .arc-img-dot { background: #6b8f96; }
+            #ARC98 .arc-body::after { content: '1798'; color: rgba(60,100,105,.06); }
+            #ARC98 .arc-tag {
+                color: #3f6b73;
+                border: 1px solid rgba(63,107,115,.3);
+                background: rgba(107,143,150,.08);
+            }
+            [data-theme="dark"] #ARC98 .arc-tag { color: #9ecbd1; border-color: rgba(158,203,209,.3); background: rgba(107,143,150,.1); }
+            #ARC98 .arc-title { color: var(--color-text, #1a1000); }
+            #ARC98 .arc-title em { color: #3f6b73; }
+            [data-theme="dark"] #ARC98 .arc-title { color: #e8dbb5; }
+            [data-theme="dark"] #ARC98 .arc-title em { color: #9ecbd1; }
+            #ARC98 .arc-quote {
+                background: rgba(107,143,150,.08);
+                border-left: 3px solid rgba(63,107,115,.5);
+            }
+            #ARC98 .arc-quote::before { color: #3f6b73; }
+            #ARC98 .arc-quote-text { color: var(--color-text, #1a1000); }
+            [data-theme="dark"] #ARC98 .arc-quote-text { color: #e8dbb5; }
+            #ARC98 .arc-hook strong { color: var(--color-text, #1a1000); }
+            [data-theme="dark"] #ARC98 .arc-hook strong { color: #9ecbd1; }
+            #ARC98 .arc-hook-icon { background: rgba(107,143,150,.12); border: 1px solid rgba(107,143,150,.22); }
+            #ARC98 .arc-stats {
+                border-color: rgba(107,143,150,.2);
+                background: rgba(107,143,150,.05);
+            }
+            #ARC98 .arc-stat { border-color: rgba(107,143,150,.16); }
+            #ARC98 .arc-stat-num { color: #3f6b73; }
+            [data-theme="dark"] #ARC98 .arc-stat-num { color: #9ecbd1; }
+            #ARC98 .arc-stat-key { color: #3f5a5e; }
+            [data-theme="dark"] #ARC98 .arc-stat-key { color: #7fa8ae; }
+            #ARC98 .arc-cta {
+                background: #1c2a30; color: #eaf3f4;
+            }
+            #ARC98 .arc-card:hover .arc-cta {
+                background: #3f6b73; color: #fff;
+                box-shadow: 0 4px 20px rgba(63,107,115,.35);
+            }
+            [data-theme="dark"] #ARC98 .arc-cta { background: #6b8f96; color: #0a1214; }
+            #ARC98 .arc-wip {
+                display: inline-flex; align-items: center; gap: .5rem;
+                padding: .3rem .85rem;
+                background: rgba(107,143,150,.1); border: 1px solid rgba(107,143,150,.25);
+                border-radius: 100px;
+                font-family: 'DM Sans', sans-serif; font-size: .56rem;
+                letter-spacing: .12em; text-transform: uppercase; color: #3f6b73;
+                width: fit-content; margin-bottom: .5rem;
+            }
+            [data-theme="dark"] #ARC98 .arc-wip { color: #9ecbd1; border-color: rgba(158,203,209,.28); background: rgba(107,143,150,.1); }
+            #ARC98 .arc-wip::before {
+                content: ''; width: 6px; height: 6px; border-radius: 50%;
+                background: #6b8f96; animation: wip98pulse 2s ease infinite; flex-shrink: 0;
+            }
+            @keyframes wip98pulse { 0%,100%{opacity:1} 50%{opacity:.25} }
             </style>
 
             <!-- ── Section heading ── -->
@@ -1569,6 +1646,73 @@ a, button, [role="button"], input, select, textarea,
                                 <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
                             </div>
                             <span class="arc-cta-hint">Транскрипція · Переклад · Особи · Контекст</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- 1798 ATLAS TEASER -->
+            <div id="ARC98" style="padding:0 0 2rem;">
+                <a href="atlas-1798.html" class="arc-card">
+                    <div class="arc-img-panel">
+                        <img class="arc-img" src="atlas-1798-chastyna-1.jpg" alt="Атлас Волинської губернії 1798 року">
+                        <div class="arc-img-overlay"></div>
+                        <div class="arc-img-badge">
+                            <div class="arc-img-pill">
+                                <div class="arc-img-dot"></div>
+                                Частина 1–2 з 3 · Anno 1798
+                            </div>
+                        </div>
+                    </div>
+                    <div class="arc-body">
+                        <div style="display:flex;flex-direction:column;gap:1rem;">
+                            <div class="arc-tag">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                                Історична картографія · Волинська губернія
+                            </div>
+                            <div class="arc-wip">Інтерактивна мапа — наповнюється поступово</div>
+                            <h3 class="arc-title">Атлас Волинської губернії<br><em>1798 року</em></h3>
+                            <div class="arc-quote">
+                                <div class="arc-quote-text">Дубровиця, Высоцьк, Бережниця, Стрільськ і кілька десятків навколишніх сіл — такими, якими їх креслив картограф понад 225 років тому.</div>
+                                <div class="arc-quote-attr">— Атлас Волинської губернії, Anno 1798</div>
+                            </div>
+                            <div class="arc-hooks">
+                                <div class="arc-hook">
+                                    <div class="arc-hook-icon">🗺️</div>
+                                    <div><strong>Інтерактивна історична мапа</strong> з мітками поселень — клікніть, щоб побачити тогочасну назву</div>
+                                </div>
+                                <div class="arc-hook">
+                                    <div class="arc-hook-icon">⛰️</div>
+                                    <div><strong>Річка Горинь і навколишні села</strong> — Людин, Рудня, Сельце, Колки, Островці, Велюнь та інші</div>
+                                </div>
+                                <div class="arc-hook">
+                                    <div class="arc-hook-icon">📜</div>
+                                    <div><strong>Дві з трьох частин мапи</strong> — Дубровиця та Бережниця–Стрільськ–Сарни; третя частина і описи сіл додаватимуться поступово</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="arc-stats" style="margin-bottom:1.4rem;">
+                                <div class="arc-stat">
+                                    <div class="arc-stat-num">1798</div>
+                                    <div class="arc-stat-key">Рік</div>
+                                </div>
+                                <div class="arc-stat">
+                                    <div class="arc-stat-num">36</div>
+                                    <div class="arc-stat-key">Поселень</div>
+                                </div>
+                                <div class="arc-stat">
+                                    <div class="arc-stat-num">2/3</div>
+                                    <div class="arc-stat-key">Частина мапи</div>
+                                </div>
+                            </div>
+                            <div class="arc-cta-row">
+                                <div class="arc-cta">
+                                    Відкрити мапу
+                                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+                                </div>
+                                <span class="arc-cta-hint">Інтерактивна карта · Мітки поселень</span>
+                            </div>
                         </div>
                     </div>
                 </a>
