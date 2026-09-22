@@ -351,17 +351,17 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
             </div>
             <span class="atl-stat-sep">·</span>
             <div class="atl-stat">
-                <span class="atl-stat-num">36</span>
+                <span class="atl-stat-num">71</span>
                 <span class="atl-stat-label">Позначених поселень</span>
             </div>
             <span class="atl-stat-sep">·</span>
             <div class="atl-stat">
-                <span class="atl-stat-num"><em>≈11 000</em></span>
+                <span class="atl-stat-num"><em>≈16 000</em></span>
                 <span class="atl-stat-label">Мешканців (за описом)</span>
             </div>
             <span class="atl-stat-sep">·</span>
             <div class="atl-stat">
-                <span class="atl-stat-num">2 <em>з 3</em></span>
+                <span class="atl-stat-num">4 <em>з 5</em></span>
                 <span class="atl-stat-label">Частин мапи</span>
             </div>
         </div>
@@ -385,7 +385,9 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
         <div class="atl-parts">
             <button class="atl-part-btn active" type="button" data-part="1">Частина 1 — Дубровиця та північ</button>
             <button class="atl-part-btn" type="button" data-part="2">Частина 2 — Бережниця, Стрільськ і Сарни</button>
-            <button class="atl-part-btn" type="button" disabled>Частина 3 <span class="soon">Скоро</span></button>
+            <button class="atl-part-btn" type="button" data-part="3">Частина 3 — Володимирець і Цепцевичі</button>
+            <button class="atl-part-btn" type="button" data-part="4">Частина 4 — Степан-город</button>
+            <button class="atl-part-btn" type="button" disabled>Частина 5 <span class="soon">Скоро</span></button>
         </div>
 
         <div id="atl-map-wrapper" data-part-panel="1">
@@ -418,23 +420,53 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
             </div>
         </div>
 
-        <p class="atl-caption" id="atl-caption-text">Фрагмент історичної мапи Волинської губернії, 1798 рік · Частина 1 з 3</p>
+        <div id="atl-map-wrapper-3" data-part-panel="3" style="display:none;">
+            <div id="atl-map-3"></div>
+        </div>
+        <div class="atl-map-meta" data-meta-panel="3" style="display:none;">
+            <div class="atl-map-meta-info">
+                <h3>Фрагмент мапи 1798 р. — частина 3</h3>
+                <p>Володимирець, Великі та Малі Цепцевичі, Кідри, Дубівка, Каноничі, Осова</p>
+            </div>
+            <div class="atl-map-legend">
+                <div class="atl-legend-row"><span class="atl-legend-dot town"></span>Містечко</div>
+                <div class="atl-legend-row"><span class="atl-legend-dot village"></span>Село</div>
+                <div class="atl-legend-row"><span class="atl-legend-dot unverified"></span>Назва з мапи (дані уточнюються)</div>
+            </div>
+        </div>
+
+        <div id="atl-map-wrapper-4" data-part-panel="4" style="display:none;">
+            <div id="atl-map-4"></div>
+        </div>
+        <div class="atl-map-meta" data-meta-panel="4" style="display:none;">
+            <div class="atl-map-meta-info">
+                <h3>Фрагмент мапи 1798 р. — частина 4</h3>
+                <p>Степан-город, Воронки, Хиночі, Трипутня, Заморочення, Озерськ</p>
+            </div>
+            <div class="atl-map-legend">
+                <div class="atl-legend-row"><span class="atl-legend-dot town"></span>Містечко</div>
+                <div class="atl-legend-row"><span class="atl-legend-dot village"></span>Село</div>
+                <div class="atl-legend-row"><span class="atl-legend-dot unverified"></span>Назва з мапи (дані уточнюються)</div>
+            </div>
+        </div>
+
+        <p class="atl-caption" id="atl-caption-text">Фрагмент історичної мапи Волинської губернії, 1798 рік · Частина 1 з 4</p>
 
         <div class="atl-info-grid">
             <div class="atl-info-card">
                 <div class="atl-info-icon">🗺️</div>
                 <div class="atl-info-title">Про атлас</div>
-                <div class="atl-info-text">Оцифровані фрагменти мапи Волинської губернії 1798 року з околицями Дубровиці. Мапа складається з кількох частин — тут представлені перша (Дубровиця, Высоцьк) і друга (Бережниця, Стрільськ, Сарни) частини.</div>
+                <div class="atl-info-text">Оцифровані фрагменти мапи Волинської губернії 1798 року з околицями Дубровиці. Мапа складається з кількох частин — тут представлені перша (Дубровиця, Высоцьк), друга (Бережниця, Стрільськ, Сарни), третя (Володимирець, Цепцевичі) і четверта (Степан-город) частини.</div>
             </div>
             <div class="atl-info-card">
                 <div class="atl-info-icon">📍</div>
                 <div class="atl-info-title">Позначені поселення</div>
-                <div class="atl-info-text">Мітки на мапі відтворюють написи оригіналу — назви подано у тогочасній орфографії. Клікніть на будь-яку — і побачите власника маєтку, кількість дворів, мешканців і короткий опис за «Економічними примітками» 1798 року. Кілька назв у другій частині (Трескині, Уродів, Корниловка, Дорошичі, Сарни) поки без даних із таблиці — позначені окремим сірим маркером.</div>
+                <div class="atl-info-text">Мітки на мапі відтворюють написи оригіналу — назви подано у тогочасній орфографії. Клікніть на будь-яку — і побачите власника маєтку, кількість дворів, мешканців і короткий опис за «Економічними примітками» 1798 року. Частина назв (сірий пунктирний маркер) поки без окремого рядка в таблиці — позначені чесно, без вигаданих даних. Деякі назви повторюються на різних фрагментах мапи (напр. «Рудня» зустрічається тричі, «Острівці» — двічі) і стосуються різних, географічно віддалених поселень — це не помилка дублювання.</div>
             </div>
             <div class="atl-info-card">
                 <div class="atl-info-icon">⏳</div>
                 <div class="atl-info-title">У розробці</div>
-                <div class="atl-info-text">Третя частина мапи та розгорнуті статті про кожне село — з повним текстом економічного опису, церквами, млинами й господарством — будуть додані найближчим часом.</div>
+                <div class="atl-info-text">П'ята частина мапи (Карпилівка, Клесів та околиці) і розгорнуті статті про кожне з нових сіл — з повним текстом економічного опису — будуть додані, коли надійдуть відповідні фрагменти мапи.</div>
             </div>
         </div>
 
@@ -757,19 +789,276 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
 
 <script>
 (function(){
+    // ЧАСТИНА 3 — фрагмент з Володимирцем, Цепцевичами, Кідрами, Дубівкою, Каноничами, Осовою
+    var imgWidth = 2689, imgHeight = 1876;
+    var bounds = [[0,0],[imgHeight, imgWidth]];
+    var wrapperEl3 = document.getElementById('atl-map-wrapper-3');
+
+    function coverZoom3(){
+        var w = wrapperEl3.clientWidth || 800, h = wrapperEl3.clientHeight || 600;
+        return Math.log2(Math.max(w / imgWidth, h / imgHeight));
+    }
+    var startZoom3 = coverZoom3();
+
+    var map3 = L.map('atl-map-3', {
+        crs: L.CRS.Simple,
+        minZoom: startZoom3,
+        maxZoom: startZoom3 + 2.5,
+        zoomSnap: 0,
+        zoomControl: false,
+        attributionControl: false,
+        maxBoundsViscosity: 1.0
+    });
+
+    L.imageOverlay('atlas-1798-chastyna-3.jpg', bounds).addTo(map3);
+    map3.setMaxBounds(bounds);
+    map3.setView([imgHeight/2, imgWidth/2], startZoom3);
+
+    function recalcCover3(){
+        if (wrapperEl3.offsetParent === null) return;
+        var z = coverZoom3();
+        map3.setMinZoom(z);
+        if (map3.getZoom() < z) map3.setView(map3.getCenter(), z);
+    }
+    window.addEventListener('resize', recalcCover3);
+    window.atlRecalcMap3 = recalcCover3;
+    window.atlMap3 = map3;
+
+    var icon = window.atlIcon;
+    var fmt = window.atlFmt;
+
+    // Поселення, підтверджені за таблицею "Економічних приміток" (та сама таблиця, що й для частин 1–2).
+    // Координати — орієнтовні, "на око" з фрагмента; точні пікселі при кліку виводяться в консоль.
+    var places3 = [
+        {name:'Володимирець (Владимирецъ)', kind:'town', coords:[1229,954],
+         owner:'Хорунжий Ігнатій Красицький, спільно з духовенством римо-католицького закону', dvory:112, pop:708,
+         note:'Містечко на суходолі при копаних криницях: церква Василія Великого, костел латинського обряду, панський дім. Мешкають євреї (шинкарство) та селяни (хліборобство). 3 ярмарки на рік.'},
+        {name:'Осова', kind:'village', coords:[1670,2366],
+         owner:'Хорунжина Розалія Фелінська', dvory:26, pop:167,
+         note:'На обох боках річки Бережанки, на якій млин на один камінь (діє навесні й восени): дерев\u2019яна церква Архангела Михаїла, панський дім.'},
+        {name:'Новаки', kind:'village', coords:[1613,1318],
+         owner:'Підкоморій Петро Цешковський', dvory:32, pop:252,
+         note:'На суходолі при копаних криницях: дерев\u2019яний панський дім.'},
+        {name:'Каноничі', kind:'village', coords:[1370,1519],
+         owner:'Старостина Анеля Трешневська', dvory:21, pop:178,
+         note:'На суходолі при копаних криницях: дерев\u2019яний панський дім; поруч — гута (скляне виробництво).'},
+        {name:'Дубівка (Дубовка)', kind:'village', coords:[1332,1573],
+         owner:'Підкоморій Теодор Урбановський', dvory:11, pop:53,
+         note:'На правому боці безіменного струмка, на якому млин на один камінь (навесні й восени): дерев\u2019яний панський дім.'},
+        {name:'Кідри', kind:'village', coords:[1463,2420],
+         owner:'Підкоморій Теодор Урбановський', dvory:39, pop:173,
+         note:'На суходолі при копаних криницях: дерев\u2019яний панський дім (в оригіналі описана разом із Дубівкою).'},
+        {name:'Великі Цепцевичі (Боль. Цепцевичи)', kind:'village', coords:[1051,2420],
+         owner:'Підкоморій Теодор Урбановський', dvory:115, pop:787,
+         note:'На лівому боці Горині: дерев\u2019яна церква Покрови Богородиці, панський дім із мурованими службами; млини на річці спільні з Малими Цепцевичами.'},
+        {name:'Малі Цепцевичі (Мал. Цепцевичи)', kind:'village', coords:[985,2313],
+         owner:'Підкоморій Теодор Урбановський', dvory:50, pop:336,
+         note:'На правому боці Горині: три борошняні млини (по одному каменю), спільні з Великими Цепцевичами, діють цілий рік.'},
+        {name:'Тутовичі (Тотовичи)', kind:'village', coords:[816,2434],
+         owner:'Підкоморій Теодор Урбановський і суддя Земський Антоній Урбановський', dvory:66, pop:441,
+         note:'По обидва боки Горині: дерев\u2019яна церква Архістратига Михаїла, панський дім, два млини на річці (по одному каменю), діють цілий рік.'},
+        {name:'Буда Цепцевицька (Майд. Цепцевицький)', kind:'village', coords:[685,1466],
+         owner:'Підкоморій Теодор Урбановський і суддя Земський Антоній Урбановський', dvory:20, pop:92,
+         note:'На суходолі при копаних криницях: поташний завод — продукцію возили до містечка Дубенки на Західному Бузі й продавали за кордон.'},
+        {name:'Зульня', kind:'village', coords:[1491,2568],
+         owner:'Ротмістр Домінік Чацький', dvory:12, pop:56,
+         note:'На лівому боці річки Бережанки: дерев\u2019яний панський дім (в оригіналі описана разом із Ремчицями й Бережницею — див. частину 2).'},
+        {name:'Рудня', kind:'village', coords:[1520,2430],
+         owner:'Ротмістр Домінік Чацький', dvory:16, pop:82,
+         note:'На лівому боці річки Бережанки: млин на один камінь із сукновальнею, діє лише навесні й восени. Це інша Рудня, ніж та, що позначена у частині 1 біля Дубровиці (6 дворів) — назва в таблиці повторюється тричі для різних сіл.'},
+        // Назви зчитані з мапи, але поки не знайдені окремим рядком у таблиці "Економічних приміток" —
+        // дані не вигадані, лише напис з оригіналу.
+        {name:'Андрюга', kind:'unverified', coords:[1801,753], owner:null, dvory:null, pop:null,
+         note:'Назва з мапи. Окремого запису в «Економічних примітках» поки не знайдено.'},
+        {name:'Пегонки', kind:'unverified', coords:[1613,645], owner:null, dvory:null, pop:null,
+         note:'Назва з мапи. Окремого запису в «Економічних примітках» поки не знайдено.'},
+        {name:'Озеро', kind:'unverified', coords:[1838,2232], owner:null, dvory:null, pop:null,
+         note:'Назва з мапи. Окремого запису в «Економічних примітках» поки не знайдено.'},
+        {name:'Зеленці', kind:'unverified', coords:[1426,121], owner:null, dvory:null, pop:null,
+         note:'Назва з мапи. Окремого запису в «Економічних примітках» поки не знайдено.'},
+        {name:'Долга Воля', kind:'unverified', coords:[1126,376], owner:null, dvory:null, pop:null,
+         note:'Назва з мапи (позначена з церквою). Окремого запису в «Економічних примітках» поки не знайдено.'},
+        {name:'Островці', kind:'unverified', coords:[957,538], owner:null, dvory:null, pop:null,
+         note:'Назва з мапи. Однойменне село вже позначене в частині 1 біля Дубровиці — це інший, географічно віддалений населений пункт із тією ж назвою, не той самий об\u2019єкт.'},
+        {name:'Жовкіні', kind:'unverified', coords:[713,1008], owner:null, dvory:null, pop:null,
+         note:'Назва з мапи. Окремого запису в «Економічних примітках» поки не знайдено.'},
+        {name:'Лузки', kind:'unverified', coords:[666,309], owner:null, dvory:null, pop:null,
+         note:'Назва з мапи (позначена з церквою). Окремого запису в «Економічних примітках» поки не знайдено.'}
+    ];
+
+    places3.forEach(function(p){
+        var kindLabel = p.kind==='town' ? 'Містечко' : p.kind==='unverified' ? 'Назва з мапи' : 'Село';
+        var marker = L.marker(p.coords, {icon: icon(p.kind)}).addTo(map3);
+        var html;
+        if (p.kind === 'unverified') {
+            html =
+                '<div class="atl-popup-body">'+
+                    '<div class="atl-popup-kind">'+kindLabel+' · мапа 1798 р.</div>'+
+                    '<div class="atl-popup-name">'+p.name+'</div>'+
+                    '<div class="atl-popup-note">'+p.note+'</div>'+
+                '</div>';
+        } else {
+            html =
+                '<div class="atl-popup-body">'+
+                    '<div class="atl-popup-kind">'+kindLabel+' · мапа 1798 р.</div>'+
+                    '<div class="atl-popup-name">'+p.name+'</div>'+
+                    '<div class="atl-popup-owner">Власник: <strong>'+p.owner+'</strong></div>'+
+                    '<div class="atl-popup-stats">'+
+                        '<div class="atl-popup-stat"><b>'+fmt(p.dvory)+'</b><span>дворів</span></div>'+
+                        '<div class="atl-popup-stat"><b>'+fmt(p.pop)+'</b><span>душ</span></div>'+
+                    '</div>'+
+                    '<div class="atl-popup-note">'+p.note+'</div>'+
+                    '<div class="atl-popup-src">За «Економічними примітками», 1798 р.</div>'+
+                '</div>';
+        }
+        marker.bindPopup(html, {className:'atl-popup', closeButton:true, maxWidth:270});
+    });
+
+    map3.on('click', function(e){
+        console.log('[atlas-1798 · частина 3] coords:', [Math.round(e.latlng.lat), Math.round(e.latlng.lng)]);
+    });
+})();
+</script>
+
+<script>
+(function(){
+    // ЧАСТИНА 4 — фрагмент зі Степан-городом, Воронками, Хиночами, Трипутнею, Заморочення, Озерськом
+    var imgWidth = 2751, imgHeight = 2323;
+    var bounds = [[0,0],[imgHeight, imgWidth]];
+    var wrapperEl4 = document.getElementById('atl-map-wrapper-4');
+
+    function coverZoom4(){
+        var w = wrapperEl4.clientWidth || 800, h = wrapperEl4.clientHeight || 600;
+        return Math.log2(Math.max(w / imgWidth, h / imgHeight));
+    }
+    var startZoom4 = coverZoom4();
+
+    var map4 = L.map('atl-map-4', {
+        crs: L.CRS.Simple,
+        minZoom: startZoom4,
+        maxZoom: startZoom4 + 2.5,
+        zoomSnap: 0,
+        zoomControl: false,
+        attributionControl: false,
+        maxBoundsViscosity: 1.0
+    });
+
+    L.imageOverlay('atlas-1798-chastyna-4.jpg', bounds).addTo(map4);
+    map4.setMaxBounds(bounds);
+    map4.setView([imgHeight/2, imgWidth/2], startZoom4);
+
+    function recalcCover4(){
+        if (wrapperEl4.offsetParent === null) return;
+        var z = coverZoom4();
+        map4.setMinZoom(z);
+        if (map4.getZoom() < z) map4.setView(map4.getCenter(), z);
+    }
+    window.addEventListener('resize', recalcCover4);
+    window.atlRecalcMap4 = recalcCover4;
+    window.atlMap4 = map4;
+
+    var icon = window.atlIcon;
+    var fmt = window.atlFmt;
+
+    var places4 = [
+        {name:'Степан-город', kind:'village', coords:[1347,1197],
+         owner:'Шамбелян і кавалер Юзеф Олізар', dvory:36, pop:238,
+         note:'На правому боці річки Стубли, на якій млин на два камені (навесні й восени): дерев\u2019яна церква Іоанна Богослова, панський дім.'},
+        {name:'Воронки', kind:'village', coords:[488,770],
+         owner:'Шамбелян і кавалер Юзеф Олізар', dvory:28, pop:197,
+         note:'На правому боці безіменного струмка (в оригіналі описана разом зі Степан-городом і Лукою).'},
+        {name:'Радежов (Радижеве)', kind:'village', coords:[372,1032],
+         owner:'Чесник Фелікс Вельгорський', dvory:24, pop:173,
+         note:'На річці Стублі: млин на один камінь (в оригіналі описане разом із Хиночами).'},
+        {name:'Трипутня', kind:'village', coords:[337,1706],
+         owner:'Стольник Францішек Бекерський і Домінік Мошинський', dvory:21, pop:129,
+         note:'На суходолі при копаних криницях: дерев\u2019яний панський дім.'},
+        {name:'Рибчиця (Рыбицы)', kind:'village', coords:[360,1816],
+         owner:'Марцелій Ясинський', dvory:11, pop:70,
+         note:'На суходолі при копаних криницях: дерев\u2019яний панський дім.'},
+        {name:'Хиночі', kind:'village', coords:[650,1032],
+         owner:'Чесник Фелікс Вельгорський', dvory:50, pop:350,
+         note:'На правому боці річки Стубли: церква Покрови Богородиці, панський дім, млин на два камені (навесні й восени).'},
+        {name:'Грані', kind:'village', coords:[267,2352],
+         owner:'Стольник Францішек Бекерський і Домінік Мошинський', dvory:23, pop:162,
+         note:'Дерев\u2019яна церква Воздвиження Чесного Хреста, панський дім, кінний млин (в оригіналі описані разом із Трипутнею).'},
+        {name:'Заморочення', kind:'village', coords:[1858,1885],
+         owner:'Полковник Карл Гердорф', dvory:2, pop:20,
+         note:'На суходолі при копаних криницях (в оригіналі описане разом з Озерськом).'},
+        {name:'Озерськ', kind:'village', coords:[2149,2586],
+         owner:'Полковник Карл Гердорф', dvory:13, pop:104,
+         note:'При безіменному озері.'},
+        {name:'Лука (Лукое)', kind:'village', coords:[1220,316],
+         owner:'Шамбелян і кавалер Юзеф Олізар', dvory:30, pop:167,
+         note:'На озері без власної назви (нині — Луківське). Написання на мапі («Лукое») трохи відрізняється від таблиці («Лука»).'},
+        // Назви зчитані з мапи, поки не знайдені окремим рядком у таблиці — дані не вигадані.
+        {name:'Буда Степангородська Гірка', kind:'unverified', coords:[1754,1210], owner:null, dvory:null, pop:null,
+         note:'Назва з мапи. Окремого запису в «Економічних примітках» поки не знайдено.'},
+        {name:'Буда Степангородська Борки', kind:'unverified', coords:[1765,1485], owner:null, dvory:null, pop:null,
+         note:'Назва з мапи. Окремого запису в «Економічних примітках» поки не знайдено.'},
+        {name:'Гута Степангородська', kind:'unverified', coords:[1649,1155], owner:null, dvory:null, pop:null,
+         note:'Назва з мапи (скляне виробництво). Окремого запису в «Економічних примітках» поки не знайдено.'},
+        {name:'Литвиськ', kind:'unverified', coords:[476,2476], owner:null, dvory:null, pop:null,
+         note:'Назва з мапи. Окремого запису в «Економічних примітках» поки не знайдено.'},
+        {name:'Столоч', kind:'unverified', coords:[232,55], owner:null, dvory:null, pop:null,
+         note:'Назва з мапи. Окремого запису в «Економічних примітках» поки не знайдено.'}
+    ];
+
+    places4.forEach(function(p){
+        var kindLabel = p.kind==='unverified' ? 'Назва з мапи' : 'Село';
+        var marker = L.marker(p.coords, {icon: icon(p.kind)}).addTo(map4);
+        var html;
+        if (p.kind === 'unverified') {
+            html =
+                '<div class="atl-popup-body">'+
+                    '<div class="atl-popup-kind">'+kindLabel+' · мапа 1798 р.</div>'+
+                    '<div class="atl-popup-name">'+p.name+'</div>'+
+                    '<div class="atl-popup-note">'+p.note+'</div>'+
+                '</div>';
+        } else {
+            html =
+                '<div class="atl-popup-body">'+
+                    '<div class="atl-popup-kind">'+kindLabel+' · мапа 1798 р.</div>'+
+                    '<div class="atl-popup-name">'+p.name+'</div>'+
+                    '<div class="atl-popup-owner">Власник: <strong>'+p.owner+'</strong></div>'+
+                    '<div class="atl-popup-stats">'+
+                        '<div class="atl-popup-stat"><b>'+fmt(p.dvory)+'</b><span>дворів</span></div>'+
+                        '<div class="atl-popup-stat"><b>'+fmt(p.pop)+'</b><span>душ</span></div>'+
+                    '</div>'+
+                    '<div class="atl-popup-note">'+p.note+'</div>'+
+                    '<div class="atl-popup-src">За «Економічними примітками», 1798 р.</div>'+
+                '</div>';
+        }
+        marker.bindPopup(html, {className:'atl-popup', closeButton:true, maxWidth:270});
+    });
+
+    map4.on('click', function(e){
+        console.log('[atlas-1798 · частина 4] coords:', [Math.round(e.latlng.lat), Math.round(e.latlng.lng)]);
+    });
+})();
+</script>
+
+<script>
+(function(){
     // Перемикач частин мапи
     var buttons = document.querySelectorAll('.atl-part-btn[data-part]');
     var panels = {
         '1': document.querySelector('[data-part-panel="1"]'),
-        '2': document.querySelector('[data-part-panel="2"]')
+        '2': document.querySelector('[data-part-panel="2"]'),
+        '3': document.querySelector('[data-part-panel="3"]'),
+        '4': document.querySelector('[data-part-panel="4"]')
     };
     var metas = {
         '1': document.querySelector('[data-meta-panel="1"]'),
-        '2': document.querySelector('[data-meta-panel="2"]')
+        '2': document.querySelector('[data-meta-panel="2"]'),
+        '3': document.querySelector('[data-meta-panel="3"]'),
+        '4': document.querySelector('[data-meta-panel="4"]')
     };
     var captions = {
-        '1': 'Фрагмент історичної мапи Волинської губернії, 1798 рік · Частина 1 з 3',
-        '2': 'Фрагмент історичної мапи Волинської губернії, 1798 рік · Частина 2 з 3'
+        '1': 'Фрагмент історичної мапи Волинської губернії, 1798 рік · Частина 1 з 4',
+        '2': 'Фрагмент історичної мапи Волинської губернії, 1798 рік · Частина 2 з 4',
+        '3': 'Фрагмент історичної мапи Волинської губернії, 1798 рік · Частина 3 з 4',
+        '4': 'Фрагмент історичної мапи Волинської губернії, 1798 рік · Частина 4 з 4'
     };
     var captionEl = document.getElementById('atl-caption-text');
 
@@ -787,6 +1076,8 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
             setTimeout(function(){
                 if (part === '1' && window.atlMap1) { window.atlMap1.invalidateSize(); if (window.atlRecalcMap1) window.atlRecalcMap1(); }
                 if (part === '2' && window.atlMap2) { window.atlMap2.invalidateSize(); if (window.atlRecalcMap2) window.atlRecalcMap2(); }
+                if (part === '3' && window.atlMap3) { window.atlMap3.invalidateSize(); if (window.atlRecalcMap3) window.atlRecalcMap3(); }
+                if (part === '4' && window.atlMap4) { window.atlMap4.invalidateSize(); if (window.atlRecalcMap4) window.atlRecalcMap4(); }
             }, 60);
         });
     });
