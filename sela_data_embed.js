@@ -1371,5 +1371,20 @@ var ATLAS_SELA_1798 = {
     "breakdown": [],
     "note": "",
     "desc": ""
+  },
+  "chylin": {
+    "slug": "chylin",
+    "mapName": "Хилін",
+    "excelName": "",
+    "kind": "village",
+    "owner": "",
+    "distMil": 0,
+    "distVerst": 0,
+    "dvory": 0,
+    "male": 0,
+    "female": 0,
+    "breakdown": [],
+    "note": "",
+    "desc": ""
   }
 };
