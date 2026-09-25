@@ -662,48 +662,19 @@ opacity: 0;
 </header>
 
 <!-- Hero -->
-<section class="ww1-page-hero" id="ww1Hero">
-    <div class="ww1-hero-bg"></div>
-    <div class="ww1-hero-grain"></div>
-    <div class="ww1-hero-vignette"></div>
-    <div style="position:absolute;inset:0;z-index:2;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.012) 3px,rgba(0,0,0,.012) 4px);"></div>
-    <div style="position:absolute;right:-2rem;top:50%;transform:translateY(-50%);font-family:'Cormorant Garamond',serif;font-size:clamp(12rem,25vw,22rem);font-weight:700;color:rgba(201,162,39,.04);line-height:1;pointer-events:none;z-index:3;letter-spacing:-.05em;user-select:none;">1914</div>
-    <div class="ww1-breadcrumb">
-        <a href="metrychni-knyhy.html">Архівні справи</a>
-        <span>›</span>
-        <span>Перша світова війна</span>
-    </div>
-    <div class="ww1-hero-content">
-        <div class="ww1-hero-eyebrow">
-            <div class="ww1-hero-dot"></div>
-            Іменний архівний реєстр · 1914–1918
-        </div>
-        <h1 class="ww1-hero-title">
-            Перша світова
-            <em>війна</em>
-        </h1>
-        <div style="display:flex;align-items:center;gap:.8rem;width:280px;margin:0 0 1.4rem;"><div style="flex:1;height:1px;background:linear-gradient(90deg,rgba(201,162,39,.5),transparent);"></div><div style="width:5px;height:5px;background:rgba(201,162,39,.55);transform:rotate(45deg);flex-shrink:0;"></div></div>
-        <p class="ww1-hero-sub">
-            Архівні записи про мешканців Дубровиці, Висоцька, Бережниці та навколишніх сіл Волинської губернії, мобілізованих до російської армії. Збереглися у госпітальних журналах, списках втрат і документах полону.
-        </p>
-        <div class="ww1-hero-stats">
-            <div class="ww1-hstat">
-                <span class="ww1-hstat-n" id="ww1HeroTotal">—</span>
-                <span class="ww1-hstat-l">Архівних записів</span>
-            </div>
-            <div class="ww1-hstat">
-                <span class="ww1-hstat-n" id="ww1HeroPhoto">—</span>
-                <span class="ww1-hstat-l">З фото документа</span>
-            </div>
-            <div class="ww1-hstat">
-                <span class="ww1-hstat-n" id="ww1HeroLoc">—</span>
-                <span class="ww1-hstat-l">Населених пунктів</span>
-            </div>
-        </div>
-    </div>
-    <div style="position:absolute;bottom:2rem;left:2rem;z-index:10;display:flex;flex-direction:column;align-items:flex-start;gap:.6rem;pointer-events:none;">
-        <span style="font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.22);">Гортайте</span>
-        <div style="width:1px;height:40px;background:linear-gradient(180deg,rgba(201,162,39,.5) 0%,transparent 100%);"></div>
+<section class="cover" id="ww1Hero" aria-label="Перша світова війна">
+    <img class="cover-img" src="https://i.imgur.com/oiHcEZ4.png" alt="" fetchpriority="high" decoding="async" style="--cover-pos:center 25%">
+    <div class="cover-shade"></div>
+    <div class="cover-inner">
+        <nav class="cover-crumbs" aria-label="Навігаційний ланцюжок"><a href="metrychni-knyhy.html">Архівні справи</a><span>/</span>Перша світова війна</nav>
+        <p class="cover-kicker">Іменний архівний реєстр · 1914 — 1918</p>
+        <h1 class="cover-title">Перша світова <em>війна</em></h1>
+        <p class="cover-lede">Архівні записи про мешканців Дубровиці, Висоцька, Бережниці та навколишніх сіл Волинської губернії, мобілізованих до російської армії. Збереглися в госпітальних журналах, списках втрат і документах полону.</p>
+        <dl class="cover-facts">
+            <div><dt>архівних записів</dt><dd><span id="ww1HeroTotal">—</span></dd></div>
+            <div><dt>з фото документа</dt><dd><span id="ww1HeroPhoto">—</span></dd></div>
+            <div><dt>населених пунктів</dt><dd><span id="ww1HeroLoc">—</span></dd></div>
+        </dl>
     </div>
 </section>
 
