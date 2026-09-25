@@ -29,503 +29,452 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 
 <style>
-/* ═════════════════════════════════════════════
-   АТЛАС 1798 — токени сторінки
-═════════════════════════════════════════════ */
+/* ═════════════════════════════════════════════════════════
+   АТЛАС 1798
+   Сторінка відкривається одразу мапою — як розгорнутий аркуш
+   на столі архіву. Нижче — коментар до атласу, розділи § 1–4.
+═════════════════════════════════════════════════════════ */
 :root {
-    --atl-ink: #2b2418;
-    --atl-ink-soft: #5a4a2e;
-    --atl-paper: #ece4cf;
-    --atl-parchment: #f5efe1;
-    --atl-gold: #a9822f;
-    --atl-gold-bright: #c9a227;
-    --atl-rule: rgba(169,130,47,.22);
-    --atl-rule-soft: rgba(169,130,47,.12);
-    --atl-muted: var(--color-text-light, #78716c);
-    --atl-card: var(--color-bg-card, #fff);
-    --atl-night: #16110a;
-    --atl-village: #3f5d63;
-    --atl-folwark: #8a5a26;
+    --hdr: 76px;
+    --ink: #2b2418;
+    --ink-2: #5a4a2e;
+    --ink-3: #8a7a5c;
+    --paper: #f7f1e3;
+    --paper-2: #efe6d0;
+    --desk: #17120b;
+    --gold: #a9822f;
+    --gold-hi: #d4b25a;
+    --rule: rgba(90,74,46,.18);
+    --rule-2: rgba(90,74,46,.1);
+    --pin-village: #34535a;
+    --pin-folwark: #8a5a26;
+    --shadow: 0 24px 60px rgba(10,7,3,.38), 0 2px 8px rgba(10,7,3,.2);
 }
 [data-theme="dark"] {
-    --atl-ink: #efe4c6;
-    --atl-ink-soft: #c9b98f;
-    --atl-paper: #1d1810;
-    --atl-parchment: #13100b;
-    --atl-gold: #d4b25a;
-    --atl-rule: rgba(212,178,90,.2);
-    --atl-rule-soft: rgba(212,178,90,.1);
-    --atl-card: #17130d;
-    --atl-village: #7fa4aa;
-    --atl-folwark: #c98f52;
+    --ink: #efe4c6;
+    --ink-2: #cdbb92;
+    --ink-3: #93825f;
+    --paper: #1b160e;
+    --paper-2: #231c12;
+    --rule: rgba(212,178,90,.2);
+    --rule-2: rgba(212,178,90,.1);
+    --gold: #d4b25a;
 }
 
-.atl-page { background: var(--atl-parchment); }
+.a-page { background: var(--color-bg); }
 
-/* ── HERO ────────────────────────────────────── */
-.atl-hero {
-    position: relative; overflow: hidden; isolation: isolate;
-    background: var(--atl-night); color: #f1e6c6;
-    padding: 7.5rem 2rem 6.5rem; text-align: center;
-    min-height: min(88svh, 820px);
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
+/* ══ ПЕРЕГЛЯДАЧ ══════════════════════════════════════════ */
+.v {
+    position: relative; isolation: isolate; overflow: hidden;
+    height: calc(100svh - var(--hdr)); min-height: 640px; max-height: 1100px;
+    background: var(--desk);
 }
-.atl-hero-bg {
-    position: absolute; inset: -6%; z-index: -2;
-    background: url('atlas-1798-preview.jpg') center 35% / cover no-repeat;
-    filter: sepia(.55) brightness(.42) contrast(1.15);
-    animation: atlDrift 60s ease-in-out infinite alternate;
-    opacity: 0; transition: opacity 1.4s ease;
-}
-.atl-hero.is-loaded .atl-hero-bg { opacity: 1; }
-@keyframes atlDrift {
-    from { transform: scale(1.02) translate(0, 0); }
-    to   { transform: scale(1.14) translate(-2.5%, -3%); }
-}
-.atl-hero::before {
+.v::before {
     content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
-    background:
-        radial-gradient(ellipse 70% 60% at 50% 45%, rgba(22,17,10,.35) 0%, rgba(22,17,10,.88) 75%),
-        linear-gradient(180deg, rgba(22,17,10,.7) 0%, transparent 30%, transparent 70%, rgba(22,17,10,.95) 100%);
+    background: radial-gradient(ellipse 80% 70% at 55% 45%, #2a2014 0%, var(--desk) 70%);
 }
-/* рамка-нетлайн, як на друкованому аркуші */
-.atl-hero::after {
-    content: ''; position: absolute; inset: 1.4rem; pointer-events: none;
-    border: 1px solid rgba(212,178,90,.22);
-    box-shadow: inset 0 0 0 5px rgba(22,17,10,0), inset 0 0 0 6px rgba(212,178,90,.12);
-}
-.atl-crumbs {
-    position: absolute; top: 2.4rem; left: 0; right: 0;
-    font-family: var(--font-body); font-size: .62rem; letter-spacing: .22em; text-transform: uppercase;
-    color: rgba(241,230,198,.45);
-}
-.atl-crumbs a { color: rgba(212,178,90,.85); text-decoration: none; }
-.atl-crumbs a:hover { color: #f1e6c6; }
-.atl-crumbs span { margin: 0 .7rem; opacity: .5; }
-
-.atl-rose {
-    width: 92px; height: 92px; margin: 0 auto 1.8rem; display: block;
-    color: #d4b25a; animation: atlRoseIn 1.2s cubic-bezier(.16,1,.3,1) both;
-}
-.atl-rose .spin { transform-origin: 50px 50px; animation: atlSpin 120s linear infinite; }
-@keyframes atlRoseIn { from { opacity: 0; transform: scale(.6) rotate(-60deg); } to { opacity: 1; transform: none; } }
-@keyframes atlSpin { to { transform: rotate(360deg); } }
-
-.atl-eyebrow {
-    display: flex; align-items: center; justify-content: center; gap: 1rem;
-    font-family: var(--font-body); font-size: .6rem; letter-spacing: .32em; text-transform: uppercase;
-    color: rgba(212,178,90,.75); margin-bottom: 1.5rem;
-    animation: atlFade .8s ease .25s both;
-}
-.atl-eyebrow::before, .atl-eyebrow::after { content: ''; width: 44px; height: 1px; background: linear-gradient(90deg, transparent, rgba(212,178,90,.5)); }
-.atl-eyebrow::after { transform: scaleX(-1); }
-
-.atl-title {
-    font-family: var(--font-display); font-weight: 300; color: #f4e9c8;
-    font-size: clamp(2.6rem, 6.6vw, 5.6rem); line-height: .98; letter-spacing: -.02em;
-    margin: 0 0 1.2rem; animation: atlFade .9s ease .35s both;
-}
-.atl-title em { display: block; font-style: italic; color: #d4b25a; font-weight: 400; }
-.atl-lede {
-    font-family: var(--font-display); font-style: italic; font-size: clamp(1.08rem, 1.7vw, 1.32rem); line-height: 1.55;
-    max-width: 40em; margin: 0 auto 2.6rem; color: rgba(241,230,198,.72);
-    animation: atlFade .9s ease .45s both;
-}
-.atl-pills { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin: 0 0 2.6rem; padding: 0; animation: atlFade .9s ease .6s both; }
-.atl-pill {
-    min-width: 128px; padding: .85rem 1.3rem; border-radius: 10px;
-    background: rgba(255,255,255,.035); border: 1px solid rgba(212,178,90,.2);
-    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
-}
-.atl-pill dd { margin: 0 0 .3rem; font-family: var(--font-display); font-size: 1.65rem; font-weight: 400; color: #d4b25a; line-height: 1; font-variant-numeric: lining-nums; }
-.atl-pill dt { font-family: var(--font-body); font-size: .56rem; letter-spacing: .18em; text-transform: uppercase; color: rgba(241,230,198,.45); }
-
-.atl-cta { display: flex; flex-wrap: wrap; justify-content: center; gap: .8rem; animation: atlFade .9s ease .75s both; }
-.atl-btn {
-    display: inline-flex; align-items: center; gap: .6rem;
-    padding: .95rem 1.7rem; border-radius: 100px; text-decoration: none;
-    font-family: var(--font-body); font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; font-weight: 600;
-    transition: transform .25s ease, background .25s ease, border-color .25s ease, color .25s ease;
-}
-.atl-btn svg { width: 14px; height: 14px; }
-.atl-btn--gold { background: #d4b25a; color: #1a1408; }
-.atl-btn--gold:hover { background: #e6c872; transform: translateY(-2px); }
-.atl-btn--ghost { border: 1px solid rgba(241,230,198,.3); color: #f1e6c6; }
-.atl-btn--ghost:hover { border-color: #d4b25a; color: #d4b25a; transform: translateY(-2px); }
-.atl-btn:focus-visible { outline: 2px solid #d4b25a; outline-offset: 3px; }
-
-.atl-hero-fade { position: absolute; left: 0; right: 0; bottom: 0; height: 90px; background: linear-gradient(transparent, var(--atl-parchment)); pointer-events: none; }
-@keyframes atlFade { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
-
-@media (max-width: 640px) {
-    .atl-hero { padding: 6.5rem 1.1rem 5rem; }
-    .atl-hero::after { inset: .7rem; }
-    .atl-crumbs { top: 1.7rem; }
-    .atl-rose { width: 70px; height: 70px; }
-    .atl-pill { min-width: 0; flex: 1 1 40%; padding: .7rem .8rem; }
-    .atl-pill dd { font-size: 1.35rem; }
-}
-
-/* ── Загальне для секцій ─────────────────────── */
-.atl-wrap { max-width: 1320px; margin: 0 auto; padding: 0 2rem; }
-@media (max-width: 640px) { .atl-wrap { padding: 0 1rem; } }
-.atl-sec { padding: 4.5rem 0; scroll-margin-top: 70px; }
-.atl-sec-head { text-align: center; margin: 0 auto 2.6rem; max-width: 760px; }
-.atl-kicker {
-    display: inline-flex; align-items: center; gap: .9rem;
-    font-family: var(--font-body); font-size: .58rem; letter-spacing: .3em; text-transform: uppercase;
-    color: var(--atl-gold); margin-bottom: .9rem;
-}
-.atl-kicker::before, .atl-kicker::after { content: ''; width: 30px; height: 1px; background: currentColor; opacity: .45; }
-.atl-h2 {
-    font-family: var(--font-display); font-weight: 300; color: var(--color-text);
-    font-size: clamp(2.1rem, 4.2vw, 3.3rem); line-height: 1; letter-spacing: -.02em; margin: 0 0 .9rem;
-}
-.atl-h2 em { font-style: italic; color: var(--atl-gold); }
-.atl-sub { font-family: var(--font-display); font-style: italic; font-size: clamp(1rem, 1.6vw, 1.18rem); line-height: 1.6; color: var(--color-text-light); margin: 0; }
-
-/* ── Вкладки аркушів ─────────────────────────── */
-.atl-tabs {
-    display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
-    border: 1px solid var(--atl-rule); border-radius: 12px; overflow: hidden;
-    background: var(--atl-card); margin-bottom: 1.2rem;
-}
-.atl-tab {
-    position: relative; display: flex; align-items: center; gap: .9rem;
-    padding: .95rem 1.2rem; background: none; border: 0; cursor: pointer; text-align: left;
-    font: inherit; color: var(--color-text-light);
-    border-left: 1px solid var(--atl-rule-soft);
-    transition: background .25s ease, color .25s ease;
-}
-.atl-tab:first-child { border-left: 0; }
-.atl-tab-n {
-    flex: 0 0 auto; width: 34px; height: 34px; border-radius: 50%;
-    display: grid; place-items: center;
-    font-family: var(--font-display); font-size: 1.05rem; font-style: italic;
-    border: 1px solid var(--atl-rule); color: var(--atl-gold);
-    transition: background .25s ease, color .25s ease, border-color .25s ease;
-}
-.atl-tab-t { min-width: 0; }
-.atl-tab-t small { display: block; font-family: var(--font-body); font-size: .56rem; letter-spacing: .2em; text-transform: uppercase; opacity: .75; margin-bottom: .15rem; }
-.atl-tab-t span { display: block; font-family: var(--font-display); font-size: 1.1rem; line-height: 1.15; color: var(--color-text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.atl-tab:hover { background: rgba(169,130,47,.05); }
-.atl-tab[aria-selected="true"] { background: #1c170e; color: rgba(241,230,198,.65); }
-.atl-tab[aria-selected="true"] .atl-tab-t span { color: #f4e9c8; }
-.atl-tab[aria-selected="true"] .atl-tab-n { background: #d4b25a; color: #1a1408; border-color: #d4b25a; }
-[data-theme="dark"] .atl-tab[aria-selected="true"] { background: #2a2113; }
-.atl-tab:focus-visible { outline: 2px solid var(--atl-gold-bright); outline-offset: -3px; }
-@media (max-width: 900px) {
-    .atl-tabs { display: flex; overflow-x: auto; scrollbar-width: none; }
-    .atl-tabs::-webkit-scrollbar { display: none; }
-    .atl-tab { flex: 0 0 auto; padding: .8rem 1rem; }
-}
-
-/* ── Сцена мапи ──────────────────────────────── */
-.atl-stage {
-    display: grid; grid-template-columns: minmax(0, 1fr) 380px;
-    height: clamp(560px, 80vh, 820px);
-    border-radius: 14px; overflow: hidden;
-    background: var(--atl-card);
-    border: 1px solid var(--atl-rule);
-    box-shadow: 0 30px 70px rgba(43,36,24,.12), 0 2px 6px rgba(43,36,24,.05);
-}
-[data-theme="dark"] .atl-stage { box-shadow: 0 30px 70px rgba(0,0,0,.55); }
-.atl-mapbox { position: relative; min-width: 0; }
-#atl-map { position: absolute; inset: 0; background: var(--atl-paper); }
+#atl-map { position: absolute; inset: 0; background: transparent; z-index: 0; outline: none; }
 #atl-map .leaflet-control-container { display: none; }
-#atl-map:focus-visible { outline: 2px solid var(--atl-gold-bright); outline-offset: -2px; }
-[data-theme="dark"] #atl-map .leaflet-image-layer { filter: sepia(.25) brightness(.82) contrast(1.05); }
-/* подвійна рамка аркуша поверх мапи */
-.atl-mapbox::after {
-    content: ''; position: absolute; inset: 10px; pointer-events: none; z-index: 500;
-    border: 1px solid rgba(43,36,24,.45);
-    box-shadow: 0 0 0 4px rgba(236,228,207,.0), 0 0 0 5px rgba(43,36,24,.22);
-    border-radius: 4px;
-}
-[data-theme="dark"] .atl-mapbox::after { border-color: rgba(212,178,90,.35); box-shadow: 0 0 0 5px rgba(212,178,90,.14); }
+#atl-map:focus-visible { box-shadow: inset 0 0 0 2px var(--gold-hi); }
+.v-sheet-img { box-shadow: 0 30px 80px rgba(0,0,0,.6), 0 0 0 1px rgba(0,0,0,.4); transition: opacity .45s ease; }
+[data-theme="dark"] .v-sheet-img { filter: sepia(.2) brightness(.86); }
+.v.is-switching .v-sheet-img { opacity: 0; }
 
-.atl-cartouche {
-    position: absolute; left: 22px; bottom: 22px; z-index: 600; pointer-events: none;
-    padding: .75rem 1.1rem .8rem; max-width: calc(100% - 44px);
-    background: rgba(245,239,225,.92); border: 1px solid rgba(43,36,24,.35);
-    box-shadow: inset 0 0 0 3px rgba(245,239,225,.92), inset 0 0 0 4px rgba(43,36,24,.2);
-    backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
-    color: #2b2418; border-radius: 2px;
+/* ── Ліва панель: титул, пошук, список ── */
+.v-panel {
+    position: absolute; z-index: 700; top: 18px; bottom: 18px; left: 18px; width: 372px;
+    display: flex; flex-direction: column; min-height: 0;
+    background: var(--paper); color: var(--ink);
+    border-radius: 14px; box-shadow: var(--shadow);
+    overflow: hidden;
 }
-[data-theme="dark"] .atl-cartouche { background: rgba(22,17,10,.88); color: #efe4c6; border-color: rgba(212,178,90,.4); box-shadow: inset 0 0 0 3px rgba(22,17,10,.88), inset 0 0 0 4px rgba(212,178,90,.2); }
-.atl-cartouche small { display: block; font-family: var(--font-body); font-size: .54rem; letter-spacing: .24em; text-transform: uppercase; opacity: .65; margin-bottom: .15rem; }
-.atl-cartouche b { display: block; font-family: var(--font-display); font-style: italic; font-weight: 500; font-size: 1.22rem; line-height: 1.1; }
+.v-title { padding: 1.35rem 1.4rem 1.1rem; border-bottom: 1px solid var(--rule); }
+.v-crumbs { font-family: var(--font-body); font-size: .72rem; color: var(--ink-3); margin-bottom: .7rem; }
+.v-crumbs a { color: var(--ink-3); text-decoration: none; }
+.v-crumbs a:hover { color: var(--gold); }
+.v-crumbs span { margin: 0 .35rem; opacity: .6; }
+.v-title h1 { font-family: var(--font-display); font-weight: 400; font-size: 2rem; line-height: 1; letter-spacing: -.02em; margin: 0 0 .45rem; color: var(--ink); }
+.v-title h1 i { font-style: italic; color: var(--gold); }
+.v-title p { margin: 0; font-family: var(--font-display); font-size: 1.02rem; line-height: 1.45; color: var(--ink-2); }
+.v-count { display: flex; gap: 1.2rem; margin-top: .9rem; font-family: var(--font-body); font-size: .74rem; color: var(--ink-3); }
+.v-count b { font-family: var(--font-display); font-weight: 500; font-size: 1.15rem; color: var(--ink); margin-right: .2rem; font-variant-numeric: lining-nums; }
 
-.atl-mini-rose { position: absolute; top: 22px; right: 22px; z-index: 600; width: 58px; height: 58px; color: #2b2418; opacity: .7; pointer-events: none; }
-[data-theme="dark"] .atl-mini-rose { color: #d4b25a; }
+.v-seg { display: grid; grid-template-columns: 1fr 1fr; margin: .9rem 1.4rem 0; padding: 3px; border-radius: 9px; background: var(--paper-2); }
+.v-seg button { font: inherit; font-family: var(--font-body); font-size: .8rem; font-weight: 500; padding: .5rem; border: 0; border-radius: 7px; background: none; color: var(--ink-2); cursor: pointer; transition: background .2s, color .2s, box-shadow .2s; }
+.v-seg button[aria-selected="true"] { background: var(--paper); color: var(--ink); box-shadow: 0 1px 3px rgba(43,36,24,.18); }
+[data-theme="dark"] .v-seg button[aria-selected="true"] { background: #2e2517; }
+.v-seg button:focus-visible { outline: 2px solid var(--gold-hi); outline-offset: 1px; }
 
-.atl-zoom { position: absolute; right: 22px; bottom: 22px; z-index: 600; display: flex; flex-direction: column; border-radius: 8px; overflow: hidden; border: 1px solid rgba(43,36,24,.3); background: rgba(245,239,225,.94); }
-[data-theme="dark"] .atl-zoom { background: rgba(22,17,10,.9); border-color: rgba(212,178,90,.35); }
-.atl-zoom button { width: 38px; height: 38px; display: grid; place-items: center; background: none; border: 0; cursor: pointer; color: #2b2418; font-size: 1.2rem; line-height: 1; }
-[data-theme="dark"] .atl-zoom button { color: #efe4c6; }
-.atl-zoom button + button { border-top: 1px solid rgba(43,36,24,.18); }
-.atl-zoom button:hover { background: rgba(169,130,47,.14); }
-.atl-zoom button:focus-visible { outline: 2px solid var(--atl-gold-bright); outline-offset: -2px; }
-.atl-zoom svg { width: 15px; height: 15px; }
+.v-search { position: relative; margin: .8rem 1.4rem .4rem; }
+.v-search svg { position: absolute; left: .75rem; top: 50%; width: 15px; height: 15px; transform: translateY(-50%); color: var(--ink-3); pointer-events: none; }
+.v-search input {
+    width: 100%; font: inherit; font-family: var(--font-body); font-size: .9rem;
+    padding: .62rem 2rem .62rem 2.2rem; border-radius: 9px;
+    border: 1px solid var(--rule); background: transparent; color: var(--ink);
+}
+.v-search input::placeholder { color: var(--ink-3); }
+.v-search input:focus { outline: none; border-color: var(--gold-hi); box-shadow: 0 0 0 3px rgba(212,178,90,.2); }
+.v-search kbd { position: absolute; right: .6rem; top: 50%; transform: translateY(-50%); font-family: var(--font-body); font-size: .66rem; color: var(--ink-3); border: 1px solid var(--rule); border-radius: 4px; padding: .05rem .35rem; }
+.v-search input:focus + kbd { display: none; }
 
-/* бічна панель */
-.atl-side { display: flex; flex-direction: column; min-height: 0; border-left: 1px solid var(--atl-rule); background: var(--atl-card); }
-@media (max-width: 960px) {
-    .atl-stage { grid-template-columns: 1fr; height: auto; }
-    .atl-mapbox { height: 64svh; min-height: 400px; }
-    .atl-side { border-left: 0; border-top: 1px solid var(--atl-rule); }
-    .atl-side-body { max-height: 70svh; }
+.v-list { flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: .2rem 0 1rem; scrollbar-width: thin; scrollbar-color: var(--rule) transparent; }
+.v-group { margin: .9rem 1.4rem .3rem; font-family: var(--font-body); font-size: .7rem; font-weight: 500; color: var(--ink-3); display: flex; justify-content: space-between; gap: 1rem; }
+.v-row {
+    width: 100%; display: grid; grid-template-columns: 16px minmax(0,1fr) auto; align-items: center; gap: .75rem;
+    padding: .5rem 1.4rem; border: 0; background: none; cursor: pointer; text-align: left; font: inherit; color: var(--ink);
+    transition: background .15s, opacity .2s;
 }
-.atl-search { padding: 1.1rem 1.3rem .9rem; border-bottom: 1px solid var(--atl-rule-soft); }
-.atl-search label { display: block; font-family: var(--font-body); font-size: .56rem; letter-spacing: .22em; text-transform: uppercase; color: var(--atl-gold); margin-bottom: .5rem; }
-.atl-search-f { position: relative; }
-.atl-search-f svg { position: absolute; left: .8rem; top: 50%; width: 15px; height: 15px; transform: translateY(-50%); color: var(--atl-muted); pointer-events: none; }
-.atl-search input {
-    width: 100%; font: inherit; font-size: .92rem;
-    padding: .65rem .8rem .65rem 2.3rem; border-radius: 100px;
-    border: 1px solid var(--atl-rule); background: var(--color-bg); color: var(--color-text);
-    transition: border-color .2s ease, box-shadow .2s ease;
-}
-.atl-search input:focus { outline: none; border-color: var(--atl-gold-bright); box-shadow: 0 0 0 4px rgba(201,162,39,.14); }
-.atl-side-body { flex: 1 1 auto; overflow-y: auto; min-height: 0; overscroll-behavior: contain; scrollbar-width: thin; }
+.v-row .v-dot { box-shadow: 0 0 0 1px rgba(20,14,6,.5); justify-self: center; }
+.v-row:hover, .v-row.is-hot { background: rgba(169,130,47,.1); }
+.v-row:focus-visible { outline: none; background: rgba(169,130,47,.14); box-shadow: inset 2px 0 0 var(--gold-hi); }
+.v-row.is-active { background: rgba(169,130,47,.16); box-shadow: inset 3px 0 0 var(--gold-hi); }
+.v-row.is-dim { opacity: .38; }
+.v-row-n { font-family: var(--font-display); font-size: 1.12rem; line-height: 1.2; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.v-row-n small { font-family: var(--font-body); font-size: .7rem; color: var(--ink-3); margin-left: .35rem; }
+.v-row-m { font-family: var(--font-body); font-size: .74rem; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.v-empty { padding: 1.2rem 1.4rem; font-family: var(--font-display); font-size: 1.05rem; line-height: 1.5; color: var(--ink-2); }
 
-.atl-sum { margin: 0; padding: 1rem 1.3rem .4rem; font-family: var(--font-display); font-style: italic; font-size: 1rem; color: var(--color-text-light); }
-.atl-list { list-style: none; margin: 0; padding: .2rem 0 1rem; }
-.atl-row {
-    width: 100%; display: grid; grid-template-columns: 14px minmax(0,1fr) auto; align-items: center; gap: .8rem;
-    padding: .58rem 1.3rem; background: none; border: 0; cursor: pointer; text-align: left;
-    font: inherit; color: var(--color-text); position: relative;
-    transition: background .15s ease;
-}
-.atl-row::before { content: ''; position: absolute; left: 0; top: 20%; bottom: 20%; width: 2px; background: var(--atl-gold-bright); transform: scaleY(0); transition: transform .2s ease; }
-.atl-row:hover, .atl-row:focus-visible { background: rgba(169,130,47,.07); outline: none; }
-.atl-row:hover::before, .atl-row:focus-visible::before { transform: scaleY(1); }
-.atl-row-name { font-family: var(--font-display); font-size: 1.12rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.atl-row-meta { font-family: var(--font-body); font-size: .72rem; color: var(--atl-muted); font-variant-numeric: tabular-nums; }
-.atl-empty { padding: 1.2rem 1.3rem; font-family: var(--font-display); font-style: italic; font-size: 1.05rem; color: var(--atl-muted); }
+.v-own { width: 100%; display: block; padding: .8rem 1.4rem; border: 0; background: none; cursor: pointer; text-align: left; font: inherit; color: var(--ink); border-bottom: 1px solid var(--rule-2); transition: background .15s; }
+.v-own:hover { background: rgba(169,130,47,.08); }
+.v-own:focus-visible { outline: none; background: rgba(169,130,47,.14); }
+.v-own.is-active { background: rgba(169,130,47,.16); box-shadow: inset 3px 0 0 var(--gold-hi); }
+.v-own-n { font-family: var(--font-display); font-size: 1.1rem; line-height: 1.25; margin-bottom: .35rem; }
+.v-own-m { display: flex; align-items: center; gap: .7rem; font-family: var(--font-body); font-size: .72rem; color: var(--ink-3); white-space: nowrap; }
+.v-own-bar { flex: 1; height: 4px; border-radius: 4px; background: var(--rule-2); overflow: hidden; }
+.v-own-bar i { display: block; height: 100%; border-radius: 4px; background: var(--gold); }
+.v-own-hint { margin: .8rem 1.4rem 0; font-family: var(--font-body); font-size: .74rem; line-height: 1.5; color: var(--ink-3); }
 
-/* картка поселення */
-.atl-card { padding: 1.1rem 1.3rem 1.8rem; animation: atlCardIn .35s cubic-bezier(.16,1,.3,1); }
-@keyframes atlCardIn { from { opacity: 0; transform: translateX(12px); } to { opacity: 1; transform: none; } }
-.atl-back {
-    display: inline-flex; align-items: center; gap: .4rem; margin: 0 0 1.2rem -.3rem;
-    background: none; border: 0; padding: .3rem; cursor: pointer;
-    font-family: var(--font-body); font-size: .6rem; letter-spacing: .18em; text-transform: uppercase; color: var(--atl-muted);
+/* ── Позначки ── */
+.v-pin { background: none; border: 0; display: flex !important; align-items: center; justify-content: center; }
+.v-dot {
+    display: block; width: 12px; height: 12px; border-radius: 50%;
+    background: var(--pin-village); border: 2px solid #fbf6ea;
+    box-shadow: 0 0 0 1px rgba(20,14,6,.8), 0 3px 8px rgba(20,14,6,.45);
+    transition: transform .18s ease, opacity .25s ease;
 }
-.atl-back:hover { color: var(--atl-gold); }
-.atl-back svg { width: 13px; height: 13px; }
-.atl-back:focus-visible { outline: 2px solid var(--atl-gold-bright); border-radius: 2px; }
-.atl-card-kind { display: flex; align-items: center; gap: .55rem; font-family: var(--font-body); font-size: .58rem; letter-spacing: .22em; text-transform: uppercase; color: var(--atl-gold); margin-bottom: .45rem; }
-.atl-card-name { font-family: var(--font-display); font-weight: 400; font-size: 2.3rem; line-height: 1; letter-spacing: -.015em; margin: 0 0 .35rem; color: var(--color-text); }
-.atl-card-name:focus { outline: none; }
-.atl-card-doc { font-family: var(--font-display); font-style: italic; font-size: 1.02rem; color: var(--atl-muted); margin: 0 0 1.2rem; }
+.v-dot.town { width: 18px; height: 18px; border-width: 2.5px; background: radial-gradient(circle at 35% 35%, #ecd07a, #a9821d); }
+.v-dot.folwark { border-radius: 3px; transform: rotate(45deg); background: var(--pin-folwark); width: 11px; height: 11px; }
+.v-pin:hover .v-dot, .v-pin.is-hot .v-dot { transform: scale(1.4); }
+.v-pin:hover .v-dot.folwark, .v-pin.is-hot .v-dot.folwark { transform: rotate(45deg) scale(1.4); }
+.v-pin.is-dim .v-dot { opacity: .42; transform: scale(.8); }
+.v-pin.is-dim .v-dot.folwark { transform: rotate(45deg) scale(.8); }
+.v-pin.is-own .v-dot { box-shadow: 0 0 0 1px rgba(20,14,6,.8), 0 0 0 5px rgba(212,178,90,.6), 0 3px 8px rgba(20,14,6,.45); }
+.v-pin.is-active { z-index: 3000 !important; }
+.v-pin.is-active .v-dot { transform: scale(1.5); }
+.v-pin.is-active .v-dot.folwark { transform: rotate(45deg) scale(1.5); }
+.v-pin.is-active::before, .v-pin.is-active::after {
+    content: ''; position: absolute; left: 50%; top: 50%; width: 18px; height: 18px; margin: -9px 0 0 -9px;
+    border-radius: 50%; border: 2px solid var(--gold-hi); pointer-events: none;
+    animation: vPulse 2s cubic-bezier(.2,.6,.3,1) infinite;
+}
+.v-pin.is-active::after { animation-delay: 1s; }
+@keyframes vPulse { from { transform: scale(1); opacity: .95; } to { transform: scale(3.4); opacity: 0; } }
+.v-pin:focus-visible { outline: none; }
+.v-pin:focus-visible .v-dot { box-shadow: 0 0 0 3px var(--gold-hi); }
 
-.atl-owner {
-    display: grid; grid-template-columns: 38px minmax(0,1fr); gap: .85rem; align-items: start;
-    padding: .95rem 1rem; margin: 0 0 1.3rem;
-    background: rgba(201,162,39,.07); border: 1px solid var(--atl-rule-soft); border-left: 3px solid var(--atl-gold-bright);
-    border-radius: 4px 10px 10px 4px;
+.v-tip.leaflet-tooltip {
+    background: rgba(23,18,11,.92); color: #f4e9c8; border: 0; border-radius: 5px;
+    padding: .25rem .55rem; box-shadow: 0 6px 18px rgba(0,0,0,.3);
+    font-family: var(--font-display); font-size: 1rem; font-style: italic; white-space: nowrap;
 }
-.atl-owner-ico { width: 38px; height: 44px; color: var(--atl-gold); }
-.atl-owner-ico img { width: 38px; height: 44px; object-fit: contain; mix-blend-mode: multiply; }
-[data-theme="dark"] .atl-owner-ico img { filter: invert(.9) sepia(.4); mix-blend-mode: screen; }
-.atl-owner-lbl { font-family: var(--font-body); font-size: .56rem; letter-spacing: .22em; text-transform: uppercase; color: var(--atl-muted); margin-bottom: .2rem; }
-.atl-owner-name { font-family: var(--font-display); font-size: 1.14rem; line-height: 1.3; color: var(--color-text); }
-.atl-owner-link {
-    display: inline-flex; align-items: center; gap: .35rem; margin-top: .5rem;
-    font-family: var(--font-body); font-size: .6rem; letter-spacing: .16em; text-transform: uppercase; font-weight: 600;
-    color: var(--atl-gold); text-decoration: none; border-bottom: 1px solid transparent;
+.v-tip.leaflet-tooltip-top::before { border-top-color: rgba(23,18,11,.92); }
+.v-lbl.leaflet-tooltip {
+    background: rgba(251,246,234,.92); color: #2b2418; border: 0; border-radius: 3px; box-shadow: 0 1px 4px rgba(0,0,0,.25);
+    padding: .05rem .4rem; font-family: var(--font-display); font-size: .95rem; font-weight: 500; white-space: nowrap;
+    transition: opacity .25s;
 }
-.atl-owner-link:hover { border-bottom-color: currentColor; }
-.atl-owner-link svg { width: 12px; height: 12px; transition: transform .2s ease; }
-.atl-owner-link:hover svg { transform: translateX(3px); }
+.v-lbl.leaflet-tooltip::before { display: none; }
+.v-lbl.is-dim { opacity: .3; }
 
-.atl-figs { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; margin: 0 0 1rem; background: var(--atl-rule); border: 1px solid var(--atl-rule); border-radius: 10px; overflow: hidden; }
-.atl-figs div { background: var(--atl-card); padding: .8rem .9rem .75rem; }
-.atl-figs dt { font-family: var(--font-body); font-size: .54rem; letter-spacing: .18em; text-transform: uppercase; color: var(--atl-muted); margin-bottom: .25rem; }
-.atl-figs dd { margin: 0; font-family: var(--font-display); font-size: 1.75rem; line-height: 1; color: var(--atl-gold); font-variant-numeric: lining-nums tabular-nums; }
+/* ── Інструменти на мапі ── */
+.v-tools { position: absolute; z-index: 690; top: 18px; right: 18px; display: flex; flex-direction: column; align-items: flex-end; gap: .7rem; transition: right .45s cubic-bezier(.16,1,.3,1); }
+.v.has-drawer .v-tools { right: 420px; }
+.v-rose { width: 58px; height: 58px; padding: 5px; border-radius: 50%; color: var(--ink); background: var(--paper); box-shadow: var(--shadow); }
+.v-zoom { display: flex; flex-direction: column; border-radius: 10px; overflow: hidden; background: var(--paper); box-shadow: var(--shadow); }
+.v-zoom button { width: 40px; height: 40px; display: grid; place-items: center; border: 0; background: none; color: var(--ink); cursor: pointer; }
+.v-zoom button + button { border-top: 1px solid var(--rule); }
+.v-zoom button:hover { background: rgba(169,130,47,.14); }
+.v-zoom button:focus-visible { outline: 2px solid var(--gold-hi); outline-offset: -2px; }
+.v-zoom svg { width: 16px; height: 16px; }
 
-.atl-sex { margin: 0 0 1.3rem; }
-.atl-sex-bar { display: flex; height: 6px; border-radius: 6px; overflow: hidden; background: var(--atl-rule-soft); }
-.atl-sex-bar i { display: block; height: 100%; }
-.atl-sex-bar .m { background: #3f5d63; }
-.atl-sex-bar .f { background: #c9a227; }
-.atl-sex-leg { display: flex; justify-content: space-between; margin-top: .35rem; font-family: var(--font-body); font-size: .66rem; color: var(--atl-muted); }
+.v-filter {
+    position: absolute; z-index: 690; top: 18px; left: 408px;
+    display: flex; align-items: center; gap: .7rem; max-width: calc(100% - 408px - 120px);
+    padding: .45rem .5rem .45rem 1rem; border-radius: 100px; background: var(--paper); color: var(--ink); box-shadow: var(--shadow);
+    font-family: var(--font-body); font-size: .8rem;
+    opacity: 0; transform: translateY(-12px); pointer-events: none;
+    transition: opacity .3s, transform .45s cubic-bezier(.16,1,.3,1);
+}
+.v-filter.is-on { opacity: 1; transform: none; pointer-events: auto; }
+.v-filter > span { color: var(--ink-3); white-space: nowrap; }
+.v-filter b { font-family: var(--font-display); font-size: 1.02rem; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.v-filter button { flex: 0 0 auto; border: 0; cursor: pointer; font: inherit; font-size: .74rem; font-weight: 600; padding: .38rem .8rem; border-radius: 100px; background: #1c170e; color: #f4e9c8; }
+[data-theme="dark"] .v-filter button { background: #d4b25a; color: #1a1408; }
+.v.has-drawer .v-filter { max-width: calc(100% - 408px - 440px); }
 
-.atl-card-note { font-family: var(--font-display); font-size: 1.1rem; line-height: 1.55; color: var(--color-text); margin: 0 0 1rem; padding-top: 1rem; border-top: 1px solid var(--atl-rule-soft); }
-.atl-card-src { font-family: var(--font-body); font-size: .68rem; line-height: 1.55; color: var(--atl-muted); margin: 0 0 1.3rem; font-style: italic; }
-.atl-more {
-    display: inline-flex; align-items: center; gap: .55rem;
-    padding: .8rem 1.3rem; border-radius: 100px;
-    background: #1c170e; color: #f1e6c6 !important; text-decoration: none !important;
-    font-family: var(--font-body); font-size: .62rem; letter-spacing: .16em; text-transform: uppercase; font-weight: 600;
-    transition: background .2s ease, transform .2s ease;
+/* ── Аркуші внизу ── */
+.v-sheets { position: absolute; z-index: 680; bottom: 18px; left: 408px; right: 18px; display: flex; justify-content: center; gap: .6rem; pointer-events: none; transition: right .45s cubic-bezier(.16,1,.3,1); }
+.v.has-drawer .v-sheets { right: 420px; }
+.v-sh {
+    pointer-events: auto; position: relative; display: grid; grid-template-columns: 52px minmax(0,1fr); align-items: center; gap: .7rem;
+    flex: 0 1 206px; min-width: 0; padding: 6px 12px 6px 6px; border: 0; border-radius: 10px; cursor: pointer; text-align: left;
+    background: rgba(247,241,227,.92); color: #2b2418; box-shadow: 0 10px 30px rgba(0,0,0,.35);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    transition: transform .25s ease, background .25s ease, box-shadow .25s ease;
+    font: inherit;
 }
-.atl-more svg { width: 13px; height: 13px; }
-.atl-more:hover { background: #2e2616; transform: translateY(-1px); }
-.atl-more:focus-visible { outline: 2px solid var(--atl-gold-bright); outline-offset: 2px; }
-[data-theme="dark"] .atl-more { background: #d4b25a; color: #1a1408 !important; }
-[data-theme="dark"] .atl-more:hover { background: #e6c872; }
+.v-sh:hover { transform: translateY(-3px); background: #fbf6ea; }
+.v-sh img { width: 52px; height: 44px; object-fit: cover; border-radius: 6px; filter: sepia(.25); }
+.v-sh-t { min-width: 0; }
+.v-sh-t small { display: block; font-family: var(--font-body); font-size: .66rem; color: #8a7a5c; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.v-sh-t span { display: block; font-family: var(--font-display); font-size: 1rem; line-height: 1.15; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.v-sh[aria-selected="true"] { background: #1c170e; color: #f4e9c8; box-shadow: 0 0 0 2px var(--gold-hi), 0 12px 34px rgba(0,0,0,.45); }
+.v-sh[aria-selected="true"] small { color: var(--gold-hi); }
+.v-sh:focus-visible { outline: 2px solid var(--gold-hi); outline-offset: 3px; }
 
-.atl-under { display: flex; justify-content: space-between; align-items: center; gap: .8rem 2rem; flex-wrap: wrap; margin-top: 1rem; }
-.atl-legend { display: flex; flex-wrap: wrap; gap: .5rem 1.6rem; margin: 0; padding: 0; list-style: none; }
-.atl-legend li { display: flex; align-items: center; gap: .55rem; font-family: var(--font-body); font-size: .8rem; color: var(--color-text-secondary); }
-.atl-hint { margin: 0; font-family: var(--font-display); font-style: italic; font-size: .98rem; color: var(--atl-muted); }
+/* ── Права шухляда: картка поселення ── */
+.v-drawer {
+    position: absolute; z-index: 710; top: 18px; bottom: 18px; right: 18px; width: 384px;
+    display: flex; flex-direction: column; min-height: 0;
+    background: var(--paper); color: var(--ink); border-radius: 14px; box-shadow: var(--shadow);
+    transform: translateX(calc(100% + 30px)); visibility: hidden;
+    transition: transform .5s cubic-bezier(.16,1,.3,1), visibility 0s linear .5s;
+}
+.v.has-drawer .v-drawer { transform: none; visibility: visible; transition: transform .5s cubic-bezier(.16,1,.3,1), visibility 0s; }
+.d-top { display: flex; align-items: center; justify-content: space-between; padding: .8rem .9rem .6rem 1.4rem; border-bottom: 1px solid var(--rule-2); }
+.d-where { font-family: var(--font-body); font-size: .74rem; color: var(--ink-3); display: flex; align-items: center; gap: .5rem; }
+.d-where .v-dot { width: 9px; height: 9px; border-width: 1.5px; box-shadow: 0 0 0 1px rgba(20,14,6,.5); }
+.d-where .v-dot.town { width: 11px; height: 11px; }
+.d-x { width: 34px; height: 34px; border-radius: 50%; border: 0; background: none; color: var(--ink-2); cursor: pointer; display: grid; place-items: center; }
+.d-x:hover { background: rgba(169,130,47,.14); color: var(--ink); }
+.d-x:focus-visible { outline: 2px solid var(--gold-hi); }
+.d-x svg { width: 16px; height: 16px; }
+.d-body { flex: 1 1 auto; overflow-y: auto; min-height: 0; padding: 1.2rem 1.4rem 1.4rem; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: var(--rule) transparent; }
+.d-body.is-in { animation: dIn .4s cubic-bezier(.16,1,.3,1); }
+@keyframes dIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.d-name { font-family: var(--font-display); font-weight: 400; font-size: 2.5rem; line-height: .98; letter-spacing: -.02em; margin: 0 0 .4rem; color: var(--ink); }
+.d-name:focus { outline: none; }
+.d-doc { font-family: var(--font-display); font-style: italic; font-size: 1.05rem; color: var(--ink-3); margin: 0 0 1.3rem; }
 
-/* ── Позначки ────────────────────────────────── */
-.atl-pin { background: none; border: 0; display: flex !important; align-items: center; justify-content: center; }
-.atl-dot {
-    display: block; flex: 0 0 auto; border-radius: 50%;
-    width: 12px; height: 12px; background: var(--atl-village);
-    border: 2px solid #f5efe1; box-shadow: 0 0 0 1px rgba(43,36,24,.75), 0 2px 5px rgba(43,36,24,.35);
-    transition: transform .18s ease;
-}
-.atl-dot.town { width: 18px; height: 18px; background: radial-gradient(circle at 35% 35%, #e8c96a, #b08a1f); border-width: 2.5px; }
-.atl-dot.folwark { width: 12px; height: 12px; border-radius: 3px; background: var(--atl-folwark); transform: rotate(45deg); }
-.atl-pin:hover .atl-dot, .atl-pin:focus-visible .atl-dot { transform: scale(1.35); }
-.atl-pin:hover .atl-dot.folwark, .atl-pin:focus-visible .atl-dot.folwark { transform: rotate(45deg) scale(1.35); }
-.atl-pin:focus-visible { outline: none; }
-.atl-pin.is-active { z-index: 2000 !important; }
-.atl-pin.is-active .atl-dot { transform: scale(1.4); }
-.atl-pin.is-active .atl-dot.folwark { transform: rotate(45deg) scale(1.4); }
-.atl-pin.is-active::after {
-    content: ''; position: absolute; left: 50%; top: 50%; width: 16px; height: 16px; margin: -8px 0 0 -8px;
-    border-radius: 50%; border: 2px solid #c9a227; pointer-events: none;
-    animation: atlPulse 1.8s ease-out infinite;
-}
-@keyframes atlPulse { from { transform: scale(1); opacity: .9; } to { transform: scale(3.2); opacity: 0; } }
-.atl-row .atl-dot, .atl-legend .atl-dot, .atl-card-kind .atl-dot { box-shadow: 0 0 0 1px rgba(43,36,24,.5); justify-self: center; }
-.atl-row .atl-dot.town, .atl-legend .atl-dot.town { width: 15px; height: 15px; }
-.atl-card-kind .atl-dot { width: 9px; height: 9px; border-width: 1.5px; }
-.atl-card-kind .atl-dot.folwark { width: 8px; height: 8px; }
+.d-figs { display: grid; grid-template-columns: repeat(3, 1fr); margin: 0 0 1.1rem; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+.d-figs div { padding: .8rem 0 .7rem; }
+.d-figs div + div { padding-left: .9rem; border-left: 1px solid var(--rule-2); }
+.d-figs dd { margin: 0 0 .2rem; font-family: var(--font-display); font-size: 1.9rem; line-height: 1; color: var(--ink); font-variant-numeric: lining-nums tabular-nums; }
+.d-figs dt { font-family: var(--font-body); font-size: .7rem; color: var(--ink-3); }
+.d-sex { margin: 0 0 1.4rem; }
+.d-sex-bar { display: flex; gap: 2px; height: 6px; }
+.d-sex-bar i { display: block; height: 100%; border-radius: 3px; }
+.d-sex-bar .m, .d-sex-leg .m::before { background: #34535a; }
+.d-sex-bar .f, .d-sex-leg .f::before { background: #c9a227; }
+[data-theme="dark"] .d-sex-bar .m, [data-theme="dark"] .d-sex-leg .m::before { background: #7fa4aa; }
+.d-sex-leg { display: flex; justify-content: space-between; margin-top: .4rem; font-family: var(--font-body); font-size: .72rem; color: var(--ink-3); }
+.d-sex-leg span::before { content: ''; display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: .35rem; }
 
-.atl-tip.leaflet-tooltip {
-    background: #1c170e; color: #f4e9c8; border: 1px solid rgba(212,178,90,.4); border-radius: 4px;
-    padding: .3rem .6rem; font-family: var(--font-display); font-style: italic; font-size: .98rem; box-shadow: 0 6px 18px rgba(0,0,0,.25);
+.d-owner { display: grid; grid-template-columns: 44px minmax(0,1fr); gap: .9rem; padding: 1rem; margin: 0 0 1.3rem; border-radius: 12px; background: var(--paper-2); }
+.d-owner-ico { width: 44px; height: 52px; display: grid; place-items: center; color: var(--gold); }
+.d-owner-ico img { width: 44px; height: 52px; object-fit: contain; mix-blend-mode: multiply; border-radius: 4px; }
+[data-theme="dark"] .d-owner-ico img { mix-blend-mode: normal; filter: sepia(.2) brightness(.9); }
+.d-owner-ico svg { width: 34px; height: 40px; }
+.d-owner-l { font-family: var(--font-body); font-size: .7rem; color: var(--ink-3); margin-bottom: .15rem; }
+.d-owner-n { font-family: var(--font-display); font-size: 1.2rem; line-height: 1.25; color: var(--ink); }
+.d-owner-a { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .65rem; }
+.d-owner-a a, .d-owner-a button {
+    display: inline-flex; align-items: center; gap: .35rem; padding: .38rem .75rem; border-radius: 100px; cursor: pointer;
+    font: inherit; font-family: var(--font-body); font-size: .74rem; font-weight: 500; text-decoration: none;
+    border: 1px solid var(--rule); background: var(--paper); color: var(--ink);
+    transition: background .15s, border-color .15s;
 }
-.atl-tip.leaflet-tooltip-top::before { border-top-color: #1c170e; }
+.d-owner-a a:hover, .d-owner-a button:hover { border-color: var(--gold); background: rgba(169,130,47,.08); }
+.d-owner-a .primary { background: #1c170e; border-color: #1c170e; color: #f4e9c8; }
+.d-owner-a .primary:hover { background: #2e2616; border-color: #2e2616; }
+[data-theme="dark"] .d-owner-a .primary { background: #d4b25a; border-color: #d4b25a; color: #1a1408; }
+.d-owner-a svg { width: 12px; height: 12px; }
 
-/* ── Маєтки ─────────────────────────────────── */
-.atl-sec--estates { background: var(--color-bg); border-top: 1px solid var(--atl-rule-soft); border-bottom: 1px solid var(--atl-rule-soft); }
-.atl-ledger { border: 1px solid var(--atl-rule); border-radius: 14px; overflow: hidden; background: var(--atl-card); }
-.atl-lg-head, .atl-lg-row {
-    display: grid; grid-template-columns: 52px minmax(0, 1.9fr) 90px minmax(170px, 1fr) 128px;
-    gap: 1.2rem; align-items: center; padding: 1rem 1.5rem;
+.d-note { font-family: var(--font-display); font-size: 1.14rem; line-height: 1.6; color: var(--ink); margin: 0 0 1rem; }
+.d-src { font-family: var(--font-body); font-size: .72rem; line-height: 1.5; color: var(--ink-3); margin: 0 0 1.2rem; }
+.d-more { display: flex; align-items: center; justify-content: space-between; gap: .5rem; padding: .95rem 1.1rem; border-radius: 10px; background: #1c170e; color: #f4e9c8; text-decoration: none; font-family: var(--font-body); font-size: .84rem; font-weight: 500; transition: background .2s; }
+.d-more:hover { background: #2e2616; }
+.d-more svg { flex: 0 0 auto; width: 15px; height: 15px; transition: transform .2s; }
+.d-more:hover svg { transform: translateX(3px); }
+[data-theme="dark"] .d-more { background: #d4b25a; color: #1a1408; }
+.d-nav { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--rule); }
+.d-nav button { display: flex; flex-direction: column; gap: .1rem; padding: .75rem 1.4rem; border: 0; background: none; cursor: pointer; font: inherit; color: var(--ink); text-align: left; transition: background .15s; min-width: 0; }
+.d-nav button + button { text-align: right; border-left: 1px solid var(--rule-2); align-items: flex-end; }
+.d-nav button:hover { background: rgba(169,130,47,.08); }
+.d-nav button:focus-visible { outline: 2px solid var(--gold-hi); outline-offset: -2px; }
+.d-nav small { font-family: var(--font-body); font-size: .68rem; color: var(--ink-3); }
+.d-nav span { font-family: var(--font-display); font-size: 1.05rem; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* підказка при першому відкритті */
+.v-hint {
+    position: absolute; z-index: 695; left: calc(50% + 195px); bottom: 92px; transform: translateX(-50%);
+    display: flex; align-items: center; gap: .6rem; padding: .55rem 1rem; border-radius: 100px; white-space: nowrap;
+    background: rgba(23,18,11,.86); color: #f4e9c8; font-family: var(--font-body); font-size: .8rem; box-shadow: 0 10px 30px rgba(0,0,0,.35);
+    transition: opacity .5s ease, transform .5s ease; pointer-events: none;
 }
-.atl-lg-head { background: rgba(169,130,47,.07); border-bottom: 1px solid var(--atl-rule); font-family: var(--font-body); font-size: .56rem; letter-spacing: .2em; text-transform: uppercase; color: var(--atl-muted); }
-.atl-lg-head .r, .atl-lg-row .r { text-align: right; }
-.atl-lg-row { border-bottom: 1px solid var(--atl-rule-soft); transition: background .2s ease; }
-.atl-lg-row:last-child { border-bottom: 0; }
-.atl-lg-row:hover { background: rgba(169,130,47,.04); }
-.atl-lg-n { font-family: var(--font-display); font-style: italic; font-size: 1.5rem; color: var(--atl-gold); opacity: .8; }
-.atl-lg-owner { font-family: var(--font-display); font-size: 1.22rem; line-height: 1.25; color: var(--color-text); margin: 0 0 .45rem; }
-.atl-lg-owner a { color: inherit; text-decoration: none; background: linear-gradient(var(--atl-gold-bright), var(--atl-gold-bright)) 0 100% / 100% 1px no-repeat; padding-bottom: 1px; }
-.atl-lg-owner a:hover { color: var(--atl-gold); }
-.atl-lg-owner .badge { display: inline-block; vertical-align: middle; margin-left: .45rem; padding: .15rem .5rem; border-radius: 100px; background: #1c170e; color: #d4b25a; font-family: var(--font-body); font-size: .5rem; letter-spacing: .16em; text-transform: uppercase; }
-.atl-chips { display: flex; flex-wrap: wrap; gap: .3rem; }
-.atl-chip {
-    display: inline-block; padding: .18rem .55rem; border-radius: 100px; font: inherit;
-    font-family: var(--font-body); font-size: .72rem; line-height: 1.4;
-    border: 1px solid var(--atl-rule); background: transparent; color: var(--color-text-secondary);
+.v-hint i { width: 10px; height: 10px; border-radius: 50%; background: var(--gold-hi); animation: vBlink 1.6s ease-in-out infinite; }
+@keyframes vBlink { 50% { opacity: .3; } }
+.v-hint.is-gone { opacity: 0; transform: translateX(-50%) translateY(10px); }
+
+/* ── Вузькі екрани ── */
+@media (max-width: 1180px) {
+    .v-panel { width: 330px; }
+    .v-sheets, .v-filter { left: 366px; }
+    .v-filter { max-width: calc(100% - 366px - 120px); }
+    .v-sh { width: auto; grid-template-columns: 44px auto; }
+    .v-sh img { width: 44px; height: 38px; }
+    .v-sh-t span { display: none; }
+    .v-drawer { width: 350px; }
+    .v.has-drawer .v-tools, .v.has-drawer .v-sheets { right: 384px; }
+    .v.has-drawer .v-filter { max-width: calc(100% - 366px - 400px); }
+    .v-hint { left: calc(50% + 174px); }
 }
-button.atl-chip { cursor: pointer; transition: background .15s ease, border-color .15s ease, color .15s ease; }
-button.atl-chip:hover, button.atl-chip:focus-visible { background: #1c170e; border-color: #1c170e; color: #f4e9c8; outline: none; }
-[data-theme="dark"] button.atl-chip:hover, [data-theme="dark"] button.atl-chip:focus-visible { background: #d4b25a; border-color: #d4b25a; color: #1a1408; }
-span.atl-chip { border-style: dashed; opacity: .75; }
-.atl-lg-num { font-family: var(--font-display); font-size: 1.3rem; color: var(--color-text); font-variant-numeric: lining-nums tabular-nums; }
-.atl-lg-souls { display: grid; gap: .35rem; }
-.atl-lg-souls .atl-lg-num { text-align: right; }
-.atl-lg-bar { height: 5px; border-radius: 5px; background: var(--atl-rule-soft); overflow: hidden; }
-.atl-lg-bar i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, #a9822f, #d4b25a); border-radius: 5px; transition: width 1.2s cubic-bezier(.16,1,.3,1); }
-.atl-ledger.is-in .atl-lg-bar i { width: var(--w); }
-.atl-lg-inc small { display: block; font-family: var(--font-body); font-size: .6rem; color: var(--atl-muted); margin-top: .1rem; }
-.atl-lg-foot { display: grid; grid-template-columns: 52px minmax(0, 1.9fr) 90px minmax(170px, 1fr) 128px; gap: 1.2rem; padding: 1.1rem 1.5rem; background: #1c170e; color: #f4e9c8; align-items: center; }
-[data-theme="dark"] .atl-lg-foot { background: #2a2113; }
-.atl-lg-foot .atl-lg-num { color: #d4b25a; }
-.atl-lg-foot .lbl { font-family: var(--font-body); font-size: .6rem; letter-spacing: .22em; text-transform: uppercase; color: rgba(244,233,200,.6); }
-.atl-note-small { margin: 1rem 0 0; font-family: var(--font-body); font-size: .74rem; line-height: 1.6; color: var(--atl-muted); text-align: center; }
-@media (max-width: 860px) {
-    .atl-lg-head { display: none; }
-    .atl-lg-row { grid-template-columns: 30px minmax(0,1fr); gap: .55rem .8rem; padding: 1.1rem 1rem; }
-    .atl-lg-row > :nth-child(n+3) { grid-column: 2; text-align: left; }
-    .atl-lg-n { align-self: start; }
-    .atl-lg-row > :nth-child(3)::before { content: 'Дворів: '; font-family: var(--font-body); font-size: .7rem; color: var(--atl-muted); }
-    .atl-lg-row > :nth-child(4)::before { content: 'Душ обох статей'; font-family: var(--font-body); font-size: .7rem; color: var(--atl-muted); }
-    .atl-lg-souls .atl-lg-num { text-align: left; }
-    .atl-lg-inc small { display: inline; margin-left: .4rem; }
-    .atl-lg-foot { grid-template-columns: 30px minmax(0,1fr) auto auto; gap: .8rem; padding: 1.1rem 1rem; }
-    .atl-lg-foot > :nth-child(5) { display: none; }
+@media (min-width: 901px) { .v-mapwrap { position: absolute; inset: 0; } }
+@media (max-width: 900px) {
+    .v { height: auto; min-height: 0; max-height: none; display: flex; flex-direction: column; overflow: visible; }
+    .v-mapwrap { position: relative; height: 62svh; min-height: 400px; overflow: hidden; }
+    .v-panel, .v-drawer { position: relative; inset: auto; width: auto; margin: 0; border-radius: 0; box-shadow: none; }
+    .v.has-drawer .v-panel { display: none; }
+    .v-panel .v-list { max-height: 60svh; }
+    .v-title { padding: 1.1rem 1rem .9rem; }
+    .v-title h1 { font-size: 1.75rem; }
+    .v-seg, .v-search { margin-left: 1rem; margin-right: 1rem; }
+    .v-row, .v-own { padding-left: 1rem; padding-right: 1rem; }
+    .v-group { margin-left: 1rem; margin-right: 1rem; }
+    .v-search kbd { display: none; }
+    .v-drawer { display: none; transform: none; visibility: visible; transition: none; }
+    .v.has-drawer .v-drawer { display: flex; }
+    .d-body { overflow: visible; padding: 1.1rem 1rem 1.3rem; }
+    .d-top { padding-left: 1rem; }
+    .v-tools, .v.has-drawer .v-tools { top: 12px; right: 12px; }
+    .v-rose { width: 46px; height: 46px; }
+    .v-sheets, .v.has-drawer .v-sheets { left: 10px; right: 10px; bottom: 10px; justify-content: flex-start; overflow-x: auto; scrollbar-width: none; }
+    .v-sheets::-webkit-scrollbar { display: none; }
+    .v-sh { flex: 0 0 auto; }
+    .v-filter, .v.has-drawer .v-filter { left: 12px; top: 12px; max-width: calc(100% - 80px); }
+    .v-hint { left: 50%; bottom: 72px; font-size: .74rem; }
 }
 
-/* ── Постать: граф Плятер ────────────────────── */
-.atl-figure {
-    display: grid; grid-template-columns: minmax(260px, 420px) minmax(0, 1fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: center;
-}
-.atl-herb {
-    position: relative; margin: 0; padding: 2rem; border-radius: 16px;
-    background: #efe6cf; border: 1px solid var(--atl-rule);
-    box-shadow: inset 0 0 0 8px #efe6cf, inset 0 0 0 9px rgba(43,36,24,.2), 0 30px 60px rgba(43,36,24,.12);
-}
-[data-theme="dark"] .atl-herb { background: #efe6cf; }
-.atl-herb img { display: block; width: 100%; height: auto; mix-blend-mode: multiply; }
-.atl-herb figcaption { margin-top: 1rem; text-align: center; font-family: var(--font-display); font-style: italic; font-size: .98rem; color: #5a4a2e; }
-.atl-fig-body .atl-kicker { margin-bottom: .8rem; }
-.atl-fig-name { font-family: var(--font-display); font-weight: 300; font-size: clamp(2.2rem, 4.4vw, 3.5rem); line-height: 1; letter-spacing: -.02em; color: var(--color-text); margin: 0 0 .6rem; }
-.atl-fig-name em { font-style: italic; color: var(--atl-gold); }
-.atl-fig-dates { font-family: var(--font-display); font-style: italic; font-size: 1.15rem; color: var(--color-text-light); margin: 0 0 1.5rem; }
-.atl-fig-body p { font-family: var(--font-display); font-size: 1.16rem; line-height: 1.65; color: var(--color-text-secondary); margin: 0 0 1rem; max-width: 60ch; }
-.atl-fig-facts { display: flex; flex-wrap: wrap; gap: 2.2rem; margin: 1.6rem 0 2rem; padding: 1.2rem 0; border-top: 1px solid var(--atl-rule); border-bottom: 1px solid var(--atl-rule); }
-.atl-fig-facts dd { margin: 0 0 .2rem; font-family: var(--font-display); font-size: 2rem; line-height: 1; color: var(--atl-gold); }
-.atl-fig-facts dt { font-family: var(--font-body); font-size: .56rem; letter-spacing: .2em; text-transform: uppercase; color: var(--atl-muted); }
-.atl-link-btn { display: inline-flex; align-items: center; gap: .6rem; padding: .95rem 1.7rem; border-radius: 100px; background: #1c170e; color: #f4e9c8; text-decoration: none; font-family: var(--font-body); font-size: .66rem; letter-spacing: .18em; text-transform: uppercase; font-weight: 600; transition: transform .2s ease, background .2s ease; }
-.atl-link-btn:hover { background: #2e2616; transform: translateY(-2px); }
-.atl-link-btn svg { width: 14px; height: 14px; }
-[data-theme="dark"] .atl-link-btn { background: #d4b25a; color: #1a1408; }
-@media (max-width: 860px) { .atl-figure { grid-template-columns: 1fr; } .atl-herb { max-width: 380px; margin: 0 auto; } }
+/* ══ КОМЕНТАР ДО АТЛАСУ: § 1–4 ═══════════════════════════ */
+.c-sec { padding: 5.5rem 0; border-top: 1px solid var(--color-border-light); scroll-margin-top: calc(var(--hdr) + 10px); }
+.c-wrap { max-width: 1240px; margin: 0 auto; padding: 0 2rem; display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 3.5rem; }
+@media (max-width: 900px) { .c-wrap { grid-template-columns: 1fr; gap: 1.2rem; padding: 0 1.1rem; } .c-sec { padding: 3.8rem 0; } }
+.c-mark { position: sticky; top: calc(var(--hdr) + 28px); align-self: start; }
+.c-mark b { display: block; font-family: var(--font-display); font-style: italic; font-weight: 400; font-size: 3.4rem; line-height: .9; color: var(--gold); }
+.c-mark span { display: block; margin-top: .6rem; font-family: var(--font-body); font-size: .78rem; color: var(--color-text-light); max-width: 16ch; line-height: 1.45; }
+@media (max-width: 900px) { .c-mark { position: static; display: flex; align-items: baseline; gap: .8rem; } .c-mark b { font-size: 2.4rem; } .c-mark span { margin: 0; max-width: none; } }
+.c-h2 { font-family: var(--font-display); font-weight: 300; font-size: clamp(2.2rem, 4.4vw, 3.6rem); line-height: 1; letter-spacing: -.025em; color: var(--color-text); margin: 0 0 1.4rem; max-width: 18ch; }
+.c-lede { font-family: var(--font-display); font-size: clamp(1.12rem, 1.6vw, 1.32rem); line-height: 1.6; color: var(--color-text-secondary); max-width: 58ch; margin: 0 0 2.4rem; }
 
-/* ── Горинь ─────────────────────────────────── */
-.atl-sec--river { background: var(--atl-night); color: #efe4c6; position: relative; overflow: hidden; }
-.atl-sec--river::before {
-    content: ''; position: absolute; inset: 0; pointer-events: none; opacity: .5;
-    background: radial-gradient(ellipse 60% 70% at 85% 30%, rgba(212,178,90,.14), transparent 60%),
-                radial-gradient(ellipse 50% 60% at 10% 90%, rgba(63,93,99,.25), transparent 60%);
-}
-.atl-sec--river .atl-wrap { position: relative; }
-.atl-sec--river .atl-h2 { color: #f4e9c8; }
-.atl-sec--river .atl-h2 em { color: #d4b25a; }
-.atl-sec--river .atl-kicker { color: #d4b25a; }
-.atl-sec--river .atl-sub { color: rgba(239,228,198,.6); }
-.atl-river { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: start; }
-@media (max-width: 900px) { .atl-river { grid-template-columns: 1fr; } }
-.atl-quote { font-family: var(--font-display); font-size: 1.2rem; line-height: 1.7; color: rgba(239,228,198,.86); margin: 0; }
-.atl-quote p { margin: 0 0 1.1rem; }
-.atl-quote p:first-child::first-letter { float: left; font-size: 4.2rem; line-height: .82; padding: .35rem .6rem 0 0; color: #d4b25a; font-style: italic; }
-.atl-quote cite { display: block; margin-top: 1.4rem; font-family: var(--font-body); font-style: normal; font-size: .62rem; letter-spacing: .2em; text-transform: uppercase; color: rgba(212,178,90,.7); }
-.atl-barge { border: 1px solid rgba(212,178,90,.22); border-radius: 14px; padding: 1.6rem 1.6rem 1.4rem; background: rgba(255,255,255,.02); }
-.atl-barge svg { display: block; width: 100%; height: auto; color: #d4b25a; }
-.atl-barge-dims { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; margin-top: 1.2rem; background: rgba(212,178,90,.18); border-radius: 10px; overflow: hidden; }
-.atl-barge-dims div { background: #1a140c; padding: .8rem .9rem; }
-.atl-barge-dims dd { margin: 0 0 .15rem; font-family: var(--font-display); font-size: 1.45rem; color: #d4b25a; line-height: 1.05; }
-.atl-barge-dims dt { font-family: var(--font-body); font-size: .58rem; letter-spacing: .14em; text-transform: uppercase; color: rgba(239,228,198,.5); }
-.atl-route { list-style: none; margin: 1.6rem 0 0; padding: 0; display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; }
-.atl-route li { display: flex; align-items: center; gap: .4rem; font-family: var(--font-display); font-size: 1.08rem; color: #efe4c6; }
-.atl-route li + li::before { content: ''; width: 18px; height: 1px; background: rgba(212,178,90,.55); }
-.atl-route li.port { color: #d4b25a; font-style: italic; }
+/* § 1 — про джерело */
+.c-facts { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); margin: 0 0 2.6rem; border-top: 1px solid var(--color-border); }
+.c-facts div { padding: 1.3rem 1.4rem 1.2rem 0; }
+.c-facts div + div { padding-left: 1.4rem; border-left: 1px solid var(--color-border-light); }
+.c-facts dd { margin: 0 0 .35rem; font-family: var(--font-display); font-size: clamp(2.2rem, 4vw, 3.2rem); line-height: 1; color: var(--color-text); font-variant-numeric: lining-nums; }
+.c-facts dt { font-family: var(--font-body); font-size: .82rem; line-height: 1.45; color: var(--color-text-light); }
+@media (max-width: 640px) { .c-facts { grid-template-columns: 1fr; } .c-facts div + div { padding-left: 0; border-left: 0; border-top: 1px solid var(--color-border-light); } }
+.c-cols { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 2.2rem; }
+@media (max-width: 900px) { .c-cols { grid-template-columns: 1fr; gap: 1.4rem; } }
+.c-cols h3 { font-family: var(--font-display); font-weight: 500; font-size: 1.3rem; margin: 0 0 .5rem; color: var(--color-text); }
+.c-cols p { margin: 0; font-size: .92rem; line-height: 1.7; color: var(--color-text-secondary); }
 
-/* ── Про джерела ─────────────────────────────── */
-.atl-notes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.4rem; }
-@media (max-width: 900px) { .atl-notes { grid-template-columns: 1fr; } }
-.atl-note { padding: 1.8rem 1.6rem; border-radius: 14px; background: var(--atl-card); border: 1px solid var(--atl-rule-soft); position: relative; }
-.atl-note::before { content: ''; position: absolute; top: 0; left: 1.6rem; right: 1.6rem; height: 2px; background: linear-gradient(90deg, transparent, var(--atl-gold-bright), transparent); opacity: .6; }
-.atl-note-n { font-family: var(--font-display); font-style: italic; font-size: 2rem; color: var(--atl-gold); line-height: 1; margin-bottom: .8rem; }
-.atl-note h3 { font-family: var(--font-display); font-weight: 500; font-size: 1.35rem; margin: 0 0 .6rem; color: var(--color-text); }
-.atl-note p { margin: 0 0 .7rem; font-size: .9rem; line-height: 1.7; color: var(--color-text-secondary); }
+/* § 2 — власники */
+.o-strip-h { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; margin-bottom: .7rem; font-family: var(--font-body); font-size: .8rem; color: var(--color-text-light); }
+.o-strip-h b { font-family: var(--font-display); font-weight: 500; font-size: 1.25rem; color: var(--color-text); }
+.o-strip { position: relative; display: flex; gap: 2px; height: 58px; margin: 0 0 .8rem; }
+.o-seg { position: relative; min-width: 5px; border: 0; padding: 0; cursor: pointer; border-radius: 4px; background: #d9c79a; transition: background .2s; }
+.o-seg:first-child { background: #a9822f; }
+.o-seg:hover, .o-seg:focus-visible { background: #1c170e; outline: none; }
+[data-theme="dark"] .o-seg { background: #4a3d24; }
+[data-theme="dark"] .o-seg:first-child { background: #b08d3a; }
+[data-theme="dark"] .o-seg:hover, [data-theme="dark"] .o-seg:focus-visible { background: #efe4c6; }
+.o-seg span { position: absolute; left: .75rem; top: 50%; transform: translateY(-50%); font-family: var(--font-display); font-size: 1.05rem; color: #fbf6ea; white-space: nowrap; pointer-events: none; }
+.o-seg:not(:first-child) span { color: #2b2418; }
+.o-seg:hover span, .o-seg:focus-visible span { color: #fbf6ea; }
+[data-theme="dark"] .o-seg:not(:first-child) span { color: #efe4c6; }
+[data-theme="dark"] .o-seg:hover span { color: #1a1408; }
+.o-tip { position: absolute; z-index: 5; bottom: calc(100% + 10px); left: 0; transform: translateX(-50%); padding: .55rem .8rem; border-radius: 8px; background: #1c170e; color: #f4e9c8; font-family: var(--font-body); font-size: .78rem; line-height: 1.45; white-space: nowrap; pointer-events: none; opacity: 0; transition: opacity .15s; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+.o-tip b { display: block; font-family: var(--font-display); font-size: 1.05rem; font-weight: 500; }
+.o-tip.is-on { opacity: 1; }
+.o-strip-note { margin: 0 0 3rem; font-family: var(--font-body); font-size: .8rem; color: var(--color-text-light); }
+
+.o-table { width: 100%; border-collapse: collapse; }
+.o-table th { white-space: nowrap; text-align: left; font-family: var(--font-body); font-size: .72rem; font-weight: 500; color: var(--color-text-light); padding: 0 1rem .7rem 0; border-bottom: 1px solid var(--color-border); }
+.o-table th.r, .o-table td.r { text-align: right; }
+.o-table td { vertical-align: top; padding: 1.1rem 1rem 1.1rem 0; border-bottom: 1px solid var(--color-border-light); }
+.o-table td:last-child, .o-table th:last-child { padding-right: 0; }
+.o-name { font-family: var(--font-display); font-size: 1.25rem; line-height: 1.25; color: var(--color-text); margin: 0 0 .5rem; }
+.o-name a { color: inherit; text-decoration: underline; text-decoration-color: var(--gold-hi); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.o-name a:hover { color: var(--gold); }
+.o-chips { display: flex; flex-wrap: wrap; gap: .3rem; }
+.o-chip { font: inherit; font-family: var(--font-body); font-size: .76rem; line-height: 1.3; padding: .2rem .6rem; border-radius: 100px; border: 1px solid var(--color-border); background: transparent; color: var(--color-text-secondary); }
+button.o-chip { cursor: pointer; transition: background .15s, border-color .15s, color .15s; }
+button.o-chip:hover, button.o-chip:focus-visible { background: #1c170e; border-color: #1c170e; color: #f4e9c8; outline: none; }
+[data-theme="dark"] button.o-chip:hover, [data-theme="dark"] button.o-chip:focus-visible { background: #d4b25a; border-color: #d4b25a; color: #1a1408; }
+span.o-chip { border-style: dashed; color: var(--color-text-light); }
+.o-num { font-family: var(--font-display); font-size: 1.35rem; color: var(--color-text); font-variant-numeric: lining-nums tabular-nums; white-space: nowrap; }
+.o-sub { display: block; font-family: var(--font-body); font-size: .72rem; color: var(--color-text-light); }
+.o-show { margin-top: .7rem; font: inherit; font-family: var(--font-body); font-size: .76rem; font-weight: 600; color: var(--gold); background: none; border: 0; padding: 0; cursor: pointer; display: inline-flex; align-items: center; gap: .35rem; }
+.o-show:hover { text-decoration: underline; }
+.o-show svg { width: 13px; height: 13px; }
+.o-foot td { border-bottom: 0; padding-top: 1.2rem; font-family: var(--font-body); font-size: .82rem; color: var(--color-text-light); }
+.o-foot .o-num { font-size: 1.5rem; }
+.o-legend { margin: 1.4rem 0 0; font-family: var(--font-body); font-size: .78rem; line-height: 1.6; color: var(--color-text-light); max-width: 80ch; }
+@media (max-width: 760px) {
+    .o-table thead { display: none; }
+    .o-table, .o-table tbody, .o-table tfoot, .o-table tr, .o-table td { display: block; }
+    .o-table tr { padding: 1rem 0; border-bottom: 1px solid var(--color-border-light); }
+    .o-table td { border: 0; padding: 0; }
+    .o-table td.r { display: inline-block; text-align: left; margin: .8rem 1.6rem 0 0; }
+    .o-table td.r::before { content: attr(data-l); display: block; font-family: var(--font-body); font-size: .7rem; color: var(--color-text-light); }
+    .o-foot tr { border-bottom: 0; }
+}
+
+/* § 3 — власник Дубровиці */
+.p-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(240px, 340px); gap: clamp(2rem, 5vw, 4rem); align-items: start; }
+@media (max-width: 900px) { .p-grid { grid-template-columns: 1fr; } }
+.p-herb { margin: 0; padding: 1.6rem; border-radius: 14px; background: #efe6cf; box-shadow: inset 0 0 0 7px #efe6cf, inset 0 0 0 8px rgba(43,36,24,.2); }
+.p-herb img { display: block; width: 100%; height: auto; mix-blend-mode: multiply; }
+.p-herb figcaption { margin-top: .8rem; text-align: center; font-family: var(--font-display); font-style: italic; font-size: .98rem; color: #5a4a2e; }
+@media (max-width: 900px) { .p-herb { max-width: 320px; } }
+.p-text p { font-family: var(--font-display); font-size: 1.2rem; line-height: 1.68; color: var(--color-text-secondary); margin: 0 0 1.1rem; max-width: 60ch; }
+.p-facts { display: flex; flex-wrap: wrap; gap: 1.4rem 2.6rem; margin: 1.8rem 0 2rem; padding: 1.2rem 0; border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
+.p-facts dd { margin: 0 0 .25rem; font-family: var(--font-display); font-size: 2.1rem; line-height: 1; color: var(--color-text); }
+.p-facts dt { font-family: var(--font-body); font-size: .76rem; color: var(--color-text-light); }
+.p-btns { display: flex; flex-wrap: wrap; gap: .6rem; }
+.btn-ink { display: inline-flex; align-items: center; gap: .55rem; padding: .9rem 1.4rem; border-radius: 10px; background: #1c170e; color: #f4e9c8; text-decoration: none; font-family: var(--font-body); font-size: .86rem; font-weight: 500; border: 0; cursor: pointer; transition: background .2s, transform .2s; }
+.btn-ink:hover { background: #2e2616; transform: translateY(-1px); }
+.btn-ink svg { width: 15px; height: 15px; }
+[data-theme="dark"] .btn-ink { background: #d4b25a; color: #1a1408; }
+.btn-line { display: inline-flex; align-items: center; gap: .55rem; padding: .9rem 1.4rem; border-radius: 10px; background: transparent; color: var(--color-text); border: 1px solid var(--color-border); font: inherit; font-family: var(--font-body); font-size: .86rem; font-weight: 500; cursor: pointer; transition: border-color .2s, background .2s; }
+.btn-line:hover { border-color: var(--gold); background: rgba(169,130,47,.06); }
+
+/* § 4 — Горинь */
+.c-sec--river { background: var(--desk); color: #efe4c6; border-top: 0; }
+.c-sec--river .c-h2 { color: #f4e9c8; max-width: 22ch; }
+.c-sec--river .c-mark b { color: #d4b25a; }
+.c-sec--river .c-mark span { color: rgba(239,228,198,.55); }
+.r-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 4rem); }
+@media (max-width: 1000px) { .r-grid { grid-template-columns: 1fr; } }
+.r-quote { margin: 0; font-family: var(--font-display); font-size: 1.2rem; line-height: 1.7; color: rgba(239,228,198,.86); }
+.r-quote p { margin: 0 0 1.1rem; }
+.r-quote cite { display: block; margin-top: 1.2rem; font-family: var(--font-body); font-style: normal; font-size: .76rem; color: rgba(212,178,90,.75); }
+.r-barge { border: 1px solid rgba(212,178,90,.22); border-radius: 14px; padding: 1.5rem; align-self: start; }
+.r-barge svg { display: block; width: 100%; height: auto; color: #d4b25a; }
+.r-dims { display: grid; grid-template-columns: repeat(2, 1fr); margin: 1.2rem 0 0; border-top: 1px solid rgba(212,178,90,.2); }
+.r-dims div { padding: .8rem 0 .7rem; border-bottom: 1px solid rgba(212,178,90,.12); }
+.r-dims div:nth-child(even) { padding-left: 1rem; border-left: 1px solid rgba(212,178,90,.12); }
+.r-dims dd { margin: 0 0 .15rem; font-family: var(--font-display); font-size: 1.55rem; color: #f4e9c8; line-height: 1.05; }
+.r-dims dt { font-family: var(--font-body); font-size: .74rem; color: rgba(239,228,198,.55); }
+.r-route { list-style: none; margin: 1.3rem 0 0; padding: 0; display: flex; flex-wrap: wrap; align-items: center; gap: .35rem .5rem; }
+.r-route li { display: flex; align-items: center; gap: .5rem; font-family: var(--font-display); font-size: 1.1rem; color: #efe4c6; }
+.r-route li + li::before { content: '→'; color: rgba(212,178,90,.7); font-family: var(--font-body); font-size: .85rem; }
+.r-route li.port { color: #d4b25a; }
+.r-route-l { margin: .5rem 0 0; font-family: var(--font-body); font-size: .74rem; color: rgba(239,228,198,.5); }
 
 @media (prefers-reduced-motion: reduce) {
-    .atl-hero-bg { animation: none; transition: none; opacity: 1; }
-    .atl-rose, .atl-rose .spin, .atl-eyebrow, .atl-title, .atl-lede, .atl-pills, .atl-cta, .atl-card { animation: none; }
-    .atl-pin.is-active::after { animation: none; opacity: 0; }
-    .atl-dot, .atl-lg-bar i { transition: none; }
+    .v-sheet-img, .v-tools, .v-sheets, .v-drawer, .v-filter, .v-hint, .v-dot, .o-seg { transition: none !important; }
+    .v-pin.is-active::before, .v-pin.is-active::after, .v-hint i, .d-body.is-in { animation: none; }
 }
 </style>
 <style>
@@ -567,210 +516,179 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
     </div>
 </header>
 
-<!-- Троянда вітрів — використовується в hero і на мапі -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-    <symbol id="atl-rose" viewBox="0 0 100 100">
-        <circle cx="50" cy="50" r="47" fill="none" stroke="currentColor" stroke-width=".8" opacity=".55"/>
-        <circle cx="50" cy="50" r="42" fill="none" stroke="currentColor" stroke-width=".5" opacity=".35" stroke-dasharray="1 2.2"/>
-        <g class="spin">
-            <path d="M50 12 L54 46 L50 50 L46 46Z" fill="currentColor"/>
-            <path d="M50 88 L54 54 L50 50 L46 54Z" fill="currentColor" opacity=".45"/>
-            <path d="M12 50 L46 46 L50 50 L46 54Z" fill="currentColor" opacity=".45"/>
-            <path d="M88 50 L54 46 L50 50 L54 54Z" fill="currentColor" opacity=".45"/>
-            <path d="M50 12 L50 50 L46 46Z" fill="#000" opacity=".22"/>
-            <path d="M24 24 L48 47 L50 50 L47 48Z" fill="currentColor" opacity=".35"/>
-            <path d="M76 24 L52 47 L50 50 L53 48Z" fill="currentColor" opacity=".35"/>
-            <path d="M24 76 L48 53 L50 50 L47 52Z" fill="currentColor" opacity=".35"/>
-            <path d="M76 76 L52 53 L50 50 L53 52Z" fill="currentColor" opacity=".35"/>
-            <circle cx="50" cy="50" r="2.6" fill="currentColor"/>
-        </g>
-        <text x="50" y="8.4" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="7.5" font-style="italic" fill="currentColor">N</text>
-    </symbol>
-</svg>
+<main class="a-page">
 
-<main class="atl-page">
+<!-- ═══ ПЕРЕГЛЯДАЧ АТЛАСУ ═══ -->
+<section class="v" id="mapa" aria-label="Інтерактивний атлас">
+    <div class="v-mapwrap">
+        <div id="atl-map" role="application" aria-label="Мапа аркуша атласу" tabindex="0"></div>
 
-<!-- ═══ HERO ═══ -->
-<section class="atl-hero" id="atlHero">
-    <div class="atl-hero-bg" aria-hidden="true"></div>
-    <nav class="atl-crumbs" aria-label="Навігаційний ланцюжок">
-        <a href="index.html">Головна</a><span>/</span><a href="metrychni-knyhy.html">Архівні справи</a><span>/</span>Атлас 1798
-    </nav>
+        <div class="v-tools">
+            <svg class="v-rose" viewBox="0 0 100 100" aria-hidden="true">
+                <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width=".9" opacity=".6"/>
+                <circle cx="50" cy="50" r="41" fill="none" stroke="currentColor" stroke-width=".5" opacity=".4" stroke-dasharray="1 2.2"/>
+                <path d="M50 10 L55 45 L50 50 L45 45Z" fill="currentColor"/>
+                <path d="M50 90 L55 55 L50 50 L45 55Z" fill="currentColor" opacity=".45"/>
+                <path d="M10 50 L45 45 L50 50 L45 55Z" fill="currentColor" opacity=".45"/>
+                <path d="M90 50 L55 45 L50 50 L55 55Z" fill="currentColor" opacity=".45"/>
+                <circle cx="50" cy="50" r="2.6" fill="currentColor"/>
+                <text x="50" y="7.5" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="8" font-style="italic" fill="currentColor">N</text>
+            </svg>
+            <div class="v-zoom">
+                <button type="button" data-zoom="in" aria-label="Наблизити"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button>
+                <button type="button" data-zoom="out" aria-label="Віддалити"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/></svg></button>
+                <button type="button" data-zoom="fit" aria-label="Показати весь аркуш"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+            </div>
+        </div>
 
-    <svg class="atl-rose" aria-hidden="true"><use href="#atl-rose"/></svg>
-    <div class="atl-eyebrow">Картографічне джерело · Волинська губернія</div>
-    <h1 class="atl-title">Атлас Волинської губернії <em>1798 року</em></h1>
-    <p class="atl-lede">Дубровиця та навколишні містечка, села й фільварки наприкінці XVIII століття: хто ними володів, скільки було дворів і душ, де стояли церкви, млини й пристані на Горині.</p>
+        <div class="v-filter" id="vFilter" aria-live="polite">
+            <span>Села власника:</span><b id="vFilterName"></b>
+            <button type="button" id="vFilterOff">Скинути</button>
+        </div>
 
-    <dl class="atl-pills">
-        <div class="atl-pill"><dd id="atlPillPlaces">—</dd><dt>поселень на мапі</dt></div>
-        <div class="atl-pill"><dd id="atlPillSouls">—</dd><dt>душ у «Примітках»</dt></div>
-        <div class="atl-pill"><dd id="atlPillEstates">—</dd><dt>маєтків і власників</dt></div>
-        <div class="atl-pill"><dd>4</dd><dt>аркуші мапи</dt></div>
-    </dl>
-
-    <div class="atl-cta">
-        <a class="atl-btn atl-btn--gold" href="#mapa">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6v16l7-4 8 4 7-4V2l-7 4-8-4-7 4z"/><path d="M8 2v16M16 6v16"/></svg>
-            Відкрити мапу
-        </a>
-        <a class="atl-btn atl-btn--ghost" href="#mayetky">Маєтки й власники</a>
+        <div class="v-sheets" role="tablist" aria-label="Аркуші атласу" id="vSheets"></div>
+        <div class="v-hint" id="vHint"><i></i>Натисніть позначку на мапі або назву в списку</div>
     </div>
-    <div class="atl-hero-fade"></div>
+
+    <aside class="v-panel" aria-label="Поселення і власники">
+        <div class="v-title">
+            <div class="v-crumbs"><a href="index.html">Головна</a><span>/</span><a href="metrychni-knyhy.html">Архівні справи</a><span>/</span>Атлас 1798</div>
+            <h1>Атлас Волинської губернії <i>1798</i></h1>
+            <p>Дубровиця та околиці наприкінці XVIII століття — за «Економічними примітками» до атласу.</p>
+            <div class="v-count"><span><b id="cPlaces">—</b>поселень</span><span><b id="cEstates">—</b>маєтків</span><span><b id="cSouls">—</b>душ</span></div>
+        </div>
+        <div class="v-seg" role="tablist" aria-label="Режим списку">
+            <button type="button" role="tab" aria-selected="true" data-mode="places">Поселення</button>
+            <button type="button" role="tab" aria-selected="false" data-mode="owners">Власники</button>
+        </div>
+        <div class="v-search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+            <input id="vQuery" type="search" autocomplete="off" placeholder="Знайти село на всіх аркушах" aria-label="Пошук поселення">
+            <kbd aria-hidden="true">/</kbd>
+        </div>
+        <div class="v-list" id="vList" aria-live="polite"></div>
+    </aside>
+
+    <aside class="v-drawer" id="vDrawer" aria-label="Картка поселення">
+        <div class="d-top">
+            <div class="d-where" id="dWhere"></div>
+            <button type="button" class="d-x" id="dClose" aria-label="Закрити картку"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        </div>
+        <div class="d-body" id="dBody"></div>
+        <div class="d-nav" id="dNav"></div>
+    </aside>
 </section>
 
-<!-- ═══ МАПА ═══ -->
-<section class="atl-sec" id="mapa">
-    <div class="atl-wrap">
-        <header class="atl-sec-head fade-in-up">
-            <div class="atl-kicker">Інтерактивна мапа</div>
-            <h2 class="atl-h2">Поселення <em>на аркушах</em></h2>
-            <p class="atl-sub">Оберіть позначку на мапі або назву в списку — картка покаже власника, кількість дворів і мешканців за описом 1798 року.</p>
-        </header>
-
-        <div class="atl-tabs" role="tablist" aria-label="Аркуші мапи" id="atlTabs"></div>
-
-        <div class="atl-stage">
-            <div class="atl-mapbox">
-                <div id="atl-map" role="application" aria-label="Інтерактивна мапа аркуша"></div>
-                <svg class="atl-mini-rose" aria-hidden="true"><use href="#atl-rose"/></svg>
-                <div class="atl-cartouche" aria-hidden="true"><small id="atlCartN">Аркуш I</small><b id="atlCartT"></b></div>
-                <div class="atl-zoom">
-                    <button type="button" data-zoom="in" aria-label="Наблизити"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button>
-                    <button type="button" data-zoom="out" aria-label="Віддалити"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/></svg></button>
-                    <button type="button" data-zoom="fit" aria-label="Показати весь аркуш"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+<!-- ═══ § 1 ПРО ДЖЕРЕЛО ═══ -->
+<section class="c-sec" id="dzherelo">
+    <div class="c-wrap">
+        <div class="c-mark"><b>§ 1</b><span>Про джерело</span></div>
+        <div>
+            <h2 class="c-h2 fade-in-up">Що це за атлас і звідки дані</h2>
+            <p class="c-lede fade-in-up">Атлас Волинської губернії 1798 року супроводжувався «Економічними примітками» — таблицею, де для кожного маєтку записано власника, кількість дворів, мешканців за станами і докладний опис господарства: річки, млини, церкви, ґрунти, ліси та панщину.</p>
+            <dl class="c-facts fade-in-up">
+                <div><dd id="fRows">—</dd><dt>поселень записано в «Примітках»</dt></div>
+                <div><dd id="fOnMap">—</dd><dt>з них знайдено й позначено на мапі</dt></div>
+                <div><dd>4</dd><dt>аркуші карти 1827 року як картографічна основа</dt></div>
+            </dl>
+            <div class="c-cols">
+                <div class="fade-in-up">
+                    <h3>Чому карта 1827 року</h3>
+                    <p>Рисунок самого атласу 1798 року для цієї місцевості поки не знайдено. Карта 1827 року показує ту саму місцевість і добре узгоджується з описами кінця XVIII століття.</p>
+                </div>
+                <div class="fade-in-up delay-1">
+                    <h3>Що позначено</h3>
+                    <p>Лише поселення, які мають власний запис у «Примітках». Жодних даних не домислено: усі цифри в картках — з таблиці 1798 року.</p>
+                </div>
+                <div class="fade-in-up delay-2">
+                    <h3>Як читати назви</h3>
+                    <p>Назви на мапі — у тогочасній орфографії, поруч — сучасна форма. «Рудня» в таблиці трапляється тричі: це різні, віддалені одне від одного села.</p>
                 </div>
             </div>
-            <aside class="atl-side" aria-label="Поселення">
-                <div class="atl-search">
-                    <label for="atlQuery">Пошук на всіх аркушах</label>
-                    <div class="atl-search-f">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-                        <input id="atlQuery" type="search" autocomplete="off" placeholder="Наприклад, Селець">
-                    </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ § 2 ВЛАСНИКИ ═══ -->
+<section class="c-sec" id="mayetky">
+    <div class="c-wrap">
+        <div class="c-mark"><b>§ 2</b><span>Маєтки та власники</span></div>
+        <div>
+            <h2 class="c-h2 fade-in-up">Кому належали люди і землі</h2>
+            <p class="c-lede fade-in-up">Шістнадцять власників ділили між собою край навколо Дубровиці. Кожна смуга нижче — частка одного маєтку в загальній кількості мешканців. Наведіть, щоб побачити цифри, натисніть — щоб показати його села на мапі.</p>
+            <div class="o-strip-h"><span>Мешканці за маєтками</span><span><b id="oTotal">—</b> душ разом</span></div>
+            <div class="o-strip" id="oStrip" role="list"></div>
+            <p class="o-strip-note" id="oNote"></p>
+            <table class="o-table" id="oTable">
+                <thead><tr><th>Власник і поселення</th><th class="r">Дворів</th><th class="r">Душ</th><th class="r">Прибуток на рік</th></tr></thead>
+                <tbody></tbody>
+                <tfoot class="o-foot"></tfoot>
+            </table>
+            <p class="o-legend">Суцільна рамка — поселення є на мапі: натисніть, щоб відкрити його картку. Пунктирна — записане в «Примітках», але не потрапило на наявні аркуші. Прибуток — річна сума доходу або оренди в рублях, як її подано в описі маєтку.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ § 3 ВЛАСНИК ДУБРОВИЦІ ═══ -->
+<section class="c-sec" id="plater">
+    <div class="c-wrap">
+        <div class="c-mark"><b>§ 3</b><span>Власник Дубровиці</span></div>
+        <div class="p-grid">
+            <div class="p-text">
+                <h2 class="c-h2 fade-in-up">Граф Юзеф Антоній Броель-Плятер</h2>
+                <p class="fade-in-up">У «Примітках» він записаний як «граф і кавалер Антоній Плятер». Дубровицю купив 1771 року в Міхала Бжостовського, а резиденцію збудував у фільварку Воробин — там мав велику бібліотеку і збірку творів мистецтва.</p>
+                <p class="fade-in-up">Посол на Великий сейм, прибічник Конституції 3 травня, кавалер орденів Святого Станіслава і Білого Орла. Помер 1832 року, похований у каплиці-гробівці на кладовищі в Дубровиці.</p>
+                <dl class="p-facts fade-in-up" id="pFacts"></dl>
+                <div class="p-btns fade-in-up">
+                    <a class="btn-ink" href="plater.html">Біографія, родина, герб <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+                    <button type="button" class="btn-line" data-show-owner="plater">Показати його села на мапі</button>
                 </div>
-                <div class="atl-side-body" id="atlSide" aria-live="polite"></div>
-            </aside>
-        </div>
-
-        <div class="atl-under">
-            <ul class="atl-legend">
-                <li><span class="atl-dot town"></span>Містечко</li>
-                <li><span class="atl-dot"></span>Село</li>
-                <li><span class="atl-dot folwark"></span>Фільварок</li>
-            </ul>
-            <p class="atl-hint">Масштаб — коліщатко миші, два пальці або кнопки на мапі.</p>
-        </div>
-    </div>
-</section>
-
-<!-- ═══ МАЄТКИ ═══ -->
-<section class="atl-sec atl-sec--estates" id="mayetky">
-    <div class="atl-wrap">
-        <header class="atl-sec-head fade-in-up">
-            <div class="atl-kicker">Хто чим володів</div>
-            <h2 class="atl-h2">Маєтки <em>1798 року</em></h2>
-            <p class="atl-sub">Усі записи «Економічних приміток», зведені за власниками. Натисніть назву поселення, щоб побачити його на мапі.</p>
-        </header>
-        <div class="atl-ledger fade-in-up" id="atlLedger"></div>
-        <p class="atl-note-small">Суцільна рамка — поселення є на мапі; пунктирна — записане в «Примітках», але не потрапило на фрагменти аркушів. Дохід і оренда — річні суми в рублях, як їх подано в описі маєтку.</p>
-    </div>
-</section>
-
-<!-- ═══ ПОСТАТЬ ═══ -->
-<section class="atl-sec" id="plater">
-    <div class="atl-wrap">
-        <div class="atl-figure">
-            <figure class="atl-herb fade-in-up">
+            </div>
+            <figure class="p-herb fade-in-up delay-1">
                 <img src="herb-plater.jpg" alt="Герб роду Плятерів: щит зі скісною перев'яззю поверх горизонтальних смуг, над ним шолом, корона і клейнод із пір'я" loading="lazy" width="1068" height="1300">
                 <figcaption>Герб роду Броель-Плятерів</figcaption>
             </figure>
-            <div class="atl-fig-body fade-in-up delay-1">
-                <div class="atl-kicker">Найбільший власник на мапі</div>
-                <h2 class="atl-fig-name">Юзеф Антоній <em>Броель-Плятер</em></h2>
-                <p class="atl-fig-dates">1750 — 1832 · граф, мальтійський командор</p>
-                <p>У «Економічних примітках» він записаний як «граф і кавалер Антоній Плятер». Дубровицю купив 1771 року в Міхала Бжостовського, а свою резиденцію збудував у фільварку Воробин — там мав велику бібліотеку і збірку творів мистецтва.</p>
-                <p>Посол на Великий сейм, прибічник Конституції 3 травня, кавалер орденів Святого Станіслава і Білого Орла. Похований у каплиці-гробівці на кладовищі в Дубровиці.</p>
-                <dl class="atl-fig-facts" id="atlPlaterFacts"></dl>
-                <a class="atl-link-btn" href="plater.html">
-                    Детальніше про графа Плятера
-                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-                </a>
-            </div>
         </div>
     </div>
 </section>
 
-<!-- ═══ ГОРИНЬ ═══ -->
-<section class="atl-sec atl-sec--river" id="horyn">
-    <div class="atl-wrap">
-        <header class="atl-sec-head fade-in-up">
-            <div class="atl-kicker">Примітка про судноплавство</div>
-            <h2 class="atl-h2">Горинь — <em>річка-дорога</em></h2>
-            <p class="atl-sub">Із Дубровиці, Бережниці та Висоцька збіжжя пливло плоскодонними барками аж до Риги.</p>
-        </header>
-        <div class="atl-river">
-            <blockquote class="atl-quote fade-in-up" id="atlNav"></blockquote>
-            <div class="atl-barge fade-in-up delay-1">
-                <svg viewBox="0 0 400 170" fill="none" stroke="currentColor" aria-label="Схема плоскодонної барки з розмірами">
-                    <!-- вода -->
-                    <path d="M0 112 Q 25 106 50 112 T 100 112 T 150 112 T 200 112 T 250 112 T 300 112 T 350 112 T 400 112" stroke-width="1" opacity=".4"/>
-                    <path d="M0 124 Q 25 118 50 124 T 100 124 T 150 124 T 200 124 T 250 124 T 300 124 T 350 124 T 400 124" stroke-width=".8" opacity=".22"/>
-                    <!-- корпус -->
-                    <path d="M40 78 L360 78 L344 124 L56 124 Z" stroke-width="1.6" fill="currentColor" fill-opacity=".08"/>
-                    <path d="M48 92 L352 92" stroke-width=".7" opacity=".5"/>
-                    <path d="M52 106 L348 106" stroke-width=".7" opacity=".5"/>
-                    <!-- вантаж (мішки) -->
-                    <g stroke-width=".9" opacity=".75">
-                        <rect x="90" y="60" width="40" height="18" rx="6"/><rect x="134" y="60" width="40" height="18" rx="6"/><rect x="178" y="60" width="40" height="18" rx="6"/><rect x="222" y="60" width="40" height="18" rx="6"/><rect x="266" y="60" width="40" height="18" rx="6"/>
-                        <rect x="112" y="44" width="40" height="17" rx="6"/><rect x="156" y="44" width="40" height="17" rx="6"/><rect x="200" y="44" width="40" height="17" rx="6"/><rect x="244" y="44" width="40" height="17" rx="6"/>
-                    </g>
-                    <!-- стерно -->
-                    <path d="M360 78 L392 58" stroke-width="1.4"/><path d="M386 54 L396 64" stroke-width="3"/>
-                    <!-- довжина -->
-                    <g stroke-width=".8" opacity=".9"><path d="M40 146 L360 146"/><path d="M40 140 L40 152 M360 140 L360 152"/></g>
-                    <text x="200" y="162" text-anchor="middle" fill="currentColor" stroke="none" font-family="Cormorant Garamond, Georgia, serif" font-style="italic" font-size="14">16 сажнів ≈ 34 м</text>
-                    <!-- осадка -->
-                    <g stroke-width=".8" opacity=".9"><path d="M30 112 L30 124"/><path d="M24 112 L36 112 M24 124 L36 124"/></g>
-                    <text x="30" y="140" text-anchor="middle" fill="currentColor" stroke="none" font-family="Cormorant Garamond, Georgia, serif" font-style="italic" font-size="11">осадка</text>
-                </svg>
-                <dl class="atl-barge-dims">
-                    <div><dd>≈ 34 м</dd><dt>довжина · 16 сажнів</dt></div>
-                    <div><dd>≈ 5,3 м</dd><dt>ширина · 2,5 сажня</dt></div>
-                    <div><dd>≈ 71 см</dd><dt>осадка з вантажем · 1 аршин</dt></div>
-                    <div><dd>до червня</dd><dt>сезон плавання · з весни</dt></div>
-                </dl>
-                <ol class="atl-route" aria-label="Шлях вантажу">
-                    <li class="port">Бережниця</li><li class="port">Домбровиця</li><li class="port">Висоцьк</li><li>Прип’ять</li><li>Пінськ</li><li>Рига</li>
-                </ol>
+<!-- ═══ § 4 ГОРИНЬ ═══ -->
+<section class="c-sec c-sec--river" id="horyn">
+    <div class="c-wrap">
+        <div class="c-mark"><b>§ 4</b><span>Примітка про судноплавство</span></div>
+        <div>
+            <h2 class="c-h2 fade-in-up">Горинь — річка, якою збіжжя пливло до Риги</h2>
+            <div class="r-grid">
+                <blockquote class="r-quote fade-in-up" id="rQuote"></blockquote>
+                <div class="r-barge fade-in-up delay-1">
+                    <svg viewBox="0 0 400 170" fill="none" stroke="currentColor" aria-label="Схема плоскодонної барки з розмірами">
+                        <path d="M0 112 Q 25 106 50 112 T 100 112 T 150 112 T 200 112 T 250 112 T 300 112 T 350 112 T 400 112" stroke-width="1" opacity=".4"/>
+                        <path d="M0 124 Q 25 118 50 124 T 100 124 T 150 124 T 200 124 T 250 124 T 300 124 T 350 124 T 400 124" stroke-width=".8" opacity=".22"/>
+                        <path d="M40 78 L360 78 L344 124 L56 124 Z" stroke-width="1.6" fill="currentColor" fill-opacity=".08"/>
+                        <path d="M48 92 L352 92" stroke-width=".7" opacity=".5"/>
+                        <path d="M52 106 L348 106" stroke-width=".7" opacity=".5"/>
+                        <g stroke-width=".9" opacity=".75">
+                            <rect x="90" y="60" width="40" height="18" rx="6"/><rect x="134" y="60" width="40" height="18" rx="6"/><rect x="178" y="60" width="40" height="18" rx="6"/><rect x="222" y="60" width="40" height="18" rx="6"/><rect x="266" y="60" width="40" height="18" rx="6"/>
+                            <rect x="112" y="44" width="40" height="17" rx="6"/><rect x="156" y="44" width="40" height="17" rx="6"/><rect x="200" y="44" width="40" height="17" rx="6"/><rect x="244" y="44" width="40" height="17" rx="6"/>
+                        </g>
+                        <path d="M360 78 L392 58" stroke-width="1.4"/><path d="M386 54 L396 64" stroke-width="3"/>
+                        <g stroke-width=".8" opacity=".9"><path d="M40 146 L360 146"/><path d="M40 140 L40 152 M360 140 L360 152"/></g>
+                        <text x="200" y="162" text-anchor="middle" fill="currentColor" stroke="none" font-family="Cormorant Garamond, Georgia, serif" font-style="italic" font-size="14">16 сажнів ≈ 34 м</text>
+                        <g stroke-width=".8" opacity=".9"><path d="M30 112 L30 124"/><path d="M24 112 L36 112 M24 124 L36 124"/></g>
+                        <text x="30" y="140" text-anchor="middle" fill="currentColor" stroke="none" font-family="Cormorant Garamond, Georgia, serif" font-style="italic" font-size="11">осадка</text>
+                    </svg>
+                    <dl class="r-dims">
+                        <div><dd>≈ 34 м</dd><dt>довжина, 16 сажнів</dt></div>
+                        <div><dd>≈ 5,3 м</dd><dt>ширина, 2,5 сажня</dt></div>
+                        <div><dd>≈ 71 см</dd><dt>осадка з вантажем, 1 аршин</dt></div>
+                        <div><dd>до червня</dd><dt>сезон плавання, з весни</dt></div>
+                    </dl>
+                    <ol class="r-route" aria-label="Шлях вантажу">
+                        <li class="port">Бережниця</li><li class="port">Домбровиця</li><li class="port">Висоцьк</li><li>Прип’ять</li><li>Пінськ</li><li>Рига</li>
+                    </ol>
+                    <p class="r-route-l">Золотим позначено найкращі пристані на Горині.</p>
+                </div>
             </div>
-        </div>
-    </div>
-</section>
-
-<!-- ═══ ДЖЕРЕЛА ═══ -->
-<section class="atl-sec" id="dzherela">
-    <div class="atl-wrap">
-        <header class="atl-sec-head fade-in-up">
-            <div class="atl-kicker">Про джерело</div>
-            <h2 class="atl-h2">Як читати <em>цю мапу</em></h2>
-        </header>
-        <div class="atl-notes">
-            <article class="atl-note fade-in-up">
-                <div class="atl-note-n">i</div>
-                <h3>Звідки мапа</h3>
-                <p>Рисунок атласу 1798 року для цієї місцевості поки не знайдено. Тому основою слугує детальна карта 1827 року: вона показує ту саму місцевість і добре узгоджується з описами кінця XVIII століття.</p>
-            </article>
-            <article class="atl-note fade-in-up delay-1">
-                <div class="atl-note-n">ii</div>
-                <h3>Звідки дані</h3>
-                <p>Власники, двори, мешканці за станами та описи маєтків узято з «Економічних приміток» 1798 року — текстового додатка до атласу. На мапі позначено лише поселення, які мають свій запис у «Примітках».</p>
-            </article>
-            <article class="atl-note fade-in-up delay-2">
-                <div class="atl-note-n">iii</div>
-                <h3>Назви й повтори</h3>
-                <p>Назви подано так, як їх написано на карті, у тогочасній орфографії. «Рудня» трапляється в таблиці тричі — це різні, віддалені одне від одного села.</p>
-            </article>
         </div>
     </div>
 </section>
@@ -815,15 +733,6 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 (function(){
-    var hero = document.getElementById('atlHero');
-    if (!hero) return;
-    var img = new Image();
-    img.onload = function(){ hero.classList.add('is-loaded'); };
-    img.src = 'atlas-1798-preview.jpg';
-})();
-</script>
-<script>
-(function(){
 'use strict';
 
 /* Аркуші мапи. Координати позначок — у пікселях від нижнього лівого кута зображення [y, x].
@@ -841,383 +750,525 @@ var DATA = window.ATLAS_SELA_1798 || (typeof ATLAS_SELA_1798 !== 'undefined' ? A
 var OWNERS = typeof ATLAS_OWNERS_1798 !== 'undefined' ? ATLAS_OWNERS_1798 : {};
 var ESTATES = typeof ATLAS_ESTATES_1798 !== 'undefined' ? ATLAS_ESTATES_1798 : [];
 var NAV = typeof ATLAS_NAVIGATION_1798 !== 'undefined' ? ATLAS_NAVIGATION_1798 : '';
-var KIND_LABEL = { town: 'Містечко', village: 'Село', folwark: 'Фільварок' };
-var ROMAN = ['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII','XIII','XIV','XV','XVI','XVII','XVIII','XIX','XX'];
+var KIND = { town: 'Містечко', village: 'Село', folwark: 'Фільварок' };
+var ROMAN = ['I','II','III','IV'];
+var ARROW = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>';
 
+function $(id){ return document.getElementById(id); }
 function esc(s){ var d = document.createElement('div'); d.textContent = s == null ? '' : String(s); return d.innerHTML; }
 function isNum(n){ return typeof n === 'number' && isFinite(n); }
 function fmt(n){ return isNum(n) ? n.toLocaleString('uk-UA').replace(/\s/g, ' ') : '—'; }
+function pct(a, b){ return (a / b * 100).toFixed(1).replace('.', ','); }
 function plural(n, one, few, many){
     var m10 = n % 10, m100 = n % 100;
     if (m10 === 1 && m100 !== 11) return one;
     if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return few;
     return many;
 }
-var ARROW = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>';
+function shortName(s){ return s.replace(/^(Село \(Деревня\)|Село|Сільце|Містечко|Філварок)\s+/, ''); }
+var narrow = window.matchMedia('(max-width: 900px)');
 
-/* Єдиний запис про поселення з таблиці */
+/* ── Дані ─────────────────────────────────── */
+var ESTATE_BY_OWNER = {};
+ESTATES.forEach(function(e){ ESTATE_BY_OWNER[e.ownerId] = e; });
+
 function record(p){
     var d = DATA[p.slug] || {};
-    var total = (isNum(d.male) && isNum(d.female)) ? d.male + d.female : null;
-    var docName = (d.excelName || '').trim();
-    var o = OWNERS[d.ownerId] || {};
+    var mapName = d.mapName || p.name;
+    // «Берестье (Берестя)» → назва з мапи і сучасна форма
+    var m = /^(.*?)\s*\((.+)\)$/.exec(mapName);
     return {
         slug: p.slug,
-        name: d.mapName || p.name,
-        docName: docName && docName !== (d.mapName || '').trim() ? docName : '',
+        name: mapName,
+        main: m ? m[1] : mapName,
+        alt: m ? m[2] : '',
+        docName: (d.excelName || '').trim(),
         kind: d.kind || p.kind || 'village',
         owner: d.owner || '',
-        ownerPage: o.page || '',
+        ownerId: d.ownerId || '',
+        ownerPage: (OWNERS[d.ownerId] || {}).page || '',
         dvory: isNum(d.dvory) && d.dvory > 0 ? d.dvory : null,
         male: isNum(d.male) ? d.male : null,
         female: isNum(d.female) ? d.female : null,
-        total: total,
+        total: isNum(d.male) && isNum(d.female) ? d.male + d.female : null,
         note: d.note || ''
     };
 }
-
 SHEETS.forEach(function(sh){
     sh.places.forEach(function(p, i){ p.sheet = sh.n; p.id = sh.n + '-' + i; p.rec = record(p); });
+    sh.sorted = sh.places.slice().sort(function(a, b){
+        if ((a.rec.kind === 'town') !== (b.rec.kind === 'town')) return a.rec.kind === 'town' ? -1 : 1;
+        return a.rec.main.localeCompare(b.rec.main, 'uk');
+    });
 });
 var ALL = [].concat.apply([], SHEETS.map(function(s){ return s.places; }));
-var BY_SLUG = {};
-ALL.forEach(function(p){ BY_SLUG[p.slug] = p; });
+var BY_ID = {}, BY_SLUG = {};
+ALL.forEach(function(p){ BY_ID[p.id] = p; BY_SLUG[p.slug] = p; });
+var SOULS = ESTATES.reduce(function(s, e){ return s + e.male + e.female; }, 0);
+var ROWS = ESTATES.reduce(function(s, e){ return s + e.places.length; }, 0);
 
-/* ── Цифри в hero ─────────────────────────── */
-var soulsAll = ESTATES.reduce(function(s, e){ return s + (e.male || 0) + (e.female || 0); }, 0);
-function setText(id, v){ var el = document.getElementById(id); if (el) el.textContent = v; }
-setText('atlPillPlaces', ALL.length);
-setText('atlPillSouls', soulsAll ? fmt(soulsAll) : '—');
-setText('atlPillEstates', ESTATES.length || '—');
+$('cPlaces').textContent = ALL.length;
+$('cEstates').textContent = ESTATES.length;
+$('cSouls').textContent = fmt(SOULS);
+$('fRows').textContent = ROWS;
+$('fOnMap').textContent = ALL.length;
+
+/* ── Стан ─────────────────────────────────── */
+var V = document.querySelector('.v');
+var state = { sheet: null, active: null, owner: null, mode: 'places' };
 
 /* ── Мапа ─────────────────────────────────── */
-var mapEl = document.getElementById('atl-map');
+var mapEl = $('atl-map');
 var map = L.map(mapEl, {
-    crs: L.CRS.Simple, zoomSnap: 0, zoomDelta: 0.5, wheelPxPerZoomLevel: 110,
-    zoomControl: false, attributionControl: false, maxBoundsViscosity: 1.0
+    crs: L.CRS.Simple, zoomSnap: 0, zoomDelta: 0.5, wheelPxPerZoomLevel: 120,
+    zoomControl: false, attributionControl: false, keyboard: true, maxBoundsViscosity: 0.85
 });
 var overlay = null, layer = L.layerGroup().addTo(map);
 var markers = {};
-var current = null;
-var active = null;
+var labelsOn = false;
+var fitZ = 0;
 
-function coverZoom(sh){
-    var w = mapEl.clientWidth || 800, h = mapEl.clientHeight || 600;
-    return Math.log2(Math.max(w / sh.w, h / sh.h));
+/* вільна частина мапи — без панелей, що її перекривають */
+function insets(){
+    if (narrow.matches) return { l: 16, r: 16, t: 16, b: 76 };
+    var pw = document.querySelector('.v-panel').offsetWidth;
+    var open = V.classList.contains('has-drawer');
+    return { l: pw + 40, r: open ? document.querySelector('.v-drawer').offsetWidth + 40 : 96, t: 24, b: 96 };
 }
-function fitSheet(sh, keepView){
-    var z = coverZoom(sh);
-    map.options.minZoom = z;
-    map.options.maxZoom = z + 2.6;
-    if (!keepView || map.getZoom() < z) map.setView([sh.h / 2, sh.w / 2], z, { animate: false });
+function centerFor(latlng, z, pad){
+    pad = pad || insets();
+    var pt = map.project(latlng, z).subtract([(pad.l - pad.r) / 2, (pad.t - pad.b) / 2]);
+    return map.unproject(pt, z);
 }
+function fitSheet(animate){
+    var sh = state.sheet, pad = insets();
+    var b = L.latLngBounds([[0, 0], [sh.h, sh.w]]);
+    map.setMinZoom(-6); map.setMaxZoom(6);   // інакше getBoundsZoom обріже масштаб старими межами
+    var z = map.getBoundsZoom(b, false, L.point(pad.l + pad.r, pad.t + pad.b));
+    fitZ = z;
+    map.setMinZoom(z - 0.4);
+    map.setMaxZoom(z + 3);
+    map.setMaxBounds(b.pad(1.5));   // із запасом: інакше Leaflet центрує аркуш під панеллю
+    map.setView(centerFor(L.latLng(sh.h / 2, sh.w / 2), z, pad), z, { animate: !!animate });
+}
+function focusOn(p){
+    var z = Math.max(map.getZoom(), fitZ + 1.1);
+    map.flyTo(centerFor(L.latLng(p.at[0], p.at[1]), z), z, { duration: 0.9, easeLinearity: 0.2 });
+}
+
 function pinIcon(kind){
-    return L.divIcon({ className: 'atl-pin', html: '<span class="atl-dot ' + kind + '"></span>', iconSize: [26, 26], iconAnchor: [13, 13] });
+    return L.divIcon({ className: 'v-pin', html: '<span class="v-dot ' + kind + '"></span>', iconSize: [28, 28], iconAnchor: [14, 14] });
 }
+function bindLabel(m, p, permanent){
+    m.unbindTooltip();
+    if (permanent) m.bindTooltip(esc(p.rec.main), { permanent: true, direction: 'right', offset: [10, 0], className: 'v-lbl' });
+    else m.bindTooltip(esc(p.rec.name), { direction: 'top', offset: [0, -12], className: 'v-tip' });
+}
+function updateLabels(force){
+    var want = map.getZoom() >= fitZ + 0.75;
+    if (want === labelsOn && !force) return;
+    labelsOn = want;
+    state.sheet.places.forEach(function(p){ bindLabel(markers[p.id], p, want); });
+    paint();
+}
+map.on('zoomend', function(){ if (state.sheet) updateLabels(); });
 
 function showSheet(n, opts){
     opts = opts || {};
     var sh = SHEETS[n - 1];
     if (!sh) return;
-    var changed = current !== sh;
-    current = sh;
-
-    if (changed) {
+    if (state.sheet === sh) { renderList(); return; }
+    var first = !state.sheet;
+    state.sheet = sh;
+    function build(){
         var bounds = [[0, 0], [sh.h, sh.w]];
         if (overlay) map.removeLayer(overlay);
-        overlay = L.imageOverlay(sh.img, bounds).addTo(map);
-        map.setMaxBounds(bounds);
-        layer.clearLayers(); markers = {}; active = null;
+        overlay = L.imageOverlay(sh.img, bounds, { className: 'v-sheet-img' }).addTo(map);
+        layer.clearLayers(); markers = {}; labelsOn = false;
         sh.places.forEach(function(p){
             var m = L.marker(p.at, { icon: pinIcon(p.rec.kind), keyboard: true, title: '', alt: p.rec.name, riseOnHover: true });
-            m.bindTooltip(esc(p.rec.name), { direction: 'top', offset: [0, -10], className: 'atl-tip' });
+            bindLabel(m, p, false);
             m.on('click', function(){ select(p, { fromMap: true }); });
+            m.on('mouseover', function(){ hot(p, true); });
+            m.on('mouseout', function(){ hot(p, false); });
             m.addTo(layer);
             markers[p.id] = m;
         });
         map.invalidateSize();
-        fitSheet(sh, false);
-        setText('atlCartN', 'Аркуш ' + ROMAN[sh.n - 1]);
-        setText('atlCartT', sh.title);
+        fitSheet(false);
+        updateLabels(true);
+        if (opts.then) opts.then();
+        requestAnimationFrame(function(){ V.classList.remove('is-switching'); });
     }
+    if (first) build();
+    else { V.classList.add('is-switching'); setTimeout(build, 260); }
 
-    document.querySelectorAll('.atl-tab').forEach(function(t){
+    document.querySelectorAll('.v-sh').forEach(function(t){
         var on = +t.getAttribute('data-sheet') === sh.n;
         t.setAttribute('aria-selected', on ? 'true' : 'false');
         t.tabIndex = on ? 0 : -1;
-        if (on && tabs.scrollWidth > tabs.clientWidth) tabs.scrollLeft = Math.max(0, t.offsetLeft - 16);
     });
-    if (!opts.keepPanel) renderList();
+    renderList();
     if (!opts.noHash) setHash('arkush-' + sh.n);
 }
 
-function setActiveMarker(p){
+/* підсвічування: активне поселення, власник, наведення */
+function paint(){
     Object.keys(markers).forEach(function(id){
         var el = markers[id].getElement();
-        if (el) el.classList.toggle('is-active', !!p && id === p.id);
+        if (!el) return;
+        var p = BY_ID[id];
+        var own = !!state.owner && p.rec.ownerId === state.owner;
+        var dim = !!state.owner && !own;
+        el.classList.toggle('is-active', !!state.active && state.active.id === id);
+        el.classList.toggle('is-own', own);
+        el.classList.toggle('is-dim', dim);
+        var tt = markers[id].getTooltip();
+        if (tt && tt.getElement()) tt.getElement().classList.toggle('is-dim', dim);
+    });
+    document.querySelectorAll('.v-row').forEach(function(r){
+        var p = BY_ID[r.getAttribute('data-id')];
+        r.classList.toggle('is-active', !!state.active && p === state.active);
+        r.classList.toggle('is-dim', !!state.owner && p.rec.ownerId !== state.owner);
     });
 }
+function hot(p, on){
+    var m = markers[p.id], el = m && m.getElement();
+    if (el) el.classList.toggle('is-hot', on);
+    var r = document.querySelector('.v-row[data-id="' + p.id + '"]');
+    if (r) r.classList.toggle('is-hot', on);
+}
 
+/* ── Вибір поселення ──────────────────────── */
 function select(p, opts){
     opts = opts || {};
-    if (!current || current.n !== p.sheet) showSheet(p.sheet, { keepPanel: true, noHash: true });
-    active = p;
-    setActiveMarker(p);
-    renderCard(p);
-    var m = markers[p.id];
-    if (m && !opts.fromMap) {
-        var b = map.getBounds().pad(-0.15);
-        if (!b.contains(m.getLatLng())) map.panTo(m.getLatLng(), { animate: true });
-    }
+    dismissHint();
+    state.active = p;
+    openDrawer(p);
     setHash(p.rec.slug);
-    if (window.matchMedia('(max-width: 960px)').matches && opts.fromMap) {
-        side.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
-}
-
-function deselect(){
-    active = null;
-    setActiveMarker(null);
-    renderList();
-    if (current) setHash('arkush-' + current.n);
-}
-
-function setHash(h){
-    if (history.replaceState) history.replaceState(null, '', '#' + h);
-}
-
-/* ── Кнопки масштабу ──────────────────────── */
-document.querySelector('.atl-zoom').addEventListener('click', function(e){
-    var b = e.target.closest('[data-zoom]');
-    if (!b || !current) return;
-    var z = b.getAttribute('data-zoom');
-    if (z === 'in') map.zoomIn(0.6);
-    else if (z === 'out') map.zoomOut(0.6);
-    else map.setView([current.h / 2, current.w / 2], coverZoom(current), { animate: true });
-});
-
-/* ── Бічна панель ─────────────────────────── */
-var side = document.getElementById('atlSide');
-var query = document.getElementById('atlQuery');
-
-function rowHtml(p, withSheet){
-    var r = p.rec;
-    var meta = withSheet ? 'аркуш ' + ROMAN[p.sheet - 1] : (r.dvory ? fmt(r.dvory) + ' дв.' : '');
-    return '<li><button type="button" class="atl-row" data-id="' + p.id + '">' +
-        '<span class="atl-dot ' + r.kind + '"></span>' +
-        '<span class="atl-row-name">' + esc(r.name) + '</span>' +
-        '<span class="atl-row-meta">' + meta + '</span>' +
-    '</button></li>';
-}
-function byName(a, b){ return a.rec.name.localeCompare(b.rec.name, 'uk'); }
-
-function renderList(){
-    var q = (query.value || '').trim().toLowerCase();
-    var html = '';
-    if (q) {
-        var hits = ALL.filter(function(p){
-            return p.rec.name.toLowerCase().indexOf(q) !== -1 || (p.rec.docName || '').toLowerCase().indexOf(q) !== -1;
-        }).sort(byName);
-        if (!hits.length) {
-            html = '<p class="atl-empty">Жодної назви з «' + esc(query.value.trim()) + '». Спробуйте дореформене написання або частину слова.</p>';
-        } else {
-            html = '<p class="atl-sum">' + hits.length + ' ' + plural(hits.length, 'збіг', 'збіги', 'збігів') + ' на всіх аркушах</p>' +
-                   '<ul class="atl-list">' + hits.map(function(p){ return rowHtml(p, true); }).join('') + '</ul>';
-        }
+    if (state.sheet !== SHEETS[p.sheet - 1]) {
+        showSheet(p.sheet, { noHash: true, then: function(){ paint(); setTimeout(function(){ focusOn(p); }, 60); } });
     } else {
-        var sh = current;
-        var list = sh.places.slice().sort(function(a, b){
-            if ((a.rec.kind === 'town') !== (b.rec.kind === 'town')) return a.rec.kind === 'town' ? -1 : 1;
-            return byName(a, b);
-        });
-        var n = list.length;
-        html = '<p class="atl-sum">Аркуш ' + ROMAN[sh.n - 1] + ' · ' + n + ' ' + plural(n, 'поселення', 'поселення', 'поселень') + '</p>' +
-               '<ul class="atl-list">' + list.map(function(p){ return rowHtml(p, false); }).join('') + '</ul>';
+        paint();
+        setTimeout(function(){ focusOn(p); }, 30);
     }
-    side.innerHTML = html;
-    side.scrollTop = 0;
+    if (narrow.matches && !opts.fromMap && !opts.noScroll) V.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
+function deselect(){
+    if (!state.active) return;
+    state.active = null;
+    V.classList.remove('has-drawer');
+    paint();
+    if (state.sheet) setHash('arkush-' + state.sheet.n);
+}
+function setHash(h){ if (history.replaceState) history.replaceState(null, '', '#' + h); }
 
-function renderCard(p){
+/* ── Картка ───────────────────────────────── */
+function openDrawer(p){
     var r = p.rec;
-    var html = '<div class="atl-card">' +
-        '<button type="button" class="atl-back" data-back>' +
-            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>' +
-            (query.value.trim() ? 'До результатів пошуку' : 'Усі поселення аркуша') +
-        '</button>' +
-        '<div class="atl-card-kind"><span class="atl-dot ' + r.kind + '"></span>' + KIND_LABEL[r.kind] + ' · аркуш ' + ROMAN[p.sheet - 1] + '</div>' +
-        '<h3 class="atl-card-name" tabindex="-1">' + esc(r.name) + '</h3>';
+    V.classList.add('has-drawer');
+    $('dWhere').innerHTML = '<span class="v-dot ' + r.kind + '"></span>' + KIND[r.kind] + ' · аркуш ' + ROMAN[p.sheet - 1];
 
-    if (r.docName) html += '<p class="atl-card-doc">У «Примітках»: ' + esc(r.docName) + '</p>';
-    else html += '<div style="height:1rem"></div>';
-
-    if (r.owner) {
-        html += '<div class="atl-owner">' +
-            '<div class="atl-owner-ico">' + (r.ownerPage
-                ? '<img src="herb-plater.jpg" alt="">'
-                : '<svg viewBox="0 0 38 44" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M3 4h32v16c0 10-7 17-16 21C10 37 3 30 3 20z"/><path d="M3 4l32 26" opacity=".5"/></svg>') +
-            '</div><div>' +
-            '<div class="atl-owner-lbl">Власник</div>' +
-            '<div class="atl-owner-name">' + esc(r.owner) + '</div>' +
-            (r.ownerPage ? '<a class="atl-owner-link" href="' + esc(r.ownerPage) + '">Детальніше про власника ' + ARROW + '</a>' : '') +
-            '</div></div>';
-    }
+    var h = '<h2 class="d-name" tabindex="-1">' + esc(r.main) + '</h2>';
+    var sub = [];
+    if (r.alt) sub.push('нині ' + r.alt);
+    if (r.docName) sub.push('у «Примітках»: ' + r.docName);
+    h += sub.length ? '<p class="d-doc">' + esc(sub.join(' · ')) + '</p>' : '<div style="height:1rem"></div>';
 
     var figs = [];
-    if (r.dvory != null) figs.push(['Дворів', r.dvory]);
-    if (r.total != null) figs.push(['Душ разом', r.total]);
-    if (r.male != null) figs.push(['Чоловіків', r.male]);
-    if (r.female != null) figs.push(['Жінок', r.female]);
-    if (figs.length) {
-        html += '<dl class="atl-figs">' + figs.map(function(f){ return '<div><dt>' + f[0] + '</dt><dd>' + fmt(f[1]) + '</dd></div>'; }).join('') + '</dl>';
-    }
+    if (r.dvory != null) figs.push([fmt(r.dvory), 'дворів']);
+    if (r.total != null) figs.push([fmt(r.total), 'мешканців']);
+    if (r.dvory && r.total) figs.push([(r.total / r.dvory).toFixed(1).replace('.', ','), 'душ на двір']);
+    if (figs.length) h += '<dl class="d-figs">' + figs.map(function(f){ return '<div><dd>' + f[0] + '</dd><dt>' + f[1] + '</dt></div>'; }).join('') + '</dl>';
     if (r.male && r.female) {
         var pm = Math.round(r.male / r.total * 100);
-        html += '<div class="atl-sex" aria-hidden="true"><div class="atl-sex-bar"><i class="m" style="width:' + pm + '%"></i><i class="f" style="width:' + (100 - pm) + '%"></i></div>' +
-                '<div class="atl-sex-leg"><span>чоловіки · ' + pm + '%</span><span>жінки · ' + (100 - pm) + '%</span></div></div>';
+        h += '<div class="d-sex"><div class="d-sex-bar" role="img" aria-label="Чоловіків ' + r.male + ', жінок ' + r.female + '"><i class="m" style="width:' + pm + '%"></i><i class="f" style="width:' + (100 - pm) + '%"></i></div>' +
+             '<div class="d-sex-leg"><span class="m">чоловіків ' + fmt(r.male) + '</span><span class="f">жінок ' + fmt(r.female) + '</span></div></div>';
+    } else if (r.total == null) {
+        h += '<p class="d-src">Окремого рядка з цифрами в «Примітках» немає — поселення згадане лише в описі маєтку.</p>';
     }
-    if (r.note) html += '<p class="atl-card-note">' + esc(r.note) + '</p>';
-    html += '<p class="atl-card-src">За «Економічними примітками», 1798 р.</p>';
-    html += '<a class="atl-more" href="sela-1798.html?v=' + encodeURIComponent(r.slug) + '">Повний опис поселення ' + ARROW + '</a>';
-    html += '</div>';
-    side.innerHTML = html;
-    side.scrollTop = 0;
+
+    if (r.owner) {
+        var e = ESTATE_BY_OWNER[r.ownerId];
+        var onMap = e ? e.places.filter(function(pl){ return pl.slug && BY_SLUG[pl.slug]; }).length : 0;
+        h += '<div class="d-owner"><div class="d-owner-ico">' + (r.ownerPage
+                ? '<img src="herb-plater.jpg" alt="">'
+                : '<svg viewBox="0 0 34 40" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M2 3h30v15c0 9-6.5 16-15 20C8.5 34 2 27 2 18z"/><path d="M2 3l30 25" opacity=".5"/></svg>') +
+             '</div><div><div class="d-owner-l">Власник</div><div class="d-owner-n">' + esc(r.owner) + '</div><div class="d-owner-a">' +
+             (r.ownerPage ? '<a class="primary" href="' + esc(r.ownerPage) + '">Детальніше про власника ' + ARROW + '</a>' : '') +
+             (onMap > 1 ? '<button type="button" data-owner="' + esc(r.ownerId) + '">Показати всі його села</button>' : '') +
+             '</div></div></div>';
+    }
+    if (r.note) h += '<p class="d-note">' + esc(r.note) + '</p>';
+    h += '<p class="d-src">За «Економічними примітками», 1798 р.</p>';
+    h += '<a class="d-more" href="sela-1798.html?v=' + encodeURIComponent(r.slug) + '"><span>Повний опис: стани, відстань, текст 1798 року</span>' + ARROW + '</a>';
+
+    var body = $('dBody');
+    body.innerHTML = h;
+    body.scrollTop = 0;
+    body.classList.remove('is-in'); void body.offsetWidth; body.classList.add('is-in');
+
+    var list = SHEETS[p.sheet - 1].sorted, i = list.indexOf(p);
+    var prev = list[(i - 1 + list.length) % list.length], next = list[(i + 1) % list.length];
+    $('dNav').innerHTML =
+        '<button type="button" data-go="' + prev.id + '"><small>← Попереднє</small><span>' + esc(prev.rec.main) + '</span></button>' +
+        '<button type="button" data-go="' + next.id + '"><small>Наступне →</small><span>' + esc(next.rec.main) + '</span></button>';
+}
+$('dClose').addEventListener('click', deselect);
+$('dNav').addEventListener('click', function(e){
+    var b = e.target.closest('[data-go]');
+    if (b) select(BY_ID[b.getAttribute('data-go')], { noScroll: true });
+});
+$('dBody').addEventListener('click', function(e){
+    var b = e.target.closest('[data-owner]');
+    if (b) setOwner(b.getAttribute('data-owner'));
+});
+
+/* ── Список ───────────────────────────────── */
+var list = $('vList'), query = $('vQuery');
+function rowHtml(p, withSheet){
+    var r = p.rec;
+    var meta = withSheet ? 'аркуш ' + ROMAN[p.sheet - 1] : (r.dvory ? fmt(r.dvory) : '—');
+    return '<button type="button" class="v-row" data-id="' + p.id + '">' +
+        '<span class="v-dot ' + r.kind + '"></span>' +
+        '<span class="v-row-n">' + esc(r.main) + (r.alt ? '<small>' + esc(r.alt) + '</small>' : '') + '</span>' +
+        '<span class="v-row-m">' + meta + '</span></button>';
+}
+function renderList(){
+    if (!state.sheet) return;
+    var q = (query.value || '').trim().toLowerCase();
+    var h = '';
+    if (q) {
+        var hits = ALL.filter(function(p){ return (p.rec.name + ' ' + p.rec.docName).toLowerCase().indexOf(q) !== -1; })
+            .sort(function(a, b){ return a.rec.main.localeCompare(b.rec.main, 'uk'); });
+        h = hits.length
+            ? '<div class="v-group"><span>' + hits.length + ' ' + plural(hits.length, 'збіг', 'збіги', 'збігів') + '</span><span>на всіх аркушах</span></div>' + hits.map(function(p){ return rowHtml(p, true); }).join('')
+            : '<p class="v-empty">Нічого не знайдено за «' + esc(query.value.trim()) + '». Спробуйте частину слова або стару форму назви — наприклад, «Домбров».</p>';
+    } else if (state.mode === 'owners') {
+        var here = {};
+        state.sheet.places.forEach(function(p){ if (p.rec.ownerId) here[p.rec.ownerId] = (here[p.rec.ownerId] || 0) + 1; });
+        var ids = Object.keys(here).sort(function(a, b){ return here[b] - here[a]; });
+        var maxS = Math.max.apply(null, ESTATES.map(function(e){ return e.male + e.female; }));
+        h = '<p class="v-own-hint">Натисніть власника — на мапі залишаться підсвічені лише його поселення.</p>' +
+            '<div class="v-group"><span>Власники на аркуші ' + ROMAN[state.sheet.n - 1] + '</span><span>тут / усього</span></div>';
+        h += ids.map(function(id){
+            var e = ESTATE_BY_OWNER[id]; if (!e) return '';
+            var s = e.male + e.female;
+            return '<button type="button" class="v-own' + (state.owner === id ? ' is-active' : '') + '" data-owner="' + esc(id) + '" aria-pressed="' + (state.owner === id) + '">' +
+                '<div class="v-own-n">' + esc(e.owner) + '</div>' +
+                '<div class="v-own-m"><span>' + here[id] + ' / ' + e.places.length + ' пос.</span><span class="v-own-bar"><i style="width:' + (s / maxS * 100).toFixed(1) + '%"></i></span><span>' + fmt(s) + ' душ</span></div></button>';
+        }).join('');
+    } else {
+        var sh = state.sheet;
+        h = '<div class="v-group"><span>Аркуш ' + ROMAN[sh.n - 1] + ' · ' + esc(sh.title) + '</span><span>дворів</span></div>' +
+            sh.sorted.map(function(p){ return rowHtml(p, false); }).join('');
+    }
+    list.innerHTML = h;
+    paint();
+}
+list.addEventListener('click', function(e){
+    var o = e.target.closest('.v-own');
+    if (o) { var id = o.getAttribute('data-owner'); setOwner(state.owner === id ? null : id); return; }
+    var r = e.target.closest('.v-row');
+    if (r) select(BY_ID[r.getAttribute('data-id')]);
+});
+list.addEventListener('mouseover', function(e){ var r = e.target.closest('.v-row'); if (r) hot(BY_ID[r.getAttribute('data-id')], true); });
+list.addEventListener('mouseout', function(e){ var r = e.target.closest('.v-row'); if (r) hot(BY_ID[r.getAttribute('data-id')], false); });
+query.addEventListener('input', renderList);
+query.addEventListener('keydown', function(e){
+    if (e.key === 'Enter') { var r = list.querySelector('.v-row'); if (r) r.click(); }
+    if (e.key === 'ArrowDown') { var f = list.querySelector('.v-row, .v-own'); if (f) { f.focus(); e.preventDefault(); } }
+});
+list.addEventListener('keydown', function(e){
+    if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+    var items = [].slice.call(list.querySelectorAll('.v-row, .v-own')), i = items.indexOf(document.activeElement);
+    if (i < 0) return;
+    var n = items[i + (e.key === 'ArrowDown' ? 1 : -1)];
+    if (n) n.focus(); else if (e.key === 'ArrowUp') query.focus();
+    e.preventDefault();
+});
+document.querySelector('.v-seg').addEventListener('click', function(e){
+    var b = e.target.closest('[data-mode]'); if (!b) return;
+    setMode(b.getAttribute('data-mode'));
+});
+function setMode(m){
+    state.mode = m;
+    document.querySelectorAll('.v-seg button').forEach(function(x){ x.setAttribute('aria-selected', x.getAttribute('data-mode') === m ? 'true' : 'false'); });
+    query.value = '';
+    renderList();
 }
 
-side.addEventListener('click', function(e){
-    if (e.target.closest('[data-back]')) { deselect(); return; }
-    var row = e.target.closest('.atl-row');
-    if (!row) return;
-    var p = ALL.filter(function(x){ return x.id === row.getAttribute('data-id'); })[0];
-    if (p) {
-        select(p);
-        var h = side.querySelector('.atl-card-name');
-        if (h) h.focus({ preventScroll: true });
+/* ── Фільтр за власником ──────────────────── */
+function setOwner(id){
+    state.owner = id || null;
+    var e = id && ESTATE_BY_OWNER[id];
+    $('vFilterName').textContent = e ? e.owner : '';
+    $('vFilter').classList.toggle('is-on', !!e);
+    if (e) {
+        dismissHint();
+        // якщо на цьому аркуші немає його сіл — перейти на аркуш, де їх найбільше
+        var count = {};
+        e.places.forEach(function(pl){ var p = pl.slug && BY_SLUG[pl.slug]; if (p) count[p.sheet] = (count[p.sheet] || 0) + 1; });
+        if (!count[state.sheet.n]) {
+            var best = Object.keys(count).sort(function(a, b){ return count[b] - count[a]; })[0];
+            if (best) { deselect(); showSheet(+best, { then: paint }); }
+        }
     }
-});
+    renderList();
+}
+$('vFilterOff').addEventListener('click', function(){ setOwner(null); });
 
-query.addEventListener('input', function(){ active = null; setActiveMarker(null); renderList(); });
-
-document.addEventListener('keydown', function(e){
-    if (e.key === 'Escape' && active) deselect();
-});
-
-/* ── Вкладки аркушів ──────────────────────── */
-var tabs = document.getElementById('atlTabs');
-tabs.innerHTML = SHEETS.map(function(sh){
-    return '<button type="button" class="atl-tab" role="tab" aria-controls="atl-map" aria-selected="false" data-sheet="' + sh.n + '">' +
-        '<span class="atl-tab-n">' + ROMAN[sh.n - 1] + '</span>' +
-        '<span class="atl-tab-t"><small>Аркуш ' + sh.n + ' · ' + sh.places.length + ' пос.</small><span>' + esc(sh.title) + '</span></span></button>';
+/* ── Аркуші ───────────────────────────────── */
+var sheetsBox = $('vSheets');
+sheetsBox.innerHTML = SHEETS.map(function(sh){
+    return '<button type="button" class="v-sh" role="tab" aria-selected="false" data-sheet="' + sh.n + '" title="Аркуш ' + ROMAN[sh.n - 1] + ': ' + esc(sh.title) + '">' +
+        '<img src="atlas-1798-thumb-' + sh.n + '.jpg" alt="" loading="lazy">' +
+        '<span class="v-sh-t"><small>Аркуш ' + ROMAN[sh.n - 1] + ' · ' + sh.places.length + ' пос.</small><span>' + esc(sh.title) + '</span></span></button>';
 }).join('');
-tabs.addEventListener('click', function(e){
-    var t = e.target.closest('.atl-tab');
-    if (!t) return;
+sheetsBox.addEventListener('click', function(e){
+    var t = e.target.closest('.v-sh'); if (!t) return;
+    dismissHint();
+    deselect();
     query.value = '';
-    showSheet(+t.getAttribute('data-sheet'));
-});
-tabs.addEventListener('keydown', function(e){
-    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
-    var n = current.n + (e.key === 'ArrowRight' ? 1 : -1);
-    if (n < 1) n = SHEETS.length; if (n > SHEETS.length) n = 1;
-    query.value = '';
+    var n = +t.getAttribute('data-sheet');
+    if (state.sheet && state.sheet.n === n) { fitSheet(true); return; }
     showSheet(n);
-    var t = tabs.querySelector('[data-sheet="' + n + '"]');
-    if (t) t.focus();
+});
+sheetsBox.addEventListener('keydown', function(e){
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+    var n = state.sheet.n + (e.key === 'ArrowRight' ? 1 : -1);
+    if (n < 1) n = SHEETS.length; if (n > SHEETS.length) n = 1;
+    var t = sheetsBox.querySelector('[data-sheet="' + n + '"]');
+    t.click(); t.focus();
     e.preventDefault();
 });
 
-/* ── Маєтки ───────────────────────────────── */
-(function renderLedger(){
-    var box = document.getElementById('atlLedger');
-    if (!box || !ESTATES.length) return;
-    var list = ESTATES.slice().sort(function(a, b){ return (b.male + b.female) - (a.male + a.female); });
-    var max = list[0].male + list[0].female;
-    var tot = { dv: 0, s: 0, n: 0 };
-    var html = '<div class="atl-lg-head"><span>№</span><span>Власник і поселення</span><span class="r">Дворів</span><span class="r">Душ обох статей</span><span class="r">Річний прибуток</span></div>';
-    list.forEach(function(e, i){
-        var souls = e.male + e.female;
-        tot.dv += e.dvory; tot.s += souls; tot.n += e.places.length;
-        var o = OWNERS[e.ownerId] || {};
-        var name = o.page ? '<a href="' + esc(o.page) + '">' + esc(e.owner) + '</a><span class="badge">сторінка</span>' : esc(e.owner);
-        var chips = e.places.map(function(pl){
-            var label = pl.name.replace(/^(Село \(Деревня\)|Село|Сільце|Містечко|Філварок)\s+/, '');
-            var p = pl.slug && BY_SLUG[pl.slug];
-            return p ? '<button type="button" class="atl-chip" data-slug="' + esc(pl.slug) + '" title="Показати на мапі">' + esc(label) + '</button>'
-                     : '<span class="atl-chip" title="Немає на фрагментах мапи">' + esc(label) + '</span>';
-        }).join('');
-        html += '<div class="atl-lg-row">' +
-            '<span class="atl-lg-n">' + ROMAN[i] + '</span>' +
-            '<div><p class="atl-lg-owner">' + name + '</p><div class="atl-chips">' + chips + '</div></div>' +
-            '<span class="atl-lg-num r">' + fmt(e.dvory) + '</span>' +
-            '<div class="atl-lg-souls"><span class="atl-lg-num">' + fmt(souls) + '</span><div class="atl-lg-bar"><i style="--w:' + (souls / max * 100).toFixed(1) + '%"></i></div></div>' +
-            '<div class="atl-lg-inc r">' + (e.income ? '<span class="atl-lg-num">' + fmt(e.income) + '&nbsp;руб.</span><small>' + (e.incomeKind === 'оренда' ? 'оренда' : 'дохід') + '</small>' : '<small>не вказано</small>') + '</div>' +
-        '</div>';
-    });
-    html += '<div class="atl-lg-foot"><span></span><span class="lbl">Разом · ' + tot.n + ' ' + plural(tot.n, 'поселення', 'поселення', 'поселень') + '</span>' +
-            '<span class="atl-lg-num r">' + fmt(tot.dv) + '</span><span class="atl-lg-num r">' + fmt(tot.s) + '</span><span></span></div>';
-    box.innerHTML = html;
+/* ── Масштаб ──────────────────────────────── */
+document.querySelector('.v-zoom').addEventListener('click', function(e){
+    var b = e.target.closest('[data-zoom]'); if (!b) return;
+    var z = b.getAttribute('data-zoom');
+    if (z === 'in') map.zoomIn(0.7); else if (z === 'out') map.zoomOut(0.7); else fitSheet(true);
+});
 
-    box.addEventListener('click', function(ev){
-        var c = ev.target.closest('[data-slug]');
-        if (!c) return;
-        var p = BY_SLUG[c.getAttribute('data-slug')];
-        if (!p) return;
-        query.value = '';
-        select(p);
-        document.getElementById('mapa').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-    if ('IntersectionObserver' in window) {
-        var io = new IntersectionObserver(function(en){ if (en[0].isIntersecting) { box.classList.add('is-in'); io.disconnect(); } }, { threshold: .15 });
-        io.observe(box);
-    } else box.classList.add('is-in');
+/* ── Підказка ─────────────────────────────── */
+var hintEl = $('vHint');
+function dismissHint(){ hintEl.classList.add('is-gone'); }
+map.once('dragstart', dismissHint);
+setTimeout(dismissHint, 9000);
 
-    // цифри для блоку про Плятера
-    var pl = ESTATES.filter(function(e){ return e.ownerId === 'plater'; })[0];
-    var facts = document.getElementById('atlPlaterFacts');
-    if (pl && facts) {
-        facts.innerHTML = '<div><dd>' + pl.places.length + '</dd><dt>поселень маєтку</dt></div>' +
-            '<div><dd>' + fmt(pl.dvory) + '</dd><dt>дворів</dt></div>' +
-            '<div><dd>' + fmt(pl.male + pl.female) + '</dd><dt>душ</dt></div>' +
-            '<div><dd>' + fmt(pl.income) + '</dd><dt>руб. доходу на рік</dt></div>';
+/* ── Клавіатура ───────────────────────────── */
+document.addEventListener('keydown', function(e){
+    var typing = /INPUT|TEXTAREA/.test(document.activeElement.tagName);
+    if (e.key === 'Escape') {
+        if (state.active) deselect(); else if (state.owner) setOwner(null);
+    } else if (e.key === '/' && !typing) {
+        query.focus(); e.preventDefault();
     }
+});
+
+/* ── Висота шапки, перерахунок мапи ───────── */
+function syncHeader(){
+    var hdr = document.querySelector('.header');
+    if (hdr) document.documentElement.style.setProperty('--hdr', hdr.offsetHeight + 'px');
+}
+syncHeader();
+var rT;
+window.addEventListener('resize', function(){
+    clearTimeout(rT);
+    rT = setTimeout(function(){ syncHeader(); map.invalidateSize(); if (state.sheet && !state.active) fitSheet(false); }, 120);
+});
+
+/* ── § 2 Власники ─────────────────────────── */
+(function(){
+    var sorted = ESTATES.slice().sort(function(a, b){ return (b.male + b.female) - (a.male + a.female); });
+    $('oTotal').textContent = fmt(SOULS);
+    var top = sorted[0];
+    if (top) $('oNote').textContent = 'Найбільший маєток — ' + top.owner.replace(/^Граф і кавалер /, 'графа ').replace(/Антоній Плятер$/, 'Антонія Плятера') + ': ' + pct(top.male + top.female, SOULS) + '% усіх мешканців.';
+
+    var strip = $('oStrip');
+    var tip = document.createElement('div'); tip.className = 'o-tip';
+    strip.innerHTML = sorted.map(function(e){
+        var s = e.male + e.female, w = s / SOULS * 100;
+        var short = e.owner.replace(/ спільно з .*$/, '').split(/[ ,]+/).filter(Boolean).slice(-1)[0];
+        return '<button type="button" class="o-seg" role="listitem" style="flex:' + s + ' 1 0" data-owner="' + esc(e.ownerId) + '" aria-label="' + esc(e.owner) + ': ' + s + ' душ, ' + pct(s, SOULS) + '%">' +
+            (w > 13 ? '<span>' + esc(short) + ' · ' + Math.round(w) + '%</span>' : '') + '</button>';
+    }).join('');
+    strip.appendChild(tip);
+    function showTip(seg){
+        var e = ESTATE_BY_OWNER[seg.getAttribute('data-owner')], s = e.male + e.female;
+        tip.innerHTML = '<b>' + esc(e.owner) + '</b>' + fmt(s) + ' душ · ' + pct(s, SOULS) + '% · ' + e.places.length + ' ' + plural(e.places.length, 'поселення', 'поселення', 'поселень') + ' · натисніть, щоб показати на мапі';
+        var sr = strip.getBoundingClientRect(), r = seg.getBoundingClientRect();
+        tip.classList.add('is-on');
+        var tw = tip.offsetWidth;
+        tip.style.left = Math.max(tw / 2, Math.min(sr.width - tw / 2, r.left - sr.left + r.width / 2)) + 'px';
+    }
+    strip.addEventListener('mouseover', function(e){ var s = e.target.closest('.o-seg'); if (s) showTip(s); });
+    strip.addEventListener('focusin', function(e){ var s = e.target.closest('.o-seg'); if (s) showTip(s); });
+    strip.addEventListener('mouseleave', function(){ tip.classList.remove('is-on'); });
+    strip.addEventListener('focusout', function(){ tip.classList.remove('is-on'); });
+
+    var dv = 0, n = 0;
+    document.querySelector('#oTable tbody').innerHTML = sorted.map(function(e){
+        var s = e.male + e.female; dv += e.dvory; n += e.places.length;
+        var o = OWNERS[e.ownerId] || {};
+        var name = o.page ? '<a href="' + esc(o.page) + '">' + esc(e.owner) + '</a>' : esc(e.owner);
+        var onMap = e.places.some(function(pl){ return pl.slug && BY_SLUG[pl.slug]; });
+        var chips = e.places.map(function(pl){
+            var label = shortName(pl.name);
+            return pl.slug && BY_SLUG[pl.slug]
+                ? '<button type="button" class="o-chip" data-slug="' + esc(pl.slug) + '">' + esc(label) + '</button>'
+                : '<span class="o-chip" title="Немає на наявних аркушах">' + esc(label) + '</span>';
+        }).join('');
+        return '<tr><td><p class="o-name">' + name + '</p><div class="o-chips">' + chips + '</div>' +
+            (onMap ? '<button type="button" class="o-show" data-show-owner="' + esc(e.ownerId) + '">Показати на мапі ' + ARROW + '</button>' : '') + '</td>' +
+            '<td class="r" data-l="Дворів"><span class="o-num">' + fmt(e.dvory) + '</span></td>' +
+            '<td class="r" data-l="Душ"><span class="o-num">' + fmt(s) + '</span><span class="o-sub">' + pct(s, SOULS) + '%</span></td>' +
+            '<td class="r" data-l="Прибуток на рік">' + (e.income ? '<span class="o-num">' + fmt(e.income) + ' руб.</span><span class="o-sub">' + (e.incomeKind === 'оренда' ? 'оренда' : 'дохід') + '</span>' : '<span class="o-sub">не вказано</span>') + '</td></tr>';
+    }).join('');
+    document.querySelector('#oTable tfoot').innerHTML = '<tr><td>Разом · ' + n + ' ' + plural(n, 'поселення', 'поселення', 'поселень') + '</td><td class="r" data-l="Дворів"><span class="o-num">' + fmt(dv) + '</span></td><td class="r" data-l="Душ"><span class="o-num">' + fmt(SOULS) + '</span></td><td></td></tr>';
+
+    var pl = ESTATE_BY_OWNER.plater;
+    if (pl) $('pFacts').innerHTML =
+        '<div><dd>' + pl.places.length + '</dd><dt>поселень маєтку</dt></div>' +
+        '<div><dd>' + fmt(pl.dvory) + '</dd><dt>дворів</dt></div>' +
+        '<div><dd>' + fmt(pl.male + pl.female) + '</dd><dt>душ</dt></div>' +
+        '<div><dd>' + fmt(pl.income) + '</dd><dt>рублів доходу на рік</dt></div>';
 })();
 
-/* ── Примітка про судноплавство ───────────── */
+/* кнопки з розділів нижче ведуть на мапу */
+function goToMap(){ V.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+document.addEventListener('click', function(e){
+    var s = e.target.closest('[data-show-owner], .o-seg');
+    if (s) { setOwner(s.getAttribute('data-show-owner') || s.getAttribute('data-owner')); setMode('owners'); goToMap(); return; }
+    var c = e.target.closest('.o-chip[data-slug]');
+    if (c) { var p = BY_SLUG[c.getAttribute('data-slug')]; if (p) { select(p, { noScroll: true }); goToMap(); } }
+});
+
+/* ── § 4 Примітка про судноплавство ───────── */
 (function(){
-    var box = document.getElementById('atlNav');
+    var box = $('rQuote');
     if (!box || !NAV) return;
-    var paras = NAV.replace(/^\[[^\]]*\]:?\s*/, '').split('\n').map(function(s){ return s.trim(); }).filter(Boolean);
-    // розміри барки показано на схемі праворуч — у цитаті лишаємо суть
-    var keep = paras.filter(function(s){ return !/^(довжину|ширину|висоту|осадку)/i.test(s); });
-    box.innerHTML = keep.map(function(s){
+    var paras = NAV.replace(/^\[[^\]]*\]:?\s*/, '').split('\n').map(function(s){ return s.trim(); }).filter(Boolean)
+        .filter(function(s){ return !/^(довжину|ширину|висоту|осадку)/i.test(s); });
+    box.innerHTML = paras.map(function(s){
         s = s.replace(/^\[Примітка про річку Случ\]:\s*/, '').replace(/,\s*які мають:\s*$/, ' — їхні розміри показано на схемі.');
         return '<p>' + esc(s) + '</p>';
-    }).join('') + '<cite>«Економічні примітки», 1798 · текст наприкінці таблиці</cite>';
+    }).join('') + '<cite>«Економічні примітки», 1798 — текст наприкінці таблиці</cite>';
 })();
 
-/* ── Старт: #slug або #arkush-N з адреси ─── */
-function fromHash(){
+/* ── Старт: #slug або #arkush-N ───────────── */
+(function(){
     var h = decodeURIComponent((location.hash || '').slice(1));
     var m = /^arkush-(\d)$/.exec(h);
-    if (m && SHEETS[+m[1] - 1]) { showSheet(+m[1], { noHash: true }); return; }
     var p = h && BY_SLUG[h];
-    if (p) { showSheet(p.sheet, { keepPanel: true, noHash: true }); select(p); return; }
-    showSheet(1, { noHash: true });
-}
-fromHash();
-if (/^#(arkush-\d|[a-z-]+)$/.test(location.hash) && location.hash !== '#mayetky' && location.hash !== '#plater' && location.hash !== '#horyn' && location.hash !== '#dzherela' && location.hash !== '#mapa') {
-    requestAnimationFrame(function(){ document.getElementById('mapa').scrollIntoView(); });
-}
-
-window.addEventListener('resize', function(){
-    if (!current) return;
-    map.invalidateSize();
-    fitSheet(current, true);
-});
+    if (m && SHEETS[+m[1] - 1]) showSheet(+m[1], { noHash: true });
+    else if (p) { showSheet(p.sheet, { noHash: true }); select(p, { noScroll: true }); }
+    else showSheet(1, { noHash: true });
+})();
 
 // Калібрування нових позначок
 map.on('click', function(e){
-    console.log('[atlas-1798 · аркуш ' + current.n + '] coords:', [Math.round(e.latlng.lat), Math.round(e.latlng.lng)]);
+    console.log('[atlas-1798 · аркуш ' + state.sheet.n + '] coords:', [Math.round(e.latlng.lat), Math.round(e.latlng.lng)]);
 });
 })();
 </script>
