@@ -19,10 +19,10 @@
 <meta property="og:description" content="Архівні записи учасників Першої світової війни з Дубровиці та навколишніх сіл">
 <title>Перша світова війна — Дубровиця</title>
 <script>!function(){var t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t)}()</script>
-<link rel="stylesheet" href="app.css">
+<link rel="stylesheet" href="app.css?v=11">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
 /* ══════════════════════════════════════════
@@ -77,8 +77,8 @@ opacity: 0;
     display: inline-flex;
     align-items: center;
     gap: .6rem;
-    font-family: 'DM Sans', sans-serif;
-    font-size: .47rem;
+    font-family: 'Manrope', sans-serif;
+    font-size: .62rem;
     letter-spacing: .3em;
     text-transform: uppercase;
     color: rgba(201,162,39,.6);
@@ -105,7 +105,7 @@ opacity: 0;
 }
 .ww1-hero-title em { display: block; font-style: italic; color: #c9a227; }
 .ww1-hero-sub {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Manrope', sans-serif;
     font-size: .82rem;
     color: rgba(232,219,181,.4);
     line-height: 1.6;
@@ -130,8 +130,8 @@ opacity: 0;
 }
 .ww1-hstat-l {
     display: block;
-    font-family: 'DM Sans', sans-serif;
-    font-size: .5rem;
+    font-family: 'Manrope', sans-serif;
+    font-size: .62rem;
     letter-spacing: .18em;
     text-transform: uppercase;
     color: rgba(232,219,181,.3);
@@ -144,7 +144,7 @@ opacity: 0;
     display: flex;
     align-items: center;
     gap: .5rem;
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Manrope', sans-serif;
     font-size: .65rem;
     color: rgba(232,219,181,.3);
     z-index: 3;
@@ -183,7 +183,7 @@ opacity: 0;
     font-size: 1.5rem; font-weight: 300; color: #c9a227; line-height: 1;
 }
 .ww1-band-lbl {
-    font-family: 'DM Sans', sans-serif; font-size: .6rem;
+    font-family: 'Manrope', sans-serif; font-size: .62rem;
     letter-spacing: .12em; text-transform: uppercase;
     color: rgba(232,219,181,.3); margin-top: .2rem;
 }
@@ -196,7 +196,7 @@ opacity: 0;
     background: var(--color-bg, #faf7f2);
     border-bottom: 1px solid var(--color-border, #ddd5c8);
     position: sticky;
-    top: 0;
+    top: var(--hdr-h);
     z-index: 100;
     padding: 1rem 0;
 }
@@ -221,7 +221,7 @@ opacity: 0;
     background: var(--color-bg-card, #fff);
     border: 1px solid var(--color-border, #ddd5c8);
     border-radius: 100px;
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Manrope', sans-serif;
     font-size: .82rem;
     color: var(--color-text, #1c1917);
     outline: none;
@@ -240,7 +240,7 @@ opacity: 0;
     background: var(--color-bg-card, #fff);
     border: 1px solid var(--color-border, #ddd5c8);
     border-radius: 100px;
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Manrope', sans-serif;
     font-size: .72rem;
     color: var(--color-text-secondary, #44403c);
     cursor: pointer;
@@ -251,7 +251,7 @@ opacity: 0;
 .ww1-select:focus { border-color: rgba(201,162,39,.5); }
 
 .ww1-count-badge {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Manrope', sans-serif;
     font-size: .7rem;
     color: var(--color-text-muted, #a8a29e);
     white-space: nowrap;
@@ -278,8 +278,8 @@ opacity: 0;
 .ww1-table thead th {
     background: var(--color-bg-secondary, #ede7db);
     padding: .75rem 1rem;
-    font-family: 'DM Sans', sans-serif;
-    font-size: .58rem; letter-spacing: .15em; text-transform: uppercase;
+    font-family: 'Manrope', sans-serif;
+    font-size: .62rem; letter-spacing: .15em; text-transform: uppercase;
     color: var(--color-text-light, #78716c);
     text-align: left; font-weight: 500;
     border-bottom: 1px solid var(--color-border, #ddd5c8);
@@ -293,7 +293,7 @@ opacity: 0;
 .ww1-table tbody tr:hover { background: rgba(201,162,39,.05); }
 .ww1-table td {
     padding: .8rem 1rem;
-    font-family: 'DM Sans', sans-serif; font-size: .78rem;
+    font-family: 'Manrope', sans-serif; font-size: .78rem;
     color: var(--color-text, #1c1917); vertical-align: middle;
 }
 .ww1-td-name {
@@ -304,11 +304,11 @@ opacity: 0;
 .ww1-td-sub { font-size: .65rem; color: var(--color-text-muted, #a8a29e); margin-top: .15rem; }
 .ww1-td-loc { display: inline-flex; align-items: center; gap: .3rem; font-size: .68rem; color: var(--color-text-secondary, #44403c); }
 .ww1-td-loc svg { color: rgba(201,162,39,.6); flex-shrink: 0; }
-.ww1-tag { display: inline-block; font-size: .58rem; letter-spacing: .06em; text-transform: uppercase; padding: .2rem .55rem; border-radius: 100px; background: rgba(201,162,39,.08); border: 1px solid rgba(201,162,39,.2); color: rgba(140,100,20,.9); white-space: nowrap; }
+.ww1-tag { display: inline-block; font-size: .62rem; letter-spacing: .06em; text-transform: uppercase; padding: .2rem .55rem; border-radius: 100px; background: rgba(201,162,39,.08); border: 1px solid rgba(201,162,39,.2); color: rgba(140,100,20,.9); white-space: nowrap; }
 .ww1-tag.k { background: rgba(180,40,40,.07); border-color: rgba(180,40,40,.2); color: rgba(150,30,30,.9); }
 .ww1-tag.p { background: rgba(40,80,180,.07); border-color: rgba(40,80,180,.2); color: rgba(30,60,150,.9); }
 .ww1-tag.h { background: rgba(30,140,80,.07); border-color: rgba(30,140,80,.2); color: rgba(20,110,60,.9); }
-.ww1-btn-view { display: inline-flex; align-items: center; gap: .4rem; padding: .4rem .9rem; background: transparent; border: 1px solid rgba(201,162,39,.35); border-radius: 100px; font-family: 'DM Sans', sans-serif; font-size: .62rem; color: #a07c10; cursor: pointer; transition: all .18s; white-space: nowrap; }
+.ww1-btn-view { display: inline-flex; align-items: center; gap: .4rem; padding: .4rem .9rem; background: transparent; border: 1px solid rgba(201,162,39,.35); border-radius: 100px; font-family: 'Manrope', sans-serif; font-size: .62rem; color: #a07c10; cursor: pointer; transition: all .18s; white-space: nowrap; }
 .ww1-btn-view:hover { background: #c9a227; border-color: #c9a227; color: #0a0805; }
 /* Desktop — hide some columns on medium */
 @media(max-width:900px){
@@ -338,7 +338,7 @@ opacity: 0;
     color: var(--color-text, #1c1917); line-height: 1.2;
 }
 .ww1-card-row-meta { display: flex; align-items: center; gap: .5rem; margin-top: .3rem; flex-wrap: wrap; }
-.ww1-card-row-loc { display: inline-flex; align-items: center; gap: .25rem; font-family: 'DM Sans', sans-serif; font-size: .68rem; color: var(--color-text-secondary, #44403c); }
+.ww1-card-row-loc { display: inline-flex; align-items: center; gap: .25rem; font-family: 'Manrope', sans-serif; font-size: .68rem; color: var(--color-text-secondary, #44403c); }
 .ww1-card-row-loc svg { color: rgba(201,162,39,.6); }
 .ww1-card-row-arrow { width: 30px; height: 30px; border-radius: 50%; background: rgba(201,162,39,.08); border: 1px solid rgba(201,162,39,.2); display: flex; align-items: center; justify-content: center; color: #c9a227; flex-shrink: 0; transition: all .2s; }
 .ww1-card-row:active .ww1-card-row-arrow { background: #c9a227; color: #0a0805; }
@@ -360,7 +360,7 @@ opacity: 0;
     background: var(--color-bg-card, #fff);
     border: 1px solid var(--color-border, #ddd5c8);
     border-radius: 8px;
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Manrope', sans-serif;
     font-size: .75rem;
     color: var(--color-text-secondary, #44403c);
     cursor: pointer;
@@ -447,8 +447,8 @@ opacity: 0;
     bottom: .8rem;
     left: 50%;
     transform: translateX(-50%);
-    font-family: 'DM Sans', sans-serif;
-    font-size: .55rem;
+    font-family: 'Manrope', sans-serif;
+    font-size: .62rem;
     letter-spacing: .12em;
     text-transform: uppercase;
     color: rgba(255,255,255,.35);
@@ -516,8 +516,8 @@ opacity: 0;
 .ww1-prof-close:hover { background: rgba(201,162,39,.2); }
 .ww1-prof-info { padding: 2.2rem 2rem; overflow-y: auto; }
 .ww1-prof-eyebrow {
-    font-family: 'DM Sans', sans-serif;
-    font-size: .47rem;
+    font-family: 'Manrope', sans-serif;
+    font-size: .62rem;
     letter-spacing: .28em;
     text-transform: uppercase;
     color: rgba(201,162,39,.6);
@@ -539,8 +539,8 @@ opacity: 0;
     align-items: baseline;
 }
 .ww1-prof-label {
-    font-family: 'DM Sans', sans-serif;
-    font-size: .6rem;
+    font-family: 'Manrope', sans-serif;
+    font-size: .62rem;
     letter-spacing: .12em;
     text-transform: uppercase;
     color: var(--color-text-muted, #a8a29e);
@@ -548,7 +548,7 @@ opacity: 0;
     flex-shrink: 0;
 }
 .ww1-prof-val {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Manrope', sans-serif;
     font-size: .82rem;
     color: var(--color-text, #1c1917);
     line-height: 1.5;
@@ -557,7 +557,7 @@ opacity: 0;
     margin-top: 1.4rem;
     padding-top: 1rem;
     border-top: 1px solid var(--color-border-light, #ede7db);
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Manrope', sans-serif;
     font-size: .65rem;
     color: var(--color-text-muted, #a8a29e);
     line-height: 1.6;
@@ -595,31 +595,69 @@ opacity: 0;
 <!-- Header -->
 <header class="header">
     <div class="header-container">
-        <a href="index.html" class="logo">
-            <img src="https://i.imgur.com/mXCrjjG.png" alt="Герб" class="logo-img">
-            <div class="logo-text">
+        <a href="index.html" class="logo" aria-label="Дубровиця — Цифровий архів, головна сторінка">
+            <img src="https://i.imgur.com/mXCrjjG.png" alt="" class="logo-img" width="40" height="40" decoding="async">
+            <span class="logo-text">
                 <span class="logo-city">Дубровиця</span>
                 <span class="logo-subtitle">Цифровий архів</span>
-            </div>
+            </span>
         </a>
-        <nav class="nav" id="mainNav">
-            <a href="index.html" class="nav-link">Головна</a>
-            <a href="history.html" class="nav-link">Історія</a>
-            <a href="photo-archive.html" class="nav-link">Фотоархів</a>
-            <a href="architecture.html" class="nav-link">Пам'ятки</a>
-            <a href="metrychni-knyhy.html" class="nav-link active">Архівні справи</a>
-            <a href="jewish-history.html" class="nav-link">Єврейська спадщина</a>
-            <a href="presa.html" class="nav-link">Преса</a>
-            <a href="doslidnyk.html" class="nav-link">Дослідник</a>
-            <a href="contacts.html" class="nav-link">Про проєкт</a>
+
+        <nav class="nav" id="mainNav" aria-label="Головне меню">
+            <ul class="nav-list">
+                <li class="nav-item nav-item--home" style="--i:0"><a href="index.html" class="nav-link">Головна</a></li>
+                <li class="nav-item" style="--i:1"><a href="history.html" class="nav-link">Історія</a></li>
+                <li class="nav-item" style="--i:2"><a href="photo-archive.html" class="nav-link">Фотоархів</a></li>
+                <li class="nav-item" style="--i:3"><a href="architecture.html" class="nav-link">Пам'ятки</a></li>
+                <li class="nav-item has-menu" style="--i:4">
+                    <a href="metrychni-knyhy.html" class="nav-link active">Архівні справи</a>
+                    <button type="button" class="nav-caret" aria-expanded="false" aria-controls="navArchive" aria-label="Показати документи архіву"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                    <div class="nav-menu" id="navArchive">
+                        <div class="nav-menu-inner">
+                            <div class="nav-menu-main">
+                                <p class="nav-menu-label">Документи за роками</p>
+                                <div class="nav-docs">
+                                    <a href="sumariusz-1642.html" class="nav-doc"><span class="nav-doc-year">1642</span><span class="nav-doc-name">Сумаріуш маєтку</span><span class="nav-doc-note">Доходи маєтку Дубровиця</span></a>
+                                    <a href="zhaloba-1650.html" class="nav-doc"><span class="nav-doc-year">1650</span><span class="nav-doc-name">Жалоба про спустошення</span><span class="nav-doc-note">Гродські книги Пінські</span></a>
+                                    <a href="rejestr-1665.html" class="nav-doc"><span class="nav-doc-year">1665</span><span class="nav-doc-name">Реєстр збитків</span><span class="nav-doc-note">Пінський гродський суд</span></a>
+                                    <a href="inventar-1780.html" class="nav-doc"><span class="nav-doc-year">1780</span><span class="nav-doc-name">Інвентар маєтку</span><span class="nav-doc-note">Містечко, вулиці, мешканці</span></a>
+                                    <a href="atlas-1798.html" class="nav-doc"><span class="nav-doc-year">1798</span><span class="nav-doc-name">Атлас губернії</span><span class="nav-doc-note">Інтерактивна мапа сіл</span></a>
+                                    <a href="atlas-1798-analityka.html" class="nav-doc"><span class="nav-doc-year">1798</span><span class="nav-doc-name">Край у цифрах</span><span class="nav-doc-note">Аналітика атласу</span></a>
+                                    <a href="persha-svitova.html" class="nav-doc is-current" aria-current="page"><span class="nav-doc-year">1914</span><span class="nav-doc-name">Перша світова війна</span><span class="nav-doc-note">Мобілізовані мешканці</span></a>
+                                    <a href="vyborchi-1938.html" class="nav-doc"><span class="nav-doc-year">1938</span><span class="nav-doc-name">Список виборців</span><span class="nav-doc-note">8 619 записів</span></a>
+                                </div>
+                            </div>
+                            <div class="nav-menu-side">
+                                <p class="nav-menu-label">Постаті</p>
+                                <a href="plater.html" class="nav-person"><img src="nav-plater.jpg" alt="" width="40" height="40" loading="lazy" decoding="async"><span><span class="nav-person-name">Граф Юзеф Плятер</span><span class="nav-person-role">Власник Дубровиці</span></span></a>
+                                <a href="radzyvil.html" class="nav-person"><img src="nav-radzyvil.jpg" alt="" width="40" height="40" loading="lazy" decoding="async"><span><span class="nav-person-name">Князь Домінік Радзивілл</span><span class="nav-person-role">Власник сіл над Горинню</span></span></a>
+                                <p class="nav-menu-label nav-menu-label--gap">Каталоги</p>
+                                <a href="metrychni-knyhy.html#mkcalSection" class="nav-cat"><span>Метричні книги</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                                <a href="metrychni-knyhy.html#booksCatalog" class="nav-cat"><span>Книги про Дубровицю</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                                <a href="metrychni-knyhy.html" class="nav-menu-all">Усі архівні справи <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item" style="--i:5"><a href="jewish-history.html" class="nav-link">Єврейська спадщина</a></li>
+                <li class="nav-item" style="--i:6"><a href="presa.html" class="nav-link">Преса</a></li>
+                <li class="nav-item" style="--i:7"><a href="doslidnyk.html" class="nav-link">Дослідник</a></li>
+                <li class="nav-item" style="--i:8"><a href="contacts.html" class="nav-link">Про проєкт</a></li>
+            </ul>
+            <p class="nav-foot">Цифровий архів історичної спадщини Дубровиці · <a href="contacts.html">Написати нам</a></p>
         </nav>
-        <button class="theme-toggle" id="themeToggle" aria-label="Перемкнути тему">
-            <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-            <svg class="theme-icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-        </button>
-        <button class="mobile-toggle" id="mobileToggle" aria-label="Відкрити меню">
-            <span></span><span></span><span></span>
-        </button>
+
+        <div class="header-actions">
+            <button type="button" class="theme-toggle" id="themeToggle" aria-label="Перемкнути тему">
+                <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg>
+                <svg class="theme-icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.3A8.5 8.5 0 0 1 9.7 3.5a8.5 8.5 0 1 0 10.8 10.8z"/></svg>
+            </button>
+            <button type="button" class="mobile-toggle" id="mobileToggle" aria-label="Відкрити меню" aria-expanded="false" aria-controls="mainNav">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
     </div>
 </header>
 
@@ -664,7 +702,7 @@ opacity: 0;
         </div>
     </div>
     <div style="position:absolute;bottom:2rem;left:2rem;z-index:10;display:flex;flex-direction:column;align-items:flex-start;gap:.6rem;pointer-events:none;">
-        <span style="font-family:'DM Sans',sans-serif;font-size:.46rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.22);">Гортайте</span>
+        <span style="font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.22);">Гортайте</span>
         <div style="width:1px;height:40px;background:linear-gradient(180deg,rgba(201,162,39,.5) 0%,transparent 100%);"></div>
     </div>
 </section>
@@ -674,7 +712,7 @@ opacity: 0;
 .ww1-narr-grid{display:flex;justify-content:center;align-items:center;gap:0;flex-wrap:nowrap;max-width:1200px;margin:0 auto;padding:0 1.5rem;}
 .ww1-narr-item{text-align:center;flex:1;min-width:0;padding:.5rem 0;}
 .ww1-narr-num{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,7vw,4rem);font-weight:300;line-height:1;letter-spacing:-.03em;color:#c9a227;white-space:nowrap;}
-.ww1-narr-lbl{font-family:'DM Sans',sans-serif;font-size:clamp(.38rem,.9vw,.52rem);letter-spacing:.18em;text-transform:uppercase;color:rgba(232,219,181,.3);margin-top:.4rem;white-space:nowrap;}
+.ww1-narr-lbl{font-family:'Manrope',sans-serif;font-size:clamp(.38rem,.9vw,.52rem);letter-spacing:.18em;text-transform:uppercase;color:rgba(232,219,181,.3);margin-top:.4rem;white-space:nowrap;}
 .ww1-narr-sep{width:1px;height:50px;background:linear-gradient(180deg,transparent,rgba(201,162,39,.2),transparent);flex-shrink:0;margin:0 .5rem;}
 @media(max-width:480px){
     .ww1-narr-grid{gap:0;}
@@ -709,7 +747,7 @@ opacity: 0;
 @media(max-width: 700px) { .ww1-statstrip { grid-template-columns: repeat(3, 1fr); gap:.7rem; } }
 .ww1-sstat { display: flex; flex-direction: column; gap: .25rem; }
 .ww1-sstat-n { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 300; color: var(--color-text, #1a1000); line-height: 1; }
-.ww1-sstat-lbl { font-family: 'DM Sans', sans-serif; font-size: .58rem; color: var(--color-text-muted, #a89880); letter-spacing: .04em; }
+.ww1-sstat-lbl { font-family: 'Manrope', sans-serif; font-size: .62rem; color: var(--color-text-muted, #a89880); letter-spacing: .04em; }
 .ww1-sstat-bar { width: 100%; height: 3px; border-radius: 100px; background: var(--color-border, #ddd5c8); overflow: hidden; margin-top: .2rem; }
 .ww1-sstat-fill { height: 100%; border-radius: 100px; transition: width .7s cubic-bezier(.16,1,.3,1); width: 0%; }
 </style>
@@ -764,15 +802,15 @@ opacity: 0;
 .ww1-map-img-wrap img{width:100%;display:block;filter:sepia(.15) contrast(1.05);transition:filter .3s;}
 .ww1-map-img-wrap:hover img{filter:sepia(.05) contrast(1.08);}
 .ww1-map-badge{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(0deg,rgba(0,0,0,.65) 0%,transparent 100%);padding:.8rem 1rem;display:flex;justify-content:space-between;align-items:flex-end;}
-.ww1-map-badge span{font-family:'DM Sans',sans-serif;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.7);}
-.ww1-map-zoom-hint{font-family:'DM Sans',sans-serif;font-size:.55rem;color:rgba(255,255,255,.4);display:flex;align-items:center;gap:.3rem;}
+.ww1-map-badge span{font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.7);}
+.ww1-map-zoom-hint{font-family:'Manrope',sans-serif;font-size:.55rem;color:rgba(255,255,255,.4);display:flex;align-items:center;gap:.3rem;}
 /* Lightbox */
 #ww1MapLightbox{position:fixed;inset:0;z-index:9200;background:rgba(0,0,0,.95);display:none;align-items:center;justify-content:center;padding:env(safe-area-inset-top,1rem) 1rem 1rem;touch-action:none;}
 #ww1MapLightbox.open{display:flex;}
 #ww1MapLbInner{position:relative;max-width:100%;max-height:100%;overflow:hidden;border-radius:8px;touch-action:none;}
 #ww1MapLbImg{display:block;max-width:100%;max-height:calc(100dvh - 5rem);object-fit:contain;transform-origin:center center;transition:transform .1s linear;user-select:none;-webkit-user-drag:none;}
 #ww1MapLbClose{position:fixed;top:max(env(safe-area-inset-top,0px) + .6rem, .8rem);right:1rem;z-index:9210;width:40px;height:40px;border-radius:50%;background:rgba(0,0,0,.75);border:1px solid rgba(201,162,39,.4);color:#c9a227;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;}
-#ww1MapLbHint{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);font-family:'DM Sans',sans-serif;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3);white-space:nowrap;pointer-events:none;}
+#ww1MapLbHint{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3);white-space:nowrap;pointer-events:none;}
 </style>
 
 <section class="ww1-map-section">
@@ -788,7 +826,7 @@ opacity: 0;
             </div>
         </div>
         <div>
-            <div style="font-family:'DM Sans',sans-serif;font-size:.52rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(201,162,39,.7);margin-bottom:.8rem;">Карта місцевості</div>
+            <div style="font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(201,162,39,.7);margin-bottom:.8rem;">Карта місцевості</div>
             <h3 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.5rem,2.5vw,2rem);font-weight:300;line-height:1.2;color:var(--color-text,#1a1000);margin:0 0 1rem;">Лінія фронту<br><em style="color:#c9a227;">1917 року</em></h3>
             <p style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;line-height:1.75;color:var(--color-text-secondary,#44403c);margin:0;">
                 Карта місцевості 1917 року — період, коли фронт підійшов найближче до Дубровиці: за 30–40 км.
@@ -943,7 +981,7 @@ opacity: 0;
 <div style="background:var(--color-bg-secondary,#f0ebe0);border-top:1px solid rgba(201,162,39,.12);border-bottom:1px solid rgba(201,162,39,.12);padding:1rem 0;">
     <div style="max-width:1200px;margin:0 auto;padding:0 2rem;display:flex;align-items:flex-start;gap:.85rem;">
         <svg style="flex-shrink:0;margin-top:.15rem;opacity:.55;" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#c9a227" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        <p style="font-family:'DM Sans',sans-serif;font-size:.76rem;line-height:1.65;color:var(--color-text-secondary,#5a4a2e);margin:0;">
+        <p style="font-family:'Manrope',sans-serif;font-size:.76rem;line-height:1.65;color:var(--color-text-secondary,#5a4a2e);margin:0;">
             <strong style="color:var(--color-text,#1a1000);">Це неповні дані.</strong>
             У Першій світовій війні брала участь значно більша кількість мешканців Дубровиці та навколишніх сіл.
             Цей реєстр містить лише ту частину, що збереглася в архівах — переважно записи про поранених, хворих, зниклих безвісти та полонених.
@@ -1001,38 +1039,54 @@ opacity: 0;
 
 <!-- Footer -->
 <footer class="footer">
-    <div class="container">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4 class="footer-title">Дубровиця</h4>
-                <p class="footer-text">Цифровий архів історичної спадщини міста Дубровиця, Сарненський район, Рівненська область, Україна.</p>
+    <div class="ft">
+        <div class="ft-top">
+            <div class="ft-brand">
+                <a href="index.html" class="ft-logo">
+                    <img src="https://i.imgur.com/mXCrjjG.png" alt="" width="44" height="44" loading="lazy" decoding="async">
+                    <span><span class="ft-logo-city">Дубровиця</span><span class="ft-logo-sub">Цифровий архів</span></span>
+                </a>
+                <p class="ft-about">Цифровий архів історичної спадщини міста Дубровиця — Сарненський район, Рівненська область, Україна.</p>
+                <a href="contacts.html" class="ft-cta"><span>Маєте старі фото чи документи?</span><strong>Напишіть нам <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></strong></a>
             </div>
-            <div class="footer-section">
-                <h4 class="footer-title">Навігація</h4>
-                <nav class="footer-nav">
-                    <a href="history.html">Історія</a>
-                    <a href="photo-archive.html">Фотоархів</a>
-                    <a href="metrychni-knyhy.html">Архівні справи</a>
-                    <a href="jewish-history.html">Єврейська спадщина</a>
-                </nav>
-            </div>
-            <div class="footer-section">
-                <h4 class="footer-title">Контакти</h4>
-                <p class="footer-text">Маєте матеріали або пропозиції?<br><a href="contacts.html" class="footer-link">Зв'яжіться з нами</a></p>
-            </div>
+            <nav class="ft-col" aria-label="Розділи сайту">
+                <p class="ft-title">Розділи</p>
+                <a href="history.html">Історія</a>
+                <a href="photo-archive.html">Фотоархів</a>
+                <a href="architecture.html">Пам'ятки</a>
+                <a href="jewish-history.html">Єврейська спадщина</a>
+                <a href="presa.html">Преса</a>
+                <a href="doslidnyk.html">Дослідник</a>
+                <a href="contacts.html">Про проєкт</a>
+            </nav>
+            <nav class="ft-col" aria-label="Архівні справи">
+                <p class="ft-title">Архівні справи</p>
+                <a href="sumariusz-1642.html"><span class="ft-year">1642</span>Сумаріуш маєтку</a>
+                <a href="zhaloba-1650.html"><span class="ft-year">1650</span>Жалоба про спустошення</a>
+                <a href="rejestr-1665.html"><span class="ft-year">1665</span>Реєстр збитків</a>
+                <a href="inventar-1780.html"><span class="ft-year">1780</span>Інвентар маєтку</a>
+                <a href="atlas-1798.html"><span class="ft-year">1798</span>Атлас губернії</a>
+                <a href="atlas-1798-analityka.html"><span class="ft-year">1798</span>Край у цифрах</a>
+                <a href="persha-svitova.html"><span class="ft-year">1914</span>Перша світова війна</a>
+                <a href="vyborchi-1938.html"><span class="ft-year">1938</span>Список виборців</a>
+            </nav>
+            <nav class="ft-col" aria-label="Постаті й каталоги">
+                <p class="ft-title">Постаті й каталоги</p>
+                <a href="plater.html">Граф Юзеф Плятер</a>
+                <a href="radzyvil.html">Князь Домінік Радзивілл</a>
+                <a href="metrychni-knyhy.html#mkcalSection">Метричні книги</a>
+                <a href="metrychni-knyhy.html#booksCatalog">Книги про Дубровицю</a>
+                <a href="metrychni-knyhy.html">Усі архівні справи</a>
+            </nav>
         </div>
-        <div class="footer-copyright-row">
-            <div class="footer-copyright-ornament">
-                <div class="footer-copyright-ornament-line"></div>
-                <div class="footer-copyright-ornament-diamond"></div>
-                <div class="footer-copyright-ornament-line"></div>
-            </div>
-            <p class="footer-copyright-main">&copy; 2026 <a href="https://dubrovytsia.site">dubrovytsia.site</a> — Цифровий архів Дубровиці.</p>
+        <div class="ft-bottom">
+            <p class="ft-copy">&copy; 2026 <a href="https://dubrovytsia.site">dubrovytsia.site</a> — Цифровий архів Дубровиці, Рівненська область, Україна. Сайт є некомерційним краєзнавчим проєктом, створеним з любові до міста та його історії.</p>
+            <p class="ft-notice">Публікуючи ці матеріали, ми прагнемо зберегти та популяризувати культурну й історичну спадщину міста Дубровиця для нинішніх і майбутніх поколінь. Усі фотографії, документи та архівні матеріали розміщено виключно в освітніх, краєзнавчих і науково-дослідних цілях. Відтворення, поширення або комерційне використання будь-яких матеріалів без письмового дозволу адміністрації сайту — заборонено. При цитуванні або використанні матеріалів у будь-якому форматі — обов'язкове активне посилання на <em>dubrovytsia.site</em>. Якщо ви є власником авторських прав на будь-які з опублікованих матеріалів і маєте заперечення щодо їх розміщення — будь ласка, <a href="contacts.html">зв'яжіться з нами</a> і ми негайно розглянемо ваш запит. Фотографії, завантажені з архіву, містять водяний знак сайту і не можуть публікуватись без нього.</p>
         </div>
     </div>
 </footer>
 
-<script src="app.js"></script>
+<script src="app.js?v=11"></script>
 <script>
 (function(){
 'use strict';
@@ -1101,7 +1155,7 @@ function renderTable(){
         if(loc) mob+='<span class="ww1-card-row-loc">'+locSvg+he(loc)+'</span>';
         if(r.cause) mob+='<span class="ww1-tag '+cc+'" style="font-size:.52rem;padding:.15rem .45rem;">'+he(r.cause)+'</span>';
         mob+='</div>';
-        mob+='<div style="font-family:\'DM Sans\',sans-serif;font-size:.62rem;color:var(--color-text-muted,#a8a29e);margin-top:.15rem;">'+he(r.doc_type||'')+'</div>';
+        mob+='<div style="font-family:\'Manrope\',sans-serif;font-size:.62rem;color:var(--color-text-muted,#a8a29e);margin-top:.15rem;">'+he(r.doc_type||'')+'</div>';
         mob+='</div>';
         mob+='<div class="ww1-card-row-arrow">'+arrSvg+'</div>';
         mob+='</div>';

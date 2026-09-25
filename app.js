@@ -18,7 +18,7 @@
 })();
 
 // ================================================
-// ДУБРОВИЦЯ — app.js v10.0
+// ДУБРОВИЦЯ — app.js v11
 // ================================================
 
 const GITHUB_RAW = 'https://raw.githubusercontent.com/jerkinsmichael13-stack/Dubrovytsia1/main/';
@@ -86,25 +86,84 @@ function initTheme() {
 }
 
 function initMobileNav() {
-    const toggle = document.querySelector('.mobile-toggle');
-    const nav    = document.querySelector('.nav');
-    if (!toggle || !nav) return;
-    toggle.addEventListener('click', function() {
-        const open = nav.classList.toggle('active');
-        this.classList.toggle('active');
-        this.setAttribute('aria-expanded', open);
-        this.setAttribute('aria-label', open ? 'Закрити меню' : 'Відкрити меню');
+    const header = document.querySelector('.header');
+    const nav    = document.getElementById('mainNav') || document.querySelector('.nav');
+    const toggle = document.getElementById('mobileToggle') || document.querySelector('.mobile-toggle');
+    if (!nav) return;
+    const compact = window.matchMedia('(max-width: 1080px)');
+    const canHover = window.matchMedia('(hover: hover) and (pointer: fine)');
+    const items = [...nav.querySelectorAll('.nav-item.has-menu')];
+
+    const setItem = (item, open) => {
+        if (!open) delete item.dataset.pinned;
+        item.classList.toggle('is-open', open);
+        const btn = item.querySelector('.nav-caret');
+        if (btn) btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    };
+    const closeItems = except => items.forEach(i => { if (i !== except) setItem(i, false); });
+
+    const setMenu = open => {
+        if (!toggle) return;
+        nav.classList.toggle('active', open);
+        toggle.classList.toggle('active', open);
+        header && header.classList.toggle('menu-open', open);
+        document.body.classList.toggle('menu-open', open);
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        toggle.setAttribute('aria-label', open ? 'Закрити меню' : 'Відкрити меню');
+        if (!open) closeItems();
+    };
+
+    toggle && toggle.addEventListener('click', () => setMenu(!nav.classList.contains('active')));
+
+    items.forEach(item => {
+        const btn = item.querySelector('.nav-caret');
+        btn && btn.addEventListener('click', e => {
+            e.stopPropagation();
+            // меню, відкрите наведенням, клік по стрілці закріплює, а не закриває
+            const open = !(item.classList.contains('is-open') && (item.dataset.pinned || compact.matches));
+            closeItems(item);
+            setItem(item, open);
+            if (open && !compact.matches) item.dataset.pinned = '1';
+        });
+        // Десктоп: відкриття при наведенні з невеликою затримкою на закриття
+        let t;
+        item.addEventListener('mouseenter', () => {
+            if (compact.matches || !canHover.matches) return;
+            clearTimeout(t);
+            closeItems(item);
+            setItem(item, true);
+        });
+        item.addEventListener('mouseleave', () => {
+            if (compact.matches || !canHover.matches || item.dataset.pinned) return;
+            clearTimeout(t);
+            t = setTimeout(() => setItem(item, false), 180);
+        });
+        item.addEventListener('focusout', e => {
+            if (!compact.matches && !item.contains(e.relatedTarget)) setItem(item, false);
+        });
+    });
+
+    document.addEventListener('click', e => {
+        if (!compact.matches && !e.target.closest('.nav-item.has-menu')) closeItems();
+    });
+    document.addEventListener('keydown', e => {
+        if (e.key !== 'Escape') return;
+        const openItem = items.find(i => i.classList.contains('is-open'));
+        if (openItem && !compact.matches) {
+            setItem(openItem, false);
+            const btn = openItem.querySelector('.nav-caret');
+            btn && btn.focus();
+        } else if (nav.classList.contains('active')) {
+            setMenu(false);
+            toggle && toggle.focus();
+        }
     });
     nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-        nav.classList.remove('active');
-        toggle.classList.remove('active');
-        toggle.setAttribute('aria-expanded', 'false');
-        toggle.setAttribute('aria-label', 'Відкрити меню');
+        if (nav.classList.contains('active')) setMenu(false);
+        closeItems();
     }));
-    // Повна висота на мобільному
-    new ResizeObserver(() => {
-        nav.style.height = window.innerWidth <= 1024 ? '100dvh' : '';
-    }).observe(document.body);
+    const onChange = () => { if (!compact.matches) setMenu(false); closeItems(); };
+    compact.addEventListener ? compact.addEventListener('change', onChange) : compact.addListener(onChange);
 }
 
 function initScrollAnimations() {
@@ -134,24 +193,17 @@ function initSmoothScroll() {
 function initHeaderScroll() {
     const header = document.querySelector('.header');
     if (!header) return;
-    header.style.transition = 'transform 0.4s cubic-bezier(0.22,1,0.36,1), opacity 0.4s ease, box-shadow 0.4s ease';
-    let lastY = 0, hidden = false, ticking = false;
+    let ticking = false;
+    const update = () => {
+        header.classList.toggle('scrolled', window.pageYOffset > 8);
+        ticking = false;
+    };
     window.addEventListener('scroll', () => {
         if (ticking) return;
         ticking = true;
-        requestAnimationFrame(() => {
-            const y = window.pageYOffset;
-            header.classList.toggle('scrolled', y > 100);
-            if (y > 120) {
-                const d = y - lastY;
-                if (d > 2 && !hidden)  { header.style.transform = 'translateY(-6px)'; header.style.opacity = '0.9'; hidden = true; }
-                if (d < -2 && hidden)  { header.style.transform = 'translateY(0)';    header.style.opacity = '1';   hidden = false; }
-            } else {
-                header.style.transform = 'translateY(0)'; header.style.opacity = '1'; hidden = false;
-            }
-            lastY = y; ticking = false;
-        });
+        requestAnimationFrame(update);
     }, { passive: true });
+    update();
 }
 
 function initCounters() {
@@ -503,7 +555,7 @@ async function downloadWithWatermark(imageUrl, title) {
 
         // 2. Параметри тексту
         const fontSize   = Math.max(18, Math.round(W * 0.028));
-        const fontFamily = '"DM Sans", Arial, sans-serif';
+        const fontFamily = '"Manrope", Arial, sans-serif';
         ctx.font         = `600 ${fontSize}px ${fontFamily}`;
 
         const textW  = ctx.measureText(WATERMARK).width;
@@ -1117,7 +1169,7 @@ function renderArchiveSearch(q) {
 // ================================================
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('🏛️ Дубровиця — app.js v10.0');
+    console.log('🏛️ Дубровиця — app.js v11');
 
     // Базові функції (всі сторінки)
     initTheme();

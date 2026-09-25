@@ -16,10 +16,10 @@
 <meta property="og:image" content="https://i.imgur.com/mXCrjjG.png">
 <title>Дослідницькі інструменти — Дубровиця</title>
 <script>!function(){var t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t)}()</script>
-<link rel="stylesheet" href="app.css">
+<link rel="stylesheet" href="app.css?v=11">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 .dh-hero{position:relative;min-height:380px;display:flex;flex-direction:column;justify-content:center;align-items:center;overflow:hidden;background:#080604}
 .dh-hero-bg{position:absolute;inset:0;background-image:url('https://i.imgur.com/kTYK0h1.jpeg');background-size:cover;background-position:center 40%;filter:brightness(.22) contrast(1.12) saturate(.35) sepia(.25);z-index:0;transform:scale(1.05);transition:transform 14s ease-out,opacity .8s ease;opacity:0}
@@ -32,7 +32,7 @@
 .dh-title{font-family:var(--font-display);font-size:clamp(2.6rem,5vw,4rem);font-weight:300;line-height:1;letter-spacing:-.02em;color:#f2e8d8;margin-bottom:.6rem}
 .dh-title em{font-style:italic;color:#c9a227}
 .dh-sub{font-size:.92rem;color:rgba(242,232,216,.5);line-height:1.7;max-width:440px;margin:0 auto}
-.dh-tabs-bar{background:var(--color-bg);border-bottom:1px solid var(--color-border-light);position:sticky;top:76px;z-index:40;transition:box-shadow var(--transition-fast)}
+.dh-tabs-bar{background:var(--color-bg);border-bottom:1px solid var(--color-border-light);position:sticky;top:var(--hdr-h);z-index:40;transition:box-shadow var(--transition-fast)}
 .dh-tabs-bar.scrolled{box-shadow:var(--shadow-sm)}
 .dh-tabs{display:flex;gap:.25rem;overflow-x:auto;scrollbar-width:none;padding:.5rem 0}
 .dh-tabs::-webkit-scrollbar{display:none}
@@ -90,7 +90,7 @@
 .dh-tl-date{font-size:.72rem;color:var(--color-accent);font-weight:600;margin-bottom:.2rem}
 .dh-tl-title{font-family:var(--font-display);font-size:1.1rem;font-weight:600;color:var(--color-text);line-height:1.3;margin-bottom:.15rem}
 .dh-tl-src{font-size:.75rem;color:var(--color-text-light);font-style:italic}
-.dh-tl-lang{display:inline-block;font-size:.6rem;font-weight:700;text-transform:uppercase;padding:.1rem .4rem;border-radius:var(--radius-full);margin-left:.4rem;vertical-align:middle}
+.dh-tl-lang{display:inline-block;font-size:.62rem;font-weight:700;text-transform:uppercase;padding:.1rem .4rem;border-radius:var(--radius-full);margin-left:.4rem;vertical-align:middle}
 .lpl{background:rgba(30,64,175,.15);color:#1e40af}
 .lru{background:rgba(153,27,27,.15);color:#991b1b}
 .luk{background:rgba(22,101,52,.15);color:#166534}
@@ -134,7 +134,6 @@
 .dh-lb.open{opacity:1;pointer-events:auto}
 .dh-lb img{max-width:96vw;max-height:96vh;object-fit:contain;border-radius:3px}
 @media(max-width:640px){
-    .dh-tabs-bar{top:56px}
     .dh-tl::before{left:65px}
     .dh-tl-item{grid-template-columns:54px 30px 1fr}
     .dh-tl-year{font-size:.95rem}
@@ -144,26 +143,69 @@
 <body>
 <header class="header">
     <div class="header-container">
-        <a href="index.html" class="logo">
-            <img src="https://i.imgur.com/mXCrjjG.png" alt="Герб Дубровиці" class="logo-img" loading="lazy">
-            <div class="logo-text"><span class="logo-city">Дубровиця</span><span class="logo-subtitle">Цифровий архів</span></div>
+        <a href="index.html" class="logo" aria-label="Дубровиця — Цифровий архів, головна сторінка">
+            <img src="https://i.imgur.com/mXCrjjG.png" alt="" class="logo-img" width="40" height="40" decoding="async">
+            <span class="logo-text">
+                <span class="logo-city">Дубровиця</span>
+                <span class="logo-subtitle">Цифровий архів</span>
+            </span>
         </a>
-        <nav class="nav" id="mainNav">
-            <a href="index.html" class="nav-link">Головна</a>
-            <a href="history.html" class="nav-link">Історія</a>
-            <a href="photo-archive.html" class="nav-link">Фотоархів</a>
-            <a href="architecture.html" class="nav-link">Пам'ятки</a>
-            <a href="metrychni-knyhy.html" class="nav-link">Архівні справи</a>
-            <a href="jewish-history.html" class="nav-link">Єврейська спадщина</a>
-            <a href="presa.html" class="nav-link">Преса</a>
-            <a href="doslidnyk.html" class="nav-link active">Дослідник</a>
-            <a href="contacts.html" class="nav-link">Про проєкт</a>
+
+        <nav class="nav" id="mainNav" aria-label="Головне меню">
+            <ul class="nav-list">
+                <li class="nav-item nav-item--home" style="--i:0"><a href="index.html" class="nav-link">Головна</a></li>
+                <li class="nav-item" style="--i:1"><a href="history.html" class="nav-link">Історія</a></li>
+                <li class="nav-item" style="--i:2"><a href="photo-archive.html" class="nav-link">Фотоархів</a></li>
+                <li class="nav-item" style="--i:3"><a href="architecture.html" class="nav-link">Пам'ятки</a></li>
+                <li class="nav-item has-menu" style="--i:4">
+                    <a href="metrychni-knyhy.html" class="nav-link">Архівні справи</a>
+                    <button type="button" class="nav-caret" aria-expanded="false" aria-controls="navArchive" aria-label="Показати документи архіву"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                    <div class="nav-menu" id="navArchive">
+                        <div class="nav-menu-inner">
+                            <div class="nav-menu-main">
+                                <p class="nav-menu-label">Документи за роками</p>
+                                <div class="nav-docs">
+                                    <a href="sumariusz-1642.html" class="nav-doc"><span class="nav-doc-year">1642</span><span class="nav-doc-name">Сумаріуш маєтку</span><span class="nav-doc-note">Доходи маєтку Дубровиця</span></a>
+                                    <a href="zhaloba-1650.html" class="nav-doc"><span class="nav-doc-year">1650</span><span class="nav-doc-name">Жалоба про спустошення</span><span class="nav-doc-note">Гродські книги Пінські</span></a>
+                                    <a href="rejestr-1665.html" class="nav-doc"><span class="nav-doc-year">1665</span><span class="nav-doc-name">Реєстр збитків</span><span class="nav-doc-note">Пінський гродський суд</span></a>
+                                    <a href="inventar-1780.html" class="nav-doc"><span class="nav-doc-year">1780</span><span class="nav-doc-name">Інвентар маєтку</span><span class="nav-doc-note">Містечко, вулиці, мешканці</span></a>
+                                    <a href="atlas-1798.html" class="nav-doc"><span class="nav-doc-year">1798</span><span class="nav-doc-name">Атлас губернії</span><span class="nav-doc-note">Інтерактивна мапа сіл</span></a>
+                                    <a href="atlas-1798-analityka.html" class="nav-doc"><span class="nav-doc-year">1798</span><span class="nav-doc-name">Край у цифрах</span><span class="nav-doc-note">Аналітика атласу</span></a>
+                                    <a href="persha-svitova.html" class="nav-doc"><span class="nav-doc-year">1914</span><span class="nav-doc-name">Перша світова війна</span><span class="nav-doc-note">Мобілізовані мешканці</span></a>
+                                    <a href="vyborchi-1938.html" class="nav-doc"><span class="nav-doc-year">1938</span><span class="nav-doc-name">Список виборців</span><span class="nav-doc-note">8 619 записів</span></a>
+                                </div>
+                            </div>
+                            <div class="nav-menu-side">
+                                <p class="nav-menu-label">Постаті</p>
+                                <a href="plater.html" class="nav-person"><img src="nav-plater.jpg" alt="" width="40" height="40" loading="lazy" decoding="async"><span><span class="nav-person-name">Граф Юзеф Плятер</span><span class="nav-person-role">Власник Дубровиці</span></span></a>
+                                <a href="radzyvil.html" class="nav-person"><img src="nav-radzyvil.jpg" alt="" width="40" height="40" loading="lazy" decoding="async"><span><span class="nav-person-name">Князь Домінік Радзивілл</span><span class="nav-person-role">Власник сіл над Горинню</span></span></a>
+                                <p class="nav-menu-label nav-menu-label--gap">Каталоги</p>
+                                <a href="metrychni-knyhy.html#mkcalSection" class="nav-cat"><span>Метричні книги</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                                <a href="metrychni-knyhy.html#booksCatalog" class="nav-cat"><span>Книги про Дубровицю</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                                <a href="metrychni-knyhy.html" class="nav-menu-all">Усі архівні справи <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item" style="--i:5"><a href="jewish-history.html" class="nav-link">Єврейська спадщина</a></li>
+                <li class="nav-item" style="--i:6"><a href="presa.html" class="nav-link">Преса</a></li>
+                <li class="nav-item" style="--i:7"><a href="doslidnyk.html" class="nav-link active" aria-current="page">Дослідник</a></li>
+                <li class="nav-item" style="--i:8"><a href="contacts.html" class="nav-link">Про проєкт</a></li>
+            </ul>
+            <p class="nav-foot">Цифровий архів історичної спадщини Дубровиці · <a href="contacts.html">Написати нам</a></p>
         </nav>
-        <button class="theme-toggle" id="themeToggle" aria-label="Перемкнути тему">
-            <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-            <svg class="theme-icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-        </button>
-        <button class="mobile-toggle" id="mobileToggle" aria-label="Меню"><span></span><span></span><span></span></button>
+
+        <div class="header-actions">
+            <button type="button" class="theme-toggle" id="themeToggle" aria-label="Перемкнути тему">
+                <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg>
+                <svg class="theme-icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.3A8.5 8.5 0 0 1 9.7 3.5a8.5 8.5 0 1 0 10.8 10.8z"/></svg>
+            </button>
+            <button type="button" class="mobile-toggle" id="mobileToggle" aria-label="Відкрити меню" aria-expanded="false" aria-controls="mainNav">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
     </div>
 </header>
 
@@ -239,8 +281,8 @@
                 flex-shrink: 0;
             }
             .arc-section-label {
-                font-family: 'DM Sans', sans-serif;
-                font-size: .55rem; letter-spacing: .36em; text-transform: uppercase;
+                font-family: 'Manrope', sans-serif;
+                font-size: .62rem; letter-spacing: .36em; text-transform: uppercase;
                 color: #c9a227;
             }
             .arc-section-title {
@@ -299,8 +341,8 @@
                 display: flex; align-items: center; gap: .45rem;
                 background: rgba(8,5,2,.82); backdrop-filter: blur(10px);
                 border-radius: 6px; padding: .4rem .85rem;
-                font-family: 'DM Sans', sans-serif;
-                font-size: .55rem; letter-spacing: .18em; text-transform: uppercase;
+                font-family: 'Manrope', sans-serif;
+                font-size: .62rem; letter-spacing: .18em; text-transform: uppercase;
             }
             .arc-img-dot {
                 width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
@@ -326,8 +368,8 @@
 
             .arc-tag {
                 display: inline-flex; align-items: center; gap: .5rem;
-                font-family: 'DM Sans', sans-serif;
-                font-size: .54rem; letter-spacing: .22em; text-transform: uppercase;
+                font-family: 'Manrope', sans-serif;
+                font-size: .62rem; letter-spacing: .22em; text-transform: uppercase;
                 border-radius: 100px; padding: .3rem .9rem;
                 width: fit-content;
             }
@@ -363,7 +405,7 @@
                 position: relative; z-index: 1;
             }
             .arc-quote-attr {
-                font-family: 'DM Sans', sans-serif;
+                font-family: 'Manrope', sans-serif;
                 font-size: .65rem; letter-spacing: .1em;
                 margin-top: .6rem; opacity: .6;
                 position: relative; z-index: 1;
@@ -375,7 +417,7 @@
             }
             .arc-hook {
                 display: flex; align-items: flex-start; gap: .85rem;
-                font-family: 'DM Sans', sans-serif;
+                font-family: 'Manrope', sans-serif;
                 font-size: .78rem; line-height: 1.6;
                 color: var(--color-text-muted, #7a6040);
             }
@@ -405,8 +447,8 @@
                 font-size: 1.5rem; font-weight: 300; line-height: 1;
             }
             .arc-stat-key {
-                font-family: 'DM Sans', sans-serif;
-                font-size: .5rem; letter-spacing: .12em; text-transform: uppercase;
+                font-family: 'Manrope', sans-serif;
+                font-size: .62rem; letter-spacing: .12em; text-transform: uppercase;
                 margin-top: .25rem; opacity: .6;
             }
 
@@ -416,7 +458,7 @@
                 display: inline-flex; align-items: center; gap: .75rem;
                 padding: .85rem 1.8rem;
                 border-radius: 100px;
-                font-family: 'DM Sans', sans-serif;
+                font-family: 'Manrope', sans-serif;
                 font-size: .72rem; font-weight: 500; letter-spacing: .07em; text-transform: uppercase;
                 transition: all .28s cubic-bezier(.16,1,.3,1);
                 white-space: nowrap;
@@ -424,7 +466,7 @@
             .arc-cta svg { width: 14px; height: 14px; transition: transform .28s ease; flex-shrink: 0; }
             .arc-card:hover .arc-cta svg { transform: translateX(4px); }
             .arc-cta-hint {
-                font-family: 'DM Sans', sans-serif;
+                font-family: 'Manrope', sans-serif;
                 font-size: .68rem; opacity: .45;
                 color: var(--color-text-muted, #7a6040);
             }
@@ -553,7 +595,7 @@
                 padding: .3rem .85rem;
                 background: rgba(90,128,64,.08); border: 1px solid rgba(90,128,64,.2);
                 border-radius: 100px;
-                font-family: 'DM Sans', sans-serif; font-size: .56rem;
+                font-family: 'Manrope', sans-serif; font-size: .62rem;
                 letter-spacing: .12em; text-transform: uppercase; color: #5a8040;
                 width: fit-content; margin-bottom: .5rem;
             }
@@ -677,19 +719,19 @@
             <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.2rem;margin-top:2rem;">
                 <a href="sumariusz-1642.html" style="display:flex;align-items:center;gap:1rem;padding:1.2rem 1.4rem;background:var(--color-bg-card);border:1px solid rgba(201,162,39,.18);border-radius:12px;text-decoration:none;transition:all .2s;">
                     <span style="font-size:1.5rem;">📜</span>
-                    <div><div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--color-text);">Сумаріуш 1642</div><div style="font-family:'DM Sans',sans-serif;font-size:.7rem;color:#c9a227;">Господарський звіт маєтку</div></div>
+                    <div><div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--color-text);">Сумаріуш 1642</div><div style="font-family:'Manrope',sans-serif;font-size:.7rem;color:#c9a227;">Господарський звіт маєтку</div></div>
                 </a>
                 <a href="inventar-1780.html" style="display:flex;align-items:center;gap:1rem;padding:1.2rem 1.4rem;background:var(--color-bg-card);border:1px solid rgba(90,128,64,.18);border-radius:12px;text-decoration:none;transition:all .2s;">
                     <span style="font-size:1.5rem;">🗺️</span>
-                    <div><div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--color-text);">Інвентар 1780</div><div style="font-family:'DM Sans',sans-serif;font-size:.7rem;color:#5a8040;">Топографічний опис міста</div></div>
+                    <div><div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--color-text);">Інвентар 1780</div><div style="font-family:'Manrope',sans-serif;font-size:.7rem;color:#5a8040;">Топографічний опис міста</div></div>
                 </a>
                 <a href="zhaloba-1650.html" style="display:flex;align-items:center;gap:1rem;padding:1.2rem 1.4rem;background:var(--color-bg-card);border:1px solid rgba(139,32,32,.18);border-radius:12px;text-decoration:none;transition:all .2s;">
                     <span style="font-size:1.5rem;">⚔️</span>
-                    <div><div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--color-text);">Скарга 1650</div><div style="font-family:'DM Sans',sans-serif;font-size:.7rem;color:#8b2020;">Воєнна документація</div></div>
+                    <div><div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--color-text);">Скарга 1650</div><div style="font-family:'Manrope',sans-serif;font-size:.7rem;color:#8b2020;">Воєнна документація</div></div>
                 </a>
                 <a href="rejestr-1665.html" style="display:flex;align-items:center;gap:1rem;padding:1.2rem 1.4rem;background:var(--color-bg-card);border:1px solid rgba(123,58,32,.18);border-radius:12px;text-decoration:none;transition:all .2s;">
                     <span style="font-size:1.5rem;">⚖️</span>
-                    <div><div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--color-text);">Реєстр збитків 1665</div><div style="font-family:'DM Sans',sans-serif;font-size:.7rem;color:#7b3a20;">Судовий реєстр Пінська</div></div>
+                    <div><div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--color-text);">Реєстр збитків 1665</div><div style="font-family:'Manrope',sans-serif;font-size:.7rem;color:#7b3a20;">Судовий реєстр Пінська</div></div>
                 </a>
             </div>
         </div>
@@ -701,35 +743,54 @@
 <div class="dh-lb" id="dhLb"><img id="dhLbImg" src="" alt=""></div>
 
 <footer class="footer">
-    <div class="container">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4 class="footer-title">Дубровиця</h4>
-                <p class="footer-text">Цифровий архів історичної спадщини міста Дубровиця, Сарненський район, Рівненська область, Україна.</p>
+    <div class="ft">
+        <div class="ft-top">
+            <div class="ft-brand">
+                <a href="index.html" class="ft-logo">
+                    <img src="https://i.imgur.com/mXCrjjG.png" alt="" width="44" height="44" loading="lazy" decoding="async">
+                    <span><span class="ft-logo-city">Дубровиця</span><span class="ft-logo-sub">Цифровий архів</span></span>
+                </a>
+                <p class="ft-about">Цифровий архів історичної спадщини міста Дубровиця — Сарненський район, Рівненська область, Україна.</p>
+                <a href="contacts.html" class="ft-cta"><span>Маєте старі фото чи документи?</span><strong>Напишіть нам <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></strong></a>
             </div>
-            <div class="footer-section">
-                <h4 class="footer-title">Навігація</h4>
-                <nav class="footer-nav">
-                    <a href="history.html">Історія</a>
-                    <a href="presa.html">Преса</a>
-                    <a href="metrychni-knyhy.html">Архівні справи</a>
-                    <a href="jewish-history.html">Єврейська спадщина</a>
-                    <a href="doslidnyk.html">Дослідник</a>
-                </nav>
-            </div>
-            <div class="footer-section">
-                <h4 class="footer-title">Контакти</h4>
-                <p class="footer-text">Маєте матеріали або пропозиції?<br><a href="contacts.html" class="footer-link">Зв'яжіться з нами</a></p>
-            </div>
+            <nav class="ft-col" aria-label="Розділи сайту">
+                <p class="ft-title">Розділи</p>
+                <a href="history.html">Історія</a>
+                <a href="photo-archive.html">Фотоархів</a>
+                <a href="architecture.html">Пам'ятки</a>
+                <a href="jewish-history.html">Єврейська спадщина</a>
+                <a href="presa.html">Преса</a>
+                <a href="doslidnyk.html">Дослідник</a>
+                <a href="contacts.html">Про проєкт</a>
+            </nav>
+            <nav class="ft-col" aria-label="Архівні справи">
+                <p class="ft-title">Архівні справи</p>
+                <a href="sumariusz-1642.html"><span class="ft-year">1642</span>Сумаріуш маєтку</a>
+                <a href="zhaloba-1650.html"><span class="ft-year">1650</span>Жалоба про спустошення</a>
+                <a href="rejestr-1665.html"><span class="ft-year">1665</span>Реєстр збитків</a>
+                <a href="inventar-1780.html"><span class="ft-year">1780</span>Інвентар маєтку</a>
+                <a href="atlas-1798.html"><span class="ft-year">1798</span>Атлас губернії</a>
+                <a href="atlas-1798-analityka.html"><span class="ft-year">1798</span>Край у цифрах</a>
+                <a href="persha-svitova.html"><span class="ft-year">1914</span>Перша світова війна</a>
+                <a href="vyborchi-1938.html"><span class="ft-year">1938</span>Список виборців</a>
+            </nav>
+            <nav class="ft-col" aria-label="Постаті й каталоги">
+                <p class="ft-title">Постаті й каталоги</p>
+                <a href="plater.html">Граф Юзеф Плятер</a>
+                <a href="radzyvil.html">Князь Домінік Радзивілл</a>
+                <a href="metrychni-knyhy.html#mkcalSection">Метричні книги</a>
+                <a href="metrychni-knyhy.html#booksCatalog">Книги про Дубровицю</a>
+                <a href="metrychni-knyhy.html">Усі архівні справи</a>
+            </nav>
         </div>
-        <div class="footer-copyright-row">
-            <div class="footer-copyright-ornament"><div class="footer-copyright-ornament-line"></div><div class="footer-copyright-ornament-diamond"></div><div class="footer-copyright-ornament-line"></div></div>
-            <p class="footer-copyright-main">&copy; 2026 <a href="https://dubrovytsia.site">dubrovytsia.site</a> — Цифровий архів Дубровиці, Рівненська область, Україна.<br>Сайт є некомерційним краєзнавчим проєктом, створеним з любові до міста та його історії.</p>
+        <div class="ft-bottom">
+            <p class="ft-copy">&copy; 2026 <a href="https://dubrovytsia.site">dubrovytsia.site</a> — Цифровий архів Дубровиці, Рівненська область, Україна. Сайт є некомерційним краєзнавчим проєктом, створеним з любові до міста та його історії.</p>
+            <p class="ft-notice">Публікуючи ці матеріали, ми прагнемо зберегти та популяризувати культурну й історичну спадщину міста Дубровиця для нинішніх і майбутніх поколінь. Усі фотографії, документи та архівні матеріали розміщено виключно в освітніх, краєзнавчих і науково-дослідних цілях. Відтворення, поширення або комерційне використання будь-яких матеріалів без письмового дозволу адміністрації сайту — заборонено. При цитуванні або використанні матеріалів у будь-якому форматі — обов'язкове активне посилання на <em>dubrovytsia.site</em>. Якщо ви є власником авторських прав на будь-які з опублікованих матеріалів і маєте заперечення щодо їх розміщення — будь ласка, <a href="contacts.html">зв'яжіться з нами</a> і ми негайно розглянемо ваш запит. Фотографії, завантажені з архіву, містять водяний знак сайту і не можуть публікуватись без нього.</p>
         </div>
     </div>
 </footer>
 
-<script src="app.js"></script>
+<script src="app.js?v=11"></script>
 <script>
 var PRESS_URL='press-data.json', SITE_URL='site-index.json', PHOTOS_URL='photos-data.json', DOCS_URL='docs-data.json';
 var LF={pl:'польська',ru:'російська',uk:'українська',de:'німецька'};
