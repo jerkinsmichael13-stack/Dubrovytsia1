@@ -3256,11 +3256,11 @@ button.cover-credit:hover { color: #fff; }
     .cover { min-height: 78svh; }
     .cover--short { min-height: 60svh; }
     .cover-shade {
-        background: linear-gradient(180deg, rgba(12, 9, 6, .45) 0%, rgba(12, 9, 6, .12) 24%, rgba(12, 9, 6, .6) 58%, rgba(12, 9, 6, .95) 100%);
+        background: linear-gradient(180deg, rgba(12, 9, 6, .5) 0%, rgba(12, 9, 6, .42) 30%, rgba(12, 9, 6, .72) 58%, rgba(12, 9, 6, .96) 100%);
     }
     .cover-inner { padding: 6.5rem 1.25rem 1.75rem; }
     .cover-title { font-size: clamp(2.7rem, 13vw, 3.8rem); }
-    .cover-facts { gap: 1rem 2rem; margin-top: 1.8rem; }
+    .cover-facts { display: grid; grid-template-columns: repeat(3, auto); justify-content: start; gap: 1rem 1.6rem; margin-top: 1.8rem; }
     .cover-credit {
         position: static;
         align-items: flex-start;
