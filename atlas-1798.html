@@ -76,9 +76,12 @@
 #atl-map { position: absolute; inset: 0; background: transparent; z-index: 0; outline: none; }
 #atl-map .leaflet-control-container { display: none; }
 #atl-map:focus-visible { box-shadow: inset 0 0 0 2px var(--gold-hi); }
-.v-sheet-img { box-shadow: 0 30px 80px rgba(0,0,0,.6), 0 0 0 1px rgba(0,0,0,.4); transition: opacity .45s ease; }
-[data-theme="dark"] .v-sheet-img { filter: sepia(.2) brightness(.86); }
+.v-sheet-img { outline: 1px solid rgba(0,0,0,.45); transition: opacity .45s ease; }
+[data-theme="dark"] .v-sheet-img { opacity: .86; }
 .v.is-switching .v-sheet-img { opacity: 0; }
+/* поки мапа рухається — прибрати анімації позначок, щоб не гальмувало */
+.v.is-moving .v-pin.is-active::before, .v.is-moving .v-pin.is-active::after { animation: none; opacity: 0; }
+.v.is-moving .v-dot { transition: none; }
 
 /* ── Ліва панель: титул, пошук, список ── */
 .v-panel {
@@ -184,6 +187,8 @@
     transition: opacity .25s;
 }
 .v-lbl.leaflet-tooltip::before { display: none; }
+.v-lbl.is-sel.leaflet-tooltip { background: #1c170e; color: #f4e9c8; font-style: italic; font-size: 1.02rem; padding: .12rem .5rem; box-shadow: 0 4px 12px rgba(0,0,0,.35); }
+[data-theme="dark"] .v-lbl.is-sel.leaflet-tooltip { background: #d4b25a; color: #1a1408; }
 .v-lbl.is-dim { opacity: .3; }
 
 /* ── Інструменти на мапі ── */
@@ -196,6 +201,9 @@
 .v-zoom button:hover { background: rgba(169,130,47,.14); }
 .v-zoom button:focus-visible { outline: 2px solid var(--gold-hi); outline-offset: -2px; }
 .v-zoom svg { width: 16px; height: 16px; }
+.v-zoom button[aria-pressed="true"] { background: #1c170e; color: #f4e9c8; }
+[data-theme="dark"] .v-zoom button[aria-pressed="true"] { background: #d4b25a; color: #1a1408; }
+.v-zoom .aa { font-family: var(--font-display); font-size: 1.05rem; font-style: italic; line-height: 1; }
 
 .v-filter {
     position: absolute; z-index: 690; top: 18px; left: 408px;
@@ -218,8 +226,7 @@
 .v-sh {
     pointer-events: auto; position: relative; display: grid; grid-template-columns: 52px minmax(0,1fr); align-items: center; gap: .7rem;
     flex: 0 1 206px; min-width: 0; padding: 6px 12px 6px 6px; border: 0; border-radius: 10px; cursor: pointer; text-align: left;
-    background: rgba(247,241,227,.92); color: #2b2418; box-shadow: 0 10px 30px rgba(0,0,0,.35);
-    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    background: #f3ecdb; color: #2b2418; box-shadow: 0 8px 22px rgba(0,0,0,.32);
     transition: transform .25s ease, background .25s ease, box-shadow .25s ease;
     font: inherit;
 }
@@ -537,6 +544,7 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
             <div class="v-zoom">
                 <button type="button" data-zoom="in" aria-label="Наблизити"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button>
                 <button type="button" data-zoom="out" aria-label="Віддалити"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/></svg></button>
+                <button type="button" data-labels aria-pressed="false" aria-label="Показати назви всіх поселень" title="Назви всіх поселень"><span class="aa">Aa</span></button>
                 <button type="button" data-zoom="fit" aria-label="Показати весь аркуш"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
             </div>
         </div>
@@ -825,7 +833,8 @@ var map = L.map(mapEl, {
 });
 var overlay = null, layer = L.layerGroup().addTo(map);
 var markers = {};
-var labelsOn = false;
+var showAll = false;                                   // кнопка «Aa»: назви всіх поселень
+var canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 var fitZ = 0;
 
 /* вільна частина мапи — без панелей, що її перекривають */
@@ -859,19 +868,27 @@ function focusOn(p){
 function pinIcon(kind){
     return L.divIcon({ className: 'v-pin', html: '<span class="v-dot ' + kind + '"></span>', iconSize: [28, 28], iconAnchor: [14, 14] });
 }
-function bindLabel(m, p, permanent){
+/* Підписи позначок.
+   За замовчуванням — назва при наведенні (лише мишею: на сенсорних екранах підказка «залипала»).
+   Вибране поселення має постійний підпис. Кнопка «Aa» вмикає підписи для всіх. */
+function labelMode(p){
+    if (state.active === p) return 'sel';
+    if (showAll) return 'all';
+    return canHover ? 'hover' : 'none';
+}
+function setLabel(p){
+    var m = markers[p.id]; if (!m) return;
+    var mode = labelMode(p);
+    if (m._lbl === mode) return;
+    m._lbl = mode;
     m.unbindTooltip();
-    if (permanent) m.bindTooltip(esc(p.rec.main), { permanent: true, direction: 'right', offset: [10, 0], className: 'v-lbl' });
-    else m.bindTooltip(esc(p.rec.name), { direction: 'top', offset: [0, -12], className: 'v-tip' });
+    if (mode === 'sel') m.bindTooltip(esc(p.rec.main), { permanent: true, direction: 'right', offset: [12, 0], className: 'v-lbl is-sel' });
+    else if (mode === 'all') m.bindTooltip(esc(p.rec.main), { permanent: true, direction: 'right', offset: [10, 0], className: 'v-lbl' });
+    else if (mode === 'hover') m.bindTooltip(esc(p.rec.name), { direction: 'top', offset: [0, -12], className: 'v-tip' });
 }
-function updateLabels(force){
-    var want = map.getZoom() >= fitZ + 0.75;
-    if (want === labelsOn && !force) return;
-    labelsOn = want;
-    state.sheet.places.forEach(function(p){ bindLabel(markers[p.id], p, want); });
-    paint();
-}
-map.on('zoomend', function(){ if (state.sheet) updateLabels(); });
+function refreshLabels(){ if (state.sheet) state.sheet.places.forEach(setLabel); }
+map.on('movestart zoomstart', function(){ V.classList.add('is-moving'); });
+map.on('moveend zoomend', function(){ V.classList.remove('is-moving'); });
 
 function showSheet(n, opts){
     opts = opts || {};
@@ -884,19 +901,20 @@ function showSheet(n, opts){
         var bounds = [[0, 0], [sh.h, sh.w]];
         if (overlay) map.removeLayer(overlay);
         overlay = L.imageOverlay(sh.img, bounds, { className: 'v-sheet-img' }).addTo(map);
-        layer.clearLayers(); markers = {}; labelsOn = false;
+        if (state.sheet !== sh) return;            // поки чекали, обрали інший аркуш
+        layer.clearLayers(); markers = {};
         sh.places.forEach(function(p){
             var m = L.marker(p.at, { icon: pinIcon(p.rec.kind), keyboard: true, title: '', alt: p.rec.name, riseOnHover: true });
-            bindLabel(m, p, false);
             m.on('click', function(){ select(p, { fromMap: true }); });
             m.on('mouseover', function(){ hot(p, true); });
             m.on('mouseout', function(){ hot(p, false); });
             m.addTo(layer);
             markers[p.id] = m;
+            setLabel(p);
         });
         map.invalidateSize();
         fitSheet(false);
-        updateLabels(true);
+        paint();
         if (opts.then) opts.then();
         requestAnimationFrame(function(){ V.classList.remove('is-switching'); });
     }
@@ -943,7 +961,10 @@ function hot(p, on){
 function select(p, opts){
     opts = opts || {};
     dismissHint();
+    var prev = state.active;
     state.active = p;
+    if (prev && prev !== p) setLabel(prev);
+    setLabel(p);
     openDrawer(p);
     setHash(p.rec.slug);
     if (state.sheet !== SHEETS[p.sheet - 1]) {
@@ -956,7 +977,9 @@ function select(p, opts){
 }
 function deselect(){
     if (!state.active) return;
+    var prev = state.active;
     state.active = null;
+    setLabel(prev);
     V.classList.remove('has-drawer');
     paint();
     if (state.sheet) setHash('arkush-' + state.sheet.n);
@@ -1145,6 +1168,13 @@ sheetsBox.addEventListener('keydown', function(e){
 
 /* ── Масштаб ──────────────────────────────── */
 document.querySelector('.v-zoom').addEventListener('click', function(e){
+    var l = e.target.closest('[data-labels]');
+    if (l) {
+        showAll = !showAll;
+        l.setAttribute('aria-pressed', showAll ? 'true' : 'false');
+        refreshLabels(); paint();
+        return;
+    }
     var b = e.target.closest('[data-zoom]'); if (!b) return;
     var z = b.getAttribute('data-zoom');
     if (z === 'in') map.zoomIn(0.7); else if (z === 'out') map.zoomOut(0.7); else fitSheet(true);
@@ -1256,15 +1286,30 @@ document.addEventListener('click', function(e){
     }).join('') + '<cite>«Економічні примітки», 1798 — текст наприкінці таблиці</cite>';
 })();
 
-/* ── Старт: #slug або #arkush-N ───────────── */
-(function(){
+/* ── Старт і зміна адреси: #slug або #arkush-N ── */
+function applyHash(initial){
     var h = decodeURIComponent((location.hash || '').slice(1));
     var m = /^arkush-(\d)$/.exec(h);
     var p = h && BY_SLUG[h];
-    if (m && SHEETS[+m[1] - 1]) showSheet(+m[1], { noHash: true });
-    else if (p) { showSheet(p.sheet, { noHash: true }); select(p, { noScroll: true }); }
-    else showSheet(1, { noHash: true });
-})();
+    if (m && SHEETS[+m[1] - 1]) { deselect(); showSheet(+m[1], { noHash: true }); }
+    else if (p) { if (!state.sheet) showSheet(p.sheet, { noHash: true }); select(p, { noScroll: initial }); }
+    else if (initial) showSheet(1, { noHash: true });
+    // інші якорі (#mayetky, #plater…) — звичайна прокрутка до розділу
+}
+applyHash(true);
+window.addEventListener('hashchange', function(){ applyHash(false); });
+
+/* інші аркуші підвантажити заздалегідь, коли браузер вільний, — щоб перемикання не зависало */
+window.addEventListener('load', function(){
+    var idle = window.requestIdleCallback || function(f){ setTimeout(f, 1500); };
+    idle(function(){
+        SHEETS.forEach(function(sh){
+            if (sh === state.sheet) return;
+            var im = new Image(); im.src = sh.img;
+            if (im.decode) im.decode().catch(function(){});
+        });
+    });
+});
 
 // Калібрування нових позначок
 map.on('click', function(e){
