@@ -51,21 +51,22 @@
     position: relative; overflow: hidden;
 }
 [data-theme="dark"] .sl-card { background: #1a1408; border-color: rgba(201,162,39,.15); }
-.sl-card::before {
-    content:''; position:absolute; top:0; left:0; right:0; height: 4px;
-    background: linear-gradient(90deg, transparent, #c9a227, transparent);
+.sl-partial {
+    font-family: 'DM Sans', sans-serif; font-size: .82rem; line-height: 1.6;
+    color: var(--color-text-secondary,#44403c); margin: -1rem 0 1.8rem;
+    padding-left: .9rem; border-left: 2px solid #c9a227;
 }
 
 .sl-kind {
     display: inline-flex; align-items: center; gap: .5rem;
-    font-family: 'DM Sans', sans-serif; font-size: .58rem; letter-spacing: .26em; text-transform: uppercase;
-    color: #a9822f; border: 1px solid rgba(201,162,39,.3); border-radius: 100px;
-    padding: .32rem .95rem; margin-bottom: 1.2rem;
+    font-family: 'DM Sans', sans-serif; font-size: .82rem;
+    color: var(--color-text-light,#78716c); margin-bottom: .6rem;
 }
 .sl-kind-dot { width: 6px; height: 6px; border-radius: 50%; background: #c9a227; }
 
 .sl-title { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: clamp(2rem,5vw,3.1rem); letter-spacing: -.02em; line-height: 1.02; color: var(--color-text,#1a1000); margin: 0 0 .3rem; }
 [data-theme="dark"] .sl-title { color: #e8dbb5; }
+.sl-title + .sl-owner { margin-top: 1.2rem; }
 .sl-subtitle { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.05rem; color: var(--color-text-light,#8b6f3e); margin: 0 0 1.5rem; }
 
 .sl-owner {
@@ -77,16 +78,16 @@
 .sl-owner strong { color: var(--color-text,#1a1000); font-weight: 500; }
 [data-theme="dark"] .sl-owner strong { color: #e8dbb5; }
 
-.sl-stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: rgba(201,162,39,.18); border-radius: 14px; overflow: hidden; margin-bottom: 2.2rem; border: 1px solid rgba(201,162,39,.18); }
+.sl-stats { display: grid; grid-template-columns: repeat(var(--n,4),1fr); gap: 1px; background: rgba(201,162,39,.18); border-radius: 14px; overflow: hidden; margin-bottom: 2.2rem; border: 1px solid rgba(201,162,39,.18); }
 @media(max-width:640px){ .sl-stats { grid-template-columns: repeat(2,1fr); } }
 .sl-stat { background: var(--color-bg-card,#fff); padding: 1.1rem .8rem; text-align: center; }
 [data-theme="dark"] .sl-stat { background: #1a1408; }
 .sl-stat b { display: block; font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; font-weight: 500; color: #a9822f; line-height: 1; margin-bottom: .3rem; }
-.sl-stat span { display: block; font-family: 'DM Sans', sans-serif; font-size: .56rem; letter-spacing: .09em; text-transform: uppercase; color: var(--color-text-light,#8b6f3e); }
+.sl-stat span { display: block; font-family: 'DM Sans', sans-serif; font-size: .78rem; color: var(--color-text-light,#8b6f3e); }
 
 .sl-section-title {
-    font-family: 'DM Sans', sans-serif; font-size: .62rem; letter-spacing: .22em; text-transform: uppercase;
-    color: #a9822f; margin: 2.2rem 0 1rem; padding-top: 1.6rem; border-top: 1px solid rgba(201,162,39,.16);
+    font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; font-weight: 500;
+    color: var(--color-text,#1c1917); margin: 2.2rem 0 1rem; padding-top: 1.6rem; border-top: 1px solid rgba(201,162,39,.16);
     display: flex; align-items: center; gap: .6rem;
 }
 .sl-section-title:first-of-type { border-top: none; padding-top: 0; margin-top: 0; }
@@ -217,7 +218,7 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
 
 <script src="app.js"></script>
 
-<!-- Дані по всіх 21 поселеннях частини 1 атласу, за таблицею "Економічних приміток" 1798 р. -->
+<!-- Дані поселень усіх чотирьох аркушів атласу за таблицею "Економічних приміток" 1798 р. -->
 <script src="sela_data_embed.js"></script>
 <script>
 (function(){
@@ -247,14 +248,15 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
         content.innerHTML =
             '<div class="sl-card"><div class="sl-notfound">'+
                 '<h2>Таке поселення поки не додане</h2>'+
-                '<p>Перевірте посилання або поверніться до мапи — можливо, це поселення з другої чи третьої частини атласу, дані про яку ще уточнюються.</p>'+
+                '<p>Перевірте посилання або поверніться до мапи й оберіть поселення там.</p>'+
                 '<a class="sl-back" href="atlas-1798.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>До мапи атласу</a>'+
             '</div></div>';
         return;
     }
 
     var kindLabel = data.kind === 'town' ? 'Містечко' : data.kind === 'folwark' ? 'Фільварок' : 'Село';
-    var total = (typeof data.male === 'number' && typeof data.female === 'number') ? (data.male + data.female) : null;
+    var total = (typeof data.male === 'number' && typeof data.female === 'number') ? (data.male + data.female)
+              : (typeof data.pop === 'number' ? data.pop : null);
 
     document.title = data.mapName + ' · Атлас Волинської губернії 1798 року';
     crumb.textContent = data.mapName;
@@ -262,7 +264,7 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
     var html = '';
     html += '<div class="sl-card">';
 
-    html += '<div class="sl-kind"><span class="sl-kind-dot"></span>'+esc(kindLabel)+' · мапа 1798 р.</div>';
+    html += '<div class="sl-kind"><span class="sl-kind-dot"></span>'+esc(kindLabel)+'</div>';
     html += '<h1 class="sl-title">'+esc(data.mapName)+'</h1>';
     if (data.excelName && data.excelName.trim() !== data.mapName.trim()) {
         html += '<p class="sl-subtitle">У «Економічних примітках»: «'+esc(data.excelName)+'»</p>';
@@ -270,12 +272,19 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
 
     html += '<div class="sl-owner">Власник маєтку: <strong>'+esc((data.owner||'').replace(/^Власність\s+/i,''))+'</strong></div>';
 
-    html += '<div class="sl-stats">';
-    html += '<div class="sl-stat"><b>'+fmt(data.dvory)+'</b><span>дворів</span></div>';
-    html += '<div class="sl-stat"><b>'+fmt(total)+'</b><span>мешканців разом</span></div>';
-    html += '<div class="sl-stat"><b>'+fmt(data.male)+'</b><span>чоловічої статі</span></div>';
-    html += '<div class="sl-stat"><b>'+fmt(data.female)+'</b><span>жіночої статі</span></div>';
-    html += '</div>';
+    var stats = [];
+    if (data.dvory != null) stats.push([data.dvory, 'дворів']);
+    if (total != null) stats.push([total, 'мешканців разом']);
+    if (data.male != null) stats.push([data.male, 'чоловічої статі']);
+    if (data.female != null) stats.push([data.female, 'жіночої статі']);
+    if (stats.length) {
+        html += '<div class="sl-stats" style="--n:'+Math.min(stats.length,4)+'">';
+        stats.forEach(function(s){ html += '<div class="sl-stat"><b>'+fmt(s[0])+'</b><span>'+s[1]+'</span></div>'; });
+        html += '</div>';
+    }
+    if (data.partial) {
+        html += '<p class="sl-partial">Для цього поселення поки внесено лише зведені дані з «Економічних приміток»: власник, кількість дворів і душ, короткий опис. Розподіл за статтю, за родом жителів і повний текст опису маєтку буде додано.</p>';
+    }
 
     if (data.distMil || data.distVerst) {
         html += '<p style="font-family:\'DM Sans\',sans-serif;font-size:.74rem;color:var(--color-text-light,#8b6f3e);margin:-1rem 0 1.8rem;">'+
@@ -315,7 +324,7 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
 
     html += '<p class="sl-src">За «Економічними примітками до Атласу Волинської губернії», 1798 р. Дані про власника, двори та мешканців узято з таблиці; текст опису наведено за оригіналом без змін.</p>';
 
-    html += '<a class="sl-back" href="atlas-1798.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>Назад до інтерактивної мапи</a>';
+    html += '<a class="sl-back" href="atlas-1798.html#'+encodeURIComponent(slug)+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>Назад до інтерактивної мапи</a>';
 
     html += '</div>';
     content.innerHTML = html;
