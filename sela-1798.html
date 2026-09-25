@@ -311,20 +311,33 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
 
     if (data.desc) {
         html += '<div class="sl-section-title">Повний географічний і економічний опис маєтку</div>';
-        html += '<p class="sl-desc-hint">Опис 1798 року складався одним записом на весь маєток чи групу поселень одного власника — тому нижче наведено повний текст, а речення, що прямо стосуються «'+esc(data.mapName)+'», виділено.</p>';
-        html += '<div class="sl-desc">';
+        var descHtml = '';
         var paras = data.desc.split('\n').filter(function(p){ return p.trim() !== ''; });
-        var keyRaw = (data.excelName||'').replace(/^(Село|Сільце|Містечко|Філварок|Деревня|Буда|Гута)\s+/i,'').trim();
-        var keyWord = keyRaw.split(/[\s(]/)[0];
+        // Назва в описі може бути написана інакше, ніж у таблиці чи на мапі (Ясенець / Ясинець,
+        // різні апострофи, «(Деревня)»), тому шукаємо за основою слова з кількох варіантів назви.
+        var names = [(data.excelName||'').replace(/^(Село|Сільце|Містечко|Філварок|Буда|Гута)\s+/i,'').replace(/^\(Деревня\)\s*/,'')]
+            .concat((data.mapName||'').split(/[()]/));
+        var stems = [];
+        names.forEach(function(n){
+            var w = n.trim().split(/\s+/)[0].replace(/[ъь]$/,'');
+            if (w.length < 4 || /^Фольв/.test(w)) return;
+            var st = w.slice(0, Math.max(4, w.length - 2)).replace(/[’'ʼ]/g, "['’ʼ]");
+            if (stems.indexOf(st) === -1) stems.push(st);
+        });
+        var markRe = stems.length ? new RegExp('(' + stems.join('|') + ')[\\wа-яіїєґ’\'ʼ]*', 'gi') : null;
         paras.forEach(function(p){
             var safe = esc(p);
-            if (keyWord && keyWord.length > 2) {
-                var re = new RegExp('('+keyWord.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\w*)','gi');
-                safe = safe.replace(re, '<mark>$1</mark>');
-            }
-            html += '<p>'+safe+'</p>';
+            if (markRe) safe = safe.replace(markRe, '<mark>$&</mark>');
+            descHtml += '<p>'+safe+'</p>';
         });
-        html += '</div>';
+        var est = (typeof ATLAS_ESTATES_1798 !== 'undefined' ? ATLAS_ESTATES_1798 : []).filter(function(e){ return e.ownerId === data.ownerId; })[0];
+        var single = est && est.places.length === 1;
+        var hint = single
+            ? 'Цей опис у «Примітках» стосується лише цього поселення.'
+            : descHtml.indexOf('<mark>') !== -1
+                ? 'Опис 1798 року складався одним записом на весь маєток чи групу поселень одного власника — тому нижче наведено повний текст, а згадки про «'+esc(data.mapName)+'» виділено.'
+                : 'Опис 1798 року складався одним записом на весь маєток; окремо «'+esc(data.mapName)+'» в ньому не згадано.';
+        html += '<p class="sl-desc-hint">'+hint+'</p><div class="sl-desc">'+descHtml+'</div>';
     }
 
     html += '<p class="sl-src">За «Економічними примітками до Атласу Волинської губернії», 1798 р. Дані про власника, двори та мешканців узято з таблиці; текст опису наведено за оригіналом без змін.</p>';
