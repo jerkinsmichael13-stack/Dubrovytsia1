@@ -100,6 +100,9 @@
 .v-title h1 i { font-style: italic; color: var(--gold); }
 .v-title p { margin: 0; font-family: var(--font-display); font-size: 1.02rem; line-height: 1.45; color: var(--ink-2); }
 .v-count { display: flex; gap: 1.2rem; margin-top: .9rem; font-family: var(--font-body); font-size: .74rem; color: var(--ink-3); }
+.v-an { display: inline-flex; align-items: center; gap: .4rem; margin-top: .75rem; font-family: var(--font-body); font-size: .78rem; font-weight: 600; color: var(--gold); text-decoration: none; }
+.v-an:hover { text-decoration: underline; }
+.v-an svg { width: 13px; height: 13px; }
 .v-count b { font-family: var(--font-display); font-weight: 500; font-size: 1.15rem; color: var(--ink); margin-right: .2rem; font-variant-numeric: lining-nums; }
 
 .v-seg { display: grid; grid-template-columns: 1fr 1fr; margin: .9rem 1.4rem 0; padding: 3px; border-radius: 9px; background: var(--paper-2); }
@@ -564,6 +567,7 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
             <h1>Атлас Волинської губернії <i>1798</i></h1>
             <p>Дубровиця та околиці наприкінці XVIII століття — за «Економічними примітками» до атласу.</p>
             <div class="v-count"><span><b id="cPlaces">—</b>поселень</span><span><b id="cEstates">—</b>маєтків</span><span><b id="cSouls">—</b>душ</span></div>
+            <a class="v-an" href="atlas-1798-analityka.html">Аналітика: хто де жив, маєтки, млини, храми <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
         </div>
         <div class="v-seg" role="tablist" aria-label="Режим списку">
             <button type="button" role="tab" aria-selected="true" data-mode="places">Поселення</button>
@@ -633,6 +637,7 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
                 <tfoot class="o-foot"></tfoot>
             </table>
             <p class="o-legend">Суцільна рамка — поселення є на мапі: натисніть, щоб відкрити його картку. Пунктирна — записане в «Примітках», але не потрапило на наявні аркуші. Прибуток — річна сума доходу або оренди в рублях, як її подано в описі маєтку.</p>
+            <p style="margin:1.8rem 0 0"><a class="btn-ink" href="atlas-1798-analityka.html">Повна аналітика: населення за станами, портрети маєтків, млини, храми, природа <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></p>
         </div>
     </div>
 </section>

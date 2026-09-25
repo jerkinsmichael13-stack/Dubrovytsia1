@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="uk" data-theme="light">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WGBZ0BD23K"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-WGBZ0BD23K');
+</script>
+<meta charset="UTF-8">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="manifest" href="site.webmanifest">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Аналітика «Економічних приміток» 1798 року: населення Дубровиці й околиць за станами, де жила шляхта, духовенство і кріпаки, 16 маєтків, млини, храми, ліси, звірі, риба, ярмарки.">
+<meta property="og:title" content="Край у цифрах, 1798 — аналітика атласу Волинської губернії">
+<meta property="og:image" content="atlas-1798-preview.jpg">
+<title>Край у цифрах, 1798 — Дубровиця</title>
+<script>!function(){var t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t)}()</script>
+<link rel="stylesheet" href="app.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+/* ═════════════════════════════════════════════════════════
+   КРАЙ У ЦИФРАХ, 1798 — аналітика «Економічних приміток»
+   Кольори станів перевірено на розрізнюваність (у т.ч. для
+   людей з порушенням кольоросприйняття) у світлій і темній темі.
+═════════════════════════════════════════════════════════ */
+:root {
+    --hdr: 76px;
+    --gold: #a9822f;
+    --gold-hi: #d4b25a;
+    --ink-btn: #1c170e;
+    --card: var(--color-bg-card, #fff);
+    --rule: var(--color-border, #ddd5c8);
+    --rule-2: var(--color-border-light, #ede7db);
+    --grid: #e7e0d2;
+    --track: #efe8da;
+    /* стани (однаковий порядок у всіх діаграмах) */
+    --k-serfs: #c96a2b;
+    --k-churchSerfs: #2f63b8;
+    --k-free: #3d8a3a;
+    --k-burghers: #a23a5e;
+    --k-nobles: #5b4bb0;
+    --k-clergy: #b83a32;
+    --male: #2f63b8;
+    --female: #c96a2b;
+    --heat-0: #f3ede1;
+    --heat-1: #a9822f;
+}
+[data-theme="dark"] {
+    --gold: #d4b25a;
+    --ink-btn: #d4b25a;
+    --grid: #2a241b;
+    --track: #231d15;
+    --k-serfs: #d57a3c;
+    --k-churchSerfs: #5b8ee0;
+    --k-free: #4f9e4a;
+    --k-burghers: #c65580;
+    --k-nobles: #8a7ce0;
+    --k-clergy: #d05a50;
+    --male: #5b8ee0;
+    --female: #d57a3c;
+    --heat-0: #1f1a13;
+    --heat-1: #c9a53f;
+}
+
+.an-page { background: var(--color-bg); }
+
+/* ── Шапка сторінки ── */
+.an-hero { position: relative; overflow: hidden; background: #16110a; color: #f1e6c6; padding: 4.6rem 0 3.6rem; isolation: isolate; }
+.an-hero::before { content: ''; position: absolute; inset: 0; z-index: -1; background: url('atlas-1798-preview.jpg') center 40% / cover; opacity: .16; filter: sepia(.6); }
+.an-hero::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, #16110a 30%, rgba(22,17,10,.6) 100%); }
+.an-wrap { max-width: 1240px; margin: 0 auto; padding: 0 2rem; }
+@media (max-width: 700px) { .an-wrap { padding: 0 1.1rem; } .an-hero { padding: 3.2rem 0 2.6rem; } }
+.an-crumbs { font-family: var(--font-body); font-size: .76rem; color: rgba(241,230,198,.55); margin-bottom: 1.6rem; }
+.an-crumbs a { color: rgba(212,178,90,.9); text-decoration: none; }
+.an-crumbs a:hover { color: #f1e6c6; }
+.an-crumbs span { margin: 0 .45rem; opacity: .5; }
+.an-hero h1 { font-family: var(--font-display); font-weight: 300; font-size: clamp(2.6rem, 6vw, 4.8rem); line-height: .98; letter-spacing: -.025em; margin: 0 0 1rem; color: #f4e9c8; max-width: 14ch; }
+.an-hero h1 i { color: #d4b25a; }
+.an-lede { font-family: var(--font-display); font-size: clamp(1.1rem, 1.7vw, 1.32rem); line-height: 1.55; color: rgba(241,230,198,.78); max-width: 52ch; margin: 0 0 2.4rem; }
+.an-kpis { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); border-top: 1px solid rgba(212,178,90,.25); }
+.an-kpi { padding: 1.1rem 1rem .2rem 0; }
+.an-kpi + .an-kpi { padding-left: 1rem; border-left: 1px solid rgba(212,178,90,.14); }
+.an-kpi b { display: block; font-family: var(--font-display); font-weight: 400; font-size: clamp(1.9rem, 3vw, 2.7rem); line-height: 1; color: #f4e9c8; }
+.an-kpi span { display: block; margin-top: .4rem; font-family: var(--font-body); font-size: .76rem; line-height: 1.4; color: rgba(241,230,198,.6); }
+@media (max-width: 900px) { .an-kpis { grid-template-columns: repeat(3, 1fr); } .an-kpi:nth-child(4) { padding-left: 0; border-left: 0; } .an-kpi:nth-child(n+4) { border-top: 1px solid rgba(212,178,90,.14); } }
+@media (max-width: 480px) { .an-kpis { grid-template-columns: repeat(2, 1fr); } .an-kpi:nth-child(odd) { padding-left: 0; border-left: 0; } .an-kpi:nth-child(4) { padding-left: 1rem; border-left: 1px solid rgba(212,178,90,.14); } .an-kpi:nth-child(n+3) { border-top: 1px solid rgba(212,178,90,.14); } }
+
+/* ── Навігація розділами ── */
+.an-nav { position: sticky; top: var(--hdr); z-index: 50; background: var(--color-bg); border-bottom: 1px solid var(--rule-2); }
+.an-nav .an-wrap { display: flex; gap: .3rem; overflow-x: auto; scrollbar-width: none; padding-top: .55rem; padding-bottom: .55rem; }
+.an-nav .an-wrap::-webkit-scrollbar { display: none; }
+.an-nav a { flex: 0 0 auto; padding: .45rem .85rem; border-radius: 100px; font-family: var(--font-body); font-size: .8rem; color: var(--color-text-secondary); text-decoration: none; transition: background .15s, color .15s; }
+.an-nav a:hover { background: rgba(169,130,47,.1); color: var(--color-text); }
+.an-nav a.is-on { background: var(--ink-btn); color: #f4e9c8; }
+[data-theme="dark"] .an-nav a.is-on { color: #1a1408; }
+.an-nav a.map { margin-left: auto; color: var(--gold); font-weight: 500; }
+
+/* ── Розділи ── */
+.c-sec { padding: 4.8rem 0; border-top: 1px solid var(--rule-2); scroll-margin-top: calc(var(--hdr) + 60px); }
+.c-sec:first-of-type { border-top: 0; }
+.c-head { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 3.5rem; margin-bottom: 2.6rem; }
+.c-mark b { display: block; font-family: var(--font-display); font-style: italic; font-weight: 400; font-size: 3.2rem; line-height: .9; color: var(--gold); }
+.c-mark span { display: block; margin-top: .55rem; font-family: var(--font-body); font-size: .78rem; color: var(--color-text-light); }
+.c-h2 { font-family: var(--font-display); font-weight: 300; font-size: clamp(2.1rem, 4.2vw, 3.4rem); line-height: 1; letter-spacing: -.025em; color: var(--color-text); margin: 0 0 1rem; max-width: 20ch; }
+.c-lede { font-family: var(--font-display); font-size: clamp(1.08rem, 1.5vw, 1.26rem); line-height: 1.6; color: var(--color-text-secondary); max-width: 62ch; margin: 0; }
+@media (max-width: 900px) { .c-head { grid-template-columns: 1fr; gap: .8rem; } .c-mark { display: flex; align-items: baseline; gap: .8rem; } .c-mark b { font-size: 2.3rem; } .c-mark span { margin: 0; } .c-sec { padding: 3.6rem 0; } }
+
+.blk { margin: 0 0 3.6rem; }
+.blk:last-child { margin-bottom: 0; }
+.blk-h { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem 2rem; flex-wrap: wrap; margin: 0 0 1.1rem; }
+.blk-h h3 { font-family: var(--font-display); font-weight: 500; font-size: 1.6rem; line-height: 1.15; margin: 0; color: var(--color-text); }
+.blk-h p { margin: 0; font-family: var(--font-body); font-size: .82rem; color: var(--color-text-light); max-width: 60ch; }
+.blk-note { margin: .9rem 0 0; font-family: var(--font-body); font-size: .8rem; line-height: 1.6; color: var(--color-text-light); max-width: 80ch; }
+.insight { margin: 1.2rem 0 0; padding: 1rem 1.2rem; border-left: 3px solid var(--gold-hi); background: rgba(201,162,39,.07); border-radius: 3px 10px 10px 3px; font-family: var(--font-display); font-size: 1.12rem; line-height: 1.55; color: var(--color-text); max-width: 80ch; }
+.insight b { font-weight: 600; }
+.panel { background: var(--card); border: 1px solid var(--rule-2); border-radius: 14px; padding: 1.4rem 1.5rem; }
+[data-theme="dark"] .panel { background: #17130d; }
+@media (max-width: 600px) { .panel { padding: 1.1rem 1rem; } }
+
+/* ── Легенда ── */
+.legend { display: flex; flex-wrap: wrap; gap: .5rem 1.3rem; margin: 0 0 1rem; padding: 0; list-style: none; }
+.legend li { display: flex; align-items: center; gap: .45rem; font-family: var(--font-body); font-size: .8rem; color: var(--color-text-secondary); }
+.sw { display: inline-block; width: 11px; height: 11px; border-radius: 3px; flex: 0 0 auto; }
+
+/* ── Стовпчик 100% ── */
+.stack { display: flex; gap: 2px; height: 56px; border-radius: 6px; overflow: hidden; }
+.stack i { display: block; min-width: 3px; height: 100%; position: relative; cursor: default; transition: opacity .15s; }
+.stack i:first-child { border-radius: 4px 0 0 4px; }
+.stack i:last-child { border-radius: 0 4px 4px 0; }
+.stack:hover i { opacity: .55; }
+.stack i:hover { opacity: 1; }
+.stack i span { position: absolute; left: .7rem; top: 50%; transform: translateY(-50%); font-family: var(--font-body); font-size: .82rem; font-weight: 500; color: #fff; white-space: nowrap; pointer-events: none; }
+
+/* картки станів */
+.cats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin-top: 1.4rem; }
+@media (max-width: 900px) { .cats { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 520px) { .cats { grid-template-columns: 1fr; } }
+.cat { text-align: left; font: inherit; cursor: pointer; padding: 1.1rem 1.2rem 1rem; border-radius: 12px; border: 1px solid var(--rule-2); background: var(--card); color: var(--color-text); position: relative; transition: border-color .2s, transform .2s, box-shadow .2s; }
+[data-theme="dark"] .cat { background: #17130d; }
+.cat:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(0,0,0,.08); }
+.cat.is-on { border-color: var(--c); box-shadow: 0 0 0 1px var(--c); }
+.cat:focus-visible { outline: 2px solid var(--gold-hi); outline-offset: 2px; }
+.cat::before { content: ''; position: absolute; left: 1.2rem; top: 0; width: 34px; height: 3px; border-radius: 0 0 3px 3px; background: var(--c); }
+.cat-n { font-family: var(--font-body); font-size: .8rem; color: var(--color-text-secondary); margin: .3rem 0 .35rem; display: flex; align-items: center; gap: .45rem; }
+.cat-v { font-family: var(--font-display); font-size: 2.2rem; line-height: 1; margin-bottom: .45rem; }
+.cat-v small { font-family: var(--font-body); font-size: .8rem; color: var(--color-text-light); margin-left: .35rem; }
+.cat-d { font-family: var(--font-body); font-size: .78rem; line-height: 1.5; color: var(--color-text-light); }
+
+/* ── Горизонтальні смуги (рейтинги) ── */
+.chips { display: flex; flex-wrap: wrap; gap: .4rem; margin: 0 0 1rem; }
+.chip { font: inherit; font-family: var(--font-body); font-size: .8rem; padding: .42rem .85rem; border-radius: 100px; border: 1px solid var(--rule); background: transparent; color: var(--color-text-secondary); cursor: pointer; display: inline-flex; align-items: center; gap: .45rem; transition: background .15s, border-color .15s, color .15s; }
+.chip:hover { border-color: var(--gold); color: var(--color-text); }
+.chip[aria-pressed="true"] { background: var(--ink-btn); border-color: var(--ink-btn); color: #f4e9c8; }
+[data-theme="dark"] .chip[aria-pressed="true"] { color: #1a1408; }
+.chip:focus-visible { outline: 2px solid var(--gold-hi); outline-offset: 2px; }
+
+.hb { display: grid; grid-template-columns: minmax(120px, 210px) minmax(0, 1fr) auto; gap: .35rem .9rem; align-items: center; }
+.hb-l { font-family: var(--font-display); font-size: 1.08rem; color: var(--color-text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hb-l a { color: inherit; text-decoration: none; border-bottom: 1px dotted var(--rule); }
+.hb-l a:hover { color: var(--gold); border-bottom-color: var(--gold); }
+.hb-l small { font-family: var(--font-body); font-size: .7rem; color: var(--color-text-light); margin-left: .35rem; }
+.hb-t { height: 14px; background: var(--track); border-radius: 4px; overflow: hidden; display: flex; gap: 2px; }
+.hb-t i { display: block; height: 100%; border-radius: 0 4px 4px 0; }
+.hb-v { font-family: var(--font-body); font-size: .8rem; color: var(--color-text-secondary); font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+.hb-v b { font-weight: 600; color: var(--color-text); }
+.hb-more { margin-top: .9rem; font: inherit; font-family: var(--font-body); font-size: .8rem; font-weight: 600; color: var(--gold); background: none; border: 0; padding: 0; cursor: pointer; }
+.hb-more:hover { text-decoration: underline; }
+@media (max-width: 560px) { .hb { grid-template-columns: minmax(90px, 120px) minmax(0, 1fr) auto; gap: .3rem .6rem; } .hb-l { font-size: .98rem; } }
+
+/* ── Склад усіх поселень ── */
+.tools { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; margin: 0 0 1rem; }
+.tools label { font-family: var(--font-body); font-size: .78rem; color: var(--color-text-light); }
+.seg { display: inline-flex; padding: 3px; border-radius: 9px; background: var(--track); }
+.seg button { font: inherit; font-family: var(--font-body); font-size: .78rem; padding: .38rem .75rem; border: 0; border-radius: 7px; background: none; color: var(--color-text-secondary); cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--card); color: var(--color-text); box-shadow: 0 1px 3px rgba(0,0,0,.12); }
+[data-theme="dark"] .seg button[aria-pressed="true"] { background: #2e2517; }
+.tools input[type="search"] { font: inherit; font-family: var(--font-body); font-size: .84rem; padding: .5rem .8rem; border-radius: 9px; border: 1px solid var(--rule); background: transparent; color: var(--color-text); min-width: 200px; }
+.tools input:focus { outline: none; border-color: var(--gold-hi); box-shadow: 0 0 0 3px rgba(212,178,90,.2); }
+.comp { display: grid; grid-template-columns: minmax(130px, 220px) minmax(0, 1fr) 64px; gap: .28rem .9rem; align-items: center; }
+.comp-g { grid-column: 1 / -1; margin: 1rem 0 .2rem; padding-top: .8rem; border-top: 1px solid var(--rule-2); font-family: var(--font-body); font-size: .76rem; font-weight: 500; color: var(--color-text-light); display: flex; justify-content: space-between; }
+.comp-g:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
+.comp .stack { height: 18px; border-radius: 3px; }
+.comp .stack i:first-child { border-radius: 3px 0 0 3px; }
+.comp .stack i:last-child { border-radius: 0 3px 3px 0; }
+.comp-v { font-family: var(--font-body); font-size: .8rem; text-align: right; font-variant-numeric: tabular-nums; color: var(--color-text-secondary); }
+@media (max-width: 560px) { .comp { grid-template-columns: minmax(80px, 110px) minmax(0, 1fr) 46px; gap: .28rem .5rem; } }
+
+/* ── Метелик: чоловіки / жінки ── */
+.bf { display: grid; grid-template-columns: minmax(0, 1fr) 150px minmax(0, 1fr); gap: .45rem .7rem; align-items: center; }
+.bf-h { font-family: var(--font-body); font-size: .76rem; color: var(--color-text-light); }
+.bf-h.l { text-align: right; }
+.bf-c { text-align: center; font-family: var(--font-body); font-size: .8rem; color: var(--color-text-secondary); }
+.bf-t { height: 18px; display: flex; }
+.bf-t.l { justify-content: flex-end; }
+.bf-t i { display: block; height: 100%; border-radius: 4px 0 0 4px; }
+.bf-t.r i { border-radius: 0 4px 4px 0; }
+.bf-n { font-family: var(--font-body); font-size: .74rem; color: var(--color-text-secondary); font-variant-numeric: tabular-nums; margin: 0 .4rem; align-self: center; white-space: nowrap; }
+@media (max-width: 560px) { .bf { grid-template-columns: minmax(0, 1fr) 92px minmax(0, 1fr); } .bf-c { font-size: .72rem; } }
+
+/* ── Точкова смуга (розподіл по поселеннях) ── */
+.strip { position: relative; height: 120px; margin: .5rem 0 1.4rem; }
+.strip-axis { position: absolute; left: 0; right: 0; top: 92px; height: 1px; background: var(--rule); }
+.strip-tick { position: absolute; top: 98px; transform: translateX(-50%); font-family: var(--font-body); font-size: .7rem; color: var(--color-text-light); white-space: nowrap; }
+.strip-tick::before { content: ''; position: absolute; left: 50%; top: -9px; width: 1px; height: 6px; background: var(--rule); }
+.strip-ref { position: absolute; top: 16px; bottom: 28px; width: 0; border-left: 1px dashed var(--gold); }
+.strip-ref span { position: absolute; bottom: -2px; left: 5px; font-family: var(--font-body); font-size: .7rem; color: var(--gold); white-space: nowrap; }
+.dot { position: absolute; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: var(--c, var(--gold)); box-shadow: 0 0 0 2px var(--color-bg); cursor: pointer; transition: transform .15s; border: 0; padding: 0; }
+.dot:hover, .dot:focus-visible { transform: scale(1.6); outline: none; z-index: 2; }
+.dot-l { position: absolute; transform: translateX(-50%); font-family: var(--font-body); font-size: .72rem; color: var(--color-text-secondary); white-space: nowrap; pointer-events: none; }
+
+/* ── Гістограма ── */
+.hist { display: grid; grid-template-columns: repeat(var(--n), minmax(0, 1fr)); gap: 6px; align-items: end; height: 190px; padding-top: 1.4rem; border-bottom: 1px solid var(--rule); }
+.hist-c { position: relative; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; cursor: default; }
+.hist-c i { display: block; background: var(--gold); border-radius: 4px 4px 0 0; min-height: 2px; transition: opacity .15s; }
+.hist-c:hover i { opacity: .75; }
+.hist-c b { position: absolute; left: 0; right: 0; text-align: center; font-family: var(--font-body); font-size: .76rem; font-weight: 500; color: var(--color-text); }
+.hist-x { display: grid; grid-template-columns: repeat(var(--n), minmax(0, 1fr)); gap: 6px; margin-top: .45rem; }
+.hist-x span { text-align: center; font-family: var(--font-body); font-size: .7rem; line-height: 1.3; color: var(--color-text-light); }
+
+/* ── Два стовпці ── */
+.two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.4rem; }
+@media (max-width: 900px) { .two { grid-template-columns: 1fr; } }
+
+/* ── Містечка ── */
+.towns { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
+@media (max-width: 1000px) { .towns { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 520px) { .towns { grid-template-columns: 1fr; } }
+.town h4 { font-family: var(--font-display); font-weight: 500; font-size: 1.45rem; margin: 0 0 .1rem; color: var(--color-text); }
+.town h4 a { color: inherit; text-decoration: none; }
+.town h4 a:hover { color: var(--gold); }
+.town-o { font-family: var(--font-body); font-size: .74rem; color: var(--color-text-light); margin: 0 0 .9rem; min-height: 2.2em; }
+.town-bars { display: grid; gap: .35rem; margin: 0 0 1rem; }
+.town-bar { display: grid; grid-template-columns: 1fr 44px; gap: .5rem; align-items: center; font-family: var(--font-body); font-size: .74rem; color: var(--color-text-secondary); }
+.town-bar .t { height: 8px; background: var(--track); border-radius: 3px; overflow: hidden; }
+.town-bar .t i { display: block; height: 100%; }
+.town-bar .l { grid-column: 1 / -1; display: flex; justify-content: space-between; margin-bottom: -.15rem; }
+.town-f { margin: 0; padding: .8rem 0 0; border-top: 1px solid var(--rule-2); list-style: none; font-family: var(--font-body); font-size: .78rem; line-height: 1.55; color: var(--color-text-secondary); display: grid; gap: .3rem; }
+.town-f b { color: var(--color-text); font-weight: 500; }
+
+/* ── Власники ── */
+.own-pick { display: flex; gap: .4rem; overflow-x: auto; scrollbar-width: thin; padding-bottom: .6rem; margin-bottom: 1.2rem; }
+.own-pick .chip { flex: 0 0 auto; }
+.own-pick .chip small { font-size: .7rem; opacity: .7; }
+.own { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 1.4rem; }
+@media (max-width: 1000px) { .own { grid-template-columns: 1fr; } }
+.own-name { font-family: var(--font-display); font-weight: 400; font-size: clamp(1.7rem, 3vw, 2.3rem); line-height: 1.1; margin: 0 0 .6rem; color: var(--color-text); }
+.own-links { display: flex; flex-wrap: wrap; gap: .5rem; margin: 0 0 1.3rem; }
+.btn { display: inline-flex; align-items: center; gap: .45rem; padding: .55rem .95rem; border-radius: 9px; font-family: var(--font-body); font-size: .8rem; font-weight: 500; text-decoration: none; border: 1px solid var(--rule); color: var(--color-text); background: transparent; cursor: pointer; }
+.btn:hover { border-color: var(--gold); }
+.btn.ink { background: var(--ink-btn); border-color: var(--ink-btn); color: #f4e9c8; }
+[data-theme="dark"] .btn.ink { color: #1a1408; }
+.btn svg { width: 13px; height: 13px; }
+.kv { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 0 0 1.4rem; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+.kv div { padding: .85rem .8rem .75rem 0; }
+.kv div + div { padding-left: .8rem; border-left: 1px solid var(--rule-2); }
+.kv dd { margin: 0 0 .25rem; font-family: var(--font-display); font-size: 1.85rem; line-height: 1; color: var(--color-text); }
+.kv dt { font-family: var(--font-body); font-size: .72rem; color: var(--color-text-light); line-height: 1.35; }
+.kv .cmp { display: block; font-family: var(--font-body); font-size: .7rem; color: var(--gold); margin-top: .2rem; }
+@media (max-width: 560px) { .kv { grid-template-columns: repeat(2, 1fr); } .kv div:nth-child(3) { padding-left: 0; border-left: 0; } .kv div:nth-child(n+3) { border-top: 1px solid var(--rule-2); } }
+.facts { display: grid; gap: .1rem; margin: 0; }
+.fact { display: grid; grid-template-columns: 130px minmax(0, 1fr); gap: 1rem; padding: .6rem 0; border-bottom: 1px solid var(--rule-2); }
+.fact:last-child { border-bottom: 0; }
+.fact dt { font-family: var(--font-body); font-size: .76rem; color: var(--color-text-light); }
+.fact dd { margin: 0; font-family: var(--font-display); font-size: 1.05rem; line-height: 1.45; color: var(--color-text); }
+.fact dd .none { font-family: var(--font-body); font-size: .8rem; color: var(--color-text-light); font-style: italic; }
+.tag { display: inline-block; margin: 0 .25rem .25rem 0; padding: .08rem .5rem; border-radius: 100px; background: var(--track); font-family: var(--font-body); font-size: .74rem; color: var(--color-text-secondary); }
+.tag.no { background: transparent; border: 1px dashed var(--rule); color: var(--color-text-light); text-decoration: line-through; }
+@media (max-width: 560px) { .fact { grid-template-columns: 1fr; gap: .2rem; } }
+
+/* ── Теплова таблиця ── */
+.heat-wrap { overflow-x: auto; }
+.heat { border-collapse: separate; border-spacing: 3px; width: 100%; min-width: 620px; }
+.heat th { font-family: var(--font-body); font-weight: 500; font-size: .74rem; color: var(--color-text-light); padding: .25rem .4rem; text-align: center; white-space: nowrap; }
+.heat th.row { text-align: left; font-family: var(--font-display); font-weight: 400; font-size: 1rem; color: var(--color-text); padding-right: .8rem; }
+.heat td { height: 28px; border-radius: 4px; background: var(--heat-0); text-align: center; font-family: var(--font-body); font-size: .72rem; color: transparent; }
+.heat td.on { background: var(--heat-1); color: #fff; }
+.heat td.on::after { content: '✓'; font-size: .8rem; }
+[data-theme="dark"] .heat td.on { color: #1a1408; }
+.heat tfoot td { background: transparent; color: var(--color-text-secondary); font-size: .74rem; height: auto; padding-top: .3rem; }
+
+/* ── Бестіарій ── */
+.fauna { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+@media (max-width: 900px) { .fauna { grid-template-columns: 1fr; } }
+.fauna h4 { font-family: var(--font-display); font-weight: 500; font-size: 1.35rem; margin: 0 0 .2rem; color: var(--color-text); display: flex; align-items: center; gap: .6rem; }
+.fauna h4 svg { width: 26px; height: 26px; color: var(--gold); }
+.fauna p.sub { margin: 0 0 1rem; font-family: var(--font-body); font-size: .78rem; color: var(--color-text-light); }
+.sp { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .3rem 1rem; padding: .45rem 0; border-bottom: 1px solid var(--rule-2); align-items: baseline; }
+.sp:last-child { border-bottom: 0; }
+.sp b { font-family: var(--font-display); font-weight: 400; font-size: 1.1rem; color: var(--color-text); }
+.sp span { font-family: var(--font-body); font-size: .74rem; color: var(--color-text-light); text-align: right; }
+
+/* ── Список з мітками (млини, храми) ── */
+.ll { list-style: none; margin: 0; padding: 0; columns: 2 280px; column-gap: 2rem; }
+.ll li { break-inside: avoid; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .6rem; padding: .45rem 0; border-bottom: 1px solid var(--rule-2); font-family: var(--font-display); font-size: 1.05rem; color: var(--color-text); }
+.ll li small { display: block; font-family: var(--font-body); font-size: .72rem; color: var(--color-text-light); }
+.ll li .r { font-family: var(--font-body); font-size: .74rem; color: var(--color-text-secondary); text-align: right; white-space: nowrap; }
+.ll a { color: inherit; text-decoration: none; }
+.ll a:hover { color: var(--gold); }
+
+.cards4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
+@media (max-width: 1000px) { .cards4 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 520px) { .cards4 { grid-template-columns: 1fr; } }
+.card4 h4 { font-family: var(--font-display); font-weight: 500; font-size: 1.3rem; margin: .2rem 0 .4rem; color: var(--color-text); }
+.card4 .n { font-family: var(--font-display); font-size: 2.4rem; line-height: 1; color: var(--gold); }
+.card4 p { margin: 0; font-family: var(--font-body); font-size: .82rem; line-height: 1.55; color: var(--color-text-secondary); }
+
+/* ── Календар ярмарків ── */
+.cal { position: relative; }
+.cal-row { display: grid; grid-template-columns: 130px minmax(0, 1fr); gap: 1rem; align-items: center; height: 44px; }
+.cal-row + .cal-row { border-top: 1px solid var(--rule-2); }
+.cal-row > b { font-family: var(--font-display); font-weight: 400; font-size: 1.1rem; color: var(--color-text); }
+.cal-t { position: relative; height: 100%; }
+.cal-m { display: grid; grid-template-columns: 130px minmax(0, 1fr); gap: 1rem; margin-top: .4rem; }
+.cal-m div { display: grid; grid-template-columns: repeat(12, 1fr); }
+.cal-m span { font-family: var(--font-body); font-size: .7rem; color: var(--color-text-light); border-left: 1px solid var(--rule-2); padding-left: .3rem; }
+.cal-grid { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(12, 1fr); pointer-events: none; }
+.cal-grid i { border-left: 1px solid var(--rule-2); }
+.fair { position: absolute; top: 50%; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 0 3px var(--color-bg); border: 0; padding: 0; cursor: pointer; }
+.fair.mov { background: transparent; box-shadow: 0 0 0 2px var(--gold) inset, 0 0 0 3px var(--color-bg); }
+.fair:hover, .fair:focus-visible { transform: scale(1.35); outline: none; }
+@media (max-width: 560px) { .cal-row, .cal-m { grid-template-columns: 88px minmax(0, 1fr); gap: .5rem; } .cal-row > b { font-size: .95rem; } .cal-m span { font-size: .6rem; padding-left: .1rem; } }
+
+/* ── Концентрація доходу ── */
+.lorenz svg { display: block; width: 100%; height: auto; }
+.lorenz text { font-family: var(--font-body); font-size: 11px; fill: var(--color-text-light); }
+
+/* ── Підказка ── */
+.tip { position: fixed; z-index: 3000; pointer-events: none; max-width: 280px; padding: .6rem .8rem; border-radius: 8px; background: #1c170e; color: #f4e9c8; font-family: var(--font-body); font-size: .78rem; line-height: 1.5; box-shadow: 0 10px 30px rgba(0,0,0,.3); opacity: 0; transform: translateY(4px); transition: opacity .12s, transform .12s; }
+.tip.on { opacity: 1; transform: none; }
+.tip b { display: block; font-family: var(--font-display); font-size: 1.05rem; font-weight: 500; margin-bottom: .15rem; }
+.tip .row { display: flex; justify-content: space-between; gap: 1rem; }
+.tip .row i { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: .35rem; }
+
+/* ── Методика ── */
+.method { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.4rem 3rem; }
+@media (max-width: 900px) { .method { grid-template-columns: 1fr; } }
+.method h4 { font-family: var(--font-display); font-weight: 500; font-size: 1.25rem; margin: 0 0 .4rem; color: var(--color-text); }
+.method p, .method li { font-size: .9rem; line-height: 1.7; color: var(--color-text-secondary); margin: 0 0 .5rem; }
+.method ul { margin: 0; padding-left: 1.1rem; }
+
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+@media (prefers-reduced-motion: reduce) { .cat, .dot, .stack i, .hist-c i { transition: none; } }
+</style>
+<style>
+html, body { touch-action: manipulation; }
+a, button, [role="button"], input, select, textarea, .nav-link, .logo,
+.mobile-toggle, .theme-toggle, .scroll-top-btn { touch-action: manipulation; }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+    <div class="header-container">
+        <a href="index.html" class="logo">
+            <img src="https://i.imgur.com/mXCrjjG.png" alt="Герб" class="logo-img">
+            <div class="logo-text">
+                <span class="logo-city">Дубровиця</span>
+                <span class="logo-subtitle">Цифровий архів</span>
+            </div>
+        </a>
+        <nav class="nav" id="mainNav">
+            <a href="index.html" class="nav-link">Головна</a>
+            <a href="history.html" class="nav-link">Історія</a>
+            <a href="photo-archive.html" class="nav-link">Фотоархів</a>
+            <a href="architecture.html" class="nav-link">Пам'ятки</a>
+            <a href="metrychni-knyhy.html" class="nav-link active">Архівні справи</a>
+            <a href="jewish-history.html" class="nav-link">Єврейська спадщина</a>
+            <a href="presa.html" class="nav-link">Преса</a>
+            <a href="doslidnyk.html" class="nav-link">Дослідник</a>
+            <a href="contacts.html" class="nav-link">Про проєкт</a>
+        </nav>
+        <button class="theme-toggle" id="themeToggle" aria-label="Перемкнути тему">
+            <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            <svg class="theme-icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Відкрити меню">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</header>
+
+<main class="an-page">
+
+<section class="an-hero">
+    <div class="an-wrap">
+        <div class="an-crumbs"><a href="index.html">Головна</a><span>/</span><a href="atlas-1798.html">Атлас 1798</a><span>/</span>Аналітика</div>
+        <h1>Край у цифрах, <i>1798</i></h1>
+        <p class="an-lede">Що розповідають «Економічні примітки» до атласу Волинської губернії про Дубровицю й навколишні села: хто тут жив і де, кому належали люди й землі, що сіяли, на кого полювали, які рибу ловили в Горині й де мололи зерно.</p>
+        <div class="an-kpis" id="kpis"></div>
+    </div>
+</section>
+
+<nav class="an-nav" aria-label="Розділи аналітики">
+    <div class="an-wrap">
+        <a href="#naselennia">Населення</a>
+        <a href="#dejyly">Де жили стани</a>
+        <a href="#stat">Чоловіки й жінки</a>
+        <a href="#rozmir">Розмір сіл</a>
+        <a href="#mistechka">Містечка</a>
+        <a href="#vlasnyky">Власники</a>
+        <a href="#pryroda">Поля, ліси, звірі</a>
+        <a href="#mlyny">Млини й промисли</a>
+        <a href="#khramy">Храми й садиби</a>
+        <a href="#hroshi">Гроші</a>
+        <a href="#yarmarky">Ярмарки</a>
+        <a href="#metod">Методика</a>
+        <a href="atlas-1798.html" class="map">До мапи →</a>
+    </div>
+</nav>
+
+<!-- § 1 НАСЕЛЕННЯ -->
+<section class="c-sec" id="naselennia">
+    <div class="an-wrap">
+        <div class="c-head">
+            <div class="c-mark"><b>§ 1</b><span>Населення</span></div>
+            <div>
+                <h2 class="c-h2">Хто тут жив</h2>
+                <p class="c-lede">«Економічні примітки» записують мешканців кожного поселення окремо за станами — від духовенства до кріпаків — і окремо чоловіків та жінок. Разом це 20&nbsp;347 душ у 74 поселеннях.</p>
+            </div>
+        </div>
+        <div class="blk">
+            <ul class="legend" id="catLegend"></ul>
+            <div class="stack" id="catStack" role="img" aria-label="Населення за станами"></div>
+            <div class="cats" id="catCards"></div>
+            <p class="insight" id="catInsight"></p>
+        </div>
+    </div>
+</section>
+
+<!-- § 2 ДЕ ЖИЛИ -->
+<section class="c-sec" id="dejyly">
+    <div class="an-wrap">
+        <div class="c-head">
+            <div class="c-mark"><b>§ 2</b><span>Географія станів</span></div>
+            <div>
+                <h2 class="c-h2">Де жила шляхта, де духовенство, де кріпаки</h2>
+                <p class="c-lede">Оберіть стан — побачите всі поселення, де його записано, від найбільшої громади до найменшої, і яку частку він становив серед мешканців кожного з них.</p>
+            </div>
+        </div>
+        <div class="blk">
+            <div class="chips" id="whereChips" role="group" aria-label="Стан"></div>
+            <div class="panel">
+                <div class="blk-h"><h3 id="whereTitle"></h3><p id="whereSub"></p></div>
+                <div class="hb" id="whereBars"></div>
+                <button type="button" class="hb-more" id="whereMore" hidden></button>
+            </div>
+            <p class="insight" id="whereInsight"></p>
+        </div>
+        <div class="blk">
+            <div class="blk-h"><h3>Склад кожного поселення</h3><p>Усі 74 записи. Кожна смуга — 100% мешканців поселення за станами. Наведіть на смугу — точні цифри; натисніть назву — поселення на мапі.</p></div>
+            <div class="tools">
+                <span class="seg" role="group" aria-label="Групування">
+                    <button type="button" data-grp="estate" aria-pressed="true">За маєтками</button>
+                    <button type="button" data-grp="none" aria-pressed="false">Одним списком</button>
+                </span>
+                <span class="seg" role="group" aria-label="Сортування">
+                    <button type="button" data-sort="pop" aria-pressed="true">За населенням</button>
+                    <button type="button" data-sort="serfs" aria-pressed="false">Найменше кріпаків</button>
+                    <button type="button" data-sort="name" aria-pressed="false">За назвою</button>
+                </span>
+                <input type="search" id="compQ" placeholder="Знайти поселення" aria-label="Знайти поселення">
+            </div>
+            <ul class="legend" id="compLegend"></ul>
+            <div class="panel"><div class="comp" id="comp"></div></div>
+        </div>
+    </div>
+</section>
+
+<!-- § 3 СТАТЬ -->
+<section class="c-sec" id="stat">
+    <div class="an-wrap">
+        <div class="c-head">
+            <div class="c-mark"><b>§ 3</b><span>Чоловіки й жінки</span></div>
+            <div>
+                <h2 class="c-h2">Співвідношення статей</h2>
+                <p class="c-lede">Чоловіків у таблиці 10&nbsp;315, жінок — 10&nbsp;032. Але в різних станах і селах картина дуже різна.</p>
+            </div>
+        </div>
+        <div class="blk">
+            <div class="blk-h"><h3>Чоловіки та жінки за станами</h3></div>
+            <div class="panel"><div class="bf" id="bf"></div></div>
+            <p class="insight" id="bfInsight"></p>
+        </div>
+        <div class="blk">
+            <div class="blk-h"><h3>Скільки чоловіків на 100 жінок у кожному поселенні</h3><p>Кожна точка — поселення. Пунктир — рівновага 100 : 100. Наведіть на точку, щоб побачити назву.</p></div>
+            <div class="panel"><div class="strip" id="sexStrip"></div></div>
+            <p class="insight" id="sexInsight"></p>
+        </div>
+    </div>
+</section>
+
+<!-- § 4 РОЗМІР -->
+<section class="c-sec" id="rozmir">
+    <div class="an-wrap">
+        <div class="c-head">
+            <div class="c-mark"><b>§ 4</b><span>Розмір поселень</span></div>
+            <div>
+                <h2 class="c-h2">Великі й малі поселення</h2>
+                <p class="c-lede">Від хутірців на кілька дворів до містечка Домбровиці з 323 дворами й 1&nbsp;750 мешканцями.</p>
+            </div>
+        </div>
+        <div class="blk two">
+            <div class="panel">
+                <div class="blk-h"><h3>Скільки людей жило в поселеннях</h3></div>
+                <div id="hist"></div>
+            </div>
+            <div class="panel">
+                <div class="blk-h"><h3>Типи поселень</h3></div>
+                <div class="hb" id="types"></div>
+                <p class="blk-note">«Сільце» — поселення з панським домом, зазвичай без власної церкви; «буда» — осада при поташному виробництві, «гута» — при скляному.</p>
+            </div>
+        </div>
+        <div class="blk">
+            <div class="blk-h"><h3>Найбільші поселення</h3><p>Натисніть назву, щоб відкрити поселення на мапі атласу.</p></div>
+            <div class="panel"><div class="hb" id="biggest"></div><button type="button" class="hb-more" id="biggestMore"></button></div>
+        </div>
+        <div class="blk">
+            <div class="blk-h"><h3>Скільки людей припадало на один двір</h3><p>Середнє — <b id="avgDvir"></b> душі на двір. Пунктир — середнє по краю.</p></div>
+            <div class="panel"><div class="strip" id="dvirStrip"></div></div>
+            <p class="insight" id="dvirInsight"></p>
+        </div>
+    </div>
+</section>
+
+<!-- § 5 МІСТЕЧКА -->
+<section class="c-sec" id="mistechka">
+    <div class="an-wrap">
+        <div class="c-head">
+            <div class="c-mark"><b>§ 5</b><span>Містечка</span></div>
+            <div>
+                <h2 class="c-h2">Чотири містечка краю</h2>
+                <p class="c-lede">Бережниця, Домбровиця, Висоцьк і Володимирець — єдині місця, де жили купці й міщани у великій кількості. Описи називають їхніх мешканців прямо: «євреї та селяни» — перші займалися дрібною торгівлею та шинкуванням, другі — хліборобством.</p>
+            </div>
+        </div>
+        <div class="blk"><div class="towns" id="towns"></div><p class="insight" id="townInsight"></p></div>
+    </div>
+</section>
+
+<!-- § 6 ВЛАСНИКИ -->
+<section class="c-sec" id="vlasnyky">
+    <div class="an-wrap">
+        <div class="c-head">
+            <div class="c-mark"><b>§ 6</b><span>Власники</span></div>
+            <div>
+                <h2 class="c-h2">Шістнадцять маєтків, шістнадцять портретів</h2>
+                <p class="c-lede">Оберіть власника — побачите його поселення, хто в них жив, скільки маєток приносив, що в ньому сіяли, які були ліси, млини, храми й панщина.</p>
+            </div>
+        </div>
+        <div class="blk">
+            <div class="own-pick" id="ownPick" role="tablist" aria-label="Власник"></div>
+            <div id="ownBody"></div>
+        </div>
+    </div>
+</section>
+
+<!-- § 7 ПРИРОДА -->
+<section class="c-sec" id="pryroda">
+    <div class="an-wrap">
+        <div class="c-head">
+            <div class="c-mark"><b>§ 7</b><span>Поля, ліси, звірі</span></div>
+            <div>
+                <h2 class="c-h2">Що сіяли, що росло, на кого полювали</h2>
+                <p class="c-lede">Описи маєтків перелічують культури на полях, породи дерев у лісах, звірів, птахів і рибу. Ґрунт майже скрізь піщаний — лише в Каноничах «глинистий із піском».</p>
+            </div>
+        </div>
+        <div class="blk">
+            <div class="blk-h"><h3>Що сіяли в кожному маєтку</h3><p>Позначка — культуру названо в описі маєтку.</p></div>
+            <div class="panel heat-wrap"><table class="heat" id="cropHeat"></table></div>
+            <p class="insight" id="cropInsight"></p>
+        </div>
+        <div class="blk">
+            <div class="blk-h"><h3>Ліси</h3><p>Породи дерев, названі в описі, і скільки було лісу.</p></div>
+            <div class="panel heat-wrap"><table class="heat" id="treeHeat"></table></div>
+            <p class="insight" id="treeInsight"></p>
+        </div>
+        <div class="blk">
+            <div class="blk-h"><h3>Звірі, птахи й риба</h3><p>Фауну докладно описано лише для трьох маєтків — Чацького, Плятера й Урбановського (Дубівка). Праворуч — де саме згадано кожен вид.</p></div>
+            <div class="fauna" id="fauna"></div>
+        </div>
+        <div class="blk two">
+            <div class="panel">
+                <div class="blk-h"><h3>Сіножаті</h3></div>
+                <div class="hb" id="hay"></div>
+                <p class="blk-note">«Добрих» сіножатей не названо в жодному маєтку.</p>
+            </div>
+            <div class="panel">
+                <div class="blk-h"><h3>Худоба</h3></div>
+                <p class="c-lede" style="font-size:1.08rem">У всіх описах, де йдеться про худобу, повторюється одна фраза: «рогатої худоби, овець і дворової птиці тримають мало». Коней окремо згадано у <b id="horsesN"></b> маєтках. Мало худоби — мало гною, тож і з удобренням урожаї на піску лишалися бідними.</p>
+                <p class="blk-note" id="weaveNote"></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- § 8 МЛИНИ -->
+<section class="c-sec" id="mlyny">
+    <div class="an-wrap">
+        <div class="c-head">
+            <div class="c-mark"><b>§ 8</b><span>Млини й промисли</span></div>
+            <div>
+                <h2 class="c-h2">Де мололи зерно і що виробляли</h2>
+                <p class="c-lede">Майже всі млини краю — водяні, на Горині, Случі, Стублі й безіменних струмках. Лише в Гранях стояв «машинний» млин, який крутили коні.</p>
+            </div>
+        </div>
+        <div class="blk">
+            <div class="blk-h"><h3>Млини за маєтками</h3><p>Довжина смуги — кількість млинів; колір — коли вони працювали.</p></div>
+            <ul class="legend" id="millLegend"></ul>
+            <div class="panel"><div class="hb" id="millBars"></div></div>
+            <p class="insight" id="millInsight"></p>
+        </div>
+        <div class="blk">
+            <div class="blk-h"><h3>Усі млини поіменно</h3></div>
+            <div class="panel"><ul class="ll" id="millList"></ul></div>
+        </div>
+        <div class="blk">
+            <div class="blk-h"><h3>Промисли</h3></div>
+            <div class="cards4" id="crafts"></div>
+        </div>
+    </div>
+</section>
+
+<!-- § 9 ХРАМИ -->
+<section class="c-sec" id="khramy">
+    <div class="an-wrap">
+        <div class="c-head">
+            <div class="c-mark"><b>§ 9</b><span>Храми й садиби</span></div>
+            <div>
+                <h2 class="c-h2">Церкви, костели й панські доми</h2>
+                <p class="c-lede">Описи згадують кожну церкву з її посвятою, а також костели «латинського обряду» і панські доми. Майже всі будівлі — дерев’яні.</p>
+            </div>
+        </div>
+        <div class="blk two">
+            <div class="panel">
+                <div class="blk-h"><h3>Кому присвячені церкви</h3></div>
+                <div class="hb" id="dedic"></div>
+            </div>
+            <div class="panel">
+                <div class="blk-h"><h3>Духовенство і храми</h3></div>
+                <div id="clergyChurch"></div>
+            </div>
+        </div>
+        <div class="blk">
+            <div class="blk-h"><h3>Усі храми</h3></div>
+            <div class="panel"><ul class="ll" id="churchList"></ul></div>
+        </div>
+        <div class="blk">
+            <div class="blk-h"><h3>Панські доми</h3><p id="manorSub"></p></div>
+            <div class="panel"><div class="hb" id="manorBars"></div></div>
+            <p class="insight" id="manorInsight"></p>
+        </div>
+    </div>
+</section>
+
+<!-- § 10 ГРОШІ -->
+<section class="c-sec" id="hroshi">
+    <div class="an-wrap">
+        <div class="c-head">
+            <div class="c-mark"><b>§ 10</b><span>Гроші й панщина</span></div>
+            <div>
+                <h2 class="c-h2">Скільки приносили маєтки</h2>
+                <p class="c-lede">Для 14 маєтків описи називають річну суму: або «дохід» власника, або «оренду», за яку маєток здавали. Для Фелінської та Гердорфа суму не вказано.</p>
+            </div>
+        </div>
+        <div class="blk">
+            <div class="blk-h"><h3>Річний прибуток, рублів</h3></div>
+            <ul class="legend"><li><span class="sw" style="background:var(--gold)"></span>дохід власника</li><li><span class="sw" style="background:var(--k-churchSerfs)"></span>оренда</li></ul>
+            <div class="panel"><div class="hb" id="incBars"></div></div>
+        </div>
+        <div class="blk two">
+            <div class="panel">
+                <div class="blk-h"><h3>Рублів на одну душу</h3><p>Прибуток маєтку, поділений на всіх його мешканців.</p></div>
+                <div class="hb" id="perSoul"></div>
+            </div>
+            <div class="panel lorenz">
+                <div class="blk-h"><h3>Як нерівно розподілено дохід</h3><p>Маєтки від найменшого до найбільшого. Діагональ — якби всі мали порівну.</p></div>
+                <div id="lorenz"></div>
+            </div>
+        </div>
+        <p class="insight" id="incInsight"></p>
+        <div class="blk" style="margin-top:3rem">
+            <div class="blk-h"><h3>Панщина: скільки днів на тиждень</h3><p>Як записано в описах. «По три, інші по два і по дню» — різні господарства відробляли по-різному.</p></div>
+            <div class="panel heat-wrap"><table class="heat" id="panHeat"></table></div>
+        </div>
+    </div>
+</section>
+
+<!-- § 11 ЯРМАРКИ -->
+<section class="c-sec" id="yarmarky">
+    <div class="an-wrap">
+        <div class="c-head">
+            <div class="c-mark"><b>§ 11</b><span>Ярмарки й торгівля</span></div>
+            <div>
+                <h2 class="c-h2">Одинадцять ярмарків на рік</h2>
+                <p class="c-lede">Ярмарки тривали по одному дню (для Висоцька тривалість не вказано). На них з’їжджалися з навколишніх сіл — «лише з їстівними припасами», а в Бережниці й Володимирці — ще й з дрібним товаром.</p>
+            </div>
+        </div>
+        <div class="blk">
+            <div class="panel"><div class="cal" id="cal"></div></div>
+            <p class="blk-note">Порожнє коло — Вознесіння Господнє, свято без сталої дати (40-й день після Великодня, травень–червень).</p>
+        </div>
+        <div class="blk two">
+            <div class="panel">
+                <div class="blk-h"><h3>Горинню — до Риги</h3></div>
+                <p class="c-lede" style="font-size:1.08rem">Навесні, до червня, з пристаней у Бережниці, Домбровиці й Висоцьку поміщицьке збіжжя вантажили на плоскодонні барки завдовжки близько 34 м і сплавляли Горинню до Прип’яті, далі до Пінська й Риги — без перевантаження. Сплавляли й ліс.</p>
+                <p class="blk-note">Усі три найкращі пристані належали трьом найбагатшим маєткам — Плятера, Чацького й Вигановських.</p>
+            </div>
+            <div class="panel">
+                <div class="blk-h"><h3>Поташ — до Дубенки</h3></div>
+                <p class="c-lede" style="font-size:1.08rem">Поташ із заводу в Буді Цепцевицькій возили суходолом до містечка Дубенка на Західному Бузі, а звідти сплавляли Бугом і продавали за кордон по 3 рублі за пуд (≈16,4 кг).</p>
+                <p class="blk-note">Поташ — очищений деревний попіл, потрібний для виробництва скла, мила й фарбування тканин.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- § 12 МЕТОДИКА -->
+<section class="c-sec" id="metod">
+    <div class="an-wrap">
+        <div class="c-head">
+            <div class="c-mark"><b>§ 12</b><span>Методика</span></div>
+            <div><h2 class="c-h2">Звідки цифри</h2></div>
+        </div>
+        <div class="method">
+            <div>
+                <h4>Таблиця</h4>
+                <p>Двори й мешканці за станами — з таблиці «Економічних приміток» (74 записи, 16 власників). Казенних підданих у ній немає, тож цей стан не показано.</p>
+                <p>Духовенство в трьох містечках записано як «9 (+10 католиків)», «2 (+1 католик)», «5 (+2 католики)» — тут обидва числа додано.</p>
+                <p>У двох рядках сума станів не збігається з підсумком самої таблиці: Висоцьк (384 проти 398) і Володимирець (715 проти 708). Загальні підсумки — 10&nbsp;315 чоловіків і 10&nbsp;032 жінки — подано за підсумковими стовпцями.</p>
+            </div>
+            <div>
+                <h4>Описи маєтків</h4>
+                <ul>
+                    <li>Культури, ліси, звірі, риба, млини, храми, панські доми, панщина, ярмарки й прибутки вибрано вручну з тексту «Географічного і економічного опису» кожного маєтку.</li>
+                    <li>Опис здебільшого один на весь маєток: те, що в ньому сказано, стосується всіх його поселень.</li>
+                    <li>Якщо в описі чогось немає, це не означає, що цього не було, — лише що укладачі про це не написали.</li>
+                    <li>Три млини на Горині описано разом для Великих і Малих Цепцевичів — тут їх віднесено до Великих.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+</main>
+
+<div class="tip" id="tip" role="tooltip"></div>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4 class="footer-title">Дубровиця</h4>
+                <p class="footer-text">Цифровий архів історичної спадщини міста Дубровиця, Сарненський район, Рівненська область, Україна.</p>
+            </div>
+            <div class="footer-section">
+                <h4 class="footer-title">Навігація</h4>
+                <nav class="footer-nav">
+                    <a href="history.html">Історія</a>
+                    <a href="photo-archive.html">Фотоархів</a>
+                    <a href="metrychni-knyhy.html">Архівні справи</a>
+                    <a href="jewish-history.html">Єврейська спадщина</a>
+                </nav>
+            </div>
+            <div class="footer-section">
+                <h4 class="footer-title">Контакти</h4>
+                <p class="footer-text">Маєте матеріали або пропозиції?<br><a href="contacts.html" class="footer-link">Зв'яжіться з нами</a></p>
+            </div>
+        </div>
+        <div class="footer-copyright-row">
+            <div class="footer-copyright-ornament">
+                <div class="footer-copyright-ornament-line"></div>
+                <div class="footer-copyright-ornament-diamond"></div>
+                <div class="footer-copyright-ornament-line"></div>
+            </div>
+            <p class="footer-copyright-main">&copy; 2026 <a href="https://dubrovytsia.site">dubrovytsia.site</a> — Цифровий архів Дубровиці.</p>
+        </div>
+    </div>
+</footer>
+
+<script src="app.js"></script>
+<script src="sela_data_embed.js"></script>
+<script src="atlas-1798-analityka-data.js"></script>
+<script src="atlas-1798-analityka.js"></script>
+</body>
+</html>
