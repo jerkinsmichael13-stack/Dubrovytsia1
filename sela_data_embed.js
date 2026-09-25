@@ -1797,10 +1797,13 @@ var ATLAS_OWNERS_1798 = {
   },
   "plater": {
     "name": "Граф і кавалер Антоній Плятер",
-    "page": "plater.html"
+    "page": "plater.html",
+    "img": "herb-plater.jpg"
   },
   "radzyvil": {
-    "name": "Підкоморій князь Домінік Радзивіл"
+    "name": "Підкоморій князь Домінік Радзивіл",
+    "page": "radzyvil.html",
+    "img": "radzyvil-medalion.jpg"
   },
   "piary": {
     "name": "Домбровицький кляштор (монастир) ксендзів-піарів"
