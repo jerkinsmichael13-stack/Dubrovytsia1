@@ -3084,6 +3084,11 @@ select.admin-input { cursor: pointer; }
     border-bottom: 1px solid rgba(201, 162, 39, 0.38);
 }
 .cover--short { min-height: clamp(440px, 62svh, 640px); }
+.cover--full { min-height: clamp(600px, 94svh, 1000px); }
+.cover-title--long { max-width: 22ch; font-size: clamp(2.4rem, 4.6vw, 4.3rem); line-height: 1; }
+.cover--full .cover-title { font-size: clamp(3.6rem, 10vw, 9rem); letter-spacing: -.025em; }
+.cover-kpis { margin-top: 2.4rem; max-width: 64rem; }
+.cover .hero-news { margin-top: 1.4rem; }
 
 .cover-img {
     position: absolute;
@@ -3097,14 +3102,14 @@ select.admin-input { cursor: pointer; }
     filter: saturate(.82) contrast(1.06) sepia(.1);
     animation: coverDrift 16s cubic-bezier(.2, .6, .3, 1) both;
 }
-.cover-img--paper { filter: none; }
+.cover-img--paper { filter: sepia(.2) brightness(.72) contrast(1.08); }
 .cover-shade {
     position: absolute;
     inset: 0;
     z-index: -1;
     background:
         linear-gradient(180deg, rgba(12, 9, 6, .5) 0%, rgba(12, 9, 6, .08) 26%, rgba(12, 9, 6, .1) 44%, rgba(12, 9, 6, .72) 76%, rgba(12, 9, 6, .94) 100%),
-        linear-gradient(90deg, rgba(12, 9, 6, .72) 0%, rgba(12, 9, 6, .28) 46%, rgba(12, 9, 6, 0) 72%);
+        linear-gradient(90deg, rgba(12, 9, 6, .8) 0%, rgba(12, 9, 6, .42) 48%, rgba(12, 9, 6, .05) 76%);
 }
 .cover-shade::after {          /* ледь помітна паперова фактура */
     content: '';
@@ -3261,6 +3266,8 @@ button.cover-credit:hover { color: #fff; }
     .cover-inner { padding: 6.5rem 1.25rem 1.75rem; }
     .cover-title { font-size: clamp(2.7rem, 13vw, 3.8rem); }
     .cover-facts { display: grid; grid-template-columns: repeat(3, auto); justify-content: start; gap: 1rem 1.6rem; margin-top: 1.8rem; }
+    .cover-facts:has(> div:nth-child(4)) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .cover-img--paper { filter: sepia(.2) brightness(.55) contrast(1.1); }
     .cover-credit {
         position: static;
         align-items: flex-start;
