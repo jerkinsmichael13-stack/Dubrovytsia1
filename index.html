@@ -271,6 +271,11 @@ a, button, [role="button"], input, select, textarea,
                     Історія міста
                 </a>
             </div>
+            <a href="atlas-1798.html" class="hero-news">
+                <span class="hero-news-tag">Новинка</span>
+                <span class="hero-news-txt">Атлас Волинської губернії 1798 року</span>
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+            </a>
         </div>
 
         <!-- Floating archive count bottom-right -->
@@ -285,6 +290,137 @@ a, button, [role="button"], input, select, textarea,
         <div class="hero-scroll-hint">
             <span>Гортати</span>
             <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- ═══ ЩО НОВОГО ═══ -->
+    <section class="whatsnew" id="shcho-novoho">
+    <style>
+    .hero-news{display:inline-flex;align-items:center;gap:.75rem;margin-top:1.6rem;padding:.45rem .9rem .45rem .45rem;border-radius:100px;background:rgba(18,14,8,.42);border:1px solid rgba(212,178,90,.38);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#f4e9c8;text-decoration:none;font-family:'DM Sans',sans-serif;font-size:.78rem;transition:background .25s ease,border-color .25s ease,transform .25s ease;animation:wnChipIn .9s ease 1s both;}
+    .hero-news:hover{background:rgba(18,14,8,.62);border-color:#d4b25a;transform:translateY(-2px);}
+    .hero-news-tag{padding:.28rem .65rem;border-radius:100px;background:#d4b25a;color:#1a1408;font-size:.56rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;}
+    .hero-news-txt{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.05rem;}
+    .hero-news svg{width:13px;height:13px;color:#d4b25a;transition:transform .25s ease;}
+    .hero-news:hover svg{transform:translateX(3px);}
+    @keyframes wnChipIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+    @media(max-width:560px){.hero-news-txt{font-size:.92rem}}
+
+    .whatsnew{padding:6rem 0 5.5rem;background:var(--color-bg,#faf7f2);position:relative;overflow:hidden;}
+    .wn-inner{max-width:1300px;margin:0 auto;padding:0 2rem;}
+    @media(max-width:700px){.wn-inner{padding:0 1.1rem;}.whatsnew{padding:4.2rem 0;}}
+    .wn-head{display:flex;justify-content:space-between;align-items:flex-end;gap:1.5rem 3rem;flex-wrap:wrap;margin-bottom:2.4rem;}
+    .wn-eyebrow{display:flex;align-items:center;gap:.9rem;font-family:'DM Sans',sans-serif;font-size:.56rem;letter-spacing:.32em;text-transform:uppercase;color:#a9822f;margin-bottom:.9rem;}
+    .wn-eyebrow::before{content:'';width:9px;height:9px;border-radius:50%;background:#c9a227;box-shadow:0 0 0 4px rgba(201,162,39,.18);animation:wnPulse 2.2s ease-in-out infinite;}
+    @keyframes wnPulse{50%{box-shadow:0 0 0 8px rgba(201,162,39,0)}}
+    .wn-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.3rem,4.6vw,3.6rem);line-height:.98;letter-spacing:-.03em;color:var(--color-text,#1a1000);margin:0;}
+    .wn-title em{font-style:italic;color:#c9a227;}
+    .wn-date{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:var(--color-text-light,#8b6f3e);}
+
+    .wn-grid{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(0,1fr);gap:1.4rem;}
+    @media(max-width:980px){.wn-grid{grid-template-columns:1fr;}}
+
+    .wn-feature{position:relative;display:grid;grid-template-rows:minmax(300px,1fr) auto;min-height:560px;border-radius:18px;overflow:hidden;text-decoration:none;color:#f4e9c8;background:#16110a;isolation:isolate;box-shadow:0 30px 70px rgba(28,20,8,.2);}
+    .wn-feature-img{position:absolute;inset:0;z-index:-2;background:url('atlas-1798-preview.jpg') center 30%/cover no-repeat;filter:sepia(.45) brightness(.62) contrast(1.1);transform:scale(1.04);transition:transform 1.6s cubic-bezier(.16,1,.3,1),filter .8s ease;}
+    .wn-feature:hover .wn-feature-img{transform:scale(1.1) translate(-1%,-1%);filter:sepia(.3) brightness(.7) contrast(1.1);}
+    .wn-feature::before{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(22,17,10,.1) 0%,rgba(22,17,10,.35) 22%,rgba(22,17,10,.88) 45%,rgba(22,17,10,.97) 100%);}
+    .wn-feature::after{content:'';position:absolute;inset:14px;border:1px solid rgba(212,178,90,.28);border-radius:10px;pointer-events:none;}
+    .wn-feature-top{display:flex;justify-content:space-between;align-items:flex-start;padding:2rem 2.2rem;}
+    .wn-badge{display:inline-flex;align-items:center;gap:.5rem;padding:.4rem .85rem;border-radius:100px;background:#d4b25a;color:#1a1408;font-family:'DM Sans',sans-serif;font-size:.56rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;}
+    .wn-rose{width:74px;height:74px;color:#d4b25a;opacity:.85;}
+    .wn-rose g{transform-origin:50px 50px;animation:wnSpin 90s linear infinite;}
+    @keyframes wnSpin{to{transform:rotate(360deg)}}
+    .wn-feature-body{padding:0 2.2rem 2.2rem;}
+    .wn-kicker{font-family:'DM Sans',sans-serif;font-size:.58rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(212,178,90,.85);margin-bottom:.7rem;}
+    .wn-feature h3{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2rem,4vw,3.3rem);line-height:.98;letter-spacing:-.02em;margin:0 0 1rem;color:#f4e9c8;}
+    .wn-feature h3 em{display:block;font-style:italic;color:#d4b25a;font-weight:400;}
+    .wn-feature p{font-family:'Cormorant Garamond',serif;font-size:1.15rem;line-height:1.55;color:rgba(244,233,200,.78);max-width:46ch;margin:0 0 1.5rem;}
+    .wn-stats{display:flex;flex-wrap:wrap;gap:1.6rem 2.2rem;margin:0 0 1.7rem;padding-top:1.1rem;border-top:1px solid rgba(212,178,90,.22);}
+    .wn-stats dd{margin:0 0 .15rem;font-family:'Cormorant Garamond',serif;font-size:1.9rem;line-height:1;color:#d4b25a;}
+    .wn-stats dt{font-family:'DM Sans',sans-serif;font-size:.54rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(244,233,200,.5);}
+    .wn-cta{display:inline-flex;align-items:center;gap:.6rem;padding:.9rem 1.5rem;border-radius:100px;background:#d4b25a;color:#1a1408;font-family:'DM Sans',sans-serif;font-size:.64rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;transition:background .25s ease,gap .25s ease;}
+    .wn-feature:hover .wn-cta{background:#e6c872;gap:.9rem;}
+    .wn-cta svg{width:13px;height:13px;}
+    @media(max-width:560px){.wn-feature{min-height:520px}.wn-feature-top{padding:1.5rem}.wn-feature-body{padding:0 1.5rem 1.6rem}.wn-rose{width:56px;height:56px}}
+
+    .wn-side{display:grid;gap:1.4rem;grid-template-rows:1fr 1fr;}
+    @media(max-width:980px){.wn-side{grid-template-rows:none;grid-template-columns:1fr 1fr;}}
+    @media(max-width:640px){.wn-side{grid-template-columns:1fr;}}
+    .wn-item{position:relative;display:grid;grid-template-columns:92px minmax(0,1fr);gap:1.3rem;align-items:center;padding:1.6rem;border-radius:18px;background:var(--color-bg-card,#fff);border:1px solid var(--color-border-light,rgba(201,162,39,.15));text-decoration:none;color:inherit;overflow:hidden;transition:transform .4s cubic-bezier(.16,1,.3,1),box-shadow .4s ease,border-color .3s ease;}
+    [data-theme="dark"] .wn-item{background:#12100c;border-color:rgba(201,162,39,.18);}
+    .wn-item:hover{transform:translateY(-4px);box-shadow:0 22px 50px rgba(0,0,0,.1);border-color:#c9a227;}
+    .wn-item::before{content:'';position:absolute;top:0;left:1.6rem;right:1.6rem;height:2px;background:linear-gradient(90deg,transparent,#c9a227,transparent);opacity:.5;}
+    .wn-thumb{width:92px;height:110px;border-radius:10px;background:#efe6cf;border:1px solid rgba(169,130,47,.25);display:grid;place-items:center;overflow:hidden;box-shadow:inset 0 0 0 4px #efe6cf,inset 0 0 0 5px rgba(43,36,24,.15);}
+    .wn-thumb img{width:76%;height:auto;mix-blend-mode:multiply;}
+    .wn-thumb--ledger{background:#1c170e;border-color:#1c170e;box-shadow:none;padding:.9rem .7rem;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;gap:.35rem;}
+    .wn-thumb--ledger i{display:block;height:5px;border-radius:5px;background:linear-gradient(90deg,#a9822f,#d4b25a);}
+    .wn-item-lbl{font-family:'DM Sans',sans-serif;font-size:.54rem;letter-spacing:.22em;text-transform:uppercase;color:#a9822f;margin-bottom:.4rem;}
+    .wn-item h4{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.45rem;line-height:1.15;color:var(--color-text,#1a1000);margin:0 0 .45rem;}
+    .wn-item p{font-family:'Cormorant Garamond',serif;font-size:1rem;line-height:1.5;color:var(--color-text-secondary,#5a4a2e);margin:0 0 .7rem;}
+    .wn-more{display:inline-flex;align-items:center;gap:.4rem;font-family:'DM Sans',sans-serif;font-size:.58rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#a9822f;}
+    .wn-more svg{width:12px;height:12px;transition:transform .25s ease;}
+    .wn-item:hover .wn-more svg{transform:translateX(3px);}
+    @media(prefers-reduced-motion:reduce){.wn-rose g,.wn-eyebrow::before,.hero-news{animation:none}.wn-feature-img{transition:none}}
+    </style>
+        <div class="wn-inner">
+            <div class="wn-head fade-in-up">
+                <div>
+                    <div class="wn-eyebrow">Що нового</div>
+                    <h2 class="wn-title">Нове <em>в архіві</em></h2>
+                </div>
+                <span class="wn-date">Вересень 2026</span>
+            </div>
+
+            <div class="wn-grid">
+                <a href="atlas-1798.html" class="wn-feature fade-in-up">
+                    <div class="wn-feature-img" aria-hidden="true"></div>
+                    <div class="wn-feature-top">
+                        <span class="wn-badge">Презентуємо</span>
+                        <svg class="wn-rose" viewBox="0 0 100 100" aria-hidden="true">
+                            <circle cx="50" cy="50" r="47" fill="none" stroke="currentColor" stroke-width=".8" opacity=".55"/>
+                            <circle cx="50" cy="50" r="42" fill="none" stroke="currentColor" stroke-width=".5" opacity=".35" stroke-dasharray="1 2.2"/>
+                            <g>
+                                <path d="M50 12 L54 46 L50 50 L46 46Z" fill="currentColor"/>
+                                <path d="M50 88 L54 54 L50 50 L46 54Z" fill="currentColor" opacity=".45"/>
+                                <path d="M12 50 L46 46 L50 50 L46 54Z" fill="currentColor" opacity=".45"/>
+                                <path d="M88 50 L54 46 L50 50 L54 54Z" fill="currentColor" opacity=".45"/>
+                                <circle cx="50" cy="50" r="2.6" fill="currentColor"/>
+                            </g>
+                        </svg>
+                    </div>
+                    <div class="wn-feature-body">
+                        <div class="wn-kicker">Інтерактивна мапа · Картографічне джерело</div>
+                        <h3>Атлас Волинської губернії <em>1798 року</em></h3>
+                        <p>Дубровиця й навколишні села наприкінці XVIII століття: хто ними володів, скільки було дворів і душ, де стояли церкви, млини й пристані на Горині. Чотири аркуші мапи, повні «Економічні примітки» і зведення всіх маєтків.</p>
+                        <dl class="wn-stats">
+                            <div><dd>60</dd><dt>поселень на мапі</dt></div>
+                            <div><dd>16</dd><dt>маєтків</dt></div>
+                            <div><dd>20&nbsp;347</dd><dt>душ у «Примітках»</dt></div>
+                        </dl>
+                        <span class="wn-cta">Відкрити атлас <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
+                    </div>
+                </a>
+
+                <div class="wn-side">
+                    <a href="plater.html" class="wn-item fade-in-up delay-1">
+                        <div class="wn-thumb"><img src="herb-plater.jpg" alt="" loading="lazy"></div>
+                        <div>
+                            <div class="wn-item-lbl">Нова сторінка · Власники</div>
+                            <h4>Граф Юзеф Антоній Броель-Плятер</h4>
+                            <p>Власник Дубровиці з 1771 року: біографія, родина, герб і маєток за описом 1798 року.</p>
+                            <span class="wn-more">Читати <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
+                        </div>
+                    </a>
+                    <a href="atlas-1798.html#mayetky" class="wn-item fade-in-up delay-2">
+                        <div class="wn-thumb wn-thumb--ledger" aria-hidden="true"><i style="width:100%"></i><i style="width:56%"></i><i style="width:49%"></i><i style="width:42%"></i><i style="width:36%"></i></div>
+                        <div>
+                            <div class="wn-item-lbl">Дані · Економічні примітки</div>
+                            <h4>Хто чим володів у 1798 році</h4>
+                            <p>Шістнадцять маєтків навколо Дубровиці: двори, душі й річний дохід кожного власника.</p>
+                            <span class="wn-more">До зведення <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
+                        </div>
+                    </a>
+                </div>
+            </div>
         </div>
     </section>
 

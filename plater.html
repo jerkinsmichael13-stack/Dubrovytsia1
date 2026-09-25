@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="uk" data-theme="light">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WGBZ0BD23K"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-WGBZ0BD23K');
+</script>
+<meta charset="UTF-8">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="manifest" href="site.webmanifest">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Юзеф Антоній Броель-Плятер (1750–1832) — граф, мальтійський командор, власник Дубровиці з 1771 року. Біографія, родина, герб і маєток за «Економічними примітками» 1798 року.">
+<meta property="og:title" content="Юзеф Антоній Броель-Плятер — власник Дубровиці">
+<meta property="og:image" content="herb-plater.jpg">
+<title>Юзеф Антоній Броель-Плятер — Дубровиця</title>
+<script>!function(){var t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t)}()</script>
+<link rel="stylesheet" href="app.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+:root {
+    --pl-gold: #a9822f;
+    --pl-rule: rgba(169,130,47,.22);
+    --pl-rule-soft: rgba(169,130,47,.12);
+    --pl-parchment: #f5efe1;
+    --pl-card: var(--color-bg-card, #fff);
+}
+[data-theme="dark"] {
+    --pl-gold: #d4b25a;
+    --pl-rule: rgba(212,178,90,.2);
+    --pl-rule-soft: rgba(212,178,90,.1);
+    --pl-parchment: #13100b;
+    --pl-card: #17130d;
+}
+.pl-page { background: var(--pl-parchment); }
+
+/* ── Hero ── */
+.pl-hero {
+    position: relative; overflow: hidden; isolation: isolate; text-align: center;
+    background: linear-gradient(160deg, #1a1408 0%, #2a1e0a 50%, #1c1509 100%);
+    color: #f1e6c6; padding: 7rem 2rem 6rem;
+}
+.pl-hero::before {
+    content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+    background:
+        radial-gradient(ellipse 55% 70% at 50% 100%, rgba(212,178,90,.16) 0%, transparent 60%),
+        url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23c9a553' fill-opacity='0.03'%3E%3Cpath d='M50 0L52 48 100 50 52 52 50 100 48 52 0 50 48 48z'/%3E%3C/g%3E%3C/svg%3E");
+}
+.pl-hero::after { content: ''; position: absolute; inset: 1.4rem; pointer-events: none; border: 1px solid rgba(212,178,90,.2); }
+.pl-crumbs { position: absolute; top: 2.4rem; left: 0; right: 0; font-family: var(--font-body); font-size: .62rem; letter-spacing: .22em; text-transform: uppercase; color: rgba(241,230,198,.45); }
+.pl-crumbs a { color: rgba(212,178,90,.85); text-decoration: none; }
+.pl-crumbs a:hover { color: #f1e6c6; }
+.pl-crumbs span { margin: 0 .7rem; opacity: .5; }
+.pl-seal {
+    width: 112px; height: 112px; margin: 0 auto 1.8rem; border-radius: 50%; position: relative;
+    background: #efe6cf; border: 1px solid rgba(212,178,90,.5);
+    box-shadow: 0 0 0 6px rgba(212,178,90,.08), 0 0 0 7px rgba(212,178,90,.25), 0 20px 50px rgba(0,0,0,.5);
+    display: grid; place-items: center; overflow: hidden;
+    animation: plSeal 1s cubic-bezier(.16,1,.3,1) both;
+}
+.pl-seal img { width: 78%; height: auto; mix-blend-mode: multiply; }
+@keyframes plSeal { from { opacity: 0; transform: scale(.7) rotate(-15deg); } to { opacity: 1; transform: none; } }
+.pl-eyebrow { display: flex; align-items: center; justify-content: center; gap: 1rem; font-family: var(--font-body); font-size: .6rem; letter-spacing: .32em; text-transform: uppercase; color: rgba(212,178,90,.75); margin-bottom: 1.4rem; animation: plFade .8s ease .2s both; }
+.pl-eyebrow::before, .pl-eyebrow::after { content: ''; width: 44px; height: 1px; background: linear-gradient(90deg, transparent, rgba(212,178,90,.5)); }
+.pl-eyebrow::after { transform: scaleX(-1); }
+.pl-title { font-family: var(--font-display); font-weight: 300; color: #f4e9c8; font-size: clamp(2.5rem, 6vw, 4.8rem); line-height: 1; letter-spacing: -.02em; margin: 0 0 1rem; animation: plFade .9s ease .3s both; }
+.pl-title em { display: block; font-style: italic; color: #d4b25a; font-weight: 400; }
+.pl-lede { font-family: var(--font-display); font-style: italic; font-size: clamp(1.05rem, 1.7vw, 1.3rem); color: rgba(241,230,198,.7); max-width: 38em; margin: 0 auto 2.4rem; line-height: 1.55; animation: plFade .9s ease .4s both; }
+.pl-pills { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin: 0; animation: plFade .9s ease .55s both; }
+.pl-pill { min-width: 128px; padding: .85rem 1.3rem; border-radius: 10px; background: rgba(255,255,255,.035); border: 1px solid rgba(212,178,90,.2); }
+.pl-pill dd { margin: 0 0 .3rem; font-family: var(--font-display); font-size: 1.6rem; color: #d4b25a; line-height: 1; }
+.pl-pill dt { font-family: var(--font-body); font-size: .56rem; letter-spacing: .18em; text-transform: uppercase; color: rgba(241,230,198,.45); }
+.pl-hero-fade { position: absolute; left: 0; right: 0; bottom: 0; height: 80px; background: linear-gradient(transparent, var(--pl-parchment)); pointer-events: none; }
+@keyframes plFade { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@media (max-width: 640px) {
+    .pl-hero { padding: 6.5rem 1.1rem 5rem; }
+    .pl-hero::after { inset: .7rem; }
+    .pl-crumbs { top: 1.7rem; }
+    .pl-pill { flex: 1 1 40%; min-width: 0; padding: .7rem .8rem; }
+}
+
+/* ── Секції ── */
+.pl-wrap { max-width: 1180px; margin: 0 auto; padding: 0 2rem; }
+@media (max-width: 640px) { .pl-wrap { padding: 0 1rem; } }
+.pl-sec { padding: 4.5rem 0; }
+.pl-kicker { display: inline-flex; align-items: center; gap: .9rem; font-family: var(--font-body); font-size: .58rem; letter-spacing: .3em; text-transform: uppercase; color: var(--pl-gold); margin-bottom: .9rem; }
+.pl-kicker::before, .pl-kicker::after { content: ''; width: 30px; height: 1px; background: currentColor; opacity: .45; }
+.pl-h2 { font-family: var(--font-display); font-weight: 300; font-size: clamp(2rem, 4vw, 3rem); line-height: 1.02; letter-spacing: -.02em; color: var(--color-text); margin: 0 0 1.4rem; }
+.pl-h2 em { font-style: italic; color: var(--pl-gold); }
+.pl-center { text-align: center; }
+
+/* Біографія + герб */
+.pl-bio { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(280px, 400px); gap: clamp(2rem, 5vw, 4.5rem); align-items: start; }
+@media (max-width: 880px) { .pl-bio { grid-template-columns: 1fr; } }
+.pl-prose p { font-family: var(--font-display); font-size: 1.2rem; line-height: 1.72; color: var(--color-text-secondary); margin: 0 0 1.2rem; }
+.pl-prose p:first-of-type::first-letter { float: left; font-size: 4.6rem; line-height: .8; padding: .4rem .7rem 0 0; color: var(--pl-gold); font-style: italic; }
+.pl-titles { margin: 1.8rem 0 0; padding: 1.3rem 1.4rem; border-left: 3px solid #c9a227; background: rgba(201,162,39,.07); border-radius: 4px 12px 12px 4px; font-family: var(--font-display); font-size: 1.1rem; line-height: 1.6; color: var(--color-text); }
+.pl-titles b { display: block; font-family: var(--font-body); font-weight: 500; font-size: .56rem; letter-spacing: .22em; text-transform: uppercase; color: var(--pl-gold); margin-bottom: .3rem; }
+.pl-herb { position: sticky; top: 90px; margin: 0; padding: 2rem; border-radius: 16px; background: #efe6cf; border: 1px solid var(--pl-rule); box-shadow: inset 0 0 0 8px #efe6cf, inset 0 0 0 9px rgba(43,36,24,.2), 0 30px 60px rgba(43,36,24,.12); }
+@media (max-width: 880px) { .pl-herb { position: static; max-width: 380px; margin: 0 auto; } }
+.pl-herb img { display: block; width: 100%; height: auto; mix-blend-mode: multiply; }
+.pl-herb figcaption { margin-top: 1rem; text-align: center; font-family: var(--font-display); font-style: italic; font-size: 1rem; color: #5a4a2e; }
+
+/* Хронологія */
+.pl-sec--time { background: var(--color-bg); border-top: 1px solid var(--pl-rule-soft); border-bottom: 1px solid var(--pl-rule-soft); }
+.pl-time { list-style: none; margin: 2.4rem auto 0; padding: 0; max-width: 860px; position: relative; }
+.pl-time::before { content: ''; position: absolute; left: 120px; top: .6rem; bottom: .6rem; width: 1px; background: linear-gradient(var(--pl-rule), #c9a227 20%, #c9a227 80%, var(--pl-rule)); }
+.pl-time li { display: grid; grid-template-columns: 96px minmax(0,1fr); gap: 48px; padding: .9rem 0; position: relative; }
+.pl-time li::before { content: ''; position: absolute; left: 115px; top: 1.35rem; width: 11px; height: 11px; border-radius: 50%; background: var(--pl-parchment); border: 2px solid #c9a227; }
+.pl-time li.key::before { background: #c9a227; box-shadow: 0 0 0 4px rgba(201,162,39,.2); }
+.pl-time-y { text-align: right; font-family: var(--font-display); font-size: 1.6rem; line-height: 1.2; color: var(--pl-gold); font-variant-numeric: lining-nums; }
+.pl-time-t { font-family: var(--font-display); font-size: 1.15rem; line-height: 1.55; color: var(--color-text); }
+.pl-time-t a { color: var(--pl-gold); }
+@media (max-width: 600px) {
+    .pl-time::before { left: 8px; }
+    .pl-time li { grid-template-columns: 1fr; gap: .1rem; padding-left: 32px; }
+    .pl-time li::before { left: 3px; }
+    .pl-time-y { text-align: left; font-size: 1.35rem; }
+}
+
+/* Родина */
+.pl-spouse { max-width: 860px; margin: 0 auto 2.6rem; text-align: center; font-family: var(--font-display); font-size: 1.2rem; line-height: 1.7; color: var(--color-text-secondary); }
+.pl-spouse strong { color: var(--color-text); font-weight: 500; }
+.pl-kids { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.2rem; }
+.pl-kid { position: relative; padding: 1.6rem 1.5rem 1.4rem; border-radius: 14px; background: var(--pl-card); border: 1px solid var(--pl-rule-soft); transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease; }
+.pl-kid:hover { transform: translateY(-3px); box-shadow: 0 18px 40px rgba(43,36,24,.1); border-color: var(--pl-rule); }
+.pl-kid::before { content: ''; position: absolute; top: 0; left: 1.5rem; right: 1.5rem; height: 2px; background: linear-gradient(90deg, transparent, #c9a227, transparent); opacity: .55; }
+.pl-kid-l { position: absolute; top: 1.3rem; right: 1.4rem; font-family: var(--font-display); font-style: italic; font-size: 1.5rem; color: var(--pl-gold); opacity: .6; }
+.pl-kid h3 { font-family: var(--font-display); font-weight: 500; font-size: 1.4rem; line-height: 1.2; margin: 0 0 .2rem; color: var(--color-text); padding-right: 2rem; }
+.pl-kid-d { font-family: var(--font-body); font-size: .72rem; letter-spacing: .06em; color: var(--pl-gold); margin: 0 0 .7rem; }
+.pl-kid p { font-size: .9rem; line-height: 1.65; color: var(--color-text-secondary); margin: 0; }
+.pl-kid-link { display: inline-block; margin-top: .8rem; font-family: var(--font-body); font-size: .6rem; letter-spacing: .16em; text-transform: uppercase; font-weight: 600; color: var(--pl-gold); text-decoration: none; }
+.pl-kid-link:hover { text-decoration: underline; }
+
+/* Маєток 1798 */
+.pl-sec--estate { background: #16110a; color: #efe4c6; }
+.pl-sec--estate .pl-h2 { color: #f4e9c8; }
+.pl-sec--estate .pl-h2 em, .pl-sec--estate .pl-kicker { color: #d4b25a; }
+.pl-est-lede { font-family: var(--font-display); font-style: italic; font-size: 1.15rem; color: rgba(239,228,198,.65); max-width: 44em; margin: 0 auto 2.4rem; line-height: 1.6; }
+.pl-est-nums { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: rgba(212,178,90,.2); border: 1px solid rgba(212,178,90,.2); border-radius: 14px; overflow: hidden; margin-bottom: 2.4rem; }
+@media (max-width: 700px) { .pl-est-nums { grid-template-columns: repeat(2, 1fr); } }
+.pl-est-nums div { background: #1c160d; padding: 1.4rem 1rem; text-align: center; }
+.pl-est-nums dd { margin: 0 0 .35rem; font-family: var(--font-display); font-size: 2.3rem; line-height: 1; color: #d4b25a; }
+.pl-est-nums dt { font-family: var(--font-body); font-size: .58rem; letter-spacing: .18em; text-transform: uppercase; color: rgba(239,228,198,.5); }
+.pl-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: .45rem; }
+.pl-chip { display: inline-flex; align-items: baseline; gap: .45rem; padding: .4rem .85rem; border-radius: 100px; border: 1px solid rgba(212,178,90,.3); color: #efe4c6; text-decoration: none; font-family: var(--font-display); font-size: 1.05rem; transition: background .2s ease, color .2s ease, border-color .2s ease; }
+.pl-chip small { font-family: var(--font-body); font-size: .62rem; color: rgba(239,228,198,.5); }
+a.pl-chip:hover, a.pl-chip:focus-visible { background: #d4b25a; border-color: #d4b25a; color: #1a1408; outline: none; }
+a.pl-chip:hover small, a.pl-chip:focus-visible small { color: #1a1408; }
+span.pl-chip { border-style: dashed; opacity: .7; }
+.pl-est-note { margin: 1.4rem 0 0; text-align: center; font-family: var(--font-body); font-size: .74rem; color: rgba(239,228,198,.45); }
+.pl-est-cta { text-align: center; margin-top: 2.2rem; }
+.pl-btn { display: inline-flex; align-items: center; gap: .6rem; padding: .95rem 1.7rem; border-radius: 100px; background: #d4b25a; color: #1a1408; text-decoration: none; font-family: var(--font-body); font-size: .66rem; letter-spacing: .18em; text-transform: uppercase; font-weight: 600; transition: transform .2s ease, background .2s ease; }
+.pl-btn:hover { background: #e6c872; transform: translateY(-2px); }
+.pl-btn svg { width: 14px; height: 14px; }
+
+/* Пам'ять */
+.pl-memory { max-width: 860px; margin: 0 auto; display: grid; grid-template-columns: 64px minmax(0,1fr); gap: 1.4rem; align-items: start; padding: 1.8rem; border-radius: 14px; background: var(--pl-card); border: 1px solid var(--pl-rule-soft); }
+.pl-memory svg { width: 64px; height: 64px; color: var(--pl-gold); }
+.pl-memory h3 { font-family: var(--font-display); font-weight: 500; font-size: 1.4rem; margin: 0 0 .5rem; color: var(--color-text); }
+.pl-memory p { font-size: .92rem; line-height: 1.7; color: var(--color-text-secondary); margin: 0 0 .8rem; }
+.pl-memory a { font-family: var(--font-body); font-size: .62rem; letter-spacing: .16em; text-transform: uppercase; font-weight: 600; color: var(--pl-gold); text-decoration: none; }
+.pl-memory a:hover { text-decoration: underline; }
+@media (max-width: 560px) { .pl-memory { grid-template-columns: 1fr; } }
+.pl-src { max-width: 860px; margin: 2rem auto 0; text-align: center; font-family: var(--font-body); font-size: .72rem; line-height: 1.6; color: var(--color-text-light); font-style: italic; }
+
+@media (prefers-reduced-motion: reduce) { .pl-seal, .pl-eyebrow, .pl-title, .pl-lede, .pl-pills { animation: none; } }
+</style>
+<style>
+html, body { touch-action: manipulation; }
+a, button, [role="button"], input, select, textarea, .nav-link, .logo,
+.mobile-toggle, .theme-toggle, .scroll-top-btn { touch-action: manipulation; }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+    <div class="header-container">
+        <a href="index.html" class="logo">
+            <img src="https://i.imgur.com/mXCrjjG.png" alt="Герб" class="logo-img">
+            <div class="logo-text">
+                <span class="logo-city">Дубровиця</span>
+                <span class="logo-subtitle">Цифровий архів</span>
+            </div>
+        </a>
+        <nav class="nav" id="mainNav">
+            <a href="index.html" class="nav-link">Головна</a>
+            <a href="history.html" class="nav-link active">Історія</a>
+            <a href="photo-archive.html" class="nav-link">Фотоархів</a>
+            <a href="architecture.html" class="nav-link">Пам'ятки</a>
+            <a href="metrychni-knyhy.html" class="nav-link">Архівні справи</a>
+            <a href="jewish-history.html" class="nav-link">Єврейська спадщина</a>
+            <a href="presa.html" class="nav-link">Преса</a>
+            <a href="doslidnyk.html" class="nav-link">Дослідник</a>
+            <a href="contacts.html" class="nav-link">Про проєкт</a>
+        </nav>
+        <button class="theme-toggle" id="themeToggle" aria-label="Перемкнути тему">
+            <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            <svg class="theme-icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Відкрити меню">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</header>
+
+<main class="pl-page">
+
+<section class="pl-hero">
+    <nav class="pl-crumbs" aria-label="Навігаційний ланцюжок">
+        <a href="index.html">Головна</a><span>/</span><a href="atlas-1798.html">Атлас 1798</a><span>/</span>Власники
+    </nav>
+    <div class="pl-seal"><img src="herb-plater.jpg" alt=""></div>
+    <div class="pl-eyebrow">Власник Дубровиці · 1771–1832</div>
+    <h1 class="pl-title">Юзеф Антоній <em>Броель-Плятер</em></h1>
+    <p class="pl-lede">Граф, мальтійський командор, посол на Великий сейм. У «Економічних примітках» 1798 року — «граф і кавалер Антоній Плятер», власник Дубровиці й двох десятків навколишніх сіл.</p>
+    <dl class="pl-pills">
+        <div class="pl-pill"><dd>1750</dd><dt>народився в Шатейках</dt></div>
+        <div class="pl-pill"><dd>1771</dd><dt>придбав Дубровицю</dt></div>
+        <div class="pl-pill"><dd>1792</dd><dt>орден Білого Орла</dt></div>
+        <div class="pl-pill"><dd>1832</dd><dt>помер у Воробині</dt></div>
+    </dl>
+    <div class="pl-hero-fade"></div>
+</section>
+
+<!-- Біографія -->
+<section class="pl-sec">
+    <div class="pl-wrap pl-bio">
+        <div class="pl-prose fade-in-up">
+            <div class="pl-kicker">Біографія</div>
+            <h2 class="pl-h2">Граф із <em>Воробина</em></h2>
+            <p>Юзеф Антоній Вільгельм Броель-Плятер народився 13 червня 1750 року в Шатейках. Він був сином Вільгельма Яна та Петронели з Нагурських. Після продажу у 1771 році зайнських маєтностей того ж року придбав Дубровицю у Міхала Бжостовського.</p>
+            <p>Свою резиденцію збудував у Воробині, поруч із Дубровицею. Там мав велику бібліотеку та чудову колекцію творів мистецтва. Володів також Пульмами біля Володави та Загороддям біля Кременця.</p>
+            <p>У 1776 році був послом на Жмудський сейм, у 1788-му — послом на Великий сейм. Був прибічником Конституції 3 травня. У 1790 році отримав орден Святого Станіслава, у 1792-му — орден Білого Орла.</p>
+            <p>Помер у Воробині 2 вересня 1832 року. Похований у гробівці-каплиці на кладовищі в Дубровиці.</p>
+            <div class="pl-titles">
+                <b>Титули та уряди</b>
+                Російський дійсний таємний радник (1796), граф (1774), інфлянтський войський (1788–1790), гелдянський і міласький староста, мальтійський кавалер (в ордені з 1775 року), спадковий мальтійський командор.
+            </div>
+        </div>
+        <figure class="pl-herb fade-in-up delay-1">
+            <img src="herb-plater.jpg" alt="Герб роду Плятерів: щит зі скісною перев'яззю поверх горизонтальних смуг, над ним шолом, корона і клейнод із пір'я" width="1068" height="1300">
+            <figcaption>Герб роду Броель-Плятерів</figcaption>
+        </figure>
+    </div>
+</section>
+
+<!-- Хронологія -->
+<section class="pl-sec pl-sec--time">
+    <div class="pl-wrap">
+        <div class="pl-center fade-in-up">
+            <div class="pl-kicker">Хронологія</div>
+            <h2 class="pl-h2">Життя <em>в датах</em></h2>
+        </div>
+        <ol class="pl-time fade-in-up">
+            <li class="key"><span class="pl-time-y">1750</span><span class="pl-time-t">13 червня — народився в Шатейках.</span></li>
+            <li class="key"><span class="pl-time-y">1771</span><span class="pl-time-t">Продав зайнські маєтності й придбав Дубровицю у Міхала Бжостовського.</span></li>
+            <li><span class="pl-time-y">1774</span><span class="pl-time-t">Отримав графський титул.</span></li>
+            <li><span class="pl-time-y">1775</span><span class="pl-time-t">Вступив до Мальтійського ордену.</span></li>
+            <li><span class="pl-time-y">1776</span><span class="pl-time-t">Посол на Жмудський сейм.</span></li>
+            <li><span class="pl-time-y">1788</span><span class="pl-time-t">Посол на Великий (Чотирирічний) сейм; інфлянтський войський (до 1790).</span></li>
+            <li><span class="pl-time-y">1790</span><span class="pl-time-t">Кавалер ордена Святого Станіслава.</span></li>
+            <li class="key"><span class="pl-time-y">1792</span><span class="pl-time-t">Нагороджений орденом Білого Орла.</span></li>
+            <li><span class="pl-time-y">1796</span><span class="pl-time-t">Російський дійсний таємний радник.</span></li>
+            <li class="key"><span class="pl-time-y">1798</span><span class="pl-time-t">«Економічні примітки» до атласу Волинської губернії описують його маєток: <span id="plTimeEstate">Дубровиця та навколишні села</span>. <a href="atlas-1798.html#mayetky">Див. атлас</a></span></li>
+            <li class="key"><span class="pl-time-y">1832</span><span class="pl-time-t">2 вересня — помер у Воробині. Похований у гробівці-каплиці на кладовищі в Дубровиці.</span></li>
+        </ol>
+    </div>
+</section>
+
+<!-- Родина -->
+<section class="pl-sec">
+    <div class="pl-wrap">
+        <div class="pl-center fade-in-up">
+            <div class="pl-kicker">Родина</div>
+            <h2 class="pl-h2">Дружина <em>і діти</em></h2>
+        </div>
+        <p class="pl-spouse fade-in-up">Був одружений з <strong>Терезою Абрамович</strong> (Абрагамович), власного герба або відміни герба Яструбець (1754–1826). Вона була дочкою Єжи, стародубського старости, і Марціанни (Марії) Дерналович герба Любич, а по батькові — онукою Анджея Абрамовича, дідича Ворнян, та N. Огінської. Для неї це був другий шлюб: першим її чоловіком був Тадеуш Слізень, гродненський земський суддя.</p>
+
+        <div class="pl-kids">
+            <article class="pl-kid fade-in-up">
+                <span class="pl-kid-l">a</span>
+                <h3>Анна Юлія</h3>
+                <p class="pl-kid-d">1776–1845</p>
+                <p>Була заміжня двічі: вперше — за графом Каролем Красицьким герба Рогаля, власником Рлуші; вдруге — за генералом російських військ Станіславом Шостаковським.</p>
+            </article>
+            <article class="pl-kid fade-in-up delay-1">
+                <span class="pl-kid-l">b</span>
+                <h3>Граціян Віктор</h3>
+                <p class="pl-kid-d">† 19.12.1784</p>
+                <p>Відома лише дата смерті.</p>
+            </article>
+            <article class="pl-kid fade-in-up delay-2">
+                <span class="pl-kid-l">c</span>
+                <h3>Ян Норберт</h3>
+                <p class="pl-kid-d">1778–1786</p>
+                <p>Помер у дитинстві.</p>
+            </article>
+            <article class="pl-kid fade-in-up">
+                <span class="pl-kid-l">d</span>
+                <h3>Франциск Ксаверій</h3>
+                <p class="pl-kid-d">нар. 1786</p>
+                <p>Інших відомостей поки немає.</p>
+            </article>
+            <article class="pl-kid fade-in-up delay-1">
+                <span class="pl-kid-l">e</span>
+                <h3>Констанція</h3>
+                <p class="pl-kid-d">1782–1874</p>
+                <p>У 1800 році вийшла заміж за графа Станіслава Мануцці — сина графа Миколи Мануцці (а де-факто сина короля Станіслава Августа Понятовського) та Ядвіги Струтинської герба Сас, брацлавського маршалка і дідича Бельмонта, Опси, Богіні, Злотого та інших сіл у Єзероському повіті. Шлюб був бездітним.</p>
+                <a class="pl-kid-link" href="presa.html?id=1907-08-14-dziennik-wilenski-plater-hrob">Преса 1907: осквернення гробівця →</a>
+            </article>
+            <article class="pl-kid fade-in-up delay-2">
+                <span class="pl-kid-l">f</span>
+                <h3>Філіп Нереуш Граціян Віктор</h3>
+                <p class="pl-kid-d">1784 – 04.11.1838</p>
+                <p>Військовий армії Варшавського герцогства. Кілька років був візитатором (інспектором) шкіл у Київській, Подільській та Волинській губерніях, обіймав посаду волинського віцегубернатора. Після 1821 року відійшов від суспільного життя й оселився на віллі в Одесі. Холостяк; імовірно, наприкінці життя мав психічний розлад. Похований в Одесі.</p>
+            </article>
+            <article class="pl-kid fade-in-up">
+                <span class="pl-kid-l">g</span>
+                <h3>Ігнацій Вільгельм</h3>
+                <p class="pl-kid-d">1791–1854</p>
+                <p>У 1825 році одружився з Ідалією Аделаїдою Собанською герба Юноша (†1891), дочкою Міхала та Вікторії Орловської герба Любич. Масон. У 1829 році отримав з рук царя Миколи I графський титул. Окрім Дубровиці, володів Пульмою, Бельмонтом та Богіном. У 1833 році придбав у князя Євстахія Сангушка Іллінці (Лінці) в Липовецькому повіті.</p>
+                <a class="pl-kid-link" href="presa.html?id=1907-08-14-dziennik-wilenski-plater-hrob">Преса 1907: осквернення гробівця →</a>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- Маєток 1798 -->
+<section class="pl-sec pl-sec--estate">
+    <div class="pl-wrap pl-center">
+        <div class="pl-kicker">Атлас Волинської губернії</div>
+        <h2 class="pl-h2">Маєток <em>1798 року</em></h2>
+        <p class="pl-est-lede">За «Економічними примітками» маєток графа простягався по обидва боки Горині, Случі та Двірки. Містечко Домбровиця мало чотири ярмарки на рік, а у фільварку Воробин стояв дерев’яний панський дім.</p>
+        <dl class="pl-est-nums" id="plNums">
+            <div><dd>—</dd><dt>поселень</dt></div><div><dd>—</dd><dt>дворів</dt></div><div><dd>—</dd><dt>душ</dt></div><div><dd>—</dd><dt>руб. доходу на рік</dt></div>
+        </dl>
+        <div class="pl-chips" id="plChips"></div>
+        <p class="pl-est-note">Натисніть поселення, щоб відкрити його на інтерактивній мапі. Пунктирні — записані в «Примітках», але не потрапили на фрагменти аркушів.</p>
+        <div class="pl-est-cta">
+            <a class="pl-btn" href="atlas-1798.html#dombrovytsia">
+                Відкрити атлас 1798 року
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Пам'ять -->
+<section class="pl-sec">
+    <div class="pl-wrap">
+        <div class="pl-memory fade-in-up">
+            <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M12 58V30L32 12l20 18v28z"/><path d="M32 4v12M27 8h10"/><path d="M26 58V42a6 6 0 0 1 12 0v16"/><path d="M6 58h52"/></svg>
+            <div>
+                <h3>Гробівець-каплиця в Дубровиці</h3>
+                <p>У каплиці на парафіяльному кладовищі поховано графа та його нащадків. У 1907 році газета «Dziennik Wileński» повідомляла, що під час пожежі в містечку злочинці вломилися до каплиці й розбили саркофаги дочки графа, Констанції Мануцці, та сина, Ігнація Плятера.</p>
+                <a href="presa.html?id=1907-08-14-dziennik-wilenski-plater-hrob">Читати статтю в розділі «Преса» →</a>
+            </div>
+        </div>
+        <p class="pl-src">Біографічні відомості подано за матеріалами, наданими дослідниками проєкту; дані про маєток — за «Економічними примітками» до атласу Волинської губернії 1798 року.</p>
+    </div>
+</section>
+
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4 class="footer-title">Дубровиця</h4>
+                <p class="footer-text">Цифровий архів історичної спадщини міста Дубровиця, Сарненський район, Рівненська область, Україна.</p>
+            </div>
+            <div class="footer-section">
+                <h4 class="footer-title">Навігація</h4>
+                <nav class="footer-nav">
+                    <a href="history.html">Історія</a>
+                    <a href="photo-archive.html">Фотоархів</a>
+                    <a href="metrychni-knyhy.html">Архівні справи</a>
+                    <a href="jewish-history.html">Єврейська спадщина</a>
+                </nav>
+            </div>
+            <div class="footer-section">
+                <h4 class="footer-title">Контакти</h4>
+                <p class="footer-text">Маєте матеріали або пропозиції?<br><a href="contacts.html" class="footer-link">Зв'яжіться з нами</a></p>
+            </div>
+        </div>
+        <div class="footer-copyright-row">
+            <div class="footer-copyright-ornament">
+                <div class="footer-copyright-ornament-line"></div>
+                <div class="footer-copyright-ornament-diamond"></div>
+                <div class="footer-copyright-ornament-line"></div>
+            </div>
+            <p class="footer-copyright-main">&copy; 2026 <a href="https://dubrovytsia.site">dubrovytsia.site</a> — Цифровий архів Дубровиці.</p>
+        </div>
+    </div>
+</footer>
+
+<script src="app.js"></script>
+<script src="sela_data_embed.js"></script>
+<script>
+(function(){
+    if (typeof ATLAS_ESTATES_1798 === 'undefined') return;
+    var e = ATLAS_ESTATES_1798.filter(function(x){ return x.ownerId === 'plater'; })[0];
+    if (!e) return;
+    function fmt(n){ return n.toLocaleString('uk-UA').replace(/\s/g, ' '); }
+    function esc(s){ var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+    var dd = document.querySelectorAll('#plNums dd');
+    [e.places.length, e.dvory, e.male + e.female, e.income].forEach(function(v, i){ dd[i].textContent = fmt(v); });
+    var sela = window.ATLAS_SELA_1798 || {};
+    document.getElementById('plChips').innerHTML = e.places.map(function(p){
+        var label = p.name.replace(/^(Село \(Деревня\)|Село|Сільце|Містечко|Філварок)\s+/, '');
+        var d = p.slug && sela[p.slug];
+        var n = d && d.dvory ? '<small>' + d.dvory + ' дв.</small>' : '';
+        return d ? '<a class="pl-chip" href="atlas-1798.html#' + encodeURIComponent(p.slug) + '">' + esc(label) + n + '</a>'
+                 : '<span class="pl-chip">' + esc(label) + '</span>';
+    }).join('');
+    var t = document.getElementById('plTimeEstate');
+    if (t) t.textContent = e.places.length + ' поселень, ' + fmt(e.dvory) + ' дворів, ' + fmt(e.male + e.female) + ' душ і ' + fmt(e.income) + ' руб. доходу на рік';
+})();
+</script>
+</body>
+</html>
