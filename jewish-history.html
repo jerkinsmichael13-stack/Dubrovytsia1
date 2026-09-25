@@ -20,10 +20,10 @@
     <meta property="og:type" content="website">
     <title>Єврейська Дубровиця — Цифровий архів</title>
     <script>!function(){var t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t)}()</script>
-    <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="app.css?v=11">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Manrope:wght@300;400;500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
 /* ═══════════════════════════════════════════════
@@ -78,7 +78,7 @@
     pointer-events: none;
     background:
         radial-gradient(ellipse 70% 60% at 50% 50%, transparent 20%, rgba(0,0,0,0.3) 100%),
-        linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.05) 30%, rgba(0,0,0,0.4) 68%, var(--color-bg, #faf7f2) 100%);
+        linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.05) 30%, rgba(0,0,0,0.4) 68%, rgba(0,0,0,0.6) 100%);
 }
 /* Scan lines like photo-archive */
 .jh-hero-scan {
@@ -155,7 +155,7 @@
     flex-shrink: 0;
 }
 .jh-eyebrow span {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Manrope', sans-serif;
     font-size: 0.65rem;
     letter-spacing: 0.35em;
     text-transform: uppercase;
@@ -207,8 +207,8 @@
     z-index: 10;
 }
 .jh-scroll-indicator span {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.58rem;
+    font-family: 'Manrope', sans-serif;
+    font-size: .62rem;
     letter-spacing: 0.3em;
     text-transform: uppercase;
     color: rgba(255,255,255,0.35);
@@ -275,7 +275,7 @@
     margin-bottom: 0.4rem;
 }
 .jh-stat-label {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Manrope', sans-serif;
     font-size: 0.62rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
@@ -288,7 +288,7 @@
     align-items: start;
 }
 .jh-intro-label {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Manrope', sans-serif;
     font-size: 0.62rem;
     letter-spacing: 0.3em;
     text-transform: uppercase;
@@ -335,7 +335,7 @@
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Manrope', sans-serif;
     font-size: 0.68rem;
     color: var(--color-text-muted);
     border: 1px solid var(--color-border-light);
@@ -366,8 +366,8 @@
     margin-bottom: 3.5rem;
 }
 .jh-section-eyebrow {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.58rem;
+    font-family: 'Manrope', sans-serif;
+    font-size: .62rem;
     letter-spacing: 0.38em;
     text-transform: uppercase;
     color: var(--color-accent);
@@ -502,8 +502,8 @@
 }
 .jh-ph-sm .jh-photo-caption p { font-size: 0.73rem; }
 .jh-photo-caption .year-tag {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.5rem;
+    font-family: 'Manrope', sans-serif;
+    font-size: .62rem;
     letter-spacing: 0.2em;
     color: #c9a227;
     font-style: normal;
@@ -563,8 +563,8 @@
     50%      { opacity: 0.65; transform: scale(1.05) rotate(3deg); }
 }
 .jh-nigun-vert-label {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.44rem;
+    font-family: 'Manrope', sans-serif;
+    font-size: .62rem;
     letter-spacing: 0.32em;
     text-transform: uppercase;
     color: rgba(201,162,39,0.38);
@@ -573,8 +573,8 @@
 }
 .jh-nigun-body { min-width: 0; overflow-wrap: break-word; word-break: break-word; max-width: 100%; }
 .jh-nigun-eyebrow {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.52rem;
+    font-family: 'Manrope', sans-serif;
+    font-size: .62rem;
     letter-spacing: 0.34em;
     text-transform: uppercase;
     color: rgba(201,162,39,0.55);
@@ -614,8 +614,8 @@
     margin: 1.1rem 0 1rem;
 }
 .jh-nigun-tag {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.58rem;
+    font-family: 'Manrope', sans-serif;
+    font-size: .62rem;
     letter-spacing: 0.12em;
     color: rgba(201,162,39,0.55);
     border: 1px solid rgba(201,162,39,0.18);
@@ -698,14 +698,14 @@
 .jh-audio-times {
     display: flex;
     justify-content: space-between;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.52rem;
+    font-family: 'Manrope', sans-serif;
+    font-size: .62rem;
     letter-spacing: 0.05em;
     color: rgba(255,255,255,0.25);
 }
 .jh-nigun-source {
     margin-top: 1.2rem;
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Manrope', sans-serif;
     font-size: 0.62rem;
     color: rgba(255,255,255,0.2);
     line-height: 1.6;
@@ -755,8 +755,8 @@
     border: 1px solid var(--color-border);
 }
 .jh-book-meta-label {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.6rem;
+    font-family: 'Manrope', sans-serif;
+    font-size: .62rem;
     letter-spacing: 0.3em;
     text-transform: uppercase;
     color: var(--color-accent);
@@ -829,8 +829,8 @@
     color: transparent;
 }
 .jh-chapter-label {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.45rem;
+    font-family: 'Manrope', sans-serif;
+    font-size: .62rem;
     letter-spacing: 0.3em;
     text-transform: uppercase;
     color: var(--color-accent);
@@ -932,7 +932,7 @@
 }
 .jh-quote p::first-letter { float: none; font-size: inherit; color: inherit; margin: 0; }
 .jh-quote cite {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Manrope', sans-serif;
     font-size: 0.72rem;
     letter-spacing: 0.1em;
     color: var(--color-text-muted);
@@ -949,7 +949,7 @@
     margin: 2rem 0;
 }
 .jh-highlight-box-title {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Manrope', sans-serif;
     font-size: 0.68rem;
     letter-spacing: 0.25em;
     text-transform: uppercase;
@@ -1085,8 +1085,8 @@
     position: relative;
 }
 .jh-memorial-eyebrow {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.6rem;
+    font-family: 'Manrope', sans-serif;
+    font-size: .62rem;
     letter-spacing: 0.4em;
     text-transform: uppercase;
     color: rgba(201,162,39,0.5);
@@ -1161,8 +1161,8 @@
     margin-bottom: 0.4rem;
 }
 .jh-memorial-num-label {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.5rem;
+    font-family: 'Manrope', sans-serif;
+    font-size: .62rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: rgba(255,255,255,0.3);
@@ -1183,7 +1183,7 @@
 }
 .jh-memorial-quote p::first-letter { float: none; font-size: inherit; color: inherit; margin: 0; }
 .jh-memorial-quote cite {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Manrope', sans-serif;
     font-size: 0.68rem;
     letter-spacing: 0.12em;
     color: rgba(201,162,39,0.4);
@@ -1259,7 +1259,7 @@
 .ulb-btn{width:36px;height:36px;flex-shrink:0;border-radius:8px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.07);color:rgba(255,255,255,.82);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s,border-color .15s;padding:0;-webkit-tap-highlight-color:transparent;}
 .ulb-btn:hover,.ulb-btn:active{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.22);}
 .ulb-btn svg{width:16px;height:16px;pointer-events:none;}
-#ULB-ZVAL{font-family:'DM Sans',sans-serif;font-size:.7rem;color:rgba(255,255,255,.5);min-width:3.4em;text-align:center;flex-shrink:0;}
+#ULB-ZVAL{font-family:'Manrope',sans-serif;font-size:.7rem;color:rgba(255,255,255,.5);min-width:3.4em;text-align:center;flex-shrink:0;}
 .ulb-sep{width:1px;height:18px;background:rgba(255,255,255,.1);flex-shrink:0;}
 #ULB-CAP{font-family:'Cormorant Garamond',serif;font-size:.95rem;font-weight:300;font-style:italic;color:rgba(255,255,255,.72);text-align:center;padding:0;pointer-events:none;line-height:1.4;letter-spacing:.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
 #ULB-CLOSE{position:absolute;top:.75rem;right:.75rem;z-index:20;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.18);background:rgba(10,8,16,.75);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:rgba(255,255,255,.88);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s,transform .15s;padding:0;-webkit-tap-highlight-color:transparent;}
@@ -1269,7 +1269,7 @@
 .ulb-nav:hover{background:rgba(255,255,255,.18);}
 #ULB-PREV{left:.65rem;}
 #ULB-NEXT{right:.65rem;}
-#ULB-HINT{position:absolute;top:.75rem;left:50%;transform:translateX(-50%);z-index:20;background:rgba(6,5,10,.78);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.1);border-radius:100px;padding:.3rem .9rem;font-family:'DM Sans',sans-serif;font-size:.58rem;letter-spacing:.06em;color:rgba(255,255,255,.42);pointer-events:none;white-space:nowrap;transition:opacity .6s ease;}
+#ULB-HINT{position:absolute;top:.75rem;left:50%;transform:translateX(-50%);z-index:20;background:rgba(6,5,10,.78);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.1);border-radius:100px;padding:.3rem .9rem;font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.06em;color:rgba(255,255,255,.42);pointer-events:none;white-space:nowrap;transition:opacity .6s ease;}
 @media(max-width:480px){.ulb-nav{width:38px;height:38px;font-size:1.1rem;}#ULB-PREV{left:.35rem;}#ULB-NEXT{right:.35rem;}#ULB-HINT{display:none;}#ULB-CAP{font-size:.85rem;}}@media(min-width:481px){#ULB-ZOOM-PAD{display:none!important;}#ULB-HINT{display:none!important;}}
 
 /* ═══════════════════════════════════════════════
@@ -1495,8 +1495,8 @@
 /* Player body */
 .jh-nigun-body { min-width: 0; overflow-wrap: break-word; word-break: break-word; max-width: 100%; }
 .jh-nigun-eyebrow {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.5rem;
+    font-family: 'Manrope', sans-serif;
+    font-size: .62rem;
     letter-spacing: 0.38em;
     text-transform: uppercase;
     color: rgba(201,162,39,0.5);
@@ -1537,8 +1537,8 @@
     margin: 1rem 0;
 }
 .jh-nigun-tag {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.55rem;
+    font-family: 'Manrope', sans-serif;
+    font-size: .62rem;
     letter-spacing: 0.1em;
     color: rgba(201,162,39,0.5);
     border: 1px solid rgba(201,162,39,0.15);
@@ -1643,14 +1643,14 @@
 .jh-audio-times {
     display: flex;
     justify-content: space-between;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.5rem;
+    font-family: 'Manrope', sans-serif;
+    font-size: .62rem;
     letter-spacing: 0.06em;
     color: rgba(255,255,255,0.22);
 }
 .jh-nigun-source {
     margin-top: 1.1rem;
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Manrope', sans-serif;
     font-size: 0.6rem;
     color: rgba(255,255,255,0.18);
     line-height: 1.6;
@@ -1760,39 +1760,69 @@ a, button, [role="button"], input, select, textarea,
 <!-- HEADER -->
 <header class="header">
     <div class="header-container">
-        <a href="index.html" class="logo">
-            <img src="https://i.imgur.com/mXCrjjG.png" alt="Герб" class="logo-img">
-            <div class="logo-text">
+        <a href="index.html" class="logo" aria-label="Дубровиця — Цифровий архів, головна сторінка">
+            <img src="https://i.imgur.com/mXCrjjG.png" alt="" class="logo-img" width="40" height="40" decoding="async">
+            <span class="logo-text">
                 <span class="logo-city">Дубровиця</span>
                 <span class="logo-subtitle">Цифровий архів</span>
-            </div>
+            </span>
         </a>
-        <nav class="nav" id="mainNav">
-            <a href="index.html" class="nav-link">Головна</a>
-            <a href="history.html" class="nav-link">Історія</a>
-            <a href="photo-archive.html" class="nav-link">Фотоархів</a>
-            <a href="architecture.html" class="nav-link">Пам'ятки</a>
-            <a href="metrychni-knyhy.html" class="nav-link">Архівні справи</a>
-                <a href="jewish-history.html" class="nav-link active">Єврейська спадщина</a>
-                <a href="presa.html" class="nav-link">Преса</a>
-                <a href="doslidnyk.html" class="nav-link">Дослідник</a>
-            <a href="contacts.html" class="nav-link">Про проєкт</a>
+
+        <nav class="nav" id="mainNav" aria-label="Головне меню">
+            <ul class="nav-list">
+                <li class="nav-item nav-item--home" style="--i:0"><a href="index.html" class="nav-link">Головна</a></li>
+                <li class="nav-item" style="--i:1"><a href="history.html" class="nav-link">Історія</a></li>
+                <li class="nav-item" style="--i:2"><a href="photo-archive.html" class="nav-link">Фотоархів</a></li>
+                <li class="nav-item" style="--i:3"><a href="architecture.html" class="nav-link">Пам'ятки</a></li>
+                <li class="nav-item has-menu" style="--i:4">
+                    <a href="metrychni-knyhy.html" class="nav-link">Архівні справи</a>
+                    <button type="button" class="nav-caret" aria-expanded="false" aria-controls="navArchive" aria-label="Показати документи архіву"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                    <div class="nav-menu" id="navArchive">
+                        <div class="nav-menu-inner">
+                            <div class="nav-menu-main">
+                                <p class="nav-menu-label">Документи за роками</p>
+                                <div class="nav-docs">
+                                    <a href="sumariusz-1642.html" class="nav-doc"><span class="nav-doc-year">1642</span><span class="nav-doc-name">Сумаріуш маєтку</span><span class="nav-doc-note">Доходи маєтку Дубровиця</span></a>
+                                    <a href="zhaloba-1650.html" class="nav-doc"><span class="nav-doc-year">1650</span><span class="nav-doc-name">Жалоба про спустошення</span><span class="nav-doc-note">Гродські книги Пінські</span></a>
+                                    <a href="rejestr-1665.html" class="nav-doc"><span class="nav-doc-year">1665</span><span class="nav-doc-name">Реєстр збитків</span><span class="nav-doc-note">Пінський гродський суд</span></a>
+                                    <a href="inventar-1780.html" class="nav-doc"><span class="nav-doc-year">1780</span><span class="nav-doc-name">Інвентар маєтку</span><span class="nav-doc-note">Містечко, вулиці, мешканці</span></a>
+                                    <a href="atlas-1798.html" class="nav-doc"><span class="nav-doc-year">1798</span><span class="nav-doc-name">Атлас губернії</span><span class="nav-doc-note">Інтерактивна мапа сіл</span></a>
+                                    <a href="atlas-1798-analityka.html" class="nav-doc"><span class="nav-doc-year">1798</span><span class="nav-doc-name">Край у цифрах</span><span class="nav-doc-note">Аналітика атласу</span></a>
+                                    <a href="persha-svitova.html" class="nav-doc"><span class="nav-doc-year">1914</span><span class="nav-doc-name">Перша світова війна</span><span class="nav-doc-note">Мобілізовані мешканці</span></a>
+                                    <a href="vyborchi-1938.html" class="nav-doc"><span class="nav-doc-year">1938</span><span class="nav-doc-name">Список виборців</span><span class="nav-doc-note">8 619 записів</span></a>
+                                </div>
+                            </div>
+                            <div class="nav-menu-side">
+                                <p class="nav-menu-label">Постаті</p>
+                                <a href="plater.html" class="nav-person"><img src="nav-plater.jpg" alt="" width="40" height="40" loading="lazy" decoding="async"><span><span class="nav-person-name">Граф Юзеф Плятер</span><span class="nav-person-role">Власник Дубровиці</span></span></a>
+                                <a href="radzyvil.html" class="nav-person"><img src="nav-radzyvil.jpg" alt="" width="40" height="40" loading="lazy" decoding="async"><span><span class="nav-person-name">Князь Домінік Радзивілл</span><span class="nav-person-role">Власник сіл над Горинню</span></span></a>
+                                <p class="nav-menu-label nav-menu-label--gap">Каталоги</p>
+                                <a href="metrychni-knyhy.html#mkcalSection" class="nav-cat"><span>Метричні книги</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                                <a href="metrychni-knyhy.html#booksCatalog" class="nav-cat"><span>Книги про Дубровицю</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                                <a href="metrychni-knyhy.html" class="nav-menu-all">Усі архівні справи <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item" style="--i:5"><a href="jewish-history.html" class="nav-link active" aria-current="page">Єврейська спадщина</a></li>
+                <li class="nav-item" style="--i:6"><a href="presa.html" class="nav-link">Преса</a></li>
+                <li class="nav-item" style="--i:7"><a href="doslidnyk.html" class="nav-link">Дослідник</a></li>
+                <li class="nav-item" style="--i:8"><a href="contacts.html" class="nav-link">Про проєкт</a></li>
+            </ul>
+            <p class="nav-foot">Цифровий архів історичної спадщини Дубровиці · <a href="contacts.html">Написати нам</a></p>
         </nav>
-        <button class="theme-toggle" id="themeToggle" aria-label="Перемкнути тему">
-            <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="5"></circle>
-                <line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line>
-                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                <line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line>
-                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-            </svg>
-            <svg class="theme-icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-            </svg>
-        </button>
-        <button class="mobile-toggle" id="mobileToggle" aria-label="Відкрити меню" aria-expanded="false">
-            <span></span><span></span><span></span>
-        </button>
+
+        <div class="header-actions">
+            <button type="button" class="theme-toggle" id="themeToggle" aria-label="Перемкнути тему">
+                <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg>
+                <svg class="theme-icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.3A8.5 8.5 0 0 1 9.7 3.5a8.5 8.5 0 1 0 10.8 10.8z"/></svg>
+            </button>
+            <button type="button" class="mobile-toggle" id="mobileToggle" aria-label="Відкрити меню" aria-expanded="false" aria-controls="mainNav">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
     </div>
 </header>
 
@@ -1893,7 +1923,7 @@ a, button, [role="button"], input, select, textarea,
                     Написана тими, хто вижив і виїхав до Ізраїлю ще до Другої світової, книга є унікальним документом — детальна хроніка єврейського побуту, культури, релігійного життя і трагічної долі громади. Основний нарис «Стежками минулих днів» написаний Шмуелем Зальцманом — місцевим уродженцем. Частина сторінок перекладена українською мовою та стала основою для цього розділу.
                 </p>
                 <div style="margin-top:1.4rem;">
-                    <button onclick="openBookReader()" style="display:inline-flex;align-items:center;gap:0.6rem;font-family:'DM Sans',sans-serif;font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--color-accent);border:1px solid var(--color-accent);border-radius:var(--radius-full);padding:0.55rem 1.2rem;background:transparent;cursor:pointer;transition:background 0.2s,color 0.2s;" onmouseover="this.style.background='var(--color-accent)';this.style.color='#fff';" onmouseout="this.style.background='transparent';this.style.color='var(--color-accent)';">
+                    <button onclick="openBookReader()" style="display:inline-flex;align-items:center;gap:0.6rem;font-family:'Manrope',sans-serif;font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--color-accent);border:1px solid var(--color-accent);border-radius:var(--radius-full);padding:0.55rem 1.2rem;background:transparent;cursor:pointer;transition:background 0.2s,color 0.2s;" onmouseover="this.style.background='var(--color-accent)';this.style.color='#fff';" onmouseout="this.style.background='transparent';this.style.color='var(--color-accent)';">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
                         Читати уривки з книги
                     </button>
@@ -1910,99 +1940,99 @@ a, button, [role="button"], input, select, textarea,
   <div style="display:grid;grid-template-columns:110px 1fr;gap:1.8rem;align-items:center;padding:2rem 2.2rem 1.6rem;border-bottom:1px solid var(--color-border-light);background:var(--color-bg-alt);">
     <img src="https://i.imgur.com/tWo9hCT.png" alt="Обкладинка" style="width:100%;border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.18);">
     <div>
-      <div style="font-family:'DM Sans',sans-serif;font-size:0.44rem;letter-spacing:0.32em;text-transform:uppercase;color:var(--color-accent);margin-bottom:0.5rem;">Книга пам'яті · Іцкор-Бух · 1964</div>
+      <div style="font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:0.32em;text-transform:uppercase;color:var(--color-accent);margin-bottom:0.5rem;">Книга пам'яті · Іцкор-Бух · 1964</div>
       <div style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:300;color:var(--color-text);line-height:1.2;margin-bottom:0.25rem;">ספר דומברוביצה</div>
       <div style="font-family:'Cormorant Garamond',serif;font-size:0.95rem;font-style:italic;color:var(--color-text-light);margin-bottom:0.25rem;">Sefer Dabrowica — Книга Дубровиці</div>
       <div style="font-family:'Cormorant Garamond',serif;font-size:0.82rem;color:var(--color-text-muted);">דאמבראָוויצער אָנדענק-בוך · Dabrowitser Ondenk-bukh</div>
-      <div style="margin-top:0.6rem;font-family:'DM Sans',sans-serif;font-size:0.68rem;color:var(--color-text-muted);">Тель-Авів · Грудень 1964 · כסלו תשכ"ה · Видання Дубровицького земляцтва в Ізраїлі</div>
+      <div style="margin-top:0.6rem;font-family:'Manrope',sans-serif;font-size:0.68rem;color:var(--color-text-muted);">Тель-Авів · Грудень 1964 · כסלו תשכ"ה · Видання Дубровицького земляцтва в Ізраїлі</div>
     </div>
   </div>
   <div style="display:flex;gap:0;border-bottom:1px solid var(--color-border-light);overflow-x:auto;background:var(--color-bg);">
-    <button class="brtab" data-tab="0" onclick="switchBRTab(0)" style="flex-shrink:0;padding:0.85rem 1.3rem;font-family:'DM Sans',sans-serif;font-size:0.6rem;letter-spacing:0.1em;border:none;border-bottom:2px solid var(--color-accent);background:transparent;color:var(--color-accent);cursor:pointer;">Стежками минулих днів</button>
-    <button class="brtab" data-tab="1" onclick="switchBRTab(1)" style="flex-shrink:0;padding:0.85rem 1.3rem;font-family:'DM Sans',sans-serif;font-size:0.6rem;letter-spacing:0.1em;border:none;border-bottom:2px solid transparent;background:transparent;color:var(--color-text-muted);cursor:pointer;">Будинки та старожитності</button>
-    <button class="brtab" data-tab="2" onclick="switchBRTab(2)" style="flex-shrink:0;padding:0.85rem 1.3rem;font-family:'DM Sans',sans-serif;font-size:0.6rem;letter-spacing:0.1em;border:none;border-bottom:2px solid transparent;background:transparent;color:var(--color-text-muted);cursor:pointer;">Хаос 1920 року</button>
-    <button class="brtab" data-tab="3" onclick="switchBRTab(3)" style="flex-shrink:0;padding:0.85rem 1.3rem;font-family:'DM Sans',sans-serif;font-size:0.6rem;letter-spacing:0.1em;border:none;border-bottom:2px solid transparent;background:transparent;color:var(--color-text-muted);cursor:pointer;">Майор та Балаховці</button>
-    <button class="brtab" data-tab="4" onclick="switchBRTab(4)" style="flex-shrink:0;padding:0.85rem 1.3rem;font-family:'DM Sans',sans-serif;font-size:0.6rem;letter-spacing:0.1em;border:none;border-bottom:2px solid transparent;background:transparent;color:var(--color-text-muted);cursor:pointer;">Повний текст (укр.)</button>
+    <button class="brtab" data-tab="0" onclick="switchBRTab(0)" style="flex-shrink:0;padding:0.85rem 1.3rem;font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:0.1em;border:none;border-bottom:2px solid var(--color-accent);background:transparent;color:var(--color-accent);cursor:pointer;">Стежками минулих днів</button>
+    <button class="brtab" data-tab="1" onclick="switchBRTab(1)" style="flex-shrink:0;padding:0.85rem 1.3rem;font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:0.1em;border:none;border-bottom:2px solid transparent;background:transparent;color:var(--color-text-muted);cursor:pointer;">Будинки та старожитності</button>
+    <button class="brtab" data-tab="2" onclick="switchBRTab(2)" style="flex-shrink:0;padding:0.85rem 1.3rem;font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:0.1em;border:none;border-bottom:2px solid transparent;background:transparent;color:var(--color-text-muted);cursor:pointer;">Хаос 1920 року</button>
+    <button class="brtab" data-tab="3" onclick="switchBRTab(3)" style="flex-shrink:0;padding:0.85rem 1.3rem;font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:0.1em;border:none;border-bottom:2px solid transparent;background:transparent;color:var(--color-text-muted);cursor:pointer;">Майор та Балаховці</button>
+    <button class="brtab" data-tab="4" onclick="switchBRTab(4)" style="flex-shrink:0;padding:0.85rem 1.3rem;font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:0.1em;border:none;border-bottom:2px solid transparent;background:transparent;color:var(--color-text-muted);cursor:pointer;">Повний текст (укр.)</button>
   </div>
   <div style="padding:2rem 2.2rem 2.5rem;max-height:62vh;overflow-y:auto;">
     <div id="brpanel0">
-      <p style="font-family:'DM Sans',sans-serif;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--color-accent);margin-bottom:1rem;">Шмуель Зальцман · Розділ А — Місто загалом</p>
+      <p style="font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--color-accent);margin-bottom:1rem;">Шмуель Зальцман · Розділ А — Місто загалом</p>
       <p style="font-family:'Cormorant Garamond',serif;font-size:1.08rem;line-height:1.88;color:var(--color-text-secondary);margin-bottom:1rem;">Дубровиця розташована в північно-західній частині Волинської губернії, неподалік від залізничної лінії Рівне–Вільно, за 28 кілометрів на північ від Сарн. Місто лежить на березі річки Горинь, оточене лісами з трьох боків. До прокладання залізничної лінії (1884 р.) головним транспортним шляхом була річка Горинь, що впадає в Прип'ять.</p>
       <p style="font-family:'Cormorant Garamond',serif;font-size:1.08rem;line-height:1.88;color:var(--color-text-secondary);margin-bottom:1rem;">У центрі міста простягалася Ринкова площа квадратної форми зі стороною близько 150 метрів. 10 вулиць та провулків перетиналися на площі. Серед тих, хто навчався в «штіблі», колись виникла дискусія: чи спочатку була побудована площа, а від неї розійшлися вулиці, чи навпаки?.. Зрештою вирішили: спочатку прокладали вулиці, і само собою виникла площа — «як той, хто розкачує тісто у батон, а потім з'єднує два кінці в коло: само собою всередині утворюється отвір...»</p>
       <blockquote style="border-left:2px solid var(--color-accent);padding:1rem 1.5rem;margin:1.2rem 0;background:var(--color-bg-warm);border-radius:0 8px 8px 0;">
         <p style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-style:italic;color:var(--color-text);margin:0 0 0.4rem;">«Євреї жили в центрі міста, а християни — на його околицях. Відносини між двома громадами були нормальними… Нерідко християни зверталися до рабинів міста з проханням помолитися за одужання хворих у їхніх домівках. Бували також випадки, коли євреї та християни судилися перед рабином, і обидві сторони приймали його рішення з рівною повагою.»</p>
-        <cite style="font-family:'DM Sans',sans-serif;font-size:0.68rem;color:var(--color-text-muted);">— Шмуель Зальцман, «Стежками минулих днів»</cite>
+        <cite style="font-family:'Manrope',sans-serif;font-size:0.68rem;color:var(--color-text-muted);">— Шмуель Зальцман, «Стежками минулих днів»</cite>
       </blockquote>
     </div>
     <div id="brpanel1" style="display:none;">
-      <p style="font-family:'DM Sans',sans-serif;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--color-accent);margin-bottom:1rem;">Сторінки 24–25 · Старожитності та типи будинків</p>
+      <p style="font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--color-accent);margin-bottom:1rem;">Сторінки 24–25 · Старожитності та типи будинків</p>
       <p style="font-family:'Cormorant Garamond',serif;font-size:1.08rem;line-height:1.88;color:var(--color-text-secondary);margin-bottom:1rem;"><strong style="color:var(--color-text);">Старожитності.</strong> Різні легенди ходили щодо виявлення старожитностей: на північ від міста, біля лазні, стирчала скеля висотою близько метра з половиною, і на ній були викарбувані незрозумілі слова та кілька цифр, що починалися з «17…» — слова та цифри ніколи не були розшифровані. На вулиці Воробин, біля штабу поліції, стояла будівля «Сокольня» — на честь текстильної фабрики, що колись існувала тут. Також існувала легенда про підземний хід від католицької церкви на захід — тунель, виявлений у поточному столітті, викликав безліч здогадок.</p>
       <p style="font-family:'Cormorant Garamond',serif;font-size:1.08rem;line-height:1.88;color:var(--color-text-secondary);margin-bottom:1rem;"><strong style="color:var(--color-text);">Будинки.</strong> Будинки в більшості своїй були збудовані з дерева; через численні пожежі почали використовувати випалену цеглу з місцевих цегелень. Стиль будинків був різним, проте можна було розрізнити три основні типи:</p>
       <div style="background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:8px;padding:1.2rem 1.5rem;margin:1rem 0;">
-        <p style="font-family:'DM Sans',sans-serif;font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--color-accent);margin-bottom:0.8rem;">Три типи житла</p>
+        <p style="font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--color-accent);margin-bottom:0.8rem;">Три типи житла</p>
         <p style="font-family:'Cormorant Garamond',serif;font-size:1rem;line-height:1.7;color:var(--color-text-secondary);margin:0;"><strong style="color:var(--color-text);">А.</strong> Велика зала, дві спальні, кухня та комора.<br><strong style="color:var(--color-text);">Б.</strong> Їдальня, вітальня, дві спальні, кухня та комора.<br><strong style="color:var(--color-text);">В.</strong> Передпокій, їдальня, вітальня, дві спальні, кухня та комора.</p>
       </div>
       <p style="font-family:'Cormorant Garamond',serif;font-size:1.08rem;line-height:1.88;color:var(--color-text-secondary);">Будинки були переважно одноповерховими. Крім кухонної печі, у стінах були вбудовані дві пічки для обігріву взимку. Для опалення використовували дрова, які купували у селян. Вугілля з печі йшло на розігрів самоварів та прасок. На подвір'ї був хлів, бо у більшості родин були корови. В місті не було водопроводу та каналізації — воду черпали з колодязів.</p>
     </div>
     <div id="brpanel2" style="display:none;">
-      <p style="font-family:'DM Sans',sans-serif;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--color-accent);margin-bottom:1rem;">Сторінки 218–220 · Рав Аарон Петешник — Розділ 13</p>
+      <p style="font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--color-accent);margin-bottom:1rem;">Сторінки 218–220 · Рав Аарон Петешник — Розділ 13</p>
       <p style="font-family:'Cormorant Garamond',serif;font-size:1.08rem;line-height:1.88;color:var(--color-text-secondary);margin-bottom:1rem;">О 12 годині дня до міста увійшли кілька сотень солдатів, і як тільки побачили, що в місті немає жодної влади — почали чинити безчинства: розбивали крамниці, грабували, а також били євреїв. Тільки пізніше з'явилися польські офіцери і прогнали їх.</p>
       <p style="font-family:'Cormorant Garamond',serif;font-size:1.08rem;line-height:1.88;color:var(--color-text-secondary);margin-bottom:1rem;">У суботу, 10 липня 1920 року, польський комендант видав наказ, щоб усі йшли за місто копати окопи. Ввечері кавалеристи підпалили довгий міст між містом і залізничною станцією. Протягом трьох наступних днів не було жодної влади.</p>
       <blockquote style="border-left:2px solid var(--color-accent);padding:1rem 1.5rem;margin:1.2rem 0;background:var(--color-bg-warm);border-radius:0 8px 8px 0;">
         <p style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-style:italic;color:var(--color-text);margin:0 0 0.4rem;">«Таким чином у нас за три дні тричі змінювалася влада: вдень — більшовики, вдень — поляки, а ввечері — знову більшовики. Наше становище за таких умов можна легко уявити: постійно між молотом і ковадлом, і за все доводилося розплачуватися…»</p>
-        <cite style="font-family:'DM Sans',sans-serif;font-size:0.68rem;color:var(--color-text-muted);">— Рав Аарон Петешник, «Розділи з Першої світової війни», стор. 219</cite>
+        <cite style="font-family:'Manrope',sans-serif;font-size:0.68rem;color:var(--color-text-muted);">— Рав Аарон Петешник, «Розділи з Першої світової війни», стор. 219</cite>
       </blockquote>
       <p style="font-family:'Cormorant Garamond',serif;font-size:1.08rem;line-height:1.88;color:var(--color-text-secondary);">У Хол-а-Моед Суккот дізналися, що загін «поляків» — це насправді російські солдати під назвою «Балаховці» (загони Булак-Балаховича). На Йом-Кіпур ці бандити підпалили млин і електростанцію. Одній жінці, з пальця якої каблучка швидко не знімалася, просто відрубали палець.</p>
     </div>
     <div id="brpanel3" style="display:none;">
-      <p style="font-family:'DM Sans',sans-serif;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--color-accent);margin-bottom:1rem;">Сторінки 221–225 · Розділи 15–16</p>
+      <p style="font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--color-accent);margin-bottom:1rem;">Сторінки 221–225 · Розділи 15–16</p>
       <p style="font-family:'Cormorant Garamond',serif;font-size:1.08rem;line-height:1.88;color:var(--color-text-secondary);margin-bottom:1rem;">До рабина зібралося вузьке коло людей на Сімхат Тора. Раптом почувся легкий стукіт у двері. Зайшов польський офіцер — як виявилося, майор, призначений комендантом гарнізону. Він прийшов встановити зв'язок із єврейським населенням і пообіцяв, що солдати не будуть бешкетувати на ринку, і що видасть дозволи на в'їзд та вивезення товарів.</p>
       <blockquote style="border-left:2px solid var(--color-accent);padding:1rem 1.5rem;margin:1.2rem 0;background:var(--color-bg-warm);border-radius:0 8px 8px 0;">
         <p style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-style:italic;color:var(--color-text);margin:0 0 0.4rem;">«Найбільша заслуга і найбільша дія на користь нашого міста — справа балаховців. По всьому регіону поширилися великі погроми. Вони мали намір увірватися і в наше місто, але майор жодним чином не дозволив їм цього. Як залізний мур стояв він за нас і захищав нас за власною ініціативою.»</p>
-        <cite style="font-family:'DM Sans',sans-serif;font-size:0.68rem;color:var(--color-text-muted);">— Рав Аарон Петешник, «Розділи з Першої світової війни», стор. 222</cite>
+        <cite style="font-family:'Manrope',sans-serif;font-size:0.68rem;color:var(--color-text-muted);">— Рав Аарон Петешник, «Розділи з Першої світової війни», стор. 222</cite>
       </blockquote>
       <p style="font-family:'Cormorant Garamond',serif;font-size:1.08rem;line-height:1.88;color:var(--color-text-secondary);margin-bottom:1rem;">Десять містечок у регіоні були спустошені балаховцями: сотні євреїв вбиті та поранені, сотні сімей ховалися в лісах із малими дітьми в холодні жовтневі ночі. Завдяки клопотанням майора містечко Серники було врятоване — він надіслав комісію та сповістив жандармерію в Пінську, і балаховців роззброїли.</p>
       <p style="font-family:'Cormorant Garamond',serif;font-size:1.08rem;line-height:1.88;color:var(--color-text-secondary);">Коли майора відкликали у військове міністерство, він через рабина надіслав єврейському населенню теплий прощальний лист. На знак визнання йому подарували срібну скриньку з написом. «У нашому місті завдяки «майору» все минуло спокійно, і ми відбули той час лише переляком» — підсумовує Петешник.</p>
     </div>
     <div id="brpanel4" style="display:none;">
-      <p style="font-family:'DM Sans',sans-serif;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--color-accent);margin-bottom:1.2rem;">Повний переклад · Шмуель Зальцман та Рав Аарон Петешник</p>
+      <p style="font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--color-accent);margin-bottom:1.2rem;">Повний переклад · Шмуель Зальцман та Рав Аарон Петешник</p>
 
       <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:400;color:var(--color-text);margin:0 0 0.4rem;">Стежками минулих днів</h3>
-      <p style="font-family:'DM Sans',sans-serif;font-size:0.7rem;color:var(--color-text-muted);margin-bottom:1.4rem;">Шмуель Зальцман — сторінки 21–61</p>
+      <p style="font-family:'Manrope',sans-serif;font-size:0.7rem;color:var(--color-text-muted);margin-bottom:1.4rem;">Шмуель Зальцман — сторінки 21–61</p>
 
-      <p style="font-family:'DM Sans',sans-serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--color-accent);margin:0.8rem 0 0.4rem;">1. Географічне положення</p>
+      <p style="font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--color-accent);margin:0.8rem 0 0.4rem;">1. Географічне положення</p>
       <p style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.85;color:var(--color-text-secondary);margin-bottom:0.9rem;">Дубровиця розташована в північно-західній частині Волинської губернії, неподалік від залізничної лінії Рівне–Вільно, за 28 кілометрів на північ від Сарн та приблизно за 70 кілометрів на південний схід від Пінська. Місто лежить на березі річки Горинь, оточене лісами з трьох боків. До прокладання залізничної лінії (1884 р.) головним транспортним шляхом була річка Горинь, що впадає в Прип'ять. З прокладанням лінії зв'язки з прилеглими містами значно зміцнилися. У той же період був збудований міст через річку Горинь довжиною близько 500 метрів. Озера поблизу утворилися внаслідок розливів річки Горинь у весняний період.</p>
 
-      <p style="font-family:'DM Sans',sans-serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--color-accent);margin:0.8rem 0 0.4rem;">2. Історія міста</p>
+      <p style="font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--color-accent);margin:0.8rem 0 0.4rem;">2. Історія міста</p>
       <p style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.85;color:var(--color-text-secondary);margin-bottom:0.9rem;">Хоча єврейське поселення в Дубровиці почалося лише в XV столітті, місто існувало задовго до того. «Велика Радянська Енциклопедія» зазначає, що місто відоме з XIII століття. До литовського завоювання (1330 р.) назвою поселення було Дубровиця. Литовці змінили назву на Дубровиць або Дубровичі. Після Унії Литви та Польщі (1386 р.) місто отримало польську назву — Домбровиця, і цей символ супроводжував єврейських мешканців близько 500 років. У 1799 році Дубровиця була включена до Рівненського повіту і залишалася в цьому статусі до відновлення польської влади у 1921 році.</p>
 
-      <p style="font-family:'DM Sans',sans-serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--color-accent);margin:0.8rem 0 0.4rem;">В. Як будувалося поселення</p>
+      <p style="font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--color-accent);margin:0.8rem 0 0.4rem;">В. Як будувалося поселення</p>
       <p style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.85;color:var(--color-text-secondary);margin-bottom:0.9rem;">У центрі міста простягалася Ринкова площа квадратної форми зі стороною близько 150 метрів. 10 вулиць та провулків перетиналися на площі. Серед тих, хто навчався в «штіблі», виникла дискусія: «Чи спочатку була побудована площа, а від неї розійшлися вулиці, чи навпаки?» Вирішили, що спочатку прокладали вулиці — «схоже на того, хто розкачує тісто у батон, а потім з'єднує два кінці в коло: само собою всередині утворюється отвір…» На східній стороні ринку стояли будинки Готліба, Слуцького, Герштейна та Сандлера. Між ними — будинок католицької церкви. Далі — великий сад і два будинки родини графа Плятера.</p>
 
-      <p style="font-family:'DM Sans',sans-serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--color-accent);margin:0.8rem 0 0.4rem;">Г. Старожитності</p>
+      <p style="font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--color-accent);margin:0.8rem 0 0.4rem;">Г. Старожитності</p>
       <p style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.85;color:var(--color-text-secondary);margin-bottom:0.9rem;">Різні легенди ходили щодо виявлення старожитностей. На північ від міста, біля лазні, стирчала скеля з викарбуваними словами та цифрами, що починалися з «17…» — ніколи не розшифровані. На вулиці Воробин — будівля «Сокольня», названа на честь текстильної фабрики, яка колись існувала тут. Також легенда про підземний хід від католицької церкви на захід, виявлений у поточному столітті.</p>
 
-      <p style="font-family:'DM Sans',sans-serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--color-accent);margin:0.8rem 0 0.4rem;">Д. Будинки зсередини та ззовні</p>
+      <p style="font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--color-accent);margin:0.8rem 0 0.4rem;">Д. Будинки зсередини та ззовні</p>
       <p style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.85;color:var(--color-text-secondary);margin-bottom:0.9rem;">Будинки в більшості своїй були збудовані з дерева; через численні пожежі почали використовувати цеглу. Три типи житла: А — велика зала, дві спальні, кухня та комора; Б — їдальня, вітальня, дві спальні, кухня та комора; В — передпокій, їдальня, вітальня, дві спальні, кухня та комора. Будинки переважно одноповерхові. Крім кухонної печі, у стінах — дві пічки для обігріву взимку. На подвір'ї — хлів, бо у більшості родин були корови. Воду черпали з колодязів у різних частинах міста.</p>
 
-      <p style="font-family:'DM Sans',sans-serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--color-accent);margin:1.2rem 0 0.4rem;">А. Населення</p>
+      <p style="font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--color-accent);margin:1.2rem 0 0.4rem;">А. Населення</p>
       <p style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.85;color:var(--color-text-secondary);margin-bottom:0.9rem;">Згідно з переписом 1766 року, Дубровиця налічувала 404 євреї; у 1847 році — 1910 євреїв; у 1897 році — 2868 євреїв із загальної кількості 6007 душ. Напередодні Першої світової війни (1914) у місті було близько 10 000 душ, з них близько 4000 євреїв. Склад єврейського населення: 40% ремісників; 30% власників крамниць; 20% торговців; 10% служителів культу та представників вільних професій. Євреї Дубровиці розмовляли на їдиші з литовським акцентом.</p>
 
-      <p style="font-family:'DM Sans',sans-serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--color-accent);margin:0.8rem 0 0.4rem;">Б. Заснування незалежної громади</p>
+      <p style="font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--color-accent);margin:0.8rem 0 0.4rem;">Б. Заснування незалежної громади</p>
       <p style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.85;color:var(--color-text-secondary);margin-bottom:0.9rem;">Поселенці з північного заходу спочатку належали до громади Пінська (згідно з «Пінков євреїв Литви» від 1623 р.). Лише у 1753 році власник Міхаель Бростовський видав наказ на заснування незалежної єврейської громади: власний автономний суд; право на лісоматеріали; безкоштовні ділянки для громадських будівель (синагога, лазня, будинок рабина, цвинтар); право засновувати гуральні та торгувати вином; звільнення від панщини. Ці права підтвердив у 1774 році Антоній Плятер.</p>
 
-      <p style="font-family:'DM Sans',sans-serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--color-accent);margin:0.8rem 0 0.4rem;">Рабини та духовне протистояння</p>
+      <p style="font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--color-accent);margin:0.8rem 0 0.4rem;">Рабини та духовне протистояння</p>
       <p style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.85;color:var(--color-text-secondary);margin-bottom:0.9rem;">Першим власним рабином став рав Сендер-Натан. Після нього — рав Яаков-Натан Вайсман (1870 р.) — великий мудрець Тори, але слабкий в «земних справах». Потім — рав Іцхак Шапіра («рав Ітці-суддя»), видатна особистість, що особисто перевіряла ваги торговців. Після його смерті місто запросило аж чотирьох рабинів одночасно — «річ, якої ніколи не траплялося в жодному іншому єврейському поселенні в регіоні». Два з них — рав Зальцман та рав Рабинович — постійно сперечалися, поки суперечки не вирішували рабини Пінська та Борисова.</p>
 
-      <p style="font-family:'DM Sans',sans-serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--color-accent);margin:0.8rem 0 0.4rem;">П'ять синагог та хасидські мелодії</p>
+      <p style="font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--color-accent);margin:0.8rem 0 0.4rem;">П'ять синагог та хасидські мелодії</p>
       <p style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.85;color:var(--color-text-secondary);margin-bottom:0.9rem;">Місто мало п'ять синагог: «Велика синагога» (ашкеназький обряд), Столінський штібель (Карлін-Столін), «Бейт га-Мідраш» (хасиди Березного), «Тріскер штібель» (хасиди Триська), та «Корітські» — «поспішна» синагога. Хасидська мелодія (ніґун) — це форма служіння Творцю, сповнена відданості та натхнення. Були мелодії щоденні та для Суботи, для свят та Страшних днів. Хасидські мелодії співали в кожному домі, у ремісничих майстернях, і навіть діти в «хедерах» співали їх.</p>
 
       <blockquote style="border-left:2px solid var(--color-accent);padding:1rem 1.5rem;margin:1.2rem 0;background:var(--color-bg-warm);border-radius:0 8px 8px 0;">
         <p style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-style:italic;color:var(--color-text);margin:0 0 0.4rem;">«Була зруйнована єврейська Дубровиця: зрубані її гілки та пущений вогонь у її крону. Припинилася творчість і затихла пісня. Дерево зрубано. Ой, яке лихо!»</p>
-        <cite style="font-family:'DM Sans',sans-serif;font-size:0.68rem;color:var(--color-text-muted);">— Шмуель Зальцман</cite>
+        <cite style="font-family:'Manrope',sans-serif;font-size:0.68rem;color:var(--color-text-muted);">— Шмуель Зальцман</cite>
       </blockquote>
 
-      <p style="font-family:'DM Sans',sans-serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--color-accent);margin:1.2rem 0 0.4rem;">У вирі часів (1914–1920) — Рав Аарон Петешник</p>
+      <p style="font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--color-accent);margin:1.2rem 0 0.4rem;">У вирі часів (1914–1920) — Рав Аарон Петешник</p>
       <p style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.85;color:var(--color-text-secondary);margin-bottom:0.9rem;">Більша частина Першої світової пройшла без особливих потрясень. У 1918 році місцевий комітет захопив владу і проголосив «Радянську Республіку в Домбровиці». Але невдовзі прийшли петлюрівці. П'ять днів тривав бій за місто. Після взяття петлюрівці вчинили жорстокий погром тривалістю 14 днів. Двоє євреїв були вбиті. Делегація з дванадцяти найповажніших мешканців, що вийшла з хлібом і сіллю, була заарештована та побита. Лише дивом, після передачі великої суми комендантові, делегацію звільнили. Слідом за погромом прийшли голод та епідемія тифу — понад сто єврейських душ.</p>
       <p style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.85;color:var(--color-text-secondary);">Потім прийшов польський майор, призначений комендантом гарнізону, який встановив порядок і захищав місто від балаховців — загонів Булак-Балаховича, що спустошили десять містечок у регіоні. Завдяки його клопотанням Дубровиця уникла погромів. Коли майора відкликали, йому подарували срібну скриньку з написом — на знак вдячності єврейської громади.</p>
     </div>
@@ -2017,7 +2047,7 @@ a, button, [role="button"], input, select, textarea,
 @media(max-width:700px){.jtp-wrap{padding:0 1.4rem;}}
 .jtp-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:.8rem;}
 .jtp-eyebrow{display:flex;align-items:center;gap:.8rem;margin-bottom:1.2rem;}
-.jtp-eyebrow span{font-family:'DM Sans',sans-serif;font-size:.5rem;letter-spacing:.32em;text-transform:uppercase;color:rgba(139,90,43,.65);}
+.jtp-eyebrow span{font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.32em;text-transform:uppercase;color:rgba(139,90,43,.65);}
 .jtp-eyebrow::before{content:'';display:block;width:28px;height:1px;background:linear-gradient(90deg,transparent,rgba(139,90,43,.4));flex-shrink:0;}
 .jtp-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:300;line-height:1;letter-spacing:-.02em;color:var(--color-text,#1c1917);margin-bottom:.4rem;}
 .jtp-title em{font-style:italic;color:#8b5a2b;}
@@ -2025,7 +2055,7 @@ a, button, [role="button"], input, select, textarea,
 [data-theme="dark"] .jtp-title em{color:#c9a227;}
 .jtp-sub{font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;color:rgba(28,25,23,.45);margin-bottom:0;}
 [data-theme="dark"] .jtp-sub{color:rgba(240,234,216,.38);}
-.jtp-open-btn{font-family:'DM Sans',sans-serif;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:rgba(139,90,43,.6);display:flex;align-items:center;gap:.5rem;cursor:pointer;background:none;border:none;padding:0;transition:color .18s;}
+.jtp-open-btn{font-family:'Manrope',sans-serif;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:rgba(139,90,43,.6);display:flex;align-items:center;gap:.5rem;cursor:pointer;background:none;border:none;padding:0;transition:color .18s;}
 .jtp-open-btn:hover{color:#8b5a2b;}
 .jtp-open-btn svg{width:14px;height:14px;}
 .jtp-grid{display:grid;grid-template-columns:1.45fr 1fr;gap:1.5rem;align-items:start;margin-bottom:3rem;}
@@ -2035,7 +2065,7 @@ a, button, [role="button"], input, select, textarea,
 [data-theme="dark"] .jtp-map-wrap{background:#1a160e;border-color:rgba(201,162,39,.12);}
 .jtp-map-wrap img{width:100%;display:block;transition:transform .4s ease;}
 .jtp-map-wrap:hover img{transform:scale(1.02);}
-.jtp-zoom-hint{position:absolute;bottom:.8rem;right:.8rem;background:rgba(8,6,2,.72);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.12);border-radius:100px;padding:.3rem .8rem;font-family:'DM Sans',sans-serif;font-size:.58rem;letter-spacing:.07em;color:rgba(255,255,255,.6);pointer-events:none;display:flex;align-items:center;gap:.4rem;}
+.jtp-zoom-hint{position:absolute;bottom:.8rem;right:.8rem;background:rgba(8,6,2,.72);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.12);border-radius:100px;padding:.3rem .8rem;font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.07em;color:rgba(255,255,255,.6);pointer-events:none;display:flex;align-items:center;gap:.4rem;}
 .jtp-zoom-hint svg{width:11px;height:11px;flex-shrink:0;}
 .jtp-side{display:flex;flex-direction:column;gap:1rem;}
 .jtp-leg-wrap{border-radius:4px;overflow:hidden;cursor:zoom-in;border:1px solid rgba(139,90,43,.15);background:#e8e0d0;transition:box-shadow .22s;}
@@ -2047,7 +2077,7 @@ a, button, [role="button"], input, select, textarea,
 .jtp-list-head{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-style:italic;color:rgba(28,25,23,.55);margin-bottom:1.6rem;max-width:700px;line-height:1.7;}
 [data-theme="dark"] .jtp-list-head{color:rgba(240,234,216,.45);}
 .jtp-obj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:.45rem;}
-.jtp-obj{display:flex;align-items:baseline;gap:.7rem;padding:.55rem .9rem;border-radius:4px;border:1px solid rgba(139,90,43,.1);background:rgba(139,90,43,.025);font-family:'DM Sans',sans-serif;font-size:.75rem;color:var(--color-text-secondary,#44403c);line-height:1.45;transition:background .15s;}
+.jtp-obj{display:flex;align-items:baseline;gap:.7rem;padding:.55rem .9rem;border-radius:4px;border:1px solid rgba(139,90,43,.1);background:rgba(139,90,43,.025);font-family:'Manrope',sans-serif;font-size:.75rem;color:var(--color-text-secondary,#44403c);line-height:1.45;transition:background .15s;}
 .jtp-obj:hover{background:rgba(139,90,43,.06);}
 [data-theme="dark"] .jtp-obj{background:rgba(201,162,39,.03);border-color:rgba(201,162,39,.08);color:rgba(240,234,216,.55);}
 [data-theme="dark"] .jtp-obj:hover{background:rgba(201,162,39,.08);}
@@ -2061,7 +2091,7 @@ a, button, [role="button"], input, select, textarea,
 [data-theme="dark"] .jtp-mem-inner{border-color:rgba(201,162,39,.12);background:rgba(201,162,39,.03);}
 .jtp-mem-q{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,1.6vw,1.2rem);font-style:italic;font-weight:300;color:var(--color-text-secondary,#44403c);line-height:1.75;margin-bottom:.9rem;}
 [data-theme="dark"] .jtp-mem-q{color:rgba(240,234,216,.6);}
-.jtp-mem-src{font-family:'DM Sans',sans-serif;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(139,90,43,.5);}
+.jtp-mem-src{font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(139,90,43,.5);}
 @media(max-width:640px){.jtp-mem-inner{padding:1.8rem 1.4rem;}}
 </style>
 
@@ -2906,7 +2936,7 @@ a, button, [role="button"], input, select, textarea,
 }
 .jh-cem-title em { font-style: italic; color: var(--color-accent); }
 .jh-cem-subtitle {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Manrope', sans-serif;
     font-size: .68rem;
     letter-spacing: .1em;
     text-transform: uppercase;
@@ -3149,52 +3179,52 @@ var newCemPhotos = [
 
 <!-- FOOTER -->
 <footer class="footer">
-    <div class="container">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4 class="footer-title">Дубровиця</h4>
-                <p class="footer-text">Цифровий архів історичної спадщини міста Дубровиця, Сарненський район, Рівненська область, Україна.</p>
+    <div class="ft">
+        <div class="ft-top">
+            <div class="ft-brand">
+                <a href="index.html" class="ft-logo">
+                    <img src="https://i.imgur.com/mXCrjjG.png" alt="" width="44" height="44" loading="lazy" decoding="async">
+                    <span><span class="ft-logo-city">Дубровиця</span><span class="ft-logo-sub">Цифровий архів</span></span>
+                </a>
+                <p class="ft-about">Цифровий архів історичної спадщини міста Дубровиця — Сарненський район, Рівненська область, Україна.</p>
+                <a href="contacts.html" class="ft-cta"><span>Маєте старі фото чи документи?</span><strong>Напишіть нам <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></strong></a>
             </div>
-            <div class="footer-section">
-                <h4 class="footer-title">Навігація</h4>
-                <nav class="footer-nav">
-                    <a href="history.html">Історія</a>
-                    <a href="photo-archive.html">Фотоархів</a>
-                    <a href="metrychni-knyhy.html">Архівні справи</a>
-                    <a href="contacts.html">Контакти</a>
-                </nav>
-            </div>
-            <div class="footer-section">
-                <h4 class="footer-title">Контакти</h4>
-                <p class="footer-text">
-                    Маєте матеріали або пропозиції?<br>
-                    <a href="contacts.html" class="footer-link">Зв'яжіться з нами</a>
-                </p>
-            </div>
+            <nav class="ft-col" aria-label="Розділи сайту">
+                <p class="ft-title">Розділи</p>
+                <a href="history.html">Історія</a>
+                <a href="photo-archive.html">Фотоархів</a>
+                <a href="architecture.html">Пам'ятки</a>
+                <a href="jewish-history.html">Єврейська спадщина</a>
+                <a href="presa.html">Преса</a>
+                <a href="doslidnyk.html">Дослідник</a>
+                <a href="contacts.html">Про проєкт</a>
+            </nav>
+            <nav class="ft-col" aria-label="Архівні справи">
+                <p class="ft-title">Архівні справи</p>
+                <a href="sumariusz-1642.html"><span class="ft-year">1642</span>Сумаріуш маєтку</a>
+                <a href="zhaloba-1650.html"><span class="ft-year">1650</span>Жалоба про спустошення</a>
+                <a href="rejestr-1665.html"><span class="ft-year">1665</span>Реєстр збитків</a>
+                <a href="inventar-1780.html"><span class="ft-year">1780</span>Інвентар маєтку</a>
+                <a href="atlas-1798.html"><span class="ft-year">1798</span>Атлас губернії</a>
+                <a href="atlas-1798-analityka.html"><span class="ft-year">1798</span>Край у цифрах</a>
+                <a href="persha-svitova.html"><span class="ft-year">1914</span>Перша світова війна</a>
+                <a href="vyborchi-1938.html"><span class="ft-year">1938</span>Список виборців</a>
+            </nav>
+            <nav class="ft-col" aria-label="Постаті й каталоги">
+                <p class="ft-title">Постаті й каталоги</p>
+                <a href="plater.html">Граф Юзеф Плятер</a>
+                <a href="radzyvil.html">Князь Домінік Радзивілл</a>
+                <a href="metrychni-knyhy.html#mkcalSection">Метричні книги</a>
+                <a href="metrychni-knyhy.html#booksCatalog">Книги про Дубровицю</a>
+                <a href="metrychni-knyhy.html">Усі архівні справи</a>
+            </nav>
         </div>
-                <div class="footer-copyright-row">
-            <div class="footer-copyright-ornament">
-                <div class="footer-copyright-ornament-line"></div>
-                <div class="footer-copyright-ornament-diamond"></div>
-                <div class="footer-copyright-ornament-line"></div>
-            </div>
-            <p class="footer-copyright-main">
-                &copy; 2026 <a href="https://dubrovytsia.site">dubrovytsia.site</a> — Цифровий архів Дубровиці, Рівненська область, Україна.<br>
-                Сайт є некомерційним краєзнавчим проєктом, створеним з любові до міста та його історії.
-            </p>
-            <p class="footer-copyright-notice">
-                Публікуючи ці матеріали, ми прагнемо зберегти та популяризувати культурну й історичну спадщину міста Дубровиця для нинішніх і майбутніх поколінь.
-                Усі фотографії, документи та архівні матеріали розміщено виключно в освітніх, краєзнавчих і науково-дослідних цілях.
-                Відтворення, поширення або комерційне використання будь-яких матеріалів без письмового дозволу адміністрації сайту — заборонено.
-                При цитуванні або використанні матеріалів у будь-якому форматі — обов'язкове активне посилання на <em>dubrovytsia.site</em>.
-                Якщо ви є власником авторських прав на будь-які з опублікованих матеріалів і маєте заперечення щодо їх розміщення —
-                будь ласка, <a href="contacts.html">зв'яжіться з нами</a> і ми негайно розглянемо ваш запит.
-                Фотографії, завантажені з архіву, містять водяний знак сайту і не можуть публікуватись без нього.
-            </p>
+        <div class="ft-bottom">
+            <p class="ft-copy">&copy; 2026 <a href="https://dubrovytsia.site">dubrovytsia.site</a> — Цифровий архів Дубровиці, Рівненська область, Україна. Сайт є некомерційним краєзнавчим проєктом, створеним з любові до міста та його історії.</p>
+            <p class="ft-notice">Публікуючи ці матеріали, ми прагнемо зберегти та популяризувати культурну й історичну спадщину міста Дубровиця для нинішніх і майбутніх поколінь. Усі фотографії, документи та архівні матеріали розміщено виключно в освітніх, краєзнавчих і науково-дослідних цілях. Відтворення, поширення або комерційне використання будь-яких матеріалів без письмового дозволу адміністрації сайту — заборонено. При цитуванні або використанні матеріалів у будь-якому форматі — обов'язкове активне посилання на <em>dubrovytsia.site</em>. Якщо ви є власником авторських прав на будь-які з опублікованих матеріалів і маєте заперечення щодо їх розміщення — будь ласка, <a href="contacts.html">зв'яжіться з нами</a> і ми негайно розглянемо ваш запит. Фотографії, завантажені з архіву, містять водяний знак сайту і не можуть публікуватись без нього.</p>
         </div>
-        </div>
-        </div>
-    </footer>
+    </div>
+</footer>
 
 <!-- LIGHTBOX — з повноцінним зумом, паном, клавіатурою -->
 <div id="ULB">
@@ -3219,7 +3249,7 @@ var newCemPhotos = [
   </div>
 </div>
 
-<script src="app.js"></script>
+<script src="app.js?v=11"></script>
 <script>
 // Hero parallax
 (function(){

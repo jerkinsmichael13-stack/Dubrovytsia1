@@ -25,10 +25,10 @@
     <script>!function(){var t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t)}()</script>
     <link rel="preload" as="image" href="https://i.imgur.com/FfgAmadh.jpeg" media="(min-width: 768px)">
     <link rel="preload" as="image" href="https://i.imgur.com/cMQeU7Ph.jpeg" media="(min-width: 768px)">
-    <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="app.css?v=11">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 
 <style>
@@ -160,7 +160,7 @@
 .ulb-btn{width:36px;height:36px;flex-shrink:0;border-radius:8px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.07);color:rgba(255,255,255,.82);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s,border-color .15s;padding:0;-webkit-tap-highlight-color:transparent;}
 .ulb-btn:hover,.ulb-btn:active{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.22);}
 .ulb-btn svg{width:16px;height:16px;pointer-events:none;}
-#ULB-ZVAL{font-family:'DM Sans',sans-serif;font-size:.7rem;color:rgba(255,255,255,.5);min-width:3.4em;text-align:center;flex-shrink:0;}
+#ULB-ZVAL{font-family:'Manrope',sans-serif;font-size:.7rem;color:rgba(255,255,255,.5);min-width:3.4em;text-align:center;flex-shrink:0;}
 .ulb-sep{width:1px;height:18px;background:rgba(255,255,255,.1);flex-shrink:0;}
 #ULB-CAP{font-family:'Cormorant Garamond',serif;font-size:.95rem;font-weight:300;font-style:italic;color:rgba(255,255,255,.72);text-align:center;padding:0;pointer-events:none;line-height:1.4;letter-spacing:.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
 #ULB-CLOSE{position:absolute;top:.75rem;right:.75rem;z-index:20;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.18);background:rgba(10,8,16,.75);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:rgba(255,255,255,.88);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s,transform .15s;padding:0;-webkit-tap-highlight-color:transparent;}
@@ -170,7 +170,7 @@
 .ulb-nav:hover{background:rgba(255,255,255,.18);}
 #ULB-PREV{left:.65rem;}
 #ULB-NEXT{right:.65rem;}
-#ULB-HINT{position:absolute;top:.75rem;left:50%;transform:translateX(-50%);z-index:20;background:rgba(6,5,10,.78);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.1);border-radius:100px;padding:.3rem .9rem;font-family:'DM Sans',sans-serif;font-size:.58rem;letter-spacing:.06em;color:rgba(255,255,255,.42);pointer-events:none;white-space:nowrap;transition:opacity .6s ease;}
+#ULB-HINT{position:absolute;top:.75rem;left:50%;transform:translateX(-50%);z-index:20;background:rgba(6,5,10,.78);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.1);border-radius:100px;padding:.3rem .9rem;font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.06em;color:rgba(255,255,255,.42);pointer-events:none;white-space:nowrap;transition:opacity .6s ease;}
 @media(max-width:480px){.ulb-nav{width:38px;height:38px;font-size:1.1rem;}#ULB-PREV{left:.35rem;}#ULB-NEXT{right:.35rem;}#ULB-HINT{display:none;}#ULB-CAP{font-size:.85rem;}}@media(min-width:481px){#ULB-ZOOM-PAD{display:none!important;}#ULB-HINT{display:none!important;}}
 </style>
 
@@ -189,48 +189,69 @@ a, button, [role="button"], input, select, textarea,
     <!-- Header -->
     <header class="header">
         <div class="header-container">
-            <a href="index.html" class="logo">
-                <img src="https://i.imgur.com/mXCrjjG.png" alt="Герб" class="logo-img" loading="lazy">
-                <div class="logo-text">
+            <a href="index.html" class="logo" aria-label="Дубровиця — Цифровий архів, головна сторінка">
+                <img src="https://i.imgur.com/mXCrjjG.png" alt="" class="logo-img" width="40" height="40" decoding="async">
+                <span class="logo-text">
                     <span class="logo-city">Дубровиця</span>
                     <span class="logo-subtitle">Цифровий архів</span>
-                </div>
+                </span>
             </a>
-            
-            <nav class="nav" id="mainNav">
-                <a href="index.html" class="nav-link active">Головна</a>
-                <a href="history.html" class="nav-link">Історія</a>
-                <a href="photo-archive.html" class="nav-link">Фотоархів</a>
-                <a href="architecture.html" class="nav-link">Пам'ятки</a>
-                <a href="metrychni-knyhy.html" class="nav-link">Архівні справи</a>
-                <a href="jewish-history.html" class="nav-link">Єврейська спадщина</a>
-                <a href="presa.html" class="nav-link">Преса</a>
-                <a href="doslidnyk.html" class="nav-link">Дослідник</a>
-                <a href="contacts.html" class="nav-link">Про проєкт</a>
+
+            <nav class="nav" id="mainNav" aria-label="Головне меню">
+                <ul class="nav-list">
+                    <li class="nav-item nav-item--home" style="--i:0"><a href="index.html" class="nav-link active" aria-current="page">Головна</a></li>
+                    <li class="nav-item" style="--i:1"><a href="history.html" class="nav-link">Історія</a></li>
+                    <li class="nav-item" style="--i:2"><a href="photo-archive.html" class="nav-link">Фотоархів</a></li>
+                    <li class="nav-item" style="--i:3"><a href="architecture.html" class="nav-link">Пам'ятки</a></li>
+                    <li class="nav-item has-menu" style="--i:4">
+                        <a href="metrychni-knyhy.html" class="nav-link">Архівні справи</a>
+                        <button type="button" class="nav-caret" aria-expanded="false" aria-controls="navArchive" aria-label="Показати документи архіву"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                        <div class="nav-menu" id="navArchive">
+                            <div class="nav-menu-inner">
+                                <div class="nav-menu-main">
+                                    <p class="nav-menu-label">Документи за роками</p>
+                                    <div class="nav-docs">
+                                        <a href="sumariusz-1642.html" class="nav-doc"><span class="nav-doc-year">1642</span><span class="nav-doc-name">Сумаріуш маєтку</span><span class="nav-doc-note">Доходи маєтку Дубровиця</span></a>
+                                        <a href="zhaloba-1650.html" class="nav-doc"><span class="nav-doc-year">1650</span><span class="nav-doc-name">Жалоба про спустошення</span><span class="nav-doc-note">Гродські книги Пінські</span></a>
+                                        <a href="rejestr-1665.html" class="nav-doc"><span class="nav-doc-year">1665</span><span class="nav-doc-name">Реєстр збитків</span><span class="nav-doc-note">Пінський гродський суд</span></a>
+                                        <a href="inventar-1780.html" class="nav-doc"><span class="nav-doc-year">1780</span><span class="nav-doc-name">Інвентар маєтку</span><span class="nav-doc-note">Містечко, вулиці, мешканці</span></a>
+                                        <a href="atlas-1798.html" class="nav-doc"><span class="nav-doc-year">1798</span><span class="nav-doc-name">Атлас губернії</span><span class="nav-doc-note">Інтерактивна мапа сіл</span></a>
+                                        <a href="atlas-1798-analityka.html" class="nav-doc"><span class="nav-doc-year">1798</span><span class="nav-doc-name">Край у цифрах</span><span class="nav-doc-note">Аналітика атласу</span></a>
+                                        <a href="persha-svitova.html" class="nav-doc"><span class="nav-doc-year">1914</span><span class="nav-doc-name">Перша світова війна</span><span class="nav-doc-note">Мобілізовані мешканці</span></a>
+                                        <a href="vyborchi-1938.html" class="nav-doc"><span class="nav-doc-year">1938</span><span class="nav-doc-name">Список виборців</span><span class="nav-doc-note">8 619 записів</span></a>
+                                    </div>
+                                </div>
+                                <div class="nav-menu-side">
+                                    <p class="nav-menu-label">Постаті</p>
+                                    <a href="plater.html" class="nav-person"><img src="nav-plater.jpg" alt="" width="40" height="40" loading="lazy" decoding="async"><span><span class="nav-person-name">Граф Юзеф Плятер</span><span class="nav-person-role">Власник Дубровиці</span></span></a>
+                                    <a href="radzyvil.html" class="nav-person"><img src="nav-radzyvil.jpg" alt="" width="40" height="40" loading="lazy" decoding="async"><span><span class="nav-person-name">Князь Домінік Радзивілл</span><span class="nav-person-role">Власник сіл над Горинню</span></span></a>
+                                    <p class="nav-menu-label nav-menu-label--gap">Каталоги</p>
+                                    <a href="metrychni-knyhy.html#mkcalSection" class="nav-cat"><span>Метричні книги</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                                    <a href="metrychni-knyhy.html#booksCatalog" class="nav-cat"><span>Книги про Дубровицю</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                                    <a href="metrychni-knyhy.html" class="nav-menu-all">Усі архівні справи <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item" style="--i:5"><a href="jewish-history.html" class="nav-link">Єврейська спадщина</a></li>
+                    <li class="nav-item" style="--i:6"><a href="presa.html" class="nav-link">Преса</a></li>
+                    <li class="nav-item" style="--i:7"><a href="doslidnyk.html" class="nav-link">Дослідник</a></li>
+                    <li class="nav-item" style="--i:8"><a href="contacts.html" class="nav-link">Про проєкт</a></li>
+                </ul>
+                <p class="nav-foot">Цифровий архів історичної спадщини Дубровиці · <a href="contacts.html">Написати нам</a></p>
             </nav>
 
-            <button class="theme-toggle" id="themeToggle" aria-label="Перемкнути тему">
-                <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="5"></circle>
-                    <line x1="12" y1="1" x2="12" y2="3"></line>
-                    <line x1="12" y1="21" x2="12" y2="23"></line>
-                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                    <line x1="1" y1="12" x2="3" y2="12"></line>
-                    <line x1="21" y1="12" x2="23" y2="12"></line>
-                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                </svg>
-                <svg class="theme-icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                </svg>
-            </button>
-
-            <button class="mobile-toggle" id="mobileToggle" aria-label="Відкрити меню" aria-expanded="false">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+            <div class="header-actions">
+                <button type="button" class="theme-toggle" id="themeToggle" aria-label="Перемкнути тему">
+                    <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg>
+                    <svg class="theme-icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.3A8.5 8.5 0 0 1 9.7 3.5a8.5 8.5 0 1 0 10.8 10.8z"/></svg>
+                </button>
+                <button type="button" class="mobile-toggle" id="mobileToggle" aria-label="Відкрити меню" aria-expanded="false" aria-controls="mainNav">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
         </div>
     </header>
 
@@ -296,9 +317,9 @@ a, button, [role="button"], input, select, textarea,
     <!-- ═══ ЩО НОВОГО ═══ -->
     <section class="whatsnew" id="shcho-novoho">
     <style>
-    .hero-news{display:inline-flex;align-items:center;gap:.75rem;margin-top:1.6rem;padding:.45rem .9rem .45rem .45rem;border-radius:100px;background:rgba(18,14,8,.42);border:1px solid rgba(212,178,90,.38);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#f4e9c8;text-decoration:none;font-family:'DM Sans',sans-serif;font-size:.78rem;transition:background .25s ease,border-color .25s ease,transform .25s ease;animation:wnChipIn .9s ease 1s both;}
+    .hero-news{display:inline-flex;align-items:center;gap:.75rem;margin-top:1.6rem;padding:.45rem .9rem .45rem .45rem;border-radius:100px;background:rgba(18,14,8,.42);border:1px solid rgba(212,178,90,.38);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#f4e9c8;text-decoration:none;font-family:'Manrope',sans-serif;font-size:.78rem;transition:background .25s ease,border-color .25s ease,transform .25s ease;animation:wnChipIn .9s ease 1s both;}
     .hero-news:hover{background:rgba(18,14,8,.62);border-color:#d4b25a;transform:translateY(-2px);}
-    .hero-news-tag{padding:.28rem .65rem;border-radius:100px;background:#d4b25a;color:#1a1408;font-size:.56rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;}
+    .hero-news-tag{padding:.28rem .65rem;border-radius:100px;background:#d4b25a;color:#1a1408;font-size:.62rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;}
     .hero-news-txt{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.05rem;}
     .hero-news svg{width:13px;height:13px;color:#d4b25a;transition:transform .25s ease;}
     .hero-news:hover svg{transform:translateX(3px);}
@@ -309,7 +330,7 @@ a, button, [role="button"], input, select, textarea,
     .wn-inner{max-width:1300px;margin:0 auto;padding:0 2rem;}
     @media(max-width:700px){.wn-inner{padding:0 1.1rem;}.whatsnew{padding:4.2rem 0;}}
     .wn-head{display:flex;justify-content:space-between;align-items:flex-end;gap:1.5rem 3rem;flex-wrap:wrap;margin-bottom:2.4rem;}
-    .wn-eyebrow{display:flex;align-items:center;gap:.9rem;font-family:'DM Sans',sans-serif;font-size:.56rem;letter-spacing:.32em;text-transform:uppercase;color:#a9822f;margin-bottom:.9rem;}
+    .wn-eyebrow{display:flex;align-items:center;gap:.9rem;font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.32em;text-transform:uppercase;color:#a9822f;margin-bottom:.9rem;}
     .wn-eyebrow::before{content:'';width:9px;height:9px;border-radius:50%;background:#c9a227;box-shadow:0 0 0 4px rgba(201,162,39,.18);animation:wnPulse 2.2s ease-in-out infinite;}
     @keyframes wnPulse{50%{box-shadow:0 0 0 8px rgba(201,162,39,0)}}
     .wn-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.3rem,4.6vw,3.6rem);line-height:.98;letter-spacing:-.03em;color:var(--color-text,#1a1000);margin:0;}
@@ -325,19 +346,19 @@ a, button, [role="button"], input, select, textarea,
     .wn-feature::before{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(22,17,10,.1) 0%,rgba(22,17,10,.35) 22%,rgba(22,17,10,.88) 45%,rgba(22,17,10,.97) 100%);}
     .wn-feature::after{content:'';position:absolute;inset:14px;border:1px solid rgba(212,178,90,.28);border-radius:10px;pointer-events:none;}
     .wn-feature-top{display:flex;justify-content:space-between;align-items:flex-start;padding:2rem 2.2rem;}
-    .wn-badge{display:inline-flex;align-items:center;gap:.5rem;padding:.4rem .85rem;border-radius:100px;background:#d4b25a;color:#1a1408;font-family:'DM Sans',sans-serif;font-size:.56rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;}
+    .wn-badge{display:inline-flex;align-items:center;gap:.5rem;padding:.4rem .85rem;border-radius:100px;background:#d4b25a;color:#1a1408;font-family:'Manrope',sans-serif;font-size:.62rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;}
     .wn-rose{width:74px;height:74px;color:#d4b25a;opacity:.85;}
     .wn-rose g{transform-origin:50px 50px;animation:wnSpin 90s linear infinite;}
     @keyframes wnSpin{to{transform:rotate(360deg)}}
     .wn-feature-body{padding:0 2.2rem 2.2rem;}
-    .wn-kicker{font-family:'DM Sans',sans-serif;font-size:.58rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(212,178,90,.85);margin-bottom:.7rem;}
+    .wn-kicker{font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(212,178,90,.85);margin-bottom:.7rem;}
     .wn-feature h3{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2rem,4vw,3.3rem);line-height:.98;letter-spacing:-.02em;margin:0 0 1rem;color:#f4e9c8;}
     .wn-feature h3 em{display:block;font-style:italic;color:#d4b25a;font-weight:400;}
     .wn-feature p{font-family:'Cormorant Garamond',serif;font-size:1.15rem;line-height:1.55;color:rgba(244,233,200,.78);max-width:46ch;margin:0 0 1.5rem;}
     .wn-stats{display:flex;flex-wrap:wrap;gap:1.6rem 2.2rem;margin:0 0 1.7rem;padding-top:1.1rem;border-top:1px solid rgba(212,178,90,.22);}
     .wn-stats dd{margin:0 0 .15rem;font-family:'Cormorant Garamond',serif;font-size:1.9rem;line-height:1;color:#d4b25a;}
-    .wn-stats dt{font-family:'DM Sans',sans-serif;font-size:.54rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(244,233,200,.5);}
-    .wn-cta{display:inline-flex;align-items:center;gap:.6rem;padding:.9rem 1.5rem;border-radius:100px;background:#d4b25a;color:#1a1408;font-family:'DM Sans',sans-serif;font-size:.64rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;transition:background .25s ease,gap .25s ease;}
+    .wn-stats dt{font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(244,233,200,.5);}
+    .wn-cta{display:inline-flex;align-items:center;gap:.6rem;padding:.9rem 1.5rem;border-radius:100px;background:#d4b25a;color:#1a1408;font-family:'Manrope',sans-serif;font-size:.64rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;transition:background .25s ease,gap .25s ease;}
     .wn-feature:hover .wn-cta{background:#e6c872;gap:.9rem;}
     .wn-cta svg{width:13px;height:13px;}
     @media(max-width:560px){.wn-feature{min-height:520px}.wn-feature-top{padding:1.5rem}.wn-feature-body{padding:0 1.5rem 1.6rem}.wn-rose{width:56px;height:56px}}
@@ -353,10 +374,10 @@ a, button, [role="button"], input, select, textarea,
     .wn-thumb img{width:76%;height:auto;mix-blend-mode:multiply;}
     .wn-thumb--ledger{background:#1c170e;border-color:#1c170e;box-shadow:none;padding:.9rem .7rem;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;gap:.35rem;}
     .wn-thumb--ledger i{display:block;height:5px;border-radius:5px;background:linear-gradient(90deg,#a9822f,#d4b25a);}
-    .wn-item-lbl{font-family:'DM Sans',sans-serif;font-size:.54rem;letter-spacing:.22em;text-transform:uppercase;color:#a9822f;margin-bottom:.4rem;}
+    .wn-item-lbl{font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:#a9822f;margin-bottom:.4rem;}
     .wn-item h4{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.45rem;line-height:1.15;color:var(--color-text,#1a1000);margin:0 0 .45rem;}
     .wn-item p{font-family:'Cormorant Garamond',serif;font-size:1rem;line-height:1.5;color:var(--color-text-secondary,#5a4a2e);margin:0 0 .7rem;}
-    .wn-more{display:inline-flex;align-items:center;gap:.4rem;font-family:'DM Sans',sans-serif;font-size:.58rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#a9822f;}
+    .wn-more{display:inline-flex;align-items:center;gap:.4rem;font-family:'Manrope',sans-serif;font-size:.62rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#a9822f;}
     .wn-more svg{width:12px;height:12px;transition:transform .25s ease;}
     .wn-item:hover .wn-more svg{transform:translateX(3px);}
     @media(prefers-reduced-motion:reduce){.wn-rose g,.wn-eyebrow::before,.hero-news{animation:none}.wn-feature-img{transition:none}}
@@ -577,7 +598,7 @@ a, button, [role="button"], input, select, textarea,
     @media(max-width:700px){.fa-inner{padding:0 1.2rem;}.featured-archives{padding:4.5rem 0;}}
     .fa-head{text-align:center;margin-bottom:3.5rem;}
     .fa-eyebrow{display:flex;align-items:center;justify-content:center;gap:1rem;margin-bottom:1rem;}
-    .fa-eyebrow span{font-family:'DM Sans',sans-serif;font-size:.52rem;letter-spacing:.34em;text-transform:uppercase;color:rgba(201,162,39,.72);}
+    .fa-eyebrow span{font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.34em;text-transform:uppercase;color:rgba(201,162,39,.72);}
     .fa-eyebrow-ln{width:38px;height:1px;background:linear-gradient(90deg,transparent,rgba(201,162,39,.55));}
     .fa-eyebrow-ln:last-child{transform:scaleX(-1);}
     .fa-title{font-family:'Cormorant Garamond',serif;font-weight:300;line-height:.95;letter-spacing:-.035em;font-size:clamp(2.4rem,4.8vw,3.8rem);color:var(--color-text,#1a1000);margin-bottom:.9rem;}
@@ -593,16 +614,16 @@ a, button, [role="button"], input, select, textarea,
     .fa-card:hover{transform:translateY(-5px);box-shadow:0 22px 55px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.05);border-color:var(--fa-accent,#c9a227);}
     [data-theme="dark"] .fa-card:hover{box-shadow:0 22px 55px rgba(0,0,0,.5);}
     .fa-year{position:absolute;top:1.2rem;right:1.5rem;font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:600;color:var(--fa-accent,#c9a227);opacity:1;font-style:normal;letter-spacing:.02em;text-shadow:0 1px 8px rgba(201,162,39,.18);}
-    .fa-num{font-family:'DM Sans',sans-serif;font-size:.5rem;letter-spacing:.24em;text-transform:uppercase;color:var(--color-text-muted,#a89880);font-weight:600;margin-bottom:1.4rem;}
+    .fa-num{font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;color:var(--color-text-muted,#a89880);font-weight:600;margin-bottom:1.4rem;}
     .fa-icon{width:42px;height:42px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--fa-glow,rgba(201,162,39,.12)),rgba(201,162,39,.05));border-radius:10px;margin-bottom:1.1rem;border:1px solid var(--fa-accent-border,rgba(201,162,39,.2));}
     .fa-icon svg{width:19px;height:19px;stroke:var(--fa-accent,#c9a227);}
-    .fa-label{font-family:'DM Sans',sans-serif;font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--fa-accent,#c9a227);font-weight:500;margin-bottom:.6rem;}
+    .fa-label{font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--fa-accent,#c9a227);font-weight:500;margin-bottom:.6rem;}
     .fa-name{font-family:'Cormorant Garamond',serif;font-size:1.42rem;font-weight:400;color:var(--color-text,#1a1000);line-height:1.22;margin-bottom:.8rem;letter-spacing:-.015em;}
     .fa-desc{font-family:'Cormorant Garamond',serif;font-size:.95rem;line-height:1.65;color:var(--color-text-secondary,#5a4a2e);margin-bottom:1.4rem;min-height:3.3em;}
     .fa-stats-row{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.2rem;}
-    .fa-stat-pill{display:inline-flex;align-items:center;gap:.3rem;padding:.25rem .6rem;background:var(--color-bg,#faf7f2);border:1px solid var(--color-border-light,rgba(201,162,39,.18));border-radius:100px;font-family:'DM Sans',sans-serif;font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;color:var(--color-text-muted,#a89880);}
+    .fa-stat-pill{display:inline-flex;align-items:center;gap:.3rem;padding:.25rem .6rem;background:var(--color-bg,#faf7f2);border:1px solid var(--color-border-light,rgba(201,162,39,.18));border-radius:100px;font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--color-text-muted,#a89880);}
     [data-theme="dark"] .fa-stat-pill{background:#0e0c0a;}
-    .fa-cta{display:inline-flex;align-items:center;gap:.5rem;font-family:'DM Sans',sans-serif;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--fa-accent,#c9a227);font-weight:600;padding-top:1rem;border-top:1px solid var(--color-border-light,rgba(201,162,39,.1));transition:gap .3s ease;}
+    .fa-cta{display:inline-flex;align-items:center;gap:.5rem;font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--fa-accent,#c9a227);font-weight:600;padding-top:1rem;border-top:1px solid var(--color-border-light,rgba(201,162,39,.1));transition:gap .3s ease;}
     .fa-cta svg{width:13px;height:13px;stroke:var(--fa-accent,#c9a227);transition:transform .3s ease;}
     .fa-card:hover .fa-cta{gap:.75rem;}
     .fa-card:hover .fa-cta svg{transform:translateX(3px);}
@@ -617,7 +638,7 @@ a, button, [role="button"], input, select, textarea,
     [data-theme="dark"] .fa-card--forest{--fa-accent:#86a86a;}
 
     .fa-footer-link{text-align:center;margin-top:3rem;}
-    .fa-footer-link a{display:inline-flex;align-items:center;gap:.6rem;font-family:'DM Sans',sans-serif;font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--color-text,#1a1000);text-decoration:none;padding:1rem 2rem;background:transparent;border:1px solid var(--color-border,rgba(201,162,39,.3));border-radius:100px;font-weight:500;transition:background .3s ease,border-color .3s ease,transform .2s ease;}
+    .fa-footer-link a{display:inline-flex;align-items:center;gap:.6rem;font-family:'Manrope',sans-serif;font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--color-text,#1a1000);text-decoration:none;padding:1rem 2rem;background:transparent;border:1px solid var(--color-border,rgba(201,162,39,.3));border-radius:100px;font-weight:500;transition:background .3s ease,border-color .3s ease,transform .2s ease;}
     .fa-footer-link a:hover{background:rgba(201,162,39,.06);border-color:#c9a227;transform:translateY(-2px);}
     .fa-footer-link a svg{width:13px;height:13px;transition:transform .3s ease;}
     .fa-footer-link a:hover svg{transform:translateX(3px);}
@@ -754,8 +775,8 @@ a, button, [role="button"], input, select, textarea,
 
     .TDIH-EYE {
         display: inline-flex; align-items: center; gap: .6rem;
-        font-family: 'DM Sans', sans-serif;
-        font-size: .55rem; letter-spacing: .28em; text-transform: uppercase;
+        font-family: 'Manrope', sans-serif;
+        font-size: .62rem; letter-spacing: .28em; text-transform: uppercase;
         color: #b8902a; margin-bottom: 1.2rem;
     }
     .TDIH-EYE svg { width: 14px; height: 14px; }
@@ -771,8 +792,8 @@ a, button, [role="button"], input, select, textarea,
 
     .TDIH-YEAR-TAG {
         display: inline-block;
-        font-family: 'DM Sans', sans-serif;
-        font-size: .6rem; letter-spacing: .15em; text-transform: uppercase;
+        font-family: 'Manrope', sans-serif;
+        font-size: .62rem; letter-spacing: .15em; text-transform: uppercase;
         color: #c9a227;
         background: rgba(201,162,39,.1);
         border: 1px solid rgba(201,162,39,.2);
@@ -782,7 +803,7 @@ a, button, [role="button"], input, select, textarea,
     }
 
     .TDIH-TEXT {
-        font-family: 'DM Sans', sans-serif;
+        font-family: 'Manrope', sans-serif;
         font-size: .82rem; line-height: 1.85;
         color: var(--color-text-secondary, #44403c);
         margin-bottom: 1.2rem;
@@ -791,7 +812,7 @@ a, button, [role="button"], input, select, textarea,
     [data-theme="dark"] .TDIH-TEXT { color: rgba(200,185,155,.65); }
 
     .TDIH-SOURCE {
-        font-family: 'DM Sans', sans-serif;
+        font-family: 'Manrope', sans-serif;
         font-size: .65rem; letter-spacing: .08em;
         color: var(--color-text-muted, #a8a29e);
         font-style: italic;
@@ -832,7 +853,7 @@ a, button, [role="button"], input, select, textarea,
 
     /* ── QUOTE ROTATOR ── */
     .TDIH-QUOTE-CARD {
-        background: linear-gradient(145deg, #1a3d28, #2c5f3f);
+        background: linear-gradient(145deg, #15110b, #2a2012);
         border-radius: 16px;
         padding: 2.4rem 2rem;
         box-shadow: 0 4px 24px rgba(0,0,0,.12);
@@ -850,8 +871,8 @@ a, button, [role="button"], input, select, textarea,
     }
 
     .TDIH-Q-LABEL {
-        font-family: 'DM Sans', sans-serif;
-        font-size: .52rem; letter-spacing: .28em; text-transform: uppercase;
+        font-family: 'Manrope', sans-serif;
+        font-size: .62rem; letter-spacing: .28em; text-transform: uppercase;
         color: rgba(201,162,39,.7); margin-bottom: 1.2rem;
         display: flex; align-items: center; gap: .5rem;
     }
@@ -871,7 +892,7 @@ a, button, [role="button"], input, select, textarea,
 
     .TDIH-Q-META {
         margin-top: 1.4rem;
-        font-family: 'DM Sans', sans-serif;
+        font-family: 'Manrope', sans-serif;
         font-size: .68rem; color: rgba(255,255,255,.45);
         letter-spacing: .06em;
         transition: opacity .4s ease;
@@ -909,7 +930,7 @@ a, button, [role="button"], input, select, textarea,
         <div style="text-align:center;margin-bottom:2.8rem;">
             <div style="display:inline-flex;align-items:center;gap:.8rem;margin-bottom:.9rem;">
                 <div style="height:1px;width:40px;background:linear-gradient(90deg,transparent,rgba(201,162,39,.5));"></div>
-                <span style="font-family:'DM Sans',sans-serif;font-size:.58rem;letter-spacing:.3em;text-transform:uppercase;color:#c9a227;">Живий архів</span>
+                <span style="font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:#c9a227;">Живий архів</span>
                 <div style="height:1px;width:40px;background:linear-gradient(90deg,rgba(201,162,39,.5),transparent);"></div>
             </div>
             <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:300;color:var(--color-text);line-height:1.1;margin:0;">
@@ -981,8 +1002,8 @@ a, button, [role="button"], input, select, textarea,
     .TDIH-Q-PHOTO-OVERLAY.visible { opacity: 1; }
     .TDIH-Q-TAG {
         display: inline-flex; align-items: center; gap: .4rem;
-        font-family: 'DM Sans', sans-serif;
-        font-size: .48rem; letter-spacing: .22em; text-transform: uppercase;
+        font-family: 'Manrope', sans-serif;
+        font-size: .62rem; letter-spacing: .22em; text-transform: uppercase;
         color: rgba(201,162,39,.85);
         background: rgba(201,162,39,.12);
         border: 1px solid rgba(201,162,39,.22);
@@ -1247,7 +1268,7 @@ a, button, [role="button"], input, select, textarea,
     /* ══ SECTION HEADER ══ */
     .AH{text-align:center;margin-bottom:5.5rem;position:relative;}
     .AH-EYE{display:inline-flex;align-items:center;gap:1rem;
-      font-family:'DM Sans',sans-serif;font-size:.5rem;letter-spacing:.38em;text-transform:uppercase;
+      font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.38em;text-transform:uppercase;
       color:rgba(201,162,39,.5);margin-bottom:1.6rem;}
     .AH-EYE::before,.AH-EYE::after{content:'';width:50px;height:1px;
       background:linear-gradient(90deg,transparent,rgba(201,162,39,.35));}
@@ -1262,14 +1283,14 @@ a, button, [role="button"], input, select, textarea,
     .AH-TL-NODE{display:flex;flex-direction:column;align-items:center;gap:.4rem;padding:0 1.6rem;}
     .AH-TL-Y{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:600;
       color:#c9a227;line-height:1;}
-    .AH-TL-L{font-family:'DM Sans',sans-serif;font-size:.48rem;letter-spacing:.18em;text-transform:uppercase;
+    .AH-TL-L{font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;
       color:rgba(201,162,39,.4);}
     .AH-TL-LINE{flex:1;height:1px;background:linear-gradient(90deg,rgba(201,162,39,.2),rgba(201,162,39,.4),rgba(201,162,39,.2));
       max-width:60px;}
     .AH-TL-DOT{width:6px;height:6px;border-radius:50%;background:#c9a227;opacity:.6;
       box-shadow:0 0 8px rgba(201,162,39,.5);}
 
-    .AS{font-family:'DM Sans',sans-serif;font-size:.75rem;letter-spacing:.1em;
+    .AS{font-family:'Manrope',sans-serif;font-size:.75rem;letter-spacing:.1em;
       color:rgba(240,230,200,.28);text-transform:uppercase;}
 
     /* ══ BLOCK ══ */
@@ -1300,7 +1321,7 @@ a, button, [role="button"], input, select, textarea,
       font-size:clamp(1.2rem,2.5vw,1.65rem);font-weight:500;
       color:#f0e6c8;margin:0 0 .6rem;line-height:1.2;}
     .ABLK-TAGS{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;}
-    .ABLK-TAG{font-family:'DM Sans',sans-serif;font-size:.5rem;
+    .ABLK-TAG{font-family:'Manrope',sans-serif;font-size:.62rem;
       letter-spacing:.18em;text-transform:uppercase;
       color:rgba(201,162,39,.5);
       background:rgba(201,162,39,.06);
@@ -1364,7 +1385,7 @@ a, button, [role="button"], input, select, textarea,
       border:2px solid rgba(255,255,255,.9);
       box-shadow:0 2px 10px rgba(0,0,0,.7),0 0 18px rgba(201,162,39,.4);
       display:flex;align-items:center;justify-content:center;
-      font-family:'DM Sans',sans-serif;font-size:8.5px;font-weight:800;color:#1a1000;
+      font-family:'Manrope',sans-serif;font-size:8.5px;font-weight:800;color:#1a1000;
       transition:transform .15s,box-shadow .15s;}
     .PIN:hover .PDOT,.PIN.act .PDOT{
       background:linear-gradient(135deg,#f5d050,#e0b830);transform:scale(1.28);
@@ -1387,10 +1408,10 @@ a, button, [role="button"], input, select, textarea,
     .TTR{display:flex;align-items:center;gap:8px;margin-bottom:5px;}
     .TTN{flex-shrink:0;width:22px;height:22px;border-radius:50%;
       background:linear-gradient(135deg,#ddb030,#c49020);
-      color:#1a1000;font-size:.62rem;font-weight:800;font-family:'DM Sans',sans-serif;
+      color:#1a1000;font-size:.62rem;font-weight:800;font-family:'Manrope',sans-serif;
       display:flex;align-items:center;justify-content:center;}
     .TTT{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:#f0e6c8;line-height:1.2;}
-    .TTD{font-family:'DM Sans',sans-serif;font-size:.68rem;color:#8a7a68;line-height:1.6;display:block;margin-top:3px;}
+    .TTD{font-family:'Manrope',sans-serif;font-size:.68rem;color:#8a7a68;line-height:1.6;display:block;margin-top:3px;}
 
     /* ══ ZOOM BTNS ══ */
     .ZW{position:absolute;bottom:14px;left:14px;display:flex;flex-direction:column;gap:4px;z-index:20;}
@@ -1415,9 +1436,9 @@ a, button, [role="button"], input, select, textarea,
       background:rgba(5,4,2,.88);backdrop-filter:blur(14px);
       border:1px solid rgba(201,162,39,.22);border-radius:5px;
       padding:5px 12px;pointer-events:none;line-height:1.45;}
-    .BADGE .bl{display:block;font-family:'DM Sans',sans-serif;font-size:.46rem;
+    .BADGE .bl{display:block;font-family:'Manrope',sans-serif;font-size:.62rem;
       letter-spacing:.22em;text-transform:uppercase;color:rgba(201,162,39,.45);}
-    .BADGE .bd{display:block;font-family:'DM Sans',sans-serif;font-size:.8rem;
+    .BADGE .bd{display:block;font-family:'Manrope',sans-serif;font-size:.8rem;
       color:#c9a227;font-weight:700;letter-spacing:.04em;}
 
     /* ══ LEGEND ══ */
@@ -1431,17 +1452,17 @@ a, button, [role="button"], input, select, textarea,
     .LEGL{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:3px;}
     .LEGI{display:flex;align-items:center;gap:6px;padding:4px 8px;border-radius:6px;
       cursor:pointer;border:1px solid transparent;transition:background .13s,color .13s;
-      font-family:'DM Sans',sans-serif;font-size:.68rem;color:rgba(200,185,150,.42);line-height:1.4;}
+      font-family:'Manrope',sans-serif;font-size:.68rem;color:rgba(200,185,150,.42);line-height:1.4;}
     .LEGI:hover{background:rgba(255,255,255,.05);color:rgba(200,185,150,.8);}
     .LEGI.act{background:rgba(201,162,39,.1);border-color:rgba(201,162,39,.28);color:rgba(240,220,155,.9);}
     .LEGN{flex-shrink:0;width:20px;height:20px;border-radius:50%;
       background:linear-gradient(135deg,#ddb030,#c49020);
-      color:#1a1000;font-size:.55rem;font-weight:800;font-family:'DM Sans',sans-serif;
+      color:#1a1000;font-size:.55rem;font-weight:800;font-family:'Manrope',sans-serif;
       display:flex;align-items:center;justify-content:center;
       transition:transform .13s;box-shadow:0 2px 6px rgba(0,0,0,.4);}
     .LEGI:hover .LEGN,.LEGI.act .LEGN{transform:scale(1.12);}
     .LEGHINT{margin-top:.5rem;font-size:.58rem;color:rgba(160,145,120,.3);
-      font-family:'DM Sans',sans-serif;line-height:1.5;font-style:italic;
+      font-family:'Manrope',sans-serif;line-height:1.5;font-style:italic;
       border-top:1px solid rgba(255,255,255,.05);padding-top:.45rem;}
 
     /* ══ SEPARATOR ══ */
@@ -1449,7 +1470,7 @@ a, button, [role="button"], input, select, textarea,
       background:linear-gradient(90deg,transparent,rgba(201,162,39,.15),transparent);}
     .MSEP-INNER{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
       display:flex;align-items:center;gap:.8rem;}
-    .MSEP-TXT{font-family:'DM Sans',sans-serif;font-size:.46rem;letter-spacing:.32em;
+    .MSEP-TXT{font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.32em;
       text-transform:uppercase;color:rgba(201,162,39,.35);
       background:#07060a;padding:0 1.2rem;white-space:nowrap;position:relative;z-index:2;}
     .MSEP-DIAMOND{width:5px;height:5px;background:rgba(201,162,39,.3);
@@ -1465,7 +1486,7 @@ a, button, [role="button"], input, select, textarea,
       background:rgba(5,4,2,.96);
       border-bottom:1px solid rgba(201,162,39,.1);
       backdrop-filter:blur(12px);}
-    #MFS-LABEL{font-family:'DM Sans',sans-serif;font-size:.52rem;
+    #MFS-LABEL{font-family:'Manrope',sans-serif;font-size:.62rem;
       letter-spacing:.28em;text-transform:uppercase;color:rgba(201,162,39,.7);flex:1;}
     .mfs-btn{width:36px;height:36px;flex-shrink:0;border-radius:8px;
       border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.06);
@@ -1473,7 +1494,7 @@ a, button, [role="button"], input, select, textarea,
       display:flex;align-items:center;justify-content:center;
       transition:background .15s;padding:0;font-size:1rem;}
     .mfs-btn:hover{background:rgba(255,255,255,.18);color:#fff;}
-    #MFS-ZVAL{font-family:'DM Sans',sans-serif;font-size:.72rem;
+    #MFS-ZVAL{font-family:'Manrope',sans-serif;font-size:.72rem;
       color:rgba(255,255,255,.42);min-width:3em;text-align:center;}
     #MFS-CLOSE{width:36px;height:36px;border-radius:50%;
       border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.07);
@@ -1508,12 +1529,12 @@ a, button, [role="button"], input, select, textarea,
     #MFS-LEG{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:2px;}
     .MFS-LI{display:flex;align-items:flex-start;gap:8px;padding:6px 8px;border-radius:6px;
       cursor:pointer;border:1px solid transparent;transition:background .13s;
-      font-family:'DM Sans',sans-serif;font-size:.71rem;color:rgba(200,185,150,.45);line-height:1.45;}
+      font-family:'Manrope',sans-serif;font-size:.71rem;color:rgba(200,185,150,.45);line-height:1.45;}
     .MFS-LI:hover{background:rgba(255,255,255,.06);color:rgba(200,185,150,.85);}
     .MFS-LI.act{background:rgba(201,162,39,.1);border-color:rgba(201,162,39,.32);color:rgba(240,220,155,.9);}
     .MFS-LN{flex-shrink:0;width:22px;height:22px;border-radius:50%;
       background:linear-gradient(135deg,#ddb030,#c49020);
-      color:#1a1000;font-size:.58rem;font-weight:800;font-family:'DM Sans',sans-serif;
+      color:#1a1000;font-size:.58rem;font-weight:800;font-family:'Manrope',sans-serif;
       display:flex;align-items:center;justify-content:center;margin-top:1px;}
 
     .MWRAP.sat::before,.MWRAP.sat::after,.MWRAP.sat .MC::before,.MWRAP.sat .MC::after{
@@ -1631,7 +1652,7 @@ a, button, [role="button"], input, select, textarea,
       .AER-FIND-BODY{flex:1;min-width:220px;}
       .AER-FIND-EYE{
         display:inline-flex;align-items:center;gap:.55rem;
-        font-family:'DM Sans',sans-serif;font-size:.46rem;letter-spacing:.38em;text-transform:uppercase;
+        font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.38em;text-transform:uppercase;
         color:#e8b84b;margin-bottom:.6rem;
       }
       .AER-FIND-EYE-DOT{width:5px;height:5px;border-radius:50%;background:#e8b84b;animation:blinkDot 1.4s ease-in-out infinite;}
@@ -1644,7 +1665,7 @@ a, button, [role="button"], input, select, textarea,
       :root:not([data-theme="dark"]) .AER-FIND-TITLE{color:#1c1917;}
       .AER-FIND-TITLE em{font-style:italic;color:#e8b84b;}
       .AER-FIND-DESC{
-        font-family:'DM Sans',sans-serif;font-size:.74rem;line-height:1.75;
+        font-family:'Manrope',sans-serif;font-size:.74rem;line-height:1.75;
         color:rgba(240,230,200,.5);max-width:700px;
       }
       :root:not([data-theme="dark"]) .AER-FIND-DESC{color:rgba(44,33,16,.55);}
@@ -1652,7 +1673,7 @@ a, button, [role="button"], input, select, textarea,
       :root:not([data-theme="dark"]) .AER-FIND-DESC strong{color:#8a5c0a;}
       .AER-FIND-TAGS{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.85rem;}
       .AER-FIND-TAG{
-        font-family:'DM Sans',sans-serif;font-size:.44rem;letter-spacing:.2em;text-transform:uppercase;
+        font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;
         color:rgba(232,184,75,.7);background:rgba(201,162,39,.08);
         border:1px solid rgba(201,162,39,.18);border-radius:2px;padding:.22rem .7rem;
       }
@@ -1661,7 +1682,7 @@ a, button, [role="button"], input, select, textarea,
       /* ── Dual photo layout for 1917 — stacked full-width ── */
       .AG17{display:flex;flex-direction:column;gap:2.4rem;}
       .AG17-LABEL{
-        font-family:'DM Sans',sans-serif;font-size:.46rem;letter-spacing:.26em;text-transform:uppercase;
+        font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.26em;text-transform:uppercase;
         color:rgba(232,184,75,.5);margin-bottom:.6rem;
         display:flex;align-items:center;gap:.5rem;
       }
@@ -1680,7 +1701,7 @@ a, button, [role="button"], input, select, textarea,
       .MBOX17B img{width:100%;height:100%;object-fit:contain;display:block;user-select:none;pointer-events:none;}
       .MBOX17B-HINT{
         position:absolute;bottom:.7rem;left:50%;transform:translateX(-50%);
-        font-family:'DM Sans',sans-serif;font-size:.5rem;letter-spacing:.16em;text-transform:uppercase;
+        font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;
         color:rgba(240,220,160,1);background:rgba(5,4,2,.85);backdrop-filter:blur(8px);
         border:1px solid rgba(255,255,255,.08);border-radius:100px;
         padding:.28rem .9rem;white-space:nowrap;pointer-events:none;
@@ -1765,7 +1786,7 @@ a, button, [role="button"], input, select, textarea,
               <div class="LEG">
                 <p class="LEGH">Позначення</p>
                 <ul class="LEGL" id="L17a">
-                  <li style="font-size:.71rem;color:rgba(160,150,130,.35);font-family:'DM Sans',sans-serif;padding:.4rem .25rem">Завантаження...</li>
+                  <li style="font-size:.71rem;color:rgba(160,150,130,.35);font-family:'Manrope',sans-serif;padding:.4rem .25rem">Завантаження...</li>
                 </ul>
                 <p class="LEGHINT">Натисніть маркер або пункт · Scroll для збільшення</p>
               </div>
@@ -1797,7 +1818,7 @@ a, button, [role="button"], input, select, textarea,
           <p style="font-family:'Cormorant Garamond',serif;font-size:.82rem;font-style:italic;color:var(--color-text-secondary);margin:0 0 .3rem;line-height:1.6;">
             „<span lang="de">Dombrowica 12.6.1917. Aufnahmen der bayr. Fliegerabteilung 47 bei Kowel.</span>"
           </p>
-          <p style="font-family:'DM Sans',sans-serif;font-size:.65rem;color:var(--color-text-light);margin:0;letter-spacing:.04em;">
+          <p style="font-family:'Manrope',sans-serif;font-size:.65rem;color:var(--color-text-light);margin:0;letter-spacing:.04em;">
             Оригінальний підпис на знімках · 47-й баварський польовий авіаційний загін
           </p>
         </div>
@@ -1904,7 +1925,7 @@ a, button, [role="button"], input, select, textarea,
       }
       .BJ44-EYE {
         display: inline-flex; align-items: center; gap: .55rem;
-        font-family: 'DM Sans', sans-serif; font-size: .44rem;
+        font-family: 'Manrope', sans-serif; font-size: .62rem;
         letter-spacing: .36em; text-transform: uppercase; color: #e87070;
       }
       :root:not([data-theme="dark"]) .BJ44-EYE { color: #b03030; }
@@ -1918,7 +1939,7 @@ a, button, [role="button"], input, select, textarea,
         60% { box-shadow: 0 0 0 7px rgba(232,112,112,.0); }
       }
       .BJ44-DATE-TAG {
-        font-family: 'DM Sans', sans-serif; font-size: .44rem;
+        font-family: 'Manrope', sans-serif; font-size: .62rem;
         letter-spacing: .2em; text-transform: uppercase;
         color: rgba(201,162,39,.6); background: rgba(201,162,39,.08);
         border: 1px solid rgba(201,162,39,.2); border-radius: 100px;
@@ -1937,7 +1958,7 @@ a, button, [role="button"], input, select, textarea,
       .BJ44-TITLE em { font-style: italic; color: #e8b84b; }
       :root:not([data-theme="dark"]) .BJ44-TITLE em { color: #a8701a; }
       .BJ44-LEAD {
-        font-family: 'DM Sans', sans-serif; font-size: .78rem; line-height: 1.82;
+        font-family: 'Manrope', sans-serif; font-size: .78rem; line-height: 1.82;
         color: rgba(240,230,200,.46); max-width: 680px;
       }
       :root:not([data-theme="dark"]) .BJ44-LEAD { color: rgba(44,33,16,.5); }
@@ -1975,7 +1996,7 @@ a, button, [role="button"], input, select, textarea,
         color: #e87070; line-height: 1; display: block; margin-bottom: .3rem;
       }
       .BJ44-SB-L {
-        font-family: 'DM Sans', sans-serif; font-size: .58rem; letter-spacing: .08em;
+        font-family: 'Manrope', sans-serif; font-size: .62rem; letter-spacing: .08em;
         color: rgba(240,230,200,.35); display: block;
       }
       :root:not([data-theme="dark"]) .BJ44-SB-L { color: rgba(44,33,16,.4); }
@@ -2039,7 +2060,7 @@ a, button, [role="button"], input, select, textarea,
       }
       .BJ44-JTHUMB-DATE {
         position: absolute; bottom: .6rem; right: .7rem;
-        font-family: 'DM Sans', sans-serif; font-size: .42rem; letter-spacing: .18em;
+        font-family: 'Manrope', sans-serif; font-size: .62rem; letter-spacing: .18em;
         text-transform: uppercase; color: rgba(232,184,75,.8);
         background: rgba(5,4,2,.6); backdrop-filter: blur(6px);
         border: 1px solid rgba(201,162,39,.2); border-radius: 100px;
@@ -2047,7 +2068,7 @@ a, button, [role="button"], input, select, textarea,
       }
       .BJ44-JBODY { padding: 1rem 1.1rem 1.2rem; flex: 1; display: flex; flex-direction: column; gap: .55rem; }
       .BJ44-JLABEL {
-        font-family: 'DM Sans', sans-serif; font-size: .42rem; letter-spacing: .26em;
+        font-family: 'Manrope', sans-serif; font-size: .62rem; letter-spacing: .26em;
         text-transform: uppercase; color: rgba(232,184,75,.5);
         display: flex; align-items: center; gap: .4rem;
       }
@@ -2057,7 +2078,7 @@ a, button, [role="button"], input, select, textarea,
         background: rgba(201,162,39,.3); flex-shrink: 0;
       }
       .BJ44-JTEXT {
-        font-family: 'DM Sans', sans-serif; font-size: .72rem; line-height: 1.78;
+        font-family: 'Manrope', sans-serif; font-size: .72rem; line-height: 1.78;
         color: rgba(240,230,200,.55); font-style: italic;
         padding-left: .8rem;
         border-left: 2px solid rgba(201,162,39,.22); flex: 1;
@@ -2065,7 +2086,7 @@ a, button, [role="button"], input, select, textarea,
       :root:not([data-theme="dark"]) .BJ44-JTEXT { color: rgba(44,33,16,.56); border-color: rgba(140,95,15,.22); }
       .BJ44-JZOOM {
         display: inline-flex; align-items: center; gap: .35rem;
-        font-family: 'DM Sans', sans-serif; font-size: .46rem; letter-spacing: .14em;
+        font-family: 'Manrope', sans-serif; font-size: .62rem; letter-spacing: .14em;
         text-transform: uppercase; color: rgba(201,162,39,.45);
         padding-top: .5rem; border-top: 1px solid rgba(201,162,39,.08);
         transition: color .2s;
@@ -2106,7 +2127,7 @@ a, button, [role="button"], input, select, textarea,
       :root:not([data-theme="dark"]) .BJ44-ANALYSIS-GHOST { color: rgba(180,30,30,.04); }
       .BJ44-ANALYSIS-CONTENT { position: relative; z-index: 1; }
       .BJ44-ANALYSIS-EYE {
-        font-family: 'DM Sans', sans-serif; font-size: .44rem; letter-spacing: .3em;
+        font-family: 'Manrope', sans-serif; font-size: .62rem; letter-spacing: .3em;
         text-transform: uppercase; color: #e87070; margin-bottom: .7rem;
         display: flex; align-items: center; gap: .6rem;
       }
@@ -2124,7 +2145,7 @@ a, button, [role="button"], input, select, textarea,
       .BJ44-ANALYSIS-T em { font-style: normal; color: #e8b84b; }
       :root:not([data-theme="dark"]) .BJ44-ANALYSIS-T em { color: #a8701a; }
       .BJ44-ANALYSIS-D {
-        font-family: 'DM Sans', sans-serif; font-size: .74rem; line-height: 1.85;
+        font-family: 'Manrope', sans-serif; font-size: .74rem; line-height: 1.85;
         color: rgba(240,230,200,.48);
       }
       :root:not([data-theme="dark"]) .BJ44-ANALYSIS-D { color: rgba(44,33,16,.52); }
@@ -2154,7 +2175,7 @@ a, button, [role="button"], input, select, textarea,
         box-shadow: 0 0 5px rgba(232,112,112,.5);
       }
       .BJ44-SDIV-PILL-TXT {
-        font-family: 'DM Sans', sans-serif; font-size: .44rem; letter-spacing: .26em;
+        font-family: 'Manrope', sans-serif; font-size: .62rem; letter-spacing: .26em;
         text-transform: uppercase; color: rgba(232,112,112,.7); white-space: nowrap;
       }
       :root:not([data-theme="dark"]) .BJ44-SDIV-PILL-TXT { color: rgba(180,40,40,.65); }
@@ -2192,14 +2213,14 @@ a, button, [role="button"], input, select, textarea,
       .BJ44-PHOTO-CAP {
         position: absolute; bottom: 0; left: 0; right: 0; padding: .45rem .75rem;
         background: linear-gradient(to top, rgba(5,4,2,.88), transparent);
-        font-family: 'DM Sans', sans-serif; font-size: .42rem; letter-spacing: .12em;
+        font-family: 'Manrope', sans-serif; font-size: .62rem; letter-spacing: .12em;
         color: rgba(232,200,140,.7); text-transform: uppercase; pointer-events: none;
       }
 
       .BJ44-INFO { display: flex; flex-direction: column; gap: 1.4rem; }
       .BJ44-INFO-EYE {
         display: inline-flex; align-items: center; gap: .55rem;
-        font-family: 'DM Sans', sans-serif; font-size: .44rem; letter-spacing: .3em;
+        font-family: 'Manrope', sans-serif; font-size: .62rem; letter-spacing: .3em;
         text-transform: uppercase; color: #e87070;
       }
       :root:not([data-theme="dark"]) .BJ44-INFO-EYE { color: #b03030; }
@@ -2216,7 +2237,7 @@ a, button, [role="button"], input, select, textarea,
       .BJ44-INFO-TITLE em { font-style: italic; color: #e8b84b; }
       :root:not([data-theme="dark"]) .BJ44-INFO-TITLE em { color: #a8701a; }
       .BJ44-INFO-BODY {
-        font-family: 'DM Sans', sans-serif; font-size: .73rem; line-height: 1.85;
+        font-family: 'Manrope', sans-serif; font-size: .73rem; line-height: 1.85;
         color: rgba(240,230,200,.48);
       }
       :root:not([data-theme="dark"]) .BJ44-INFO-BODY { color: rgba(44,33,16,.52); }
@@ -2225,7 +2246,7 @@ a, button, [role="button"], input, select, textarea,
 
       /* Docs grid (interrogation) */
       .BJ44-DOCS-HDR {
-        font-family: 'DM Sans', sans-serif; font-size: .43rem; letter-spacing: .26em;
+        font-family: 'Manrope', sans-serif; font-size: .62rem; letter-spacing: .26em;
         text-transform: uppercase; color: rgba(232,184,75,.42); margin-bottom: .6rem;
         display: flex; align-items: center; gap: .5rem;
       }
@@ -2247,7 +2268,7 @@ a, button, [role="button"], input, select, textarea,
       .BJ44-DOC-CAP {
         position: absolute; bottom: 0; left: 0; right: 0; padding: .4rem .6rem;
         background: linear-gradient(to top, rgba(5,4,2,.9), transparent);
-        font-family: 'DM Sans', sans-serif; font-size: .4rem; letter-spacing: .12em;
+        font-family: 'Manrope', sans-serif; font-size: .62rem; letter-spacing: .12em;
         color: rgba(232,200,140,.7); text-transform: uppercase; pointer-events: none;
       }
 
@@ -2262,7 +2283,7 @@ a, button, [role="button"], input, select, textarea,
         padding: .65rem 1.1rem;
         background: linear-gradient(90deg, rgba(201,162,39,.1), rgba(201,162,39,.04));
         border-bottom: 1px solid rgba(201,162,39,.14);
-        font-family: 'DM Sans', sans-serif; font-size: .43rem; letter-spacing: .28em;
+        font-family: 'Manrope', sans-serif; font-size: .62rem; letter-spacing: .28em;
         text-transform: uppercase; color: rgba(232,184,75,.6);
         display: flex; align-items: center; gap: .6rem;
       }
@@ -2271,7 +2292,7 @@ a, button, [role="button"], input, select, textarea,
         display: grid; grid-template-columns: 130px 1fr; gap: .5rem 1rem;
         padding: .55rem 1.1rem;
         border-bottom: 1px solid rgba(201,162,39,.07);
-        font-family: 'DM Sans', sans-serif; font-size: .7rem;
+        font-family: 'Manrope', sans-serif; font-size: .7rem;
         align-items: baseline;
       }
       :root:not([data-theme="dark"]) .BJ44-PILOT-ROW { border-color: rgba(140,95,15,.09); }
@@ -2310,7 +2331,7 @@ a, button, [role="button"], input, select, textarea,
       :root:not([data-theme="dark"]) .BJ44-UNIT-GHOST { color: rgba(50,80,180,.04); }
       .BJ44-UNIT-CONTENT { position: relative; z-index: 1; }
       .BJ44-UNIT-LABEL {
-        font-family: 'DM Sans', sans-serif; font-size: .44rem; letter-spacing: .3em;
+        font-family: 'Manrope', sans-serif; font-size: .62rem; letter-spacing: .3em;
         text-transform: uppercase; color: rgba(140,170,255,.55); margin-bottom: .55rem;
         display: flex; align-items: center; gap: .55rem;
       }
@@ -2325,7 +2346,7 @@ a, button, [role="button"], input, select, textarea,
       .BJ44-UNIT-T em { font-style: italic; color: #e8b84b; }
       :root:not([data-theme="dark"]) .BJ44-UNIT-T em { color: #a8701a; }
       .BJ44-UNIT-D {
-        font-family: 'DM Sans', sans-serif; font-size: .73rem; line-height: 1.85;
+        font-family: 'Manrope', sans-serif; font-size: .73rem; line-height: 1.85;
         color: rgba(240,230,200,.46);
       }
       :root:not([data-theme="dark"]) .BJ44-UNIT-D { color: rgba(44,33,16,.5); }
@@ -2584,7 +2605,7 @@ a, button, [role="button"], input, select, textarea,
           <div class="LEG">
             <p class="LEGH">Позначення</p>
             <ul class="LEGL" id="L43">
-              <li style="font-size:.71rem;color:rgba(160,150,130,.35);font-family:'DM Sans',sans-serif;padding:.4rem .25rem">Завантаження...</li>
+              <li style="font-size:.71rem;color:rgba(160,150,130,.35);font-family:'Manrope',sans-serif;padding:.4rem .25rem">Завантаження...</li>
             </ul>
           </div>
         </div>
@@ -2634,7 +2655,7 @@ a, button, [role="button"], input, select, textarea,
           <div class="LEG">
             <p class="LEGH">Позначення</p>
             <ul class="LEGL" id="L71">
-              <li style="font-size:.71rem;color:rgba(160,150,130,.35);font-family:'DM Sans',sans-serif;padding:.4rem .25rem">Завантаження...</li>
+              <li style="font-size:.71rem;color:rgba(160,150,130,.35);font-family:'Manrope',sans-serif;padding:.4rem .25rem">Завантаження...</li>
             </ul>
           </div>
         </div>
@@ -3174,7 +3195,7 @@ a, button, [role="button"], input, select, textarea,
           .then(function(r) { return r.ok ? r.json() : []; })
           .then(function(data) {
             if (!Array.isArray(data) || !data.length) {
-              if (leg) leg.innerHTML = '<li style="font-size:.72rem;color:#a09080;font-family:\'DM Sans\',sans-serif;padding:.4rem .25rem">Позначень ще немає</li>';
+              if (leg) leg.innerHTML = '<li style="font-size:.72rem;color:#a09080;font-family:\'Manrope\',sans-serif;padding:.4rem .25rem">Позначень ще немає</li>';
               return;
             }
             DATA[mid] = data.map(normalizePin).filter(function(p){ return !isNaN(p.x)&&!isNaN(p.y); });
@@ -3182,7 +3203,7 @@ a, button, [role="button"], input, select, textarea,
             buildLegend(mid);
           })
           .catch(function() {
-            if (leg) leg.innerHTML = '<li style="font-size:.72rem;color:#a09080;font-family:\'DM Sans\',sans-serif;padding:.4rem .25rem">Помилка завантаження</li>';
+            if (leg) leg.innerHTML = '<li style="font-size:.72rem;color:#a09080;font-family:\'Manrope\',sans-serif;padding:.4rem .25rem">Помилка завантаження</li>';
           });
       }
 
@@ -3220,11 +3241,11 @@ a, button, [role="button"], input, select, textarea,
     .TPE::before,.TPE::after{content:'';display:block;width:40px;height:1px;}
     .TPE::before{background:linear-gradient(90deg,transparent,rgba(201,162,39,.6));}
     .TPE::after{background:linear-gradient(90deg,rgba(201,162,39,.6),transparent);}
-    .TPE span{font-family:'DM Sans',sans-serif;font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:#c9a227;}
+    .TPE span{font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:#c9a227;}
     .TPT{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(2rem,3.8vw,3rem);font-weight:400;color:#1c1917;line-height:1.1;margin:0 0 .5rem;}
     [data-theme="dark"] .TPT{color:#f0e6c8;}
     .TPT em{font-style:italic;color:#c9a227;}
-    .TPS{font-family:'DM Sans',sans-serif;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(28,25,23,.4);margin:0;}
+    .TPS{font-family:'Manrope',sans-serif;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(28,25,23,.4);margin:0;}
     [data-theme="dark"] .TPS{color:rgba(240,230,200,.3);}
 
     /* ── MAIN GRID — map takes full width, sidebar below ── */
@@ -3253,7 +3274,7 @@ a, button, [role="button"], input, select, textarea,
       animation:tpPulse 2.2s ease-out infinite;pointer-events:none;}
     .TPPIN .TPPdot{width:12px;height:12px;border-radius:50%;background:#c9a227;border:1.5px solid #fff;
       box-shadow:0 1px 5px rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;
-      font-family:'DM Sans',sans-serif;font-size:.38rem;font-weight:800;color:#1a1000;
+      font-family:'Manrope',sans-serif;font-size:.38rem;font-weight:800;color:#1a1000;
       transition:transform .14s,background .14s;}
     .TPPIN:hover .TPPdot,.TPPIN.act .TPPdot{background:#f0c840;transform:scale(1.2);}
     @keyframes tpPulse{0%{transform:translate(-50%,-50%) scale(.9);opacity:.7}70%{transform:translate(-50%,-50%) scale(2);opacity:0}100%{transform:translate(-50%,-50%) scale(2);opacity:0}}
@@ -3270,10 +3291,10 @@ a, button, [role="button"], input, select, textarea,
     .TPTTX:hover{background:rgba(255,255,255,.22);color:#fff;}
     .TPTTR{display:flex;align-items:center;gap:7px;margin-bottom:4px;}
     .TPTTNUM{flex-shrink:0;width:20px;height:20px;border-radius:50%;background:#c9a227;
-      color:#1a1000;font-size:.6rem;font-weight:800;font-family:'DM Sans',sans-serif;
+      color:#1a1000;font-size:.6rem;font-weight:800;font-family:'Manrope',sans-serif;
       display:flex;align-items:center;justify-content:center;}
     .TPTTTIT{font-family:'Cormorant Garamond',serif;font-size:.92rem;font-weight:600;color:#f0e6c8;line-height:1.2;}
-    .TPTTDSC{font-family:'DM Sans',sans-serif;font-size:.68rem;color:#9e9080;line-height:1.5;display:block;margin-top:2px;}
+    .TPTTDSC{font-family:'Manrope',sans-serif;font-size:.68rem;color:#9e9080;line-height:1.5;display:block;margin-top:2px;}
 
     /* ── MAP CONTROLS ── */
     .TPZW{position:absolute;bottom:14px;left:14px;display:flex;flex-direction:column;gap:5px;z-index:10;}
@@ -3291,11 +3312,11 @@ a, button, [role="button"], input, select, textarea,
     .TPBADGE{position:absolute;top:14px;right:14px;z-index:5;background:rgba(8,5,2,.88);
       backdrop-filter:blur(12px);border:1px solid rgba(201,162,39,.3);border-radius:8px;
       padding:6px 12px;pointer-events:none;line-height:1.4;}
-    .TPBADGE .bl{display:block;font-family:'DM Sans',sans-serif;font-size:.48rem;letter-spacing:.2em;text-transform:uppercase;color:#5a4a2e;}
+    .TPBADGE .bl{display:block;font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:#5a4a2e;}
     .TPBADGE .bd{display:block;font-family:'Cormorant Garamond',serif;font-size:.95rem;color:#c9a227;font-weight:500;letter-spacing:.04em;}
     .TPHINT{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);background:rgba(8,5,2,.72);
       backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.07);border-radius:100px;
-      padding:.4rem 1.2rem;font-family:'DM Sans',sans-serif;font-size:.6rem;letter-spacing:.15em;
+      padding:.4rem 1.2rem;font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.15em;
       text-transform:uppercase;color:rgba(255,255,255,.4);pointer-events:none;white-space:nowrap;
       transition:opacity .5s;z-index:8;}
     .TPMBOX.moved .TPHINT{opacity:0;}
@@ -3313,17 +3334,17 @@ a, button, [role="button"], input, select, textarea,
     .TPLEGLIST{display:flex;flex-direction:column;gap:2px;margin-bottom:.5rem;}
     .TPLEGLI{display:flex;align-items:center;gap:8px;padding:5px 7px;border-radius:6px;
       cursor:pointer;border:1px solid transparent;transition:background .13s;
-      font-family:'DM Sans',sans-serif;font-size:.72rem;color:#44403c;}
+      font-family:'Manrope',sans-serif;font-size:.72rem;color:#44403c;}
     [data-theme="dark"] .TPLEGLI{color:#a09080;}
     .TPLEGLI:hover{background:#f4efe7;}
     [data-theme="dark"] .TPLEGLI:hover{background:rgba(255,255,255,.04);}
     .TPLEGLI.act{background:#fdf5e0;border-color:rgba(201,162,39,.45);}
     [data-theme="dark"] .TPLEGLI.act{background:rgba(201,162,39,.1);border-color:rgba(201,162,39,.35);}
     .TPLEGN{flex-shrink:0;width:20px;height:20px;border-radius:50%;background:#c9a227;
-      color:#1a1000;font-size:.58rem;font-weight:800;font-family:'DM Sans',sans-serif;
+      color:#1a1000;font-size:.58rem;font-weight:800;font-family:'Manrope',sans-serif;
       display:flex;align-items:center;justify-content:center;transition:transform .13s;}
     .TPLEGLI:hover .TPLEGN,.TPLEGLI.act .TPLEGN{transform:scale(1.12);}
-    .TPLEGMT{font-family:'DM Sans',sans-serif;font-size:.6rem;font-style:italic;color:#b0a080;line-height:1.5;
+    .TPLEGMT{font-family:'Manrope',sans-serif;font-size:.6rem;font-style:italic;color:#b0a080;line-height:1.5;
       border-top:1px solid #ede5d5;padding-top:.6rem;margin-top:.4rem;}
     [data-theme="dark"] .TPLEGMT{color:#4e4530;border-color:#2a2218;}
 
@@ -3332,7 +3353,7 @@ a, button, [role="button"], input, select, textarea,
     .TPROW{display:flex;justify-content:space-between;align-items:baseline;gap:.5rem;padding:.3rem 0;border-bottom:1px solid #f0e8d8;}
     [data-theme="dark"] .TPROW{border-color:#1e1a14;}
     .TPROW:last-child{border-bottom:none;}
-    .TPRL{font-family:'DM Sans',sans-serif;font-size:.68rem;color:#a09070;text-transform:uppercase;letter-spacing:.06em;}
+    .TPRL{font-family:'Manrope',sans-serif;font-size:.68rem;color:#a09070;text-transform:uppercase;letter-spacing:.06em;}
     [data-theme="dark"] .TPRL{color:#8a7a60;}
     .tpcard-p { color: rgba(44,36,28,.72); }
     [data-theme="dark"] .tpcard-p { color: rgba(210,195,170,.75); }
@@ -3351,7 +3372,7 @@ a, button, [role="button"], input, select, textarea,
     .TPLEGBODY{padding:.8rem;}
     .TPLEGIMG{width:100%;border-radius:6px;display:block;cursor:zoom-in;transition:transform .2s;}
     .TPLEGIMG:hover{transform:scale(1.02);}
-    .TPLEGFOOTER{padding:.2rem 1rem .8rem;font-family:'DM Sans',sans-serif;font-size:.62rem;color:#a09070;font-style:italic;line-height:1.5;text-align:center;}
+    .TPLEGFOOTER{padding:.2rem 1rem .8rem;font-family:'Manrope',sans-serif;font-size:.62rem;color:#a09070;font-style:italic;line-height:1.5;text-align:center;}
     [data-theme="dark"] .TPLEGFOOTER{color:#5a4a30;}
 
     /* ── FULLSCREEN OVERLAY ── */
@@ -3386,13 +3407,13 @@ a, button, [role="button"], input, select, textarea,
     .TPFSZB:hover{background:rgba(201,162,39,.22);transform:scale(1.06);}
     #TPFSHINT{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);
       background:rgba(8,5,2,.72);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.07);
-      border-radius:100px;padding:.4rem 1.2rem;font-family:'DM Sans',sans-serif;font-size:.6rem;
+      border-radius:100px;padding:.4rem 1.2rem;font-family:'Manrope',sans-serif;font-size:.62rem;
       letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.4);pointer-events:none;
       white-space:nowrap;transition:opacity .5s;z-index:18;}
     #TPFSFRAME.fsmoved #TPFSHINT{opacity:0;}
 
     #TPFSMETA{display:flex;gap:2rem;align-items:center;justify-content:center;flex-wrap:wrap;padding:0 1rem;pointer-events:none;}
-    .TPFSMT{font-family:'DM Sans',sans-serif;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;}
+    .TPFSMT{font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;}
     .TPFSMT .label{color:rgba(201,162,39,.5);display:block;margin-bottom:.2rem;}
     .TPFSMT .val{color:rgba(240,220,160,.7);}
 
@@ -3412,7 +3433,7 @@ a, button, [role="button"], input, select, textarea,
     .TPBICO svg{width:17px;height:17px;color:#c9a227;}
     .TPBTH{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:600;color:#1c1917;}
     [data-theme="dark"] .TPBTH{color:#e0d4b8;}
-    .TPBTD{font-family:'DM Sans',sans-serif;font-size:.72rem;color:rgba(44,36,28,.62);line-height:1.7;}
+    .TPBTD{font-family:'Manrope',sans-serif;font-size:.72rem;color:rgba(44,36,28,.62);line-height:1.7;}
     [data-theme="dark"] .TPBTD{color:rgba(210,195,170,.72);}
 
     @media(max-width:640px){.TPZW{bottom:10px;left:10px;}.TPBADGE{top:10px;right:10px;}.TPFSB{bottom:10px;right:10px;}.TPT{font-size:1.7rem;}}
@@ -3466,7 +3487,7 @@ a, button, [role="button"], input, select, textarea,
               Позначення пінів
             </h4>
             <ul class="TPLEGLIST" id="TPLEGLIST">
-              <li style="font-size:.72rem;color:#a09080;font-family:'DM Sans',sans-serif;padding:.4rem .25rem">Завантаження...</li>
+              <li style="font-size:.72rem;color:#a09080;font-family:'Manrope',sans-serif;padding:.4rem .25rem">Завантаження...</li>
             </ul>
             <p class="TPLEGMT">Натисніть маркер або пункт · Scroll для збільшення</p>
           </div>
@@ -3477,13 +3498,13 @@ a, button, [role="button"], input, select, textarea,
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-1.447-.894L15 9m0 8V9m0 0L9 7"/></svg>
               Про карту
             </h4>
-            <p style="font-family:'DM Sans',sans-serif;font-size:.75rem;line-height:1.75;margin:0 0 .6rem;" class="tpcard-p">
+            <p style="font-family:'Manrope',sans-serif;font-size:.75rem;line-height:1.75;margin:0 0 .6rem;" class="tpcard-p">
               Рукописна топографічна карта міста Дубровиці 1855 року, складена в часи Волинської губернії Російської імперії. Масштаб — 30 саженів у дюймі (близько 1:2 500). Власник міста на той час — граф Ф. Платер.
             </p>
-            <p style="font-family:'DM Sans',sans-serif;font-size:.75rem;line-height:1.75;margin:0 0 .7rem;" class="tpcard-p">
+            <p style="font-family:'Manrope',sans-serif;font-size:.75rem;line-height:1.75;margin:0 0 .7rem;" class="tpcard-p">
               На плані позначено вулиці, церкви, єврейські будинки, поміщицькі та казенні будівлі, річку Горинь і її притоки.
             </p>
-            <p style="font-family:'DM Sans',sans-serif;font-size:.65rem;line-height:1.6;margin:0;padding-top:.6rem;border-top:1px solid #ede5d5;" class="tpcard-p tpcard-p-sm">
+            <p style="font-family:'Manrope',sans-serif;font-size:.65rem;line-height:1.6;margin:0;padding-top:.6rem;border-top:1px solid #ede5d5;" class="tpcard-p tpcard-p-sm">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:11px;height:11px;display:inline;vertical-align:middle;margin-right:3px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
               Зображення тут у зниженій якості. Для перегляду у повному розмірі та повній якості — натисніть кнопку <strong style="color:#c9a227;">⤢</strong> у куті карти.
             </p>
@@ -3667,7 +3688,7 @@ a, button, [role="button"], input, select, textarea,
       function buildLegend() {
         var ul = document.getElementById('TPLEGLIST'); ul.innerHTML = '';
         if (!pins.length) {
-          ul.innerHTML = '<li style="font-size:.72rem;color:#a09080;font-family:\'DM Sans\',sans-serif;padding:.4rem .25rem">Позначень ще немає</li>';
+          ul.innerHTML = '<li style="font-size:.72rem;color:#a09080;font-family:\'Manrope\',sans-serif;padding:.4rem .25rem">Позначень ще немає</li>';
           return;
         }
         pins.forEach(function(p) {
@@ -3732,7 +3753,7 @@ a, button, [role="button"], input, select, textarea,
           buildPins(); buildLegend();
         })
         .catch(function() {
-          document.getElementById('TPLEGLIST').innerHTML = '<li style="font-size:.72rem;color:#a09080;font-family:\'DM Sans\',sans-serif;padding:.4rem .25rem">Позначень ще немає</li>';
+          document.getElementById('TPLEGLIST').innerHTML = '<li style="font-size:.72rem;color:#a09080;font-family:\'Manrope\',sans-serif;padding:.4rem .25rem">Позначень ще немає</li>';
         });
 
       // ── FULLSCREEN (map) ─────────────────────────────────────
@@ -3825,12 +3846,12 @@ a, button, [role="button"], input, select, textarea,
     .P62E::before,.P62E::after{content:'';display:block;width:50px;height:1px;}
     .P62E::before{background:linear-gradient(90deg,transparent,rgba(180,130,30,.7));}
     .P62E::after{background:linear-gradient(90deg,rgba(180,130,30,.7),transparent);}
-    .P62E span{font-family:'DM Sans',sans-serif;font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:#b07820;}
+    .P62E span{font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:#b07820;}
     :root:not([data-theme="dark"]) .P62E span{color:#8a5c10;}
     .P62T{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(2rem,3.8vw,3rem);font-weight:400;color:#f0e6c8;line-height:1.1;margin:0 0 .5rem;}
     :root:not([data-theme="dark"]) .P62T{color:#1c1917;}
     .P62T em{font-style:italic;color:#c9a227;}
-    .P62S{font-family:'DM Sans',sans-serif;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(240,230,200,.28);margin:0;}
+    .P62S{font-family:'Manrope',sans-serif;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(240,230,200,.28);margin:0;}
     :root:not([data-theme="dark"]) .P62S{color:rgba(28,25,23,.38);}
 
     /* ── SECTION INTRO LABEL ── */
@@ -3868,11 +3889,11 @@ a, button, [role="button"], input, select, textarea,
     .P62BADGE{position:absolute;top:14px;right:14px;z-index:5;background:rgba(6,4,1,.9);
       backdrop-filter:blur(12px);border:1px solid rgba(180,130,30,.32);border-radius:8px;
       padding:7px 13px;pointer-events:none;line-height:1.4;}
-    .P62BADGE .bl{display:block;font-family:'DM Sans',sans-serif;font-size:.48rem;letter-spacing:.2em;text-transform:uppercase;color:#5a4020;}
+    .P62BADGE .bl{display:block;font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:#5a4020;}
     .P62BADGE .bd{display:block;font-family:'Cormorant Garamond',serif;font-size:.95rem;color:#c9a227;font-weight:500;letter-spacing:.04em;}
     .P62HINT{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);background:rgba(6,4,1,.74);
       backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.07);border-radius:100px;
-      padding:.4rem 1.2rem;font-family:'DM Sans',sans-serif;font-size:.6rem;letter-spacing:.15em;
+      padding:.4rem 1.2rem;font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.15em;
       text-transform:uppercase;color:rgba(255,255,255,.38);pointer-events:none;white-space:nowrap;
       transition:opacity .5s;z-index:8;}
     @media(pointer:coarse){.P62HINT{bottom:70px;font-size:.55rem;padding:.35rem .9rem;}}
@@ -3887,9 +3908,9 @@ a, button, [role="button"], input, select, textarea,
       border-radius:8px;display:flex;align-items:center;justify-content:center;color:#c9a227;}
     .P62HQ-ICON svg{width:16px;height:16px;}
     .P62HQ-TEXT{flex:1;}
-    .P62HQ-T{font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:600;color:#e8d9b0;letter-spacing:.02em;}
+    .P62HQ-T{font-family:'Manrope',sans-serif;font-size:.78rem;font-weight:600;color:#e8d9b0;letter-spacing:.02em;}
     :root:not([data-theme="dark"]) .P62HQ-T{color:#2c1f06;}
-    .P62HQ-D{font-family:'DM Sans',sans-serif;font-size:.68rem;color:rgba(200,180,130,.55);margin-top:.1rem;}
+    .P62HQ-D{font-family:'Manrope',sans-serif;font-size:.68rem;color:rgba(200,180,130,.55);margin-top:.1rem;}
     :root:not([data-theme="dark"]) .P62HQ-D{color:rgba(80,55,15,.5);}
     .P62HQ-ARROW{color:#c9a227;font-size:1.1rem;flex-shrink:0;}
 
@@ -3907,7 +3928,7 @@ a, button, [role="button"], input, select, textarea,
     .P62CARD-ICON svg{width:18px;height:18px;}
     .P62CARD-H{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:#e8d8b5;margin:0 0 .55rem;line-height:1.25;}
     :root:not([data-theme="dark"]) .P62CARD-H{color:#1c1917;}
-    .P62CARD-B{font-family:'DM Sans',sans-serif;font-size:.73rem;line-height:1.78;color:rgba(200,185,150,.6);}
+    .P62CARD-B{font-family:'Manrope',sans-serif;font-size:.73rem;line-height:1.78;color:rgba(200,185,150,.6);}
     :root:not([data-theme="dark"]) .P62CARD-B{color:rgba(44,35,15,.58);}
 
     /* ── LEGEND GRID ── */
@@ -3917,7 +3938,7 @@ a, button, [role="button"], input, select, textarea,
     :root:not([data-theme="dark"]) .P62LEGHT{color:#1c1917;}
     .P62LEGLINE{flex:1;height:1px;background:rgba(180,130,30,.15);}
     .P62LEGTABS{display:flex;gap:.5rem;margin-bottom:1.2rem;flex-wrap:wrap;}
-    .P62LEGTAB{font-family:'DM Sans',sans-serif;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;
+    .P62LEGTAB{font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;
       padding:.38rem .85rem;border-radius:100px;border:1px solid rgba(180,130,30,.28);color:rgba(200,180,130,.55);
       cursor:pointer;transition:all .16s;background:transparent;-webkit-tap-highlight-color:transparent;}
     .P62LEGTAB:hover,.P62LEGTAB.act{background:rgba(201,162,39,.15);border-color:rgba(201,162,39,.5);color:#c9a227;}
@@ -3933,7 +3954,7 @@ a, button, [role="button"], input, select, textarea,
     .P62LEGSWATCH{flex-shrink:0;width:22px;height:22px;border-radius:5px;margin-top:2px;border:1px solid rgba(0,0,0,.25);}
     .P62LEGNAME{font-family:'Cormorant Garamond',serif;font-size:.88rem;font-weight:600;color:#e0d0b0;display:block;margin-bottom:.1rem;}
     :root:not([data-theme="dark"]) .P62LEGNAME{color:#1c1917;}
-    .P62LEGDESC{font-family:'DM Sans',sans-serif;font-size:.67rem;line-height:1.65;color:rgba(180,160,120,.55);}
+    .P62LEGDESC{font-family:'Manrope',sans-serif;font-size:.67rem;line-height:1.65;color:rgba(180,160,120,.55);}
     :root:not([data-theme="dark"]) .P62LEGDESC{color:rgba(60,45,20,.5);}
 
     /* ── GEOGRAPHY SECTION ── */
@@ -3948,7 +3969,7 @@ a, button, [role="button"], input, select, textarea,
     :root:not([data-theme="dark"]) .P62GEOBH{color:#8a5c10;border-color:rgba(140,100,20,.18);}
     .P62GEOBH svg{width:14px;height:14px;}
     .P62GEOLIST{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.5rem;}
-    .P62GEOLIST li{font-family:'DM Sans',sans-serif;font-size:.73rem;color:rgba(200,185,150,.62);
+    .P62GEOLIST li{font-family:'Manrope',sans-serif;font-size:.73rem;color:rgba(200,185,150,.62);
       position:relative;padding-left:1.1rem;line-height:1.7;}
     :root:not([data-theme="dark"]) .P62GEOLIST li{color:rgba(55,40,15,.55);}
     .P62GEOLIST li::before{content:'·';position:absolute;left:0;top:0;color:rgba(201,162,39,.6);line-height:1.7;}
@@ -3968,7 +3989,7 @@ a, button, [role="button"], input, select, textarea,
     .P62BICO svg{width:15px;height:15px;}
     .P62BTH{font-family:'Cormorant Garamond',serif;font-size:.95rem;font-weight:600;color:#e0d0b0;line-height:1.3;}
     :root:not([data-theme="dark"]) .P62BTH{color:#1c1917;}
-    .P62BTD{font-family:'DM Sans',sans-serif;font-size:.72rem;line-height:1.75;color:rgba(180,165,130,.55);}
+    .P62BTD{font-family:'Manrope',sans-serif;font-size:.72rem;line-height:1.75;color:rgba(180,165,130,.55);}
     :root:not([data-theme="dark"]) .P62BTD{color:rgba(55,40,15,.52);}
 
     /* ── FULLSCREEN OVERLAY ── */
@@ -4006,14 +4027,14 @@ a, button, [role="button"], input, select, textarea,
     .P62FSZB:hover{background:rgba(201,162,39,.28);}
     .P62FSHINT{position:absolute;bottom:4.5rem;left:50%;transform:translateX(-50%);
       background:rgba(6,4,10,.72);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.07);
-      border-radius:100px;padding:.35rem 1.1rem;font-family:'DM Sans',sans-serif;font-size:.58rem;
+      border-radius:100px;padding:.35rem 1.1rem;font-family:'Manrope',sans-serif;font-size:.62rem;
       letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.35);pointer-events:none;
       white-space:nowrap;transition:opacity .5s;z-index:8;}
     #P62FSMETA{display:flex;align-items:center;justify-content:center;gap:1.5rem;flex-wrap:wrap;
       padding:.65rem 1.2rem;background:rgba(6,4,10,.93);backdrop-filter:blur(14px);
       border-top:1px solid rgba(255,255,255,.06);flex-shrink:0;}
     .P62FSMT{display:flex;align-items:center;gap:.45rem;}
-    .P62FSMT .label{font-family:'DM Sans',sans-serif;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.28);}
+    .P62FSMT .label{font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.28);}
     .P62FSMT .val{font-family:'Cormorant Garamond',serif;font-size:.9rem;color:rgba(201,162,39,.9);}
     .P62FSSEP{width:1px;height:16px;background:rgba(255,255,255,.1);}
     #P62FSLOADER{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
@@ -4024,7 +4045,7 @@ a, button, [role="button"], input, select, textarea,
     #P62FSLOADER.hidden{display:none;}
     #P62FSHQ{position:absolute;top:3.8rem;right:1.2rem;z-index:15;
       background:rgba(201,162,39,.14);border:1px solid rgba(201,162,39,.32);border-radius:100px;
-      padding:.3rem 1rem;font-family:'DM Sans',sans-serif;font-size:.6rem;letter-spacing:.1em;
+      padding:.3rem 1rem;font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.1em;
       color:rgba(201,162,39,.88);pointer-events:none;white-space:nowrap;text-transform:uppercase;}
 
     @media(max-width:600px){
@@ -4299,7 +4320,7 @@ a, button, [role="button"], input, select, textarea,
           <h3 class="P62LEGHT">Географічний аналіз — топоніми</h3>
           <div class="P62LEGLINE"></div>
         </div>
-        <p style="font-family:'DM Sans',sans-serif;font-size:.72rem;color:rgba(180,155,100,.65);margin:-.4rem 0 1.2rem;line-height:1.6;">
+        <p style="font-family:'Manrope',sans-serif;font-size:.72rem;color:rgba(180,155,100,.65);margin:-.4rem 0 1.2rem;line-height:1.6;">
           <em>Назви подано в оригінальному написанні з документа (старопольська мова, XVIII ст.) — поруч із сучасними українськими відповідниками.</em>
         </p>
         <div class="P62GEOINNER">
@@ -4386,13 +4407,13 @@ a, button, [role="button"], input, select, textarea,
           width:13px;height:13px;border-radius:50%;background:#c9a227;
           border:2px solid rgba(201,162,39,.3);box-shadow:0 0 0 4px rgba(201,162,39,.07);}
         .P62TLITEM.highlight::before{background:#f0c840;box-shadow:0 0 0 5px rgba(201,162,39,.14),0 0 14px rgba(201,162,39,.3);}
-        .P62TLYEAR{font-family:'DM Sans',sans-serif;font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;
+        .P62TLYEAR{font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;
           color:#c9a227;margin:0 0 .3rem;display:block;}
         :root:not([data-theme="dark"]) .P62TLYEAR{color:#8a5c10;}
         .P62TLTT{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:600;color:#e8d8b5;
           margin:0 0 .45rem;line-height:1.25;}
         :root:not([data-theme="dark"]) .P62TLTT{color:#1c1917;}
-        .P62TLTB{font-family:'DM Sans',sans-serif;font-size:.73rem;line-height:1.8;color:rgba(195,178,140,.58);}
+        .P62TLTB{font-family:'Manrope',sans-serif;font-size:.73rem;line-height:1.8;color:rgba(195,178,140,.58);}
         :root:not([data-theme="dark"]) .P62TLTB{color:rgba(55,40,15,.55);}
         .P62TLTB strong{font-weight:600;color:rgba(220,200,155,.85);}
         :root:not([data-theme="dark"]) .P62TLTB strong{color:#3a2608;}
@@ -4404,7 +4425,7 @@ a, button, [role="button"], input, select, textarea,
         :root:not([data-theme="dark"]) .P62TLITEM.highlight .P62TLINBOX{
           background:rgba(180,130,20,.05);border-color:rgba(140,100,20,.2);}
         .P62TLINBOX{margin-top:.5rem;}
-        .P62TLINBOX-NOTE{font-family:'DM Sans',sans-serif;font-size:.68rem;line-height:1.75;
+        .P62TLINBOX-NOTE{font-family:'Manrope',sans-serif;font-size:.68rem;line-height:1.75;
           color:rgba(230,210,160,.68);}
         :root:not([data-theme="dark"]) .P62TLINBOX-NOTE{color:rgba(60,40,10,.55);}
         .P62TLINBOX-NOTE strong{font-weight:700;color:#c9a227;}
@@ -4424,7 +4445,7 @@ a, button, [role="button"], input, select, textarea,
         :root:not([data-theme="dark"]) .P62CONCL-Q{color:rgba(45,30,8,.65);}
         .P62CONCL-Q em{color:#c9a227;font-style:normal;font-weight:600;}
         :root:not([data-theme="dark"]) .P62CONCL-Q em{color:#8a5c10;}
-        .P62CONCL-SRC{font-family:'DM Sans',sans-serif;font-size:.62rem;letter-spacing:.1em;
+        .P62CONCL-SRC{font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.1em;
           text-transform:uppercase;color:rgba(180,155,100,.4);}
         :root:not([data-theme="dark"]) .P62CONCL-SRC{color:rgba(100,75,25,.38);}
         </style>
@@ -4870,12 +4891,12 @@ a, button, [role="button"], input, select, textarea,
     .CE{display:inline-flex;align-items:center;gap:.75rem;margin-bottom:1.2rem;}
     .CE::before,.CE::after{content:'';display:block;width:32px;height:1px;background:linear-gradient(90deg,transparent,rgba(201,162,39,.5));}
     .CE::after{background:linear-gradient(90deg,rgba(201,162,39,.5),transparent);}
-    .CE span{font-family:'DM Sans',sans-serif;font-size:.65rem;letter-spacing:.28em;text-transform:uppercase;color:#c9a227;}
+    .CE span{font-family:'Manrope',sans-serif;font-size:.65rem;letter-spacing:.28em;text-transform:uppercase;color:#c9a227;}
     .CT{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(2.2rem,4vw,3.2rem);font-weight:300;
         color:#1c1917;line-height:1.1;margin:0 0 .6rem;}
     [data-theme="dark"] .CT{color:#f0e6c8;}
     .CT em{font-style:italic;color:#c9a227;}
-    .CS{font-family:'DM Sans',sans-serif;font-size:.8rem;letter-spacing:.1em;color:rgba(28,25,23,.45);margin:0;}
+    .CS{font-family:'Manrope',sans-serif;font-size:.8rem;letter-spacing:.1em;color:rgba(28,25,23,.45);margin:0;}
     [data-theme="dark"] .CS{color:rgba(240,230,200,.35);}
 
     /* ── YEAR STRIP ── */
@@ -4887,7 +4908,7 @@ a, button, [role="button"], input, select, textarea,
     .CYB.yr .cy{background:linear-gradient(135deg,#6aadf5,#a8d4ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
     .CYB .cl{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(28,25,23,.4);}
     [data-theme="dark"] .CYB .cl{color:rgba(240,230,200,.3);}
-    .CYB .cd{font-size:.72rem;font-family:'DM Sans',sans-serif;color:rgba(28,25,23,.5);margin-top:.1rem;}
+    .CYB .cd{font-size:.72rem;font-family:'Manrope',sans-serif;color:rgba(28,25,23,.5);margin-top:.1rem;}
     [data-theme="dark"] .CYB .cd{color:rgba(240,230,200,.5);}
     .CYD{text-align:center;font-size:1.4rem;color:rgba(201,162,39,.4);}
     [data-theme="dark"] .CYD{color:rgba(201,162,39,.3);}
@@ -4896,7 +4917,7 @@ a, button, [role="button"], input, select, textarea,
     .CSF{position:relative;width:100%;aspect-ratio:16/9;border-radius:3px;overflow:hidden;
          cursor:ew-resize;user-select:none;-webkit-user-select:none;
          box-shadow:0 0 0 1px rgba(201,162,39,.12),0 30px 80px rgba(0,0,0,.7),0 8px 24px rgba(0,0,0,.4);}
-    @media(max-width:600px){.CSF{aspect-ratio:3/2;cursor:default;}.CCLB .ccy{font-size:1.1rem;}.CCLB .ccs{font-size:.46rem;letter-spacing:.05em;}}
+    @media(max-width:600px){.CSF{aspect-ratio:3/2;cursor:default;}.CCLB .ccy{font-size:1.1rem;}.CCLB .ccs{font-size:.62rem;letter-spacing:.05em;}}
 
     /* images */
     .CSF .ci-base{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
@@ -4984,7 +5005,7 @@ a, button, [role="button"], input, select, textarea,
     .COT{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:500;
          color:#1c1917;margin-bottom:.7rem;line-height:1.2;}
     [data-theme="dark"] .COT{color:#e8d8a8;}
-    .COD{font-size:.85rem;font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.8;
+    .COD{font-size:.85rem;font-family:'Manrope',sans-serif;font-weight:300;line-height:1.8;
          color:rgba(44,40,36,.65);}
     [data-theme="dark"] .COD{color:rgba(240,230,200,.45);}
     </style>
@@ -5120,12 +5141,12 @@ a, button, [role="button"], input, select, textarea,
     .PE::before,.PE::after{content:'';display:block;width:32px;height:1px;}
     .PE::before{background:linear-gradient(90deg,transparent,rgba(139,90,43,.6));}
     .PE::after{background:linear-gradient(90deg,rgba(139,90,43,.6),transparent);}
-    .PE span{font-family:'DM Sans',sans-serif;font-size:.65rem;letter-spacing:.28em;text-transform:uppercase;color:#a06830;}
+    .PE span{font-family:'Manrope',sans-serif;font-size:.65rem;letter-spacing:.28em;text-transform:uppercase;color:#a06830;}
     .PT{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,4vw,3.2rem);font-weight:300;
         color:#1c1917;line-height:1.1;margin:0 0 .6rem;}
     [data-theme="dark"] .PT{color:#f0e6c8;}
     .PT em{font-style:italic;color:#c8924a;}
-    .PSB{font-family:'DM Sans',sans-serif;font-size:.8rem;letter-spacing:.1em;color:rgba(28,25,23,.45);margin:0;}
+    .PSB{font-family:'Manrope',sans-serif;font-size:.8rem;letter-spacing:.1em;color:rgba(28,25,23,.45);margin:0;}
     [data-theme="dark"] .PSB{color:rgba(240,230,200,.35);}
 
     /* year strip */
@@ -5137,7 +5158,7 @@ a, button, [role="button"], input, select, textarea,
     .PYB.pr .py{background:linear-gradient(135deg,#6aadf5,#a8d4ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
     .PYB .pl{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(28,25,23,.4);}
     [data-theme="dark"] .PYB .pl{color:rgba(240,230,200,.3);}
-    .PYB .pd{font-size:.72rem;font-family:'DM Sans',sans-serif;color:rgba(28,25,23,.5);margin-top:.1rem;}
+    .PYB .pd{font-size:.72rem;font-family:'Manrope',sans-serif;color:rgba(28,25,23,.5);margin-top:.1rem;}
     [data-theme="dark"] .PYB .pd{color:rgba(240,230,200,.5);}
     .PYD{text-align:center;font-size:1.4rem;color:rgba(200,146,74,.4);}
     [data-theme="dark"] .PYD{color:rgba(200,146,74,.3);}
@@ -5175,7 +5196,7 @@ a, button, [role="button"], input, select, textarea,
                text-shadow:0 0 20px rgba(0,0,0,1),0 2px 8px rgba(0,0,0,1);}
     .PCLB.pll .pcy{color:#e8c080;}
     .PCLB.plr .pcy{color:#a8d8ff;}
-    .PCLB .pcs{display:block;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;
+    .PCLB .pcs{display:block;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
                color:#fff;margin-top:.15rem;font-weight:500;
                text-shadow:0 1px 8px rgba(0,0,0,1),0 0 12px rgba(0,0,0,1);}
     .PIP{position:absolute;bottom:1.4rem;left:50%;transform:translateX(-50%);z-index:20;
@@ -5206,7 +5227,7 @@ a, button, [role="button"], input, select, textarea,
     .POI{font-size:2rem;margin-bottom:1.1rem;display:block;}
     .POT{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:500;color:#1c1917;margin-bottom:.7rem;line-height:1.2;}
     [data-theme="dark"] .POT{color:#e8c890;}
-    .POD{font-size:.85rem;font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.8;color:rgba(44,40,36,.65);}
+    .POD{font-size:.85rem;font-family:'Manrope',sans-serif;font-weight:300;line-height:1.8;color:rgba(44,40,36,.65);}
     [data-theme="dark"] .POD{color:rgba(240,230,200,.45);}
 
     /* photo gallery */
@@ -5228,7 +5249,7 @@ a, button, [role="button"], input, select, textarea,
     .PGITEM:hover img{transform:scale(1.04);filter:contrast(1.08) brightness(1.05);}
     .PGCAP{position:absolute;bottom:0;left:0;right:0;padding:.7rem .9rem;
            background:linear-gradient(to top,rgba(0,0,0,.85) 0%,transparent 100%);
-           font-family:'DM Sans',sans-serif;font-size:.65rem;letter-spacing:.08em;
+           font-family:'Manrope',sans-serif;font-size:.65rem;letter-spacing:.08em;
            color:rgba(255,255,255,.6);line-height:1.4;}
 
     /* lightbox */
@@ -5301,7 +5322,7 @@ a, button, [role="button"], input, select, textarea,
       <!-- Photo Gallery -->
       <div class="PGL">
         <p class="PGLH">Архівні фотографії маєтку</p>
-        <div style="display:inline-flex;align-items:center;gap:.5rem;padding:.4rem .85rem;background:rgba(201,162,39,.08);border:1px solid rgba(201,162,39,.22);border-radius:100px;margin-bottom:1rem;font-family:'DM Sans',sans-serif;font-size:.65rem;color:var(--color-text-secondary);letter-spacing:.04em;">
+        <div style="display:inline-flex;align-items:center;gap:.5rem;padding:.4rem .85rem;background:rgba(201,162,39,.08);border:1px solid rgba(201,162,39,.22);border-radius:100px;margin-bottom:1rem;font-family:'Manrope',sans-serif;font-size:.65rem;color:var(--color-text-secondary);letter-spacing:.04em;">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:13px;height:13px;flex-shrink:0;color:#c9a227;"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
           Деякі фотографії колоризовані за допомогою ШІ
         </div>
@@ -5377,12 +5398,12 @@ a, button, [role="button"], input, select, textarea,
     .WE::before,.WE::after{content:'';display:block;width:32px;height:1px;}
     .WE::before{background:linear-gradient(90deg,transparent,rgba(42,100,180,.5));}
     .WE::after{background:linear-gradient(90deg,rgba(42,100,180,.5),transparent);}
-    .WE span{font-family:'DM Sans',sans-serif;font-size:.65rem;letter-spacing:.28em;text-transform:uppercase;color:#4a80c0;}
+    .WE span{font-family:'Manrope',sans-serif;font-size:.65rem;letter-spacing:.28em;text-transform:uppercase;color:#4a80c0;}
     .WT{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,4vw,3.2rem);font-weight:300;
         color:#1c1917;line-height:1.1;margin:0 0 .6rem;}
     [data-theme="dark"] .WT{color:#f0e6c8;}
     .WT em{font-style:italic;color:#7ab0e0;}
-    .WSB{font-family:'DM Sans',sans-serif;font-size:.8rem;letter-spacing:.1em;color:rgba(28,25,23,.45);margin:0;}
+    .WSB{font-family:'Manrope',sans-serif;font-size:.8rem;letter-spacing:.1em;color:rgba(28,25,23,.45);margin:0;}
     [data-theme="dark"] .WSB{color:rgba(240,230,200,.35);}
     /* year strip */
     .WYR{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:1.5rem;margin:0 0 1.5rem;}
@@ -5394,9 +5415,9 @@ a, button, [role="button"], input, select, textarea,
     @media(max-width:600px){.WYB .wy{font-size:2rem;}}
     .WYB.wr .wy{background:linear-gradient(135deg,#6aadf5,#a8d4ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
     .WYB .wl{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(28,25,23,.4);}
-    @media(max-width:600px){.WYB .wl{font-size:.5rem;letter-spacing:.1em;}}
+    @media(max-width:600px){.WYB .wl{font-size:.62rem;letter-spacing:.1em;}}
     [data-theme="dark"] .WYB .wl{color:rgba(240,230,200,.3);}
-    .WYB .wd{font-size:.72rem;font-family:'DM Sans',sans-serif;color:rgba(28,25,23,.5);margin-top:.1rem;}
+    .WYB .wd{font-size:.72rem;font-family:'Manrope',sans-serif;color:rgba(28,25,23,.5);margin-top:.1rem;}
     @media(max-width:600px){.WYB .wd{font-size:.6rem;}}
     [data-theme="dark"] .WYB .wd{color:rgba(240,230,200,.5);}
     .WYD{text-align:center;font-size:1.4rem;color:rgba(42,100,180,.4);}
@@ -5434,7 +5455,7 @@ a, button, [role="button"], input, select, textarea,
                text-shadow:0 0 20px rgba(0,0,0,1),0 2px 8px rgba(0,0,0,1);}
     .WCLB.wll .wcy{color:#f5d060;}
     .WCLB.wlr .wcy{color:#a8d8ff;}
-    .WCLB .wcs{display:block;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;
+    .WCLB .wcs{display:block;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
                color:#fff;margin-top:.15rem;font-weight:500;
                text-shadow:0 1px 8px rgba(0,0,0,1),0 0 12px rgba(0,0,0,1);}
     .WIP{position:absolute;bottom:1.4rem;left:50%;transform:translateX(-50%);z-index:20;
@@ -5463,7 +5484,7 @@ a, button, [role="button"], input, select, textarea,
     .WOI{font-size:2rem;margin-bottom:1.1rem;display:block;}
     .WOT{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:500;color:#1c1917;margin-bottom:.7rem;line-height:1.2;}
     [data-theme="dark"] .WOT{color:#b8d0f0;}
-    .WOD{font-size:.85rem;font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.8;color:rgba(44,40,36,.65);}
+    .WOD{font-size:.85rem;font-family:'Manrope',sans-serif;font-weight:300;line-height:1.8;color:rgba(44,40,36,.65);}
     [data-theme="dark"] .WOD{color:rgba(240,230,200,.45);}
     </style>
 
@@ -5621,7 +5642,7 @@ a, button, [role="button"], input, select, textarea,
     background: linear-gradient(90deg, rgba(201,162,39,.5), transparent);
 }
 .HTL-EYEBROW span {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Manrope', sans-serif;
     font-size: .62rem;
     letter-spacing: .3em;
     text-transform: uppercase;
@@ -5645,7 +5666,7 @@ a, button, [role="button"], input, select, textarea,
     background-clip: text;
 }
 .HTL-SUB {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Manrope', sans-serif;
     font-size: .85rem;
     letter-spacing: .12em;
     color: rgba(28,25,23,.4);
@@ -5927,7 +5948,7 @@ a, button, [role="button"], input, select, textarea,
     color: #ddb830;
 }
 .HTL-EDESC {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Manrope', sans-serif;
     font-size: .74rem;
     font-weight: 400;
     line-height: 1.68;
@@ -5947,7 +5968,7 @@ a, button, [role="button"], input, select, textarea,
     display: inline-flex;
     align-items: center;
     gap: .7rem;
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Manrope', sans-serif;
     font-size: .7rem;
     letter-spacing: .24em;
     text-transform: uppercase;
@@ -6444,56 +6465,54 @@ a, button, [role="button"], input, select, textarea,
   </div>
 </div>
     <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4 class="footer-title">Дубровиця</h4>
-                    <p class="footer-text">
-                        Цифровий архів історичної спадщини міста Дубровиця, 
-                        Сарненський район, Рівненська область, Україна.
-                    </p>
+        <div class="ft">
+            <div class="ft-top">
+                <div class="ft-brand">
+                    <a href="index.html" class="ft-logo">
+                        <img src="https://i.imgur.com/mXCrjjG.png" alt="" width="44" height="44" loading="lazy" decoding="async">
+                        <span><span class="ft-logo-city">Дубровиця</span><span class="ft-logo-sub">Цифровий архів</span></span>
+                    </a>
+                    <p class="ft-about">Цифровий архів історичної спадщини міста Дубровиця — Сарненський район, Рівненська область, Україна.</p>
+                    <a href="contacts.html" class="ft-cta"><span>Маєте старі фото чи документи?</span><strong>Напишіть нам <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></strong></a>
                 </div>
-                <div class="footer-section">
-                    <h4 class="footer-title">Навігація</h4>
-                    <nav class="footer-nav">
-                        <a href="history.html">Історія</a>
-                        <a href="photo-archive.html">Фотоархів</a>
-                        <a href="metrychni-knyhy.html">Архівні справи</a>
-                        <a href="jewish-history.html">Єврейська спадщина</a>
-                    </nav>
-                </div>
-                <div class="footer-section">
-                    <h4 class="footer-title">Контакти</h4>
-                    <p class="footer-text">
-                        Маєте матеріали або пропозиції?<br>
-                        <a href="contacts.html" class="footer-link">Зв'яжіться з нами</a>
-                    </p>
-                </div>
+                <nav class="ft-col" aria-label="Розділи сайту">
+                    <p class="ft-title">Розділи</p>
+                    <a href="history.html">Історія</a>
+                    <a href="photo-archive.html">Фотоархів</a>
+                    <a href="architecture.html">Пам'ятки</a>
+                    <a href="jewish-history.html">Єврейська спадщина</a>
+                    <a href="presa.html">Преса</a>
+                    <a href="doslidnyk.html">Дослідник</a>
+                    <a href="contacts.html">Про проєкт</a>
+                </nav>
+                <nav class="ft-col" aria-label="Архівні справи">
+                    <p class="ft-title">Архівні справи</p>
+                    <a href="sumariusz-1642.html"><span class="ft-year">1642</span>Сумаріуш маєтку</a>
+                    <a href="zhaloba-1650.html"><span class="ft-year">1650</span>Жалоба про спустошення</a>
+                    <a href="rejestr-1665.html"><span class="ft-year">1665</span>Реєстр збитків</a>
+                    <a href="inventar-1780.html"><span class="ft-year">1780</span>Інвентар маєтку</a>
+                    <a href="atlas-1798.html"><span class="ft-year">1798</span>Атлас губернії</a>
+                    <a href="atlas-1798-analityka.html"><span class="ft-year">1798</span>Край у цифрах</a>
+                    <a href="persha-svitova.html"><span class="ft-year">1914</span>Перша світова війна</a>
+                    <a href="vyborchi-1938.html"><span class="ft-year">1938</span>Список виборців</a>
+                </nav>
+                <nav class="ft-col" aria-label="Постаті й каталоги">
+                    <p class="ft-title">Постаті й каталоги</p>
+                    <a href="plater.html">Граф Юзеф Плятер</a>
+                    <a href="radzyvil.html">Князь Домінік Радзивілл</a>
+                    <a href="metrychni-knyhy.html#mkcalSection">Метричні книги</a>
+                    <a href="metrychni-knyhy.html#booksCatalog">Книги про Дубровицю</a>
+                    <a href="metrychni-knyhy.html">Усі архівні справи</a>
+                </nav>
             </div>
-                <div class="footer-copyright-row">
-            <div class="footer-copyright-ornament">
-                <div class="footer-copyright-ornament-line"></div>
-                <div class="footer-copyright-ornament-diamond"></div>
-                <div class="footer-copyright-ornament-line"></div>
+            <div class="ft-bottom">
+                <p class="ft-copy">&copy; 2026 <a href="https://dubrovytsia.site">dubrovytsia.site</a> — Цифровий архів Дубровиці, Рівненська область, Україна. Сайт є некомерційним краєзнавчим проєктом, створеним з любові до міста та його історії.</p>
+                <p class="ft-notice">Публікуючи ці матеріали, ми прагнемо зберегти та популяризувати культурну й історичну спадщину міста Дубровиця для нинішніх і майбутніх поколінь. Усі фотографії, документи та архівні матеріали розміщено виключно в освітніх, краєзнавчих і науково-дослідних цілях. Відтворення, поширення або комерційне використання будь-яких матеріалів без письмового дозволу адміністрації сайту — заборонено. При цитуванні або використанні матеріалів у будь-якому форматі — обов'язкове активне посилання на <em>dubrovytsia.site</em>. Якщо ви є власником авторських прав на будь-які з опублікованих матеріалів і маєте заперечення щодо їх розміщення — будь ласка, <a href="contacts.html">зв'яжіться з нами</a> і ми негайно розглянемо ваш запит. Фотографії, завантажені з архіву, містять водяний знак сайту і не можуть публікуватись без нього.</p>
             </div>
-            <p class="footer-copyright-main">
-                &copy; 2026 <a href="https://dubrovytsia.site">dubrovytsia.site</a> — Цифровий архів Дубровиці, Рівненська область, Україна.<br>
-                Сайт є некомерційним краєзнавчим проєктом, створеним з любові до міста та його історії.
-            </p>
-            <p class="footer-copyright-notice">
-                Публікуючи ці матеріали, ми прагнемо зберегти та популяризувати культурну й історичну спадщину міста Дубровиця для нинішніх і майбутніх поколінь.
-                Усі фотографії, документи та архівні матеріали розміщено виключно в освітніх, краєзнавчих і науково-дослідних цілях.
-                Відтворення, поширення або комерційне використання будь-яких матеріалів без письмового дозволу адміністрації сайту — заборонено.
-                При цитуванні або використанні матеріалів у будь-якому форматі — обов'язкове активне посилання на <em>dubrovytsia.site</em>.
-                Якщо ви є власником авторських прав на будь-які з опублікованих матеріалів і маєте заперечення щодо їх розміщення —
-                будь ласка, <a href="contacts.html">зв'яжіться з нами</a> і ми негайно розглянемо ваш запит.
-                Фотографії, завантажені з архіву, містять водяний знак сайту і не можуть публікуватись без нього.
-            </p>
-        </div>
         </div>
     </footer>
 
-    <script src="app.js"></script>
+    <script src="app.js?v=11"></script>
 
     <!-- FULLSCREEN SLIDER OVERLAY -->
     <div id="SFS-OVERLAY">

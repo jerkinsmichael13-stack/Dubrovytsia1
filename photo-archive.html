@@ -19,10 +19,10 @@
     <meta name="description" content="Фотоархів Дубровиці — унікальна колекція від XIX до XXI ст.">
     <title>Фотоархів — Дубровиця</title>
     <script>!function(){var t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t)}()</script>
-    <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="app.css?v=11">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 /* ULB v3 — Full-Quality Zoom Lightbox */
 #ULB{position:fixed;inset:0;z-index:99999;background:rgba(3,2,5,.97);display:none;flex-direction:column;touch-action:none;overscroll-behavior:none;}
@@ -37,16 +37,16 @@
 #ULB-LOADER.ulb-hidden{display:none;}
 #ULB-BAR{display:flex;align-items:center;justify-content:center;gap:.8rem;padding:.55rem 1.2rem;flex-shrink:0;background:rgba(6,5,10,.93);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid rgba(255,255,255,.06);}
 #ULB-DL-WRAP{display:flex;align-items:center;gap:.35rem;flex-shrink:0;}
-.ulb-dl-btn{display:flex;align-items:center;gap:.38rem;padding:.3rem .7rem;border-radius:8px;border:1px solid rgba(201,162,39,.28);background:rgba(201,162,39,.08);color:rgba(201,162,39,.85);font-family:'DM Sans',sans-serif;font-size:.65rem;letter-spacing:.04em;cursor:pointer;transition:background .15s,border-color .15s,color .15s;white-space:nowrap;-webkit-tap-highlight-color:transparent;}
+.ulb-dl-btn{display:flex;align-items:center;gap:.38rem;padding:.3rem .7rem;border-radius:8px;border:1px solid rgba(201,162,39,.28);background:rgba(201,162,39,.08);color:rgba(201,162,39,.85);font-family:'Manrope',sans-serif;font-size:.65rem;letter-spacing:.04em;cursor:pointer;transition:background .15s,border-color .15s,color .15s;white-space:nowrap;-webkit-tap-highlight-color:transparent;}
 .ulb-dl-btn:hover{background:rgba(201,162,39,.2);border-color:rgba(201,162,39,.55);color:rgba(201,162,39,1);}
 .ulb-dl-btn:disabled{opacity:.38;cursor:not-allowed;}
 .ulb-dl-btn svg{width:13px;height:13px;pointer-events:none;flex-shrink:0;}
-.ulb-dl-quality{font-size:.5rem;letter-spacing:.1em;opacity:.62;text-transform:uppercase;}
+.ulb-dl-quality{font-size:.62rem;letter-spacing:.1em;opacity:.62;text-transform:uppercase;}
 #ULB-ZOOM-PAD{position:absolute;bottom:2.4rem;left:.7rem;z-index:30;display:flex;align-items:center;gap:.28rem;background:rgba(6,5,10,.82);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:.35rem .45rem;}
 .ulb-btn{width:36px;height:36px;flex-shrink:0;border-radius:8px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.07);color:rgba(255,255,255,.82);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s,border-color .15s;padding:0;-webkit-tap-highlight-color:transparent;}
 .ulb-btn:hover,.ulb-btn:active{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.22);}
 .ulb-btn svg{width:16px;height:16px;pointer-events:none;}
-#ULB-ZVAL{font-family:'DM Sans',sans-serif;font-size:.7rem;color:rgba(255,255,255,.5);min-width:3.4em;text-align:center;flex-shrink:0;}
+#ULB-ZVAL{font-family:'Manrope',sans-serif;font-size:.7rem;color:rgba(255,255,255,.5);min-width:3.4em;text-align:center;flex-shrink:0;}
 .ulb-sep{width:1px;height:18px;background:rgba(255,255,255,.1);flex-shrink:0;}
 #ULB-CAP{font-family:'Cormorant Garamond',serif;font-size:.95rem;font-weight:300;font-style:italic;color:rgba(255,255,255,.72);text-align:center;padding:0;pointer-events:none;line-height:1.4;letter-spacing:.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
 #ULB-CLOSE{position:absolute;top:.75rem;right:.75rem;z-index:20;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.18);background:rgba(10,8,16,.75);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:rgba(255,255,255,.88);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s,transform .15s;padding:0;-webkit-tap-highlight-color:transparent;}
@@ -56,7 +56,7 @@
 .ulb-nav:hover{background:rgba(255,255,255,.18);}
 #ULB-PREV{left:.65rem;}
 #ULB-NEXT{right:.65rem;}
-#ULB-HINT{position:absolute;top:.75rem;left:50%;transform:translateX(-50%);z-index:20;background:rgba(6,5,10,.78);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.1);border-radius:100px;padding:.3rem .9rem;font-family:'DM Sans',sans-serif;font-size:.58rem;letter-spacing:.06em;color:rgba(255,255,255,.42);pointer-events:none;white-space:nowrap;transition:opacity .6s ease;}
+#ULB-HINT{position:absolute;top:.75rem;left:50%;transform:translateX(-50%);z-index:20;background:rgba(6,5,10,.78);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.1);border-radius:100px;padding:.3rem .9rem;font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.06em;color:rgba(255,255,255,.42);pointer-events:none;white-space:nowrap;transition:opacity .6s ease;}
 @media(max-width:480px){.ulb-nav{width:38px;height:38px;font-size:1.1rem;}#ULB-PREV{left:.35rem;}#ULB-NEXT{right:.35rem;}#ULB-HINT{display:none;}#ULB-CAP{font-size:.85rem;}}@media(min-width:481px){#ULB-ZOOM-PAD{display:none!important;}#ULB-HINT{display:none!important;}}
 
 /* ═══════════════════════════════════════════════════════
@@ -127,7 +127,7 @@
             rgba(0,0,0,0.3) 0%,
             rgba(0,0,0,0.08) 30%,
             rgba(0,0,0,0.35) 68%,
-            var(--color-bg) 100%);
+            rgba(0,0,0,0.6) 100%);
     z-index: 2;
     pointer-events: none;
 }
@@ -175,8 +175,8 @@
     animation: pa-slideup 0.85s cubic-bezier(0.16,1,0.3,1) 0.15s forwards;
 }
 .pa-hero-eyebrow-text {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.5rem;
+    font-family: 'Manrope', sans-serif;
+    font-size: .62rem;
     letter-spacing: 0.34em;
     text-transform: uppercase;
     color: rgba(201,162,39,0.75);
@@ -274,8 +274,8 @@
 .pa-hero-stat-num em { font-style: normal; color: #c9a227; }
 .pa-hero-stat-label {
     display: block;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.48rem;
+    font-family: 'Manrope', sans-serif;
+    font-size: .62rem;
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: rgba(255,255,255,0.32);
@@ -319,8 +319,8 @@
     pointer-events: none;
 }
 .pa-hero-scroll-label {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.48rem;
+    font-family: 'Manrope', sans-serif;
+    font-size: .62rem;
     letter-spacing: 0.3em;
     text-transform: uppercase;
     color: rgba(255,255,255,0.28);
@@ -415,8 +415,8 @@
 @media(max-width:700px){ .pa-hero-main-ovl { padding: 1.6rem 1.5rem 1.5rem; } }
 
 .pa-hero-main-year {
-    font-family: 'DM Sans',sans-serif;
-    font-size: .48rem; letter-spacing: .28em; text-transform: uppercase;
+    font-family: 'Manrope',sans-serif;
+    font-size: .62rem; letter-spacing: .28em; text-transform: uppercase;
     color: rgba(201,162,39,.9);
     margin-bottom: .55rem;
     display: flex; align-items: center; gap: .55rem;
@@ -507,8 +507,8 @@
     pointer-events: none;
 }
 .pa-strip-year {
-    font-family: 'DM Sans',sans-serif;
-    font-size: .44rem; letter-spacing: .22em; text-transform: uppercase;
+    font-family: 'Manrope',sans-serif;
+    font-size: .62rem; letter-spacing: .22em; text-transform: uppercase;
     color: rgba(201,162,39,.85); margin-bottom: .25rem;
 }
 .pa-strip-title {
@@ -555,7 +555,7 @@
 }
 .pa-tabs-wrap {
     background: var(--color-bg,#faf7f2);
-    position: sticky; top: 62px; z-index: 100;
+    position: sticky; top: var(--hdr-h); z-index: 100;
     border-bottom: 1px solid var(--color-border-light,rgba(201,162,39,.12));
     box-shadow: 0 4px 20px rgba(0,0,0,.04);
 }
@@ -567,7 +567,7 @@
 .pa-tabs::-webkit-scrollbar { display: none; }
 .pa-tab {
     flex-shrink: 0; padding: 1.1rem 1.6rem;
-    font-family: 'DM Sans',sans-serif;
+    font-family: 'Manrope',sans-serif;
     font-size: .65rem; letter-spacing: .14em; text-transform: uppercase;
     color: var(--color-text-light,#78716c);
     cursor: pointer; border: none; background: none;
@@ -602,8 +602,8 @@
     color: var(--color-text,#1c1917); white-space: nowrap;
 }
 .pa-section-count {
-    font-family: 'DM Sans',sans-serif;
-    font-size: .58rem; letter-spacing: .16em; text-transform: uppercase;
+    font-family: 'Manrope',sans-serif;
+    font-size: .62rem; letter-spacing: .16em; text-transform: uppercase;
     color: var(--color-text-muted,#a8a29e); white-space: nowrap;
 }
 .pa-period-pills {
@@ -611,7 +611,7 @@
 }
 .pa-period-pill {
     padding: .35rem .9rem;
-    font-family: 'DM Sans',sans-serif; font-size: .62rem;
+    font-family: 'Manrope',sans-serif; font-size: .62rem;
     letter-spacing: .1em; text-transform: uppercase;
     border-radius: 100px;
     border: 1px solid var(--color-border-light,rgba(201,162,39,.2));
@@ -643,17 +643,17 @@
 .pa-pg-btn {
     min-width:40px; height:40px; padding:0 .6rem; border-radius:8px;
     border:1px solid var(--color-border-light,rgba(201,162,39,.2));
-    background:transparent; font-family:'DM Sans',sans-serif; font-size:.75rem;
+    background:transparent; font-family:'Manrope',sans-serif; font-size:.75rem;
     color:var(--color-text-secondary,#78716c); cursor:pointer; transition:all .2s ease;
     display:flex; align-items:center; justify-content:center;
 }
 .pa-pg-btn:hover:not(:disabled) { border-color:rgba(201,162,39,.5); color:var(--color-text,#1c1917); background:rgba(201,162,39,.06); }
 .pa-pg-btn.active { background:rgba(201,162,39,.12); border-color:rgba(201,162,39,.5); color:#c9a227; font-weight:500; }
 .pa-pg-btn:disabled { opacity:.35; cursor:not-allowed; }
-.pa-pg-ellipsis { font-family:'DM Sans',sans-serif; font-size:.8rem; color:var(--color-text-muted,#a8a29e); padding:0 .3rem; }
+.pa-pg-ellipsis { font-family:'Manrope',sans-serif; font-size:.8rem; color:var(--color-text-muted,#a8a29e); padding:0 .3rem; }
 .pa-loading {
     text-align:center; padding:4rem 1rem;
-    font-family:'DM Sans',sans-serif; font-size:.72rem;
+    font-family:'Manrope',sans-serif; font-size:.72rem;
     letter-spacing:.1em; text-transform:uppercase;
     color:var(--color-text-muted,#a8a29e);
     display:flex; align-items:center; justify-content:center; gap:.8rem;
@@ -700,8 +700,8 @@
     left: 10px;
     top: 50%;
     transform: translateY(-50%) rotate(-90deg);
-    font-family: 'DM Sans', 'Arial', sans-serif;
-    font-size: 0.6rem;
+    font-family: 'Manrope', 'Arial', sans-serif;
+    font-size: .62rem;
     font-weight: 600;
     letter-spacing: 0.14em;
     text-transform: uppercase;
@@ -711,8 +711,8 @@
 }
 /* ── Photo disclaimer ── */
 .photo-credit-hint {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.6rem;
+    font-family: 'Manrope', sans-serif;
+    font-size: .62rem;
     color: var(--color-text-muted);
     letter-spacing: 0.04em;
     line-height: 1.5;
@@ -802,8 +802,8 @@ a, button, [role="button"], input, select, textarea,
 
 .photo-dl-menu-head {
     padding: .58rem .92rem .4rem !important;
-    font-family: 'DM Sans', sans-serif !important;
-    font-size: .46rem !important;
+    font-family: 'Manrope', sans-serif !important;
+    font-size: .62rem !important;
     letter-spacing: .24em !important;
     text-transform: uppercase !important;
     color: rgba(201,162,39,.52) !important;
@@ -819,7 +819,7 @@ a, button, [role="button"], input, select, textarea,
     background: none !important;
     border: none !important;
     cursor: pointer !important;
-    font-family: 'DM Sans', sans-serif !important;
+    font-family: 'Manrope', sans-serif !important;
     font-size: .74rem !important;
     color: rgba(255,255,255,.82) !important;
     text-align: left !important;
@@ -832,7 +832,7 @@ a, button, [role="button"], input, select, textarea,
 .photo-dl-option svg { width: 13px !important; height: 13px !important; flex-shrink: 0 !important; opacity: .7 !important; }
 .photo-dl-option:hover svg { opacity: 1 !important; }
 .photo-dl-option-label { display: flex !important; flex-direction: column !important; gap: .07rem !important; }
-.photo-dl-option-sub { font-size: .55rem !important; letter-spacing: .06em !important; opacity: .45 !important; }
+.photo-dl-option-sub { font-size: .62rem !important; letter-spacing: .06em !important; opacity: .45 !important; }
 .photo-dl-sep { height: 1px !important; background: rgba(201,162,39,.1) !important; margin: .2rem 0 !important; }
 
 /* ── Copyright footer ── */
@@ -850,7 +850,7 @@ a, button, [role="button"], input, select, textarea,
 .footer-copyright-ornament-line:last-child { background:linear-gradient(270deg,transparent,rgba(201,162,39,.8)); }
 .footer-copyright-ornament-diamond { width:4px; height:4px; background:rgba(201,162,39,.9); transform:rotate(45deg); flex-shrink:0; }
 .footer-copyright-main {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Manrope', sans-serif;
     font-size: .8rem;
     color: rgba(255,255,255,.4);
     letter-spacing: .03em;
@@ -874,39 +874,69 @@ a, button, [role="button"], input, select, textarea,
 
 <header class="header">
     <div class="header-container">
-        <a href="index.html" class="logo">
-            <img src="https://i.imgur.com/mXCrjjG.png" alt="Герб" class="logo-img" loading="lazy">
-            <div class="logo-text">
+        <a href="index.html" class="logo" aria-label="Дубровиця — Цифровий архів, головна сторінка">
+            <img src="https://i.imgur.com/mXCrjjG.png" alt="" class="logo-img" width="40" height="40" decoding="async">
+            <span class="logo-text">
                 <span class="logo-city">Дубровиця</span>
                 <span class="logo-subtitle">Цифровий архів</span>
-            </div>
+            </span>
         </a>
-        <nav class="nav" id="mainNav">
-            <a href="index.html" class="nav-link">Головна</a>
-            <a href="history.html" class="nav-link">Історія</a>
-            <a href="photo-archive.html" class="nav-link active">Фотоархів</a>
-            <a href="architecture.html" class="nav-link">Пам'ятки</a>
-            <a href="metrychni-knyhy.html" class="nav-link">Архівні справи</a>
-                <a href="jewish-history.html" class="nav-link">Єврейська спадщина</a>
-                <a href="presa.html" class="nav-link">Преса</a>
-                <a href="doslidnyk.html" class="nav-link">Дослідник</a>
-            <a href="contacts.html" class="nav-link">Про проєкт</a>
+
+        <nav class="nav" id="mainNav" aria-label="Головне меню">
+            <ul class="nav-list">
+                <li class="nav-item nav-item--home" style="--i:0"><a href="index.html" class="nav-link">Головна</a></li>
+                <li class="nav-item" style="--i:1"><a href="history.html" class="nav-link">Історія</a></li>
+                <li class="nav-item" style="--i:2"><a href="photo-archive.html" class="nav-link active" aria-current="page">Фотоархів</a></li>
+                <li class="nav-item" style="--i:3"><a href="architecture.html" class="nav-link">Пам'ятки</a></li>
+                <li class="nav-item has-menu" style="--i:4">
+                    <a href="metrychni-knyhy.html" class="nav-link">Архівні справи</a>
+                    <button type="button" class="nav-caret" aria-expanded="false" aria-controls="navArchive" aria-label="Показати документи архіву"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                    <div class="nav-menu" id="navArchive">
+                        <div class="nav-menu-inner">
+                            <div class="nav-menu-main">
+                                <p class="nav-menu-label">Документи за роками</p>
+                                <div class="nav-docs">
+                                    <a href="sumariusz-1642.html" class="nav-doc"><span class="nav-doc-year">1642</span><span class="nav-doc-name">Сумаріуш маєтку</span><span class="nav-doc-note">Доходи маєтку Дубровиця</span></a>
+                                    <a href="zhaloba-1650.html" class="nav-doc"><span class="nav-doc-year">1650</span><span class="nav-doc-name">Жалоба про спустошення</span><span class="nav-doc-note">Гродські книги Пінські</span></a>
+                                    <a href="rejestr-1665.html" class="nav-doc"><span class="nav-doc-year">1665</span><span class="nav-doc-name">Реєстр збитків</span><span class="nav-doc-note">Пінський гродський суд</span></a>
+                                    <a href="inventar-1780.html" class="nav-doc"><span class="nav-doc-year">1780</span><span class="nav-doc-name">Інвентар маєтку</span><span class="nav-doc-note">Містечко, вулиці, мешканці</span></a>
+                                    <a href="atlas-1798.html" class="nav-doc"><span class="nav-doc-year">1798</span><span class="nav-doc-name">Атлас губернії</span><span class="nav-doc-note">Інтерактивна мапа сіл</span></a>
+                                    <a href="atlas-1798-analityka.html" class="nav-doc"><span class="nav-doc-year">1798</span><span class="nav-doc-name">Край у цифрах</span><span class="nav-doc-note">Аналітика атласу</span></a>
+                                    <a href="persha-svitova.html" class="nav-doc"><span class="nav-doc-year">1914</span><span class="nav-doc-name">Перша світова війна</span><span class="nav-doc-note">Мобілізовані мешканці</span></a>
+                                    <a href="vyborchi-1938.html" class="nav-doc"><span class="nav-doc-year">1938</span><span class="nav-doc-name">Список виборців</span><span class="nav-doc-note">8 619 записів</span></a>
+                                </div>
+                            </div>
+                            <div class="nav-menu-side">
+                                <p class="nav-menu-label">Постаті</p>
+                                <a href="plater.html" class="nav-person"><img src="nav-plater.jpg" alt="" width="40" height="40" loading="lazy" decoding="async"><span><span class="nav-person-name">Граф Юзеф Плятер</span><span class="nav-person-role">Власник Дубровиці</span></span></a>
+                                <a href="radzyvil.html" class="nav-person"><img src="nav-radzyvil.jpg" alt="" width="40" height="40" loading="lazy" decoding="async"><span><span class="nav-person-name">Князь Домінік Радзивілл</span><span class="nav-person-role">Власник сіл над Горинню</span></span></a>
+                                <p class="nav-menu-label nav-menu-label--gap">Каталоги</p>
+                                <a href="metrychni-knyhy.html#mkcalSection" class="nav-cat"><span>Метричні книги</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                                <a href="metrychni-knyhy.html#booksCatalog" class="nav-cat"><span>Книги про Дубровицю</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                                <a href="metrychni-knyhy.html" class="nav-menu-all">Усі архівні справи <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item" style="--i:5"><a href="jewish-history.html" class="nav-link">Єврейська спадщина</a></li>
+                <li class="nav-item" style="--i:6"><a href="presa.html" class="nav-link">Преса</a></li>
+                <li class="nav-item" style="--i:7"><a href="doslidnyk.html" class="nav-link">Дослідник</a></li>
+                <li class="nav-item" style="--i:8"><a href="contacts.html" class="nav-link">Про проєкт</a></li>
+            </ul>
+            <p class="nav-foot">Цифровий архів історичної спадщини Дубровиці · <a href="contacts.html">Написати нам</a></p>
         </nav>
-        <button class="theme-toggle" id="themeToggle" aria-label="Перемкнути тему">
-            <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/>
-                <line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/>
-                <line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-            </svg>
-            <svg class="theme-icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-            </svg>
-        </button>
-        <button class="mobile-toggle" id="mobileToggle" aria-label="Відкрити меню">
-            <span></span><span></span><span></span>
-        </button>
+
+        <div class="header-actions">
+            <button type="button" class="theme-toggle" id="themeToggle" aria-label="Перемкнути тему">
+                <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg>
+                <svg class="theme-icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.3A8.5 8.5 0 0 1 9.7 3.5a8.5 8.5 0 1 0 10.8 10.8z"/></svg>
+            </button>
+            <button type="button" class="mobile-toggle" id="mobileToggle" aria-label="Відкрити меню" aria-expanded="false" aria-controls="mainNav">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
     </div>
 </header>
 
@@ -1064,44 +1094,49 @@ a, button, [role="button"], input, select, textarea,
 </div>
 
 <footer class="footer">
-    <div class="container">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4 class="footer-title">Дубровиця</h4>
-                <p class="footer-text">Цифровий архів історичної спадщини міста Дубровиця, Рівненська область, Україна.</p>
+    <div class="ft">
+        <div class="ft-top">
+            <div class="ft-brand">
+                <a href="index.html" class="ft-logo">
+                    <img src="https://i.imgur.com/mXCrjjG.png" alt="" width="44" height="44" loading="lazy" decoding="async">
+                    <span><span class="ft-logo-city">Дубровиця</span><span class="ft-logo-sub">Цифровий архів</span></span>
+                </a>
+                <p class="ft-about">Цифровий архів історичної спадщини міста Дубровиця — Сарненський район, Рівненська область, Україна.</p>
+                <a href="contacts.html" class="ft-cta"><span>Маєте старі фото чи документи?</span><strong>Напишіть нам <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></strong></a>
             </div>
-            <div class="footer-section">
-                <h4 class="footer-title">Навігація</h4>
-                <nav class="footer-nav">
-                    <a href="history.html">Історія</a>
-                    <a href="photo-archive.html">Фотоархів</a>
-                    <a href="metrychni-knyhy.html">Архівні справи</a>
-                </nav>
-            </div>
-            <div class="footer-section">
-                <h4 class="footer-title">Контакти</h4>
-                <p class="footer-text">Маєте матеріали?<br><a href="contacts.html" class="footer-link">Зв'яжіться з нами</a></p>
-            </div>
+            <nav class="ft-col" aria-label="Розділи сайту">
+                <p class="ft-title">Розділи</p>
+                <a href="history.html">Історія</a>
+                <a href="photo-archive.html">Фотоархів</a>
+                <a href="architecture.html">Пам'ятки</a>
+                <a href="jewish-history.html">Єврейська спадщина</a>
+                <a href="presa.html">Преса</a>
+                <a href="doslidnyk.html">Дослідник</a>
+                <a href="contacts.html">Про проєкт</a>
+            </nav>
+            <nav class="ft-col" aria-label="Архівні справи">
+                <p class="ft-title">Архівні справи</p>
+                <a href="sumariusz-1642.html"><span class="ft-year">1642</span>Сумаріуш маєтку</a>
+                <a href="zhaloba-1650.html"><span class="ft-year">1650</span>Жалоба про спустошення</a>
+                <a href="rejestr-1665.html"><span class="ft-year">1665</span>Реєстр збитків</a>
+                <a href="inventar-1780.html"><span class="ft-year">1780</span>Інвентар маєтку</a>
+                <a href="atlas-1798.html"><span class="ft-year">1798</span>Атлас губернії</a>
+                <a href="atlas-1798-analityka.html"><span class="ft-year">1798</span>Край у цифрах</a>
+                <a href="persha-svitova.html"><span class="ft-year">1914</span>Перша світова війна</a>
+                <a href="vyborchi-1938.html"><span class="ft-year">1938</span>Список виборців</a>
+            </nav>
+            <nav class="ft-col" aria-label="Постаті й каталоги">
+                <p class="ft-title">Постаті й каталоги</p>
+                <a href="plater.html">Граф Юзеф Плятер</a>
+                <a href="radzyvil.html">Князь Домінік Радзивілл</a>
+                <a href="metrychni-knyhy.html#mkcalSection">Метричні книги</a>
+                <a href="metrychni-knyhy.html#booksCatalog">Книги про Дубровицю</a>
+                <a href="metrychni-knyhy.html">Усі архівні справи</a>
+            </nav>
         </div>
-        <div class="footer-copyright-row">
-            <div class="footer-copyright-ornament">
-                <div class="footer-copyright-ornament-line"></div>
-                <div class="footer-copyright-ornament-diamond"></div>
-                <div class="footer-copyright-ornament-line"></div>
-            </div>
-            <p class="footer-copyright-main">
-                &copy; 2026 <a href="https://dubrovytsia.site">dubrovytsia.site</a> — Цифровий архів Дубровиці, Рівненська область, Україна.<br>
-                Сайт є некомерційним краєзнавчим проєктом, створеним з любові до міста та його історії.
-            </p>
-            <p class="footer-copyright-notice">
-                Публікуючи ці матеріали, ми прагнемо зберегти та популяризувати культурну й історичну спадщину міста Дубровиця для нинішніх і майбутніх поколінь.
-                Усі фотографії, документи та архівні матеріали розміщено виключно в освітніх, краєзнавчих і науково-дослідних цілях.
-                Відтворення, поширення або комерційне використання будь-яких матеріалів без письмового дозволу адміністрації сайту — заборонено.
-                При цитуванні або використанні матеріалів у будь-якому форматі — обов'язкове активне посилання на <em>dubrovytsia.site</em>.
-                Якщо ви є власником авторських прав на будь-які з опублікованих матеріалів і маєте заперечення щодо їх розміщення —
-                будь ласка, <a href="contacts.html">зв'яжіться з нами</a> і ми негайно розглянемо ваш запит.
-                Фотографії, завантажені з архіву, містять водяний знак сайту і не можуть публікуватись без нього.
-            </p>
+        <div class="ft-bottom">
+            <p class="ft-copy">&copy; 2026 <a href="https://dubrovytsia.site">dubrovytsia.site</a> — Цифровий архів Дубровиці, Рівненська область, Україна. Сайт є некомерційним краєзнавчим проєктом, створеним з любові до міста та його історії.</p>
+            <p class="ft-notice">Публікуючи ці матеріали, ми прагнемо зберегти та популяризувати культурну й історичну спадщину міста Дубровиця для нинішніх і майбутніх поколінь. Усі фотографії, документи та архівні матеріали розміщено виключно в освітніх, краєзнавчих і науково-дослідних цілях. Відтворення, поширення або комерційне використання будь-яких матеріалів без письмового дозволу адміністрації сайту — заборонено. При цитуванні або використанні матеріалів у будь-якому форматі — обов'язкове активне посилання на <em>dubrovytsia.site</em>. Якщо ви є власником авторських прав на будь-які з опублікованих матеріалів і маєте заперечення щодо їх розміщення — будь ласка, <a href="contacts.html">зв'яжіться з нами</a> і ми негайно розглянемо ваш запит. Фотографії, завантажені з архіву, містять водяний знак сайту і не можуть публікуватись без нього.</p>
         </div>
     </div>
 </footer>
@@ -1135,7 +1170,7 @@ a, button, [role="button"], input, select, textarea,
   </div>
 </div>
 
-<script src="app.js"></script>
+<script src="app.js?v=11"></script>
 <script>
 /* ══════════════════════════════════════════════════════════════
    DL — Download with Watermark System
@@ -1933,7 +1968,7 @@ g.ULB={open:open,close:close,nav:nav,
 #fu-toast-icon svg { width: 16px; height: 16px; color: #c9a227; }
 #fu-toast-text { flex: 1; }
 #fu-toast-title {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Manrope', sans-serif;
     font-size: 0.72rem;
     font-weight: 600;
     letter-spacing: 0.06em;

@@ -10,9 +10,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Адмін-панель — Дубровиця</title>
     <script>!function(){var t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t)}()</script>
-    <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="app.css?v=11">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         /* ============================================
            АДМІН ПАНЕЛЬ - СТИЛІ
@@ -67,7 +67,7 @@
             border: 2px solid var(--color-border);
             border-radius: 0.625rem;
             font-size: 0.9375rem;
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Manrope', sans-serif;
             background: var(--color-bg);
             color: var(--color-text);
             transition: border-color 0.2s;
@@ -93,7 +93,7 @@
             border-radius: 0.625rem;
             font-size: 0.9375rem;
             font-weight: 600;
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Manrope', sans-serif;
             cursor: pointer;
             transition: all 0.2s;
         }
@@ -235,7 +235,7 @@
             padding: 0.6rem 1.2rem;
             border: none;
             background: none;
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Manrope', sans-serif;
             font-size: 0.9rem;
             font-weight: 500;
             color: var(--color-text-secondary);
@@ -361,10 +361,10 @@
             <div style="margin-bottom:1.5rem;">
                 <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;margin-bottom:1rem;color:var(--color-text);">Що ви хочете додати?</h2>
                 <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
-                    <button class="content-type-btn" data-type="photo" style="display:flex;align-items:center;gap:0.5rem;padding:0.75rem 1.25rem;border-radius:0.75rem;border:2px solid var(--color-primary);background:var(--color-primary);color:white;font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:600;cursor:pointer;transition:all 0.2s;">📸 Фото до архіву</button>
-                    <button class="content-type-btn" data-type="book" style="display:flex;align-items:center;gap:0.5rem;padding:0.75rem 1.25rem;border-radius:0.75rem;border:2px solid var(--color-border);background:transparent;color:var(--color-text);font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:600;cursor:pointer;transition:all 0.2s;">📚 Книга про Дубровицю</button>
-                    <button class="content-type-btn" data-type="metric" style="display:flex;align-items:center;gap:0.5rem;padding:0.75rem 1.25rem;border-radius:0.75rem;border:2px solid var(--color-border);background:transparent;color:var(--color-text);font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:600;cursor:pointer;transition:all 0.2s;">📖 Метрична книга</button>
-                    <button class="content-type-btn" data-type="pin" style="display:flex;align-items:center;gap:0.5rem;padding:0.75rem 1.25rem;border-radius:0.75rem;border:2px solid var(--color-border);background:transparent;color:var(--color-text);font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:600;cursor:pointer;transition:all 0.2s;">📍 Піни костелу</button>
+                    <button class="content-type-btn" data-type="photo" style="display:flex;align-items:center;gap:0.5rem;padding:0.75rem 1.25rem;border-radius:0.75rem;border:2px solid var(--color-primary);background:var(--color-primary);color:white;font-family:'Manrope',sans-serif;font-size:0.9rem;font-weight:600;cursor:pointer;transition:all 0.2s;">📸 Фото до архіву</button>
+                    <button class="content-type-btn" data-type="book" style="display:flex;align-items:center;gap:0.5rem;padding:0.75rem 1.25rem;border-radius:0.75rem;border:2px solid var(--color-border);background:transparent;color:var(--color-text);font-family:'Manrope',sans-serif;font-size:0.9rem;font-weight:600;cursor:pointer;transition:all 0.2s;">📚 Книга про Дубровицю</button>
+                    <button class="content-type-btn" data-type="metric" style="display:flex;align-items:center;gap:0.5rem;padding:0.75rem 1.25rem;border-radius:0.75rem;border:2px solid var(--color-border);background:transparent;color:var(--color-text);font-family:'Manrope',sans-serif;font-size:0.9rem;font-weight:600;cursor:pointer;transition:all 0.2s;">📖 Метрична книга</button>
+                    <button class="content-type-btn" data-type="pin" style="display:flex;align-items:center;gap:0.5rem;padding:0.75rem 1.25rem;border-radius:0.75rem;border:2px solid var(--color-border);background:transparent;color:var(--color-text);font-family:'Manrope',sans-serif;font-size:0.9rem;font-weight:600;cursor:pointer;transition:all 0.2s;">📍 Піни костелу</button>
                 </div>
             </div>
 
@@ -629,25 +629,25 @@
             <div style="display:flex;gap:0.75rem;margin-bottom:1.5rem;flex-wrap:wrap;">
                 <button class="map-sel-btn" data-mapid="1917a"
                     style="padding:0.6rem 1.2rem;border-radius:0.6rem;border:2px solid var(--color-border);
-                           background:transparent;color:var(--color-text);font-family:'DM Sans',sans-serif;
+                           background:transparent;color:var(--color-text);font-family:'Manrope',sans-serif;
                            font-size:0.875rem;font-weight:600;cursor:pointer;transition:all 0.2s;">
                     📸 Знімок 1917
                 </button>
                 <button class="map-sel-btn active" data-mapid="1944"
                     style="padding:0.6rem 1.2rem;border-radius:0.6rem;border:2px solid var(--color-primary);
-                           background:var(--color-primary);color:#fff;font-family:'DM Sans',sans-serif;
+                           background:var(--color-primary);color:#fff;font-family:'Manrope',sans-serif;
                            font-size:0.875rem;font-weight:600;cursor:pointer;transition:all 0.2s;">
                     📸 Знімок 1944
                 </button>
                 <button class="map-sel-btn" data-mapid="1943"
                     style="padding:0.6rem 1.2rem;border-radius:0.6rem;border:2px solid var(--color-border);
-                           background:transparent;color:var(--color-text);font-family:'DM Sans',sans-serif;
+                           background:transparent;color:var(--color-text);font-family:'Manrope',sans-serif;
                            font-size:0.875rem;font-weight:600;cursor:pointer;transition:all 0.2s;">
                     📸 Знімок 1943
                 </button>
                 <button class="map-sel-btn" data-mapid="1971"
                     style="padding:0.6rem 1.2rem;border-radius:0.6rem;border:2px solid var(--color-border);
-                           background:transparent;color:var(--color-text);font-family:'DM Sans',sans-serif;
+                           background:transparent;color:var(--color-text);font-family:'Manrope',sans-serif;
                            font-size:0.875rem;font-weight:600;cursor:pointer;transition:all 0.2s;">
                     🛰️ Супутник 1971
                 </button>
@@ -666,7 +666,7 @@
                 <div id="editorHint" style="position:absolute;top:10px;left:50%;transform:translateX(-50%);
                      background:rgba(10,8,5,0.82);backdrop-filter:blur(8px);
                      border:1px solid rgba(201,162,39,0.3);border-radius:8px;
-                     padding:6px 14px;font-family:'DM Sans',sans-serif;font-size:0.72rem;
+                     padding:6px 14px;font-family:'Manrope',sans-serif;font-size:0.72rem;
                      color:#c9a227;white-space:nowrap;pointer-events:none;">
                     👆 Клік на фото — додати пін &nbsp;|&nbsp; Перетягнути пін — перемістити
                 </div>
@@ -699,14 +699,14 @@
                         <label style="font-size:0.8rem;font-weight:600;color:var(--color-text-secondary);">Назва *</label>
                         <input id="pinModalTitle" type="text" placeholder="Костел Іоанна Хрестителя"
                             style="width:100%;padding:0.65rem 0.9rem;border:2px solid var(--color-border);
-                            border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.9rem;
+                            border-radius:8px;font-family:'Manrope',sans-serif;font-size:0.9rem;
                             background:var(--color-bg);color:var(--color-text);box-sizing:border-box;">
                     </div>
                     <div class="field" style="margin-top:0.75rem;">
                         <label style="font-size:0.8rem;font-weight:600;color:var(--color-text-secondary);">Опис (необов'язково)</label>
                         <textarea id="pinModalDesc" rows="3" placeholder="Короткий опис об'єкта..."
                             style="width:100%;padding:0.65rem 0.9rem;border:2px solid var(--color-border);
-                            border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.875rem;
+                            border-radius:8px;font-family:'Manrope',sans-serif;font-size:0.875rem;
                             background:var(--color-bg);color:var(--color-text);box-sizing:border-box;resize:vertical;"></textarea>
                     </div>
                     <div style="display:flex;gap:0.75rem;margin-top:1.25rem;">
@@ -735,7 +735,7 @@
                 <div id="kostelEditorHint" style="position:absolute;top:10px;left:50%;transform:translateX(-50%);
                      background:rgba(10,8,5,0.85);backdrop-filter:blur(8px);
                      border:1px solid rgba(201,162,39,0.35);border-radius:8px;
-                     padding:6px 16px;font-family:'DM Sans',sans-serif;font-size:0.72rem;
+                     padding:6px 16px;font-family:'Manrope',sans-serif;font-size:0.72rem;
                      color:#c9a227;white-space:nowrap;pointer-events:none;">
                     👆 Клік на фото — додати пін &nbsp;|&nbsp; Перетягнути пін — перемістити
                 </div>
@@ -780,28 +780,28 @@
                         <label style="font-size:0.8rem;font-weight:600;color:var(--color-text-secondary);">Мітка (напр. "Будівництво · 1695–1742") *</label>
                         <input id="kostelPinLabel" type="text" placeholder="Будівництво · 1695–1742"
                             style="width:100%;padding:0.65rem 0.9rem;border:2px solid var(--color-border);
-                            border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.9rem;
+                            border-radius:8px;font-family:'Manrope',sans-serif;font-size:0.9rem;
                             background:var(--color-bg);color:var(--color-text);box-sizing:border-box;">
                     </div>
                     <div class="field" style="margin-top:0.75rem;">
                         <label style="font-size:0.8rem;font-weight:600;color:var(--color-text-secondary);">Заголовок картки *</label>
                         <input id="kostelPinCardTitle" type="text" placeholder="Орден піарів"
                             style="width:100%;padding:0.65rem 0.9rem;border:2px solid var(--color-border);
-                            border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.9rem;
+                            border-radius:8px;font-family:'Manrope',sans-serif;font-size:0.9rem;
                             background:var(--color-bg);color:var(--color-text);box-sizing:border-box;">
                     </div>
                     <div class="field" style="margin-top:0.75rem;">
                         <label style="font-size:0.8rem;font-weight:600;color:var(--color-text-secondary);">Текст (абзац 1)</label>
                         <textarea id="kostelPinText1" rows="3" placeholder="Основний текст..."
                             style="width:100%;padding:0.65rem 0.9rem;border:2px solid var(--color-border);
-                            border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.875rem;
+                            border-radius:8px;font-family:'Manrope',sans-serif;font-size:0.875rem;
                             background:var(--color-bg);color:var(--color-text);box-sizing:border-box;resize:vertical;"></textarea>
                     </div>
                     <div class="field" style="margin-top:0.75rem;">
                         <label style="font-size:0.8rem;font-weight:600;color:var(--color-text-secondary);">Текст (абзац 2, необов'язково)</label>
                         <textarea id="kostelPinText2" rows="3" placeholder="Додатковий текст..."
                             style="width:100%;padding:0.65rem 0.9rem;border:2px solid var(--color-border);
-                            border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.875rem;
+                            border-radius:8px;font-family:'Manrope',sans-serif;font-size:0.875rem;
                             background:var(--color-bg);color:var(--color-text);box-sizing:border-box;resize:vertical;"></textarea>
                     </div>
                     <div style="display:flex;gap:0.75rem;margin-top:1.25rem;">
@@ -830,7 +830,7 @@
                 <div style="position:absolute;top:10px;left:50%;transform:translateX(-50%);
                      background:rgba(10,8,5,0.85);backdrop-filter:blur(8px);
                      border:1px solid rgba(201,162,39,0.35);border-radius:8px;
-                     padding:6px 16px;font-family:'DM Sans',sans-serif;font-size:0.72rem;
+                     padding:6px 16px;font-family:'Manrope',sans-serif;font-size:0.72rem;
                      color:#c9a227;white-space:nowrap;pointer-events:none;">
                     👆 Клік на карту — додати пін &nbsp;|&nbsp; Перетягнути пін — перемістити
                 </div>
@@ -862,14 +862,14 @@
                         <label style="font-size:0.8rem;font-weight:600;color:var(--color-text-secondary);">Назва *</label>
                         <input id="topoPinTitle" type="text" placeholder="Ринкова площа"
                             style="width:100%;padding:0.65rem 0.9rem;border:2px solid var(--color-border);
-                            border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.9rem;
+                            border-radius:8px;font-family:'Manrope',sans-serif;font-size:0.9rem;
                             background:var(--color-bg);color:var(--color-text);box-sizing:border-box;">
                     </div>
                     <div class="field" style="margin-top:0.75rem;">
                         <label style="font-size:0.8rem;font-weight:600;color:var(--color-text-secondary);">Опис (необов'язково)</label>
                         <textarea id="topoPinDesc" rows="3" placeholder="Короткий опис місця або об'єкта..."
                             style="width:100%;padding:0.65rem 0.9rem;border:2px solid var(--color-border);
-                            border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.875rem;
+                            border-radius:8px;font-family:'Manrope',sans-serif;font-size:0.875rem;
                             background:var(--color-bg);color:var(--color-text);box-sizing:border-box;resize:vertical;"></textarea>
                     </div>
                     <div style="display:flex;gap:0.75rem;margin-top:1.25rem;">
@@ -934,7 +934,7 @@
                     txt.setAttribute('x',px); txt.setAttribute('y',py);
                     txt.setAttribute('text-anchor','middle'); txt.setAttribute('dominant-baseline','central');
                     txt.setAttribute('fill','#1a1000'); txt.setAttribute('font-size','10');
-                    txt.setAttribute('font-weight','800'); txt.setAttribute('font-family','DM Sans,sans-serif');
+                    txt.setAttribute('font-weight','800'); txt.setAttribute('font-family','Manrope,sans-serif');
                     txt.setAttribute('pointer-events','none'); txt.textContent = pin.id;
                     g.appendChild(ring); g.appendChild(circ); g.appendChild(txt);
                     editorSVG.appendChild(g);
@@ -1341,7 +1341,7 @@
             var rangeStr = (b.yearEnd && b.yearEnd !== b.yearStart) ? b.yearStart + '–' + b.yearEnd : String(b.yearStart);
             yrBadge.style.cssText = 'min-width:80px;padding:0.25rem 0.55rem;border-radius:100px;' +
                 'background:rgba(201,162,39,0.1);border:1px solid rgba(201,162,39,0.25);' +
-                'font-family:\'DM Sans\',sans-serif;font-size:0.7rem;font-weight:700;' +
+                'font-family:\'Manrope\',sans-serif;font-size:0.7rem;font-weight:700;' +
                 'color:#a07d15;text-align:center;flex-shrink:0;';
             yrBadge.textContent = rangeStr;
 
@@ -2565,7 +2565,7 @@ function renderKSVG() {
         txt.setAttribute('dominant-baseline','central');
         txt.setAttribute('fill','#1a1000');
         txt.setAttribute('font-size','10'); txt.setAttribute('font-weight','800');
-        txt.setAttribute('font-family','DM Sans,sans-serif');
+        txt.setAttribute('font-family','Manrope,sans-serif');
         txt.setAttribute('pointer-events','none');
         txt.textContent = String(pin.id);
 
@@ -2577,7 +2577,7 @@ function renderKSVG() {
         lbl.setAttribute('dominant-baseline','central');
         lbl.setAttribute('fill','rgba(201,162,39,0.75)');
         lbl.setAttribute('font-size','8');
-        lbl.setAttribute('font-family','DM Sans,sans-serif');
+        lbl.setAttribute('font-family','Manrope,sans-serif');
         lbl.setAttribute('pointer-events','none');
         lbl.textContent = pin.side==='L' ? '◀ L' : 'R ▶';
 
@@ -2909,7 +2909,7 @@ function renderSVG() {
         txt.setAttribute('fill','#1a1000');
         txt.setAttribute('font-size','10');
         txt.setAttribute('font-weight','800');
-        txt.setAttribute('font-family','DM Sans,sans-serif');
+        txt.setAttribute('font-family','Manrope,sans-serif');
         txt.setAttribute('pointer-events','none');
         txt.textContent = String(pin.id);
 
