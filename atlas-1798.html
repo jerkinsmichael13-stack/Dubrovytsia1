@@ -303,6 +303,14 @@
 
 .d-note { font-family: var(--font-display); font-size: 1.14rem; line-height: 1.6; color: var(--ink); margin: 0 0 1rem; }
 .d-src { font-family: var(--font-body); font-size: .72rem; line-height: 1.5; color: var(--ink-3); margin: 0 0 1.2rem; }
+/* картка «Інвентар Плятера» у вікні поселення */
+.d-inv { display: block; margin: 0 0 1.2rem; padding: .95rem 1.1rem 1rem; border-radius: 10px; border: 1px solid var(--rule); background: var(--paper-2); color: var(--ink); text-decoration: none; transition: border-color .2s; }
+.d-inv:hover, .d-inv:focus-visible { border-color: var(--gold); outline: none; }
+.d-inv-k { display: block; font-family: var(--font-body); font-size: .72rem; color: var(--ink-3); margin-bottom: .25rem; }
+.d-inv-n { display: block; font-family: var(--font-display); font-size: 1.28rem; line-height: 1.2; color: var(--ink); }
+.d-inv-s { display: flex; align-items: center; gap: .4rem; margin-top: .35rem; font-family: var(--font-body); font-size: .8rem; font-weight: 600; color: var(--gold); }
+.d-inv-s svg { width: 13px; height: 13px; transition: transform .2s; }
+.d-inv:hover .d-inv-s svg { transform: translateX(3px); }
 .d-more { display: flex; align-items: center; justify-content: space-between; gap: .5rem; padding: .95rem 1.1rem; border-radius: 10px; background: #1c170e; color: #f4e9c8; text-decoration: none; font-family: var(--font-body); font-size: .84rem; font-weight: 500; transition: background .2s; }
 .d-more:hover { background: #2e2616; }
 .d-more svg { flex: 0 0 auto; width: 15px; height: 15px; transition: transform .2s; }
@@ -525,6 +533,7 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
                                     <a href="zhaloba-1650.html" class="nav-doc"><span class="nav-doc-year">1650</span><span class="nav-doc-name">Жалоба про спустошення</span><span class="nav-doc-note">Гродські книги Пінські</span></a>
                                     <a href="rejestr-1665.html" class="nav-doc"><span class="nav-doc-year">1665</span><span class="nav-doc-name">Реєстр збитків</span><span class="nav-doc-note">Пінський гродський суд</span></a>
                                     <a href="inventar-1780.html" class="nav-doc"><span class="nav-doc-year">1780</span><span class="nav-doc-name">Інвентар маєтку</span><span class="nav-doc-note">Містечко, вулиці, мешканці</span></a>
+                                    <a href="inventar-naselennia.html" class="nav-doc"><span class="nav-doc-year">1780</span><span class="nav-doc-name">Мешканці міста</span><span class="nav-doc-note">Поіменно за вулицями</span></a>
                                     <a href="atlas-1798.html" class="nav-doc is-current" aria-current="page"><span class="nav-doc-year">1798</span><span class="nav-doc-name">Атлас губернії</span><span class="nav-doc-note">Інтерактивна мапа сіл</span></a>
                                     <a href="atlas-1798-analityka.html" class="nav-doc"><span class="nav-doc-year">1798</span><span class="nav-doc-name">Край у цифрах</span><span class="nav-doc-note">Аналітика атласу</span></a>
                                     <a href="persha-svitova.html" class="nav-doc"><span class="nav-doc-year">1914</span><span class="nav-doc-name">Перша світова війна</span><span class="nav-doc-note">Мобілізовані мешканці</span></a>
@@ -775,6 +784,7 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
                 <a href="zhaloba-1650.html"><span class="ft-year">1650</span>Жалоба про спустошення</a>
                 <a href="rejestr-1665.html"><span class="ft-year">1665</span>Реєстр збитків</a>
                 <a href="inventar-1780.html"><span class="ft-year">1780</span>Інвентар маєтку</a>
+                <a href="inventar-naselennia.html"><span class="ft-year">1780</span>Мешканці міста</a>
                 <a href="atlas-1798.html"><span class="ft-year">1798</span>Атлас губернії</a>
                 <a href="atlas-1798-analityka.html"><span class="ft-year">1798</span>Край у цифрах</a>
                 <a href="persha-svitova.html"><span class="ft-year">1914</span>Перша світова війна</a>
@@ -798,6 +808,7 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
 
 <script src="app.js?v=11"></script>
 <script src="sela_data_embed.js"></script>
+<script src="inventar-plater-data.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 (function(){
@@ -1082,6 +1093,16 @@ function openDrawer(p){
              (r.ownerPage ? '<a class="primary" href="' + esc(r.ownerPage) + '">Детальніше про власника ' + ARROW + '</a>' : '') +
              (onMap > 1 ? '<button type="button" data-owner="' + esc(r.ownerId) + '">Показати всі його села</button>' : '') +
              '</div></div></div>';
+    }
+    /* Інвентар графа Плятера: поіменний список, якщо він є для цього поселення */
+    var INV = (typeof INVENTAR_PLATER !== 'undefined' ? INVENTAR_PLATER : {})[r.slug];
+    if (INV) {
+        var invH = 0, invP = 0;
+        INV.streets.forEach(function(st){ st.sides.forEach(function(sd){ sd.items.forEach(function(it){ if (!it.lm) { invH++; invP += 1 + (it.m ? it.m.length : 0); } }); }); });
+        h += '<a class="d-inv" href="inventar-naselennia.html?p=' + encodeURIComponent(r.slug) + '">' +
+             '<span class="d-inv-k">Інвентар графа Плятера, 1780–1820</span>' +
+             '<span class="d-inv-n">' + fmt(invH) + ' ' + plural(invH, 'двір', 'двори', 'дворів') + ', ' + fmt(invP) + ' ' + plural(invP, 'особа', 'особи', 'осіб') + ' поіменно</span>' +
+             '<span class="d-inv-s">Хто на якій вулиці жив' + ARROW + '</span></a>';
     }
     if (r.note) h += '<p class="d-note">' + esc(r.note) + '</p>';
     h += '<p class="d-src">За «Економічними примітками», 1798 р.</p>';
