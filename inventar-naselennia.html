@@ -125,7 +125,7 @@ a.iv-place:hover { border-color: var(--gold); color: var(--ink); }
 .iv-quote cite { font-family: var(--font-body); font-style: normal; font-size: .78rem; color: var(--color-text-light); }
 
 /* пам'ятні місця міста */
-.iv-lms { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1px; margin: 2rem 0 0; background: var(--color-border-light); border: 1px solid var(--color-border-light); border-radius: 12px; overflow: hidden; }
+.iv-lms { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1px; margin: 2rem 0 0; background: var(--color-border-light); border: 1px solid var(--color-border-light); border-radius: 12px; overflow: hidden; }
 .iv-lm { display: grid; grid-template-columns: 28px minmax(0,1fr); gap: .8rem; align-items: start; padding: 1.05rem 1.1rem; background: var(--color-bg); border: 0; text-align: left; font: inherit; color: inherit; cursor: pointer; transition: background .2s; }
 .iv-lm:hover, .iv-lm:focus-visible { background: var(--paper); outline: none; }
 .iv-lm svg { width: 26px; height: 26px; color: var(--gold); }
@@ -216,11 +216,21 @@ a.iv-place:hover { border-color: var(--gold); color: var(--ink); }
 .iv-no.c-g { background: rgba(122,138,54,.15); color: #566421; }
 .iv-no.c-p { background: rgba(169,130,47,.16); color: #7a5c17; }
 .iv-no.c-n { border: 1px dashed var(--rule); color: var(--ink-3); font-weight: 500; }
+.iv-no.c-t { background: rgba(110,94,74,.13); color: #5b4a33; }
+.iv-no.c-b { background: rgba(142,58,58,.12); color: #7c2f2f; }
+.iv-no.c-o { color: var(--ink-3); font-weight: 500; font-family: var(--font-display); font-style: italic; font-size: .95rem; padding: 0 .3rem; }
+[data-theme="dark"] .iv-no.c-t { background: rgba(200,180,150,.14); color: #d9c8a8; }
+[data-theme="dark"] .iv-no.c-b { background: rgba(220,120,120,.15); color: #eab0a6; }
+.iv-hero-grid.is-solo { grid-template-columns: minmax(0, 1fr); }
+.iv-hero-grid.is-solo .iv-lede { max-width: 62ch; }
+.iv-reg.is-solo { grid-template-columns: minmax(0, 1fr); }
+.iv-reg.is-solo .iv-idx { display: none; }
+[hidden] { display: none !important; }
 [data-theme="dark"] .iv-no.c-j { background: rgba(120,160,210,.16); color: #a9c6ea; }
 [data-theme="dark"] .iv-no.c-g { background: rgba(170,190,90,.15); color: #cddb95; }
 [data-theme="dark"] .iv-no.c-p { background: rgba(212,178,90,.16); color: #e6cc86; }
 /* групи інвентаря */
-.iv-cats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin: 2rem 0 .6rem; }
+.iv-cats { display: grid; grid-template-columns: repeat(var(--n, 3), minmax(0, 1fr)); gap: 1rem; margin: 2rem 0 .6rem; }
 @media (max-width: 760px) { .iv-cats { grid-template-columns: 1fr; } }
 .iv-cat { display: block; width: 100%; padding: 1.1rem 1.2rem 1.15rem; border-radius: 12px; border: 1px solid var(--rule); background: var(--paper); color: inherit; font: inherit; text-align: left; cursor: pointer; transition: border-color .2s, transform .2s; }
 .iv-cat:hover, .iv-cat:focus-visible { border-color: var(--gold); transform: translateY(-1px); outline: none; }
@@ -338,7 +348,7 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
                                     <a href="zhaloba-1650.html" class="nav-doc"><span class="nav-doc-year">1650</span><span class="nav-doc-name">Жалоба про спустошення</span><span class="nav-doc-note">Гродські книги Пінські</span></a>
                                     <a href="rejestr-1665.html" class="nav-doc"><span class="nav-doc-year">1665</span><span class="nav-doc-name">Реєстр збитків</span><span class="nav-doc-note">Пінський гродський суд</span></a>
                                     <a href="inventar-1780.html" class="nav-doc"><span class="nav-doc-year">1780</span><span class="nav-doc-name">Інвентар маєтку</span><span class="nav-doc-note">Містечко, вулиці, мешканці</span></a>
-                                    <a href="inventar-naselennia.html" class="nav-doc is-current" aria-current="page"><span class="nav-doc-year">1780</span><span class="nav-doc-name">Мешканці міста</span><span class="nav-doc-note">Поіменно за вулицями</span></a>
+                                    <a href="inventar-naselennia.html" class="nav-doc is-current" aria-current="page"><span class="nav-doc-year">1780</span><span class="nav-doc-name">Мешканці маєтку</span><span class="nav-doc-note">Місто й села поіменно</span></a>
                                     <a href="atlas-1798.html" class="nav-doc"><span class="nav-doc-year">1798</span><span class="nav-doc-name">Атлас губернії</span><span class="nav-doc-note">Інтерактивна мапа сіл</span></a>
                                     <a href="atlas-1798-analityka.html" class="nav-doc"><span class="nav-doc-year">1798</span><span class="nav-doc-name">Край у цифрах</span><span class="nav-doc-note">Аналітика атласу</span></a>
                                     <a href="persha-svitova.html" class="nav-doc"><span class="nav-doc-year">1914</span><span class="nav-doc-name">Перша світова війна</span><span class="nav-doc-note">Мобілізовані мешканці</span></a>
@@ -393,13 +403,15 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
         <symbol id="i-castle" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 21V8h2V5h2v3h2V5h2v3h2V5h2v3h2v13z"/><path d="M10 21v-4a2 2 0 0 1 4 0v4"/><path d="M2 21h20"/></g></symbol>
         <symbol id="i-piarists" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M12 2v3M10.5 3.5h3"/><path d="M8 21V9l4-3 4 3v12"/><path d="M3 21v-7h5M21 21v-7h-5"/><path d="M10.5 13h3v3h-3z"/></g></symbol>
         <symbol id="i-empty" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-dasharray="2.2 2.2"><rect x="4" y="5" width="16" height="14" rx="1"/></g></symbol>
+        <symbol id="i-mill" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M8 21V11h8v10"/><path d="M12 11V4M12 7.5l-5-3.5M12 7.5l5-3.5M12 7.5l-4 5M12 7.5l4 5"/><path d="M3 21h18"/><path d="M4 18c1.3-1 2.7-1 4 0"/></g></symbol>
+        <symbol id="i-brick" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="1"/><path d="M3 10h18M3 14h18M9 6v4M15 6v4M6 10v4M12 10v4M18 10v4M9 14v4M15 14v4"/></g></symbol>
         <symbol id="i-arrow" viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     </defs>
 </svg>
 
 <!-- ═══ ТИТУЛ ═══ -->
 <header class="iv-hero">
-    <div class="iv-wrap iv-hero-grid">
+    <div class="iv-wrap iv-hero-grid" id="ivHeroGrid">
         <div>
             <div class="iv-crumbs"><a href="index.html">Головна</a><span>/</span><a href="metrychni-knyhy.html">Архівні справи</a><span>/</span><a href="inventar-1780.html">Інвентар маєтку</a><span>/</span>Мешканці</div>
             <h1 id="ivTitle">Люди Домбровиці<small>поіменно, за інвентарем графа Плятера</small></h1>
@@ -407,8 +419,8 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
             <dl class="iv-figs">
                 <div><dd id="fHH">—</dd><dt>дворів</dt></div>
                 <div><dd id="fPP">—</dd><dt>людей названо в записах</dt></div>
-                <div><dd id="fST">—</dd><dt>вулиць, провулків і рядів</dt></div>
-                <div><dd id="fCR">—</dd><dt>ремісників</dt></div>
+                <div><dd id="fST">—</dd><dt id="fSTl">вулиць, провулків і рядів</dt></div>
+                <div id="fCRw"><dd id="fCR">—</dd><dt id="fCRl">ремісників</dt></div>
             </dl>
             <div class="iv-btns">
                 <a class="iv-btn dark" href="#reyestr"><span>Відкрити список мешканців</span><svg><use href="#i-arrow"/></svg></a>
@@ -427,8 +439,10 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
 <!-- ═══ § 1 МІСТО ЗА ІНВЕНТАРЕМ ═══ -->
 <section class="iv-sec" id="misto">
     <div class="iv-wrap iv-cols">
-        <div class="iv-mark"><b>§ 1</b><span>Місто за інвентарем</span></div>
+        <div class="iv-mark"><b>§ 1</b><span id="ivMark1">Місто за інвентарем</span></div>
         <div>
+            <div id="ivVillageIntro" hidden></div>
+            <div id="ivTownIntro">
             <h2 class="iv-h2">Яким було місто, коли його описували двір за двором</h2>
             <p class="iv-p">Інвентар фільварку Воробин з містом Домбровицею складено вже за графа Юзефа Антонія Плятера, який купив Дубровицю 1771 року. Рік на аркушах не збережено, тому документ датують широко: 1780–1820. Він і відкривається описом самого міста.</p>
             <blockquote class="iv-quote">
@@ -436,10 +450,13 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
                 <cite>Переказ вступу до інвентаря, аркуш 00009318-47</cite>
             </blockquote>
             <p class="iv-p">Далі укладач веде читача так, як ішов би сам, — від ринку. Посеред міста площа з крамницями й шпихлірами; довкола неї чотири ряди будинків. З ринку розходяться вулиці: Воробинська на північ, Бережницька на південь, Замкова до церкви Святого Миколая й замку, дорога на Мочулище на захід. Місто обведене валом, а за ним на обох трактах лежать два передмістя: <em>Воробинське</em> — на Литовському шляху від Століна й Висоцька, і <em>Бережницьке</em> — на Волинському й Українському шляху від Бережниці.</p>
+            </div>
             <p class="iv-p" id="ivObs"></p>
-            <h3 class="iv-h2" style="font-size:clamp(1.6rem,2.6vw,2.1rem);margin-top:2.4rem">Три групи міщан — три окремі нумерації</h3>
-            <p class="iv-p">Укладач інвентаря рахував двори не підряд, а за трьома групами, кожну з першого номера. Ці номери — такі, як у документі, — стоять біля кожного двору в реєстрі нижче.</p>
+            <div id="ivCatsBox">
+            <h3 class="iv-h2" id="ivCatsH" style="font-size:clamp(1.6rem,2.6vw,2.1rem);margin-top:2.4rem">Три групи міщан — три окремі нумерації</h3>
+            <p class="iv-p" id="ivCatsP">Укладач інвентаря рахував двори не підряд, а за трьома групами, кожну з першого номера. Ці номери — такі, як у документі, — стоять біля кожного двору в реєстрі нижче.</p>
             <div class="iv-cats" id="ivCats"></div>
+            </div>
             <p class="iv-cats-note" id="ivCatsNote"></p>
             <div class="iv-lms" id="ivLandmarks"></div>
         </div>
@@ -517,7 +534,7 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
 <section class="iv-sec" id="reyestr">
     <div class="iv-wrap">
         <div class="iv-mark" style="position:static;margin-bottom:1.2rem;display:flex;align-items:baseline;gap:.9rem"><b>§ 3</b><span style="max-width:none;margin:0">Реєстр мешканців</span></div>
-        <div class="iv-reg">
+        <div class="iv-reg" id="ivRegGrid">
             <nav class="iv-idx" id="ivIdx" aria-label="Вулиці"></nav>
             <div>
                 <div class="iv-tools">
@@ -527,17 +544,16 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
                         <button type="button" id="ivClear" aria-label="Очистити пошук"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
                     </div>
                     <div class="iv-filt" role="toolbar" aria-label="Фільтри">
+                        <span id="ivZoneChips" style="display:contents">
                         <button type="button" class="iv-chip" data-zone="" aria-pressed="true">Усе місто</button>
                         <button type="button" class="iv-chip" data-zone="misto" aria-pressed="false">Місто</button>
                         <button type="button" class="iv-chip" data-zone="vorobynske" aria-pressed="false">Воробинське</button>
                         <button type="button" class="iv-chip" data-zone="berezhnytske" aria-pressed="false">Бережницьке</button>
                         <span class="iv-sep" aria-hidden="true"></span>
+                        </span>
                         <button type="button" class="iv-chip" data-f="w" aria-pressed="false">Вдови</button>
                         <button type="button" class="iv-chip" data-f="p" aria-pressed="false">Ремесла</button>
-                        <span class="iv-sep" aria-hidden="true"></span>
-                        <button type="button" class="iv-chip" data-cat="j" aria-pressed="false">Євреї</button>
-                        <button type="button" class="iv-chip" data-cat="g" aria-pressed="false">Ґрунтові</button>
-                        <button type="button" class="iv-chip" data-cat="p" aria-pressed="false">Плацові</button>
+                        <span id="ivCatChips" style="display:contents"></span>
                     </div>
                     <p class="iv-legend" id="ivLegend"></p>
                     <p class="iv-status" id="ivStatus" aria-live="polite"></p>
@@ -554,10 +570,10 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
         <div class="iv-mark"><b>§ 4</b><span>Прізвища й ремесла</span></div>
         <div>
             <h2 class="iv-h2">Прізвища, що повторюються</h2>
-            <p class="iv-p">Натисніть прізвище — реєстр покаже всі двори й усіх членів родин, де воно трапляється. Цифра — кількість дворів. Для єврейських господарів інвентар здебільшого записує ім'я по батькові (Аронович — «син Арона»), тож такі форми тут не збираються в родини.</p>
+            <p class="iv-p">Натисніть прізвище — реєстр покаже всі двори й усіх членів родин, де воно трапляється. Цифра — кількість дворів.<span id="ivSurnJ"> Для єврейських господарів інвентар здебільшого записує ім'я по батькові (Аронович — «син Арона»), тож такі форми тут не збираються в родини.</span></p>
             <div class="iv-sn" id="ivSurnames"></div>
-            <h2 class="iv-h2" style="margin-top:3.6rem">Ремесла</h2>
-            <p class="iv-p">Заняття вписане лише біля частини імен — там, де воно відрізняло людину від сусідів або мало значення для повинностей.</p>
+            <h2 class="iv-h2" id="ivCraftsH" style="margin-top:3.6rem">Ремесла</h2>
+            <p class="iv-p" id="ivCraftsP">Заняття вписане лише біля частини імен — там, де воно відрізняло людину від сусідів або мало значення для повинностей.</p>
             <div class="iv-crafts" id="ivCrafts"></div>
         </div>
     </div>
@@ -570,7 +586,7 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
         <div>
             <h2 class="iv-h2">Що в списку від документа, а що від нас</h2>
             <ol class="iv-rules">
-                <li><b>Один запис — один двір, з номером із документа.</b> Господар і всі, кого інвентар називає поруч із ним, подані разом, у порядку оригіналу. Номер біля двору — той, що вписав укладач, окремо для євреїв (Є), християн ґрунтових (Ґ) і плацових (П). Записи, яким номера не дано, позначено «б/н».</li>
+                <li><b>Один запис — один двір, з номером із документа.</b> Господар і всі, кого інвентар називає поруч із ним, подані разом, у порядку оригіналу. Номер біля двору — той, що вписав укладач, окремо в кожній групі: у Дубровиці для євреїв (Є), християн ґрунтових (Ґ) і плацових (П), в Орв’яниці — для бояр (Б). Тяглі двори Орв’яниці номерів не мають і позначені лише літерою (Т); окремі записи без номера — «б/н»; у селах, де укладач двори не нумерував, сірим стоїть порядковий номер запису.</li>
                 <li><b>Синам, дочкам, братам і сестрам дописано прізвище господаря.</b> Для жінок прізвище узгоджене за родом: Гладкий — Уляна Гладка, Несторов — Марина Несторова, Ярмолін — Марта Ярмоліна. Дітям вдів дописано прізвище покійного чоловіка, якщо його названо.</li>
                 <li><b>Зятів, пасербів, швагрів і вітчимів залишено без прізвища господаря</b> — вони з іншої родини, а їхнє власне прізвище інвентар здебільшого не вказує.</li>
                 <li><b>Позначку «жонатий» не відтворено.</b> Дружини, названі в переліку окремим словом, показані на своєму місці без імені. Якщо запис не уточнює, чия це дружина — господаря чи сина, — ми цього не домислюємо.</li>
@@ -592,6 +608,9 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
                 <div><dt>Фундушевий плац<i>plac funduszowy</i></dt><dd>Земля, надана церкві чи монастирю на утримання (фундуш). Так записано володіння піарів і площу під церквою Різдва Богородиці.</dd></div>
                 <div><dt>Пресвітер</dt><dd>Парафіяльний священник церкви; у Домбровиці — при церкві Святого Миколая.</dd></div>
                 <div><dt>Пасерб, швагер, братанець</dt><dd>Пасерб — пасинок; швагер — брат дружини або чоловік сестри; братанець — син брата.</dd></div>
+                <div><dt>Стрий, сестринець, синовиця</dt><dd>Стрий — брат батька; сестринець — син сестри; синовиця — донька брата.</dd></div>
+                <div><dt>Тяглі господарства<i>gospodarstwa ciągłe</i></dt><dd>Двори селян, які мали робочу худобу й відбували панщину «тяглом»: волами чи кіньми орали панську землю, возили збіжжя й дрова. Основна маса підданих у селах маєтку.</dd></div>
+                <div><dt>Бояри<i>bojarzy</i></dt><dd>Служилі селяни Полісся й Волині. Замість звичайної панщини несли службу при дворі — їздили з дорученнями й листами, супроводжували підводи, стерегли; мали кращий статус, ніж тяглі. В Орв’яниці їх 13.</dd></div>
             </dl>
             <div class="iv-back">
                 <a class="iv-btn dark" href="inventar-1780.html"><span>Скани й транскрипція інвентаря</span><svg><use href="#i-arrow"/></svg></a>
@@ -632,7 +651,7 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
                 <a href="zhaloba-1650.html"><span class="ft-year">1650</span>Жалоба про спустошення</a>
                 <a href="rejestr-1665.html"><span class="ft-year">1665</span>Реєстр збитків</a>
                 <a href="inventar-1780.html"><span class="ft-year">1780</span>Інвентар маєтку</a>
-                <a href="inventar-naselennia.html"><span class="ft-year">1780</span>Мешканці міста</a>
+                <a href="inventar-naselennia.html"><span class="ft-year">1780</span>Мешканці маєтку</a>
                 <a href="atlas-1798.html"><span class="ft-year">1798</span>Атлас губернії</a>
                 <a href="atlas-1798-analityka.html"><span class="ft-year">1798</span>Край у цифрах</a>
                 <a href="persha-svitova.html"><span class="ft-year">1914</span>Перша світова війна</a>
@@ -670,12 +689,14 @@ if (!D) return;
 
 /* Села маєтку за титулом інвентаря — списки з'являтимуться тут у міру перекладу */
 var ESTATE = [
-    ['dombrovytsia', 'Дубровиця'], ['', 'Лютинськ'], ['', 'Орв\u2019яниця'], ['', 'Берестя'],
-    ['', 'Ясинець'], ['', 'Плоска'], ['', 'Жидче'], ['', 'Ютовщина']
+    ['dombrovytsia', 'Дубровиця'], ['berestia', 'Берестя з Плоскою'], ['orvianytsia', 'Орв\u2019яниця'], ['yutovshchyzna', 'Ютовщизна'],
+    ['', 'Лютинськ'], ['', 'Ясинець'], ['', 'Жидче']
 ];
+var VILLAGE = D.kind === 'village';
 
 var ICON = { church: 'church', synagogue: 'synagogue', rabbi: 'rabbi', hospital: 'hospital', bath: 'bath',
-             distillery: 'distillery', manor: 'manor', castle: 'castle', piarists: 'piarists', empty: 'empty' };
+             distillery: 'distillery', manor: 'manor', castle: 'castle', piarists: 'piarists', empty: 'empty',
+             mill: 'mill', brick: 'brick' };
 
 function $(id){ return document.getElementById(id); }
 function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[c]; }); }
@@ -722,13 +743,40 @@ if (D.name) {
     $('ivAtlasBtn').href = 'atlas-1798.html#' + SLUG;
     $('ivAtlasFig').href = 'atlas-1798.html#' + SLUG;
 }
+var SURN = {};
+HH.forEach(function(h){ if (h.s) SURN[h.s] = (SURN[h.s] || 0) + 1; });
+if (VILLAGE) {
+    var nm = D.name.replace(/'/g, '\u2019');
+    $('ivTitle').innerHTML = 'Люди села ' + esc(nm) + '<small>поіменно, за інвентарем графа Плятера</small>';
+    document.title = 'Мешканці села ' + nm + ' за інвентарем графа Плятера — Цифровий архів';
+    if (D.lede) $('ivLede').textContent = D.lede;
+    $('fST').textContent = Object.keys(SURN).length;
+    $('fSTl').textContent = 'прізвищ';
+    var boy = HH.filter(function(h){ return h.c === 'b'; }).length;
+    if (boy) { $('fCR').textContent = boy; $('fCRl').textContent = 'боярських дворів'; }
+    else if (!CRAFT.length) $('fCRw').hidden = true;
+    $('ivAtlasFig').hidden = true;
+    $('ivHeroGrid').classList.add('is-solo');
+    $('ivAtlasBtn').querySelector('span').textContent = nm + ' на атласі 1798';
+    document.querySelector('.iv-crumbs').lastChild.textContent = nm;
+}
 $('ivPlaces').innerHTML = '<b>Маєток Плятера в інвентарі:</b> ' + ESTATE.map(function(e){
     if (e[0] && ALL[e[0]]) return e[0] === SLUG ? '<span class="iv-place on">' + esc(e[1]) + '</span>' : '<a class="iv-place" href="?p=' + e[0] + '">' + esc(e[1]) + '</a>';
     return '<span class="iv-place" title="Список ще перекладається">' + esc(e[1]) + '</span>';
 }).join('') + '<br>Решта сіл з\u2019являтимуться тут у міру перекладу.';
 
 /* ── § 1: спостереження і пам'ятні місця ─── */
-(function(){
+if (VILLAGE) (function(){
+    var st = STREETS[0], nm = D.name.replace(/'/g, '\u2019');
+    $('ivTownIntro').hidden = true;
+    $('ivMark1').textContent = 'Село за інвентарем';
+    var box = $('ivVillageIntro');
+    box.hidden = false;
+    box.innerHTML = '<h2 class="iv-h2">' + esc(D.title.replace(/'/g, '\u2019')) + '</h2>' +
+        '<p class="iv-p">' + esc(st.desc) + '</p>' +
+        '<p class="iv-p">Село входило до маєтку Воробин з містом Домбровицею. Його мешканців укладач інвентаря записав так само, як і міщан, — двір за двором, з родинами, що жили під одним дахом. Документ складено за графа Юзефа Антонія Плятера; рік на аркушах не збережено, тому його датують широко: 1780–1820.</p>';
+})();
+if (!VILLAGE) (function(){
     var ryn = STREETS.filter(function(s){ return s.id === 'rynok'; })[0];
     var wid = HH.filter(function(h){ return h.w; }).length;
     var zoneHH = {};
@@ -743,6 +791,21 @@ $('ivPlaces').innerHTML = '<b>Маєток Плятера в інвентарі:
         'Передмістя — християнські двори, часто з великими родинами синів, дочок і братів. ';
     txt += wid + ' ' + plural(wid, 'двір', 'двори', 'дворів') + ' очолюють вдови.';
     $('ivObs').textContent = txt;
+})();
+(function(){
+    if (VILLAGE) {
+        var top = Object.keys(SURN).filter(function(k){ return SURN[k] > 1; }).sort(function(a, b){ return SURN[b] - SURN[a] || a.localeCompare(b, 'uk'); });
+        var big = HH.slice().sort(function(a, b){ return (b.m ? b.m.length : 0) - (a.m ? a.m.length : 0); })[0];
+        var t = 'У списку ' + fmt(HH.length) + ' ' + plural(HH.length, 'двір', 'двори', 'дворів') + ' і ' + fmt(PEOPLE) + ' ' + plural(PEOPLE, 'особа', 'особи', 'осіб') + ' — у середньому ' +
+            (PEOPLE / HH.length).toFixed(1).replace('.', ',') + ' на двір. ';
+        if (top.length) t += 'Найчисленніші родини: ' + top.slice(0, 4).map(function(k){ return k + ' (' + SURN[k] + ' ' + plural(SURN[k], 'двір', 'двори', 'дворів') + ')'; }).join(', ') + '. ';
+        if (big && big.m && big.m.length > 3) {
+            var bigs = HH.filter(function(h){ return h.m && h.m.length === big.m.length; });
+            t += (bigs.length > 1 ? 'Найбільші двори — ' : 'Найбільший двір — ') + bigs.slice(0, 3).map(function(h){ return h.n; }).join(', ') + (bigs.length > 3 ? ' та ін.' : '') + ': по ' + (big.m.length + 1) + ' ' + plural(big.m.length + 1, 'особа', 'особи', 'осіб') + ' під одним дахом.';
+            if (bigs.length === 1) t = t.replace(': по ', ': ');
+        }
+        $('ivObs').textContent = t;
+    }
 
     var seen = {};
     $('ivLandmarks').innerHTML = LM.filter(function(l){
@@ -770,9 +833,14 @@ $('ivZoneList').innerHTML = ZORDER.map(function(z){
 
 /* ── § 3: реєстр ──────────────────────────── */
 var state = { q: '', zone: '', f: '', cat: '' };
-var CATS = { j: ['Є', 'Євреї', 'єврейський двір'], g: ['Ґ', 'Християни ґрунтові', 'християнський ґрунтовий двір'], p: ['П', 'Християни плацові', 'християнський плацовий двір'] };
+var CATS = { j: ['Є', 'Євреї', 'єврейський двір', /євр/i], g: ['Ґ', 'Християни ґрунтові', 'християнський ґрунтовий двір', /ґрунт/i],
+             p: ['П', 'Християни плацові', 'християнський плацовий двір', /плац/i], t: ['Т', 'Тяглі господарства', 'тяглий двір', /тягл/i],
+             b: ['Б', 'Бояри', 'боярський двір', /бояр/i] };
+var PRESENT = ['j', 'g', 'p', 't', 'b'].filter(function(k){ return HH.some(function(h){ return h.c === k; }); });
 function noHtml(h){
+    if (!h.c && D.plain) return '<span class="iv-no c-o" title="Двори в інвентарі не пронумеровано — це порядок запису">' + h.id + '</span>';
     if (!h.c) return '<span class="iv-no c-n" title="Окремого номера в інвентарі немає">б/н</span>';
+    if (!h.no) return '<span class="iv-no c-' + h.c + '" title="' + esc(CATS[h.c][2]) + ', без номера в інвентарі"><i>' + CATS[h.c][0] + '</i></span>';
     return '<span class="iv-no c-' + h.c + '" title="' + esc(CATS[h.c][2]) + ', № ' + h.no + ' в інвентарі"><i>' + CATS[h.c][0] + '</i>' + h.no + '</span>';
 }
 var reg = $('ivReg'), idx = $('ivIdx');
@@ -839,7 +907,7 @@ function render(){
         counts[st.id] = n;
         if (filtering && !n) return;
         shown += n;
-        if (st.zone !== lastZone) {
+        if (st.zone !== lastZone && !VILLAGE) {
             var zc = HH.filter(function(h){ return h.st.zone === st.zone; }).length;
             html += '<h2 class="iv-zone-h">' + esc(D.zones[st.zone]) + '<span>' + zc + ' ' + plural(zc, 'двір', 'двори', 'дворів') + '</span></h2>';
             lastZone = st.zone;
@@ -847,7 +915,7 @@ function render(){
         html += '<section class="iv-street" id="vul-' + st.id + '" data-st="' + st.id + '">' +
             '<div class="iv-st-h"><h3>' + esc(st.name) + '</h3>' + (st.orig ? '<span class="orig">' + esc(st.orig) + '</span>' : '') +
             '<span class="cnt">' + (filtering ? n + ' з ' + st.hh : st.hh + ' ' + plural(st.hh, 'двір', 'двори', 'дворів') + ', ' + st.pp + ' ' + plural(st.pp, 'особа', 'особи', 'осіб')) + '</span></div>' +
-            (filtering ? '' : '<p class="iv-st-d">' + esc(st.desc) + '</p>') + body + '</section>';
+            (filtering || VILLAGE ? '' : '<p class="iv-st-d">' + esc(st.desc) + '</p>') + body + '</section>';
     });
     reg.innerHTML = html || '<p class="iv-empty">Нічого не знайдено за «' + esc(state.q.trim()) + '». Спробуйте частину імені або прізвища — у рукописі написання часто різняться. <button type="button" id="ivReset">Показати весь список</button></p>';
     $('ivStatus').textContent = filtering ? shown + ' ' + plural(shown, 'двір', 'двори', 'дворів') + ' знайдено' : '';
@@ -977,24 +1045,54 @@ document.querySelectorAll('#ivPlan .st').forEach(function(g){
     }).join('');
 })();
 
-/* ── Групи інвентаря: підсумок і легенда ─── */
+/* ── Групи інвентаря: підсумок, фільтри, легенда ─── */
 (function(){
-    var cnt = { j: 0, g: 0, p: 0 }, none = 0;
-    HH.forEach(function(h){ if (h.c) cnt[h.c]++; else none++; });
+    var cnt = {}, none = 0;
+    HH.forEach(function(h){ if (h.c) cnt[h.c] = (cnt[h.c] || 0) + 1; else none++; });
     var rows = (D.summary && D.summary.rows) || [];
-    var order = [['j', /євр/i], ['g', /ґрунт/i], ['p', /плац/i]];
-    $('ivCats').innerHTML = order.map(function(o){
-        var k = o[0], row = rows.filter(function(r){ return o[1].test(r.label); })[0] || {};
-        var mx = Math.max.apply(null, HH.filter(function(h){ return h.c === k; }).map(function(h){ return h.no; }).concat([0]));
-        return '<button type="button" class="iv-cat" data-showcat="' + k + '">' +
-            '<span class="iv-cat-top"><b>' + fmt(cnt[k]) + '</b><span class="iv-no c-' + k + '"><i>' + CATS[k][0] + '</i>1–' + mx + '</span></span>' +
-            '<strong>' + esc(CATS[k][1]) + '</strong>' + (row.orig ? '<em>' + esc(row.orig) + '</em>' : '') +
-            (row.hint ? '<span class="h">' + esc(row.hint[0].toUpperCase() + row.hint.slice(1)) + '.</span>' : '') + '</button>';
-    }).join('');
-    $('ivCatsNote').textContent = (D.summary && D.summary.note ? D.summary.note + ' ' : '') + (none ? 'У списку таких записів ' + none + '.' : '');
-    $('ivLegend').innerHTML = 'Номер із документа: ' + ['j', 'g', 'p'].map(function(k){
+    $('ivCatChips').innerHTML = PRESENT.length ? '<span class="iv-sep" aria-hidden="true"></span>' + PRESENT.map(function(k){
+        return '<button type="button" class="iv-chip" data-cat="' + k + '" aria-pressed="false">' + esc(CATS[k][1].replace('Християни ', '').replace(/^./, function(c){ return c.toUpperCase(); })) + '</button>';
+    }).join('') : '';
+    if (PRESENT.indexOf('j') < 0) $('ivSurnJ').hidden = true;
+    if (!PRESENT.length) {
+        $('ivCatsBox').hidden = true;
+    } else {
+        if (VILLAGE) {
+            $('ivCatsH').textContent = PRESENT.map(function(k, i){ return i ? CATS[k][1].toLowerCase() : CATS[k][1]; }).join(' і ');
+            $('ivCatsP').textContent = 'Укладач поділив господарства села на ' + PRESENT.length + ' ' + plural(PRESENT.length, 'групу', 'групи', 'груп') + '. Номери, де вони є, стоять біля дворів у реєстрі нижче — такі, як у документі.';
+        }
+        $('ivCats').style.setProperty('--n', PRESENT.length);
+        $('ivCats').innerHTML = PRESENT.map(function(k){
+            var row = rows.filter(function(r){ return CATS[k][3].test(r.label); })[0] || {};
+            var nos = HH.filter(function(h){ return h.c === k && h.no; }).map(function(h){ return h.no; });
+            var badge = nos.length ? '<i>' + CATS[k][0] + '</i>1–' + Math.max.apply(null, nos) : '<i>' + CATS[k][0] + '</i>без номерів';
+            return '<button type="button" class="iv-cat" data-showcat="' + k + '">' +
+                '<span class="iv-cat-top"><b>' + fmt(cnt[k]) + '</b><span class="iv-no c-' + k + '">' + badge + '</span></span>' +
+                '<strong>' + esc(CATS[k][1]) + '</strong>' + (row.orig ? '<em>' + esc(row.orig) + '</em>' : '') +
+                (row.hint ? '<span class="h">' + esc(row.hint[0].toUpperCase() + row.hint.slice(1)) + '.</span>' : '') + '</button>';
+        }).join('');
+    }
+    $('ivCatsNote').textContent = (D.summary && D.summary.note ? D.summary.note + ' ' : '') + (none && !D.plain ? 'У списку таких записів ' + none + '.' : '');
+    if (!PRESENT.length && D.summary && D.summary.note) $('ivCatsNote').style.marginTop = '1.4rem';
+    var leg = PRESENT.map(function(k){
         return '<span><span class="iv-no c-' + k + '"><i>' + CATS[k][0] + '</i>№</span> ' + esc(CATS[k][1].toLowerCase()) + '</span>';
-    }).join('') + '<span><span class="iv-no c-n">б/н</span> без номера</span>';
+    });
+    if (D.plain) leg = ['<span><span class="iv-no c-o">1</span> порядок запису — у документі двори не пронумеровано</span>'];
+    else if (none) leg.push('<span><span class="iv-no c-n">б/н</span> без номера</span>');
+    $('ivLegend').innerHTML = (PRESENT.length ? 'Номер із документа: ' : '') + leg.join('');
+    if (VILLAGE) {
+        $('ivZoneChips').hidden = true;
+        var fc = document.querySelector('#ivCatChips .iv-sep'); if (fc) fc.remove();
+        $('ivRegGrid').classList.add('is-solo');
+        $('skhema').hidden = true;
+        if (!CRAFT.length) { $('ivCraftsH').hidden = true; $('ivCraftsP').hidden = true; }
+    }
+    /* номери параграфів — лише для видимих розділів */
+    var n = 0;
+    document.querySelectorAll('.iv-sec').forEach(function(sec){
+        if (sec.hidden) return;
+        var b = sec.querySelector('.iv-mark b'); if (b) b.textContent = '\u00a7 ' + (++n);
+    });
 })();
 
 /* ── Старт ────────────────────────────────── */

@@ -6,6 +6,7 @@
 Формат джерела (inventar-plater-src.txt):
   # коментар
   @place slug | Назва | Назва в документі | kind | Заголовок      — нове поселення (необов'язково для першого)
+  @set ключ = <JSON>                                            — будь-яке інше поле поселення (опис, зображення, підсумки)
   @street id | zone | Назва | Назва в оригіналі (або —)
   <рядок опису вулиці>
   @side Назва ряду | звідки починається опис
@@ -14,7 +15,7 @@
     родина:  «син Якуб; дочка Параска; дружина*; ? Григорій» (через «;»)
              «дружина*» — дружина, ім'я не вписане (чия — ключ wife=);
              «дружина» — теж без імені; «? Ім'я» — спорідненість не вказана
-    ключі:   cat=j|g|p (євреї / християни ґрунтові / плацові), no=номер в інвентарі,
+    ключі:   cat=j|g|p|t|b (євреї / християни ґрунтові / плацові / тяглі / бояри), no=номер в інвентарі,
              prof=заняття, orig=написання в оригіналі, note=примітка,
              widow=1, disp=як показувати ім'я, sur=прізвище, wife=чия дружина
 """
@@ -25,8 +26,8 @@ SRC = os.path.join(ROOT, 'inventar-plater-src.txt')
 OUT = os.path.join(ROOT, 'inventar-plater-data.js')
 
 # Родичі з іншої родини: прізвище господаря їм не дописуємо
-NO_SURNAME = {'зять', 'пасерб', 'швагер', 'вітчим'}
-FEMALE = {'дочка', 'сестра', 'мати', 'дружина'}
+NO_SURNAME = {'зять', 'пасерб', 'пасинок', 'швагер', 'вітчим', 'сестринець'}
+FEMALE = {'дочка', 'сестра', 'мати', 'дружина', 'синовиця'}
 
 
 def fem(sur):
@@ -35,7 +36,7 @@ def fem(sur):
         return sur[:-2] + 'а'
     if sur.endswith('ий'):
         return sur[:-2] + 'а'
-    if re.search(r'(ов|ев|єв|ін|їн)$', sur):
+    if re.search(r'(ов|ев|єв|ін|їн)$', sur) or re.search(r'(?<!ан)ин$', sur):
         return sur + 'а'
     return sur
 
@@ -96,6 +97,10 @@ def build(text):
             f = [x.strip() for x in line[6:].split('|')]
             cur = places.setdefault(f[0], {'name': f[1], 'docName': f[2], 'kind': f[3], 'title': f[4], 'streets': []})
             hid = 0
+            continue
+        if line.startswith('@set'):
+            k, _, v = line[4:].partition('=')
+            cur[k.strip()] = json.loads(v.strip())
             continue
         if cur is None:
             cur = places.setdefault('dombrovytsia', {'streets': []})
