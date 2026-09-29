@@ -4,7 +4,8 @@
 var ATLAS_SELA_1798 = {
   "dombrovytsia": {
     "slug": "dombrovytsia",
-    "mapName": "Домбровиця (Дубровиця)",
+    "mapNameOrig": "Домбровиця (Дубровиця)",
+    "mapName": "Дубровиця",
     "excelName": "Містечко Домбровиця",
     "kind": "town",
     "owner": "Граф і кавалер Антоній Плятер",
@@ -213,7 +214,8 @@ var ATLAS_SELA_1798 = {
   },
   "bila": {
     "slug": "bila",
-    "mapName": "Бѣлая",
+    "mapNameOrig": "Бѣлая",
+    "mapName": "Біла",
     "excelName": "Село Біла",
     "kind": "village",
     "owner": "Граф і кавалер Антоній Плятер",
@@ -235,7 +237,8 @@ var ATLAS_SELA_1798 = {
   },
   "yasenets": {
     "slug": "yasenets",
-    "mapName": "Ясинецъ",
+    "mapNameOrig": "Ясинецъ",
+    "mapName": "Ясенець",
     "excelName": "Село Ясенець",
     "kind": "village",
     "owner": "Граф і кавалер Антоній Плятер",
@@ -257,7 +260,8 @@ var ATLAS_SELA_1798 = {
   },
   "liutynsk": {
     "slug": "liutynsk",
-    "mapName": "Лотвинскъ (Лютинськ)",
+    "mapNameOrig": "Лотвинскъ (Лютинськ)",
+    "mapName": "Лютинськ",
     "excelName": "Село Лютинськ",
     "kind": "village",
     "owner": "Граф і кавалер Антоній Плятер",
@@ -311,7 +315,8 @@ var ATLAS_SELA_1798 = {
   },
   "selets": {
     "slug": "selets",
-    "mapName": "Сельцо (Селець)",
+    "mapNameOrig": "Сельцо (Селець)",
+    "mapName": "Селець",
     "excelName": "Село Селець",
     "kind": "village",
     "owner": "Граф і кавалер Антоній Плятер",
@@ -377,7 +382,8 @@ var ATLAS_SELA_1798 = {
   },
   "krupove": {
     "slug": "krupove",
-    "mapName": "Крупе (Крупове)",
+    "mapNameOrig": "Крупе (Крупове)",
+    "mapName": "Крупове",
     "excelName": "Село Крупове",
     "kind": "village",
     "owner": "Граф і кавалер Антоній Плятер",
@@ -431,7 +437,8 @@ var ATLAS_SELA_1798 = {
   },
   "berestia": {
     "slug": "berestia",
-    "mapName": "Берестье (Берестя)",
+    "mapNameOrig": "Берестье (Берестя)",
+    "mapName": "Берестя",
     "excelName": "Село Берестя",
     "kind": "village",
     "owner": "Граф і кавалер Антоній Плятер",
@@ -495,7 +502,8 @@ var ATLAS_SELA_1798 = {
   },
   "nyvetsk": {
     "slug": "nyvetsk",
-    "mapName": "Нивицкъ (Нивецьк)",
+    "mapNameOrig": "Нивицкъ (Нивецьк)",
+    "mapName": "Нивецьк",
     "excelName": "Сільце Нивецьк з хутором Грицьки",
     "kind": "village",
     "owner": "Граф і кавалер Антоній Плятер",
@@ -554,7 +562,8 @@ var ATLAS_SELA_1798 = {
   },
   "vorobyn": {
     "slug": "vorobyn",
-    "mapName": "Фольв. Воробинъ",
+    "mapNameOrig": "Фольв. Воробинъ",
+    "mapName": "Воробин",
     "excelName": "Філварок Воробин",
     "kind": "folwark",
     "owner": "Граф і кавалер Антоній Плятер",
@@ -1054,7 +1063,8 @@ var ATLAS_SELA_1798 = {
   },
   "dubivka": {
     "slug": "dubivka",
-    "mapName": "Дубівка (Дубовка)",
+    "mapNameOrig": "Дубівка (Дубовка)",
+    "mapName": "Дубівка",
     "excelName": "Сільце Дубівка",
     "kind": "village",
     "owner": "Підкоморій Теодор Урбановський",
@@ -1204,7 +1214,8 @@ var ATLAS_SELA_1798 = {
   },
   "buda-tseptsevytska": {
     "slug": "buda-tseptsevytska",
-    "mapName": "Буда Цепцевицька (Майд. Цепцевицький)",
+    "mapNameOrig": "Буда Цепцевицька (Майд. Цепцевицький)",
+    "mapName": "Буда Цепцевицька",
     "excelName": "Буда Цепцевицька",
     "kind": "village",
     "owner": "Підкоморій Теодор Урбановський, граничний комісар Криштоф і земський суддя Антоній Урбановський",
@@ -1258,7 +1269,8 @@ var ATLAS_SELA_1798 = {
   },
   "rudnia-berezhnytsia": {
     "slug": "rudnia-berezhnytsia",
-    "mapName": "Рудня",
+    "mapNameOrig": "Рудня",
+    "mapName": "Рудня Бережницька",
     "excelName": "Село (Деревня) Рудня",
     "kind": "village",
     "owner": "Ротмістр Домінік Чацький спільно з духовенством Бережницького костелу",
@@ -1746,7 +1758,8 @@ var ATLAS_SELA_1798 = {
   },
   "luko": {
     "slug": "luko",
-    "mapName": "Луко",
+    "mapNameOrig": "Луко",
+    "mapName": "Лука",
     "excelName": "Село (Деревня) Лука",
     "kind": "village",
     "owner": "Шамбелян і кавалер Юзеф Олізар",
@@ -1843,23 +1856,28 @@ var ATLAS_ESTATES_1798 = [
   "female": 1025,
   "places": [
    {
-    "name": "Село Ремчиці",
+    "name": "Ремчиці",
+    "docName": "Село Ремчиці",
     "slug": "remchytsi"
    },
    {
-    "name": "Сільце Тристень",
+    "name": "Тристень",
+    "docName": "Сільце Тристень",
     "slug": "trysten"
    },
    {
-    "name": "Село (Деревня) Рудня",
+    "name": "Рудня Бережницька",
+    "docName": "Село (Деревня) Рудня",
     "slug": "rudnia-berezhnytsia"
    },
    {
-    "name": "Сільце Зульня",
+    "name": "Зульня",
+    "docName": "Сільце Зульня",
     "slug": "zulnia"
    },
    {
-    "name": "Містечко Бережниця",
+    "name": "Бережниця",
+    "docName": "Містечко Бережниця",
     "slug": "berezhnytsia"
    }
   ]
@@ -1874,7 +1892,8 @@ var ATLAS_ESTATES_1798 = [
   "female": 79,
   "places": [
    {
-    "name": "Село Осова",
+    "name": "Осова",
+    "docName": "Село Осова",
     "slug": "osova"
    }
   ]
@@ -1889,11 +1908,13 @@ var ATLAS_ESTATES_1798 = [
   "female": 141,
   "places": [
    {
-    "name": "Сільце Трипутня",
+    "name": "Трипутня",
+    "docName": "Сільце Трипутня",
     "slug": "tryputnia"
    },
    {
-    "name": "Село Грані",
+    "name": "Грані",
+    "docName": "Село Грані",
     "slug": "hrani"
    }
   ]
@@ -1908,7 +1929,8 @@ var ATLAS_ESTATES_1798 = [
   "female": 34,
   "places": [
    {
-    "name": "Сільце Рибчиця",
+    "name": "Рибчиця",
+    "docName": "Сільце Рибчиця",
     "slug": "rybchytsia"
    }
   ]
@@ -1923,11 +1945,13 @@ var ATLAS_ESTATES_1798 = [
   "female": 259,
   "places": [
    {
-    "name": "Село Хиночі",
+    "name": "Хиночі",
+    "docName": "Село Хиночі",
     "slug": "khynochi"
    },
    {
-    "name": "Сільце Радижеве",
+    "name": "Радижеве",
+    "docName": "Сільце Радижеве",
     "slug": "radyzheve"
    }
   ]
@@ -1942,15 +1966,18 @@ var ATLAS_ESTATES_1798 = [
   "female": 291,
   "places": [
    {
-    "name": "Село (Деревня) Воронки",
+    "name": "Воронки",
+    "docName": "Село (Деревня) Воронки",
     "slug": "voronky"
    },
    {
-    "name": "Село (Деревня) Лука",
+    "name": "Лука",
+    "docName": "Село (Деревня) Лука",
     "slug": "luko"
    },
    {
-    "name": "Село Степангород",
+    "name": "Степангород",
+    "docName": "Село Степангород",
     "slug": "stepanhorod"
    }
   ]
@@ -1965,11 +1992,13 @@ var ATLAS_ESTATES_1798 = [
   "female": 62,
   "places": [
    {
-    "name": "Село (Деревня) Заморочення",
+    "name": "Заморочення",
+    "docName": "Село (Деревня) Заморочення",
     "slug": "zamorochennia"
    },
    {
-    "name": "Село (Деревня) Озерськ",
+    "name": "Озерськ",
+    "docName": "Село (Деревня) Озерськ",
     "slug": "ozersk"
    }
   ]
@@ -1984,59 +2013,73 @@ var ATLAS_ESTATES_1798 = [
   "female": 2428,
   "places": [
    {
-    "name": "Село Людинь",
+    "name": "Людинь",
+    "docName": "Село Людинь",
     "slug": "liudyn"
    },
    {
-    "name": "Село Рудня",
+    "name": "Рудня",
+    "docName": "Село Рудня",
     "slug": "rudnia"
    },
    {
-    "name": "Село Пузня",
+    "name": "Пузня",
+    "docName": "Село Пузня",
     "slug": "puznia"
    },
    {
-    "name": "Сільце Золоте",
+    "name": "Золоте",
+    "docName": "Сільце Золоте",
     "slug": "zolote"
    },
    {
-    "name": "Село Лютинськ",
+    "name": "Лютинськ",
+    "docName": "Село Лютинськ",
     "slug": "liutynsk"
    },
    {
-    "name": "Село Ясенець",
+    "name": "Ясенець",
+    "docName": "Село Ясенець",
     "slug": "yasenets"
    },
    {
-    "name": "Село Острівці",
+    "name": "Острівці",
+    "docName": "Село Острівці",
     "slug": "ostrivtsi"
    },
    {
-    "name": "Сільце Мочулище",
+    "name": "Мочулище",
+    "docName": "Сільце Мочулище",
     "slug": "mochulyshche"
    },
    {
-    "name": "Село Працюки",
+    "name": "Працюки",
+    "docName": "Село Працюки",
     "slug": "pratsiuky"
    },
    {
-    "name": "Село Залішани",
+    "name": "Залішани",
+    "docName": "Село Залішани",
     "slug": "zalishany"
    },
    {
-    "name": "Село Літвиця",
+    "name": "Літвиця",
+    "docName": "Село Літвиця",
     "slug": "litvytsia"
    },
    {
-    "name": "Сільце Нивецьк з хутором Грицьки",
+    "name": "Нивецьк",
+    "docName": "Сільце Нивецьк з хутором Грицьки",
     "slug": "nyvetsk"
    },
    {
-    "name": "Село Ютовщизна",
+    "name": "Ютовщизна",
+    "docName": "Село Ютовщизна",
     "slug": "yutovshchyzna"
    },
    {
-    "name": "Сільце Сохи",
+    "name": "Сохи",
+    "docName": "Сільце Сохи",
     "slug": "sokhy"
    },
    {
@@ -2044,35 +2087,43 @@ var ATLAS_ESTATES_1798 = [
     "slug": null
    },
    {
-    "name": "Село Орв’яниця",
+    "name": "Орв’яниця",
+    "docName": "Село Орв’яниця",
     "slug": "orvianytsia"
    },
    {
-    "name": "Село Берестя",
+    "name": "Берестя",
+    "docName": "Село Берестя",
     "slug": "berestia"
    },
    {
-    "name": "Село Крупове",
+    "name": "Крупове",
+    "docName": "Село Крупове",
     "slug": "krupove"
    },
    {
-    "name": "Містечко Домбровиця",
+    "name": "Дубровиця",
+    "docName": "Містечко Домбровиця",
     "slug": "dombrovytsia"
    },
    {
-    "name": "Філварок Воробин",
+    "name": "Воробин",
+    "docName": "Філварок Воробин",
     "slug": "vorobyn"
    },
    {
-    "name": "Село Селець",
+    "name": "Селець",
+    "docName": "Село Селець",
     "slug": "selets"
    },
    {
-    "name": "Село Велюнь",
+    "name": "Велюнь",
+    "docName": "Село Велюнь",
     "slug": "veliun"
    },
    {
-    "name": "Село Біла",
+    "name": "Біла",
+    "docName": "Село Біла",
     "slug": "bila"
    },
    {
@@ -2095,23 +2146,28 @@ var ATLAS_ESTATES_1798 = [
     "slug": null
    },
    {
-    "name": "Село Колки",
+    "name": "Колки",
+    "docName": "Село Колки",
     "slug": "kolky"
    },
    {
-    "name": "Село Бережки",
+    "name": "Бережки",
+    "docName": "Село Бережки",
     "slug": "berezhky"
    },
    {
-    "name": "Село Любиковичі",
+    "name": "Любиковичі",
+    "docName": "Село Любиковичі",
     "slug": "liubykovychi"
    },
    {
-    "name": "Село Кураш",
+    "name": "Кураш",
+    "docName": "Село Кураш",
     "slug": "kurash"
    },
    {
-    "name": "Село Білятичі",
+    "name": "Білятичі",
+    "docName": "Село Білятичі",
     "slug": "biliatychi"
    }
   ]
@@ -2126,15 +2182,18 @@ var ATLAS_ESTATES_1798 = [
   "female": 969,
   "places": [
    {
-    "name": "Село Стрільськ",
+    "name": "Стрільськ",
+    "docName": "Село Стрільськ",
     "slug": "strilsk"
    },
    {
-    "name": "Село Глушиця",
+    "name": "Глушиця",
+    "docName": "Село Глушиця",
     "slug": "hlushytsia"
    },
    {
-    "name": "Село Карпилівка",
+    "name": "Карпилівка",
+    "docName": "Село Карпилівка",
     "slug": "karpylivka"
    },
    {
@@ -2177,7 +2236,8 @@ var ATLAS_ESTATES_1798 = [
     "slug": null
    },
    {
-    "name": "Село Удрицьк",
+    "name": "Удрицьк",
+    "docName": "Село Удрицьк",
     "slug": "udrytsk"
    },
    {
@@ -2185,11 +2245,13 @@ var ATLAS_ESTATES_1798 = [
     "slug": null
    },
    {
-    "name": "Містечко Висоцьк",
+    "name": "Висоцьк",
+    "docName": "Містечко Висоцьк",
     "slug": "vysotsk"
    },
    {
-    "name": "Село Підвисоччя",
+    "name": "Підвисоччя",
+    "docName": "Село Підвисоччя",
     "slug": "pidvysocchia"
    },
    {
@@ -2208,7 +2270,8 @@ var ATLAS_ESTATES_1798 = [
   "female": 352,
   "places": [
    {
-    "name": "Містечко Володимирець",
+    "name": "Володимирець",
+    "docName": "Містечко Володимирець",
     "slug": "volodymyrets"
    }
   ]
@@ -2223,7 +2286,8 @@ var ATLAS_ESTATES_1798 = [
   "female": 130,
   "places": [
    {
-    "name": "Сільце Новаки",
+    "name": "Новаки",
+    "docName": "Сільце Новаки",
     "slug": "novaky"
    }
   ]
@@ -2238,7 +2302,8 @@ var ATLAS_ESTATES_1798 = [
   "female": 119,
   "places": [
    {
-    "name": "Сільце Каноничі",
+    "name": "Каноничі",
+    "docName": "Сільце Каноничі",
     "slug": "kanonychi"
    },
    {
@@ -2257,19 +2322,23 @@ var ATLAS_ESTATES_1798 = [
   "female": 682,
   "places": [
    {
-    "name": "Сільце Дубівка",
+    "name": "Дубівка",
+    "docName": "Сільце Дубівка",
     "slug": "dubivka"
    },
    {
-    "name": "Сільце Кідри",
+    "name": "Кідри",
+    "docName": "Сільце Кідри",
     "slug": "kidry"
    },
    {
-    "name": "Село Великі Цепцевичі",
+    "name": "Великі Цепцевичі",
+    "docName": "Село Великі Цепцевичі",
     "slug": "velyki-tseptsevychi"
    },
    {
-    "name": "Село Малі Цепцевичі",
+    "name": "Малі Цепцевичі",
+    "docName": "Село Малі Цепцевичі",
     "slug": "mali-tseptsevychi"
    }
   ]
@@ -2284,7 +2353,8 @@ var ATLAS_ESTATES_1798 = [
   "female": 913,
   "places": [
    {
-    "name": "Село Тутовичі",
+    "name": "Тутовичі",
+    "docName": "Село Тутовичі",
     "slug": "tutovychi"
    },
    {
@@ -2300,7 +2370,8 @@ var ATLAS_ESTATES_1798 = [
     "slug": null
    },
    {
-    "name": "Село Люхча",
+    "name": "Люхча",
+    "docName": "Село Люхча",
     "slug": "liukhcha"
    }
   ]

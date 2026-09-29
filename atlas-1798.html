@@ -303,14 +303,48 @@
 
 .d-note { font-family: var(--font-display); font-size: 1.14rem; line-height: 1.6; color: var(--ink); margin: 0 0 1rem; }
 .d-src { font-family: var(--font-body); font-size: .72rem; line-height: 1.5; color: var(--ink-3); margin: 0 0 1.2rem; }
-/* картка «Інвентар Плятера» у вікні поселення */
-.d-inv { display: block; margin: 0 0 1.2rem; padding: .95rem 1.1rem 1rem; border-radius: 10px; border: 1px solid var(--rule); background: var(--paper-2); color: var(--ink); text-decoration: none; transition: border-color .2s; }
-.d-inv:hover, .d-inv:focus-visible { border-color: var(--gold); outline: none; }
-.d-inv-k { display: block; font-family: var(--font-body); font-size: .72rem; color: var(--ink-3); margin-bottom: .25rem; }
-.d-inv-n { display: block; font-family: var(--font-display); font-size: 1.28rem; line-height: 1.2; color: var(--ink); }
-.d-inv-s { display: flex; align-items: center; gap: .4rem; margin-top: .35rem; font-family: var(--font-body); font-size: .8rem; font-weight: 600; color: var(--gold); }
-.d-inv-s svg { width: 13px; height: 13px; transition: transform .2s; }
-.d-inv:hover .d-inv-s svg { transform: translateX(3px); }
+/* вкладки «Примітки 1798 / Інвентар Плятера» у вікні поселення */
+.d-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; padding: 3px; margin: 0 0 1.25rem; border-radius: 11px; background: var(--paper-2); border: 1px solid var(--rule); }
+.d-tabs button { font: inherit; font-family: var(--font-body); font-size: .8rem; font-weight: 500; padding: .62rem .5rem; border: 0; border-radius: 8px; background: none; color: var(--ink-3); cursor: pointer; transition: background .2s, color .2s, box-shadow .2s; }
+.d-tabs button:hover { color: var(--ink); }
+.d-tabs button[aria-selected="true"] { background: #1c170e; color: #f4e9c8; box-shadow: 0 2px 8px rgba(20,15,8,.18); }
+.d-tabs button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.d-pane[hidden] { display: none; }
+.d-pane { animation: dIn .35s cubic-bezier(.16,1,.3,1); }
+.di-cap { margin: 0 0 1rem; font-family: var(--font-display); font-style: italic; font-size: 1rem; line-height: 1.45; color: var(--ink-3); }
+.d-figs.two { grid-template-columns: repeat(2, 1fr); }
+.di-h { margin: 1.5rem 0 .6rem; font-family: var(--font-body); font-size: .74rem; font-weight: 600; color: var(--ink-3); }
+.di-cmp-r { display: grid; grid-template-columns: 6.8rem minmax(0,1fr) 2.6rem; gap: .7rem; align-items: center; margin: 0 0 .5rem; font-family: var(--font-body); font-size: .8rem; color: var(--ink-2); }
+.di-cmp-r b { justify-self: end; font-family: var(--font-display); font-weight: 500; font-size: 1.15rem; color: var(--ink); font-variant-numeric: lining-nums; }
+.di-bar { height: 10px; border-radius: 99px; background: var(--rule-2, rgba(90,74,46,.09)); overflow: hidden; }
+.di-bar i { display: block; height: 100%; border-radius: 99px; background: var(--river, #3e5552); }
+.di-cmp-r.inv .di-bar i { background: var(--gold); }
+.di-note { margin: .6rem 0 0; font-family: var(--font-body); font-size: .78rem; line-height: 1.6; color: var(--ink-3); }
+.di-stack { display: flex; height: 12px; gap: 2px; border-radius: 99px; overflow: hidden; margin: .2rem 0 .7rem; }
+.di-stack i { display: block; min-width: 3px; }
+.di-stack i:nth-child(1) { background: var(--gold); }
+.di-stack i:nth-child(2) { background: var(--river, #3e5552); }
+.di-stack i:nth-child(3) { background: var(--ink-3); }
+.di-leg { display: grid; gap: .35rem; margin: 0; padding: 0; list-style: none; font-family: var(--font-body); font-size: .8rem; color: var(--ink-2); }
+.di-leg li { display: grid; grid-template-columns: 10px minmax(0,1fr) auto; gap: .6rem; align-items: baseline; }
+.di-leg li::before { content: ''; width: 10px; height: 10px; border-radius: 3px; background: var(--gold); transform: translateY(1px); }
+.di-leg li:nth-child(2)::before { background: var(--river, #3e5552); }
+.di-leg li:nth-child(3)::before { background: var(--ink-3); }
+.di-leg b { font-family: var(--font-display); font-weight: 500; font-size: 1.05rem; color: var(--ink); }
+.di-sn { display: flex; flex-wrap: wrap; gap: .35rem; margin: 0; padding: 0; list-style: none; }
+.di-sn li { padding: .22rem .65rem; border-radius: 99px; border: 1px solid var(--rule); font-family: var(--font-display); font-size: .98rem; color: var(--ink); }
+.di-sn li sup { margin-left: .25rem; font-family: var(--font-body); font-size: .66rem; color: var(--gold); }
+.di-st { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--rule); }
+.di-st a { display: grid; grid-template-columns: minmax(0,1fr) auto auto; gap: .6rem; align-items: baseline; padding: .55rem .1rem; border-bottom: 1px solid var(--rule-2, rgba(90,74,46,.09)); font-family: var(--font-display); font-size: 1.02rem; color: var(--ink); text-decoration: none; transition: color .2s; }
+.di-st a:hover, .di-st a:focus-visible { color: var(--gold); outline: none; }
+.di-st a i { font-style: normal; font-family: var(--font-body); font-size: .74rem; color: var(--ink-3); }
+.di-st a svg { width: 12px; height: 12px; opacity: .5; }
+.di-act { display: grid; gap: .6rem; margin: 1.4rem 0 0; }
+.di-act a.line { display: flex; align-items: center; justify-content: space-between; gap: .5rem; padding: .85rem 1.1rem; border-radius: 10px; border: 1px solid var(--rule); color: var(--ink); text-decoration: none; font-family: var(--font-body); font-size: .84rem; font-weight: 500; transition: border-color .2s; }
+.di-act a.line:hover { border-color: var(--gold); }
+.di-act a.line svg { width: 15px; height: 15px; }
+.v-row-i { display: inline-flex; align-items: center; margin-left: .45rem; color: var(--gold); vertical-align: -1px; }
+.v-row-i svg { width: 13px; height: 13px; }
 .d-more { display: flex; align-items: center; justify-content: space-between; gap: .5rem; padding: .95rem 1.1rem; border-radius: 10px; background: #1c170e; color: #f4e9c8; text-decoration: none; font-family: var(--font-body); font-size: .84rem; font-weight: 500; transition: background .2s; }
 .d-more:hover { background: #2e2616; }
 .d-more svg { flex: 0 0 auto; width: 15px; height: 15px; transition: transform .2s; }
@@ -819,10 +853,10 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
    Дані (власник, двори, опис) беруться з sela_data_embed.js за slug. На мапі — лише поселення,
    що мають запис у «Економічних примітках». */
 var SHEETS = [
-  {"n": 1, "title": "Дубровиця і Висоцьк", "img": "atlas-1798-chastyna-1.jpg", "w": 2351, "h": 2595, "places": [{"name": "Домбровиця (Дубровиця)", "kind": "town", "at": [563, 861], "slug": "dombrovytsia"}, {"name": "Висоцьк", "kind": "town", "at": [2120, 1498], "slug": "vysotsk"}, {"name": "Удрицьк", "kind": "village", "at": [2405, 1848], "slug": "udrytsk"}, {"name": "Людинь", "kind": "village", "at": [1782, 884], "slug": "liudyn"}, {"name": "Рудня", "kind": "village", "at": [1778, 1048], "slug": "rudnia"}, {"name": "Золоте", "kind": "village", "at": [1653, 392], "slug": "zolote"}, {"name": "Пузня", "kind": "village", "at": [1658, 790], "slug": "puznia"}, {"name": "Біла", "kind": "village", "at": [1619, 1959], "slug": "bila"}, {"name": "Ясинецъ", "kind": "village", "at": [1305, 1009], "slug": "yasenets"}, {"name": "Лютинськ", "kind": "village", "at": [1347, 1261], "slug": "liutynsk"}, {"name": "Велюнь", "kind": "village", "at": [1430, 1465], "slug": "veliun"}, {"name": "Селець", "kind": "village", "at": [1081, 1119], "slug": "selets"}, {"name": "Острівці", "kind": "village", "at": [854, 441], "slug": "ostrivtsi"}, {"name": "Мочулище", "kind": "village", "at": [787, 367], "slug": "mochulyshche"}, {"name": "Крупове", "kind": "village", "at": [540, 424], "slug": "krupove"}, {"name": "Колки", "kind": "village", "at": [740, 1249], "slug": "kolky"}, {"name": "Берестье (Берестя)", "kind": "village", "at": [200, 812], "slug": "berestia"}, {"name": "Бережки", "kind": "village", "at": [145, 1232], "slug": "berezhky"}, {"name": "Нивицкъ (Нивецьк)", "kind": "village", "at": [45, 120], "slug": "nyvetsk"}, {"name": "Сохи", "kind": "village", "at": [35, 380], "slug": "sokhy"}, {"name": "Фольв. Воробинъ", "kind": "folwark", "at": [889, 938], "slug": "vorobyn"}, {"name": "Підвисоччя", "kind": "village", "at": [2022, 1474], "slug": "pidvysocchia"}, {"name": "Ютовщизна", "kind": "village", "at": [27, 596], "slug": "yutovshchyzna"}, {"name": "Хилін", "kind": "village", "at": [2082, 1830], "slug": "chylin"}]},
+  {"n": 1, "title": "Дубровиця і Висоцьк", "img": "atlas-1798-chastyna-1.jpg", "w": 2351, "h": 2595, "places": [{"name": "Дубровиця", "kind": "town", "at": [563, 861], "slug": "dombrovytsia"}, {"name": "Висоцьк", "kind": "town", "at": [2120, 1498], "slug": "vysotsk"}, {"name": "Удрицьк", "kind": "village", "at": [2405, 1848], "slug": "udrytsk"}, {"name": "Людинь", "kind": "village", "at": [1782, 884], "slug": "liudyn"}, {"name": "Рудня", "kind": "village", "at": [1778, 1048], "slug": "rudnia"}, {"name": "Золоте", "kind": "village", "at": [1653, 392], "slug": "zolote"}, {"name": "Пузня", "kind": "village", "at": [1658, 790], "slug": "puznia"}, {"name": "Біла", "kind": "village", "at": [1619, 1959], "slug": "bila"}, {"name": "Ясенець", "kind": "village", "at": [1305, 1009], "slug": "yasenets"}, {"name": "Лютинськ", "kind": "village", "at": [1347, 1261], "slug": "liutynsk"}, {"name": "Велюнь", "kind": "village", "at": [1430, 1465], "slug": "veliun"}, {"name": "Селець", "kind": "village", "at": [1081, 1119], "slug": "selets"}, {"name": "Острівці", "kind": "village", "at": [854, 441], "slug": "ostrivtsi"}, {"name": "Мочулище", "kind": "village", "at": [787, 367], "slug": "mochulyshche"}, {"name": "Крупове", "kind": "village", "at": [540, 424], "slug": "krupove"}, {"name": "Колки", "kind": "village", "at": [740, 1249], "slug": "kolky"}, {"name": "Берестя", "kind": "village", "at": [200, 812], "slug": "berestia"}, {"name": "Бережки", "kind": "village", "at": [145, 1232], "slug": "berezhky"}, {"name": "Нивецьк", "kind": "village", "at": [45, 120], "slug": "nyvetsk"}, {"name": "Сохи", "kind": "village", "at": [35, 380], "slug": "sokhy"}, {"name": "Воробин", "kind": "folwark", "at": [889, 938], "slug": "vorobyn"}, {"name": "Підвисоччя", "kind": "village", "at": [2022, 1474], "slug": "pidvysocchia"}, {"name": "Ютовщизна", "kind": "village", "at": [27, 596], "slug": "yutovshchyzna"}, {"name": "Хилін", "kind": "village", "at": [2082, 1830], "slug": "chylin"}]},
   {"n": 2, "title": "Бережниця, Стрільськ і Сарни", "img": "atlas-1798-chastyna-2.jpg", "w": 2080, "h": 2166, "places": [{"name": "Бережниця", "kind": "town", "at": [1476, 306], "slug": "berezhnytsia"}, {"name": "Ремчиці", "kind": "village", "at": [1301, 396], "slug": "remchytsi"}, {"name": "Працюки", "kind": "village", "at": [1971, 229], "slug": "pratsiuky"}, {"name": "Орв’яниця", "kind": "village", "at": [2017, 771], "slug": "orvianytsia"}, {"name": "Любиковичі", "kind": "village", "at": [1932, 1219], "slug": "liubykovychi"}, {"name": "Кураш", "kind": "village", "at": [1545, 637], "slug": "kurash"}, {"name": "Білятичі", "kind": "village", "at": [1636, 953], "slug": "biliatychi"}, {"name": "Стрільськ", "kind": "village", "at": [1332, 1519], "slug": "strilsk"}, {"name": "Глушиця", "kind": "village", "at": [1051, 1442], "slug": "hlushytsia"}, {"name": "Люхча", "kind": "village", "at": [806, 1323], "slug": "liukhcha"}, {"name": "Карпилівка", "kind": "village", "at": [1148, 1797], "slug": "karpylivka"}, {"name": "Тристень", "kind": "village", "at": [962, 197], "slug": "trysten"}]},
-  {"n": 3, "title": "Володимирець і Цепцевичі", "img": "atlas-1798-chastyna-3.jpg", "w": 2689, "h": 1876, "places": [{"name": "Володимирець", "kind": "town", "at": [1028, 985], "slug": "volodymyrets"}, {"name": "Осова", "kind": "village", "at": [1504, 2263], "slug": "osova"}, {"name": "Новаки", "kind": "village", "at": [1530, 1251], "slug": "novaky"}, {"name": "Каноничі", "kind": "village", "at": [1218, 1530], "slug": "kanonychi"}, {"name": "Дубівка", "kind": "village", "at": [1073, 1527], "slug": "dubivka"}, {"name": "Кідри", "kind": "village", "at": [1333, 2251], "slug": "kidry"}, {"name": "Великі Цепцевичі", "kind": "village", "at": [638, 2468], "slug": "velyki-tseptsevychi"}, {"name": "Малі Цепцевичі", "kind": "village", "at": [482, 2593], "slug": "mali-tseptsevychi"}, {"name": "Тутовичі", "kind": "village", "at": [290, 2370], "slug": "tutovychi"}, {"name": "Буда Цепцевицька (Майд. Цепцевицький)", "kind": "village", "at": [186, 1587], "slug": "buda-tseptsevytska"}, {"name": "Зульня", "kind": "village", "at": [1368, 2445], "slug": "zulnia"}, {"name": "Рудня", "kind": "village", "at": [1319, 2615], "slug": "rudnia-berezhnytsia"}]},
-  {"n": 4, "title": "Степань і Хиночі", "img": "atlas-1798-chastyna-4.jpg", "w": 2751, "h": 2323, "places": [{"name": "Степангород", "kind": "village", "at": [1286, 1253], "slug": "stepanhorod"}, {"name": "Воронки", "kind": "village", "at": [468, 762], "slug": "voronky"}, {"name": "Радижеве", "kind": "village", "at": [311, 1053], "slug": "radyzheve"}, {"name": "Трипутня", "kind": "village", "at": [389, 2150], "slug": "tryputnia"}, {"name": "Рибчиця", "kind": "village", "at": [479, 2273], "slug": "rybchytsia"}, {"name": "Хиночі", "kind": "village", "at": [709, 1041], "slug": "khynochi"}, {"name": "Грані", "kind": "village", "at": [178, 2287], "slug": "hrani"}, {"name": "Заморочення", "kind": "village", "at": [1568, 2607], "slug": "zamorochennia"}, {"name": "Озерськ", "kind": "village", "at": [2136, 2722], "slug": "ozersk"}, {"name": "Луко", "kind": "village", "at": [1042, 352], "slug": "luko"}, {"name": "Залішани", "kind": "village", "at": [352, 2722], "slug": "zalishany"}, {"name": "Літвиця", "kind": "village", "at": [580, 2367], "slug": "litvytsia"}]}
+  {"n": 3, "title": "Володимирець і Цепцевичі", "img": "atlas-1798-chastyna-3.jpg", "w": 2689, "h": 1876, "places": [{"name": "Володимирець", "kind": "town", "at": [1028, 985], "slug": "volodymyrets"}, {"name": "Осова", "kind": "village", "at": [1504, 2263], "slug": "osova"}, {"name": "Новаки", "kind": "village", "at": [1530, 1251], "slug": "novaky"}, {"name": "Каноничі", "kind": "village", "at": [1218, 1530], "slug": "kanonychi"}, {"name": "Дубівка", "kind": "village", "at": [1073, 1527], "slug": "dubivka"}, {"name": "Кідри", "kind": "village", "at": [1333, 2251], "slug": "kidry"}, {"name": "Великі Цепцевичі", "kind": "village", "at": [638, 2468], "slug": "velyki-tseptsevychi"}, {"name": "Малі Цепцевичі", "kind": "village", "at": [482, 2593], "slug": "mali-tseptsevychi"}, {"name": "Тутовичі", "kind": "village", "at": [290, 2370], "slug": "tutovychi"}, {"name": "Буда Цепцевицька", "kind": "village", "at": [186, 1587], "slug": "buda-tseptsevytska"}, {"name": "Зульня", "kind": "village", "at": [1368, 2445], "slug": "zulnia"}, {"name": "Рудня Бережницька", "kind": "village", "at": [1319, 2615], "slug": "rudnia-berezhnytsia"}]},
+  {"n": 4, "title": "Степань і Хиночі", "img": "atlas-1798-chastyna-4.jpg", "w": 2751, "h": 2323, "places": [{"name": "Степангород", "kind": "village", "at": [1286, 1253], "slug": "stepanhorod"}, {"name": "Воронки", "kind": "village", "at": [468, 762], "slug": "voronky"}, {"name": "Радижеве", "kind": "village", "at": [311, 1053], "slug": "radyzheve"}, {"name": "Трипутня", "kind": "village", "at": [389, 2150], "slug": "tryputnia"}, {"name": "Рибчиця", "kind": "village", "at": [479, 2273], "slug": "rybchytsia"}, {"name": "Хиночі", "kind": "village", "at": [709, 1041], "slug": "khynochi"}, {"name": "Грані", "kind": "village", "at": [178, 2287], "slug": "hrani"}, {"name": "Заморочення", "kind": "village", "at": [1568, 2607], "slug": "zamorochennia"}, {"name": "Озерськ", "kind": "village", "at": [2136, 2722], "slug": "ozersk"}, {"name": "Лука", "kind": "village", "at": [1042, 352], "slug": "luko"}, {"name": "Залішани", "kind": "village", "at": [352, 2722], "slug": "zalishany"}, {"name": "Літвиця", "kind": "village", "at": [580, 2367], "slug": "litvytsia"}]}
 ];
 
 var DATA = window.ATLAS_SELA_1798 || (typeof ATLAS_SELA_1798 !== 'undefined' ? ATLAS_SELA_1798 : {});
@@ -847,6 +881,68 @@ function plural(n, one, few, many){
 function shortName(s){ return s.replace(/^(Село \(Деревня\)|Село|Сільце|Містечко|Філварок)\s+/, ''); }
 var narrow = window.matchMedia('(max-width: 900px)');
 
+/* ── Інвентар Плятера: зведення для вікна поселення ── */
+var INV_ALL = (typeof INVENTAR_PLATER !== 'undefined') ? INVENTAR_PLATER : {};
+var INV_CACHE = {};
+var BOOK = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M2 3.2C4 2.4 6.2 2.6 8 4c1.8-1.4 4-1.6 6-.8V12c-2-.8-4.2-.6-6 .8-1.8-1.4-4-1.6-6-.8z"/><path d="M8 4v8.8"/></svg>';
+function invStats(slug){
+    if (INV_CACHE[slug]) return INV_CACHE[slug];
+    var D = INV_ALL[slug]; if (!D) return null;
+    var hh = 0, pp = 0, fam = {}, streets = [];
+    D.streets.forEach(function(st){
+        var n = 0;
+        st.sides.forEach(function(sd){ sd.items.forEach(function(it){
+            if (it.lm) return;
+            n++; hh++; pp += 1 + (it.m ? it.m.length : 0);
+            if (it.s && !/(ович|евич)$/.test(it.s)) fam[it.s] = (fam[it.s] || 0) + 1;
+        }); });
+        streets.push({ id: st.id, name: st.name, n: n });
+    });
+    var top = Object.keys(fam).sort(function(a, b){ return fam[b] - fam[a] || a.localeCompare(b, 'uk'); }).slice(0, 8).map(function(k){ return [k, fam[k]]; });
+    return (INV_CACHE[slug] = { D: D, hh: hh, pp: pp, streets: streets, top: top });
+}
+function invPane(r){
+    var S = invStats(r.slug), D = S.D, town = D.kind === 'town';
+    var url = 'inventar-naselennia.html?p=' + encodeURIComponent(r.slug);
+    var h = '<p class="di-cap">Інвентар маєтку графа Плятера. Рік не встановлено, орієнтовно 1780–1820.</p>';
+    var nst = S.streets.filter(function(x){ return x.n > 0; }).length;
+    var figs = [[fmt(S.hh), plural(S.hh, 'двір', 'двори', 'дворів')], [fmt(S.pp), 'осіб названо']];
+    if (town) figs.push([nst, plural(nst, 'вулиця чи ряд', 'вулиці чи ряди', 'вулиць і рядів')]);
+    h += '<dl class="d-figs' + (town ? '' : ' two') + '">' + figs.map(function(f){ return '<div><dd>' + f[0] + '</dd><dt>' + f[1] + '</dt></div>'; }).join('') + '</dl>';
+
+    if (r.dvory) {
+        var mx = Math.max(r.dvory, S.hh), diff = S.hh - r.dvory;
+        h += '<h4 class="di-h">Два джерела поруч</h4>' +
+            '<div class="di-cmp-r"><span>Примітки 1798</span><span class="di-bar"><i style="width:' + (r.dvory / mx * 100).toFixed(1) + '%"></i></span><b>' + fmt(r.dvory) + '</b></div>' +
+            '<div class="di-cmp-r inv"><span>Інвентар</span><span class="di-bar"><i style="width:' + (S.hh / mx * 100).toFixed(1) + '%"></i></span><b>' + fmt(S.hh) + '</b></div>';
+        var t = diff === 0 ? 'Кількість дворів збігається.' : 'В інвентарі на ' + Math.abs(diff) + ' ' + plural(Math.abs(diff), 'двір', 'двори', 'дворів') + (diff > 0 ? ' більше.' : ' менше.');
+        t += ' Джерела не дублюють одне одного: інвентар не датований і описує двори поіменно, а «Примітки» 1798 року дають підсумок по поселенню.';
+        if (r.total) t += ' У «Примітках» усього ' + fmt(r.total) + ' ' + plural(r.total, 'мешканець', 'мешканці', 'мешканців') + ', в інвентарі названо лише господарів і родичів, тому осіб там менше.';
+        h += '<p class="di-note">' + esc(t) + '</p>';
+    }
+    var sm = D.summary && D.summary.rows;
+    if (sm && sm.length) {
+        var tot = sm.reduce(function(a, x){ return a + x.n; }, 0);
+        h += '<h4 class="di-h">Склад населення за інвентарем</h4><div class="di-stack">' +
+            sm.map(function(x){ return '<i style="flex:' + x.n + '" title="' + esc(x.label) + '"></i>'; }).join('') + '</div>' +
+            '<ul class="di-leg">' + sm.map(function(x){ return '<li><span>' + esc(x.label) + '</span><b>' + x.n + '</b></li>'; }).join('') + '</ul>';
+    }
+    if (S.top.length) {
+        h += '<h4 class="di-h">Найпоширеніші прізвища</h4><ul class="di-sn">' +
+            S.top.map(function(x){ return '<li>' + esc(x[0]) + (x[1] > 1 ? '<sup>' + x[1] + '</sup>' : '') + '</li>'; }).join('') + '</ul>';
+    }
+    if (town && nst > 1) {
+        h += '<h4 class="di-h">Де жили: за вулицями</h4><ul class="di-st">' +
+            S.streets.filter(function(x){ return x.n > 0; }).map(function(x){
+                return '<li><a href="' + url + '#vul-' + esc(x.id) + '"><span>' + esc(x.name) + '</span><i>' + x.n + ' ' + plural(x.n, 'двір', 'двори', 'дворів') + '</i>' + ARROW + '</a></li>';
+            }).join('') + '</ul>';
+    }
+    h += '<div class="di-act"><a class="d-more" href="' + url + '"><span>' + (town ? 'Відкрити список мешканців' : 'Відкрити список жителів') + '</span>' + ARROW + '</a>' +
+         '<a class="line" href="inventar-1780.html"><span>Про сам інвентар: скани, опис, переклад</span>' + ARROW + '</a></div>';
+    return h;
+}
+
+
 /* ── Дані ─────────────────────────────────── */
 var ESTATE_BY_OWNER = {};
 ESTATES.forEach(function(e){ ESTATE_BY_OWNER[e.ownerId] = e; });
@@ -854,14 +950,13 @@ ESTATES.forEach(function(e){ ESTATE_BY_OWNER[e.ownerId] = e; });
 function record(p){
     var d = DATA[p.slug] || {};
     var mapName = d.mapName || p.name;
-    // «Берестье (Берестя)» → назва з мапи і сучасна форма
-    var m = /^(.*?)\s*\((.+)\)$/.exec(mapName);
     return {
         slug: p.slug,
         name: mapName,
-        main: m ? m[1] : mapName,
-        alt: m ? m[2] : '',
-        docName: (d.excelName || '').trim(),
+        main: mapName,
+        alt: '',
+        hist: d.mapNameOrig || '',
+        docName: (function(x){ x = shortName((x || '').trim()); return /\s/.test(x) ? x : ''; })(d.excelName),
         kind: d.kind || p.kind || 'village',
         owner: d.owner || '',
         ownerId: d.ownerId || '',
@@ -894,7 +989,7 @@ $('fOnMap').textContent = ALL.length;
 
 /* ── Стан ─────────────────────────────────── */
 var V = document.querySelector('.v');
-var state = { sheet: null, active: null, owner: null, mode: 'places' };
+var state = { sheet: null, active: null, owner: null, mode: 'places', dTab: '1798' };
 
 /* ── Мапа ─────────────────────────────────── */
 var mapEl = $('atl-map');
@@ -1064,11 +1159,9 @@ function openDrawer(p){
     $('dWhere').innerHTML = '<span class="v-dot ' + r.kind + '"></span>' + KIND[r.kind] + ' · аркуш ' + ROMAN[p.sheet - 1];
 
     var h = '<h2 class="d-name" tabindex="-1">' + esc(r.main) + '</h2>';
-    var sub = [];
-    if (r.alt) sub.push('нині ' + r.alt);
-    if (r.docName) sub.push('у «Примітках»: ' + r.docName);
-    h += sub.length ? '<p class="d-doc">' + esc(sub.join(' · ')) + '</p>' : '<div style="height:1rem"></div>';
+    h += r.docName ? '<p class="d-doc">У «Економічних примітках» записано: ' + esc(r.docName) + '</p>' : '<div style="height:1rem"></div>';
 
+    var head = h; h = '';
     var figs = [];
     if (r.dvory != null) figs.push([fmt(r.dvory), 'дворів']);
     if (r.total != null) figs.push([fmt(r.total), 'мешканців']);
@@ -1094,20 +1187,21 @@ function openDrawer(p){
              (onMap > 1 ? '<button type="button" data-owner="' + esc(r.ownerId) + '">Показати всі його села</button>' : '') +
              '</div></div></div>';
     }
-    /* Інвентар графа Плятера: поіменний список, якщо він є для цього поселення */
-    var INV = (typeof INVENTAR_PLATER !== 'undefined' ? INVENTAR_PLATER : {})[r.slug];
-    if (INV) {
-        var invH = 0, invP = 0;
-        INV.streets.forEach(function(st){ st.sides.forEach(function(sd){ sd.items.forEach(function(it){ if (!it.lm) { invH++; invP += 1 + (it.m ? it.m.length : 0); } }); }); });
-        h += '<a class="d-inv" href="inventar-naselennia.html?p=' + encodeURIComponent(r.slug) + '">' +
-             '<span class="d-inv-k">Інвентар графа Плятера, 1780–1820</span>' +
-             '<span class="d-inv-n">' + fmt(invH) + ' ' + plural(invH, 'двір', 'двори', 'дворів') + ', ' + fmt(invP) + ' ' + plural(invP, 'особа', 'особи', 'осіб') + ' поіменно</span>' +
-             '<span class="d-inv-s">' + (INV.kind === 'village' ? 'Хто жив у селі' : 'Хто на якій вулиці жив') + ARROW + '</span></a>';
-    }
     if (r.note) h += '<p class="d-note">' + esc(r.note) + '</p>';
     h += '<p class="d-src">За «Економічними примітками», 1798 р.</p>';
     h += '<a class="d-more" href="sela-1798.html?v=' + encodeURIComponent(r.slug) + '"><span>Повний опис: стани, відстань, текст 1798 року</span>' + ARROW + '</a>';
 
+    if (INV_ALL[r.slug]) {
+        var inv = state.dTab === 'inv';
+        h = head +
+            '<div class="d-tabs" role="tablist" aria-label="Джерела">' +
+            '<button type="button" role="tab" data-dtab="1798" aria-selected="' + (!inv) + '">Примітки 1798</button>' +
+            '<button type="button" role="tab" data-dtab="inv" aria-selected="' + inv + '">Інвентар Плятера</button></div>' +
+            '<div class="d-pane" role="tabpanel" data-pane="1798"' + (inv ? ' hidden' : '') + '>' + h + '</div>' +
+            '<div class="d-pane" role="tabpanel" data-pane="inv"' + (inv ? '' : ' hidden') + '>' + invPane(r) + '</div>';
+    } else {
+        h = head + h;
+    }
     var body = $('dBody');
     body.innerHTML = h;
     body.scrollTop = 0;
@@ -1125,6 +1219,14 @@ $('dNav').addEventListener('click', function(e){
     if (b) select(BY_ID[b.getAttribute('data-go')], { noScroll: true });
 });
 $('dBody').addEventListener('click', function(e){
+    var t = e.target.closest('[data-dtab]');
+    if (t) {
+        state.dTab = t.getAttribute('data-dtab');
+        var box = $('dBody');
+        box.querySelectorAll('[data-dtab]').forEach(function(x){ x.setAttribute('aria-selected', String(x === t)); });
+        box.querySelectorAll('[data-pane]').forEach(function(x){ x.hidden = x.getAttribute('data-pane') !== state.dTab; });
+        return;
+    }
     var b = e.target.closest('[data-owner]');
     if (b) setOwner(b.getAttribute('data-owner'));
 });
@@ -1136,7 +1238,7 @@ function rowHtml(p, withSheet){
     var meta = withSheet ? 'аркуш ' + ROMAN[p.sheet - 1] : (r.dvory ? fmt(r.dvory) : '—');
     return '<button type="button" class="v-row" data-id="' + p.id + '">' +
         '<span class="v-dot ' + r.kind + '"></span>' +
-        '<span class="v-row-n">' + esc(r.main) + (r.alt ? '<small>' + esc(r.alt) + '</small>' : '') + '</span>' +
+        '<span class="v-row-n">' + esc(r.main) + (INV_ALL[r.slug] ? '<span class="v-row-i" title="Є поіменний список за інвентарем Плятера">' + BOOK + '</span>' : '') + '</span>' +
         '<span class="v-row-m">' + meta + '</span></button>';
 }
 function renderList(){
@@ -1144,7 +1246,7 @@ function renderList(){
     var q = (query.value || '').trim().toLowerCase();
     var h = '';
     if (q) {
-        var hits = ALL.filter(function(p){ return (p.rec.name + ' ' + p.rec.docName).toLowerCase().indexOf(q) !== -1; })
+        var hits = ALL.filter(function(p){ return (p.rec.name + ' ' + p.rec.docName + ' ' + p.rec.hist).toLowerCase().indexOf(q) !== -1; })
             .sort(function(a, b){ return a.rec.main.localeCompare(b.rec.main, 'uk'); });
         h = hits.length
             ? '<div class="v-group"><span>' + hits.length + ' ' + plural(hits.length, 'збіг', 'збіги', 'збігів') + '</span><span>на всіх аркушах</span></div>' + hits.map(function(p){ return rowHtml(p, true); }).join('')
@@ -1326,7 +1428,7 @@ window.addEventListener('resize', function(){
         var name = o.page ? '<a href="' + esc(o.page) + '">' + esc(e.owner) + '</a>' : esc(e.owner);
         var onMap = e.places.some(function(pl){ return pl.slug && BY_SLUG[pl.slug]; });
         var chips = e.places.map(function(pl){
-            var label = shortName(pl.name);
+            var label = (pl.slug && BY_SLUG[pl.slug]) ? BY_SLUG[pl.slug].rec.main : shortName(pl.name);
             return pl.slug && BY_SLUG[pl.slug]
                 ? '<button type="button" class="o-chip" data-slug="' + esc(pl.slug) + '">' + esc(label) + '</button>'
                 : '<span class="o-chip" title="Немає на наявних аркушах">' + esc(label) + '</span>';

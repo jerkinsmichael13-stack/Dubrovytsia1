@@ -325,9 +325,10 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
 
     html += '<div class="sl-kind"><span class="sl-kind-dot"></span>'+esc(kindLabel)+'</div>';
     html += '<h1 class="sl-title">'+esc(data.mapName)+'</h1>';
-    if (data.excelName && data.excelName.trim() !== data.mapName.trim()) {
-        html += '<p class="sl-subtitle">У «Економічних примітках»: «'+esc(data.excelName)+'»</p>';
-    }
+    var docShort = (data.excelName||'').trim().replace(/^(Село \(Деревня\)|Село|Сільце|Містечко|Філварок)\s+/, '');
+if (docShort && docShort !== data.mapName.trim()) {
+html += '<p class="sl-subtitle">У «Економічних примітках» записано: '+esc(docShort)+'</p>';
+}
 
     var ownerMeta = (typeof ATLAS_OWNERS_1798 !== 'undefined' && ATLAS_OWNERS_1798[data.ownerId]) || {};
     html += '<div class="sl-owner">Власник: <strong>'+esc(data.owner||'')+'</strong>'+
@@ -372,7 +373,7 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
         // Назва в описі може бути написана інакше, ніж у таблиці чи на мапі (Ясенець / Ясинець,
         // різні апострофи, «(Деревня)»), тому шукаємо за основою слова з кількох варіантів назви.
         var names = [(data.excelName||'').replace(/^(Село|Сільце|Містечко|Філварок|Буда|Гута)\s+/i,'').replace(/^\(Деревня\)\s*/,'')]
-            .concat((data.mapName||'').split(/[()]/));
+            .concat((data.mapName||'').split(/[()]/)).concat((data.mapNameOrig||'').split(/[()]/));
         var stems = [];
         names.forEach(function(n){
             var w = n.trim().split(/\s+/)[0].replace(/[ъь]$/,'');
