@@ -325,7 +325,7 @@ mark { background: rgba(212,178,90,.42); color: inherit; border-radius: 2px; pad
 .pm-svg, .pm-layer { position: absolute; inset: 0; width: 100%; height: 100%; }
 .pm-svg { pointer-events: none; }
 .pm-svg polyline { fill: none; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
-.pm-svg .vis { stroke: var(--gold); stroke-width: 3.5; opacity: .55; transition: opacity .2s, stroke-width .2s; }
+.pm-svg .vis { stroke: var(--gold); stroke-width: 4; opacity: .8; transition: opacity .2s, stroke-width .2s; }
 .pm-svg .hit { stroke: transparent; stroke-width: 18; pointer-events: stroke; cursor: pointer; }
 .pm-svg g:hover .vis, .pm-svg g.on .vis { opacity: 1; stroke-width: 6; }
 .pm-mark { position: absolute; width: 34px; height: 34px; padding: 0; margin: 0; border-radius: 50%; border: 2px solid var(--gold); background: var(--paper); color: var(--ink); cursor: pointer; display: grid; place-items: center; transform: translate(-50%, -50%) scale(calc(1 / var(--z))); box-shadow: 0 3px 10px rgba(20,15,8,.3); transition: background .2s, color .2s; }
@@ -365,6 +365,29 @@ mark { background: rgba(212,178,90,.42); color: inherit; border-radius: 2px; pad
 html, body { touch-action: manipulation; }
 a, button, [role="button"], input, select, textarea, .nav-link, .logo,
 .mobile-toggle, .theme-toggle, .scroll-top-btn { touch-action: manipulation; }
+
+.pm-north { position: absolute; right: .7rem; bottom: .7rem; display: flex; align-items: center; gap: .45rem; padding: .35rem .7rem; border-radius: 8px; background: rgba(28,23,14,.82); color: #f4e9c8; font-family: var(--font-body); font-size: .72rem; z-index: 5; pointer-events: none; }
+.pm-north svg { width: 34px; height: 14px; }
+.pm-north b { font-weight: 600; }
+.pm-svg .area { fill: var(--gold); fill-opacity: .12; stroke: var(--gold); stroke-width: 2.5; vector-effect: non-scaling-stroke; opacity: .7; transition: fill-opacity .2s, opacity .2s; }
+.pm-svg g:hover .area, .pm-svg g.on .area { fill-opacity: .28; opacity: 1; }
+.pm-svg.off { display: none; }
+.pm-svg .hit, .pm-svg .area { pointer-events: all; cursor: pointer; }
+.pm-svg .area { pointer-events: all; }
+.pm-vp.anim .pm-stage { transition: transform .7s cubic-bezier(.16,1,.3,1); }
+.pm-tip .pm-go { display: inline-flex; align-items: center; gap: .4rem; margin-top: .6rem; padding: .45rem .8rem; border-radius: 8px; background: #1c170e; color: #f4e9c8; font-family: var(--font-body); font-size: .76rem; font-weight: 500; text-decoration: none; }
+[data-theme="dark"] .pm-tip .pm-go { background: #d4b25a; color: #1a1408; }
+.pm-tip .pm-go svg { width: 12px; height: 12px; }
+.pm-tip small { display: block; margin: 0 0 .25rem; font-family: var(--font-display); font-style: italic; font-size: .9rem; color: var(--ink-3); }
+.pm-tip .pm-cnt { font-weight: 600; color: var(--gold); }
+.iv-zlist button.has-plan span:first-child::after { content: ''; display: inline-block; width: 7px; height: 7px; margin-left: .5rem; border-radius: 50%; background: var(--gold); vertical-align: middle; }
+.pm-leg.streets { border-style: dashed; }
+@media (max-width: 700px) {
+    .pm-tip { left: .6rem !important; right: .6rem; top: auto !important; bottom: .6rem; width: auto; max-width: none; transform: none; z-index: 8; }
+    .pm-badge { display: none; }
+    .pm-north { bottom: auto; top: .7rem; right: auto; left: .7rem; }
+}
+.pm-leg.key { border-style: dashed; }
 </style>
 </head>
 <body>
@@ -455,6 +478,8 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
         <symbol id="i-empty" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-dasharray="2.2 2.2"><rect x="4" y="5" width="16" height="14" rx="1"/></g></symbol>
         <symbol id="i-mill" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M8 21V11h8v10"/><path d="M12 11V4M12 7.5l-5-3.5M12 7.5l5-3.5M12 7.5l-4 5M12 7.5l4 5"/><path d="M3 21h18"/><path d="M4 18c1.3-1 2.7-1 4 0"/></g></symbol>
         <symbol id="i-brick" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="1"/><path d="M3 10h18M3 14h18M9 6v4M15 6v4M6 10v4M12 10v4M18 10v4M9 14v4M15 14v4"/></g></symbol>
+        <symbol id="i-cemetery" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v13M8 8h8"/><path d="M4 20h16"/><path d="M6.5 20v-3M17.5 20v-3" opacity=".7"/></g></symbol>
+        <symbol id="i-park" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c3 0 5 2.2 5 4.8 0 1-.4 1.9-1 2.6 1.4.7 2.2 2 2.2 3.4 0 2.3-2.1 4.2-4.7 4.2H10.5c-2.6 0-4.7-1.9-4.7-4.2 0-1.4.8-2.7 2.2-3.4-.6-.7-1-1.6-1-2.6C7 5.2 9 3 12 3z"/><path d="M12 17.5V21"/></g></symbol>
         <symbol id="i-ferry" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 15h18l-2.4 4H5.4z"/><path d="M12 15V5M12 5l5 6h-5M12 7L8 11h4"/><path d="M2 21.5c1.5-.9 3-.9 4.5 0s3 .9 4.5 0 3-.9 4.5 0 3 .9 4.5 0" opacity=".6"/></g></symbol>
         <symbol id="i-arrow" viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     </defs>
@@ -524,22 +549,24 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
                 <div class="pm" id="ivMap">
                     <div class="pm-vp" id="pmVp">
                         <div class="pm-stage" id="pmStage">
-                            <img class="pm-img" id="pmImg" src="https://i.imgur.com/R4FTjy1.jpeg" alt="Топографічний план міста Дубровиці, 1855 рік" draggable="false" decoding="async">
+                            <img class="pm-img" id="pmImg" src="plan-1855.jpg" width="3200" height="2468" alt="План містечка Домбровиці 1855 року: Волинська губернія, Рівненський повіт, володіння графа Плятера" draggable="false" decoding="async">
                             <svg class="pm-svg" id="pmSvg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"></svg>
                             <div class="pm-layer" id="pmLayer"></div>
                         </div>
                         <div class="pm-tools" role="group" aria-label="Масштаб плану">
                             <button type="button" id="pmIn" aria-label="Збільшити">+</button>
                             <button type="button" id="pmOut" aria-label="Зменшити">−</button>
-                            <button type="button" id="pmFit" aria-label="Весь план" title="Весь план">⤢</button>
+                            <button type="button" id="pmFit" aria-label="До міста" title="До міста">⌂</button>
+                            <button type="button" id="pmAll" aria-label="Увесь план" title="Увесь план">⤢</button>
                             <button type="button" id="pmFull" aria-label="На весь екран" title="На весь екран">⛶</button>
                         </div>
                         <div class="pm-badge"><b>Топографічний план</b>Дубровиця · 1855 р.</div>
+                        <div class="pm-north" title="На плані північ зліва — див. розу вітрів у правому верхньому куті"><svg viewBox="0 0 64 22" aria-hidden="true"><path d="M60 11H9M9 11l9-7M9 11l9 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><b>Пн</b></div>
                         <div class="pm-tip" id="pmTip" hidden></div>
                         <div class="pm-hint" id="pmHint">Ctrl + колесо або кнопки: масштаб · тягніть, щоб рухати</div>
                     </div>
                     <div class="pm-legend" id="pmLegend" aria-label="Позначення на плані"></div>
-                    <p class="iv-plan-note">Рукописний топографічний план міста, 1855 рік. Інвентар старіший приблизно на півстоліття, тому вулиці могли змінитися: позначки на плані є орієнтирами, а не точною прив’язкою дворів до ділянок.</p>
+                    <p class="iv-plan-note"><strong>Як читати.</strong> Це план містечка, складений землемірами 1855 року для графа Плятера. <strong>Північ на ньому зліва</strong> (роза вітрів у правому верхньому куті): тому дорога на Пінськ, тобто Воробинське передмістя, йде ліворуч, а Бережницьке передмістя — праворуч. Інвентар старіший приблизно на півстоліття, тож вулиці могли змінитися. Золоті лінії — вулиці, яких стосується список; там, де назву плану й інвентаря не збігається, це сказано в підказці. Вулиць без лінії на плані ще не позначено.</p>
                     <div class="pm-cal" id="pmCal" hidden></div>
                 </div>
                 <div class="iv-plan-side">
@@ -968,7 +995,7 @@ function mark(id){
     idx.querySelectorAll('a').forEach(function(a){ a.classList.toggle('on', a.getAttribute('data-go') === id); });
     document.querySelectorAll('#ivPlan .st').forEach(function(g){ g.classList.toggle('on', g.getAttribute('data-st') === id); });
     document.querySelectorAll('#pmSvg g').forEach(function(g){ g.classList.toggle('on', g.getAttribute('data-st') === id); });
-    document.querySelectorAll('#ivZoneList button').forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-go') === id); });
+    document.querySelectorAll('#ivZoneList button').forEach(function(b){ b.classList.toggle('on', (b.getAttribute('data-go') || b.getAttribute('data-plan')) === id); });
 }
 
 function go(id){
@@ -1124,118 +1151,173 @@ var m = /^#vul-([a-z-]+)$/.exec(location.hash);
 if (m) setTimeout(function(){ go(m[1]); }, 80);
 
 
-/* ── План 1855 року: маркери, вулиці, розмітка ── */
+/* ── План 1855 року: вулиці, позначки, розмітка ── */
 (function(){
     var box = document.getElementById('ivMap');
     if (!box || VILLAGE) return;
     var PLAN = {
-        marks: [{"k": "piarists", "x": 32.03, "y": 58.64, "t": "Костел і колегіум отців-піарів", "d": "За інвентарем, фундушевий плац піарів стояв фронтом до ринкових плаців, а навпроти був їхній кляштор."}, {"k": "church", "x": 46.19, "y": 61.8, "t": "Церква Святого Миколая", "d": "До церкви з цвинтарем вела від ринкових плаців Замкова (Миколаївська) вулиця; на другому її боці стояла садиба пресвітера."}, {"k": "church", "x": 15.52, "y": 70.04, "t": "Кам’яна церква", "d": ""}, {"k": "ferry", "x": 65.95, "y": 43.87, "t": "Пором через Горинь", "d": "Перевіз біля міста підписано й на атласі 1798 року."}, {"k": "mill", "x": 87.33, "y": 63.24, "t": "Водяний млин", "d": ""}],
-        /* Вулиці на плані: slug: [[x, y], ...] у відсотках зображення. Наносяться в режимі ?mark=1 */
-        streets: {}
+        iw: 3200, ih: 2468,
+        marks: [{"k": "piarists", "p": [37.03, 45.71], "t": "Костел і колегіум отців-піарів", "d": "На плані підписано «Костёл». За інвентарем, фундушевий плац піарів виходив фронтом до ринку. Пунктирна доріжка від костелу до ринку — ймовірно, Передкостельна вуличка."}, {"k": "church", "p": [46.97, 49.03], "t": "Церква Святого Миколая", "d": "Червоний хрест на церковній землі («Ц. З.») біля Горині. За інвентарем, Замкова (Миколаївська) вулиця вела від ринку саме до цієї церкви та замку."}, {"k": "church", "p": [26.34, 53.16], "t": "Кам’яна церква", "d": "На плані підписано «Церковь»: храм на церковній землі, ліворуч від ринку, при дорозі на Пінськ."}, {"k": "castle", "p": [49.53, 51.13], "t": "Місце замку (ймовірно)", "d": "Земляні укріплення з ровом і валом поруч із церквою Св. Миколая. За інвентарем, замок, обведений ровом, лежав наприкінці Замкової вулиці. Ототожнення ймовірне: на плані це місце не підписано."}, {"k": "ferry", "p": [60.44, 37.93], "t": "Пором через Горинь", "d": "На плані підписано «Паромъ»; дорога від нього йде на Березне. Перевіз показано й на атласі 1798 року."}, {"k": "mill", "p": [78.5, 51.22], "t": "Млин", "d": "На плані підписано «Мельница»: водяний млин на березі Горині, від якого стежка веде до дороги на Рівне."}, {"k": "cemetery", "p": [16.41, 55.92], "t": "Єврейський цвинтар", "d": "На плані підписано «Кладбище Еврейское». В інвентарі це окописько, за яким закінчувалося Воробинське передмістя."}, {"k": "park", "p": [43.44, 45.38], "t": "Казенна земля з парком", "d": "На плані підписано «Казённая земля»: велика ділянка з садом чи гаєм між костелом і церквою Св. Миколая. Рожевим на плані позначено панські (помещицкі) забудови."}],
+        streets: {"rynok": {"pts": [[34.12, 51.13], [38.94, 51.13], [38.94, 56.81], [34.12, 56.81]], "closed": true, "sub": "Ринок", "note": "Ринкова площа зі шпихлірами й крамницями. Інвентар описує її чотири ряди забудови."}, "vorobynska": {"pts": [[31.31, 49.8], [32.81, 50.24], [34.12, 50.65]], "closed": false, "sub": "Дорога на Пінськ", "note": "Початок дороги «изъ Пинска» біля ринку. Позначено за напрямком: інвентар веде Воробинську вулицю на північ від ринку, а на плані північ ліворуч."}, "vorob-trakt": {"pts": [[10.62, 49.51], [15.62, 49.51], [21.88, 49.51], [28.12, 49.59], [31.31, 49.8]], "closed": false, "sub": "Дорога на Пінськ", "note": "Дорога з Пінська, тобто Литовський тракт інвентаря. Уздовж неї ряди садиб; на її краю лежить єврейський цвинтар, яким закінчувалося передмістя."}, "zamkova": {"pts": [[39.25, 50.81], [43.75, 50.89], [46.25, 50.65], [46.88, 49.51]], "closed": false, "sub": "Дорога до церкви", "note": "Від ринку на схід до церкви Св. Миколая й замку."}, "peredkostelna": {"pts": [[37.12, 47.33], [37.12, 50.49]], "closed": false, "sub": "Пунктирна доріжка", "note": "Доріжка між костелом піарів і ринком. Ототожнення з Передкостельною вулицею ймовірне."}, "berezhnytska": {"pts": [[39.22, 53.73], [45.0, 53.73], [52.81, 53.69], [62.66, 52.71]], "closed": false, "sub": "Єврейські ряди", "note": "Пряма вулиця від ринку на південь із рядами єврейських ділянок по обидва боки. Вона переходить у дорогу на Рівне."}, "shkilna": {"pts": [[39.53, 59.44], [46.56, 59.6], [52.97, 58.39], [62.59, 56.6]], "closed": false, "sub": "«Улица Шпитальная»", "note": "На плані 1855 року цю вулицю підписано «Шпитальная». Інвентар веде тут Шкільну, де стояли синагога й шпиталь: найімовірніше, це та сама вулиця."}, "berezh-trakt": {"pts": [[62.66, 52.71], [63.06, 51.9], [69.84, 51.99], [75.19, 53.28], [81.06, 55.19], [84.75, 57.78], [88.41, 60.66], [93.56, 62.72]], "closed": false, "sub": "Дорога «въ Ровно»", "note": "Бережницький тракт: від міста на південь до Рівного. Уздовж дороги на плані двома рядами жовті садиби, при ній млин."}}
     };
-    var KINDS = { piarists: 'Костел і колегіум', church: 'Церкви', ferry: 'Пором', mill: 'Млин', synagogue: 'Синагога', hospital: 'Єврейський шпиталь',
-                  distillery: 'Винокурня', bath: 'Лазня', manor: 'Панський двір', castle: 'Замок' };
+    var KINDS = { piarists: 'Костел і колегіум', church: 'Церкви', castle: 'Замок', ferry: 'Пором', mill: 'Млин', cemetery: 'Єврейський цвинтар', park: 'Казенна земля',
+                  synagogue: 'Синагога', hospital: 'Шпиталь', distillery: 'Винокурня', bath: 'Лазня', manor: 'Панський двір' };
+    var ARROW = '<svg aria-hidden="true"><use href="#i-arrow"/></svg>';
     var vp = $('pmVp'), stage = $('pmStage'), img = $('pmImg'), layer = $('pmLayer'), svg = $('pmSvg'), tip = $('pmTip');
-    var Z = { s: 1, x: 0, y: 0 }, hidden = {};
+    var HOME = { s: 1.14, cx: 52.5, cy: 51 };
+    var Z = { s: 1, x: 0, y: 0 }, hidden = {}, cur = null, animT = 0, homed = true;
+    function homeS(){ return box.classList.contains('full') ? 1 : Math.max(HOME.s, vp.clientHeight / Math.max(stage.offsetHeight, 1)); }
+    function zc(){ vp.classList.toggle('z', Z.s > homeS() * 1.01); }
     function apply(){ stage.style.transform = 'translate(' + Z.x + 'px,' + Z.y + 'px) scale(' + Z.s + ')'; stage.style.setProperty('--z', Z.s); }
     function clamp(){
         var w = vp.clientWidth, h = vp.clientHeight, sw = stage.offsetWidth * Z.s, sh = stage.offsetHeight * Z.s;
         Z.x = sw <= w ? (w - sw) / 2 : Math.min(0, Math.max(w - sw, Z.x));
         Z.y = sh <= h ? (h - sh) / 2 : Math.min(0, Math.max(h - sh, Z.y));
     }
-    function sizeVp(){ if (!box.classList.contains('full')) vp.style.height = Math.min(stage.offsetHeight, innerHeight * .8) + 'px'; }
-    function fit(){ Z.s = 1; Z.x = 0; Z.y = 0; sizeVp(); clamp(); apply(); vp.classList.remove('z'); hideTip(); }
+    function sizeVp(){ if (box.classList.contains('full')) return; var base = stage.offsetHeight * .74; vp.style.height = (innerWidth < 700 ? Math.max(base, Math.min(innerHeight * .6, 470)) : Math.min(base, innerHeight * .8)) + 'px'; }
+    function place(s, cx, cy){ var w = vp.clientWidth, h = vp.clientHeight; Z.s = s; Z.x = w / 2 - cx / 100 * stage.offsetWidth * s; Z.y = h / 2 - cy / 100 * stage.offsetHeight * s; clamp(); apply(); zc(); }
+    function fit(){ sizeVp(); homed = true; place(homeS(), HOME.cx, HOME.cy); hideTip(); }
+    function whole(){ homed = false; sizeVp(); place(1, 50, 50); hideTip(); }
     function zoomAt(f, cx, cy){
-        var ns = Math.max(1, Math.min(6, Z.s * f)); f = ns / Z.s;
-        Z.x = cx - (cx - Z.x) * f; Z.y = cy - (cy - Z.y) * f; Z.s = ns; clamp(); apply(); vp.classList.toggle('z', Z.s > 1.01); if (tip.hidden === false) placeTip();
+        var ns = Math.max(1, Math.min(8, Z.s * f)); f = ns / Z.s;
+        homed = false; Z.x = cx - (cx - Z.x) * f; Z.y = cy - (cy - Z.y) * f; Z.s = ns; clamp(); apply(); zc(); if (cur) placeTip();
     }
-    function iconSvg(k){ return '<svg aria-hidden="true"><use href="#i-' + (k === 'piarists' || k === 'church' || k === 'ferry' || k === 'mill' || k === 'synagogue' || k === 'hospital' || k === 'distillery' || k === 'bath' || k === 'manor' || k === 'castle' ? k : 'empty') + '"/></svg>'; }
+    function animate(fn){ vp.classList.add('anim'); fn(); clearTimeout(animT); animT = setTimeout(function(){ vp.classList.remove('anim'); }, 800); }
+    function iconSvg(k){ return '<svg aria-hidden="true"><use href="#i-' + (KINDS[k] ? k : 'empty') + '"/></svg>'; }
+    function stInfo(id){ return STREETS.filter(function(s){ return s.id === id; })[0]; }
+    function pl(n){ return n + ' ' + plural(n, 'двір', 'двори', 'дворів'); }
 
-    /* маркери */
+    /* позначки */
     layer.innerHTML = PLAN.marks.map(function(m, i){
-        return '<button type="button" class="pm-mark" data-i="' + i + '" style="left:' + m.x + '%;top:' + m.y + '%" aria-label="' + esc(m.t) + '">' + iconSvg(m.k) + '</button>';
+        return '<button type="button" class="pm-mark" data-i="' + i + '" style="left:' + m.p[0] + '%;top:' + m.p[1] + '%" aria-label="' + esc(m.t) + '">' + iconSvg(m.k) + '</button>';
     }).join('');
-    /* легенда: лише те, що нанесено */
-    var counts = {}; PLAN.marks.forEach(function(m){ counts[m.k] = (counts[m.k] || 0) + 1; });
-    $('pmLegend').innerHTML = Object.keys(counts).map(function(k){
-        return '<button type="button" class="pm-leg" data-k="' + k + '" aria-pressed="true">' + iconSvg(k) + esc(KINDS[k] || k) + '</button>';
-    }).join('');
-    $('pmLegend').addEventListener('click', function(e){
-        var b = e.target.closest('.pm-leg'); if (!b) return;
-        var k = b.getAttribute('data-k'); hidden[k] = !hidden[k]; b.setAttribute('aria-pressed', String(!hidden[k]));
-        layer.querySelectorAll('.pm-mark').forEach(function(el){ var m = PLAN.marks[+el.getAttribute('data-i')]; el.hidden = !!hidden[m.k]; });
-        hideTip();
-    });
 
-    /* вулиці, якщо їх уже нанесено */
+    /* вулиці */
     var sh = '';
     Object.keys(PLAN.streets).forEach(function(id){
-        var pts = PLAN.streets[id].map(function(p){ return p[0] + ',' + p[1]; }).join(' ');
-        var st = STREETS.filter(function(s){ return s.id === id; })[0];
-        sh += '<g data-st="' + id + '"><title>' + esc(st ? st.name : id) + '</title><polyline class="vis" points="' + pts + '"/><polyline class="hit" points="' + pts + '" data-go="' + id + '"/></g>';
+        var S = PLAN.streets[id], st = stInfo(id), pts = S.pts.map(function(p){ return p[0] + ',' + p[1]; }).join(' ');
+        sh += '<g data-st="' + id + '"><title>' + esc(st ? st.name : id) + '</title>' +
+              (S.closed ? '<polygon class="area" points="' + pts + '" data-pst="' + id + '"/>' : '<polyline class="vis" points="' + pts + '"/><polyline class="hit" points="' + pts + '" data-pst="' + id + '"/>') + '</g>';
     });
     svg.innerHTML = sh;
 
+    /* легенда: види позначок + вулиці */
+    var counts = {}; PLAN.marks.forEach(function(m){ counts[m.k] = (counts[m.k] || 0) + 1; });
+    $('pmLegend').innerHTML = '<button type="button" class="pm-leg streets" data-k="__st" aria-pressed="true"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M3 17c4-1 6-8 9-8s5 6 9 5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>Вулиці</button>' +
+        '<button type="button" class="pm-leg key" data-k="__key"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="4" y="5" width="7" height="6" rx="1" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="13" y="5" width="7" height="6" rx="1" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="4" y="13" width="7" height="6" rx="1" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="13" y="13" width="7" height="6" rx="1" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>Умовні знаки плану</button>' +
+        Object.keys(counts).map(function(k){ return '<button type="button" class="pm-leg" data-k="' + k + '" aria-pressed="true">' + iconSvg(k) + esc(KINDS[k]) + '</button>'; }).join('');
+    $('pmLegend').addEventListener('click', function(e){
+        var b = e.target.closest('.pm-leg'); if (!b) return;
+        var k = b.getAttribute('data-k');
+        if (k === '__key') { hideTip(); animate(function(){ homed = false; var w = vp.clientWidth, h = vp.clientHeight, sw = stage.offsetWidth, sh = stage.offsetHeight, bw = 17 / 100 * sw, bh = 15 / 100 * sh; place(Math.max(1, Math.min(6, Math.min(w * .9 / bw, h * .9 / bh))), 17.5, 80.5); }); return; }
+        hidden[k] = !hidden[k]; b.setAttribute('aria-pressed', String(!hidden[k]));
+        if (k === '__st') svg.classList.toggle('off', !!hidden[k]);
+        else layer.querySelectorAll('.pm-mark').forEach(function(el){ var m = PLAN.marks[+el.getAttribute('data-i')]; el.hidden = !!hidden[m.k]; });
+        hideTip();
+    });
+
     /* підказка */
-    var cur = -1;
     function placeTip(){
-        if (cur < 0) return; var m = PLAN.marks[cur];
-        var x = Z.x + m.x / 100 * stage.offsetWidth * Z.s, y = Z.y + m.y / 100 * stage.offsetHeight * Z.s;
-        tip.style.left = Math.max(130, Math.min(vp.clientWidth - 130, x)) + 'px'; tip.style.top = Math.max(120, y) + 'px';
+        if (!cur) return;
+        var x = Z.x + cur.x / 100 * stage.offsetWidth * Z.s, y = Z.y + cur.y / 100 * stage.offsetHeight * Z.s;
+        tip.style.left = Math.max(135, Math.min(vp.clientWidth - 135, x)) + 'px'; tip.style.top = Math.max(150, y) + 'px';
     }
-    function showTip(i){
-        var m = PLAN.marks[i]; cur = i;
+    function setTip(html, x, y){
+        cur = { x: x, y: y }; tip.innerHTML = '<button type="button" class="pm-x" aria-label="Закрити">✕</button>' + html; tip.hidden = false; placeTip();
+    }
+    function hideTip(){ cur = null; tip.hidden = true; layer.querySelectorAll('.pm-mark.on').forEach(function(el){ el.classList.remove('on'); }); }
+    function showMark(i){
+        var m = PLAN.marks[i];
         layer.querySelectorAll('.pm-mark').forEach(function(el){ el.classList.toggle('on', +el.getAttribute('data-i') === i); });
-        tip.innerHTML = '<button type="button" aria-label="Закрити">✕</button><h4>' + esc(m.t) + '</h4>' + (m.d ? '<p>' + esc(m.d) + '</p>' : '');
-        tip.hidden = false; placeTip();
+        setTip('<h4>' + esc(m.t) + '</h4><p>' + esc(m.d) + '</p>', m.p[0], m.p[1]);
     }
-    function hideTip(){ cur = -1; tip.hidden = true; layer.querySelectorAll('.pm-mark.on').forEach(function(el){ el.classList.remove('on'); }); }
-    layer.addEventListener('click', function(e){ var b = e.target.closest('.pm-mark'); if (b) { e.stopPropagation(); showTip(+b.getAttribute('data-i')); } });
-    tip.addEventListener('click', function(e){ if (e.target.tagName === 'BUTTON') hideTip(); });
+    function showStreet(id, x, y){
+        var S = PLAN.streets[id], st = stInfo(id); if (!S || !st) return;
+        layer.querySelectorAll('.pm-mark.on').forEach(function(el){ el.classList.remove('on'); });
+        var n = st.hh ? '<span class="pm-cnt">' + pl(st.hh) + '</span> у списку' : 'Без мешканців у списку';
+        setTip('<small>' + esc(S.sub) + '</small><h4>' + esc(st.name) + '</h4><p>' + n + '. ' + esc(S.note) + '</p>' +
+               '<a class="pm-go" href="#vul-' + id + '" data-go="' + id + '">Хто тут жив' + ARROW + '</a>', x, y);
+        if (typeof mark === 'function') mark(id);
+    }
+    function bbox(id){
+        var P = PLAN.streets[id].pts, x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
+        P.forEach(function(p){ x0 = Math.min(x0, p[0]); x1 = Math.max(x1, p[0]); y0 = Math.min(y0, p[1]); y1 = Math.max(y1, p[1]); });
+        return { x0: x0, y0: y0, x1: x1, y1: y1, cx: (x0 + x1) / 2, cy: (y0 + y1) / 2 };
+    }
+    /* наблизити вулицю на плані */
+    function focusStreet(id){
+        var S = PLAN.streets[id]; if (!S) return false;
+        var bb = bbox(id), sw = stage.offsetWidth, sh2 = stage.offsetHeight, w = vp.clientWidth, h = vp.clientHeight;
+        var bw = Math.max((bb.x1 - bb.x0) / 100 * sw, 90), bh = Math.max((bb.y1 - bb.y0) / 100 * sh2, 90);
+        var ns = Math.max(1, Math.min(4.5, Math.min(w * .6 / bw, h * .6 / bh)));
+        animate(function(){ homed = false; place(ns, bb.cx, bb.cy); });
+        showStreet(id, bb.cx, bb.cy);
+        return true;
+    }
+    layer.addEventListener('click', function(e){ var b = e.target.closest('.pm-mark'); if (b) { e.stopPropagation(); showMark(+b.getAttribute('data-i')); } });
+    tip.addEventListener('click', function(e){ if (e.target.closest('.pm-x')) hideTip(); });
+    svg.addEventListener('click', function(e){
+        var t = e.target.closest('[data-pst]'); if (!t) return;
+        var r = stage.getBoundingClientRect();
+        showStreet(t.getAttribute('data-pst'), (e.clientX - r.left) / r.width * 100, (e.clientY - r.top) / r.height * 100);
+    });
+    /* список вулиць поруч: клік наближає вулицю на плані */
+    document.querySelectorAll('#ivZoneList button').forEach(function(b){
+        var id = b.getAttribute('data-go');
+        if (PLAN.streets[id]) { b.removeAttribute('data-go'); b.setAttribute('data-plan', id); b.classList.add('has-plan'); b.title = 'Показати на плані'; }
+    });
+    document.addEventListener('click', function(e){
+        var b = e.target.closest('[data-plan]'); if (!b) return;
+        e.preventDefault(); if (!hidden.__st) {} else { hidden.__st = false; svg.classList.remove('off'); var lg = document.querySelector('.pm-leg[data-k="__st"]'); if (lg) lg.setAttribute('aria-pressed', 'true'); }
+        var r = vp.getBoundingClientRect(); if (r.top < 60 || r.bottom > innerHeight) vp.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' });
+        focusStreet(b.getAttribute('data-plan'));
+    });
 
     /* масштаб і рух */
-    $('pmIn').addEventListener('click', function(){ zoomAt(1.5, vp.clientWidth / 2, vp.clientHeight / 2); });
-    $('pmOut').addEventListener('click', function(){ zoomAt(1 / 1.5, vp.clientWidth / 2, vp.clientHeight / 2); });
-    $('pmFit').addEventListener('click', fit);
+    $('pmIn').addEventListener('click', function(){ animate(function(){ zoomAt(1.5, vp.clientWidth / 2, vp.clientHeight / 2); }); });
+    $('pmOut').addEventListener('click', function(){ animate(function(){ zoomAt(1 / 1.5, vp.clientWidth / 2, vp.clientHeight / 2); }); });
+    $('pmFit').addEventListener('click', function(){ animate(fit); });
+    $('pmAll').addEventListener('click', function(){ animate(whole); });
     $('pmFull').addEventListener('click', function(){
         box.classList.toggle('full'); document.body.style.overflow = box.classList.contains('full') ? 'hidden' : '';
-        if (!box.classList.contains('full')) vp.style.height = ''; fit(); if (box.classList.contains('full')) vp.style.height = '';
+        vp.style.height = ''; fit();
     });
     vp.addEventListener('wheel', function(e){
         if (!(e.ctrlKey || e.metaKey || box.classList.contains('full'))) return;
         e.preventDefault(); var r = vp.getBoundingClientRect(); zoomAt(e.deltaY < 0 ? 1.2 : 1 / 1.2, e.clientX - r.left, e.clientY - r.top);
     }, { passive: false });
     var P = {}, last = 0, moved = false;
-    vp.addEventListener('pointerdown', function(e){ if (e.target.closest('.pm-tools,.pm-tip,.pm-mark')) return; P[e.pointerId] = { x: e.clientX, y: e.clientY }; moved = false; last = 0; });
+    vp.addEventListener('pointerdown', function(e){ if (e.target.closest('.pm-tools,.pm-tip,.pm-mark')) return; P[e.pointerId] = { x: e.clientX, y: e.clientY }; moved = false; last = 0; vp.classList.remove('anim'); });
     vp.addEventListener('pointermove', function(e){
         var p = P[e.pointerId]; if (!p) return; var ids = Object.keys(P);
         if (ids.length === 2) { P[e.pointerId] = { x: e.clientX, y: e.clientY }; var a = P[ids[0]], b = P[ids[1]], d = Math.hypot(a.x - b.x, a.y - b.y), r = vp.getBoundingClientRect(); if (last) zoomAt(d / last, (a.x + b.x) / 2 - r.left, (a.y + b.y) / 2 - r.top); last = d; return; }
-        if (Z.s <= 1.01) return;
-        vp.setPointerCapture(e.pointerId); vp.classList.add('drag'); moved = true;
-        Z.x += e.clientX - p.x; Z.y += e.clientY - p.y; P[e.pointerId] = { x: e.clientX, y: e.clientY }; clamp(); apply(); if (!tip.hidden) placeTip();
+        if (stage.offsetWidth * Z.s <= vp.clientWidth + 1 && stage.offsetHeight * Z.s <= vp.clientHeight + 1) return;
+        if (!moved && Math.hypot(e.clientX - p.x, e.clientY - p.y) < 4) return;
+        vp.setPointerCapture(e.pointerId); vp.classList.add('drag'); moved = true; homed = false;
+        Z.x += e.clientX - p.x; Z.y += e.clientY - p.y; P[e.pointerId] = { x: e.clientX, y: e.clientY }; clamp(); apply(); if (cur) placeTip();
     });
     function up(e){ delete P[e.pointerId]; last = 0; vp.classList.remove('drag'); }
     vp.addEventListener('pointerup', up); vp.addEventListener('pointercancel', up);
-    vp.addEventListener('click', function(e){ if (!e.target.closest('.pm-mark,.pm-tip') && !moved) hideTip(); });
+    vp.addEventListener('click', function(e){ if (!e.target.closest('.pm-mark,.pm-tip,[data-pst],.pm-tools') && !moved) hideTip(); });
     img.addEventListener('load', function(){ fit(); });
-    addEventListener('resize', function(){ if (Z.s === 1) fit(); else { clamp(); apply(); } });
+    addEventListener('resize', function(){ if (homed) fit(); else { clamp(); apply(); } });
     setTimeout(function(){ $('pmHint').style.opacity = 0; }, 6000);
-    document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && box.classList.contains('full')) $('pmFull').click(); });
+    document.addEventListener('keydown', function(e){ if (e.key === 'Escape') { if (box.classList.contains('full')) $('pmFull').click(); else hideTip(); } });
     if (img.complete && img.naturalWidth) fit();
 
-    /* режим розмітки: ?mark=1 — клік по плану записує точки вулиць і позначок */
+    /* режим розмітки: ?mark=1 — клік по плану записує точки в відсотках */
     if (params.get('mark')) {
         var cal = $('pmCal'); cal.hidden = false;
         var OUT = { streets: {}, marks: [] };
         var opts = '<optgroup label="Вулиці (лінія з кількох кліків)">' + STREETS.filter(function(s){ return s.hh; }).map(function(s){ return '<option value="s:' + s.id + '">' + esc(s.name) + '</option>'; }).join('') + '</optgroup>' +
-                   '<optgroup label="Позначки (один клік)">' + ['synagogue', 'hospital', 'distillery', 'bath', 'manor', 'castle', 'church', 'piarists'].map(function(k){ return '<option value="m:' + k + '">' + esc(KINDS[k]) + '</option>'; }).join('') + '</optgroup>';
-        cal.innerHTML = '<b>Режим розмітки.</b> Оберіть, що наносите, і клацайте по плану. Вулиця: кілька кліків вздовж неї.' +
+                   '<optgroup label="Позначки (один клік)">' + Object.keys(KINDS).map(function(k){ return '<option value="m:' + k + '">' + esc(KINDS[k]) + '</option>'; }).join('') + '</optgroup>';
+        cal.innerHTML = '<b>Режим розмітки.</b> Оберіть, що наносите, і клацайте по плану. Вулиця: кілька кліків уздовж неї.' +
             '<div class="row" style="margin-top:.6rem"><select id="calSel">' + opts + '</select><button type="button" id="calUndo">Скасувати останню точку</button><button type="button" id="calCopy">Копіювати JSON</button></div><textarea id="calOut" readonly></textarea>';
         function dump(){ $('calOut').value = JSON.stringify(OUT); }
         stage.addEventListener('click', function(e){
             if (e.target.closest('.pm-mark')) return;
             var r = stage.getBoundingClientRect(), x = +((e.clientX - r.left) / r.width * 100).toFixed(2), y = +((e.clientY - r.top) / r.height * 100).toFixed(2), v = $('calSel').value.split(':');
-            if (v[0] === 's') { (OUT.streets[v[1]] = OUT.streets[v[1]] || []).push([x, y]); } else { OUT.marks.push({ k: v[1], x: x, y: y, t: KINDS[v[1]] }); }
+            if (v[0] === 's') { (OUT.streets[v[1]] = OUT.streets[v[1]] || []).push([x, y]); } else { OUT.marks.push({ k: v[1], p: [x, y], t: KINDS[v[1]] }); }
             var d = document.createElement('i'); d.className = 'pm-dot'; d.style.left = x + '%'; d.style.top = y + '%'; layer.appendChild(d); dump();
         });
         $('calUndo').addEventListener('click', function(){
@@ -1245,6 +1327,8 @@ if (m) setTimeout(function(){ go(m[1]); }, 80);
         });
         $('calCopy').addEventListener('click', function(){ $('calOut').select(); document.execCommand('copy'); });
     }
+    /* глибоке посилання: ?plan=shkilna */
+    var pp = params.get('plan'); if (pp && PLAN.streets[pp]) setTimeout(function(){ focusStreet(pp); }, 400);
 })();
 })();
 </script>
