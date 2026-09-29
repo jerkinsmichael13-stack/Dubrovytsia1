@@ -209,8 +209,30 @@ a.iv-place:hover { border-color: var(--gold); color: var(--ink); }
 
 /* двір — як рядок рукопису */
 .iv-hh { list-style: none; margin: 0; padding: 0; }
-.iv-h { display: grid; grid-template-columns: 3rem minmax(0, 1fr); gap: 0 .4rem; padding: .55rem 0; border-bottom: 1px dotted var(--rule); }
-.iv-no { font-family: var(--font-display); font-style: italic; font-size: 1rem; color: var(--ink-3); text-align: right; padding-right: .5rem; padding-top: .12rem; font-variant-numeric: oldstyle-nums; }
+.iv-h { display: grid; grid-template-columns: 4.4rem minmax(0, 1fr); gap: 0 .4rem; padding: .55rem 0; border-bottom: 1px dotted var(--rule); }
+.iv-no { justify-self: end; align-self: start; margin: .18rem .5rem 0 0; display: inline-flex; align-items: baseline; gap: .22rem; padding: .08rem .45rem .1rem; border-radius: 6px; font-family: var(--font-body); font-size: .74rem; font-weight: 600; font-variant-numeric: tabular-nums; line-height: 1.35; white-space: nowrap; }
+.iv-no i { font-style: normal; font-weight: 500; font-size: .66rem; opacity: .75; }
+.iv-no.c-j { background: rgba(58,96,140,.12); color: #2f5680; }
+.iv-no.c-g { background: rgba(122,138,54,.15); color: #566421; }
+.iv-no.c-p { background: rgba(169,130,47,.16); color: #7a5c17; }
+.iv-no.c-n { border: 1px dashed var(--rule); color: var(--ink-3); font-weight: 500; }
+[data-theme="dark"] .iv-no.c-j { background: rgba(120,160,210,.16); color: #a9c6ea; }
+[data-theme="dark"] .iv-no.c-g { background: rgba(170,190,90,.15); color: #cddb95; }
+[data-theme="dark"] .iv-no.c-p { background: rgba(212,178,90,.16); color: #e6cc86; }
+/* групи інвентаря */
+.iv-cats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin: 2rem 0 .6rem; }
+@media (max-width: 760px) { .iv-cats { grid-template-columns: 1fr; } }
+.iv-cat { display: block; width: 100%; padding: 1.1rem 1.2rem 1.15rem; border-radius: 12px; border: 1px solid var(--rule); background: var(--paper); color: inherit; font: inherit; text-align: left; cursor: pointer; transition: border-color .2s, transform .2s; }
+.iv-cat:hover, .iv-cat:focus-visible { border-color: var(--gold); transform: translateY(-1px); outline: none; }
+.iv-cat-top { display: flex; align-items: baseline; justify-content: space-between; gap: .8rem; }
+.iv-cat b { font-family: var(--font-display); font-weight: 400; font-size: 2.4rem; line-height: 1; color: var(--ink); }
+.iv-cat .iv-no { margin: 0; }
+.iv-cat strong { display: block; margin-top: .5rem; font-family: var(--font-display); font-weight: 500; font-size: 1.22rem; color: var(--color-text); }
+.iv-cat em { display: block; font-family: var(--font-display); font-size: .95rem; color: var(--color-text-light); }
+.iv-cat span.h { display: block; margin-top: .45rem; font-family: var(--font-body); font-size: .8rem; line-height: 1.5; color: var(--color-text-secondary); }
+.iv-cats-note { font-family: var(--font-body); font-size: .8rem; line-height: 1.6; color: var(--color-text-light); max-width: 76ch; margin: 0; }
+.iv-legend { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem .9rem; margin: .7rem 0 0; font-family: var(--font-body); font-size: .76rem; color: var(--color-text-light); }
+.iv-legend .iv-no { margin: 0; }
 .iv-hl { display: flex; align-items: baseline; gap: .6rem; min-width: 0; }
 .iv-n { font-family: var(--font-display); font-weight: 500; font-size: 1.24rem; line-height: 1.3; color: var(--color-text); }
 .iv-dots { flex: 1 1 2rem; min-width: 1.5rem; border-bottom: 2px dotted var(--rule); transform: translateY(-.28rem); }
@@ -223,10 +245,8 @@ a.iv-place:hover { border-color: var(--gold); color: var(--ink); }
 .iv-fam li { font-family: var(--font-display); font-size: 1.04rem; line-height: 1.45; color: var(--color-text-secondary); }
 .iv-fam i { font-family: var(--font-body); font-style: normal; font-size: .72rem; color: var(--color-text-light); margin-right: .3rem; }
 .iv-fam .nn { color: var(--color-text-light); font-style: italic; }
-.iv-note, .iv-q { grid-column: 2; margin: .3rem 0 0; font-family: var(--font-body); font-size: .77rem; line-height: 1.5; color: var(--color-text-light); max-width: 70ch; }
-.iv-q { color: var(--warn); }
-.iv-q::before { content: 'Прочитання: '; font-weight: 600; }
-.iv-l { display: grid; grid-template-columns: 3rem minmax(0,1fr); gap: 0 .4rem; padding: .8rem 0; border-bottom: 1px dotted var(--rule); }
+.iv-note { grid-column: 2; margin: .3rem 0 0; font-family: var(--font-body); font-size: .77rem; line-height: 1.5; color: var(--color-text-light); max-width: 70ch; }
+.iv-l { display: grid; grid-template-columns: 4.4rem minmax(0,1fr); gap: 0 .4rem; padding: .8rem 0; border-bottom: 1px dotted var(--rule); }
 .iv-l > svg { justify-self: end; margin-right: .5rem; width: 22px; height: 22px; color: var(--gold); }
 .iv-l p { margin: 0; font-family: var(--font-display); font-style: italic; font-size: 1.1rem; line-height: 1.5; color: var(--ink-2); max-width: 66ch; }
 .iv-h.flash { animation: ivFlash 1.8s ease-out; }
@@ -239,10 +259,11 @@ mark { background: rgba(212,178,90,.42); color: inherit; border-radius: 2px; pad
     .iv-filt::-webkit-scrollbar { display: none; }
     .iv-chip { flex: 0 0 auto; }
     .iv-tools { padding: .7rem 0; }
+    .iv-legend { display: none; }
     .iv-street { scroll-margin-top: calc(var(--hdr) + 130px); }
 }
 @media (max-width: 560px) {
-    .iv-h, .iv-l { grid-template-columns: 2.1rem minmax(0,1fr); }
+    .iv-h, .iv-l { grid-template-columns: 3.6rem minmax(0,1fr); }
     .iv-hl { flex-wrap: wrap; }
     .iv-dots { display: none; }
     .iv-tags { justify-content: flex-start; width: 100%; }
@@ -416,6 +437,10 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
             </blockquote>
             <p class="iv-p">Далі укладач веде читача так, як ішов би сам, — від ринку. Посеред міста площа з крамницями й шпихлірами; довкола неї чотири ряди будинків. З ринку розходяться вулиці: Воробинська на північ, Бережницька на південь, Замкова до церкви Святого Миколая й замку, дорога на Мочулище на захід. Місто обведене валом, а за ним на обох трактах лежать два передмістя: <em>Воробинське</em> — на Литовському шляху від Століна й Висоцька, і <em>Бережницьке</em> — на Волинському й Українському шляху від Бережниці.</p>
             <p class="iv-p" id="ivObs"></p>
+            <h3 class="iv-h2" style="font-size:clamp(1.6rem,2.6vw,2.1rem);margin-top:2.4rem">Три групи міщан — три окремі нумерації</h3>
+            <p class="iv-p">Укладач інвентаря рахував двори не підряд, а за трьома групами, кожну з першого номера. Ці номери — такі, як у документі, — стоять біля кожного двору в реєстрі нижче.</p>
+            <div class="iv-cats" id="ivCats"></div>
+            <p class="iv-cats-note" id="ivCatsNote"></p>
             <div class="iv-lms" id="ivLandmarks"></div>
         </div>
     </div>
@@ -509,8 +534,12 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
                         <span class="iv-sep" aria-hidden="true"></span>
                         <button type="button" class="iv-chip" data-f="w" aria-pressed="false">Вдови</button>
                         <button type="button" class="iv-chip" data-f="p" aria-pressed="false">Ремесла</button>
-                        <button type="button" class="iv-chip" data-f="q" aria-pressed="false">Непевні прочитання</button>
+                        <span class="iv-sep" aria-hidden="true"></span>
+                        <button type="button" class="iv-chip" data-cat="j" aria-pressed="false">Євреї</button>
+                        <button type="button" class="iv-chip" data-cat="g" aria-pressed="false">Ґрунтові</button>
+                        <button type="button" class="iv-chip" data-cat="p" aria-pressed="false">Плацові</button>
                     </div>
+                    <p class="iv-legend" id="ivLegend"></p>
                     <p class="iv-status" id="ivStatus" aria-live="polite"></p>
                 </div>
                 <div id="ivReg"></div>
@@ -541,14 +570,12 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
         <div>
             <h2 class="iv-h2">Що в списку від документа, а що від нас</h2>
             <ol class="iv-rules">
-                <li><b>Один запис — один двір.</b> Господар і всі, кого інвентар називає поруч із ним, подані разом, у порядку оригіналу. Номери на полях — порядок у нашій транскрипції; нумерація оригіналу інша (так, гарбар Павло Мартинчик в оригіналі записаний під № 201).</li>
+                <li><b>Один запис — один двір, з номером із документа.</b> Господар і всі, кого інвентар називає поруч із ним, подані разом, у порядку оригіналу. Номер біля двору — той, що вписав укладач, окремо для євреїв (Є), християн ґрунтових (Ґ) і плацових (П). Записи, яким номера не дано, позначено «б/н».</li>
                 <li><b>Синам, дочкам, братам і сестрам дописано прізвище господаря.</b> Для жінок прізвище узгоджене за родом: Гладкий — Уляна Гладка, Несторов — Марина Несторова, Ярмолін — Марта Ярмоліна. Дітям вдів дописано прізвище покійного чоловіка, якщо його названо.</li>
                 <li><b>Зятів, пасербів, швагрів і вітчимів залишено без прізвища господаря</b> — вони з іншої родини, а їхнє власне прізвище інвентар здебільшого не вказує.</li>
                 <li><b>Позначку «жонатий» не відтворено.</b> Дружини, названі в переліку окремим словом, показані на своєму місці без імені. Якщо запис не уточнює, чия це дружина — господаря чи сина, — ми цього не домислюємо.</li>
-                <li><b>Непевні прочитання позначено.</b> Імена й слова, які в рукописі читаються неоднозначно, подано в найімовірнішій формі з приміткою; нижче — перелік місць, що чекають звірки зі сканами.</li>
+                <li><b>Написання імен уніфіковано.</b> Де рукопис читається неоднозначно, подано найімовірнішу форму імені й прізвища.</li>
             </ol>
-            <h2 class="iv-h2" style="margin-top:3rem">Чекають звірки</h2>
-            <ul class="iv-open" id="ivOpen"></ul>
             <h2 class="iv-h2" style="margin-top:3.6rem">Слова з інвентаря</h2>
             <dl class="iv-gl">
                 <div><dt>Плац<i>plac</i></dt><dd>Міська ділянка під забудову. «Ринкові плаци» — ділянки, що виходять на ринкову площу; від них інвентар починає опис більшості вулиць.</dd></div>
@@ -676,7 +703,7 @@ STREETS.forEach(function(st){
             if (it.lm) { LM.push(it); return; }
             HH.push(it);
             st.hh++; st.pp += 1 + (it.m ? it.m.length : 0);
-            var parts = [it.n, it.p, it.o, it.s];
+            var parts = [it.n, it.p, it.o, it.s, it.no ? '№' + it.no : ''];
             (it.m || []).forEach(function(m){ parts.push(m.n, m.r); });
             it.key = norm(parts.join(' '));
         });
@@ -709,7 +736,11 @@ $('ivPlaces').innerHTML = '<b>Маєток Плятера в інвентарі:
     var txt = 'У списку ' + fmt(HH.length) + ' ' + plural(HH.length, 'двір', 'двори', 'дворів') + ': ' +
         fmt(zoneHH.misto || 0) + ' у самому місті, ' + fmt(zoneHH.berezhnytske || 0) + ' у Бережницькому й ' +
         fmt(zoneHH.vorobynske || 0) + ' у Воробинському передмісті. ';
-    if (ryn) txt += 'Ринкові ряди (' + ryn.hh + ' ' + plural(ryn.hh, 'двір', 'двори', 'дворів') + ') і сусідні вулиці — Шкільна, Бережницька, Завальна — записані переважно за єврейськими іменами по батькові; передмістя й Замкова вулиця — за українськими прізвищами, з великими родинами синів, дочок і братів. ';
+    var jall = HH.filter(function(h){ return h.c === 'j'; }).length;
+    var jsub = HH.filter(function(h){ return h.c === 'j' && h.st.zone !== 'misto'; }).length;
+    if (jall) txt += (jsub ? '' : 'Усі ') + jall + ' ' + plural(jall, 'єврейський двір', 'єврейські двори', 'єврейських дворів') + ' — ' + (jsub ? 'переважно ' : '') +
+        'у самому місті, на ринку й сусідніх вулицях, найбільше на Шкільній і Бережницькій. ' +
+        'Передмістя — християнські двори, часто з великими родинами синів, дочок і братів. ';
     txt += wid + ' ' + plural(wid, 'двір', 'двори', 'дворів') + ' очолюють вдови.';
     $('ivObs').textContent = txt;
 
@@ -738,7 +769,12 @@ $('ivZoneList').innerHTML = ZORDER.map(function(z){
 }).join('');
 
 /* ── § 3: реєстр ──────────────────────────── */
-var state = { q: '', zone: '', f: '' };
+var state = { q: '', zone: '', f: '', cat: '' };
+var CATS = { j: ['Є', 'Євреї', 'єврейський двір'], g: ['Ґ', 'Християни ґрунтові', 'християнський ґрунтовий двір'], p: ['П', 'Християни плацові', 'християнський плацовий двір'] };
+function noHtml(h){
+    if (!h.c) return '<span class="iv-no c-n" title="Окремого номера в інвентарі немає">б/н</span>';
+    return '<span class="iv-no c-' + h.c + '" title="' + esc(CATS[h.c][2]) + ', № ' + h.no + ' в інвентарі"><i>' + CATS[h.c][0] + '</i>' + h.no + '</span>';
+}
 var reg = $('ivReg'), idx = $('ivIdx');
 
 function hl(text, qs){
@@ -768,26 +804,25 @@ function hhHtml(h, qs){
     var tags = '';
     if (h.p) tags += '<span class="iv-tag prof">' + hl(h.p, qs) + '</span>';
     if (h.w) tags += '<span class="iv-tag wid">вдова</span>';
-    var html = '<li class="iv-h" id="d' + h.id + '"><span class="iv-no">' + h.id + '</span>' +
+    var html = '<li class="iv-h" id="d' + h.id + '">' + noHtml(h) +
         '<div class="iv-hl"><span class="iv-n">' + hl(h.n, qs) + '</span>' +
         (h.o ? '<span class="iv-orig">' + esc(h.o) + '</span>' : '') +
         '<span class="iv-dots" aria-hidden="true"></span><span class="iv-tags">' + tags + '</span></div>';
     if (h.m) html += '<ul class="iv-fam">' + h.m.map(function(m){ return memberHtml(m, qs); }).join('') + '</ul>';
     if (h.t) html += '<p class="iv-note">' + esc(h.t) + '</p>';
-    if (h.q) html += '<p class="iv-q">' + esc(h.q) + '</p>';
     return html + '</li>';
 }
 function passes(h, qs){
     if (state.zone && h.st.zone !== state.zone) return false;
     if (state.f === 'w' && !h.w) return false;
     if (state.f === 'p' && !h.p) return false;
-    if (state.f === 'q' && !h.q) return false;
+    if (state.cat && h.c !== state.cat) return false;
     for (var i = 0; i < qs.length; i++) if (h.key.indexOf(qs[i]) === -1) return false;
     return true;
 }
 function render(){
     var qs = norm(state.q).split(/\s+/).filter(Boolean);
-    var filtering = qs.length || state.f;
+    var filtering = qs.length || state.f || state.cat;
     var shown = 0, html = '', lastZone = null, counts = {};
     STREETS.forEach(function(st){
         if (state.zone && st.zone !== state.zone) { counts[st.id] = 0; return; }
@@ -824,7 +859,8 @@ function renderIdx(counts){
     STREETS.forEach(function(st){
         if (st.zone !== last) { h += '<h3>' + esc(D.zones[st.zone]) + '</h3>'; last = st.zone; }
         var c = counts[st.id];
-        h += '<a href="#vul-' + st.id + '" data-go="' + st.id + '"' + (c === 0 && (state.q || state.f || state.zone) ? ' class="is-empty"' : '') + '>' + esc(st.name) + '<span>' + (state.q || state.f ? c : st.hh || '—') + '</span></a>';
+        var fl = state.q || state.f || state.cat;
+        h += '<a href="#vul-' + st.id + '" data-go="' + st.id + '"' + (c === 0 && (fl || state.zone) ? ' class="is-empty"' : '') + '>' + esc(st.name) + '<span>' + (fl ? c : st.hh || '—') + '</span></a>';
     });
     idx.innerHTML = h;
 }
@@ -849,7 +885,7 @@ function go(id){
     var st = STREETS.filter(function(s){ return s.id === id; })[0];
     if (!st) return;
     // якщо вулицю приховано фільтром — знімаємо фільтри
-    if ((state.zone && state.zone !== st.zone) || state.q || state.f) { resetFilters(); }
+    if ((state.zone && state.zone !== st.zone) || state.q || state.f || state.cat) { resetFilters(); }
     var el = $('vul-' + id);
     if (!el) return;
     el.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
@@ -857,13 +893,14 @@ function go(id){
     mark(id);
 }
 function resetFilters(){
-    state.q = ''; state.f = ''; state.zone = '';
+    state.q = ''; state.f = ''; state.zone = ''; state.cat = '';
     $('ivQ').value = ''; $('ivSearchBox').classList.remove('has-q');
     syncChips(); render();
 }
 function syncChips(){
     document.querySelectorAll('.iv-chip[data-zone]').forEach(function(c){ c.setAttribute('aria-pressed', String(c.getAttribute('data-zone') === state.zone)); });
     document.querySelectorAll('.iv-chip[data-f]').forEach(function(c){ c.setAttribute('aria-pressed', String(c.getAttribute('data-f') === state.f)); });
+    document.querySelectorAll('.iv-chip[data-cat]').forEach(function(c){ c.setAttribute('aria-pressed', String(c.getAttribute('data-cat') === state.cat)); });
 }
 function search(q){
     state.q = q; $('ivQ').value = q;
@@ -884,6 +921,7 @@ $('ivClear').addEventListener('click', function(){ state.q = ''; $('ivQ').value 
 document.querySelector('.iv-filt').addEventListener('click', function(e){
     var c = e.target.closest('.iv-chip'); if (!c) return;
     if (c.hasAttribute('data-zone')) state.zone = c.getAttribute('data-zone');
+    else if (c.hasAttribute('data-cat')) state.cat = state.cat === c.getAttribute('data-cat') ? '' : c.getAttribute('data-cat');
     else state.f = state.f === c.getAttribute('data-f') ? '' : c.getAttribute('data-f');
     syncChips(); render();
 });
@@ -893,6 +931,14 @@ document.addEventListener('click', function(e){
     var s = e.target.closest('[data-search]');
     if (s) { e.preventDefault(); search(s.getAttribute('data-search')); return; }
     if (e.target.id === 'ivReset') resetFilters();
+    var cb = e.target.closest('[data-showcat]');
+    if (cb) {
+        e.preventDefault();
+        state.q = ''; state.f = ''; state.zone = ''; state.cat = cb.getAttribute('data-showcat');
+        $('ivQ').value = ''; $('ivSearchBox').classList.remove('has-q');
+        syncChips(); render();
+        $('reyestr').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
 });
 document.querySelectorAll('#ivPlan .st').forEach(function(g){
     g.addEventListener('click', function(){ go(g.getAttribute('data-st')); });
@@ -931,10 +977,25 @@ document.querySelectorAll('#ivPlan .st').forEach(function(g){
     }).join('');
 })();
 
-/* ── § 5: непевні місця ──────────────────── */
-$('ivOpen').innerHTML = HH.filter(function(h){ return h.q; }).map(function(h){
-    return '<li><button type="button" data-search="' + esc(h.n) + '">' + esc(h.n) + '</button><span>' + esc(h.q) + ' <span style="color:var(--color-text-light)">— ' + esc(h.st.name) + '</span></span></li>';
-}).join('');
+/* ── Групи інвентаря: підсумок і легенда ─── */
+(function(){
+    var cnt = { j: 0, g: 0, p: 0 }, none = 0;
+    HH.forEach(function(h){ if (h.c) cnt[h.c]++; else none++; });
+    var rows = (D.summary && D.summary.rows) || [];
+    var order = [['j', /євр/i], ['g', /ґрунт/i], ['p', /плац/i]];
+    $('ivCats').innerHTML = order.map(function(o){
+        var k = o[0], row = rows.filter(function(r){ return o[1].test(r.label); })[0] || {};
+        var mx = Math.max.apply(null, HH.filter(function(h){ return h.c === k; }).map(function(h){ return h.no; }).concat([0]));
+        return '<button type="button" class="iv-cat" data-showcat="' + k + '">' +
+            '<span class="iv-cat-top"><b>' + fmt(cnt[k]) + '</b><span class="iv-no c-' + k + '"><i>' + CATS[k][0] + '</i>1–' + mx + '</span></span>' +
+            '<strong>' + esc(CATS[k][1]) + '</strong>' + (row.orig ? '<em>' + esc(row.orig) + '</em>' : '') +
+            (row.hint ? '<span class="h">' + esc(row.hint[0].toUpperCase() + row.hint.slice(1)) + '.</span>' : '') + '</button>';
+    }).join('');
+    $('ivCatsNote').textContent = (D.summary && D.summary.note ? D.summary.note + ' ' : '') + (none ? 'У списку таких записів ' + none + '.' : '');
+    $('ivLegend').innerHTML = 'Номер із документа: ' + ['j', 'g', 'p'].map(function(k){
+        return '<span><span class="iv-no c-' + k + '"><i>' + CATS[k][0] + '</i>№</span> ' + esc(CATS[k][1].toLowerCase()) + '</span>';
+    }).join('') + '<span><span class="iv-no c-n">б/н</span> без номера</span>';
+})();
 
 /* ── Старт ────────────────────────────────── */
 render();
