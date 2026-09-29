@@ -132,36 +132,50 @@ a.iv-place:hover { border-color: var(--gold); color: var(--ink); }
 .iv-lm b { display: block; font-family: var(--font-display); font-weight: 500; font-size: 1.08rem; line-height: 1.25; color: var(--color-text); margin-bottom: .25rem; }
 .iv-lm span { display: block; font-family: var(--font-body); font-size: .76rem; color: var(--color-text-light); }
 
-/* ══ СХЕМА ══════════════════════════════════════════════ */
-.iv-plan-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 2.5rem; align-items: start; }
-@media (max-width: 1000px) { .iv-plan-grid { grid-template-columns: minmax(0, 1fr); } }
-.iv-plan { background: var(--paper); border-radius: 14px; border: 1px solid var(--rule); padding: .6rem; }
-.iv-plan svg { display: block; width: 100%; height: auto; }
-.iv-plan .zone { fill: var(--paper-2); stroke: none; }
-.iv-plan .val { fill: none; stroke: var(--ink-3); stroke-width: 1.4; stroke-dasharray: 5 4; opacity: .8; }
-.iv-plan .river { fill: none; stroke: var(--river); stroke-width: 22; stroke-linecap: round; opacity: .7; }
-.iv-plan .road { fill: none; stroke: var(--ink-3); stroke-width: 1.4; stroke-dasharray: 2 4; }
-.iv-plan .st { cursor: pointer; }
-.iv-plan .st .ln { fill: none; stroke: var(--ink-2); stroke-width: 4.5; stroke-linecap: round; stroke-linejoin: round; transition: stroke .2s, stroke-width .2s; }
-.iv-plan .st .hit { fill: none; stroke: transparent; stroke-width: 22; stroke-linecap: round; }
-.iv-plan .st text { font-family: var(--font-body); font-size: 11.5px; font-weight: 600; fill: var(--ink-2); paint-order: stroke; stroke: var(--paper); stroke-width: 4px; stroke-linejoin: round; transition: fill .2s; }
-.iv-plan .st:hover .ln, .iv-plan .st:focus-visible .ln, .iv-plan .st.on .ln { stroke: var(--gold); stroke-width: 7; }
-.iv-plan .st:hover text, .iv-plan .st:focus-visible text, .iv-plan .st.on text { fill: var(--gold); }
-.iv-plan .st:focus { outline: none; }
-.iv-plan .mk { fill: var(--paper); stroke: var(--ink-2); stroke-width: 1.3; }
-.iv-plan .mk-t { font-family: var(--font-display); font-size: 13px; font-style: italic; fill: var(--ink-2); }
-.iv-plan .mk-t.big { font-size: 17px; font-style: normal; font-weight: 600; fill: var(--ink); }
-.iv-plan .zl { font-family: var(--font-display); font-size: 16px; font-style: italic; fill: var(--ink-3); }
-.iv-plan .dir { font-family: var(--font-body); font-size: 10.5px; fill: var(--ink-3); }
-.iv-plan-note { margin: .8rem .4rem .2rem; font-family: var(--font-body); font-size: .76rem; line-height: 1.5; color: var(--ink-3); }
-.iv-plan-side h3 { font-family: var(--font-display); font-weight: 500; font-size: 1.5rem; margin: 0 0 .8rem; color: var(--color-text); }
-.iv-zlist { list-style: none; margin: 0 0 1.6rem; padding: 0; border-top: 1px solid var(--color-border); }
-.iv-zlist li { border-bottom: 1px solid var(--color-border-light); }
-.iv-zlist button { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 1rem; width: 100%; padding: .7rem .2rem; border: 0; background: none; font: inherit; text-align: left; color: var(--color-text); cursor: pointer; }
-.iv-zlist button:hover span:first-child, .iv-zlist button.on span:first-child { color: var(--gold); }
-.iv-zlist span:first-child { font-family: var(--font-display); font-size: 1.12rem; transition: color .2s; }
-.iv-zlist span:last-child { font-family: var(--font-body); font-size: .78rem; color: var(--color-text-light); font-variant-numeric: tabular-nums; }
-.iv-zlist small { display: block; font-family: var(--font-body); font-size: .72rem; color: var(--color-text-light); }
+/* ══ ПЛАН 1855 РОКУ ═════════════════════════════════════ */
+.pl-grid { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(300px, 1fr); gap: 2.4rem; align-items: start; }
+@media (max-width: 1000px) { .pl-grid { grid-template-columns: minmax(0, 1fr); gap: 1.6rem; } }
+.pm { min-width: 0; }
+.pm-vp { position: relative; overflow: hidden; height: 560px; border-radius: 14px; border: 1px solid var(--rule); background: var(--paper-2); cursor: grab; touch-action: pan-y; user-select: none; -webkit-user-select: none; outline: none; }
+.pm-vp:focus-visible { box-shadow: 0 0 0 3px rgba(212,178,90,.45); }
+.pm-vp.drag { cursor: grabbing; }
+.pm-vp.z { touch-action: none; }
+.pm-img { position: absolute; left: 0; top: 0; max-width: none; width: 3200px; height: 2468px; transform-origin: 0 0; will-change: transform; -webkit-user-drag: none; filter: sepia(.08) contrast(1.02); }
+.pm-vp.anim .pm-img { transition: transform .45s cubic-bezier(.16,1,.3,1); }
+[data-theme="dark"] .pm-img { filter: sepia(.2) brightness(.82); }
+.pm-tools { position: absolute; right: .8rem; top: .8rem; z-index: 3; display: grid; gap: 1px; border-radius: 10px; overflow: hidden; border: 1px solid var(--rule); background: var(--rule); box-shadow: 0 4px 14px rgba(20,15,8,.14); }
+.pm-tools button { display: grid; place-items: center; width: 38px; height: 38px; padding: 0; border: 0; background: var(--paper); color: var(--ink); font: inherit; font-size: 1.25rem; line-height: 1; cursor: pointer; transition: background .2s; }
+.pm-tools button:hover { background: var(--paper-2); }
+.pm-tools button:disabled { opacity: .4; cursor: default; }
+.pm-tools button:focus-visible { outline: 2px solid var(--gold-hi); outline-offset: -2px; }
+.pm-tools svg { width: 18px; height: 18px; }
+.pm-close { display: none; position: absolute; left: .8rem; top: .8rem; z-index: 3; width: 38px; height: 38px; border-radius: 10px; border: 1px solid var(--rule); background: var(--paper); color: var(--ink); font-size: 1rem; cursor: pointer; }
+.pm.full { position: fixed; inset: 0; z-index: 1500; display: flex; flex-direction: column; padding: .8rem; background: var(--paper); }
+.pm.full .pm-vp { flex: 1 1 auto; height: auto; touch-action: none; }
+.pm.full .pm-close { display: block; }
+.pm.full .iv-plan-note { flex: 0 0 auto; }
+.iv-plan-note { margin: .9rem .2rem 0; font-family: var(--font-body); font-size: .8rem; line-height: 1.6; color: var(--ink-3); max-width: 70ch; }
+.iv-plan-note strong { color: var(--ink-2); font-weight: 600; }
+@media (max-width: 700px) { .pm-vp { height: 62vh; min-height: 340px; max-height: 520px; } }
+
+.pm-side { min-width: 0; display: flex; flex-direction: column; }
+.pm-side-h { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin: 0 0 .7rem; padding: 0 0 .7rem; border-bottom: 2px solid var(--ink); }
+.pm-side-h h3 { margin: 0; font-family: var(--font-display); font-weight: 500; font-size: 1.5rem; color: var(--color-text); }
+.pm-side-h span { font-family: var(--font-body); font-size: .76rem; color: var(--color-text-light); }
+.pm-streets { min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: var(--rule) transparent; padding-right: .3rem; }
+@media (min-width: 1001px) { .pm-side { height: var(--pmh, 620px); } .pm-streets { flex: 1 1 auto; -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 34px), transparent); mask-image: linear-gradient(to bottom, #000 calc(100% - 34px), transparent); padding-bottom: 1.6rem; } }
+.pm-touch { display: none; }
+@media (max-width: 700px) { .pm-touch { display: inline; } }
+.pm-z { margin: 1.1rem 0 .1rem; font-family: var(--font-body); font-size: .72rem; font-weight: 600; color: var(--gold); }
+.pm-z:first-child { margin-top: 0; }
+.pm-st { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .15rem .9rem; align-items: baseline; width: 100%; padding: .8rem .2rem .85rem; border: 0; border-bottom: 1px dotted var(--rule); background: none; font: inherit; text-align: left; color: inherit; cursor: pointer; transition: background .2s, padding .25s; }
+.pm-st:hover, .pm-st:focus-visible, .pm-st.on { background: var(--paper-2); padding-left: .7rem; padding-right: .5rem; outline: none; }
+.pm-st.on { box-shadow: inset 2px 0 0 var(--gold); }
+.pm-st-n { font-family: var(--font-display); font-weight: 500; font-size: 1.16rem; line-height: 1.25; color: var(--color-text); transition: color .2s; }
+.pm-st:hover .pm-st-n, .pm-st.on .pm-st-n { color: var(--gold); }
+.pm-st-c { font-family: var(--font-body); font-size: .76rem; color: var(--color-text-light); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.pm-st-o { grid-column: 1 / -1; font-family: var(--font-display); font-style: italic; font-size: .92rem; color: var(--color-text-light); }
+.pm-st-d { grid-column: 1 / -1; margin-top: .25rem; font-family: var(--font-body); font-size: .8rem; line-height: 1.6; color: var(--color-text-secondary); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 
 /* ══ РЕЄСТР ═════════════════════════════════════════════ */
 .iv-reg { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 3rem; align-items: start; }
@@ -309,85 +323,12 @@ mark { background: rgba(212,178,90,.42); color: inherit; border-radius: 2px; pad
 @media (max-width: 640px) { .iv-open li { grid-template-columns: 1fr; gap: .2rem; } }
 
 .iv-back { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 2.4rem; }
-
-
-.iv-plan-grid { grid-template-columns: minmax(0, 1fr) !important; gap: 2rem !important; }
-.iv-plan-side h3 { margin-bottom: .2rem; }
-#ivZoneList { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 0 2.2rem; }
-/* ══ ПЛАН 1855 РОКУ ══ */
-.pm { min-width: 0; }
-.pm-vp { position: relative; overflow: hidden; border-radius: 14px; border: 1px solid var(--rule); background: var(--paper-2); cursor: grab; touch-action: pan-y; }
-.pm-vp.drag { cursor: grabbing; }
-.pm-vp.z { touch-action: none; }
-.pm-stage { position: relative; width: 100%; transform-origin: 0 0; will-change: transform; --z: 1; }
-.pm-img { display: block; width: 100%; height: auto; user-select: none; -webkit-user-drag: none; filter: sepia(.1) contrast(1.02); }
-[data-theme="dark"] .pm-img { filter: sepia(.2) brightness(.82); }
-.pm-svg, .pm-layer { position: absolute; inset: 0; width: 100%; height: 100%; }
-.pm-svg { pointer-events: none; }
-.pm-svg polyline { fill: none; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
-.pm-svg .vis { stroke: var(--gold); stroke-width: 4; opacity: .8; transition: opacity .2s, stroke-width .2s; }
-.pm-svg .hit { stroke: transparent; stroke-width: 18; pointer-events: stroke; cursor: pointer; }
-.pm-svg g:hover .vis, .pm-svg g.on .vis { opacity: 1; stroke-width: 6; }
-.pm-mark { position: absolute; width: 34px; height: 34px; padding: 0; margin: 0; border-radius: 50%; border: 2px solid var(--gold); background: var(--paper); color: var(--ink); cursor: pointer; display: grid; place-items: center; transform: translate(-50%, -50%) scale(calc(1 / var(--z))); box-shadow: 0 3px 10px rgba(20,15,8,.3); transition: background .2s, color .2s; }
-.pm-mark svg { width: 20px; height: 20px; }
-.pm-mark:hover, .pm-mark.on { background: var(--gold); color: #fff; z-index: 3; }
-.pm-mark:focus-visible { outline: 2px solid var(--gold-hi); outline-offset: 2px; }
-.pm-mark.on::after { content: ''; position: absolute; inset: -9px; border-radius: 50%; border: 1px solid var(--gold); animation: pmPulse 2.2s ease-out infinite; }
-@keyframes pmPulse { from { transform: scale(.7); opacity: 1; } to { transform: scale(1.4); opacity: 0; } }
-@media (prefers-reduced-motion: reduce) { .pm-mark.on::after { animation: none; } }
-.pm-mark[hidden] { display: none; }
-.pm-tools { position: absolute; right: .7rem; top: .7rem; display: grid; gap: 1px; border-radius: 10px; overflow: hidden; border: 1px solid var(--rule); background: var(--rule); z-index: 5; }
-.pm-tools button { width: 36px; height: 36px; border: 0; background: var(--paper); color: var(--ink); font: inherit; font-size: 1.05rem; cursor: pointer; }
-.pm-tools button:hover { background: var(--paper-2); }
-.pm-badge { position: absolute; left: .7rem; bottom: .7rem; padding: .4rem .8rem; border-radius: 8px; background: rgba(28,23,14,.82); color: #f4e9c8; font-family: var(--font-body); font-size: .72rem; line-height: 1.35; backdrop-filter: blur(6px); z-index: 5; pointer-events: none; }
-.pm-badge b { display: block; font-family: var(--font-display); font-weight: 500; font-size: .95rem; }
-.pm-hint { position: absolute; left: 50%; top: .7rem; transform: translateX(-50%); padding: .3rem .8rem; border-radius: 999px; background: rgba(28,23,14,.78); color: rgba(244,233,200,.85); font-family: var(--font-body); font-size: .7rem; white-space: nowrap; z-index: 5; pointer-events: none; transition: opacity .6s; }
-@media (max-width: 700px) { .pm-hint { display: none; } }
-.pm-tip { position: absolute; z-index: 6; width: 250px; max-width: calc(100% - 1.4rem); padding: .9rem 1rem .95rem; border-radius: 12px; background: var(--paper); border: 1px solid var(--rule); box-shadow: 0 16px 40px rgba(20,15,8,.3); transform: translate(-50%, calc(-100% - 26px)); cursor: default; }
-.pm-tip h4 { margin: 0 0 .2rem; font-family: var(--font-display); font-weight: 500; font-size: 1.15rem; color: var(--ink); }
-.pm-tip p { margin: 0; font-family: var(--font-body); font-size: .78rem; line-height: 1.55; color: var(--ink-2); }
-.pm-tip button { position: absolute; right: .35rem; top: .3rem; width: 26px; height: 26px; border: 0; background: none; color: var(--ink-3); cursor: pointer; font-size: .9rem; }
-.pm-legend { display: flex; flex-wrap: wrap; gap: .4rem; margin: .8rem 0 0; }
-.pm-leg { display: inline-flex; align-items: center; gap: .45rem; padding: .3rem .75rem .3rem .45rem; border-radius: 999px; border: 1px solid var(--rule); background: none; font: inherit; font-family: var(--font-body); font-size: .76rem; color: var(--ink-2); cursor: pointer; transition: border-color .2s, opacity .2s; }
-.pm-leg svg { width: 18px; height: 18px; color: var(--gold); }
-.pm-leg:hover { border-color: var(--gold); }
-.pm-leg[aria-pressed="false"] { opacity: .45; }
-.pm.full { position: fixed; inset: 0; z-index: 1500; padding: 1rem; background: var(--paper); overflow: auto; }
-.pm.full .pm-vp { height: calc(100vh - 8rem) !important; }
-.pm-cal { margin-top: 1rem; padding: 1rem; border-radius: 12px; border: 1px dashed var(--gold); background: var(--paper-2); font-family: var(--font-body); font-size: .78rem; color: var(--ink-2); }
-.pm-cal select, .pm-cal button, .pm-cal textarea { font: inherit; font-size: .78rem; }
-.pm-cal textarea { width: 100%; min-height: 110px; margin-top: .6rem; padding: .5rem; border-radius: 8px; border: 1px solid var(--rule); background: var(--paper); color: var(--ink); }
-.pm-cal .row { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
-.pm-dot { position: absolute; width: 9px; height: 9px; border-radius: 50%; background: var(--warn); border: 1px solid #fff; transform: translate(-50%, -50%) scale(calc(1 / var(--z))); pointer-events: none; z-index: 4; }
 </style>
 
 <style>
 html, body { touch-action: manipulation; }
 a, button, [role="button"], input, select, textarea, .nav-link, .logo,
 .mobile-toggle, .theme-toggle, .scroll-top-btn { touch-action: manipulation; }
-
-.pm-north { position: absolute; right: .7rem; bottom: .7rem; display: flex; align-items: center; gap: .45rem; padding: .35rem .7rem; border-radius: 8px; background: rgba(28,23,14,.82); color: #f4e9c8; font-family: var(--font-body); font-size: .72rem; z-index: 5; pointer-events: none; }
-.pm-north svg { width: 34px; height: 14px; }
-.pm-north b { font-weight: 600; }
-.pm-svg .area { fill: var(--gold); fill-opacity: .12; stroke: var(--gold); stroke-width: 2.5; vector-effect: non-scaling-stroke; opacity: .7; transition: fill-opacity .2s, opacity .2s; }
-.pm-svg g:hover .area, .pm-svg g.on .area { fill-opacity: .28; opacity: 1; }
-.pm-svg.off { display: none; }
-.pm-svg .hit, .pm-svg .area { pointer-events: all; cursor: pointer; }
-.pm-svg .area { pointer-events: all; }
-.pm-vp.anim .pm-stage { transition: transform .7s cubic-bezier(.16,1,.3,1); }
-.pm-tip .pm-go { display: inline-flex; align-items: center; gap: .4rem; margin-top: .6rem; padding: .45rem .8rem; border-radius: 8px; background: #1c170e; color: #f4e9c8; font-family: var(--font-body); font-size: .76rem; font-weight: 500; text-decoration: none; }
-[data-theme="dark"] .pm-tip .pm-go { background: #d4b25a; color: #1a1408; }
-.pm-tip .pm-go svg { width: 12px; height: 12px; }
-.pm-tip small { display: block; margin: 0 0 .25rem; font-family: var(--font-display); font-style: italic; font-size: .9rem; color: var(--ink-3); }
-.pm-tip .pm-cnt { font-weight: 600; color: var(--gold); }
-.iv-zlist button.has-plan span:first-child::after { content: ''; display: inline-block; width: 7px; height: 7px; margin-left: .5rem; border-radius: 50%; background: var(--gold); vertical-align: middle; }
-.pm-leg.streets { border-style: dashed; }
-@media (max-width: 700px) {
-    .pm-tip { left: .6rem !important; right: .6rem; top: auto !important; bottom: .6rem; width: auto; max-width: none; transform: none; z-index: 8; }
-    .pm-badge { display: none; }
-    .pm-north { bottom: auto; top: .7rem; right: auto; left: .7rem; }
-}
-.pm-leg.key { border-style: dashed; }
 </style>
 </head>
 <body>
@@ -478,9 +419,6 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
         <symbol id="i-empty" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-dasharray="2.2 2.2"><rect x="4" y="5" width="16" height="14" rx="1"/></g></symbol>
         <symbol id="i-mill" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M8 21V11h8v10"/><path d="M12 11V4M12 7.5l-5-3.5M12 7.5l5-3.5M12 7.5l-4 5M12 7.5l4 5"/><path d="M3 21h18"/><path d="M4 18c1.3-1 2.7-1 4 0"/></g></symbol>
         <symbol id="i-brick" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="1"/><path d="M3 10h18M3 14h18M9 6v4M15 6v4M6 10v4M12 10v4M18 10v4M9 14v4M15 14v4"/></g></symbol>
-        <symbol id="i-cemetery" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v13M8 8h8"/><path d="M4 20h16"/><path d="M6.5 20v-3M17.5 20v-3" opacity=".7"/></g></symbol>
-        <symbol id="i-park" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c3 0 5 2.2 5 4.8 0 1-.4 1.9-1 2.6 1.4.7 2.2 2 2.2 3.4 0 2.3-2.1 4.2-4.7 4.2H10.5c-2.6 0-4.7-1.9-4.7-4.2 0-1.4.8-2.7 2.2-3.4-.6-.7-1-1.6-1-2.6C7 5.2 9 3 12 3z"/><path d="M12 17.5V21"/></g></symbol>
-        <symbol id="i-ferry" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 15h18l-2.4 4H5.4z"/><path d="M12 15V5M12 5l5 6h-5M12 7L8 11h4"/><path d="M2 21.5c1.5-.9 3-.9 4.5 0s3 .9 4.5 0 3-.9 4.5 0 3 .9 4.5 0" opacity=".6"/></g></symbol>
         <symbol id="i-arrow" viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     </defs>
 </svg>
@@ -541,39 +479,27 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
 
 <!-- ═══ § 2 СХЕМА ═══ -->
 <section class="iv-sec" id="skhema">
-    <div class="iv-wrap iv-cols">
-        <div class="iv-mark"><b>§ 2</b><span>План міста 1855 року</span></div>
-        <div>
-            <h2 class="iv-h2">Дубровиця на плані 1855 року</h2>
-            <div class="iv-plan-grid">
-                <div class="pm" id="ivMap">
-                    <div class="pm-vp" id="pmVp">
-                        <div class="pm-stage" id="pmStage">
-                            <img class="pm-img" id="pmImg" src="plan-1855.jpg" width="3200" height="2468" alt="План містечка Домбровиці 1855 року: Волинська губернія, Рівненський повіт, володіння графа Плятера" draggable="false" decoding="async">
-                            <svg class="pm-svg" id="pmSvg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"></svg>
-                            <div class="pm-layer" id="pmLayer"></div>
-                        </div>
-                        <div class="pm-tools" role="group" aria-label="Масштаб плану">
-                            <button type="button" id="pmIn" aria-label="Збільшити">+</button>
-                            <button type="button" id="pmOut" aria-label="Зменшити">−</button>
-                            <button type="button" id="pmFit" aria-label="До міста" title="До міста">⌂</button>
-                            <button type="button" id="pmAll" aria-label="Увесь план" title="Увесь план">⤢</button>
-                            <button type="button" id="pmFull" aria-label="На весь екран" title="На весь екран">⛶</button>
-                        </div>
-                        <div class="pm-badge"><b>Топографічний план</b>Дубровиця · 1855 р.</div>
-                        <div class="pm-north" title="На плані північ зліва — див. розу вітрів у правому верхньому куті"><svg viewBox="0 0 64 22" aria-hidden="true"><path d="M60 11H9M9 11l9-7M9 11l9 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><b>Пн</b></div>
-                        <div class="pm-tip" id="pmTip" hidden></div>
-                        <div class="pm-hint" id="pmHint">Ctrl + колесо або кнопки: масштаб · тягніть, щоб рухати</div>
+    <div class="iv-wrap">
+        <div class="iv-mark" style="position:static;margin-bottom:1.2rem;display:flex;align-items:baseline;gap:.9rem"><b>§ 2</b><span style="max-width:none;margin:0">План міста 1855 року</span></div>
+        <h2 class="iv-h2" style="max-width:none">Дубровиця на плані 1855 року</h2>
+        <div class="pl-grid">
+            <div class="pm" id="ivMap">
+                <div class="pm-vp" id="pmVp" tabindex="0" role="application" aria-label="План містечка Домбровиці 1855 року. Колесо миші або кнопки: масштаб, перетягування: рух">
+                    <img class="pm-img" id="pmImg" src="plan-1855.jpg" width="3200" height="2468" alt="План містечка Домбровиці 1855 року" draggable="false" decoding="async">
+                    <div class="pm-tools" role="group" aria-label="Масштаб плану">
+                        <button type="button" id="pmIn" aria-label="Збільшити">+</button>
+                        <button type="button" id="pmOut" aria-label="Зменшити">−</button>
+                        <button type="button" id="pmFit" aria-label="Показати весь план" title="Весь план"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="6" width="16" height="12" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M9 12h6M12 9v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" opacity="0"/><circle cx="12" cy="12" r="1.6" fill="currentColor"/></svg></button>
+                        <button type="button" id="pmFull" aria-label="На весь екран" title="На весь екран"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
                     </div>
-                    <div class="pm-legend" id="pmLegend" aria-label="Позначення на плані"></div>
-                    <p class="iv-plan-note"><strong>Як читати.</strong> Це план містечка, складений землемірами 1855 року для графа Плятера. <strong>Північ на ньому зліва</strong> (роза вітрів у правому верхньому куті): тому дорога на Пінськ, тобто Воробинське передмістя, йде ліворуч, а Бережницьке передмістя — праворуч. Інвентар старіший приблизно на півстоліття, тож вулиці могли змінитися. Золоті лінії — вулиці, яких стосується список; там, де назву плану й інвентаря не збігається, це сказано в підказці. Вулиць без лінії на плані ще не позначено.</p>
-                    <div class="pm-cal" id="pmCal" hidden></div>
+                    <button type="button" class="pm-close" id="pmClose" aria-label="Закрити повний екран">✕</button>
                 </div>
-                <div class="iv-plan-side">
-                    <h3>Вулиці й ряди</h3>
-                    <div id="ivZoneList"></div>
-                </div>
+                <p class="iv-plan-note"><strong>План містечка Домбровиці</strong> Рівненського повіту, складений 1855 року у вотчинному володінні графа Плятера. Північ на плані ліворуч: так намальована роза вітрів у правому верхньому куті. Інвентар старіший приблизно на півстоліття, тож вулиці могли змінитися. <span class="pm-touch">Двічі торкніться плану, щоб наблизити; кнопка праворуч відкриває його на весь екран.</span></p>
             </div>
+            <aside class="pm-side" id="pmSide" aria-label="Вулиці міста за інвентарем">
+                <div class="pm-side-h"><h3>Вулиці й ряди</h3><span id="pmSideN"></span></div>
+                <div class="pm-streets" id="pmStreets"></div>
+            </aside>
         </div>
     </div>
 </section>
@@ -867,17 +793,26 @@ if (!VILLAGE) (function(){
     }).join('');
 })();
 
-/* ── § 2: перелік за частинами міста ─────── */
+/* ── § 2: вулиці міста поруч із планом ─────── */
 var ZORDER = ['misto', 'vorobynske', 'berezhnytske'];
-$('ivZoneList').innerHTML = ZORDER.map(function(z){
-    var ss = STREETS.filter(function(s){ return s.zone === z; });
-    return '<ul class="iv-zlist" aria-label="' + esc(D.zones[z]) + '">' +
-        '<li style="border:0"><small style="padding:.8rem 0 .2rem;display:block;font-family:var(--font-body);font-size:.74rem;color:var(--color-text-light)">' + esc(D.zones[z]) + '</small></li>' +
-        ss.map(function(s){
-            return '<li><button type="button" data-go="' + s.id + '"><span>' + esc(s.name) + '</span><span>' +
-                (s.hh ? s.hh + ' ' + plural(s.hh, 'двір', 'двори', 'дворів') : 'без мешканців') + '</span></button></li>';
-        }).join('') + '</ul>';
-}).join('');
+(function(){
+    var ARW = '<svg aria-hidden="true" viewBox="0 0 16 16" width="12" height="12"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    var out = '', total = 0;
+    ZORDER.forEach(function(z){
+        var ss = STREETS.filter(function(s){ return s.zone === z; });
+        if (!ss.length) return;
+        out += '<div class="pm-z">' + esc(D.zones[z]) + '</div>';
+        ss.forEach(function(s){
+            total += s.hh;
+            var cnt = s.hh ? s.hh + ' ' + plural(s.hh, 'двір', 'двори', 'дворів') : 'без мешканців';
+            out += '<button type="button" class="pm-st" data-go="' + s.id + '"><span class="pm-st-n">' + esc(s.name) + '</span><span class="pm-st-c">' + cnt + '</span>' +
+                (s.orig ? '<span class="pm-st-o">' + esc(s.orig) + '</span>' : '') +
+                (s.desc ? '<span class="pm-st-d">' + esc(s.desc) + '</span>' : '') + '</button>';
+        });
+    });
+    $('pmStreets').innerHTML = out;
+    $('pmSideN').textContent = STREETS.length + ' ' + plural(STREETS.length, 'вулиця', 'вулиці', 'вулиць');
+})();
 
 /* ── § 3: реєстр ──────────────────────────── */
 var state = { q: '', zone: '', f: '', cat: '' };
@@ -993,9 +928,7 @@ function watch(){
 }
 function mark(id){
     idx.querySelectorAll('a').forEach(function(a){ a.classList.toggle('on', a.getAttribute('data-go') === id); });
-    document.querySelectorAll('#ivPlan .st').forEach(function(g){ g.classList.toggle('on', g.getAttribute('data-st') === id); });
-    document.querySelectorAll('#pmSvg g').forEach(function(g){ g.classList.toggle('on', g.getAttribute('data-st') === id); });
-    document.querySelectorAll('#ivZoneList button').forEach(function(b){ b.classList.toggle('on', (b.getAttribute('data-go') || b.getAttribute('data-plan')) === id); });
+    document.querySelectorAll('.pm-st').forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-go') === id); });
 }
 
 function go(id){
@@ -1056,12 +989,6 @@ document.addEventListener('click', function(e){
         syncChips(); render();
         $('reyestr').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-});
-document.querySelectorAll('#ivPlan .st').forEach(function(g){
-    g.addEventListener('click', function(){ go(g.getAttribute('data-st')); });
-    g.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(g.getAttribute('data-st')); } });
-    g.addEventListener('mouseenter', function(){ g.classList.add('on'); });
-    g.addEventListener('mouseleave', function(){ g.classList.remove('on'); });
 });
 
 /* ── § 4: прізвища і ремесла ─────────────── */
@@ -1151,184 +1078,112 @@ var m = /^#vul-([a-z-]+)$/.exec(location.hash);
 if (m) setTimeout(function(){ go(m[1]); }, 80);
 
 
-/* ── План 1855 року: вулиці, позначки, розмітка ── */
+/* ── План 1855 року: масштаб, рух, повний екран ── */
 (function(){
     var box = document.getElementById('ivMap');
     if (!box || VILLAGE) return;
-    var PLAN = {
-        iw: 3200, ih: 2468,
-        marks: [{"k": "piarists", "p": [37.03, 45.71], "t": "Костел і колегіум отців-піарів", "d": "На плані підписано «Костёл». За інвентарем, фундушевий плац піарів виходив фронтом до ринку. Пунктирна доріжка від костелу до ринку — ймовірно, Передкостельна вуличка."}, {"k": "church", "p": [46.97, 49.03], "t": "Церква Святого Миколая", "d": "Червоний хрест на церковній землі («Ц. З.») біля Горині. За інвентарем, Замкова (Миколаївська) вулиця вела від ринку саме до цієї церкви та замку."}, {"k": "church", "p": [26.34, 53.16], "t": "Кам’яна церква", "d": "На плані підписано «Церковь»: храм на церковній землі, ліворуч від ринку, при дорозі на Пінськ."}, {"k": "castle", "p": [49.53, 51.13], "t": "Місце замку (ймовірно)", "d": "Земляні укріплення з ровом і валом поруч із церквою Св. Миколая. За інвентарем, замок, обведений ровом, лежав наприкінці Замкової вулиці. Ототожнення ймовірне: на плані це місце не підписано."}, {"k": "ferry", "p": [60.44, 37.93], "t": "Пором через Горинь", "d": "На плані підписано «Паромъ»; дорога від нього йде на Березне. Перевіз показано й на атласі 1798 року."}, {"k": "mill", "p": [78.5, 51.22], "t": "Млин", "d": "На плані підписано «Мельница»: водяний млин на березі Горині, від якого стежка веде до дороги на Рівне."}, {"k": "cemetery", "p": [16.41, 55.92], "t": "Єврейський цвинтар", "d": "На плані підписано «Кладбище Еврейское». В інвентарі це окописько, за яким закінчувалося Воробинське передмістя."}, {"k": "park", "p": [43.44, 45.38], "t": "Казенна земля з парком", "d": "На плані підписано «Казённая земля»: велика ділянка з садом чи гаєм між костелом і церквою Св. Миколая. Рожевим на плані позначено панські (помещицкі) забудови."}],
-        streets: {"rynok": {"pts": [[34.12, 51.13], [38.94, 51.13], [38.94, 56.81], [34.12, 56.81]], "closed": true, "sub": "Ринок", "note": "Ринкова площа зі шпихлірами й крамницями. Інвентар описує її чотири ряди забудови."}, "vorobynska": {"pts": [[31.31, 49.8], [32.81, 50.24], [34.12, 50.65]], "closed": false, "sub": "Дорога на Пінськ", "note": "Початок дороги «изъ Пинска» біля ринку. Позначено за напрямком: інвентар веде Воробинську вулицю на північ від ринку, а на плані північ ліворуч."}, "vorob-trakt": {"pts": [[10.62, 49.51], [15.62, 49.51], [21.88, 49.51], [28.12, 49.59], [31.31, 49.8]], "closed": false, "sub": "Дорога на Пінськ", "note": "Дорога з Пінська, тобто Литовський тракт інвентаря. Уздовж неї ряди садиб; на її краю лежить єврейський цвинтар, яким закінчувалося передмістя."}, "zamkova": {"pts": [[39.25, 50.81], [43.75, 50.89], [46.25, 50.65], [46.88, 49.51]], "closed": false, "sub": "Дорога до церкви", "note": "Від ринку на схід до церкви Св. Миколая й замку."}, "peredkostelna": {"pts": [[37.12, 47.33], [37.12, 50.49]], "closed": false, "sub": "Пунктирна доріжка", "note": "Доріжка між костелом піарів і ринком. Ототожнення з Передкостельною вулицею ймовірне."}, "berezhnytska": {"pts": [[39.22, 53.73], [45.0, 53.73], [52.81, 53.69], [62.66, 52.71]], "closed": false, "sub": "Єврейські ряди", "note": "Пряма вулиця від ринку на південь із рядами єврейських ділянок по обидва боки. Вона переходить у дорогу на Рівне."}, "shkilna": {"pts": [[39.53, 59.44], [46.56, 59.6], [52.97, 58.39], [62.59, 56.6]], "closed": false, "sub": "«Улица Шпитальная»", "note": "На плані 1855 року цю вулицю підписано «Шпитальная». Інвентар веде тут Шкільну, де стояли синагога й шпиталь: найімовірніше, це та сама вулиця."}, "berezh-trakt": {"pts": [[62.66, 52.71], [63.06, 51.9], [69.84, 51.99], [75.19, 53.28], [81.06, 55.19], [84.75, 57.78], [88.41, 60.66], [93.56, 62.72]], "closed": false, "sub": "Дорога «въ Ровно»", "note": "Бережницький тракт: від міста на південь до Рівного. Уздовж дороги на плані двома рядами жовті садиби, при ній млин."}}
-    };
-    var KINDS = { piarists: 'Костел і колегіум', church: 'Церкви', castle: 'Замок', ferry: 'Пором', mill: 'Млин', cemetery: 'Єврейський цвинтар', park: 'Казенна земля',
-                  synagogue: 'Синагога', hospital: 'Шпиталь', distillery: 'Винокурня', bath: 'Лазня', manor: 'Панський двір' };
-    var ARROW = '<svg aria-hidden="true"><use href="#i-arrow"/></svg>';
-    var vp = $('pmVp'), stage = $('pmStage'), img = $('pmImg'), layer = $('pmLayer'), svg = $('pmSvg'), tip = $('pmTip');
-    var HOME = { s: 1.14, cx: 52.5, cy: 51 };
-    var Z = { s: 1, x: 0, y: 0 }, hidden = {}, cur = null, animT = 0, homed = true;
-    function homeS(){ return box.classList.contains('full') ? 1 : Math.max(HOME.s, vp.clientHeight / Math.max(stage.offsetHeight, 1)); }
-    function zc(){ vp.classList.toggle('z', Z.s > homeS() * 1.01); }
-    function apply(){ stage.style.transform = 'translate(' + Z.x + 'px,' + Z.y + 'px) scale(' + Z.s + ')'; stage.style.setProperty('--z', Z.s); }
+    var vp = $('pmVp'), img = $('pmImg'), bIn = $('pmIn'), bOut = $('pmOut');
+    var IW = 3200, IH = 2468, MAXK = 6;
+    var V = { z: 1, x: 0, y: 0, fit: 1 };            /* z — кратність відносно «весь план» */
+    var pts = {}, lastD = 0, moved = false, tapT = 0, tapX = 0, tapY = 0, animT = 0;
+    function vw(){ return vp.clientWidth; } function vh(){ return vp.clientHeight; }
+    function calcFit(){ V.fit = Math.min(vw() / IW, vh() / IH); }
+    function sc(){ return V.fit * V.z; }
     function clamp(){
-        var w = vp.clientWidth, h = vp.clientHeight, sw = stage.offsetWidth * Z.s, sh = stage.offsetHeight * Z.s;
-        Z.x = sw <= w ? (w - sw) / 2 : Math.min(0, Math.max(w - sw, Z.x));
-        Z.y = sh <= h ? (h - sh) / 2 : Math.min(0, Math.max(h - sh, Z.y));
+        var w = vw(), h = vh(), iw = IW * sc(), ih = IH * sc();
+        V.x = iw <= w ? (w - iw) / 2 : Math.min(0, Math.max(w - iw, V.x));
+        V.y = ih <= h ? (h - ih) / 2 : Math.min(0, Math.max(h - ih, V.y));
     }
-    function sizeVp(){ if (box.classList.contains('full')) return; var base = stage.offsetHeight * .74; vp.style.height = (innerWidth < 700 ? Math.max(base, Math.min(innerHeight * .6, 470)) : Math.min(base, innerHeight * .8)) + 'px'; }
-    function place(s, cx, cy){ var w = vp.clientWidth, h = vp.clientHeight; Z.s = s; Z.x = w / 2 - cx / 100 * stage.offsetWidth * s; Z.y = h / 2 - cy / 100 * stage.offsetHeight * s; clamp(); apply(); zc(); }
-    function fit(){ sizeVp(); homed = true; place(homeS(), HOME.cx, HOME.cy); hideTip(); }
-    function whole(){ homed = false; sizeVp(); place(1, 50, 50); hideTip(); }
-    function zoomAt(f, cx, cy){
-        var ns = Math.max(1, Math.min(8, Z.s * f)); f = ns / Z.s;
-        homed = false; Z.x = cx - (cx - Z.x) * f; Z.y = cy - (cy - Z.y) * f; Z.s = ns; clamp(); apply(); zc(); if (cur) placeTip();
+    function apply(){
+        img.style.transform = 'translate(' + V.x.toFixed(2) + 'px,' + V.y.toFixed(2) + 'px) scale(' + sc().toFixed(5) + ')';
+        vp.classList.toggle('z', V.z > 1.001 || box.classList.contains('full'));
+        bIn.disabled = V.z >= MAXK - .001; bOut.disabled = V.z <= 1.001;
     }
-    function animate(fn){ vp.classList.add('anim'); fn(); clearTimeout(animT); animT = setTimeout(function(){ vp.classList.remove('anim'); }, 800); }
-    function iconSvg(k){ return '<svg aria-hidden="true"><use href="#i-' + (KINDS[k] ? k : 'empty') + '"/></svg>'; }
-    function stInfo(id){ return STREETS.filter(function(s){ return s.id === id; })[0]; }
-    function pl(n){ return n + ' ' + plural(n, 'двір', 'двори', 'дворів'); }
+    function animated(fn){ vp.classList.add('anim'); fn(); clearTimeout(animT); animT = setTimeout(function(){ vp.classList.remove('anim'); }, 500); }
+    function zoomTo(nz, cx, cy){                       /* масштаб із нерухомою точкою (cx, cy) у вікні */
+        nz = Math.max(1, Math.min(MAXK, nz));
+        var k = nz / V.z, ox = (cx - V.x), oy = (cy - V.y);
+        V.x = cx - ox * k; V.y = cy - oy * k; V.z = nz; clamp(); apply();
+    }
+    function reset(){ calcFit(); V.z = 1; V.x = 0; V.y = 0; clamp(); apply(); }
+    function fitViewport(){
+        if (box.classList.contains('full')) { vp.style.height = ''; }
+        else { var w = vw(); vp.style.height = Math.round(Math.min(Math.max(w * IH / IW, 360), innerHeight * .82)) + 'px'; }
+        var was = V.z; calcFit(); if (was <= 1.001) { V.z = 1; V.x = 0; V.y = 0; } clamp(); apply();
+        $('pmSide').style.setProperty('--pmh', box.offsetHeight + 'px');
+    }
 
-    /* позначки */
-    layer.innerHTML = PLAN.marks.map(function(m, i){
-        return '<button type="button" class="pm-mark" data-i="' + i + '" style="left:' + m.p[0] + '%;top:' + m.p[1] + '%" aria-label="' + esc(m.t) + '">' + iconSvg(m.k) + '</button>';
-    }).join('');
+    /* кнопки */
+    bIn.addEventListener('click', function(){ animated(function(){ zoomTo(V.z * 1.6, vw() / 2, vh() / 2); }); });
+    bOut.addEventListener('click', function(){ animated(function(){ zoomTo(V.z / 1.6, vw() / 2, vh() / 2); }); });
+    $('pmFit').addEventListener('click', function(){ animated(reset); });
+    function setFull(on){
+        box.classList.toggle('full', on); document.body.style.overflow = on ? 'hidden' : '';
+        V.z = 1; fitViewport(); reset();
+        if (on) vp.focus();
+    }
+    $('pmFull').addEventListener('click', function(){ setFull(!box.classList.contains('full')); });
+    $('pmClose').addEventListener('click', function(){ setFull(false); });
 
-    /* вулиці */
-    var sh = '';
-    Object.keys(PLAN.streets).forEach(function(id){
-        var S = PLAN.streets[id], st = stInfo(id), pts = S.pts.map(function(p){ return p[0] + ',' + p[1]; }).join(' ');
-        sh += '<g data-st="' + id + '"><title>' + esc(st ? st.name : id) + '</title>' +
-              (S.closed ? '<polygon class="area" points="' + pts + '" data-pst="' + id + '"/>' : '<polyline class="vis" points="' + pts + '"/><polyline class="hit" points="' + pts + '" data-pst="' + id + '"/>') + '</g>';
-    });
-    svg.innerHTML = sh;
-
-    /* легенда: види позначок + вулиці */
-    var counts = {}; PLAN.marks.forEach(function(m){ counts[m.k] = (counts[m.k] || 0) + 1; });
-    $('pmLegend').innerHTML = '<button type="button" class="pm-leg streets" data-k="__st" aria-pressed="true"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M3 17c4-1 6-8 9-8s5 6 9 5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>Вулиці</button>' +
-        '<button type="button" class="pm-leg key" data-k="__key"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="4" y="5" width="7" height="6" rx="1" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="13" y="5" width="7" height="6" rx="1" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="4" y="13" width="7" height="6" rx="1" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="13" y="13" width="7" height="6" rx="1" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>Умовні знаки плану</button>' +
-        Object.keys(counts).map(function(k){ return '<button type="button" class="pm-leg" data-k="' + k + '" aria-pressed="true">' + iconSvg(k) + esc(KINDS[k]) + '</button>'; }).join('');
-    $('pmLegend').addEventListener('click', function(e){
-        var b = e.target.closest('.pm-leg'); if (!b) return;
-        var k = b.getAttribute('data-k');
-        if (k === '__key') { hideTip(); animate(function(){ homed = false; var w = vp.clientWidth, h = vp.clientHeight, sw = stage.offsetWidth, sh = stage.offsetHeight, bw = 17 / 100 * sw, bh = 15 / 100 * sh; place(Math.max(1, Math.min(6, Math.min(w * .9 / bw, h * .9 / bh))), 17.5, 80.5); }); return; }
-        hidden[k] = !hidden[k]; b.setAttribute('aria-pressed', String(!hidden[k]));
-        if (k === '__st') svg.classList.toggle('off', !!hidden[k]);
-        else layer.querySelectorAll('.pm-mark').forEach(function(el){ var m = PLAN.marks[+el.getAttribute('data-i')]; el.hidden = !!hidden[m.k]; });
-        hideTip();
-    });
-
-    /* підказка */
-    function placeTip(){
-        if (!cur) return;
-        var x = Z.x + cur.x / 100 * stage.offsetWidth * Z.s, y = Z.y + cur.y / 100 * stage.offsetHeight * Z.s;
-        tip.style.left = Math.max(135, Math.min(vp.clientWidth - 135, x)) + 'px'; tip.style.top = Math.max(150, y) + 'px';
-    }
-    function setTip(html, x, y){
-        cur = { x: x, y: y }; tip.innerHTML = '<button type="button" class="pm-x" aria-label="Закрити">✕</button>' + html; tip.hidden = false; placeTip();
-    }
-    function hideTip(){ cur = null; tip.hidden = true; layer.querySelectorAll('.pm-mark.on').forEach(function(el){ el.classList.remove('on'); }); }
-    function showMark(i){
-        var m = PLAN.marks[i];
-        layer.querySelectorAll('.pm-mark').forEach(function(el){ el.classList.toggle('on', +el.getAttribute('data-i') === i); });
-        setTip('<h4>' + esc(m.t) + '</h4><p>' + esc(m.d) + '</p>', m.p[0], m.p[1]);
-    }
-    function showStreet(id, x, y){
-        var S = PLAN.streets[id], st = stInfo(id); if (!S || !st) return;
-        layer.querySelectorAll('.pm-mark.on').forEach(function(el){ el.classList.remove('on'); });
-        var n = st.hh ? '<span class="pm-cnt">' + pl(st.hh) + '</span> у списку' : 'Без мешканців у списку';
-        setTip('<small>' + esc(S.sub) + '</small><h4>' + esc(st.name) + '</h4><p>' + n + '. ' + esc(S.note) + '</p>' +
-               '<a class="pm-go" href="#vul-' + id + '" data-go="' + id + '">Хто тут жив' + ARROW + '</a>', x, y);
-        if (typeof mark === 'function') mark(id);
-    }
-    function bbox(id){
-        var P = PLAN.streets[id].pts, x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
-        P.forEach(function(p){ x0 = Math.min(x0, p[0]); x1 = Math.max(x1, p[0]); y0 = Math.min(y0, p[1]); y1 = Math.max(y1, p[1]); });
-        return { x0: x0, y0: y0, x1: x1, y1: y1, cx: (x0 + x1) / 2, cy: (y0 + y1) / 2 };
-    }
-    /* наблизити вулицю на плані */
-    function focusStreet(id){
-        var S = PLAN.streets[id]; if (!S) return false;
-        var bb = bbox(id), sw = stage.offsetWidth, sh2 = stage.offsetHeight, w = vp.clientWidth, h = vp.clientHeight;
-        var bw = Math.max((bb.x1 - bb.x0) / 100 * sw, 90), bh = Math.max((bb.y1 - bb.y0) / 100 * sh2, 90);
-        var ns = Math.max(1, Math.min(4.5, Math.min(w * .6 / bw, h * .6 / bh)));
-        animate(function(){ homed = false; place(ns, bb.cx, bb.cy); });
-        showStreet(id, bb.cx, bb.cy);
-        return true;
-    }
-    layer.addEventListener('click', function(e){ var b = e.target.closest('.pm-mark'); if (b) { e.stopPropagation(); showMark(+b.getAttribute('data-i')); } });
-    tip.addEventListener('click', function(e){ if (e.target.closest('.pm-x')) hideTip(); });
-    svg.addEventListener('click', function(e){
-        var t = e.target.closest('[data-pst]'); if (!t) return;
-        var r = stage.getBoundingClientRect();
-        showStreet(t.getAttribute('data-pst'), (e.clientX - r.left) / r.width * 100, (e.clientY - r.top) / r.height * 100);
-    });
-    /* список вулиць поруч: клік наближає вулицю на плані */
-    document.querySelectorAll('#ivZoneList button').forEach(function(b){
-        var id = b.getAttribute('data-go');
-        if (PLAN.streets[id]) { b.removeAttribute('data-go'); b.setAttribute('data-plan', id); b.classList.add('has-plan'); b.title = 'Показати на плані'; }
-    });
-    document.addEventListener('click', function(e){
-        var b = e.target.closest('[data-plan]'); if (!b) return;
-        e.preventDefault(); if (!hidden.__st) {} else { hidden.__st = false; svg.classList.remove('off'); var lg = document.querySelector('.pm-leg[data-k="__st"]'); if (lg) lg.setAttribute('aria-pressed', 'true'); }
-        var r = vp.getBoundingClientRect(); if (r.top < 60 || r.bottom > innerHeight) vp.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' });
-        focusStreet(b.getAttribute('data-plan'));
-    });
-
-    /* масштаб і рух */
-    $('pmIn').addEventListener('click', function(){ animate(function(){ zoomAt(1.5, vp.clientWidth / 2, vp.clientHeight / 2); }); });
-    $('pmOut').addEventListener('click', function(){ animate(function(){ zoomAt(1 / 1.5, vp.clientWidth / 2, vp.clientHeight / 2); }); });
-    $('pmFit').addEventListener('click', function(){ animate(fit); });
-    $('pmAll').addEventListener('click', function(){ animate(whole); });
-    $('pmFull').addEventListener('click', function(){
-        box.classList.toggle('full'); document.body.style.overflow = box.classList.contains('full') ? 'hidden' : '';
-        vp.style.height = ''; fit();
-    });
+    /* колесо: масштаб під курсором без Ctrl; на «всьому плані» прокрутка вниз гортає сторінку */
     vp.addEventListener('wheel', function(e){
-        if (!(e.ctrlKey || e.metaKey || box.classList.contains('full'))) return;
-        e.preventDefault(); var r = vp.getBoundingClientRect(); zoomAt(e.deltaY < 0 ? 1.2 : 1 / 1.2, e.clientX - r.left, e.clientY - r.top);
+        if (e.deltaY > 0 && V.z <= 1.001 && !box.classList.contains('full')) return;
+        e.preventDefault();
+        var r = vp.getBoundingClientRect(), d = e.deltaMode === 1 ? e.deltaY * 16 : e.deltaY;
+        zoomTo(V.z * Math.exp(-Math.max(-120, Math.min(120, d)) * .0022), e.clientX - r.left, e.clientY - r.top);
     }, { passive: false });
-    var P = {}, last = 0, moved = false;
-    vp.addEventListener('pointerdown', function(e){ if (e.target.closest('.pm-tools,.pm-tip,.pm-mark')) return; P[e.pointerId] = { x: e.clientX, y: e.clientY }; moved = false; last = 0; vp.classList.remove('anim'); });
-    vp.addEventListener('pointermove', function(e){
-        var p = P[e.pointerId]; if (!p) return; var ids = Object.keys(P);
-        if (ids.length === 2) { P[e.pointerId] = { x: e.clientX, y: e.clientY }; var a = P[ids[0]], b = P[ids[1]], d = Math.hypot(a.x - b.x, a.y - b.y), r = vp.getBoundingClientRect(); if (last) zoomAt(d / last, (a.x + b.x) / 2 - r.left, (a.y + b.y) / 2 - r.top); last = d; return; }
-        if (stage.offsetWidth * Z.s <= vp.clientWidth + 1 && stage.offsetHeight * Z.s <= vp.clientHeight + 1) return;
-        if (!moved && Math.hypot(e.clientX - p.x, e.clientY - p.y) < 4) return;
-        vp.setPointerCapture(e.pointerId); vp.classList.add('drag'); moved = true; homed = false;
-        Z.x += e.clientX - p.x; Z.y += e.clientY - p.y; P[e.pointerId] = { x: e.clientX, y: e.clientY }; clamp(); apply(); if (cur) placeTip();
-    });
-    function up(e){ delete P[e.pointerId]; last = 0; vp.classList.remove('drag'); }
-    vp.addEventListener('pointerup', up); vp.addEventListener('pointercancel', up);
-    vp.addEventListener('click', function(e){ if (!e.target.closest('.pm-mark,.pm-tip,[data-pst],.pm-tools') && !moved) hideTip(); });
-    img.addEventListener('load', function(){ fit(); });
-    addEventListener('resize', function(){ if (homed) fit(); else { clamp(); apply(); } });
-    setTimeout(function(){ $('pmHint').style.opacity = 0; }, 6000);
-    document.addEventListener('keydown', function(e){ if (e.key === 'Escape') { if (box.classList.contains('full')) $('pmFull').click(); else hideTip(); } });
-    if (img.complete && img.naturalWidth) fit();
 
-    /* режим розмітки: ?mark=1 — клік по плану записує точки в відсотках */
-    if (params.get('mark')) {
-        var cal = $('pmCal'); cal.hidden = false;
-        var OUT = { streets: {}, marks: [] };
-        var opts = '<optgroup label="Вулиці (лінія з кількох кліків)">' + STREETS.filter(function(s){ return s.hh; }).map(function(s){ return '<option value="s:' + s.id + '">' + esc(s.name) + '</option>'; }).join('') + '</optgroup>' +
-                   '<optgroup label="Позначки (один клік)">' + Object.keys(KINDS).map(function(k){ return '<option value="m:' + k + '">' + esc(KINDS[k]) + '</option>'; }).join('') + '</optgroup>';
-        cal.innerHTML = '<b>Режим розмітки.</b> Оберіть, що наносите, і клацайте по плану. Вулиця: кілька кліків уздовж неї.' +
-            '<div class="row" style="margin-top:.6rem"><select id="calSel">' + opts + '</select><button type="button" id="calUndo">Скасувати останню точку</button><button type="button" id="calCopy">Копіювати JSON</button></div><textarea id="calOut" readonly></textarea>';
-        function dump(){ $('calOut').value = JSON.stringify(OUT); }
-        stage.addEventListener('click', function(e){
-            if (e.target.closest('.pm-mark')) return;
-            var r = stage.getBoundingClientRect(), x = +((e.clientX - r.left) / r.width * 100).toFixed(2), y = +((e.clientY - r.top) / r.height * 100).toFixed(2), v = $('calSel').value.split(':');
-            if (v[0] === 's') { (OUT.streets[v[1]] = OUT.streets[v[1]] || []).push([x, y]); } else { OUT.marks.push({ k: v[1], p: [x, y], t: KINDS[v[1]] }); }
-            var d = document.createElement('i'); d.className = 'pm-dot'; d.style.left = x + '%'; d.style.top = y + '%'; layer.appendChild(d); dump();
-        });
-        $('calUndo').addEventListener('click', function(){
-            var v = $('calSel').value.split(':'), dots = layer.querySelectorAll('.pm-dot');
-            if (v[0] === 's' && OUT.streets[v[1]] && OUT.streets[v[1]].length) OUT.streets[v[1]].pop(); else if (OUT.marks.length) OUT.marks.pop(); else return;
-            if (dots.length) dots[dots.length - 1].remove(); dump();
-        });
-        $('calCopy').addEventListener('click', function(){ $('calOut').select(); document.execCommand('copy'); });
+    /* перетягування й щипок */
+    vp.addEventListener('pointerdown', function(e){
+        if (e.target.closest('.pm-tools,.pm-close')) return;
+        if (e.pointerType === 'mouse' && e.button !== 0) return;
+        pts[e.pointerId] = { x: e.clientX, y: e.clientY }; moved = false; lastD = 0; vp.classList.remove('anim');
+        if (V.z > 1.001 || e.pointerType === 'mouse') { try { vp.setPointerCapture(e.pointerId); } catch (x) {} }
+    });
+    vp.addEventListener('pointermove', function(e){
+        var p = pts[e.pointerId]; if (!p) return; var ids = Object.keys(pts);
+        if (ids.length >= 2) {
+            pts[e.pointerId] = { x: e.clientX, y: e.clientY };
+            var a = pts[ids[0]], b = pts[ids[1]], d = Math.hypot(a.x - b.x, a.y - b.y), r = vp.getBoundingClientRect();
+            if (lastD) zoomTo(V.z * d / lastD, (a.x + b.x) / 2 - r.left, (a.y + b.y) / 2 - r.top);
+            lastD = d; moved = true; return;
+        }
+        var dx = e.clientX - p.x, dy = e.clientY - p.y;
+        if (!moved && Math.hypot(dx, dy) < 3) return;
+        if (V.z <= 1.001 && e.pointerType !== 'mouse') return;
+        moved = true; vp.classList.add('drag');
+        V.x += dx; V.y += dy; pts[e.pointerId] = { x: e.clientX, y: e.clientY }; clamp(); apply();
+    });
+    function up(e){
+        var was = pts[e.pointerId]; delete pts[e.pointerId]; lastD = 0;
+        if (!Object.keys(pts).length) vp.classList.remove('drag');
+        if (was && !moved && e.type === 'pointerup' && !e.target.closest('.pm-tools,.pm-close')) {      /* подвійний клац/торкання */
+            var t = Date.now();
+            if (t - tapT < 320 && Math.hypot(e.clientX - tapX, e.clientY - tapY) < 26) {
+                var r = vp.getBoundingClientRect(); tapT = 0;
+                animated(function(){ if (V.z > 1.5) reset(); else zoomTo(Math.max(V.z * 2.4, 2.4), e.clientX - r.left, e.clientY - r.top); });
+            } else { tapT = t; tapX = e.clientX; tapY = e.clientY; }
+        }
     }
-    /* глибоке посилання: ?plan=shkilna */
-    var pp = params.get('plan'); if (pp && PLAN.streets[pp]) setTimeout(function(){ focusStreet(pp); }, 400);
+    vp.addEventListener('pointerup', up); vp.addEventListener('pointercancel', up);
+    vp.addEventListener('dblclick', function(e){ e.preventDefault(); });
+
+    /* клавіатура */
+    vp.addEventListener('keydown', function(e){
+        var st = 60, k = e.key;
+        if (k === '+' || k === '=') { e.preventDefault(); bIn.click(); }
+        else if (k === '-' || k === '_') { e.preventDefault(); bOut.click(); }
+        else if (k === '0') { e.preventDefault(); $('pmFit').click(); }
+        else if (k === 'ArrowLeft' || k === 'ArrowRight' || k === 'ArrowUp' || k === 'ArrowDown') {
+            if (V.z <= 1.001) return; e.preventDefault();
+            V.x += k === 'ArrowLeft' ? st : k === 'ArrowRight' ? -st : 0; V.y += k === 'ArrowUp' ? st : k === 'ArrowDown' ? -st : 0; clamp(); apply();
+        }
+    });
+    document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && box.classList.contains('full')) setFull(false); });
+
+    addEventListener('resize', function(){ fitViewport(); });
+    img.addEventListener('load', fitViewport);
+    fitViewport(); if (img.complete) fitViewport();
 })();
 })();
 </script>
