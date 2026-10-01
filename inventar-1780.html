@@ -222,6 +222,12 @@ html { scroll-behavior: smooth; }
 .sn-nav { display: flex; gap: .5rem; margin-top: 1.2rem; }
 
 /* ══ МЕШКАНЦІ ══ */
+.hb-fh { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: baseline; gap: .3rem 1rem; margin: 1.6rem 0 -.2rem; padding-bottom: .7rem; border-bottom: 2px solid var(--ink); }
+.hb-fh:first-child { margin-top: 0; }
+.hb-fh h3 { margin: 0; font-family: var(--font-display); font-weight: 500; font-size: 1.7rem; color: var(--color-text); }
+.hb-fh i { font-family: var(--font-display); font-size: 1.05rem; color: var(--color-text-light); }
+.hb-fh span { margin-left: auto; font-family: var(--font-body); font-size: .78rem; color: var(--gold); font-weight: 600; }
+.hb-fh p { flex: 1 1 100%; margin: .2rem 0 0; max-width: 70ch; font-family: var(--font-body); font-size: .86rem; line-height: 1.6; color: var(--color-text-secondary); }
 .hb-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); gap: 1rem; margin: 1.6rem 0 0; }
 .hb { position: relative; display: flex; flex-direction: column; min-height: 200px; padding: 1.4rem 1.4rem 1.2rem; border: 1px solid var(--color-border-light); border-radius: 14px; background: var(--color-bg); color: inherit; text-decoration: none; transition: border-color .3s, box-shadow .4s var(--ease), transform .4s var(--ease); }
 a.hb:hover { border-color: var(--gold); box-shadow: 0 14px 34px rgba(20,15,8,.12); transform: translateY(-3px); }
@@ -421,7 +427,7 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
 <div class="cx-cards one rv"><article><h3>Можлива ідентифікація: загадковий камінь з книги єврейської громади</h3><p>Книга пам'яті єврейської громади Дубровиці зберегла унікальне свідчення: <strong>на північ від міста, в провулку біля лазні</strong>, стирчала скеля заввишки близько півтора метра з вирізьбленими написами та цифрами, що починались з «17…». Жодного офіційного пояснення цьому каменю не було залишено. <br><br> З огляду на інвентарний опис 1776 року, це <strong>майже напевно один із семи межових каменів</strong> Піарів. Воробинський провулок (де документ фіксує один із каменів) розташований якраз на північ від ринку, і «лазня» (баня) цілком могла існувати поряд. Цифри «17…» точно відповідають даті встановлення — <strong>1776</strong>. Написи, що «ніколи не були розшифровані» — це, вірогідно, латинські ініціали та титули тогочасного власника Бжостовського та ім'я MARYA, що без знання контексту виглядали б загадково. Кілька каменів, за описом, були «nieco wkopany» — частково вкопані в землю, а значить їхня висота над поверхнею цілком могла відповідати описаним «приблизно півтора метра». <br><br> Якщо це справді один із каменів 1776 року, він зберігся щонайменше до середини XX ст. — і може існувати досі, просто не впізнаний.</p></article></div></div></div></section>
 
 <section class="iv-sec" id="meshkantsi"><div class="iv-wrap iv-cols"><div class="iv-mark"><b>§ 6</b><span>Мешканці</span></div><div><h2 class="iv-h2">Хто жив у місті й селах</h2>
-<p class="iv-p">Інвентар записує двори поіменно: господаря, синів, дочок, братів і сестер. Списки міста й сіл маєтку переносяться сюди по черзі, зі збереженням порядку вулиць і рядів.</p>
+<p class="iv-p">Інвентар записує двори поіменно: господаря, синів, дочок, братів і сестер. Маєток він описує за фільварками: до кожного панського двору належали свої села. Списки переносяться сюди по черзі, зі збереженням порядку вулиць і рядів.</p>
 <div class="hb-grid" id="hbGrid"></div>
 <div class="rg-wrap"><h3>Реєстр ринкових ділянок</h3><p class="rg-note">Документ 00009318-9 є частиною загального реєстру ринкових ділянок. Він містить таблицю з іменами власників крамниць, шпихлірів та вільних ділянок. <strong>Переважна більшість прізвищ — єврейські</strong>, що цілком відповідає загальному укладу польських та волинських містечок тієї доби: ринкова торгівля зосереджувалась у руках єврейської громади. Прочитання деяких прізвищ є наближеним через специфіку скоропису.</p>
 <div class="rg"><div class="rg-r h"><span class="n">#</span><span class="nm">Ім&#x27;я та прізвище</span><span class="ds">Опис ділянки</span><span class="pr">Прути</span></div><div class="rg-r"><span class="n">1</span><span class="nm">Ізраель Хаймович</span><span class="ds">Кутова ділянка (rogowy); муровані крамниці та вільні крамниці; шпихлір</span><span class="pr">21</span></div><div class="rg-r"><span class="n">2</span><span class="nm">Зельман Аронович</span><span class="ds">Ділянка на ринку</span><span class="pr">17</span></div><div class="rg-r"><span class="n">3</span><span class="nm">Хаїм Йонашович</span><span class="ds">Ділянка на ринку</span><span class="pr">26</span></div><div class="rg-r"><span class="n">6</span><span class="nm">Tenże (він же)</span><span class="ds">Місце під шпихлір біля Люботина; 2-га пієржея вулиці Замкової</span><span class="pr">22</span></div><div class="rg-r"><span class="n">9–10</span><span class="nm">Давидович Гімпелович</span><span class="ds">Кутова ділянка; 3-тя пієржея (ряд забудови)</span><span class="pr">17</span></div><div class="rg-r"><span class="n">12</span><span class="nm">Міхель Абрамович</span><span class="ds">Ділянка на Завалі (na Zawale), під крамницею</span><span class="pr">10</span></div><div class="rg-r"><span class="n">13</span><span class="nm">Юда (Tenże)</span><span class="ds">Ділянка під крамницею</span><span class="pr">10</span></div><div class="rg-r"><span class="n">14–15</span><span class="nm">Лейба Шейнович</span><span class="ds">Дві ділянки; Янович Шейнер</span><span class="pr">2</span></div><div class="rg-r"><span class="n">18–20</span><span class="nm">Мошка Ошермович</span><span class="ds">Під крамницями; Юдка Абрамович; місце на Шкільній вулиці; під брамою; шпихлір</span><span class="pr">16 / 20 / 7</span></div><div class="rg-r"><span class="n">21–22</span><span class="nm">Янкель Гіршович · Шибер Висоцький</span><span class="ds">Ділянки на Вуличному провулку</span><span class="pr">20 / 29</span></div><div class="rg-r"><span class="n">25–26</span><span class="nm">Мендель Аронович</span><span class="ds">Навпроти Воробинської вулиці; під крамницею; Мордух Аронович (кутовий); Ленус Фацир</span><span class="pr">51 / 60</span></div><div class="rg-r"><span class="n">27–30</span><span class="nm">Арон Бейсахович · Фреймалкіс</span><span class="ds">Подальший перелік (Dalsza osiadłość); Ітела Юдкова, вдова; місце під крамницями</span><span class="pr">—</span></div><div class="rg-r"><span class="n">—</span><span class="nm">Абрам Буська, кравець</span><span class="ds">Вул. Воробинська, 1-й ряд; орна земля у три зміни на Підгайці</span><span class="pr">—</span></div><div class="rg-r"><span class="n">—</span><span class="nm">Антип Мартинюк · Копель Гіршович</span><span class="ds">Друга сторона Ринкового завулку; Монковський завулок від ринкових площ</span><span class="pr">—</span></div><div class="rg-r"><span class="n">50</span><span class="nm">Давид Давидович</span><span class="ds">Монковський завулок; місце під міськими ятками (jatki)</span><span class="pr">—</span></div></div></div></div></div></section>
@@ -642,17 +648,22 @@ function stats(D){
     return { hh: hh, pp: pp, per: per, st: D.streets.filter(function(s){ return per[s.id] > 0; }).length };
 }
 var ARROW = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>';
-var HUB = [['dombrovytsia', 'Дубровиця', 'Місто з двома передмістями'], ['berestia', 'Берестя з Плоскою', 'Село'], ['orvianytsia', 'Орв\u2019яниця', 'Село'], ['yutovshchyzna', 'Ютовщизна', 'Село'],
-           ['', 'Лютинськ', 'Село'], ['', 'Ясинець', 'Село'], ['', 'Жидче', 'Село']];
+var FW = window.INVENTAR_FOLWARKS || { all: { name: '', places: [['dombrovytsia', 'Дубровиця', 'Місто з двома передмістями']] } };
 var totalHH = 0, hub = '';
-HUB.forEach(function(h){
-    var D = INV[h[0]];
-    if (!D) { hub += '<div class="hb soon rv"><small>' + h[2] + '</small><h3>' + h[1] + '</h3><div class="hb-atlas">Список ще перекладається</div></div>'; return; }
+function card(slug, nm, kind){
+    var D = INV[slug];
+    if (!D) return '<div class="hb soon rv"><small>' + kind + '</small><h3>' + nm + '</h3><div class="hb-atlas">' + (/^Фільварок/.test(kind) ? 'Опис двору ще перекладається' : 'Список ще перекладається') + '</div></div>';
     var S = stats(D); totalHH += S.hh;
-    var second = D.kind === 'town' ? [S.st, plural(S.st, 'вулиця чи ряд', 'вулиці чи ряди', 'вулиць і рядів')] : [fmt(S.pp), 'осіб'];
-    hub += '<a class="hb rv" href="inventar-naselennia.html?p=' + h[0] + '"><small>' + h[2] + '</small><h3>' + h[1] + '</h3>' +
+    var second = D.kind === 'town' ? [S.st, plural(S.st, 'вулиця чи ряд', 'вулиці чи ряди', 'вулиць і рядів')] : [fmt(S.pp), plural(S.pp, 'особа', 'особи', 'осіб')];
+    return '<a class="hb rv" href="inventar-naselennia.html?p=' + slug + '"><small>' + kind + '</small><h3>' + nm + '</h3>' +
         '<div class="hb-n"><div><b>' + fmt(S.hh) + '</b><span>' + plural(S.hh, 'двір', 'двори', 'дворів') + '</span></div><div><b>' + second[0] + '</b><span>' + second[1] + '</span></div></div>' +
         '<span class="hb-go">Відкрити список' + ARROW + '</span></a>';
+}
+Object.keys(FW).forEach(function(k){
+    var f = FW[k], done = f.places.filter(function(p){ return p[0] && INV[p[0]]; }).length;
+    if (f.name) hub += '<div class="hb-fh rv"><h3>' + f.name + '</h3>' + (f.orig ? '<i>' + f.orig + '</i>' : '') +
+        '<span>' + done + ' з ' + f.places.length + ' ' + plural(f.places.length, 'поселення', 'поселень', 'поселень') + ' уже поіменно</span>' + (f.desc ? '<p>' + f.desc + '</p>' : '') + '</div>';
+    f.places.forEach(function(p){ hub += card(p[0], p[1], p[2]); });
 });
 $('hbGrid').innerHTML = hub;
 document.querySelectorAll('#hbGrid .rv').forEach(function(el, i){ el.style.setProperty('--d', (i * .06) + 's'); if (io) io.observe(el); else el.classList.add('in'); });

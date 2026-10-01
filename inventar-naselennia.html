@@ -107,6 +107,7 @@
 .iv-place { display: inline-block; padding: .18rem .6rem; margin: .2rem .25rem 0 0; border-radius: 999px; border: 1px solid var(--rule); color: var(--ink-3); text-decoration: none; }
 .iv-place.on { background: var(--ink); border-color: var(--ink); color: var(--paper); }
 a.iv-place:hover { border-color: var(--gold); color: var(--ink); }
+span.iv-place:not(.on) { opacity: .55; border-style: dashed; }
 
 /* ══ РОЗДІЛИ ════════════════════════════════════════════ */
 .iv-sec { padding: 5rem 0; border-top: 1px solid var(--color-border-light); scroll-margin-top: calc(var(--hdr) + 10px); }
@@ -134,6 +135,11 @@ a.iv-place:hover { border-color: var(--gold); color: var(--ink); }
 
 /* ══ ПЛАН 1855 РОКУ ═════════════════════════════════════ */
 .pl-grid { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(300px, 1fr); gap: 2.4rem; align-items: start; }
+.pl-grid.solo { grid-template-columns: minmax(0, 1fr); }
+.iv-fw { display: block; margin: 0 0 .55rem; }
+.iv-fw b { display: inline-block; margin-right: .5rem; color: var(--ink-3); font-weight: 600; }
+.iv-fw.on b { color: var(--ink-2); }
+.iv-fw-n { display: block; margin-top: .2rem; font-size: .74rem; }
 @media (max-width: 1000px) { .pl-grid { grid-template-columns: minmax(0, 1fr); gap: 1.6rem; } }
 .pm { min-width: 0; }
 .pm-vp { position: relative; overflow: hidden; height: 560px; border-radius: 14px; border: 1px solid var(--rule); background: var(--paper-2); cursor: grab; touch-action: pan-y; user-select: none; -webkit-user-select: none; outline: none; }
@@ -480,8 +486,8 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
 <!-- ═══ § 2 СХЕМА ═══ -->
 <section class="iv-sec" id="skhema">
     <div class="iv-wrap">
-        <div class="iv-mark" style="position:static;margin-bottom:1.2rem;display:flex;align-items:baseline;gap:.9rem"><b>§ 2</b><span style="max-width:none;margin:0">План міста 1855 року</span></div>
-        <h2 class="iv-h2" style="max-width:none">Дубровиця на плані 1855 року</h2>
+        <div class="iv-mark" style="position:static;margin-bottom:1.2rem;display:flex;align-items:baseline;gap:.9rem"><b>§ 2</b><span style="max-width:none;margin:0" id="pmLabel">План міста 1855 року</span></div>
+        <h2 class="iv-h2" style="max-width:none" id="pmTitle">Дубровиця на плані 1855 року</h2>
         <div class="pl-grid">
             <div class="pm" id="ivMap">
                 <div class="pm-vp" id="pmVp" tabindex="0" role="application" aria-label="План містечка Домбровиці 1855 року. Колесо миші або кнопки: масштаб, перетягування: рух">
@@ -494,7 +500,7 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
                     </div>
                     <button type="button" class="pm-close" id="pmClose" aria-label="Закрити повний екран">✕</button>
                 </div>
-                <p class="iv-plan-note"><strong>План містечка Домбровиці</strong> Рівненського повіту, складений 1855 року у вотчинному володінні графа Плятера. Північ на плані ліворуч: так намальована роза вітрів у правому верхньому куті. Інвентар старіший приблизно на півстоліття, тож вулиці могли змінитися. <span class="pm-touch">Двічі торкніться плану, щоб наблизити; кнопка праворуч відкриває його на весь екран.</span></p>
+                <p class="iv-plan-note" id="pmNote"><strong>План містечка Домбровиці</strong> Рівненського повіту, складений 1855 року у вотчинному володінні графа Плятера. Північ на плані ліворуч: так намальована роза вітрів у правому верхньому куті. Інвентар старіший приблизно на півстоліття, тож вулиці могли змінитися. <span class="pm-touch">Двічі торкніться плану, щоб наблизити; кнопка праворуч відкриває його на весь екран.</span></p>
             </div>
             <aside class="pm-side" id="pmSide" aria-label="Вулиці міста за інвентарем">
                 <div class="pm-side-h"><h3>Вулиці й ряди</h3><span id="pmSideN"></span></div>
@@ -734,10 +740,21 @@ if (VILLAGE) {
     $('ivAtlasBtn').querySelector('span').textContent = nm + ' на атласі 1798';
     document.querySelector('.iv-crumbs').lastChild.textContent = nm;
 }
-$('ivPlaces').innerHTML = '<b>Маєток Плятера в інвентарі:</b> ' + ESTATE.map(function(e){
-    if (e[0] && ALL[e[0]]) return e[0] === SLUG ? '<span class="iv-place on">' + esc(e[1]) + '</span>' : '<a class="iv-place" href="?p=' + e[0] + '">' + esc(e[1]) + '</a>';
-    return '<span class="iv-place" title="Список ще перекладається">' + esc(e[1]) + '</span>';
-}).join('') + '<br>Решта сіл з\u2019являтимуться тут у міру перекладу.';
+(function(){
+    var FW = window.INVENTAR_FOLWARKS;
+    function chip(slug, nm){
+        if (slug && ALL[slug]) return slug === SLUG ? '<span class="iv-place on">' + esc(nm) + '</span>' : '<a class="iv-place" href="?p=' + slug + '">' + esc(nm) + '</a>';
+        return '<span class="iv-place" title="Список ще перекладається">' + esc(nm) + '</span>';
+    }
+    if (!FW) {
+        $('ivPlaces').innerHTML = '<b>Маєток Плятера в інвентарі:</b> ' + ESTATE.map(function(e){ return chip(e[0], e[1]); }).join('');
+        return;
+    }
+    $('ivPlaces').innerHTML = Object.keys(FW).map(function(k){
+        var f = FW[k];
+        return '<span class="iv-fw' + (D.folwark === k ? ' on' : '') + '"><b>' + esc(f.name) + '</b>' + f.places.map(function(e){ return chip(e[0], e[1]); }).join('') + '</span>';
+    }).join('') + '<span class="iv-fw-n">Блідим — поселення, списки яких ще перекладаються.</span>';
+})();
 
 /* ── § 1: спостереження і пам'ятні місця ─── */
 if (VILLAGE) (function(){
@@ -821,9 +838,9 @@ var CATS = { j: ['Є', 'Євреї', 'єврейський двір', /євр/i]
              b: ['Б', 'Бояри', 'боярський двір', /бояр/i] };
 var PRESENT = ['j', 'g', 'p', 't', 'b'].filter(function(k){ return HH.some(function(h){ return h.c === k; }); });
 function noHtml(h){
-    if (!h.c && D.plain) return '<span class="iv-no c-o" title="Двори в інвентарі не пронумеровано — це порядок запису">' + h.id + '</span>';
+    if (!h.c && D.plain) return '<span class="iv-no c-o" title="' + (D.nonums ? 'Порядок запису в інвентарі' : 'Двори в інвентарі не пронумеровано — це порядок запису') + '">' + h.id + '</span>';
     if (!h.c) return '<span class="iv-no c-n" title="Окремого номера в інвентарі немає">б/н</span>';
-    if (!h.no) return '<span class="iv-no c-' + h.c + '" title="' + esc(CATS[h.c][2]) + ', без номера в інвентарі"><i>' + CATS[h.c][0] + '</i></span>';
+    if (!h.no) return '<span class="iv-no c-' + h.c + '" title="' + esc(CATS[h.c][2]) + (D.nonums ? '' : ', без номера в інвентарі') + '"><i>' + CATS[h.c][0] + '</i></span>';
     return '<span class="iv-no c-' + h.c + '" title="' + esc(CATS[h.c][2]) + ', № ' + h.no + ' в інвентарі"><i>' + CATS[h.c][0] + '</i>' + h.no + '</span>';
 }
 var reg = $('ivReg'), idx = $('ivIdx');
@@ -1041,7 +1058,7 @@ document.addEventListener('click', function(e){
         $('ivCats').innerHTML = PRESENT.map(function(k){
             var row = rows.filter(function(r){ return CATS[k][3].test(r.label); })[0] || {};
             var nos = HH.filter(function(h){ return h.c === k && h.no; }).map(function(h){ return h.no; });
-            var badge = nos.length ? '<i>' + CATS[k][0] + '</i>1–' + Math.max.apply(null, nos) : '<i>' + CATS[k][0] + '</i>без номерів';
+            var badge = nos.length ? '<i>' + CATS[k][0] + '</i>1–' + Math.max.apply(null, nos) : '<i>' + CATS[k][0] + '</i>' + (D.nonums ? '' : 'без номерів');
             return '<button type="button" class="iv-cat" data-showcat="' + k + '">' +
                 '<span class="iv-cat-top"><b>' + fmt(cnt[k]) + '</b><span class="iv-no c-' + k + '">' + badge + '</span></span>' +
                 '<strong>' + esc(CATS[k][1]) + '</strong>' + (row.orig ? '<em>' + esc(row.orig) + '</em>' : '') +
@@ -1051,16 +1068,26 @@ document.addEventListener('click', function(e){
     $('ivCatsNote').textContent = (D.summary && D.summary.note ? D.summary.note + ' ' : '') + (none && !D.plain ? 'У списку таких записів ' + none + '.' : '');
     if (!PRESENT.length && D.summary && D.summary.note) $('ivCatsNote').style.marginTop = '1.4rem';
     var leg = PRESENT.map(function(k){
-        return '<span><span class="iv-no c-' + k + '"><i>' + CATS[k][0] + '</i>№</span> ' + esc(CATS[k][1].toLowerCase()) + '</span>';
+        return '<span><span class="iv-no c-' + k + '"><i>' + CATS[k][0] + '</i>' + (D.nonums ? '' : '№') + '</span> ' + esc(CATS[k][1].toLowerCase()) + '</span>';
     });
-    if (D.plain) leg = ['<span><span class="iv-no c-o">1</span> порядок запису — у документі двори не пронумеровано</span>'];
+    if (D.plain) leg = ['<span><span class="iv-no c-o">1</span> ' + (D.nonums ? 'порядок запису в інвентарі' : 'порядок запису — у документі двори не пронумеровано') + '</span>'];
     else if (none) leg.push('<span><span class="iv-no c-n">б/н</span> без номера</span>');
-    $('ivLegend').innerHTML = (PRESENT.length ? 'Номер із документа: ' : '') + leg.join('');
+    $('ivLegend').innerHTML = (PRESENT.length ? (D.nonums ? 'Група в документі: ' : 'Номер із документа: ') : '') + leg.join('');
+    if (!CRAFT.length) { var cp = document.querySelector('.iv-chip[data-f="p"]'); if (cp) cp.hidden = true; }
+    /* підписи під цифрами в шапці — у правильному відмінку */
+    var FORMS = [[/^дворів$/, ['двір', 'двори', 'дворів']], [/^людей названо в записах$/, ['людину названо в записах', 'людей названо в записах', 'людей названо в записах']],
+                 [/^прізвищ$/, ['прізвище', 'прізвища', 'прізвищ']], [/^боярських дворів$/, ['боярський двір', 'боярські двори', 'боярських дворів']],
+                 [/^ремісників$/, ['ремісник', 'ремісники', 'ремісників']]];
+    document.querySelectorAll('.iv-figs > div').forEach(function(d){
+        var dd = d.querySelector('dd'), dt = d.querySelector('dt'); if (!dd || !dt) return;
+        var n = parseInt(dd.textContent.replace(/\D/g, ''), 10); if (isNaN(n)) return;
+        FORMS.forEach(function(f){ if (f[0].test(dt.textContent.trim()) || f[1].indexOf(dt.textContent.trim()) >= 0) dt.textContent = plural(n, f[1][0], f[1][1], f[1][2]); });
+    });
     if (VILLAGE) {
         $('ivZoneChips').hidden = true;
         var fc = document.querySelector('#ivCatChips .iv-sep'); if (fc) fc.remove();
         $('ivRegGrid').classList.add('is-solo');
-        $('skhema').hidden = true;
+        if (!D.plan) $('skhema').hidden = true;
         if (!CRAFT.length) { $('ivCraftsH').hidden = true; $('ivCraftsP').hidden = true; }
     }
     /* номери параграфів — лише для видимих розділів */
@@ -1081,9 +1108,19 @@ if (m) setTimeout(function(){ go(m[1]); }, 80);
 /* ── План 1855 року: масштаб, рух, повний екран ── */
 (function(){
     var box = document.getElementById('ivMap');
-    if (!box || VILLAGE) return;
+    if (!box || (VILLAGE && !D.plan)) return;
+    var PL = D.plan || { src: 'plan-1855.jpg', w: 3200, h: 2468, side: true };
     var vp = $('pmVp'), img = $('pmImg'), bIn = $('pmIn'), bOut = $('pmOut');
-    var IW = 3200, IH = 2468, MAXK = 6;
+    var IW = PL.w, IH = PL.h, MAXK = 6;
+    if (D.plan) {
+        if (img.getAttribute('src') !== PL.src) { img.src = PL.src; }
+        img.width = IW; img.height = IH; img.style.width = IW + 'px'; img.style.height = IH + 'px';
+        img.alt = PL.title || '';
+        if (PL.label) $('pmLabel').textContent = PL.label;
+        if (PL.title) $('pmTitle').textContent = PL.title;
+        if (PL.lead || PL.text) $('pmNote').innerHTML = '<strong>' + esc(PL.lead || '') + '</strong> ' + esc(PL.text || '') + ' <span class="pm-touch">Двічі торкніться плану, щоб наблизити; кнопка праворуч відкриває його на весь екран.</span>';
+    }
+    if (!PL.side) { $('pmSide').hidden = true; box.parentNode.classList.add('solo'); }
     var V = { z: 1, x: 0, y: 0, fit: 1 };            /* z — кратність відносно «весь план» */
     var pts = {}, lastD = 0, moved = false, tapT = 0, tapX = 0, tapY = 0, animT = 0;
     function vw(){ return vp.clientWidth; } function vh(){ return vp.clientHeight; }
@@ -1106,6 +1143,12 @@ if (m) setTimeout(function(){ go(m[1]); }, 80);
         V.x = cx - ox * k; V.y = cy - oy * k; V.z = nz; clamp(); apply();
     }
     function reset(){ calcFit(); V.z = 1; V.x = 0; V.y = 0; clamp(); apply(); }
+    function home(){
+        reset();
+        if (!PL.focus) return;
+        var z = Math.min(MAXK, PL.focus[2] || 1.5), s = V.fit * z;
+        V.z = z; V.x = vw() / 2 - PL.focus[0] / 100 * IW * s; V.y = vh() / 2 - PL.focus[1] / 100 * IH * s; clamp(); apply();
+    }
     function fitViewport(){
         if (box.classList.contains('full')) { vp.style.height = ''; }
         else { var w = vw(); vp.style.height = Math.round(Math.min(Math.max(w * IH / IW, 360), innerHeight * .82)) + 'px'; }
@@ -1182,8 +1225,10 @@ if (m) setTimeout(function(){ go(m[1]); }, 80);
     document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && box.classList.contains('full')) setFull(false); });
 
     addEventListener('resize', function(){ fitViewport(); });
-    img.addEventListener('load', fitViewport);
-    fitViewport(); if (img.complete) fitViewport();
+    var homed = false;
+    function first(){ fitViewport(); if (!homed && img.naturalWidth) { homed = true; home(); } }
+    img.addEventListener('load', first);
+    fitViewport(); if (img.complete) first();
 })();
 })();
 </script>
