@@ -1035,6 +1035,7 @@ document.addEventListener('click', function(e){
         }).join('');
     }
     $('ivCatsNote').textContent = (D.summary && D.summary.note ? D.summary.note + ' ' : '') + (none && !D.plain ? 'У списку таких записів ' + none + '.' : '');
+    if (VILLAGE && !PRESENT.length) $('ivCatsNote').textContent += ' Групу господарств (тяглі, піші чи боярські) для цього села в транскрипції не вказано — даних немає. Найімовірніше, це звичайні двори підданих, тяглі або піші; бояр тут, судячи з усього, не було: там, де вони були (Лютинськ, Орв’яниця), інвентар записує їх окремим розділом.';
     if (!PRESENT.length && D.summary && D.summary.note) $('ivCatsNote').style.marginTop = '1.4rem';
     var leg = PRESENT.map(function(k){
         return '<span><span class="iv-no c-' + k + '"><i>' + CATS[k][0] + '</i>' + (D.nonums ? '' : '№') + '</span> ' + esc(CATS[k][1].toLowerCase()) + '</span>';

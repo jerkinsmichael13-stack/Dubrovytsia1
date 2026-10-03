@@ -483,7 +483,7 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
 <h3 class="an-h">Найчастіші імена</h3><p class="an-sub">Серед усіх названих людей: господарів, дітей, братів і сестер. Зменшені форми рахуються так, як їх записав укладач.</p>
 <div class="an-two"><div><h4>Чоловічі</h4><div class="an-bars" id="anMale"></div></div><div><h4>Жіночі</h4><div class="an-bars" id="anFem"></div></div></div>
 <h3 class="an-h">Скільки людей під одним дахом</h3><p class="an-sub" id="anSizeSub"></p><div class="an-hist" id="anHist"></div>
-<h3 class="an-h">Хто жив у маєтку</h3><div class="an-cards" id="anSoc"></div><p class="an-note">Групи — ті, якими користувався сам укладач: у місті він окремо нумерував євреїв, християн ґрунтових і плацових, у селах — тяглі й боярські двори.</p>
+<h3 class="an-h">Хто жив у маєтку</h3><div class="an-cards" id="anSoc"></div><p class="an-note">Групи — ті, якими користувався сам укладач. У Дубровиці він окремо нумерував євреїв, християн ґрунтових і плацових; тяглі й боярські двори виділено лише в Лютинську та Орв’яниці. Для решти сіл групу господарств у транскрипції не вказано — даних немає; найімовірніше, це звичайні двори підданих.</p>
 </div></div></section>
 
 
@@ -744,7 +744,7 @@ if (dom) document.querySelectorAll('.st-card').forEach(function(c){
         A[slug].streets.forEach(function(st){ st.sides.forEach(function(sd){ sd.items.forEach(function(it){
             if (it.lm) return;
             var size = 1 + (it.m ? it.m.length : 0);
-            all.push({ slug: slug, size: size });
+            all.push({ slug: slug, size: size, c: it.c || '' });
             sizes[Math.min(size, 10)] = (sizes[Math.min(size, 10)] || 0) + 1;
             if (it.c) cat[it.c] = (cat[it.c] || 0) + 1;
             if (it.w) widows++;
@@ -815,7 +815,10 @@ if (dom) document.querySelectorAll('.st-card').forEach(function(c){
     if (cat.j) soc.push([cat.j, 'єврейських дворів у Дубровиці — ринок, Шкільна, Бережницька, Завальна']);
     if (cat.g || cat.p) soc.push([(cat.g || 0) + (cat.p || 0), 'християнських дворів міста: ' + (cat.g || 0) + ' ґрунтових і ' + (cat.p || 0) + ' плацових']);
     if (cat.t) soc.push([cat.t, 'тяглих господарств у Лютинську й Орв’яниці']);
-    if (cat.b) soc.push([cat.b, 'боярських дворів — служилих селян']);
+    if (cat.b) { var bs = {}; all.forEach(function(h){ if (h.c === 'b') bs[h.slug] = (bs[h.slug] || 0) + 1; });
+        soc.push([cat.b, 'боярських дворів: ' + Object.keys(bs).map(function(k){ return A[k].name + ' — ' + bs[k]; }).join(', ')]); }
+    var noc = all.filter(function(h){ return !h.c; }).length;
+    if (noc) soc.push([noc, plural(noc, 'двір', 'двори', 'дворів') + ' без зазначеної групи — даних немає (усі села, крім Лютинська й Орв’яниці, та 7 записів Дубровиці без номера)']);
     soc.push([widows, plural(widows, 'двір', 'двори', 'дворів') + ', які очолюють вдови']);
     soc.push([crN, plural(crN, 'ремісник', 'ремісники', 'ремісників') + ': ' + cr.join(', ')]);
     $('anSoc').innerHTML = soc.map(function(s){ return '<div><b>' + fmt(s[0]) + '</b><span>' + esc(s[1]) + '</span></div>'; }).join('');
