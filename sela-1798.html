@@ -16,7 +16,7 @@
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <link rel="manifest" href="site.webmanifest">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Село на Атласі Волинської губернії 1798 року — власник, двори, мешканці та географічно-економічний опис за «Економічними примітками»">
+<meta name="description" content="Село на Атласі Волинської губернії 1798 року — власник, двори, мешканці та географічно-економічний опис за атласом 1798 року">
 <title id="slTabTitle">Поселення · Атлас Волинської губернії 1798 року</title>
 <script>!function(){var t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t)}()</script>
 <link rel="stylesheet" href="app.css?v=11">
@@ -334,7 +334,7 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
     html += '<h1 class="sl-title">'+esc(data.mapName)+'</h1>';
     var docShort = (data.excelName||'').trim().replace(/^(Село \(Деревня\)|Село|Сільце|Містечко|Філварок)\s+/, '');
 if (docShort && docShort !== data.mapName.trim()) {
-html += '<p class="sl-subtitle">У «Економічних примітках» записано: '+esc(docShort)+'</p>';
+html += '<p class="sl-subtitle">В атласі 1798 року записано: '+esc(docShort)+'</p>';
 }
 
     var ownerMeta = (typeof ATLAS_OWNERS_1798 !== 'undefined' && ATLAS_OWNERS_1798[data.ownerId]) || {};
@@ -366,7 +366,7 @@ html += '<p class="sl-subtitle">У «Економічних примітках»
             '<span class="sl-inv-s">Хто тут жив: родини, імена, ремесла →</span></a>';
     })();
     if (data.partial) {
-        html += '<p class="sl-partial">Для цього поселення поки внесено лише зведені дані з «Економічних приміток»: власник, кількість дворів і душ, короткий опис. Розподіл за статтю, за родом жителів і повний текст опису маєтку буде додано.</p>';
+        html += '<p class="sl-partial">Для цього поселення поки внесено лише зведені дані з атласу 1798 року: власник, кількість дворів і душ, короткий опис. Розподіл за статтю, за родом жителів і повний текст опису маєтку буде додано.</p>';
     }
 
     if (data.distMil || data.distVerst) {
@@ -411,14 +411,14 @@ html += '<p class="sl-subtitle">У «Економічних примітках»
         var est = (typeof ATLAS_ESTATES_1798 !== 'undefined' ? ATLAS_ESTATES_1798 : []).filter(function(e){ return e.ownerId === data.ownerId; })[0];
         var single = est && est.places.length === 1;
         var hint = single
-            ? 'Цей опис у «Примітках» стосується лише цього поселення.'
+            ? 'Цей опис в атласі стосується лише цього поселення.'
             : descHtml.indexOf('<mark>') !== -1
                 ? 'Опис 1798 року складався одним записом на весь маєток чи групу поселень одного власника — тому нижче наведено повний текст, а згадки про «'+esc(data.mapName)+'» виділено.'
                 : 'Опис 1798 року складався одним записом на весь маєток; окремо «'+esc(data.mapName)+'» в ньому не згадано.';
         html += '<p class="sl-desc-hint">'+hint+'</p><div class="sl-desc">'+descHtml+'</div>';
     }
 
-    html += '<p class="sl-src">За «Економічними примітками до Атласу Волинської губернії», 1798 р. Дані про власника, двори та мешканців узято з таблиці; текст опису наведено за оригіналом без змін.</p>';
+    html += '<p class="sl-src">За описом до атласу Волинської губернії 1798 року (в архіві його називають «Економічні примітки»). Дані про власника, двори та мешканців узято з таблиці; текст опису наведено за оригіналом без змін.</p>';
 
     html += '<a class="sl-back" href="atlas-1798.html#'+encodeURIComponent(slug)+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>Назад до інтерактивної мапи</a>';
 

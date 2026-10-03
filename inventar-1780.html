@@ -478,7 +478,7 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
 <dl class="an-figs" id="anFigs"></dl>
 <h3 class="an-h">Фільварки</h3><p class="an-sub">Скільки дворів і названих людей припадає на кожен панський двір разом із його селами.</p><div class="an-bars" id="anFw"></div>
 <h3 class="an-h">Інвентар і атлас 1798 року</h3><p class="an-sub" id="anCmpSub">Кількість дворів у селах, які є в обох джерелах.</p>
-<div class="an-leg"><span>інвентар Плятера</span><span class="b">«Економічні примітки» 1798</span></div><div class="an-bars" id="anCmp"></div><p class="an-note" id="anCmpNote"></p>
+<div class="an-leg"><span>інвентар Плятера</span><span class="b">атлас 1798 року</span></div><div class="an-bars" id="anCmp"></div><p class="an-note" id="anCmpNote"></p>
 <h3 class="an-h">Найпоширеніші прізвища</h3><p class="an-sub">Кількість дворів із цим прізвищем у всьому маєтку. Натисніть, щоб знайти родину в реєстрі.</p><div class="an-sn" id="anSur"></div>
 <h3 class="an-h">Найчастіші імена</h3><p class="an-sub">Серед усіх названих людей: господарів, дітей, братів і сестер. Зменшені форми рахуються так, як їх записав укладач.</p>
 <div class="an-two"><div><h4>Чоловічі</h4><div class="an-bars" id="anMale"></div></div><div><h4>Жіночі</h4><div class="an-bars" id="anFem"></div></div></div>
@@ -788,7 +788,7 @@ if (dom) document.querySelectorAll('.st-card').forEach(function(c){
             ti += r.inv; ta += r.at; if (Math.abs(r.inv - r.at) <= Math.max(2, r.at * .1)) close++;
             return '<div class="an-row pair"><b><a href="inventar-naselennia.html?p=' + r.k + '">' + esc(r.n) + '</a></b><span class="an-track"><i class="a" style="width:' + (r.inv / cm * 100).toFixed(1) + '%"></i><i class="b" style="width:' + (r.at / cm * 100).toFixed(1) + '%"></i></span><span>' + r.inv + ' / ' + r.at + '</span></div>';
         }).join('');
-        $('anCmpNote').textContent = 'Разом у ' + cmp.length + ' ' + plural(cmp.length, 'поселенні', 'поселеннях', 'поселеннях') + ': ' + fmt(ti) + ' ' + plural(ti, 'двір', 'двори', 'дворів') + ' за інвентарем проти ' + fmt(ta) + ' за «Примітками» 1798 року. У ' + close + ' з ' + cmp.length +
+        $('anCmpNote').textContent = 'Разом у ' + cmp.length + ' ' + plural(cmp.length, 'поселенні', 'поселеннях', 'поселеннях') + ': ' + fmt(ti) + ' ' + plural(ti, 'двір', 'двори', 'дворів') + ' за інвентарем проти ' + fmt(ta) + ' за атласом 1798 року. У ' + close + ' з ' + cmp.length +
             ' кількість майже збігається (різниця до 10 %). Це підтримує думку, що інвентар складено незадовго до чи невдовзі після 1798 року; на сторінці Мочулища видно ще й мапу 1805 року, яка, найімовірніше, пізніша за інвентар.';
     }
     /* прізвища */

@@ -102,7 +102,7 @@ var waterMills = sum(ROWS, function(r){ return r.mills ? r.mills[0] : 0; });
 var horseMills = sum(ROWS, function(r){ return r.horseMill || 0; });
 var churches = sum(ROWS, function(r){ return (r.church || []).length; }), kostels = sum(ROWS, function(r){ return r.kostel || 0; });
 $('kpis').innerHTML = [
-    [ROWS.length, 'поселень у «Примітках»'],
+    [ROWS.length, 'поселень в атласі'],
     [fmt(DV), 'дворів'],
     [fmt(POP), 'душ обох статей'],
     [pct(serfsAll, CS_ALL) + '%', 'мешканців — кріпаки'],
