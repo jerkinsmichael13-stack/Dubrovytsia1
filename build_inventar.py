@@ -23,7 +23,9 @@
 """
 import json, os, re, sys
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+HERE = os.path.dirname(os.path.abspath(__file__))
+# працює і з tools/, і з кореня репозиторію
+ROOT = HERE if os.path.exists(os.path.join(HERE, 'inventar-plater-src.txt')) else os.path.dirname(HERE)
 SRC = os.path.join(ROOT, 'inventar-plater-src.txt')
 OUT = os.path.join(ROOT, 'inventar-plater-data.js')
 
