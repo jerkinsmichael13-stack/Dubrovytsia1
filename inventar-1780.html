@@ -662,7 +662,7 @@ function card(slug, nm, kind){
 Object.keys(FW).forEach(function(k){
     var f = FW[k], done = f.places.filter(function(p){ return p[0] && INV[p[0]]; }).length;
     if (f.name) hub += '<div class="hb-fh rv"><h3>' + f.name + '</h3>' + (f.orig ? '<i>' + f.orig + '</i>' : '') +
-        '<span>' + done + ' з ' + f.places.length + ' ' + plural(f.places.length, 'поселення', 'поселень', 'поселень') + ' уже поіменно</span>' + (f.desc ? '<p>' + f.desc + '</p>' : '') + '</div>';
+        '<span>' + done + ' з ' + f.places.length + ' ' + plural(f.places.length, 'поселення', 'поселення', 'поселень') + ' уже поіменно</span>' + (f.desc ? '<p>' + f.desc + '</p>' : '') + '</div>';
     f.places.forEach(function(p){ hub += card(p[0], p[1], p[2]); });
 });
 $('hbGrid').innerHTML = hub;
