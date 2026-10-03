@@ -883,6 +883,13 @@ var narrow = window.matchMedia('(max-width: 900px)');
 
 /* ── Інвентар Плятера: зведення для вікна поселення ── */
 var INV_ALL = (typeof INVENTAR_PLATER !== 'undefined') ? INVENTAR_PLATER : {};
+/* поселення атласу → список в інвентарі (slug той самий або вказаний у полі atlas; atlas: false — на аркушах немає) */
+var INV_FOR = {}, INV_DOC = {};
+Object.keys(INV_ALL).forEach(function(k){
+    var a = INV_ALL[k].atlas;
+    if (a !== false) INV_FOR[typeof a === 'string' ? a : k] = k;
+    if (INV_ALL[k].atlasDoc) INV_DOC[INV_ALL[k].atlasDoc] = k;
+});
 var INV_CACHE = {};
 var BOOK = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M2 3.2C4 2.4 6.2 2.6 8 4c1.8-1.4 4-1.6 6-.8V12c-2-.8-4.2-.6-6 .8-1.8-1.4-4-1.6-6-.8z"/><path d="M8 4v8.8"/></svg>';
 function invStats(slug){
@@ -902,15 +909,16 @@ function invStats(slug){
     return (INV_CACHE[slug] = { D: D, hh: hh, pp: pp, streets: streets, top: top });
 }
 function invPane(r){
-    var S = invStats(r.slug), D = S.D, town = D.kind === 'town';
-    var url = 'inventar-naselennia.html?p=' + encodeURIComponent(r.slug);
-    var h = '<p class="di-cap">Інвентар маєтку графа Плятера. Рік не встановлено, орієнтовно 1780–1820.</p>';
+    var iv = INV_FOR[r.slug], S = invStats(iv), D = S.D, town = D.kind === 'town';
+    var url = 'inventar-naselennia.html?p=' + encodeURIComponent(iv);
+    var h = '<p class="di-cap">Інвентар маєтку графа Плятера' + (D.folwark && window.INVENTAR_FOLWARKS && INVENTAR_FOLWARKS[D.folwark] ? ', ' + esc(INVENTAR_FOLWARKS[D.folwark].name.replace(/^Ф/, 'ф')) : '') + (iv !== r.slug ? ': ' + esc((D.title || D.name).replace(/^./, function(c){ return c.toLowerCase(); })) : '') + '. Рік не встановлено, орієнтовно 1780–1820.</p>';
+    if (D.atlasNote) h += '<p class="di-note" style="margin:-.4rem 0 1rem">' + esc(D.atlasNote) + '</p>';
     var nst = S.streets.filter(function(x){ return x.n > 0; }).length;
     var figs = [[fmt(S.hh), plural(S.hh, 'двір', 'двори', 'дворів')], [fmt(S.pp), 'осіб названо']];
     if (town) figs.push([nst, plural(nst, 'вулиця чи ряд', 'вулиці чи ряди', 'вулиць і рядів')]);
     h += '<dl class="d-figs' + (town ? '' : ' two') + '">' + figs.map(function(f){ return '<div><dd>' + f[0] + '</dd><dt>' + f[1] + '</dt></div>'; }).join('') + '</dl>';
 
-    if (r.dvory) {
+    if (r.dvory && iv === r.slug) {
         var mx = Math.max(r.dvory, S.hh), diff = S.hh - r.dvory;
         h += '<h4 class="di-h">Два джерела поруч</h4>' +
             '<div class="di-cmp-r"><span>Примітки 1798</span><span class="di-bar"><i style="width:' + (r.dvory / mx * 100).toFixed(1) + '%"></i></span><b>' + fmt(r.dvory) + '</b></div>' +
@@ -1191,7 +1199,7 @@ function openDrawer(p){
     h += '<p class="d-src">За «Економічними примітками», 1798 р.</p>';
     h += '<a class="d-more" href="sela-1798.html?v=' + encodeURIComponent(r.slug) + '"><span>Повний опис: стани, відстань, текст 1798 року</span>' + ARROW + '</a>';
 
-    if (INV_ALL[r.slug]) {
+    if (INV_FOR[r.slug]) {
         var inv = state.dTab === 'inv';
         h = head +
             '<div class="d-tabs" role="tablist" aria-label="Джерела">' +
@@ -1238,7 +1246,7 @@ function rowHtml(p, withSheet){
     var meta = withSheet ? 'аркуш ' + ROMAN[p.sheet - 1] : (r.dvory ? fmt(r.dvory) : '—');
     return '<button type="button" class="v-row" data-id="' + p.id + '">' +
         '<span class="v-dot ' + r.kind + '"></span>' +
-        '<span class="v-row-n">' + esc(r.main) + (INV_ALL[r.slug] ? '<span class="v-row-i" title="Є поіменний список за інвентарем Плятера">' + BOOK + '</span>' : '') + '</span>' +
+        '<span class="v-row-n">' + esc(r.main) + (INV_FOR[r.slug] ? '<span class="v-row-i" title="Є поіменний список за інвентарем Плятера">' + BOOK + '</span>' : '') + '</span>' +
         '<span class="v-row-m">' + meta + '</span></button>';
 }
 function renderList(){
@@ -1429,9 +1437,10 @@ window.addEventListener('resize', function(){
         var onMap = e.places.some(function(pl){ return pl.slug && BY_SLUG[pl.slug]; });
         var chips = e.places.map(function(pl){
             var label = (pl.slug && BY_SLUG[pl.slug]) ? BY_SLUG[pl.slug].rec.main : shortName(pl.name);
-            return pl.slug && BY_SLUG[pl.slug]
-                ? '<button type="button" class="o-chip" data-slug="' + esc(pl.slug) + '">' + esc(label) + '</button>'
-                : '<span class="o-chip" title="Немає на наявних аркушах">' + esc(label) + '</span>';
+            var book = '<span class="v-row-i" title="Є поіменний список за інвентарем Плятера">' + BOOK + '</span>';
+            if (pl.slug && BY_SLUG[pl.slug]) return '<button type="button" class="o-chip" data-slug="' + esc(pl.slug) + '">' + esc(label) + (INV_FOR[pl.slug] ? book : '') + '</button>';
+            if (INV_DOC[pl.name]) return '<a class="o-chip" href="inventar-naselennia.html?p=' + esc(INV_DOC[pl.name]) + '" title="Немає на наявних аркушах атласу, але є поіменний список в інвентарі Плятера">' + esc(label) + book + '</a>';
+            return '<span class="o-chip" title="Немає на наявних аркушах">' + esc(label) + '</span>';
         }).join('');
         return '<tr><td><p class="o-name">' + name + '</p><div class="o-chips">' + chips + '</div>' +
             (onMap ? '<button type="button" class="o-show" data-show-owner="' + esc(e.ownerId) + '">Показати на мапі ' + ARROW + '</button>' : '') + '</td>' +

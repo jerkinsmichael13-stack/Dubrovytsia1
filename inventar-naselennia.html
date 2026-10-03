@@ -739,6 +739,10 @@ if (VILLAGE) {
     $('ivHeroGrid').classList.add('is-solo');
     $('ivAtlasBtn').querySelector('span').textContent = nm + ' на атласі 1798';
     if (D.atlas === false) $('ivAtlasBtn').hidden = true;
+    else if (typeof D.atlas === 'string') {
+        $('ivAtlasBtn').href = 'atlas-1798.html#' + D.atlas;
+        if (D.atlasLabel) $('ivAtlasBtn').querySelector('span').textContent = D.atlasLabel;
+    }
     document.querySelector('.iv-crumbs').lastChild.textContent = nm;
 }
 (function(){

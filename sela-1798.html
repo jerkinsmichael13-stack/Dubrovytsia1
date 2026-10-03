@@ -117,6 +117,12 @@
 
 .sl-src { font-family: 'Manrope', sans-serif; font-size: .68rem; color: var(--color-text-light,#8b6f3e); opacity: .7; font-style: italic; margin-top: 1.4rem; }
 
+.sl-inv { display: block; margin: 0 0 2rem; padding: 1rem 1.2rem 1.05rem; border-radius: 12px; border: 1px solid rgba(90,74,46,.2); background: #efe6d0; color: #2b2418; text-decoration: none; transition: border-color .2s, transform .2s; }
+.sl-inv:hover { border-color: #a9822f; transform: translateY(-1px); }
+.sl-inv-k { display: block; font-family: 'Manrope', sans-serif; font-size: .72rem; color: #8a7a5c; margin-bottom: .25rem; }
+.sl-inv-n { display: block; font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; line-height: 1.2; }
+.sl-inv-s { display: block; margin-top: .35rem; font-family: 'Manrope', sans-serif; font-size: .8rem; font-weight: 600; color: #a9822f; }
+[data-theme="dark"] .sl-inv { background: #231c12; border-color: rgba(212,178,90,.2); color: #efe4c6; }
 .sl-back {
     display: inline-flex; align-items: center; gap: .5rem; margin-top: 2.4rem;
     font-family: 'Manrope', sans-serif; font-size: .72rem; letter-spacing: .04em;
@@ -279,6 +285,7 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
 
 <!-- Дані поселень усіх чотирьох аркушів атласу за таблицею "Економічних приміток" 1798 р. -->
 <script src="sela_data_embed.js"></script>
+<script src="inventar-plater-data.js"></script>
 <script>
 (function(){
     function qs(name){
@@ -344,6 +351,20 @@ html += '<p class="sl-subtitle">У «Економічних примітках»
         stats.forEach(function(s){ html += '<div class="sl-stat"><b>'+fmt(s[0])+'</b><span>'+s[1]+'</span></div>'; });
         html += '</div>';
     }
+    /* поіменний список з інвентаря Плятера, якщо він є для цього поселення */
+    (function(){
+        var INV = window.INVENTAR_PLATER || {}, iv = null;
+        Object.keys(INV).forEach(function(k){ var at = INV[k].atlas; if (at !== false && (typeof at === 'string' ? at : k) === slug) iv = k; });
+        if (!iv) return;
+        var D = INV[iv], hh = 0, pp = 0;
+        D.streets.forEach(function(st){ st.sides.forEach(function(sd){ sd.items.forEach(function(it){ if (!it.lm) { hh++; pp += 1 + (it.m ? it.m.length : 0); } }); }); });
+        var pl = function(n, a, b, c){ var x = n % 10, y = n % 100; return x === 1 && y !== 11 ? a : (x >= 2 && x <= 4 && (y < 12 || y > 14)) ? b : c; };
+        var fw = D.folwark && window.INVENTAR_FOLWARKS && INVENTAR_FOLWARKS[D.folwark] ? INVENTAR_FOLWARKS[D.folwark].name : '';
+        html += '<a class="sl-inv" href="inventar-naselennia.html?p=' + encodeURIComponent(iv) + '">' +
+            '<span class="sl-inv-k">Інвентар графа Плятера' + (fw ? ' · ' + esc(fw) : '') + '</span>' +
+            '<span class="sl-inv-n">' + (iv !== slug ? esc(D.title || D.name) + ': ' : '') + fmt(hh) + ' ' + pl(hh, 'двір', 'двори', 'дворів') + ', ' + fmt(pp) + ' ' + pl(pp, 'особа', 'особи', 'осіб') + ' поіменно</span>' +
+            '<span class="sl-inv-s">Хто тут жив: родини, імена, ремесла →</span></a>';
+    })();
     if (data.partial) {
         html += '<p class="sl-partial">Для цього поселення поки внесено лише зведені дані з «Економічних приміток»: власник, кількість дворів і душ, короткий опис. Розподіл за статтю, за родом жителів і повний текст опису маєтку буде додано.</p>';
     }
