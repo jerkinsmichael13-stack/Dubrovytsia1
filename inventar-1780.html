@@ -222,6 +222,46 @@ html { scroll-behavior: smooth; }
 .sn-nav { display: flex; gap: .5rem; margin-top: 1.2rem; }
 
 /* ══ МЕШКАНЦІ ══ */
+/* ══ АНАЛІТИКА ══ */
+.an-figs { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0; margin: 1.6rem 0 0; border-top: 2px solid var(--ink); }
+.an-figs div { padding: 1rem 1rem .9rem 0; border-bottom: 1px solid var(--color-border-light); }
+.an-figs dd { margin: 0; font-family: var(--font-display); font-size: clamp(2rem, 3.4vw, 2.8rem); line-height: 1; color: var(--ink); font-variant-numeric: lining-nums; }
+.an-figs dt { margin-top: .3rem; font-family: var(--font-body); font-size: .76rem; color: var(--color-text-light); }
+.an-h { margin: 3.2rem 0 .4rem; font-family: var(--font-display); font-weight: 500; font-size: 1.6rem; color: var(--color-text); }
+.an-sub { margin: 0 0 1.2rem; max-width: 66ch; font-family: var(--font-body); font-size: .86rem; line-height: 1.65; color: var(--color-text-secondary); }
+.an-bars { display: grid; gap: .5rem; }
+.an-row { display: grid; grid-template-columns: minmax(0, 11rem) minmax(0, 1fr) 4.2rem; gap: .9rem; align-items: center; font-family: var(--font-body); font-size: .84rem; color: var(--color-text-secondary); }
+.an-row > b { font-family: var(--font-display); font-weight: 500; font-size: 1.08rem; color: var(--color-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.an-row > b a { color: inherit; text-decoration: none; } .an-row > b a:hover { color: var(--gold); }
+.an-row > span:last-child { text-align: right; font-variant-numeric: tabular-nums; color: var(--color-text); }
+.an-track { position: relative; height: 12px; border-radius: 99px; background: var(--rule-2); overflow: hidden; }
+.an-track i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 99px; background: var(--gold); transform-origin: left; transform: scaleX(0); transition: transform 1s var(--ease); }
+.an-in .an-track i { transform: scaleX(1); }
+.an-track i.b { background: #3e5552; opacity: .85; height: 5px; top: auto; }
+.an-row.pair .an-track { height: 16px; }
+.an-row.pair .an-track i.a { height: 9px; }
+.an-leg { display: flex; flex-wrap: wrap; gap: 1.2rem; margin: 0 0 1rem; font-family: var(--font-body); font-size: .78rem; color: var(--color-text-light); }
+.an-leg span::before { content: ''; display: inline-block; width: 18px; height: 8px; margin-right: .45rem; border-radius: 99px; background: var(--gold); vertical-align: middle; }
+.an-leg span.b::before { background: #3e5552; height: 4px; }
+.an-two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.4rem; }
+@media (max-width: 760px) { .an-two { grid-template-columns: minmax(0, 1fr); } .an-row { grid-template-columns: minmax(0, 8rem) minmax(0, 1fr) 3.4rem; } }
+.an-two h4 { margin: 0 0 .8rem; font-family: var(--font-body); font-size: .76rem; font-weight: 600; color: var(--gold); }
+.an-sn { display: flex; flex-wrap: wrap; gap: .45rem; }
+.an-sn a { display: inline-flex; align-items: baseline; gap: .4rem; padding: .35rem .8rem; border: 1px solid var(--color-border); border-radius: 10px; font-family: var(--font-display); font-size: 1.08rem; color: var(--color-text); text-decoration: none; transition: border-color .2s, background .2s; }
+.an-sn a:hover { border-color: var(--gold); background: var(--paper); }
+.an-sn sup { font-family: var(--font-body); font-size: .7rem; color: var(--gold); font-weight: 600; }
+.an-sn small { font-family: var(--font-body); font-size: .7rem; color: var(--color-text-light); }
+.an-hist { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: .4rem; align-items: end; height: 190px; padding-bottom: 1.6rem; position: relative; }
+.an-hist div { position: relative; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; }
+.an-hist i { display: block; border-radius: 6px 6px 0 0; background: var(--gold); transform-origin: bottom; transform: scaleY(0); transition: transform 1s var(--ease); }
+.an-in .an-hist i { transform: scaleY(1); }
+.an-hist b { position: absolute; left: 0; right: 0; bottom: -1.5rem; text-align: center; font-family: var(--font-body); font-size: .74rem; font-weight: 500; color: var(--color-text-light); }
+.an-hist em { display: block; margin-bottom: .25rem; text-align: center; font-family: var(--font-body); font-style: normal; font-size: .72rem; color: var(--color-text-secondary); font-variant-numeric: tabular-nums; }
+.an-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1px; background: var(--color-border-light); border: 1px solid var(--color-border-light); border-radius: 14px; overflow: hidden; }
+.an-cards div { padding: 1.2rem 1.3rem; background: var(--color-bg); }
+.an-cards b { display: block; font-family: var(--font-display); font-weight: 400; font-size: 2.2rem; line-height: 1; color: var(--ink); }
+.an-cards span { display: block; margin-top: .35rem; font-family: var(--font-body); font-size: .8rem; line-height: 1.5; color: var(--color-text-secondary); }
+.an-note { margin: 1rem 0 0; max-width: 66ch; font-family: var(--font-body); font-size: .8rem; line-height: 1.6; color: var(--color-text-light); }
 .hb-fh { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: baseline; gap: .3rem 1rem; margin: 1.6rem 0 -.2rem; padding-bottom: .7rem; border-bottom: 2px solid var(--ink); }
 .hb-fh:first-child { margin-top: 0; }
 .hb-fh h3 { margin: 0; font-family: var(--font-display); font-weight: 500; font-size: 1.7rem; color: var(--color-text); }
@@ -381,11 +421,11 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
       <div class="iv-crumbs"><a href="index.html">Головна</a><span>/</span><a href="metrychni-knyhy.html">Архівні справи</a><span>/</span>Інвентар маєтку</div>
       <p class="iv-kick">Архівний документ · Річ Посполита / Російська імперія</p>
       <h1>Інвентар маєтку Дубровиця<small>Folwark Worobin z Miastem Dombrowicą</small></h1>
-      <p class="iv-lede">Опис міста, вулиць і мешканців за графа Плятера: спершу рукопис і переклад, далі вулиці, межові камені й поіменні списки. Публікується поступово, в міру перекладу нових сторінок.</p>
+      <p class="iv-lede">Опис міста, вулиць і мешканців за графа Плятера: спершу рукопис і переклад, далі вулиці, межові камені й поіменні списки. Поіменно описано місто й 23 села п’яти фільварків — понад вісімсот дворів.</p>
       <dl class="iv-figs">
         <div><dd>1780–1820</dd><dt>приблизні роки</dt></div>
         <div><dd>200+</dd><dt>сторінок документа</dt></div>
-        <div><dd id="hHH">—</dd><dt>дворів уже поіменно</dt></div>
+        <div><dd id="hHH">—</dd><dt>дворів поіменно</dt></div>
         <div><dd>~1776</dd><dt>рік межування міста</dt></div>
       </dl>
       <div class="iv-btns"><a class="iv-btn dark" href="#meshkantsi"><span>Списки мешканців</span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a><a class="iv-btn line" href="#skany"><span>Переглянути скани</span></a></div>
@@ -397,7 +437,7 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
   </div>
 </header>
 
-<nav class="ivn" aria-label="Розділи сторінки"><div class="iv-wrap ivn-in"><a href="#pro" data-nav="pro">Про документ</a><a href="#skany" data-nav="skany">Скани</a><a href="#tekst" data-nav="tekst">Текст і переклад</a><a href="#vulytsi" data-nav="vulytsi">Вулиці</a><a href="#kameni" data-nav="kameni">Межові камені</a><a href="#meshkantsi" data-nav="meshkantsi">Мешканці</a><a href="#hlosarii" data-nav="hlosarii">Глосарій</a><a href="#vlasnyky" data-nav="vlasnyky">Власники</a></div><span class="ivn-bar" id="ivnBar"></span></nav>
+<nav class="ivn" aria-label="Розділи сторінки"><div class="iv-wrap ivn-in"><a href="#pro" data-nav="pro">Про документ</a><a href="#skany" data-nav="skany">Скани</a><a href="#tekst" data-nav="tekst">Текст і переклад</a><a href="#vulytsi" data-nav="vulytsi">Вулиці</a><a href="#kameni" data-nav="kameni">Межові камені</a><a href="#meshkantsi" data-nav="meshkantsi">Мешканці</a><a href="#analityka" data-nav="analityka">Аналітика</a><a href="#hlosarii" data-nav="hlosarii">Глосарій</a><a href="#vlasnyky" data-nav="vlasnyky">Власники</a></div><span class="ivn-bar" id="ivnBar"></span></nav>
 
 <section class="iv-sec first" id="pro"><div class="iv-wrap iv-cols"><div class="iv-mark"><b>§ 1</b><span>Про документ</span></div><div><h2 class="iv-h2">Понад двісті сторінок скоропису</h2>
 <p class="iv-p">Цей інвентар налічує понад 200 сторінок і написаний <strong>старопольською мовою</strong> з вкрапленнями місцевих українських слів та діалектизмів кінця XVIII — початку XIX ст. Через специфіку тогочасного скоропису, архаїчну орфографію та вставлені слова місцевого вжитку частина тексту піддається лише наближеному прочитанню. Деякі власні назви, розміри ділянок та прізвища мешканців відтворені з певними застереженнями — там, де читання спірне, це зазначено окремо. Представлені скани є фрагментами загального корпусу.</p>
@@ -427,16 +467,31 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
 <div class="cx-cards one rv"><article><h3>Можлива ідентифікація: загадковий камінь з книги єврейської громади</h3><p>Книга пам'яті єврейської громади Дубровиці зберегла унікальне свідчення: <strong>на північ від міста, в провулку біля лазні</strong>, стирчала скеля заввишки близько півтора метра з вирізьбленими написами та цифрами, що починались з «17…». Жодного офіційного пояснення цьому каменю не було залишено. <br><br> З огляду на інвентарний опис 1776 року, це <strong>майже напевно один із семи межових каменів</strong> Піарів. Воробинський провулок (де документ фіксує один із каменів) розташований якраз на північ від ринку, і «лазня» (баня) цілком могла існувати поряд. Цифри «17…» точно відповідають даті встановлення — <strong>1776</strong>. Написи, що «ніколи не були розшифровані» — це, вірогідно, латинські ініціали та титули тогочасного власника Бжостовського та ім'я MARYA, що без знання контексту виглядали б загадково. Кілька каменів, за описом, були «nieco wkopany» — частково вкопані в землю, а значить їхня висота над поверхнею цілком могла відповідати описаним «приблизно півтора метра». <br><br> Якщо це справді один із каменів 1776 року, він зберігся щонайменше до середини XX ст. — і може існувати досі, просто не впізнаний.</p></article></div></div></div></section>
 
 <section class="iv-sec" id="meshkantsi"><div class="iv-wrap iv-cols"><div class="iv-mark"><b>§ 6</b><span>Мешканці</span></div><div><h2 class="iv-h2">Хто жив у місті й селах</h2>
-<p class="iv-p">Інвентар записує двори поіменно: господаря, синів, дочок, братів і сестер. Маєток він описує за фільварками: до кожного панського двору належали свої села. Списки переносяться сюди по черзі, зі збереженням порядку вулиць і рядів.</p>
+<p class="iv-p">Інвентар записує двори поіменно: господаря, синів, дочок, братів і сестер. Маєток він описує за фільварками: до кожного панського двору належали свої села. Усі списки перенесено зі збереженням порядку вулиць, рядів і дворів.</p>
 <div class="hb-grid" id="hbGrid"></div>
 <div class="rg-wrap"><h3>Реєстр ринкових ділянок</h3><p class="rg-note">Документ 00009318-9 є частиною загального реєстру ринкових ділянок. Він містить таблицю з іменами власників крамниць, шпихлірів та вільних ділянок. <strong>Переважна більшість прізвищ — єврейські</strong>, що цілком відповідає загальному укладу польських та волинських містечок тієї доби: ринкова торгівля зосереджувалась у руках єврейської громади. Прочитання деяких прізвищ є наближеним через специфіку скоропису.</p>
 <div class="rg"><div class="rg-r h"><span class="n">#</span><span class="nm">Ім&#x27;я та прізвище</span><span class="ds">Опис ділянки</span><span class="pr">Прути</span></div><div class="rg-r"><span class="n">1</span><span class="nm">Ізраель Хаймович</span><span class="ds">Кутова ділянка (rogowy); муровані крамниці та вільні крамниці; шпихлір</span><span class="pr">21</span></div><div class="rg-r"><span class="n">2</span><span class="nm">Зельман Аронович</span><span class="ds">Ділянка на ринку</span><span class="pr">17</span></div><div class="rg-r"><span class="n">3</span><span class="nm">Хаїм Йонашович</span><span class="ds">Ділянка на ринку</span><span class="pr">26</span></div><div class="rg-r"><span class="n">6</span><span class="nm">Tenże (він же)</span><span class="ds">Місце під шпихлір біля Люботина; 2-га пієржея вулиці Замкової</span><span class="pr">22</span></div><div class="rg-r"><span class="n">9–10</span><span class="nm">Давидович Гімпелович</span><span class="ds">Кутова ділянка; 3-тя пієржея (ряд забудови)</span><span class="pr">17</span></div><div class="rg-r"><span class="n">12</span><span class="nm">Міхель Абрамович</span><span class="ds">Ділянка на Завалі (na Zawale), під крамницею</span><span class="pr">10</span></div><div class="rg-r"><span class="n">13</span><span class="nm">Юда (Tenże)</span><span class="ds">Ділянка під крамницею</span><span class="pr">10</span></div><div class="rg-r"><span class="n">14–15</span><span class="nm">Лейба Шейнович</span><span class="ds">Дві ділянки; Янович Шейнер</span><span class="pr">2</span></div><div class="rg-r"><span class="n">18–20</span><span class="nm">Мошка Ошермович</span><span class="ds">Під крамницями; Юдка Абрамович; місце на Шкільній вулиці; під брамою; шпихлір</span><span class="pr">16 / 20 / 7</span></div><div class="rg-r"><span class="n">21–22</span><span class="nm">Янкель Гіршович · Шибер Висоцький</span><span class="ds">Ділянки на Вуличному провулку</span><span class="pr">20 / 29</span></div><div class="rg-r"><span class="n">25–26</span><span class="nm">Мендель Аронович</span><span class="ds">Навпроти Воробинської вулиці; під крамницею; Мордух Аронович (кутовий); Ленус Фацир</span><span class="pr">51 / 60</span></div><div class="rg-r"><span class="n">27–30</span><span class="nm">Арон Бейсахович · Фреймалкіс</span><span class="ds">Подальший перелік (Dalsza osiadłość); Ітела Юдкова, вдова; місце під крамницями</span><span class="pr">—</span></div><div class="rg-r"><span class="n">—</span><span class="nm">Абрам Буська, кравець</span><span class="ds">Вул. Воробинська, 1-й ряд; орна земля у три зміни на Підгайці</span><span class="pr">—</span></div><div class="rg-r"><span class="n">—</span><span class="nm">Антип Мартинюк · Копель Гіршович</span><span class="ds">Друга сторона Ринкового завулку; Монковський завулок від ринкових площ</span><span class="pr">—</span></div><div class="rg-r"><span class="n">50</span><span class="nm">Давид Давидович</span><span class="ds">Монковський завулок; місце під міськими ятками (jatki)</span><span class="pr">—</span></div></div></div></div></div></section>
 
-<section class="iv-sec" id="hlosarii"><div class="iv-wrap iv-cols"><div class="iv-mark"><b>§ 7</b><span>Глосарій</span></div><div><h2 class="iv-h2">Слова, яких не знайти в підручнику</h2>
+<section class="iv-sec" id="analityka"><div class="iv-wrap iv-cols"><div class="iv-mark"><b>§ 7</b><span>Аналітика</span></div><div id="anRoot">
+<h2 class="iv-h2">Маєток у цифрах</h2>
+<p class="iv-p">Усі поіменні списки інвентаря разом: місто й села п'яти фільварків. Цифри рахуються просто зі списків, тож кожну можна перевірити у відповідному реєстрі.</p>
+<dl class="an-figs" id="anFigs"></dl>
+<h3 class="an-h">Фільварки</h3><p class="an-sub">Скільки дворів і названих людей припадає на кожен панський двір разом із його селами.</p><div class="an-bars" id="anFw"></div>
+<h3 class="an-h">Інвентар і атлас 1798 року</h3><p class="an-sub" id="anCmpSub">Кількість дворів у селах, які є в обох джерелах.</p>
+<div class="an-leg"><span>інвентар Плятера</span><span class="b">«Економічні примітки» 1798</span></div><div class="an-bars" id="anCmp"></div><p class="an-note" id="anCmpNote"></p>
+<h3 class="an-h">Найпоширеніші прізвища</h3><p class="an-sub">Кількість дворів із цим прізвищем у всьому маєтку. Натисніть, щоб знайти родину в реєстрі.</p><div class="an-sn" id="anSur"></div>
+<h3 class="an-h">Найчастіші імена</h3><p class="an-sub">Серед усіх названих людей: господарів, дітей, братів і сестер. Зменшені форми рахуються так, як їх записав укладач.</p>
+<div class="an-two"><div><h4>Чоловічі</h4><div class="an-bars" id="anMale"></div></div><div><h4>Жіночі</h4><div class="an-bars" id="anFem"></div></div></div>
+<h3 class="an-h">Скільки людей під одним дахом</h3><p class="an-sub" id="anSizeSub"></p><div class="an-hist" id="anHist"></div>
+<h3 class="an-h">Хто жив у маєтку</h3><div class="an-cards" id="anSoc"></div><p class="an-note">Групи — ті, якими користувався сам укладач: у місті він окремо нумерував євреїв, християн ґрунтових і плацових, у селах — тяглі й боярські двори.</p>
+</div></div></section>
+
+
+<section class="iv-sec" id="hlosarii"><div class="iv-wrap iv-cols"><div class="iv-mark"><b>§ 8</b><span>Глосарій</span></div><div><h2 class="iv-h2">Слова, яких не знайти в підручнику</h2>
 <div class="gl-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input type="search" id="glQ" placeholder="Знайти термін: пєржея, прут, окописько" aria-label="Пошук у глосарії" autocomplete="off"></div>
 <dl class="gl" id="glList"><div class="gl-i"><dt>JXX / J.X.X.</dt><dd>Скорочення від польськ. <em>Jegomości Xięża</em> — «Їхмості Ксьондзи». Шанобливе звертання до католицьких священників або ченців; у даному контексті — до отців Піарів.</dd></div><div class="gl-i"><dt>Piarowie (Піари)</dt><dd>Католицький чернечий орден <em>Clerici Regulares Pauperes Matris Dei Scholarum Piarum</em>, заснований у Римі 1617 р. Спеціалізувались на безкоштовній освіті молоді. В Дубровиці утримували колегіум — одну з небагатьох шкіл у регіоні.</dd></div><div class="gl-i"><dt>Pręt (Прут)</dt><dd>Стара польська одиниця довжини — від 4,3 до 4,8 м залежно від регіону. У даному документі використовується також як міра площі (квадратний прут). 273 прути вільної ринкової площі — значний незабудований простір.</dd></div><div class="gl-i"><dt>Sznur (Шнур)</dt><dd>Міра довжини, що дорівнювала 10 прутам — приблизно 45–48 м. Використовувалась для вимірювання відстаней між межовими каменями.</dd></div><div class="gl-i"><dt>Szpichlerz (Шпихлір)</dt><dd>Велика комора для зберігання зерна, солі та інших товарів. Присутність шпихлірів просто на ринку свідчить про активну транзитну торгівлю — Дубровиця стояла на водному шляху через Горинь та Прип'ять до Балтики.</dd></div><div class="gl-i"><dt>Pierzeja (Пєржея)</dt><dd>Ряд будівель або ділянок вздовж однієї сторони вулиці чи площі. Документ розрізняє «1-шу», «2-гу», «3-тю» пєржеї ринку — фактично, чотири сторони ринкової площі.</dd></div><div class="gl-i"><dt>Gumniska (Гумниська)</dt><dd>Місця для гумен, стодол та токів для молотьби зерна. Вивід стодол із центру на окраїни — типова міська реформа XVIII ст., спрямована проти пожеж.</dd></div><div class="gl-i"><dt>Okopisko (Окописько)</dt><dd>Місцева назва єврейського цвинтаря (кіркуту). Етимологія — від «окопати» (обкопати ровом), бо такі цвинтарі часто обгороджувались земляним валом чи ровом.</dd></div><div class="gl-i"><dt>Presviter (Пресвітер)</dt><dd>Православний або греко-католицький священник; настоятель парафії. Документ фіксує плани виділення ділянки для «пресвітера» і церкви Різдва на Воробинському передмісті.</dd></div><div class="gl-i"><dt>Jurydyka (Юридика)</dt><dd>Частина міста, виведена з-під юрисдикції міського суду та самоврядування — підпорядкована безпосередньо монастирю або магнату. Монастирська юридика Піарів у Дубровиці охоплювала значну площу.</dd></div><div class="gl-i"><dt>Topa (Топа)</dt><dd>Ймовірно, місцевий топонім — низинна заплавна ділянка чи заболочений рукав річки поблизу замкового пагорба. Зустрічається у формулі «Wał y Topa Zamkowa».</dd></div><div class="gl-i"><dt>Rogowy (Роговий)</dt><dd>Кутова ділянка або будинок, що стоїть на розі вулиць. Ринкові кути були найдорожчими місцями — максимальна видимість, зручний доступ з двох сторін.</dd></div><div class="gl-i"><dt>Tenże (Тенже)</dt><dd>«Він же» — юридичний та бухгалтерський прийом уникнення повтору: якщо той самий власник має кілька суміжних ділянок, після першого запису використовується <em>Tenże</em>.</dd></div><div class="gl-i"><dt>Latus Facit</dt><dd>Латинськ. «Разом становить» або «Підсумок». Стандартна бухгалтерська позначка в документах Речі Посполитої для підбиття підсумку колонки цифр.</dd></div><div class="gl-i"><dt>JWW / WXa Litewskiego</dt><dd><em>Jaśnie Wielmożni</em> — «Ясновельможні» (титул найвищої шляхти). <em>Wielkiego Xięstwa Litewskiego</em> — «Великого Князівства Литовського». Михайло Казимир Бжостовський — великий підскарбій ВКЛ, чиє ім'я викарбуване на межовому камені «А» як власника міста у рік межування (1776).</dd></div><div class="gl-i"><dt>Sub Litt A–G</dt><dd>Латинськ. <em>Sub Littera</em> — «Під літерою». Позначення межових каменів за літерами латинського алфавіту — A, B, D, E, F, G (літера C у документі пропущена або позначена G двічі).</dd></div></dl><p class="gl-empty" id="glEmpty" hidden>Такого слова в глосарії ще немає.</p></div></div></section>
 
-<section class="iv-sec" id="vlasnyky"><div class="iv-wrap iv-cols"><div class="iv-mark"><b>§ 8</b><span>Власники й хронологія</span></div><div><h2 class="iv-h2">Чиє було місто</h2>
+<section class="iv-sec" id="vlasnyky"><div class="iv-wrap iv-cols"><div class="iv-mark"><b>§ 9</b><span>Власники й хронологія</span></div><div><h2 class="iv-h2">Чиє було місто</h2>
 <div class="tl" id="tl"><div class="tl-i"><p class="tl-y">до XVIII ст.</p><h3 class="tl-n">Сапіги та інші магнатські роди</h3><p class="tl-d">Дубровиця належала литовсько-польській магнатській родині Сапігів. У 1701 р. литовські війська спустошили місто через суперечки в межах Сапізького табору.</p><span class="tl-b">Магнатське місто</span></div><div class="tl-i"><p class="tl-y">XVIII ст. — задокументований власник</p><h3 class="tl-n">Михайло Казимир Бжостовський</h3><p class="tl-d">За деякими даними — власник або орендодавець частини дубровицьких земель. Великий підскарбій Великого Князівства Литовського. <strong>1776 р.</strong> — за його часів проведено межування монастирських угідь, встановлено 7 каменів з його ім'ям та написом MARYA.</p><span class="tl-b">Межування 1776 р.</span></div><div class="tl-i act"><p class="tl-y">Друга пол. XVIII ст. — поч. XX ст.</p><h3 class="tl-n">Графи Плятери — власники Дубровиці</h3><p class="tl-d">Дубровиця перейшла до роду Плятерів у другій половині XVIII ст. — точна дата в джерелах не встановлена однозначно. Першим підтвердженим власником із цього роду вважається <strong>Юзеф Антоній Плятер (1750–1832)</strong>. Наприкінці XVIII ст. Плятери збудували палац у Воробині. При них місто зростало: суконна мануфактура (1809), гуральня, розробка бурштину. <strong>Інвентар 1780–1820 рр. складався вже за Плятерів.</strong></p><span class="tl-b">Час складання інвентарю</span></div><div class="tl-i"><p class="tl-y">1795</p><h3 class="tl-n">Третій поділ Польщі — Дубровиця в Російській імперії</h3><p class="tl-d">5 липня 1795 р. місто отримало статус містечка. Ввійшло до Домбровицького округу Волинського намісництва, з 1797 р. — Рівненського повіту Волинської губернії. Плятери зберегли власність на місто і при новій владі.</p><span class="tl-b">Новий адміністративний устрій</span></div><div class="tl-i"><p class="tl-y">1918</p><h3 class="tl-n">Кінець епохи Плятерів</h3><p class="tl-d">5 грудня 1918 р. маєток у Воробині захоплено. Власників Ігнатія та Антонія Плятерів вбито. Палац підпалено. Вцілілий Вітольд Плятер відбудував маєток, але більше не жив у ньому.</p><span class="tl-b">Кінець приватного міста</span></div></div>
 <div class="pl rv"><div><small>Власники · XVIII ст. — 1918</small><h3>Графи Плятери та їхня Дубровиця</h3><p>Рід Плятерів (De Broël Plater) — польсько-литовська магнатська родина. На Дубровиці вони правили понад <strong>140 років</strong> — найдовший період безперервного одновласницького управління в нові часи. При них місто отримало суконну мануфактуру, гуральню та палац у Воробині (нині — медичні заклади). Герб Дубровиці досі містить <strong>три чорні балки Плятерів</strong> поряд із кентавром Гольшанських.</p></div><dl class="pl-s"><div><dd>XVIII ст.</dd><dt>Перехід до Плятерів</dt></div><div><dd>140+</dd><dt>Років у власності роду</dt></div><div><dd>1809</dd><dt>Рік заснування мануфактури</dt></div></dl></div>
 <div class="iv-end"><a class="iv-btn dark" href="inventar-naselennia.html"><span>Відкрити список мешканців</span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a><a class="iv-btn line" href="atlas-1798.html#dombrovytsia"><span>Дубровиця на атласі 1798</span></a><a class="iv-btn line" href="metrychni-knyhy.html"><span>До архівних справ</span></a></div></div></div></section>
@@ -503,6 +558,7 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
 
 <script src="app.js?v=11"></script>
 <script src="inventar-plater-data.js"></script>
+<script src="sela_data_embed.js"></script>
 <script>
 (function(){
 'use strict';
@@ -662,7 +718,7 @@ function card(slug, nm, kind){
 Object.keys(FW).forEach(function(k){
     var f = FW[k], done = f.places.filter(function(p){ return p[0] && INV[p[0]]; }).length;
     if (f.name) hub += '<div class="hb-fh rv"><h3>' + f.name + '</h3>' + (f.orig ? '<i>' + f.orig + '</i>' : '') +
-        '<span>' + done + ' з ' + f.places.length + ' ' + plural(f.places.length, 'поселення', 'поселення', 'поселень') + ' уже поіменно</span>' + (f.desc ? '<p>' + f.desc + '</p>' : '') + '</div>';
+        '<span>' + done + ' ' + plural(done, 'поселення', 'поселення', 'поселень') + '</span>' + (f.desc ? '<p>' + f.desc + '</p>' : '') + '</div>';
     f.places.forEach(function(p){ hub += card(p[0], p[1], p[2]); });
 });
 $('hbGrid').innerHTML = hub;
@@ -674,6 +730,101 @@ if (dom) document.querySelectorAll('.st-card').forEach(function(c){
     c.querySelector('[data-count]').textContent = n ? n + ' ' + plural(n, 'двір', 'двори', 'дворів') : '';
 });
 
+/* ── § 7 Аналітика ── */
+(function(){
+    function esc(x){ return String(x == null ? '' : x).replace(/[&<>"]/g, function(c){ return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+    var root = $('anRoot'); if (!root || !window.INVENTAR_PLATER) return;
+    var A = window.INVENTAR_PLATER, F = window.INVENTAR_FOLWARKS || {}, S = window.ATLAS_SELA_1798 || {};
+    var MALE = /^(син|брат|зять|пасинок|пасерб|швагер|вітчим|братанець|сестринець|приймак|внук|шурин|тесть|стрий|кровний)$/;
+    var FEM = /^(дочка|сестра|внучка|сестрениця|братаниця|синовиця|мати)$/;
+    var all = [], places = Object.keys(A), sur = {}, male = {}, fem = {}, sizes = {}, cat = {}, crafts = {}, widows = 0;
+    function first(n){ var w = String(n || '').replace(/\(.*?\)/g, '').trim().split(/\s+/)[0]; return /^[А-ЯІЇЄҐ][а-яіїєґ'’]+$/.test(w) && w !== 'Пан' && w !== 'Вдова' ? w : ''; }
+    function bump(o, k, slug){ if (!k) return; o[k] = o[k] || { n: 0, at: {} }; o[k].n++; if (slug) o[k].at[slug] = 1; }
+    places.forEach(function(slug){
+        A[slug].streets.forEach(function(st){ st.sides.forEach(function(sd){ sd.items.forEach(function(it){
+            if (it.lm) return;
+            var size = 1 + (it.m ? it.m.length : 0);
+            all.push({ slug: slug, size: size });
+            sizes[Math.min(size, 10)] = (sizes[Math.min(size, 10)] || 0) + 1;
+            if (it.c) cat[it.c] = (cat[it.c] || 0) + 1;
+            if (it.w) widows++;
+            if (it.p) bump(crafts, it.p.replace(/\s*\(.*$/, ''), slug);
+            if (it.s && it.c !== 'j' && !/^Пан /.test(it.n)) bump(sur, it.s, slug);
+            if (!it.w && it.c !== 'j') bump(male, first(it.n));
+            (it.m || []).forEach(function(m){
+                if (!m.n || m.unk) return;
+                var base = String(m.r || '').split(' ')[0], f = first(m.n);
+                if (FEM.test(base)) bump(fem, f); else if (MALE.test(base)) bump(male, f);
+            });
+        }); }); });
+    });
+    var HH = all.length, PP = all.reduce(function(s, h){ return s + h.size; }, 0);
+    function top(o, n){ return Object.keys(o).sort(function(a, b){ return o[b].n - o[a].n || a.localeCompare(b, 'uk'); }).slice(0, n); }
+    function bar(label, val, max, right, href){
+        return '<div class="an-row"><b>' + (href ? '<a href="' + href + '">' + label + '</a>' : label) + '</b><span class="an-track"><i style="width:' + (val / max * 100).toFixed(1) + '%"></i></span><span>' + right + '</span></div>';
+    }
+    /* цифри */
+    var fws = Object.keys(F).filter(function(k){ return F[k].places.some(function(p){ return A[p[0]]; }); });
+    $('anFigs').innerHTML = [[fws.length, plural(fws.length, 'фільварок', 'фільварки', 'фільварків')], [places.length, plural(places.length, 'поселення', 'поселення', 'поселень')],
+        [fmt(HH), plural(HH, 'двір', 'двори', 'дворів')], [fmt(PP), plural(PP, 'людину названо', 'людей названо', 'людей названо')],
+        [fmt(Object.keys(sur).length), 'християнських прізвищ'], [(PP / HH).toFixed(1).replace('.', ','), 'особи на двір у середньому']]
+        .map(function(f){ return '<div><dd>' + f[0] + '</dd><dt>' + f[1] + '</dt></div>'; }).join('');
+    /* фільварки */
+    var fwr = fws.map(function(k){
+        var hh = 0, pp = 0; all.forEach(function(h){ if (A[h.slug].folwark === k) { hh++; pp += h.size; } });
+        return { k: k, n: F[k].name, hh: hh, pp: pp, pl: F[k].places.filter(function(p){ return A[p[0]]; }).length };
+    }).sort(function(a, b){ return b.hh - a.hh; });
+    var mx = Math.max.apply(null, fwr.map(function(r){ return r.hh; }));
+    $('anFw').innerHTML = fwr.map(function(r){ return bar(esc(r.n.replace('Фільварок ', '')), r.hh, mx, fmt(r.hh), ''); }).join('') +
+        '<p class="an-note">' + fwr.map(function(r){ return esc(r.n) + ': ' + r.pl + ' ' + plural(r.pl, 'поселення', 'поселення', 'поселень') + ', ' + fmt(r.pp) + ' ' + plural(r.pp, 'особа', 'особи', 'осіб'); }).join(' · ') + '.</p>';
+    /* інвентар і атлас */
+    var cmp = places.filter(function(k){ return A[k].atlas !== false && typeof A[k].atlas !== 'string' && S[k] && S[k].dvory; }).map(function(k){
+        var hh = all.filter(function(h){ return h.slug === k; }).length;
+        return { k: k, n: A[k].name, inv: hh, at: S[k].dvory };
+    }).sort(function(a, b){ return b.at - a.at; });
+    if (cmp.length) {
+        var cm = Math.max.apply(null, cmp.map(function(r){ return Math.max(r.inv, r.at); })), ti = 0, ta = 0, close = 0;
+        $('anCmp').innerHTML = cmp.map(function(r){
+            ti += r.inv; ta += r.at; if (Math.abs(r.inv - r.at) <= Math.max(2, r.at * .1)) close++;
+            return '<div class="an-row pair"><b><a href="inventar-naselennia.html?p=' + r.k + '">' + esc(r.n) + '</a></b><span class="an-track"><i class="a" style="width:' + (r.inv / cm * 100).toFixed(1) + '%"></i><i class="b" style="width:' + (r.at / cm * 100).toFixed(1) + '%"></i></span><span>' + r.inv + ' / ' + r.at + '</span></div>';
+        }).join('');
+        $('anCmpNote').textContent = 'Разом у ' + cmp.length + ' ' + plural(cmp.length, 'поселенні', 'поселеннях', 'поселеннях') + ': ' + fmt(ti) + ' ' + plural(ti, 'двір', 'двори', 'дворів') + ' за інвентарем проти ' + fmt(ta) + ' за «Примітками» 1798 року. У ' + close + ' з ' + cmp.length +
+            ' кількість майже збігається (різниця до 10 %). Це підтримує думку, що інвентар складено незадовго до чи невдовзі після 1798 року; на сторінці Мочулища видно ще й мапу 1805 року, яка, найімовірніше, пізніша за інвентар.';
+    }
+    /* прізвища */
+    $('anSur').innerHTML = top(sur, 24).map(function(k){
+        var at = Object.keys(sur[k].at), one = at.length === 1 ? at[0] : '';
+        return '<a href="inventar-naselennia.html?p=' + (one || at[0]) + '&q=' + encodeURIComponent(k) + '">' + esc(k) + '<sup>' + sur[k].n + '</sup>' +
+            '<small>' + (one ? esc(A[one].name) : at.length + ' ' + plural(at.length, 'поселення', 'поселення', 'поселень')) + '</small></a>';
+    }).join('');
+    /* імена */
+    function names(o, el){ var t = top(o, 12), m = o[t[0]].n; $(el).innerHTML = t.map(function(k){ return bar(esc(k), o[k].n, m, o[k].n, ''); }).join(''); }
+    names(male, 'anMale'); names(fem, 'anFem');
+    /* розмір двору */
+    var hm = Math.max.apply(null, Object.keys(sizes).map(function(k){ return sizes[k]; }));
+    $('anHist').innerHTML = [1,2,3,4,5,6,7,8,9,10].map(function(n){
+        var v = sizes[n] || 0; return '<div><em>' + v + '</em><i style="height:' + (v / hm * 100).toFixed(1) + '%"></i><b>' + (n === 10 ? '10+' : n) + '</b></div>';
+    }).join('');
+    var big = all.reduce(function(a, h){ return h.size > a.size ? h : a; }, all[0]);
+    var mode = Object.keys(sizes).sort(function(a, b){ return sizes[b] - sizes[a]; })[0];
+    $('anSizeSub').textContent = 'Найчастіше в записі двору названо ' + mode + ' ' + plural(+mode, 'особу', 'особи', 'осіб') + '; найбільший двір — ' + big.size + ' осіб (' + A[big.slug].name + '). Самотніх господарів, без жодного родича в записі, — ' + (sizes[1] || 0) + '. Дружин інвентар здебільшого не називає, тож справжні родини були більшими.';
+    /* соціальний склад */
+    var cr = top(crafts, 20).map(function(k){ return k + (crafts[k].n > 1 ? ' (' + crafts[k].n + ')' : ''); });
+    var crN = Object.keys(crafts).reduce(function(s, k){ return s + crafts[k].n; }, 0);
+    var soc = [];
+    if (cat.j) soc.push([cat.j, 'єврейських дворів у Дубровиці — ринок, Шкільна, Бережницька, Завальна']);
+    if (cat.g || cat.p) soc.push([(cat.g || 0) + (cat.p || 0), 'християнських дворів міста: ' + (cat.g || 0) + ' ґрунтових і ' + (cat.p || 0) + ' плацових']);
+    if (cat.t) soc.push([cat.t, 'тяглих господарств у Лютинську й Орв’яниці']);
+    if (cat.b) soc.push([cat.b, 'боярських дворів — служилих селян']);
+    soc.push([widows, plural(widows, 'двір', 'двори', 'дворів') + ', які очолюють вдови']);
+    soc.push([crN, plural(crN, 'ремісник', 'ремісники', 'ремісників') + ': ' + cr.join(', ')]);
+    $('anSoc').innerHTML = soc.map(function(s){ return '<div><b>' + fmt(s[0]) + '</b><span>' + esc(s[1]) + '</span></div>'; }).join('');
+    /* поява смужок */
+    if ('IntersectionObserver' in window) {
+        var ob = new IntersectionObserver(function(es){ es.forEach(function(e){ if (e.isIntersecting) { e.target.classList.add('an-in'); ob.unobserve(e.target); } }); }, { threshold: .15 });
+        root.querySelectorAll('.an-bars, .an-hist').forEach(function(el){ ob.observe(el); });
+    } else root.querySelectorAll('.an-bars, .an-hist').forEach(function(el){ el.classList.add('an-in'); });
+})();
 })();
 
 </script>
