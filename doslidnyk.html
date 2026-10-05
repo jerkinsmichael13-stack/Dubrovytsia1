@@ -139,6 +139,52 @@
     .dh-tl-year{font-size:.95rem}
 }
 </style>
+<style>
+.dx-chips{display:flex;flex-wrap:wrap;gap:.35rem;margin:0 0 1.4rem}
+.dx-chip{font:inherit;font-size:.8rem;padding:.38rem .8rem;border-radius:999px;border:1px solid var(--color-border);background:none;color:var(--color-text-secondary);cursor:pointer}
+.dx-chip:hover{border-color:var(--color-accent)}
+.dx-chip[aria-pressed="true"]{background:var(--color-text);border-color:var(--color-text);color:var(--color-bg)}
+.dx-chip sup{font-size:.62rem;opacity:.7}
+.dx-era{margin:0 0 2.6rem}
+.dx-era-h{display:flex;align-items:baseline;gap:.8rem;margin:0 0 .8rem;padding:0 0 .6rem;border-bottom:2px solid var(--color-text);font-family:var(--font-display);font-weight:400;font-size:1.7rem;color:var(--color-text)}
+.dx-era-h i{font-size:1rem;color:var(--color-text-light)}
+.dx-era-h span{margin-left:auto;font-family:var(--font-body);font-size:.8rem;color:var(--color-text-light)}
+.dx-dec{margin:1.2rem 0 .4rem;font-family:var(--font-body);font-size:.74rem;font-weight:600;color:var(--color-accent)}
+.dx-own,.dx-key{margin:0 0 2.6rem}
+.dx-own h3,.dx-key h3,.dx-sec-h{font-family:var(--font-display);font-weight:500;font-size:1.5rem;margin:0 0 .9rem;color:var(--color-text)}
+.dx-sec-h{margin-top:2.6rem;display:flex;align-items:baseline;gap:.6rem}
+.dx-sec-h span{font-family:var(--font-body);font-size:.8rem;color:var(--color-text-light)}
+.dx-own ol{list-style:none;margin:0;padding:0;border-left:2px solid var(--color-accent)}
+.dx-own li{display:grid;grid-template-columns:9rem minmax(0,1fr);gap:1rem;padding:.45rem 0 .45rem 1rem}
+.dx-own b{font-family:var(--font-body);font-size:.78rem;color:var(--color-accent)}
+.dx-own a{font-family:var(--font-display);font-size:1.08rem;color:var(--color-text);text-decoration:none}
+.dx-own a:hover{color:var(--color-accent)}
+@media(max-width:600px){.dx-own li{grid-template-columns:1fr;gap:.1rem}}
+.dx-key-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:.8rem}
+.dx-kp{display:block;padding:.9rem 1rem;border:1px solid var(--color-border-light);border-radius:12px;text-decoration:none;color:inherit;transition:border-color .2s}
+.dx-kp:hover{border-color:var(--color-accent)}
+.dx-kp b{display:block;font-family:var(--font-display);font-weight:500;font-size:1.1rem;color:var(--color-text)}
+.dx-kp span{display:block;font-size:.78rem;color:var(--color-text-secondary);margin-top:.2rem}
+.dx-kp i{display:block;font-size:.72rem;color:var(--color-accent);margin-top:.3rem;font-style:normal}
+.dx-tools{display:grid;gap:.8rem;margin:0 0 1rem}
+.dx-people{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:.8rem}
+.dx-p{padding:.9rem 1rem;border:1px solid var(--color-border-light);border-radius:12px}
+.dx-p-h{display:flex;justify-content:space-between;align-items:baseline;gap:.6rem}
+.dx-p-h b{font-family:var(--font-display);font-weight:500;font-size:1.15rem;color:var(--color-text)}
+.dx-p-h span{font-size:.72rem;color:var(--color-accent);font-weight:600}
+.dx-p-v{font-size:.74rem;color:var(--color-text-light);margin:.15rem 0 .4rem}
+.dx-p ul{list-style:none;margin:.3rem 0 0;padding:0}
+.dx-p li a{display:block;padding:.22rem 0;font-size:.82rem;line-height:1.4;color:var(--color-text-secondary);text-decoration:none}
+.dx-p li a:hover{color:var(--color-accent)}
+.dx-p li i{font-style:normal;font-weight:600;color:var(--color-accent);margin-right:.45rem}
+.dx-note{font-size:.84rem;color:var(--color-text-secondary);margin:0 0 1rem}
+.dx-inv{display:flex;flex-wrap:wrap;gap:.35rem}
+.dx-inv a{display:inline-flex;align-items:baseline;gap:.3rem;padding:.3rem .65rem;border:1px solid var(--color-border-light);border-radius:8px;text-decoration:none;color:var(--color-text);font-family:var(--font-display);font-size:1rem}
+.dx-inv a:hover{border-color:var(--color-accent)}
+.dx-inv sup{font-family:var(--font-body);font-size:.62rem;color:var(--color-accent)}
+.dx-inv small{font-family:var(--font-body);font-size:.66rem;color:var(--color-text-light)}
+</style>
+
 </head>
 <body>
 <header class="header">
@@ -255,7 +301,7 @@
             <div id="dhResults"></div>
         </div>
         <div class="dh-panel" id="panel-timeline">
-            <div class="dh-panel-intro"><h2>Хронологія подій</h2><p>Усі газетні згадки про Дубровицю у часовій послідовності. Натисніть на подію, щоб прочитати.</p></div>
+            <div class="dh-panel-intro"><h2>Хронологія подій</h2><p>Усі газетні статті про Дубровицю за періодами й десятиліттями. Натисніть статтю, щоб прочитати.</p></div>
             <div class="dh-tl" id="dhTl"></div>
         </div>
         <div class="dh-panel" id="panel-people">
@@ -794,7 +840,9 @@
 </footer>
 
 <script src="app.js?v=11"></script>
+<script src="inventar-plater-data.js"></script>
 <script>
+var PERSONALIA=[];
 var PRESS_URL='press-data.json', SITE_URL='site-index.json', PHOTOS_URL='photos-data.json', DOCS_URL='docs-data.json';
 var LF={pl:'польська',ru:'російська',uk:'українська',de:'німецька'};
 var FL={pl:'\u{1F1F5}\u{1F1F1}',ru:'\u{1F1F7}\u{1F1FA}',uk:'\u{1F1FA}\u{1F1E6}',de:'\u{1F1E9}\u{1F1EA}'};
@@ -812,9 +860,10 @@ Promise.all([
     fetch(PRESS_URL).then(function(r){return r.json();}).catch(function(){return [];}),
     fetch(SITE_URL).then(function(r){return r.json();}).catch(function(){return [];}),
     fetch(PHOTOS_URL).then(function(r){return r.json();}).catch(function(){return [];}),
-    fetch(DOCS_URL).then(function(r){return r.json();}).catch(function(){return [];})
+    fetch(DOCS_URL).then(function(r){return r.json();}).catch(function(){return [];}),
+    fetch('personalia.json').then(function(r){return r.json();}).catch(function(){return [];})
 ]).then(function(arr){
-    PRESS=arr[0]; SITE=arr[1]; PHOTOS=arr[2]; DOCS=arr[3];
+    PRESS=arr[0]; SITE=arr[1]; PHOTOS=arr[2]; DOCS=arr[3]; PERSONALIA=arr[4]||[];
     document.getElementById('tcTl').textContent=PRESS.length;
     var ppl=new Set();PRESS.forEach(function(e){(e.people||[]).forEach(function(p){ppl.add(p);});});
     document.getElementById('tcPpl').textContent=ppl.size;
@@ -939,42 +988,107 @@ var st;
 document.getElementById('dhQ').addEventListener('input',function(e){clearTimeout(st);st=setTimeout(function(){doSearch(e.target.value);},180);});
 document.getElementById('dhQClear').addEventListener('click',function(){document.getElementById('dhQ').value='';doSearch('');document.getElementById('dhQ').focus();});
 
+/* ═══ Хронологія за періодами ═══ */
+var DH_ERAS=[['empire','Російська імперія','до 1917'],['revolution','Революція й війни','1917–1920'],['poland','Польська доба','1921–1939'],['ww2','Друга світова','1939–1944'],['soviet','Радянська доба','1944–1991']];
+function eraOf(e){ if(e.era)return e.era; var y=e.year; return y<1917?'empire':y<=1920?'revolution':y<1939?'poland':y<1945?'ww2':'soviet'; }
+var TL_ERA='';
 function buildTimeline(){
     var el=document.getElementById('dhTl');
+    var cnt={}; PRESS.forEach(function(e){var k=eraOf(e);cnt[k]=(cnt[k]||0)+1;});
+    var chips='<div class="dx-chips" id="dxTlChips"><button class="dx-chip" data-era="" aria-pressed="'+(!TL_ERA)+'">Усі періоди</button>'+DH_ERAS.filter(function(r){return cnt[r[0]];}).map(function(r){return '<button class="dx-chip" data-era="'+r[0]+'" aria-pressed="'+(TL_ERA===r[0])+'">'+r[1]+' <sup>'+cnt[r[0]]+'</sup></button>';}).join('')+'</div>';
     var sorted=PRESS.slice().sort(function(a,b){return a.date.localeCompare(b.date);});
-    el.innerHTML=sorted.map(function(e){
-        return '<div class="dh-tl-item" onclick="openPress(\''+e.id+'\')"><div class="dh-tl-year">'+e.year+'</div><div class="dh-tl-dot-wrap"><div class="dh-tl-dot"></div></div><div class="dh-tl-card"><div class="dh-tl-date">'+fd(e.date)+'</div><div class="dh-tl-title">'+esc(e.headline)+'<span class="dh-tl-lang '+(LC[e.language]||'lpl')+'">'+(e.language||'').toUpperCase()+'</span></div><div class="dh-tl-src">'+esc(e.source)+'</div></div></div>';
-    }).join('');
+    var html='';
+    DH_ERAS.forEach(function(r){
+        if(TL_ERA&&TL_ERA!==r[0])return;
+        var items=sorted.filter(function(e){return eraOf(e)===r[0];}); if(!items.length)return;
+        html+='<section class="dx-era"><h3 class="dx-era-h">'+r[1]+' <i>'+r[2]+'</i><span>'+items.length+'</span></h3>';
+        var lastDec='';
+        items.forEach(function(e){
+            var dec=Math.floor(e.year/10)*10+'-ті';
+            if(dec!==lastDec){html+='<div class="dx-dec">'+dec+'</div>';lastDec=dec;}
+            html+='<div class="dh-tl-item" onclick="openPress(\''+e.id+'\')"><div class="dh-tl-year">'+e.year+'</div><div class="dh-tl-dot-wrap"><div class="dh-tl-dot"></div></div><div class="dh-tl-card"><div class="dh-tl-date">'+fd(e.date)+' · '+esc(e.source)+'</div><div class="dh-tl-title">'+esc(e.headline)+'<span class="dh-tl-lang '+(LC[e.language]||'lpl')+'">'+(e.language||'').toUpperCase()+'</span></div>'+((e.places||[]).length?'<div class="dh-tl-src">'+esc((e.places||[]).slice(0,5).join(' · '))+'</div>':'')+'</div></div>';
+        });
+        html+='</section>';
+    });
+    el.innerHTML=chips+html;
+    document.getElementById('dxTlChips').onclick=function(ev){var b=ev.target.closest('[data-era]');if(!b)return;TL_ERA=b.dataset.era;buildTimeline();};
 }
 
+/* ═══ Іменний покажчик: об'єднання варіантів ═══ */
+var PEOPLE=[], PPL_PER='', PPL_Q='', PPL_L='all';
+var OWNERS=[
+ ['XII–XIII ст.','Князі Дубровицькі (Гліб Юрійович, Олександр)','history.html'],
+ ['бл. 1477–1558','Князі Гольшанські-Дубровицькі','history.html'],
+ ['1558–1585','Марія Гольшанська; Андрій Курбський (бл. 1571–1578)','history.html'],
+ ['1585–1635','Барбара й Андрій Фірлеї, згодом їхні сини','history.html'],
+ ['1635–1674','Соломерецькі, Марта Нарушевичева','history.html'],
+ ['1558–1673','Кердеї-Мильські, Вишневецькі, Збігнєв і Миколай Фірлеї (друга половина міста)','history.html'],
+ ['1673–1695','Ян Кароль Дольський, фундатор піарів','history.html'],
+ ['після 1695','Вишневецькі, Огінські','history.html'],
+ ['до 1775','Міхал і Казимира Бжостовські','inventar-1780.html#vlasnyky'],
+ ['з 1775–1776','Плятери: Антоній, Ігнатій, Віктор','plater.html']];
+function normName(n){
+    n=String(n||'').replace(/\(.*?\)/g,' ').replace(/^(граф|графиня|пан|пані|кн\.|князь|о\.|прот\.|тт?\.)\s+/i,'').trim();
+    var t=n.split(/\s+/).filter(function(w){return !/^[А-ЯІЇЄA-Z]\.$/.test(w);});
+    var s=(t[t.length-1]||n).replace(/[«»"„“]/g,'');
+    return s;
+}
+function keyOf(s){ var k=s.toLowerCase().replace(/[’']/g,'').replace(/ё/g,'е'); return k.replace(/(и|і)$/,'').replace(/(ові|ом|ем|а)$/,''); }
+function perOf(y){ return y<1800?'old':y<1900?'xix':y<1939?'pre':'sov'; }
 function buildPeople(){
-    var idx={};
-    PRESS.forEach(function(e){(e.people||[]).forEach(function(name){(idx[name]=idx[name]||[]).push(e);});});
-    var names=Object.keys(idx).sort(function(a,b){return a.localeCompare(b,'uk');});
     var groups={};
-    names.forEach(function(n){var L=n[0].toUpperCase();(groups[L]=groups[L]||[]).push(n);});
+    PRESS.forEach(function(e){(e.people||[]).forEach(function(full){
+        var s=normName(full); if(!s||s.length<3)return; var k=keyOf(s);
+        var g=groups[k]=groups[k]||{k:k,forms:{},full:{},arts:[]};
+        g.forms[s]=(g.forms[s]||0)+1; g.full[full.trim()]=1;
+        if(g.arts.indexOf(e)<0)g.arts.push(e);
+    });});
+    Object.keys(groups).forEach(function(k){ if(k.indexOf('-')<0)return; var last=k.split('-').pop(); if(groups[last]&&last!==k){ var g=groups[k],t=groups[last];
+        Object.keys(g.forms).forEach(function(f){t.full[f]=1;}); Object.keys(g.full).forEach(function(f){t.full[f]=1;}); g.arts.forEach(function(a){if(t.arts.indexOf(a)<0)t.arts.push(a);}); delete groups[k]; } });
+    PEOPLE=Object.keys(groups).map(function(k){var g=groups[k];var f=Object.keys(g.forms).sort(function(a,b){return g.forms[b]-g.forms[a]||a.length-b.length;});
+        g.name=f[0]; g.variants=Object.keys(g.full).filter(function(v){return v!==g.name;}); g.arts.sort(function(a,b){return a.date.localeCompare(b.date);}); return g;});
+    PEOPLE.sort(function(a,b){return a.name.localeCompare(b.name,'uk');});
+    document.getElementById('tcPpl').textContent=PEOPLE.length;
+    var pp=document.getElementById('panel-people');
+    pp.innerHTML='<div class="dh-panel-intro"><h2>Іменний покажчик</h2><p>Особи з газетних статей, власники Дубровиці, ключові постаті документів і прізвища з інвентаря Плятера. Різні записи одного прізвища (з ініціалами, у відмінках, з титулом) об\'єднано.</p></div>'+
+      '<div class="dx-own"><h3>Власники Дубровиці</h3><ol>'+OWNERS.map(function(o){return '<li><b>'+o[0]+'</b><a href="'+o[2]+'">'+esc(o[1])+'</a></li>';}).join('')+'</ol></div>'+
+      (PERSONALIA.length?'<div class="dx-key"><h3>Ключові постаті з документів архіву</h3><div class="dx-key-g">'+PERSONALIA.map(function(p){return '<a class="dx-kp" href="'+esc(p.sourceUrl||'#')+'"><b>'+esc(p.name)+'</b><span>'+esc(p.role||'')+(p.years?' · '+esc(p.years):'')+'</span><i>'+esc(p.sourceTitle||'')+'</i></a>';}).join('')+'</div></div>':'')+
+      '<h3 class="dx-sec-h">Особи в газетних статтях <span>'+PEOPLE.length+'</span></h3>'+
+      '<div class="dx-tools"><input type="search" id="dxPq" class="dh-search" placeholder="Знайти прізвище…" autocomplete="off"><div class="dx-chips" id="dxPper">'+[['','Усі роки'],['xix','XIX ст.'],['pre','1900–1939'],['sov','1939–1991']].map(function(r){return '<button class="dx-chip" data-per="'+r[0]+'" aria-pressed="'+(r[0]==='')+'">'+r[1]+'</button>';}).join('')+'</div></div>'+
+      '<div class="dh-alpha" id="dhAlpha"></div><div class="dx-people" id="dhPeople"></div>'+
+      '<h3 class="dx-sec-h">Прізвища з інвентаря Плятера <span id="dxInvN"></span></h3><p class="dx-note">Близько 1780–1820 рр.: прізвища господарів у Дубровиці та селах маєтку. Натисніть, щоб відкрити поіменний список.</p><div class="dx-inv" id="dxInv"></div>';
     var alphabet='АБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЮЯ'.split('');
-    var present={};Object.keys(groups).forEach(function(k){present[k]=1;});
+    var present={}; PEOPLE.forEach(function(p){present[p.name[0].toUpperCase()]=1;});
     document.getElementById('dhAlpha').innerHTML='<button class="dh-alpha-btn on" data-l="all">Всі</button>'+alphabet.map(function(l){return '<button class="dh-alpha-btn" data-l="'+l+'" '+(present[l]?'':'disabled')+'>'+l+'</button>';}).join('');
-    window._peopleIdx=idx;
-    window._peopleGroups=groups;
-    renderPeople('all');
-    document.getElementById('dhAlpha').addEventListener('click',function(e){
-        var b=e.target.closest('.dh-alpha-btn');if(!b||b.disabled)return;
-        document.querySelectorAll('.dh-alpha-btn').forEach(function(x){x.classList.remove('on');});
-        b.classList.add('on');renderPeople(b.dataset.l);
-    });
+    document.getElementById('dhAlpha').onclick=function(e){var b=e.target.closest('.dh-alpha-btn');if(!b||b.disabled)return;document.querySelectorAll('.dh-alpha-btn').forEach(function(x){x.classList.toggle('on',x===b);});PPL_L=b.dataset.l;renderPeople();};
+    document.getElementById('dxPper').onclick=function(e){var b=e.target.closest('[data-per]');if(!b)return;PPL_PER=b.dataset.per;this.querySelectorAll('[data-per]').forEach(function(x){x.setAttribute('aria-pressed',String(x===b));});renderPeople();};
+    document.getElementById('dxPq').oninput=function(){PPL_Q=this.value.trim().toLowerCase();renderPeople();};
+    renderPeople(); buildInvSurnames();
 }
-function renderPeople(filter){
-    var groups=window._peopleGroups, idx=window._peopleIdx;
-    var el=document.getElementById('dhPeople');
-    var letters=Object.keys(groups).sort(function(a,b){return a.localeCompare(b,'uk');});
-    el.innerHTML=letters.filter(function(l){return filter==='all'||l===filter;}).map(function(L){
-        return '<div class="dh-letter-group"><div class="dh-letter">'+L+'</div>'+groups[L].map(function(n){
-            return '<div class="dh-person" onclick="showPerson(this.dataset.n)" data-n="'+esc(n)+'"><span class="dh-person-n">'+esc(n)+'</span><span class="dh-person-c">'+idx[n].length+'</span></div>';
-        }).join('')+'</div>';
-    }).join('');
+function renderPeople(){
+    var list=PEOPLE.filter(function(p){
+        if(PPL_L!=='all'&&p.name[0].toUpperCase()!==PPL_L)return false;
+        if(PPL_PER&&!p.arts.some(function(a){return perOf(a.year)===PPL_PER;}))return false;
+        if(PPL_Q&&(p.name+' '+p.variants.join(' ')).toLowerCase().indexOf(PPL_Q)<0)return false;
+        return true;});
+    document.getElementById('dhPeople').innerHTML=list.length?list.map(function(p){
+        var arts=p.arts.filter(function(a){return !PPL_PER||perOf(a.year)===PPL_PER;});
+        return '<div class="dx-p"><div class="dx-p-h"><b>'+esc(p.name)+'</b><span>'+arts.length+'</span></div>'+(p.variants.length?'<div class="dx-p-v">'+esc(p.variants.slice(0,6).join(' · '))+'</div>':'')+
+          '<ul>'+arts.map(function(a){return '<li><a href="presa.html?id='+a.id+'" onclick="openPress(\''+a.id+'\');return false;"><i>'+a.year+'</i>'+esc(a.headline)+'</a></li>';}).join('')+'</ul></div>';
+    }).join(''):'<p class="dx-note">Нічого не знайдено.</p>';
 }
+function buildInvSurnames(){
+    var A=window.INVENTAR_PLATER; if(!A){document.getElementById('dxInv').innerHTML='';return;}
+    var S={};
+    Object.keys(A).forEach(function(slug){A[slug].streets.forEach(function(st){st.sides.forEach(function(sd){sd.items.forEach(function(it){
+        if(it.lm||!it.s||it.c==='j'||/^Пан /.test(it.n))return;
+        var r=S[it.s]=S[it.s]||{n:0,at:{}}; r.n++; r.at[slug]=(r.at[slug]||0)+1;});});});});
+    var names=Object.keys(S).sort(function(a,b){return a.localeCompare(b,'uk');});
+    document.getElementById('dxInvN').textContent=names.length;
+    document.getElementById('dxInv').innerHTML=names.map(function(n){var at=Object.keys(S[n].at).sort(function(a,b){return S[n].at[b]-S[n].at[a];});
+        return '<a href="inventar-naselennia.html?p='+at[0]+'&q='+encodeURIComponent(n)+'" title="'+esc(at.map(function(s){return A[s].name+' — '+S[n].at[s];}).join(', '))+'">'+esc(n)+(S[n].n>1?'<sup>'+S[n].n+'</sup>':'')+'<small>'+esc(at.map(function(s){return A[s].name;}).slice(0,2).join(', '))+(at.length>2?' …':'')+'</small></a>';}).join('');
+}
+
 function showPerson(name){
     var arts=window._peopleIdx[name]||[];
     var body=document.getElementById('dhModalBody');
