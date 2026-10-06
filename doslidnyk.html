@@ -141,6 +141,16 @@
 </style>
 <style>
 .dx-chips{display:flex;flex-wrap:wrap;gap:.35rem;margin:0 0 1.4rem}
+.dx-hist{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:3px;align-items:end;height:70px;margin:0 0 .3rem}
+.dx-hb{height:100%;display:flex;align-items:flex-end;padding:0;border:0;background:none;cursor:pointer}
+.dx-hb i{display:block;width:100%;border-radius:3px 3px 0 0;background:var(--color-accent);opacity:.75}
+.dx-hb:hover i{opacity:1;background:var(--color-text)}
+.dx-hb.z{cursor:default}.dx-hb.z i{background:var(--color-border);opacity:1}
+.dx-hist-ax{display:flex;justify-content:space-between;margin:0 0 1.2rem;font-size:.7rem;color:var(--color-text-light)}
+.dh-tl-item.dx-flash .dh-tl-card{box-shadow:0 0 0 2px var(--color-accent);transition:box-shadow .3s}
+.dx-chips{flex-wrap:nowrap!important;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.dx-chips::-webkit-scrollbar{display:none}
+
 .dx-chip{font:inherit;font-size:.8rem;padding:.38rem .8rem;border-radius:999px;border:1px solid var(--color-border);background:none;color:var(--color-text-secondary);cursor:pointer}
 .dx-chip:hover{border-color:var(--color-accent)}
 .dx-chip[aria-pressed="true"]{background:var(--color-text);border-color:var(--color-text);color:var(--color-bg)}
@@ -1010,7 +1020,15 @@ function buildTimeline(){
         });
         html+='</section>';
     });
-    el.innerHTML=chips+html;
+    var ys=PRESS.map(function(e){return e.year;}),Y0=Math.floor(Math.min.apply(null,ys)/5)*5,Y1=Math.floor(Math.max.apply(null,ys)/5)*5,B=[];
+    for(var y=Y0;y<=Y1;y+=5)B.push({y:y,n:0});
+    PRESS.forEach(function(e){if(!TL_ERA||eraOf(e)===TL_ERA)B[Math.floor((e.year-Y0)/5)].n++;});
+    var mx=Math.max.apply(null,B.map(function(b){return b.n;}))||1;
+    var hist='<div class="dx-hist" aria-label="Статті за роками">'+B.map(function(b){return '<button type="button" class="dx-hb'+(b.n?'':' z')+'" data-y="'+b.y+'" title="'+b.y+'–'+(b.y+4)+': '+b.n+'"'+(b.n?'':' disabled')+'><i style="height:'+(b.n?Math.max(8,b.n/mx*100):3)+'%"></i></button>';}).join('')+'</div><div class="dx-hist-ax"><span>'+Y0+'</span><span>'+(Y1+4)+'</span></div>';
+    el.innerHTML=hist+chips+html;
+    el.querySelector('.dx-hist').onclick=function(ev){var b=ev.target.closest('.dx-hb');if(!b||b.disabled)return;var y=+b.dataset.y;
+        var t=[].slice.call(el.querySelectorAll('.dh-tl-item')).filter(function(x){var v=+x.querySelector('.dh-tl-year').textContent;return v>=y&&v<y+5;})[0];
+        if(t){t.scrollIntoView({behavior:'smooth',block:'center'});t.classList.add('dx-flash');setTimeout(function(){t.classList.remove('dx-flash');},1600);}};
     document.getElementById('dxTlChips').onclick=function(ev){var b=ev.target.closest('[data-era]');if(!b)return;TL_ERA=b.dataset.era;buildTimeline();};
 }
 
