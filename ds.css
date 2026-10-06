@@ -58,3 +58,33 @@
 .ds-tl>li::before{content:'';position:absolute;left:-1.95rem;top:1.3rem;width:12px;height:12px;border-radius:50%;background:var(--color-bg,#fff);border:2px solid var(--ds-gold)}
 .ds-reveal{opacity:0;transform:translateY(16px);transition:opacity .8s var(--ds-ease),transform .8s var(--ds-ease)}.ds-reveal.in{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){.ds-pin{animation:none}.ds-reveal{opacity:1;transform:none;transition:none}}
+
+/* ═══════════════════════════════════════════════════════════════
+   Узгодження старих розділів (Історія, Фотоархів, Пам'ятки,
+   Єврейська спадщина) з дизайн-системою. Селектори з «html»
+   мають вищу вагу, тож перекривають локальні стилі сторінок.
+   ═══════════════════════════════════════════════════════════════ */
+html body{counter-reset:dsSec}
+html .cover-kicker{letter-spacing:.02em;text-transform:none;font-size:.8rem;font-weight:600;color:var(--ds-gold-hi)}
+html .cover-kicker::before{display:none}
+html .cover-title{font-weight:300;letter-spacing:-.03em}
+html .cover-title em{color:var(--ds-gold-hi)}
+html .cover-lede{color:rgba(244,233,200,.8)}
+html .cover-facts dd{font-weight:400}
+html .cover-btn{border-radius:10px;background:var(--ds-gold-hi)}
+html .cover-btn--ghost{background:rgba(244,233,200,.06);color:#f4e9c8}
+html .cover-shade::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,rgba(255,255,255,.018) 0 1px,transparent 1px 3px);pointer-events:none}
+/* розділи «Історії»: нумерація «§» і лінія, як на нових сторінках */
+html .history-section[id]{counter-increment:dsSec}
+html .history-section[id]>h2{display:flex;align-items:baseline;gap:1rem;margin:4.5rem 0 1.6rem;padding:0 0 .7rem;border-bottom:2px solid var(--color-text);font-weight:400;font-size:clamp(1.9rem,3.4vw,2.7rem);letter-spacing:-.02em}
+html .history-section[id]>h2::before{content:'§ ' counter(dsSec);position:static;width:auto;height:auto;background:none;border-radius:0;font:italic 400 1.5rem var(--ds-display);color:var(--ds-gold);flex:0 0 auto}
+html .history-section[id]>h2::after{display:none}
+html .history-section h3{font-family:var(--ds-display);font-weight:500;letter-spacing:-.01em}
+/* заголовки Фотоархіву, Пам'яток, Єврейської спадщини */
+html .px-h2,html .KPH-T,html .jh-section-title,html .jh-intro-heading,html .jh-memorial-title,html .jh-nigun-title{font-weight:400;letter-spacing:-.02em}
+html .px-h2 em,html .KPH-T em,html .jh-section-title em,html .jh-intro-heading em{color:var(--ds-gold)}
+html .jh-chapter-num{-webkit-text-stroke:1px var(--ds-gold);opacity:.55}
+html .jh-chapter-label{color:var(--ds-gold)}
+/* дрібні елементи: однаковий радіус і фокус */
+html .px-chip,html .jh-btn,html .KCARD{border-radius:var(--ds-r-sm)}
+html a:focus-visible,html button:focus-visible{outline:2px solid var(--ds-gold-hi);outline-offset:2px}

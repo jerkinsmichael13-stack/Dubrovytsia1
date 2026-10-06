@@ -176,7 +176,7 @@ from surnames import key as skey
 VOT = J('voters.json')['voters']; WW = J('ww1.json')
 SR = {}
 def bucket(k, disp, script):
-    b = SR.setdefault(k, {'k': k, 'forms': {}, 'inv': [], 'ww': [], 'vot': [], 'press': []})
+    b = SR.setdefault(k, {'k': k, 'forms': {}, 'inv': [], 'ww': [], 'vot': [], 'press': [], 'met': []})
     b['forms'][disp] = b['forms'].get(disp, 0) + (10 if script == 'ua' else 1)
     return b
 VILL = {r['mapName']: k for k, r in SELA.items()}
@@ -210,6 +210,23 @@ for v in VOT:
     if len(k) < 3: continue
     b = bucket(k, ln, 'pl')
     b['vot'].append([v.get('first', ''), v.get('born', ''), v.get('village', ''), VILL.get(v.get('village', ''), ''), v.get('addr', ''), v.get('prof', '')])
+# метричні книги: розшифровки додаються у metrics-records.csv (див. шаблон metrics-records-template.csv)
+import csv
+MBOOKS = {str(b['id']): b for b in J('metrychni-knyhy.json')}
+MET_N = 0
+mpath = os.path.join(ROOT, 'metrics-records.csv')
+if os.path.exists(mpath):
+    for row in csv.DictReader(open(mpath, encoding='utf-8-sig')):
+        ln = (row.get('surname') or '').strip()
+        if not ln or ln.startswith('#'): continue
+        k = skey(ln)
+        if len(k) < 3: continue
+        b = bucket(k, ln, 'ua' if re.search(r'[А-Яа-яІіЇїЄєҐґ]', ln) else 'pl')
+        bk = MBOOKS.get((row.get('book_id') or '').strip(), {})
+        b['met'].append([(row.get('year') or '').strip(), (row.get('event') or '').strip(), (row.get('first') or '').strip(), (row.get('role') or '').strip(),
+                         (row.get('village') or '').strip(), VILL.get((row.get('village') or '').strip(), ''), (row.get('notes') or '').strip(),
+                         (bk.get('church', '') + (' · ' + bk.get('archive', '') if bk.get('archive') else '')).strip(' ·'), (row.get('page') or '').strip()])
+        MET_N += 1
 for d in PRESS:
     for full in d.get('people') or []:
         s = surname(full)
@@ -234,7 +251,7 @@ def diff_soft(a, b):
     i = 0
     while i < len(sh) and sh[i] == l[i]: i += 1
     return l[i] in VOW
-def size(b): return len(b['inv']) + len(b['ww']) + len(b['vot']) + len(b['press'])
+def size(b): return len(b['inv']) + len(b['ww']) + len(b['vot']) + len(b['press']) + len(b['met'])
 keys = sorted(SR, key=lambda k: -size(SR[k]))
 ALIAS = {}
 by3 = {}
@@ -243,14 +260,14 @@ for k in keys:
     if k in ALIAS or len(k) < 6: continue
     for o in by3.get(k[:3], []):
         if o == k or o in ALIAS or len(o) < 6 or o[-2:] != k[-2:]: continue
-        so = [f for f in ('inv', 'ww', 'vot') if SR[o][f]]; sk = [f for f in ('inv', 'ww', 'vot') if SR[k][f]]
+        so = [f for f in ('inv', 'met', 'ww', 'vot') if SR[o][f]]; sk = [f for f in ('inv', 'met', 'ww', 'vot') if SR[k][f]]
         cross = len(so) == 1 and so[0] not in sk          # варіант трапляється лише в одному джерелі, і не в тому, де основне написання
         ins_i = len(k) != len(o) and len(set(k) ^ set(o)) <= 1 and ('i' in (set(k) ^ set(o)) or 'e' in (set(k) ^ set(o)))
         ao = len(k) == len(o) and any(i < 4 and {x, y} == {'a', 'o'} for i, (x, y) in enumerate(zip(k, o)) if x != y)
         iko = (k.endswith('ko') and o == k[:-2] + 'iko') or (o.endswith('ko') and k == o[:-2] + 'iko')   # Приходько / Приходико
         if iko or (lev1(k, o) and diff_soft(k, o) and cross and not ao and (len(k) == len(o) or ins_i) and size(SR[o]) <= size(SR[k])):
             t = SR[k]; f = SR.pop(o)
-            for fld in ('inv', 'ww', 'vot', 'press'): t[fld] += f[fld]
+            for fld in ('inv', 'ww', 'vot', 'press', 'met'): t[fld] += f[fld]
             for fm, c in f['forms'].items(): t['forms'][fm] = t['forms'].get(fm, 0) + c
             ALIAS[o] = k
 by3 = None
@@ -263,7 +280,7 @@ for k, b in SR.items():
     b['name'] = disp(b); b['variants'] = sorted(b['forms'], key=lambda f: -b['forms'][f])
     del b['forms']
     tot = len(b['inv']) + len(b['ww']) + len(b['vot']) + len(b['press'])
-    SUM.append([k, b['name'], len(b['inv']), len(b['ww']), len(b['vot']), len(b['press'])])
+    SUM.append([k, b['name'], len(b['inv']), len(b['ww']), len(b['vot']), len(b['press']), len(b['met'])])
     CH.setdefault(k[0], {})[k] = b
 for c, part in CH.items():
     json.dump(part, open(os.path.join(ROOT, 'surnames-' + c + '.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
@@ -272,13 +289,14 @@ json.dump(ALIAS, open(os.path.join(ROOT, 'surnames-alias.json'), 'w', encoding='
 json.dump(SUM, open(os.path.join(ROOT, 'surnames-index.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
 # у пошуку: прізвища ведуть на сторінку прізвища
 S[:] = [x for x in S if x['t'] != 'surname']
-for k, nm, a, w, v, pr in SUM:
+for k, nm, a, w, v, pr, mt in SUM:
     parts = []
     if a: parts.append('бл. 1800: %d %s' % (a, 'двір' if a == 1 else 'двори' if a < 5 else 'дворів'))
+    if mt: parts.append('XIX ст.: %d' % mt)
     if w: parts.append('1914–1917: %d' % w)
     if v: parts.append('1938: %d' % v)
     if pr: parts.append('преса: %d' % pr)
-    if a + w + v + pr < 1: continue
+    if a + w + v + pr + mt < 1: continue
     S.append({'t': 'surname', 'n': nm, 's': ' · '.join(parts), 'u': 'prizvyshcha.html?s=' + k, 'k': norm(' '.join(SR[k]['variants']))[:200]})
 json.dump(S, open(os.path.join(ROOT, 'search-index.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
-print('merged variants:', len(ALIAS), '| surnames:', len(SUM), '| multi-source:', sum(1 for x in SUM if sum(1 for y in x[2:] if y) >= 2), '| search items:', len(S))
+print('metric records:', MET_N, '| merged variants:', len(ALIAS), '| surnames:', len(SUM), '| multi-source:', sum(1 for x in SUM if sum(1 for y in x[2:] if y) >= 2), '| search items:', len(S))
