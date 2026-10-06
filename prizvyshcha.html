@@ -253,9 +253,9 @@ function page(b){
   }
   if (b.met.length) {
     h += '<section class="ds-sec"><div class="ds-sh"><b>§ ' + (++sec) + '</b><h2>XIX століття · метричні книги</h2><span>' + b.met.length + ' ' + plural(b.met.length, 'запис', 'записи', 'записів') + '</span></div>' +
-      '<p class="ds-note">Записи про народження, шлюби й смерті з метричних книг парафій Дубровиччини.</p>' +
+      '<p class="ds-note">Записи про народження, шлюби, смерті та сповідні відомості парафій Дубровиччини. Індекси — за FamilySearch; посилання ведуть на записи-оригінали.</p>' +
       '<div class="sp-scroll"><table class="sp-tbl" id="tMet"><thead><tr><th>Ім\'я</th><th>Рік · подія</th><th>Поселення</th><th>Книга · примітки</th></tr></thead><tbody>' +
-      b.met.map(function(x, i){ return '<tr' + (i >= 40 ? ' hidden' : '') + '><td>' + esc(x[2] || '—') + (x[3] ? '<span class="sp-fam">' + esc(x[3]) + '</span>' : '') + '</td><td>' + esc([x[0], x[1]].filter(Boolean).join(' · ')) + '</td><td>' + (x[5] ? '<a href="poselennia.html?p=' + x[5] + '">' + esc(x[4]) + '</a>' : esc(x[4] || '—')) + '</td><td>' + esc(x[7] || '') + (x[8] ? ', арк. ' + esc(x[8]) : '') + (x[6] ? '<span class="sp-fam">' + esc(x[6]) + '</span>' : '') + '</td></tr>'; }).join('') +
+      b.met.map(function(x, i){ return '<tr' + (i >= 40 ? ' hidden' : '') + '><td>' + esc(x[2] || '—') + (x[3] ? '<span class="sp-fam">' + esc(x[3]) + '</span>' : '') + '</td><td>' + esc([x[0], x[1]].filter(Boolean).join(' · ')) + '</td><td>' + (x[5] ? '<a href="poselennia.html?p=' + x[5] + '">' + esc(x[4]) + '</a>' : esc(x[4] || '—')) + '</td><td>' + esc(x[7] || '') + (x[8] ? ', зобр. ' + esc(x[8]) : '') + (x[6] ? '<span class="sp-fam">' + esc(x[6]) + '</span>' : '') + (x[9] ? '<span class="sp-fam"><a href="' + esc(x[9]) + '" target="_blank" rel="noopener">запис на FamilySearch ↗</a></span>' : '') + '</td></tr>'; }).join('') +
       '</tbody></table></div>' + more('tMet', b.met.length, 40) + '</section>';
   } else {
     h += '<section class="ds-sec"><div class="ds-sh"><b>·</b><h2>XIX століття · метричні книги</h2><span>розшифровуються</span></div>' +

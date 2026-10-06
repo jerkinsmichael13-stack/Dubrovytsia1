@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="uk" data-theme="dark">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WGBZ0BD23K"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-WGBZ0BD23K');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<title>Костел Іоанна Хрестителя · 3D-модель — Цифровий архів Дубровиці</title>
+<meta name="description" content="Тривимірна модель костелу Іоанна Хрестителя в Дубровиці (мурований 1740, освячений 1742): обертайте й наближайте пам'ятку архітектури національного значення.">
+<meta property="og:title" content="Костел Іоанна Хрестителя в Дубровиці — 3D-модель">
+<meta property="og:description" content="Обійдіть костел піарів довкола: модель за фотографіями та обмірним кресленням.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://dubrovytsia.site/kostel-3d-poster.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#17120b">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Manrope:wght@400;500;600&display=swap">
+<link rel="preload" href="three-r147.js" as="script">
+<style>
+:root{
+  --desk:#17120b; --desk-2:#2e2517; --text:#f4e9c8; --muted:rgba(244,233,200,.62); --faint:rgba(244,233,200,.16); --gold:#d4b25a;
+  --display:'Cormorant Garamond','Palatino Linotype',Georgia,serif; --body:'Manrope',system-ui,-apple-system,sans-serif;
+  --ease:cubic-bezier(.16,1,.3,1); color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;overflow:hidden;background:var(--desk)}
+body{color:var(--text);font:400 14px/1.5 var(--body);
+  background:radial-gradient(70% 60% at 50% 46%,rgba(233,196,110,.13) 0%,transparent 70%),radial-gradient(120% 95% at 50% 30%,var(--desk-2) 0%,#1e180f 55%,var(--desk) 100%)}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.016) 0 1px,transparent 1px 3px)}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;background:radial-gradient(130% 100% at 50% 45%,transparent 55%,rgba(8,6,3,.55) 100%)}
+a{color:inherit}
+#view{position:fixed;inset:0;display:block;width:100%;height:100%;cursor:grab;outline:none;opacity:0;transition:opacity 1s var(--ease)}
+#view.on{opacity:1}
+#view:active{cursor:grabbing}
+.poster{position:fixed;inset:0;width:100%;height:100%;object-fit:contain;pointer-events:none;transition:opacity 1s var(--ease)}
+.poster.off{opacity:0}
+
+.top{position:fixed;z-index:2;left:0;right:0;top:0;display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;
+  padding:calc(env(safe-area-inset-top,0px) + clamp(14px,2.6vw,28px)) clamp(16px,3vw,36px) 0;pointer-events:none}
+.top>*{pointer-events:auto}
+.back{display:inline-flex;align-items:center;gap:.45rem;margin:0 0 1rem;font:500 .74rem var(--body);letter-spacing:.06em;color:var(--muted);text-decoration:none;transition:color .2s}
+.back:hover{color:var(--text)}
+.back svg{width:14px;height:14px}
+h1{margin:0;font:400 clamp(1.8rem,3.4vw,2.8rem)/1 var(--display);letter-spacing:-.01em}
+.sub{margin:.5rem 0 0;font:400 .8rem var(--body);color:var(--muted)}
+.chip{display:inline-flex;align-items:center;gap:.5rem;padding:.55rem .95rem;border-radius:999px;border:1px solid var(--faint);background:rgba(23,18,11,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  font:500 .76rem var(--body);color:var(--text);cursor:pointer;transition:border-color .2s,background .2s}
+.chip:hover,.chip[aria-expanded="true"]{border-color:var(--gold)}
+.chip svg{width:15px;height:15px}
+
+.info{position:fixed;z-index:3;top:calc(env(safe-area-inset-top,0px) + 74px);right:clamp(16px,3vw,36px);width:min(360px,calc(100vw - 32px));max-height:calc(100% - 200px);overflow:auto;
+  padding:1.4rem 1.4rem 1.2rem;border-radius:18px;border:1px solid var(--faint);background:rgba(23,18,11,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  box-shadow:0 30px 70px rgba(0,0,0,.45);opacity:0;transform:translateY(-8px);visibility:hidden;transition:opacity .35s var(--ease),transform .35s var(--ease),visibility .35s}
+.info.open{opacity:1;transform:none;visibility:visible}
+.info h2{margin:0 0 .2rem;font:400 1.5rem/1.1 var(--display)}
+.info .k{margin:0 0 1rem;font:600 .66rem var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.info dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:.55rem .9rem}
+.info dt{font:400 1.2rem/1.2 var(--display);color:var(--gold)}
+.info dd{margin:0;font:400 .82rem/1.5 var(--body);color:rgba(244,233,200,.82)}
+.info blockquote{margin:1.1rem 0 0;padding:.8rem 1rem;border-left:2px solid var(--gold);background:rgba(244,233,200,.05);border-radius:0 10px 10px 0;font:400 .8rem/1.5 var(--body);color:var(--muted)}
+.info blockquote b{display:block;font:500 1.05rem var(--display);letter-spacing:.06em;color:var(--text)}
+.info .go{display:inline-block;margin-top:1.1rem;font:600 .78rem var(--body);color:var(--gold);text-decoration:none}
+.info .go:hover{text-decoration:underline}
+.info .src{margin:.9rem 0 0;font:400 .7rem/1.5 var(--body);color:rgba(244,233,200,.45)}
+
+.dock{position:fixed;z-index:2;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 18px);transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.7rem}
+.hint{font:400 .78rem var(--body);color:var(--muted);white-space:nowrap;text-shadow:0 1px 10px rgba(0,0,0,.75);transition:opacity .6s}
+.bar{display:flex;gap:2px;padding:4px;border-radius:999px;border:1px solid var(--faint);background:rgba(23,18,11,.62);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.bar button{display:grid;place-items:center;width:40px;height:40px;border:0;border-radius:999px;background:none;color:var(--text);cursor:pointer;transition:background .2s,color .2s}
+.bar button:hover{background:rgba(244,233,200,.1)}
+.bar button:focus-visible,.chip:focus-visible,.back:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.bar button[aria-pressed="true"]{color:var(--gold)}
+.bar svg{width:18px;height:18px}
+.bar i{width:1px;margin:8px 3px;background:var(--faint)}
+.msg{position:fixed;inset:0;display:grid;place-items:center;padding:0 16px;text-align:center;color:var(--muted);pointer-events:none}
+.load{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);font:500 .74rem var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);pointer-events:none;transition:opacity .5s}
+.load::after{content:'';display:block;width:120px;height:1px;margin:.8rem auto 0;background:linear-gradient(90deg,transparent,var(--gold),transparent);background-size:200% 100%;animation:sh 1.4s linear infinite}
+@keyframes sh{from{background-position:200% 0}to{background-position:-200% 0}}
+.load.off{opacity:0}
+@media(max-width:640px){.sub{max-width:24ch}.info{top:auto;bottom:calc(env(safe-area-inset-bottom,0px) + 120px)}.top{flex-direction:column}.chip{position:fixed;right:16px;top:calc(env(safe-area-inset-top,0px) + 14px)}}
+@media(prefers-reduced-motion:reduce){#view,.poster,.info{transition:none}.load::after{animation:none}}
+</style>
+</head>
+<body>
+<img class="poster" id="poster" src="kostel-3d-poster.webp" alt="" aria-hidden="true">
+<canvas id="view" tabindex="0" aria-label="3D-модель костелу Іоанна Хрестителя в Дубровиці. Тягніть, щоб обертати; колесо, два пальці або клавіші плюс і мінус — наблизити."></canvas>
+<p class="load" id="load">Завантаження моделі</p>
+
+<header class="top">
+  <div>
+    <a class="back" href="index.html"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M13 8H3M7 4 3 8l4 4"/></svg>Цифровий архів Дубровиці</a>
+    <h1>Костел Іоанна Хрестителя</h1>
+    <p class="sub">3D-модель за фотографіями та обмірним кресленням · вигляд сьогодні</p>
+  </div>
+  <button type="button" class="chip" id="infoBtn" aria-expanded="false" aria-controls="info"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="8" cy="8" r="6.5"/><path d="M8 7.2V11M8 5v.01"/></svg>Про пам'ятку</button>
+</header>
+
+<aside class="info" id="info" aria-label="Про пам'ятку">
+  <p class="k">Пам'ятка архітектури національного значення · № 1497</p>
+  <h2>Костел піарів у Дубровиці</h2>
+  <dl style="margin-top:1rem">
+    <dt>1681</dt><dd>Ян Кароль Дольський записує піарам 35 тис. злотих на костел і колегіум.</dd>
+    <dt>1740</dt><dd>Зведено нинішню муровану базиліку — за ректора Казимира Пнєвського.</dd>
+    <dt>1742</dt><dd>Освячення єпископом Франциском Кобельським.</dd>
+    <dt>1945</dt><dd>Костел зачинено: дзвони вивезено, орган знищено, будівлю віддано під склад.</dd>
+    <dt>1992</dt><dd>Повторно освячений і повернутий громаді.</dd>
+  </dl>
+  <blockquote><b>SAMEMU BOGU CZEŚĆ I CHWAŁA</b>«Самому Богові честь і слава» — напис на фризі головного фасаду.</blockquote>
+  <a class="go" href="architecture.html">Історія костелу й інтер'єр →</a>
+  <p class="src">Модель відтворює теперішній вигляд будівлі; пропорції — за обмірним кресленням і фотографіями, дрібний декор спрощено.</p>
+</aside>
+
+<div class="dock">
+  <p class="hint" id="hint">Тягніть, щоб обертати · колесо або два пальці — наблизити</p>
+  <div class="bar" role="toolbar" aria-label="Керування моделлю">
+    <button type="button" id="zOut" aria-label="Віддалити" title="Віддалити (−)"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M5 10h10"/></svg></button>
+    <button type="button" id="zIn" aria-label="Наблизити" title="Наблизити (+)"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M5 10h10M10 5v10"/></svg></button>
+    <i></i>
+    <button type="button" id="spin" aria-label="Обертати автоматично" aria-pressed="true" title="Автоматичне обертання"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16.2 7.5A6.5 6.5 0 1 0 16.5 12"/><path d="M16.6 3.6v4.1h-4.1"/></svg></button>
+    <button type="button" id="home" aria-label="Повернути початковий вигляд" title="Початковий вигляд (0)"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 9.2 10 3.8l6.5 5.4M5.5 7.8v8h9v-8"/></svg></button>
+    <button type="button" id="fs" aria-label="На весь екран" title="На весь екран"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 7.5v-4h4M16.5 7.5v-4h-4M3.5 12.5v4h4M16.5 12.5v4h-4"/></svg></button>
+  </div>
+</div>
+
+<script src="kostel-3d.js"></script>
+<script>
+(function(){
+  var cv = document.getElementById('view'), hint = document.getElementById('hint'), load = document.getElementById('load'), poster = document.getElementById('poster');
+  var spin = document.getElementById('spin'), info = document.getElementById('info'), ib = document.getElementById('infoBtn');
+  function fail(why){
+    load.classList.add('off');
+    document.body.insertAdjacentHTML('beforeend', '<p class="msg">' + (why === 'webgl' ? 'Цей браузер не підтримує 3D (WebGL) — показуємо знімок моделі.' : 'Не вдалося завантажити 3D-модель. Оновіть сторінку.') + '</p>');
+    document.querySelector('.bar').style.display = 'none'; hint.style.display = 'none';
+  }
+  if (!window.Kostel3D){ fail('load'); return; }
+  var narrow = matchMedia('(max-width:640px)').matches;
+  Kostel3D.mount(cv, {motes: true, view: [46, 11, 52], targetY: 15.5, fit: narrow ? 1.08 : 1.14,
+    onStart: function(){ hint.style.opacity = 0; spin.setAttribute('aria-pressed', 'false'); },
+    onReady: function(){ cv.classList.add('on'); poster.classList.add('off'); load.classList.add('off'); },
+    onFail: fail
+  }).then(function(api){
+    if (!api) return;
+    if (!api.autoRotate()) spin.setAttribute('aria-pressed', 'false');
+    document.getElementById('zIn').onclick = api.zoomIn;
+    document.getElementById('zOut').onclick = api.zoomOut;
+    document.getElementById('home').onclick = function(){ api.reset(); };
+    spin.onclick = function(){ spin.setAttribute('aria-pressed', String(api.autoRotate(!api.autoRotate()))); };
+    addEventListener('keydown', function(e){
+      if (e.target.closest && e.target.closest('input,textarea')) return;
+      if (e.key === '+' || e.key === '=') api.zoomIn(); else if (e.key === '-' || e.key === '_') api.zoomOut(); else if (e.key === '0') api.reset(); else return;
+      hint.style.opacity = 0;
+    });
+  });
+  var fsb = document.getElementById('fs'), de = document.documentElement;
+  if (!de.requestFullscreen) fsb.style.display = 'none';
+  fsb.onclick = function(){ document.fullscreenElement ? document.exitFullscreen() : de.requestFullscreen().catch(function(){}); };
+  function setInfo(open){ info.classList.toggle('open', open); ib.setAttribute('aria-expanded', String(open)); }
+  ib.onclick = function(){ setInfo(!info.classList.contains('open')); };
+  addEventListener('keydown', function(e){ if (e.key === 'Escape') setInfo(false); });
+  cv.addEventListener('pointerdown', function(){ setInfo(false); });
+})();
+</script>
+</body>
+</html>

@@ -160,7 +160,8 @@ for d in DOCS:
     add('doc', d.get('title', ''), ' · '.join(str(x) for x in [d.get('year', ''), d.get('type', '')] if x), d.get('url', ''), d.get('summary', '')[:200])
 for extra in [('Інвентар маєтку графа Плятера', 'Скани, переклад, аналітика', 'inventar-1780.html'), ('Атлас Волинської губернії 1798', 'Інтерактивна мапа', 'atlas-1798.html'),
               ('Аналітика атласу 1798', 'Стани, власники, млини', 'atlas-1798-analityka.html'), ('Поселення Дубровиччини', 'Усе про кожне село', 'poselennia.html'),
-              ('Граф Плятер', 'Власник Дубровиці 1775–1832', 'plater.html'), ('Князь Радзивілл', 'Власник маєтку 1798', 'radzyvil.html')]:
+              ('Граф Плятер', 'Власник Дубровиці 1775–1832', 'plater.html'), ('Князь Радзивілл', 'Власник маєтку 1798', 'radzyvil.html'),
+              ('Костел Іоанна Хрестителя · 3D-модель', 'Обертайте й наближайте пам\'ятку', 'kostel-3d.html')]:
     add('page', extra[0], extra[1], extra[2])
 for sec in SITE:
     add('page', sec.get('section', ''), sec.get('summary', '')[:90], sec.get('url', ''))
@@ -213,6 +214,11 @@ for v in VOT:
 # метричні книги: розшифровки додаються у metrics-records.csv (див. шаблон metrics-records-template.csv)
 import csv
 MBOOKS = {str(b['id']): b for b in J('metrychni-knyhy.json')}
+VKEY = {}
+for _k, _p in PLACES.items():
+    for _n in [_p['name']] + [a for a in _p['alt'] if a]:
+        VKEY.setdefault(skey(_n), _k)
+for _n in ('Домбровица', 'Домбровиця', 'Dąbrowica', 'Dombrowica', 'Дубровица'): VKEY[skey(_n)] = 'dombrovytsia'
 MET_N = 0
 mpath = os.path.join(ROOT, 'metrics-records.csv')
 if os.path.exists(mpath):
@@ -223,9 +229,11 @@ if os.path.exists(mpath):
         if len(k) < 3: continue
         b = bucket(k, ln, 'ua' if re.search(r'[А-Яа-яІіЇїЄєҐґ]', ln) else 'pl')
         bk = MBOOKS.get((row.get('book_id') or '').strip(), {})
+        vraw = (row.get('village') or '').strip(); vslug = VILL.get(vraw, '') or VKEY.get(skey(vraw), '')
+        if vslug: row['village'] = PLACES[vslug]['name'] if vslug in PLACES else vraw
         b['met'].append([(row.get('year') or '').strip(), (row.get('event') or '').strip(), (row.get('first') or '').strip(), (row.get('role') or '').strip(),
-                         (row.get('village') or '').strip(), VILL.get((row.get('village') or '').strip(), ''), (row.get('notes') or '').strip(),
-                         (bk.get('church', '') + (' · ' + bk.get('archive', '') if bk.get('archive') else '')).strip(' ·'), (row.get('page') or '').strip()])
+                         (row.get('village') or '').strip(), vslug, (row.get('notes') or '').strip(),
+                         (bk.get('church', '') + (' · ' + bk.get('archive', '') if bk.get('archive') else '')).strip(' ·'), (row.get('page') or '').strip(), (row.get('url') or '').strip()])
         MET_N += 1
 for d in PRESS:
     for full in d.get('people') or []:
