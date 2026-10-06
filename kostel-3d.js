@@ -354,7 +354,7 @@ function tower(cx){
   y += 1.5;
   add(new THREE.CylinderGeometry(.06, .15, 2.5, 12), M.dome, cx, y + 1.25, cz);
   add(new THREE.SphereGeometry(.22, 16, 12), M.dome, cx, y + .55, cz);
-  crossAt(cx, y + 2.45, cz, 1.6, Math.PI/2);
+  crossAt(cx, y + 2.45, cz, 1.6, 0);                                  // facing the square, like the gable cross
 }
 tower(-8.2); tower(8.2);
 
