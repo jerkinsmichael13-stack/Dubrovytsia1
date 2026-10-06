@@ -307,36 +307,104 @@ function dormer(g, y, w, h, d, bars){
   add(ext(poly([[-w/2 + .02, .02], [w/2 - .02, .02], [0, r - .07]]), .02), M.trim, 0, y + h, .05, g);
 }
 
-/* ═══════════ DIMENSIONS (metres) — measured on the archival photograph of the 1930s taken from the south
-   (window sills and heads checked against the 2010s photographs), and on the close-ups of the drum and the bell tower.
-   naos 15 × 15 m, eaves 11.8 m; octagonal drum 9.2 m across, cornice 18 m, tent to 23.4 m;
-   porch 7 × 13 m in two tiers (mid cornice 7 m, eaves 10.5 m), the bell tower on a square base rising out of its roof;
-   a lower link to the naos; sanctuary 7.6 × 7.6 m, eaves 7.8 m */
+/* ═══════════ DIMENSIONS (metres) — proportions measured on the archival photographs (1930s, 1960s) and on the frontal
+   photographs of the 2010s–2020s; details (lesenes, cornices, frames) traced facade by facade.
+   naos 15 × 15 m, eaves 11.8 m; drum a chamfered octagon 9.2 m across (wide faces with the arcades, narrow corner faces);
+   porch 7 × 13 m in two tiers; the bell tower a chamfered octagon 6 m across on a square base;
+   sanctuary 7.6 × 7.6 m with an attic band under the eaves */
 var NH = 7.5, PL = .6;
 var WX0 = -18.7, WX1 = -11.7, WH = 6.5, WC = -15.2;       // porch
 var LX1 = -7.5, LH = 4.6;                                // link
-var EX1 = 15.1, EH = 3.8;                                // sanctuary
-var DA = 4.6;                                            // drum apothem
-var BA = 3.2;                                            // belfry apothem
+var EX1 = 15.1, EH = 4.1;                                // sanctuary
+var DS = Math.SQRT2;
 
-/* corner pilaster wrapped round a corner: sx, sz = ±1 */
-function cornerBlock(cx, cz, sx, sz, y0, y1, w, pr){
-  w = w || 1.0; pr = pr || .14;
-  boxX(cx - sx*w, cx + sx*pr, y0, y1, cz - sz*w, cz + sz*pr, M.trim);
-  boxX(cx - sx*(w + .06), cx + sx*(pr + .06), y0, y0 + .35, cz - sz*(w + .06), cz + sz*(pr + .06), M.trim);
-  boxX(cx - sx*(w + .08), cx + sx*(pr + .08), y1 - .3, y1, cz - sz*(w + .08), cz + sz*(pr + .08), M.trim);
+/* ── chamfered octagon: faces i = 0..7 look E, NE, N, NW, W, SW, S, SE; the cardinal faces stand at distance A,
+      the corner faces are cut off with legs c (c = A(2 − √2) gives a regular octagon) ── */
+function chfGrow(P, d){ return {A: P.A + d, c: P.c + d*(2 - DS)}; }
+function chfReg(a){ return {A: a, c: a*(2 - DS)}; }
+function chfApo(P, i){ return i % 2 ? (2*P.A - P.c)/DS : P.A; }
+function chfLen(P, i){ return i % 2 ? P.c*DS : 2*(P.A - P.c); }
+function chfDir(i){ var th = Math.PI/2 + i*Math.PI/4; return [Math.sin(th), Math.cos(th), th]; }
+function chfVert(P, i){
+  var a = chfDir(i), b = chfDir((i + 1) % 8), pa = chfApo(P, i), pb = chfApo(P, (i + 1) % 8), det = a[0]*b[1] - a[1]*b[0];
+  return [(pa*b[1] - pb*a[1])/det, (a[0]*pb - b[0]*pa)/det];
+}
+function chfPts(P){ var p = []; for (var i = 0; i < 8; i++) p.push(chfVert(P, i)); return p; }
+function chfPrism(P, y0, y1, m, cx, cz){ var o = add(ext(poly(chfPts(P).map(function(v){ return [v[0], -v[1]]; })), y1 - y0, 1), m, cx || 0, y0, cz || 0); o.rotation.x = -Math.PI/2; return o; }
+function chfFaces(P, cx, cz){ var f = []; for (var i = 0; i < 8; i++){ var d = chfDir(i), a = chfApo(P, i); f.push({g: face((cx || 0) + a*d[0], (cz || 0) + a*d[1], d[2]), cardinal: i % 2 === 0, i: i, len: chfLen(P, i), apo: a, dir: d}); } return f; }
+function chfTent(P0, y0, P1, y1, m, cx, cz){
+  var b = chfPts(P0), t = chfPts(P1);
+  for (var k = 0; k < 8; k++){
+    var j = (k + 1) % 8;
+    quad([cx + b[k][0], y0, cz + b[k][1]], [cx + b[j][0], y0, cz + b[j][1]], [cx + t[j][0], y1, cz + t[j][1]], [cx + t[k][0], y1, cz + t[k][1]], m);
+    rod([cx + b[k][0]*1.012, y0 + .03, cz + b[k][1]*1.012], [cx + t[k][0], y1, cz + t[k][1]], .055, M.roof);
+  }
+}
+function triU(a, b, c, m){
+  var A = new THREE.Vector3().fromArray(a), B = new THREE.Vector3().fromArray(b), C = new THREE.Vector3().fromArray(c);
+  if (B.clone().sub(A).cross(C.clone().sub(A)).y < 0){ var t = b; b = c; c = t; }
+  return tri(a, b, c, m);
+}
+/* sloping skirt from a square of half-side h (at y) up to a chamfered octagon (at ya) */
+function apronChf(cx, cz, h, y, P, ya, m){
+  var v = chfPts(P);
+  function sq(p){ var k = h/Math.max(Math.abs(p[0]), Math.abs(p[1])); return [cx + p[0]*k, y, cz + p[1]*k]; }
+  for (var k = 0; k < 8; k++){
+    var j = (k + 1) % 8, p = v[k], q = v[j], t0 = [cx + p[0], ya, cz + p[1]], t1 = [cx + q[0], ya, cz + q[1]], a = sq(p), b = sq(q);
+    if ((k + 1) % 2){ var d = chfDir((k + 1) % 8), cor = [cx + Math.sign(Math.round(d[0]*10))*h, y, cz + Math.sign(Math.round(d[1]*10))*h];
+      triU(t0, a, cor, m); triU(t0, cor, t1, m); triU(t1, cor, b, m); }
+    else { triU(t0, a, b, m); triU(t0, b, t1, m); }
+  }
+}
+
+/* ── facade vocabulary: lesenes (shallow blue pilasters outlined in white), plain white frames, cornices ── */
+function frameR(g, x, y0, w, h, z, t){
+  t = t || .09; var sh = rectS(w, y0, y0 + h); sh.holes.push(rectS(w - 2*t, y0 + t, y0 + h - t, true));
+  add(ext(sh, .045), M.trim, x, 0, z || 0, g);
+}
+function lesene(g, x0, x1, y0, y1, zf, d, noFrame, noBase){
+  d = d || .12;
+  boxX(x0, x1, y0, y1, zf - .02, zf + d, M.wall, g);
+  if (!noBase) boxX(x0 - .03, x1 + .03, y0, y0 + .3, zf - .02, zf + d + .04, M.trim, g);
+  if (!noFrame) frameR(g, (x0 + x1)/2, y0 + (noBase ? .2 : .45), Math.abs(x1 - x0) - .14, y1 - y0 - (noBase ? .4 : .62), zf + d, .085);
+}
+/* the two-storey entablature between the tiers: a band (with capitals over the lesenes), a frieze, a projecting cornice */
+function midEntab(g, x0, x1, y, zf, out){
+  out = out || 0;
+  boxX(x0, x1, y, y + .22, zf - .05, zf + .1 + out, M.trim, g);
+  boxX(x0, x1, y + .22, y + .62, zf - .05, zf + out + .02, M.wall, g);
+  boxX(x0 - .03, x1 + .03, y + .62, y + .76, zf - .05, zf + .14 + out, M.trim, g);
+  boxX(x0 - .06, x1 + .06, y + .76, y + .94, zf - .05, zf + .3 + out, M.trim, g);
+  boxX(x0 - .08, x1 + .08, y + .94, y + 1.04, zf - .05, zf + .38 + out, M.trim, g);
+  return y + 1.04;
+}
+/* a corner lesene wrapped round both faces; with a band level it is split into two storeys under the mid entablature */
+function cornerBlock(cx, cz, sx, sz, y0, y1, w, band){
+  w = w || 1.0;
+  [face(cx + sx*.0, cz - sz*w/2, sx > 0 ? E_ : W_), face(cx - sx*w/2, cz + sz*.0, sz > 0 ? S_ : N_)].forEach(function(g){
+    if (!band){ lesene(g, -w/2, w/2, y0, y1, 0, .12); return; }
+    lesene(g, -w/2, w/2, y0, band, 0, .12);
+    boxX(-w/2, w/2, band, band + 1.04, -.02, .12, M.wall, g);
+    midEntab(g, -w/2, w/2, band, 0, .12);
+    lesene(g, -w/2, w/2, band + 1.04, y1, 0, .12, false, true);
+  });
+}
+/* the eaves entablature as a piece on one face (used where it breaks forward over a lesene) */
+function entabPiece(g, x0, x1, y, zf){
+  boxX(x0, x1, y, y + .2, zf - .05, zf + .14, M.trim, g); y += .2;
+  boxX(x0, x1, y, y + .2, zf - .05, zf + .12, M.wall, g); y += .2;
+  [[.14, .2], [.18, .36], [.2, .5]].forEach(function(L){ boxX(x0 - L[1]*.3, x1 + L[1]*.3, y, y + L[0], zf - .05, zf + L[1], M.trim, g); y += L[0]; });
 }
 /* entablature round a rectangular block: architrave, frieze (wall), cornice */
 function entab(x0, x1, z0, z1, y, sides, big){
   sides = sides || {n:1, s:1, e:1, w:1};
-  var a = big ? .25 : .2, f = big ? .25 : .15;
+  var a = big ? .25 : .2, f = big ? .3 : .2;
   function ring(y0, y1, p, m){ boxX(x0 - (sides.w ? p : 0), x1 + (sides.e ? p : 0), y0, y1, z0 - (sides.n ? p : 0), z1 + (sides.s ? p : 0), m); }
-  ring(y, y + a, .06, M.trim); y += a;
-  ring(y, y + f, .0, M.wall); y += f;
-  [[.14, .12], [.18, .28], [.2, .42]].forEach(function(L){ ring(y, y + L[0], L[1], M.trim); y += L[0]; });
+  ring(y, y + a, .14, M.trim); y += a;
+  ring(y, y + f, .12, M.wall); y += f;
+  [[.14, .2], [.18, .36], [.2, .5]].forEach(function(L){ ring(y, y + L[0], L[1], M.trim); y += L[0]; });
   return y;
 }
-/* a gabled roof over x0..x1 (ridge along x) or z0..z1 (ridge along z) */
 function gableX(x0, x1, zc, hw, ye, k){ var yr = ye + hw*k;
   quad([x1, ye, zc + hw], [x0, ye, zc + hw], [x0, yr, zc], [x1, yr, zc], M.roof);
   quad([x0, ye, zc - hw], [x1, ye, zc - hw], [x1, yr, zc], [x0, yr, zc], M.roof);
@@ -345,101 +413,115 @@ function gableZ(z0, z1, xc, hw, ye, k){ var yr = ye + hw*k;
   quad([xc - hw, ye, z0], [xc - hw, ye, z1], [xc, yr, z1], [xc, yr, z0], M.roof);
   quad([xc + hw, ye, z1], [xc + hw, ye, z0], [xc, yr, z0], [xc, yr, z1], M.roof);
   rod([xc, yr + .03, z0], [xc, yr + .03, z1], .07, M.roof); return yr; }
-/* a deep round-headed porch with a white archivolt; at its back the blue double door under a fanlight */
+/* half ring (an arch band) centred on (0, yc) */
+function halfRing(r0, r1, yc){ var s = new THREE.Shape(); s.moveTo(r1, yc); s.absarc(0, yc, r1, 0, Math.PI, false); s.lineTo(-r0, yc); s.absarc(0, yc, r0, Math.PI, 0, true); s.lineTo(r1, yc); return s; }
+/* a deep round-headed porch with a broad white archivolt on imposts; at its back the blue double door
+   under a fanlight, framed by its own white archivolt */
 function porch(F, zf, nw, crown, dw, dcrown, nd){
-  var ny = crown - nw/2;
-  var ar = archS(nw + .5, PL, ny); ar.holes.push(archS(nw, PL, ny, true)); add(ext(ar, .1, 32), M.trim, 0, 0, zf, F);
-  boxX(-nw/2 - .3, -nw/2 + .02, ny - .22, ny, zf, zf + .14, M.trim, F); boxX(nw/2 - .02, nw/2 + .3, ny - .22, ny, zf, zf + .14, M.trim, F);
-  hole(F, function(){ return archS(nw, PL, ny); }, 0, 0, nd + zf, revealB, zf);
-  var zb = -nd + .03, dy = dcrown - dw/2;
-  var da = archS(dw + .36, PL, dy); da.holes.push(archS(dw, PL, dy, true)); sunk(add(ext(da, .08, 32), M.trim, 0, 0, zb, F), 3);
-  sunk(box(dw, dy - PL, .06, 0, PL, zb + .02, M.door, F), 3);
-  sunk(add(new THREE.ShapeGeometry(archS(dw, dy, dy), 24), M.glass, 0, 0, zb + .02, F), 3);
-  for (var i = 0; i <= 6; i++){ var t = i/6*Math.PI, r = dw/2; sunk(box(.035, r, .04, Math.cos(t)*r/2, dy + Math.sin(t)*r/2 - r/2, zb + .05, M.trim, F), 3).rotation.z = t - Math.PI/2; }
-  sunk(add(ext(ringS(dw/2 - .06, dw/2), .05, 32), M.trim, 0, dy, zb + .03, F), 3);
-  sunk(add(ext(ringS(.26, .31), .05, 24), M.trim, 0, dy, zb + .03, F), 3);
-  sunk(box(dw, .08, .06, 0, dy - .04, zb + .04, M.trim, F), 3);
-}
-/* portico frontispiece: a risalit .3 proud with edge pilasters, broken-bed pediment, oculus, porch, steps */
-function portico(F, hw, belt0, pedBase, apex, oc, nw, ncrown, dw, dcrown, steps){
-  var RZ = .3, slope = (apex - pedBase)/hw;
-  add(ext(poly([[-hw, PL], [hw, PL], [hw, pedBase], [0, apex], [-hw, pedBase]]), RZ), M.wall, 0, 0, 0, F);
+  var ny = crown - nw/2, r = nw/2;
+  add(ext(halfRing(r, r + .42, ny), .12, 40), M.trim, 0, 0, zf, F);
   [-1, 1].forEach(function(s){
-    boxX(s*hw - s*.5, s*hw + s*.04, PL, belt0, RZ - .02, RZ + .1, M.trim, F);
-    boxX(s*hw - s*.56, s*hw + s*.1, belt0 - .3, belt0, RZ - .02, RZ + .16, M.trim, F);
-    boxX(s*hw - s*.56, s*hw + s*.1, PL, PL + .35, RZ - .02, RZ + .15, M.trim, F);
-    belt(F, Math.min(s*(oc[1] + .32), s*(hw + .35)), Math.max(s*(oc[1] + .32), s*(hw + .35)), belt0, RZ, false);
+    boxX(s*r, s*(r + .42), PL, ny, zf, zf + .1, M.trim, F);
+    boxX(s*(r - .04), s*(r + .5), ny - .24, ny, zf, zf + .16, M.trim, F);
   });
-  var rh = hw + .35; rakes(F, rh, apex - rh*slope - .03, rh*slope, RZ, .32, .5);
-  box(.5, .3, .5, 0, apex - .12, RZ + .13, M.trim, F);
-  oculus(F, 0, oc[0], oc[1] - .3, RZ);
-  porch(F, RZ, nw, ncrown, dw, dcrown, .7);
-  if (steps){
-    steps.forEach(function(S){ boxX(-S[2], S[2], 0, S[0], RZ - .1, RZ + S[1], M.step, F); });
-    var sw = steps[steps.length - 1][2], sd = steps[steps.length - 1][1];      /* low side walls of the steps */
+  hole(F, function(){ return archS(nw, PL, ny); }, 0, 0, nd + zf, revealB, zf);
+  var zb = -nd + .03, dr = dw/2, dy = dcrown - dr;
+  sunk(add(ext(halfRing(dr, dr + .36, dy), .1, 40), M.trim, 0, 0, zb, F), 3);
+  [-1, 1].forEach(function(s){ sunk(boxX(s*dr, s*(dr + .36), PL, dy, zb, zb + .1, M.trim, F), 3); });
+  sunk(box(dw, dy - PL, .06, 0, PL, zb + .02, M.door, F), 3);
+  sunk(box(dw + .02, .1, .08, 0, dy - .05, zb + .03, M.trim, F), 3);
+  sunk(add(new THREE.ShapeGeometry(archS(dw, dy, dy), 32), M.glass, 0, 0, zb + .02, F), 3);
+  sunk(add(ext(halfRing(dr - .07, dr, dy), .05, 32), M.trim, 0, 0, zb + .03, F), 3);
+  sunk(add(ext(halfRing(.22, .28, dy), .05, 20), M.trim, 0, 0, zb + .04, F), 3);
+  for (var i = 1; i < 8; i++){ var t = i/8*Math.PI, r0 = .28, r1 = dr - .07, L = r1 - r0, rm = (r0 + r1)/2;
+    sunk(box(.035, L, .04, Math.cos(t)*rm, dy + Math.sin(t)*rm - L/2, zb + .05, M.trim, F), 3).rotation.z = t - Math.PI/2; }
+}
+/* portico: a risalit .3 proud carrying lesenes, the cornice pieces, an open-bed pediment, the oculus, the porch and steps */
+function portico(F, o){
+  var RZ = .3, hw = o.hw, pb = o.pedBase, rx = o.rake, apex = pb + rx*o.slope;
+  add(ext(poly([[-hw, PL], [hw, PL], [hw, pb], [0, apex - .25], [-hw, pb]]), RZ), M.wall, 0, 0, 0, F);
+  [-1, 1].forEach(function(s){
+    var x0 = Math.min(s*o.les[0], s*o.les[1]), x1 = Math.max(s*o.les[0], s*o.les[1]);
+    lesene(F, x0, x1, PL, o.band, RZ, .1);
+    var lo = Math.min(s*o.cor, s*hw), hi = Math.max(s*o.cor, s*hw);
+    midEntab(F, Math.min(x0, lo), Math.max(x1, hi), o.band, RZ, 0);
+  });
+  rakes(F, rx, pb - .04, rx*o.slope, RZ, .3, .52);
+  box(.46, .32, .52, 0, apex - .14, RZ + .14, M.trim, F);
+  oculus(F, 0, o.oc[0], o.oc[1], RZ);
+  porch(F, RZ, o.niche[0], o.niche[1], o.door[0], o.door[1], .7);
+  if (o.steps){
+    o.steps.forEach(function(S){ boxX(-S[2], S[2], 0, S[0], RZ - .1, RZ + S[1], M.step, F); });
+    var sw = o.steps[o.steps.length - 1][2], sd = o.steps[o.steps.length - 1][1];
     [-1, 1].forEach(function(s){ boxX(s*sw, s*(sw + .38), 0, .78, RZ - .1, RZ + sd, M.plinth, F); boxX(s*(sw - .03), s*(sw + .41), .78, .86, RZ - .1, RZ + sd + .03, M.step, F); });
   }
+  return apex;
 }
 
-/* ═══════════ NAOS ═══════════ */
-var NW = 10.8, NB = 7.4;                                       // wall top, mid entablature
+/* ═══════════ NAOS · on north and south a portico; side bays with a tall window under the double cornice and a frame
+   above it; wide corner lesenes ═══════════ */
+var NW = 10.8, NB = 7.15;                                      // wall top, band of the mid entablature
 boxX(-NH - .15, NH + .15, 0, PL, -NH - .15, NH + .15, M.plinth);
 boxX(-NH, NH, PL, NW, -NH, NH, M.wall);
-[[1, 1], [1, -1], [-1, 1], [-1, -1]].forEach(function(c){ cornerBlock(c[0]*NH, c[1]*NH, c[0], c[1], PL, NW, 1.05, .14); });
-var NE = entab(-NH, NH, -NH, NH, NW, null, true);             // → 11.82
+[[1, 1], [1, -1], [-1, 1], [-1, -1]].forEach(function(c){ cornerBlock(c[0]*NH, c[1]*NH, c[0], c[1], PL, NW, 1.05, NB); });
+var NE = entab(-NH, NH, -NH, NH, NW, null, true);             // → 11.87
 [S_, N_].forEach(function(rot){
   var F = face(0, rot === S_ ? NH : -NH, rot);
-  portico(F, 3.6, NB, 7.78, 10.45, [7.9, .92], 3.0, 6.15, 1.95, 5.1, [[.6, 1.25, 3.0], [.4, 1.6, 3.3], [.2, 1.95, 3.6]]);
+  portico(F, {hw: 3.75, les: [2.5, 3.75], band: NB, cor: 2.3, pedBase: NB + 1.04, rake: 4.25, slope: .43,
+              oc: [7.95, .58], niche: [3.0, 6.15], door: [1.6, 5.15], steps: [[.6, 1.25, 3.0], [.4, 1.6, 3.3], [.2, 1.95, 3.6]]});
   [-1, 1].forEach(function(s){
-    belt(F, Math.min(s*3.6, s*6.45), Math.max(s*3.6, s*6.45), NB, 0, false);
-    win(F, s*5.05, 2.6, 1.0, 3.1, true, .2, 3, M.glass, .4);
-    panel(F, s*5.05, 8.05, 1.9, 2.4);
-    panel(F, s*5.05, 1.15, 1.3, .9);
+    midEntab(F, Math.min(s*3.75, s*6.45), Math.max(s*3.75, s*6.45), NB, 0, 0);
+    win(F, s*5.1, 2.55, 1.0, 3.15, true, .2, 3, M.glass, .4);
+    frameR(F, s*5.1, 8.65, 2.05, 1.85, .02);
+    frameR(F, s*5.1, 1.0, 1.3, .95, .02);
   });
 });
 [[E_, NH, EH], [W_, -NH, LH]].forEach(function(A){
   var F = face(A[1], 0, A[0]);
-  [-1, 1].forEach(function(s){ var c = s*(A[2] + 6.45)/2, w = 6.45 - A[2] - .5; belt(F, Math.min(s*A[2], s*6.45), Math.max(s*A[2], s*6.45), NB, 0, false); panel(F, c, 8.05, w, 2.4); panel(F, c, 1.35, w*.8, 5.5); });
+  [-1, 1].forEach(function(s){
+    var c = s*(A[2] + 6.45)/2, w = 6.45 - A[2] - .6;
+    midEntab(F, Math.min(s*A[2], s*6.45), Math.max(s*A[2], s*6.45), NB, 0, 0);
+    frameR(F, c, 8.65, w, 1.85, .02);
+    if (A[0] === E_) frameR(F, c, 1.2, w*.75, 5.4, .02);
+  });
 });
-/* low hipped roof from the eaves up to the drum: four planes, each cut by the octagon */
+/* low hipped roof from the eaves up to the drum: four planes, each cut by the chamfered octagon */
+var DP = {A: 4.6, c: 1.7};                                      // drum: wide faces 5.8 m, corner faces 2.4 m
 (function(){
-  var ee = NH + .45, k = .19, a = DA - .02, h = a*T8, dg = a/Math.SQRT2;
+  var ee = NH + .5, k = .19, P = chfGrow(DP, -.02), h = P.A - P.c, dg = (2*P.A - P.c)/2, a = P.A;
   function y(d){ return NE + k*d; }
   for (var q = 0; q < 4; q++){
     var th = q*Math.PI/2, cs = Math.cos(th), sn = Math.sin(th);
-    var P = function(u, d){ var zz = ee - d; return [u*cs + zz*sn, y(d), -u*sn + zz*cs]; };
-    var pts = [P(-ee, 0), P(ee, 0), P(dg, ee - dg), P(h, ee - a), P(-h, ee - a), P(-dg, ee - dg)];
-    var pos = [], uv = [];
-    pts.forEach(function(p, i){ pos.push(p[0], p[1], p[2]); var u = [-ee, ee, dg, h, -h, -dg][i], d = [0, 0, ee - dg, ee - a, ee - a, ee - dg][i]; uv.push(u, d*1.02); });
+    var Pt = function(u, d){ var zz = ee - d; return [u*cs + zz*sn, y(d), -u*sn + zz*cs]; };
+    var U = [-ee, ee, dg, h, -h, -dg], D = [0, 0, ee - dg, ee - a, ee - a, ee - dg], pos = [], uv = [];
+    for (var i = 0; i < 6; i++){ var p = Pt(U[i], D[i]); pos.push(p[0], p[1], p[2]); uv.push(U[i], D[i]*1.02); }
     add(geo(pos, uv, [0, 1, 2, 0, 2, 3, 0, 3, 4, 0, 4, 5]), M.roof);
-    rod(P(ee, 0), P(dg, ee - dg), .06, M.roof);
+    rod(Pt(ee, 0), Pt(dg, ee - dg), .06, M.roof);
   }
 })();
 
-/* ═══════════ DRUM · a plain base band, a ledge, three arches on the four main faces (a window between two blind
-   arches) and one blind arch on each diagonal face, a plain frieze, a deep cornice; slate tent with four dormers ═══════════ */
+/* ═══════════ DRUM · chamfered: on each wide face three arches (a window between two blind arches), on each narrow
+   corner face one blind arch; a plain base band, a ledge, a frieze, a deep cornice; slate tent with four dormers ═══════════ */
 (function(){
-  var y0 = NE - .1, yl = 13.9, ya = 14.16, ah = 2.35, yf = 17.25;
-  octPrism(DA, y0, yf, M.wall, 0, 0);
-  octPrism(DA + .1, yl, yl + .2, M.trim, 0, 0);
-  octPrism(DA + .05, yf - .2, yf, M.trim, 0, 0);
-  var y = yf + .22; octPrism(DA, yf, y, M.wall, 0, 0);
-  [[.12, .12], [.14, .3], [.18, .5], [.06, .56]].forEach(function(L){ octPrism(DA + L[1], y, y + L[0], M.trim, 0, 0); y += L[0]; });   // → 17.34
-  octFaces(DA, 0, 0).forEach(function(F){
+  var y0 = NE - .1, yl = 13.9, ya = 14.15, ah = 2.55, yf = 17.4;
+  chfPrism(DP, y0, yf + .22, M.wall);
+  chfPrism(chfGrow(DP, .1), yl, yl + .2, M.trim);
+  chfPrism(chfGrow(DP, .05), yf - .2, yf, M.trim);
+  var y = yf + .22; [[.12, .12], [.14, .3], [.18, .5], [.06, .56]].forEach(function(L){ chfPrism(chfGrow(DP, L[1]), y, y + L[0], M.trim); y += L[0]; });
+  chfFaces(DP).forEach(function(F){
     if (F.cardinal){
-      win(F.g, 0, ya, .9, ah, true, .13, 3, M.glass, .4, {sill: null});
-      [-1, 1].forEach(function(k){ win(F.g, k*1.2, ya, .9, ah, true, .13, 0, M.wall, .16, {reveal: revealB, sill: null}); });
-    } else win(F.g, 0, ya, .9, ah, true, .13, 0, M.wall, .16, {reveal: revealB, sill: null});
+      win(F.g, 0, ya, .95, ah, true, .14, 3, M.glass, .45, {sill: null});
+      [-1, 1].forEach(function(k){ win(F.g, k*1.65, ya, .95, ah, true, .14, 0, M.wall, .16, {reveal: revealB, sill: null}); });
+    } else win(F.g, 0, ya, .95, ah, true, .14, 0, M.wall, .16, {reveal: revealB, sill: null});
   });
-  var ye = y, a0 = DA + .62, yt = 23.4, a1 = .62;
-  tent(a0, ye, a1, yt, M.slate, 0, 0);
-  octFaces(DA, 0, 0).forEach(function(F){
+  var ye = y, P0 = chfGrow(DP, .62), yt = 23.2, P1 = chfReg(.62);
+  chfTent(P0, ye, P1, yt, M.slate, 0, 0);
+  chfFaces(DP).forEach(function(F){
     if (!F.cardinal) return;
-    var t = .33, aa = a0 - t*(a0 - a1), yy = ye + t*(yt - ye);
-    var g = face(Math.sin(F.g.rotation.y)*(aa + .04), Math.cos(F.g.rotation.y)*(aa + .04), F.g.rotation.y);
-    dormer(g, yy - .2, .95, 1.05, 1.3, [.55]);
+    var t = .3, aa = P0.A - t*(P0.A - P1.A), yy = ye + t*(yt - ye);
+    dormer(face(F.dir[0]*(aa + .04), F.dir[1]*(aa + .04), F.dir[2]), yy - .2, 1.2, 1.25, 1.5, [.55]);
   });
-  dome(0, 0, yt - .05, a1, .74, 1.6, true, 1.5);
+  dome(0, 0, yt - .05, .62, .8, 1.6, true, 1.5);
 })();
 
 /* ═══════════ LINK between the porch and the naos ═══════════ */
@@ -450,94 +532,125 @@ gableX(WX1, LX1, 0, LH + .42, LE, .3);
 [S_, N_].forEach(function(rot){
   var F = face((WX1 + LX1)/2, rot === S_ ? LH : -LH, rot);
   win(F, 0, 2.1, .95, 3.0, true, .18, 3, M.glass, .4);
-  [-1, 1].forEach(function(s){ boxX(s*2.1 - s*.45, s*2.1 + s*.02, PL, 6.2, -.02, .1, M.trim, F); });
+  [-1, 1].forEach(function(s){ lesene(F, Math.min(s*1.55, s*2.1), Math.max(s*1.55, s*2.1), PL, 6.2, 0, .1, true); });
 });
 
-/* ═══════════ PORCH · two tiers under one cornice line: the mid cornice runs round the whole block, the upper tier ends in
-   gables north and south; the main entrance on the west ═══════════ */
-var WB = 6.8, WW = 9.6;
+/* ═══════════ PORCH · two tiers: lower tier up to the double mid cornice that runs round the block, upper tier to the eaves;
+   gables north and south; on the west the main portico ═══════════ */
+var WB = 6.75, WW = 9.75;
 boxX(WX0 - .15, WX1, 0, PL, -WH - .15, WH + .15, M.plinth);
 boxX(WX0, WX1, PL, WW, -WH, WH, M.wall);
-[[WX0, -1], [WX1, 1]].forEach(function(c){ [-1, 1].forEach(function(sz){ cornerBlock(c[0], sz*WH, c[1], sz, PL, WW, .9, .14); }); });
-var WE = entab(WX0, WX1, -WH, WH, WW, null, false);             // → 10.87
-var WK = .32, WRID = gableZ(-WH - .35, WH + .35, WC, (WX1 - WX0)/2 + .42, WE, WK);
-/* the mid cornice round the porch (interrupted only by the west portico, which carries its own pieces) */
-[[S_, WC, WH, (WX1 - WX0)/2], [N_, WC, -WH, (WX1 - WX0)/2], [E_, WX1, 0, WH]].forEach(function(A){
-  var F = A[0] === E_ ? face(A[1], 0, E_) : face(A[1], A[2], A[0]);
-  belt(F, -A[3] - .1, A[3] + .1, WB, 0, true);
-});
+[[WX0, -1], [WX1, 1]].forEach(function(c){ [-1, 1].forEach(function(sz){ cornerBlock(c[0], sz*WH, c[1], sz, PL, WW, .75, WB); }); });
+var WE = entab(WX0, WX1, -WH, WH, WW, null, false);             // → 10.67
+var WK = .3, WRID = gableZ(-WH - .35, WH + .35, WC, (WX1 - WX0)/2 + .42, WE, WK);
+/* gable ends (north, south): lower tier an arched window between two tall frames, upper tier a small square window
+   in a frame, frames either side; the pediment */
 [S_, N_].forEach(function(rot){
   var F = face(WC, rot === S_ ? WH : -WH, rot), hw = (WX1 - WX0)/2;
+  midEntab(F, -hw + .75, hw - .75, WB, 0, 0);
   add(ext(poly([[-hw, 0], [hw, 0], [0, hw*WK]]), .3), M.wall, 0, WE, -.3, F);
   rakes(F, hw + .42, WE - .05, (hw + .42)*WK, .02, .26, .42);
   win(F, 0, 2.2, .95, 3.2, true, .18, 3, M.glass, .4);
-  [-1, 1].forEach(function(s){ panel(F, s*2.15, 1.3, .95, 4.6); panel(F, s*2.15, 7.75, .95, 1.6); });
-  win(F, 0, 8.0, .62, .78, false, .14, 2, M.glass, .35);
-  panel(F, 0, 7.65, 1.35, 1.75, .1);
+  [-1, 1].forEach(function(s){ frameR(F, s*1.85, 1.2, .9, 5.1, .02); frameR(F, s*1.85, 8.15, .9, 1.35, .02); });
+  win(F, 0, 8.25, .6, .75, false, .13, 2, M.glass, .35);
+  frameR(F, 0, 8.0, 1.25, 1.55, .02);
 });
+/* west front, measured on the frontal photograph */
 (function(){
   var F = face(WX0, 0, W_);
-  portico(F, 2.85, WB, 7.18, 9.3, [7.15, .84], 2.8, 5.75, 1.75, 4.65, [[.6, 1.3, 2.7], [.4, 1.65, 3.0], [.2, 2.0, 3.3]]);
+  portico(F, {hw: 3.7, les: [2.45, 3.7], band: WB, cor: 2.05, pedBase: WB + 1.04, rake: 3.55, slope: .45,
+              oc: [7.6, .46], niche: [3.4, 5.75], door: [1.75, 4.85], steps: [[.6, 1.3, 2.7], [.4, 1.65, 3.0], [.2, 2.0, 3.3]]});
   [-1, 1].forEach(function(s){
-    belt(F, Math.min(s*2.85, s*5.6), Math.max(s*2.85, s*5.6), WB, 0, true);
-    panel(F, s*4.22, 1.25, 1.45, 5.1);
-    panel(F, s*4.22, 7.7, 1.6, 1.65);
+    midEntab(F, Math.min(s*3.7, s*5.75), Math.max(s*3.7, s*5.75), WB, 0, 0);
+    frameR(F, s*4.6, 8.3, 1.9, 1.15, .02);                    // upper tier: wide frame over the outer bay
   });
 })();
-(function(){ var F = face(WX1, 0, E_); [-1, 1].forEach(function(s){ panel(F, s*5.4, 7.7, 1.2, 1.65); }); })();
+(function(){ var F = face(WX1, 0, E_); [-1, 1].forEach(function(s){ midEntab(F, Math.min(s*LH, s*5.75), Math.max(s*LH, s*5.75), WB, 0, 0); frameR(F, s*5.15, 8.15, .9, 1.35, .02); }); })();
 
-/* ═══════════ BELL TOWER · a square base rising out of the porch roof, its top sloped up to the octagon;
-   the octagon with louvred openings (railings below) on the main faces and blind arches on the diagonals,
-   a tall gable over every face, a slate spire with four dormers ═══════════ */
+/* ═══════════ BELL TOWER · a square base rising out of the porch roof, skirted up to a chamfered octagon: louvred openings
+   with railings on the wide faces, blind arches on the narrow ones, a gable over every face (large over the wide faces,
+   small over the narrow), a slate spire with four dormers ═══════════ */
 (function(){
-  var cx = WC, P = 3.45, sb0 = 9.9, sbt = 12.0, oy = 12.45, ye = 18.4;
-  boxX(cx - P, cx + P, sb0, sbt, -P, P, M.wall);
-  [[1, 1], [1, -1], [-1, 1], [-1, -1]].forEach(function(c){ boxX(cx + c[0]*(P - .4), cx + c[0]*(P + .05), sb0, sbt, c[1]*(P - .4), c[1]*(P + .05), M.trim); });
-  boxX(cx - P - .1, cx + P + .1, sbt - .05, sbt + .12, -P - .1, P + .1, M.trim);
-  apron(cx, 0, P + .08, sbt + .12, BA + .04, oy, M.wall);
-  octPrism(BA, sbt, ye, M.wall, cx, 0);
-  octPrism(BA + .08, oy, oy + .16, M.trim, cx, 0);
-  octPrism(BA + .06, ye - .26, ye, M.trim, cx, 0);
-  var s = 2*BA*T8, gr = 2.8, sb = 2.65, st = ye + 8.2, sa = .42, oh = 4.6, ow = 1.3, ob = oy + .45;
-  octFaces(BA, cx, 0).forEach(function(F){
+  var cx = WC, Q = 3.38, sb0 = 9.9, sbt = 11.95, oy = 12.4, ye = 16.4, BP = {A: 3.0, c: 1.6};
+  boxX(cx - Q, cx + Q, sb0, sbt, -Q, Q, M.wall);
+  [[1, 1], [1, -1], [-1, 1], [-1, -1]].forEach(function(c){ boxX(cx + c[0]*(Q - .35), cx + c[0]*(Q + .04), sb0, sbt, c[1]*(Q - .35), c[1]*(Q + .04), M.trim); });
+  boxX(cx - Q - .1, cx + Q + .1, sbt - .05, sbt + .12, -Q - .1, Q + .1, M.trim);
+  apronChf(cx, 0, Q + .08, sbt + .12, chfGrow(BP, .04), oy, M.wall);
+  chfPrism(BP, sbt, ye, M.wall, cx, 0);
+  chfPrism(chfGrow(BP, .08), oy, oy + .16, M.trim, cx, 0);
+  chfPrism(chfGrow(BP, .06), ye - .26, ye, M.trim, cx, 0);
+  var k = 1.35, ob = 12.7, oh = 3.3, sbP = {A: 2.4, c: 1.28}, st = 26.0, saP = chfReg(.42);
+  chfFaces(BP, cx, 0).forEach(function(F){
     if (F.cardinal){
-      win(F.g, 0, ob, ow, oh, true, .15, 0, M.louv, .55, {reveal: revealW});
-      for (var i = -2; i <= 2; i++) sunk(box(.04, .8, .04, i*.24, ob, -.25, M.trim, F.g), 3);
-      sunk(box(ow, .06, .06, 0, ob + .8, -.25, M.trim, F.g), 3);
+      win(F.g, 0, ob, 1.1, oh, true, .15, 0, M.louv, .55, {reveal: revealW});
+      for (var i = -2; i <= 2; i++) sunk(box(.04, .8, .04, i*.22, ob, -.25, M.trim, F.g), 3);
+      sunk(box(1.15, .06, .06, 0, ob + .8, -.25, M.trim, F.g), 3);
     } else {
-      win(F.g, 0, ob, ow, oh, true, .15, 0, M.trim, .1, {reveal: revealW});
-      box(ow - .02, .06, .05, 0, ob + oh - ow/2 - .04, -.07, M.trim, F.g);
-      box(ow - .02, .05, .05, 0, ob + .55, -.07, M.trim, F.g);
+      win(F.g, 0, ob, .9, oh, true, .13, 0, M.trim, .1, {reveal: revealW});
+      box(.88, .06, .05, 0, ob + oh - .45 - .04, -.07, M.trim, F.g);
+      box(.88, .05, .05, 0, ob + .55, -.07, M.trim, F.g);
     }
-    add(ext(poly([[-s/2 - .02, 0], [s/2 + .02, 0], [0, gr]]), .4), M.wall, 0, ye, -.4, F.g);
-    rakes(F.g, s/2 + .05, ye - .04, (s/2 + .05)*gr/(s/2), .02, .18, .3);
-    var gb = s/2 + .2; add(ext(poly([[-gb, 0], [gb, 0], [0, gr*gb/(s/2)]]), 1.74), M.slate, 0, ye + .1, -2.1, F.g);
+    var hw = F.len/2, rise = hw*k;
+    add(ext(poly([[-hw - .02, 0], [hw + .02, 0], [0, rise]]), .4), M.wall, 0, ye, -.4, F.g);
+    rakes(F.g, hw + .06, ye - .04, (hw + .06)*k, .02, .17, .3);
+    var gb = hw + .18, gd = F.cardinal ? 1.6 : 1.3; add(ext(poly([[-gb, 0], [gb, 0], [0, gb*k]]), gd), M.slate, 0, ye + .08, -gd + .04, F.g);
   });
-  tent(sb, ye + .25, sa, st, M.slate, cx, 0);
-  octFaces(BA, cx, 0).forEach(function(F){
+  chfTent(sbP, ye + .25, saP, st, M.slate, cx, 0);
+  chfFaces(BP, cx, 0).forEach(function(F){
     if (!F.cardinal) return;
-    var t = .44, r = sb - t*(sb - sa), yy = ye + .25 + t*(st - ye - .25);
-    var g = face(cx + Math.sin(F.g.rotation.y)*(r + .03), Math.cos(F.g.rotation.y)*(r + .03), F.g.rotation.y);
-    dormer(g, yy - .2, .62, .74, 1.1, [.55]);
+    var t = .42, r = sbP.A - t*(sbP.A - saP.A), yy = ye + .25 + t*(st - ye - .25);
+    dormer(face(cx + F.dir[0]*(r + .03), F.dir[1]*(r + .03), F.dir[2]), yy - .2, .66, .78, 1.1, [.55]);
   });
-  dome(cx, 0, st - .05, sa, .62, 1.45, true, 1.0);
+  dome(cx, 0, st - .05, .42, .64, 1.45, true, 1.05);
 })();
 
-/* ═══════════ SANCTUARY · gabled, a closed pediment with a round window, a deep painted niche, the small dome ═══════════ */
-var ECX = (NH + EX1)/2, EW = 6.9;
+/* ═══════════ SANCTUARY · on the sides a lesene at the naos, a bay with a tall window, a broad projecting lesene at the
+   east end; a lower cornice, an attic band and the eaves cornice breaking forward over the lesenes; on the east
+   an open-bed pediment with a round window, a deep niche with the painted Resurrection, the small dome ═══════════ */
+var ECX = (NH + EX1)/2, EW = 8.3, EC = 7.1;                    // wall top, lower cornice
 boxX(NH, EX1 + .15, 0, PL, -EH - .15, EH + .15, M.plinth);
 boxX(NH, EX1, PL, EW, -EH, EH, M.wall);
-[[1, 1], [1, -1]].forEach(function(c){ cornerBlock(EX1, c[1]*EH, 1, c[1], PL, EW, 1.0, .14); });
-var EE = entab(NH, EX1, -EH, EH, EW, {n:1, s:1, e:1, w:0}, false);      // → 7.17
-var EK = .42, ER = gableX(NH, EX1 + .4, 0, EH + .4, EE, EK);
+var EE = entab(NH, EX1 - .06, -EH, EH, EW, {n:1, s:1, e:0, w:0}, false); // → 7.62
+var EK = .46, ER = gableX(NH, EX1 + .45, 0, EH + .45, EE, EK);
+function lowCornice(g, x0, x1, y, zf){
+  boxX(x0, x1, y, y + .14, zf - .05, zf + .1, M.trim, g);
+  boxX(x0 - .04, x1 + .04, y + .14, y + .3, zf - .05, zf + .26, M.trim, g);
+  boxX(x0 - .07, x1 + .07, y + .3, y + .38, zf - .05, zf + .34, M.trim, g);
+}
+[S_, N_].forEach(function(rot){
+  var F = face(ECX, rot === S_ ? EH : -EH, rot), L = (EX1 - NH)/2, sg = rot === S_ ? 1 : -1;
+  /* along the face, local x runs west → east on the south side and east → west on the north side */
+  function X(wx){ return sg*(wx - ECX); }
+  var a0 = X(NH), a1 = X(NH + .95), e0 = X(EX1 - 2.05), e1 = X(EX1);
+  lesene(F, Math.min(a0, a1), Math.max(a0, a1), PL, EC, 0, .1);
+  boxX(Math.min(e0, e1), Math.max(e0, e1), PL, EW, -.02, .16, M.wall, F);
+  boxX(Math.min(e0, e1) - .03, Math.max(e0, e1) + .03, PL, PL + .3, -.02, .2, M.trim, F);
+  frameR(F, (e0 + e1)/2, PL + .5, 2.05 - .5, EC - PL - .8, .16, .09);
+  lowCornice(F, Math.min(a1, e0), Math.max(a1, e0), EC, 0);
+  lowCornice(F, Math.min(e0, e1), Math.max(e0, e1) + (sg > 0 ? .1 : -.1)*0, EC, .16);
+  lowCornice(F, Math.min(a0, a1), Math.max(a0, a1), EC, .1);
+  frameR(F, X((NH + .95 + EX1 - 2.05)/2), EC + .58, (EX1 - 2.05) - (NH + .95) - .5, EW - EC - .78, .02, .07);
+  var ex = X(EX1 + .66); entabPiece(F, Math.min(e0, ex), Math.max(e0, ex), EW, .16);
+  win(F, X((NH + .95 + EX1 - 2.05)/2), 3.1, 1.0, 3.6, true, .18, 3, M.glass, .4);
+});
 (function(){
   var F = face(EX1, 0, E_);
-  add(ext(poly([[-EH, 0], [EH, 0], [0, EH*EK]]), .3), M.wall, 0, EE, -.3, F);
-  rakes(F, EH + .4, EE - .06, (EH + .4)*EK, .02, .28, .44);
-  oculus(F, 0, EE + .62, .3, 0);
-  [-1, 1].forEach(function(s){ boxX(s*2.42 - s*.4, s*2.42 + s*.02, PL, EW, -.02, .12, M.trim, F); boxX(s*2.42 - s*.46, s*2.42 + s*.08, EW - .3, EW, -.02, .18, M.trim, F); boxX(s*2.42 - s*.46, s*2.42 + s*.08, PL, PL + .35, -.02, .17, M.trim, F); });
-  var nw = 2.8, ny = 6.2 - nw/2, nd = .45;
-  var ar = archS(nw + .5, PL, ny); ar.holes.push(archS(nw, PL, ny, true)); add(ext(ar, .1, 32), M.trim, 0, 0, 0, F);
+  /* broad corner lesenes, carrying the cornice pieces from which the pediment rakes spring */
+  [-1, 1].forEach(function(s){
+    var x0 = Math.min(s*2.75, s*EH), x1 = Math.max(s*2.75, s*EH);
+    boxX(x0, x1, PL, EW, -.02, .16, M.wall, F);
+    boxX(x0 - .03, x1 + .03, PL, PL + .3, -.02, .2, M.trim, F);
+    frameR(F, (x0 + x1)/2, PL + .45, (x1 - x0) - .4, EC - PL - .7, .16, .09);
+    lowCornice(F, x0, x1, EC, .16);
+    frameR(F, (x0 + x1)/2, EC + .55, (x1 - x0) - .4, EW - EC - .75, .16, .07);
+  });
+  [-1, 1].forEach(function(s){ entabPiece(F, Math.min(s*2.75, s*(EH + .66)), Math.max(s*2.75, s*(EH + .66)), EW, .16); });
+  add(ext(poly([[-EH, EW - EE], [EH, EW - EE], [EH, 0], [0, EH*EK], [-EH, 0]]), .3), M.wall, 0, EE, -.3, F);
+  rakes(F, EH + .45, EE - .06, (EH + .45)*EK, .18, .28, .44);
+  oculus(F, 0, EE + .05, .34, 0);
+  var nw = 3.1, ny = 6.75 - nw/2, nd = .5;
+  add(ext(halfRing(nw/2, nw/2 + .34, ny), .12, 40), M.trim, 0, 0, 0, F);
+  [-1, 1].forEach(function(s){ boxX(s*nw/2, s*(nw/2 + .34), PL, ny, 0, .1, M.trim, F); boxX(s*(nw/2 - .04), s*(nw/2 + .38), ny - .24, ny, 0, .16, M.trim, F); });
   hole(F, function(){ return archS(nw, PL, ny); }, 0, 0, nd, revealW);
   var icon = canvasTex(512, 768, function(k){
     var g = k.createLinearGradient(0, 0, 0, 768); g.addColorStop(0, '#f6e7b8'); g.addColorStop(.55, '#e6c06a'); g.addColorStop(1, '#b58b45');
@@ -560,16 +673,11 @@ var EK = .42, ER = gableX(NH, EX1 + .4, 0, EH + .4, EE, EK);
   icon.repeat.set(1/nw, 1/(ny + nw/2 - PL)); icon.offset.set(.5, -PL/(ny + nw/2 - PL));
   sunk(add(new THREE.ShapeGeometry(archS(nw, PL, ny), 32), mat('#ffffff', {map: icon, roughness: .85}), 0, 0, -nd + .02, F), 3);
 })();
-[S_, N_].forEach(function(rot){
-  var F = face(ECX, rot === S_ ? EH : -EH, rot);
-  win(F, 0, 2.4, 1.0, 3.2, true, .2, 3, M.glass, .4);
-  [-1, 1].forEach(function(s){ var x = s*(ECX - NH - .45); boxX(x - .45, x + .45, PL, EW, -.02, .12, M.trim, F); });
-});
 (function(){
   var x = EX1 - .9, y0 = ER - .55;
-  boxX(x - .55, x + .55, y0, y0 + 1.15, -.55, .55, M.wall);
-  boxX(x - .64, x + .64, y0 + 1.15, y0 + 1.3, -.64, .64, M.trim);
-  dome(x, 0, y0 + 1.3, .36, .5, 1.05, false, .6);
+  boxX(x - .5, x + .5, y0, y0 + 1.0, -.5, .5, M.wall);
+  boxX(x - .58, x + .58, y0 + 1.0, y0 + 1.14, -.58, .58, M.trim);
+  dome(x, 0, y0 + 1.14, .34, .5, 1.05, false, .75);
 })();
 
 /* ═══════════ rainwater downpipes at the corners, as on the photographs ═══════════ */
@@ -583,11 +691,11 @@ var EK = .42, ER = gableX(NH, EX1 + .4, 0, EH + .4, EE, EK);
   }
   var o = .33;
   [-1, 1].forEach(function(s){
-    dp(WX0 - o, s*(WH - .25), 9.95, -1, 0);           // west front
-    dp(WX1 + .25, s*(WH + o), 9.95, 0, s);           // porch, east corners
+    dp(WX0 - o, s*(WH - .25), 10.1, -1, 0);           // west front
+    dp(WX1 + .25, s*(WH + o), 10.1, 0, s);            // porch, east corners
     dp(-NH - .25, s*(NH + o), 11.3, 0, s);            // naos
     dp(NH + .25, s*(NH + o), 11.3, 0, s);
-    dp(EX1 - .25, s*(EH + o), 7.5, 0, s);             // sanctuary
+    dp(EX1 - .3, s*(EH + o), 8.7, 0, s);              // sanctuary
   });
 })();
 
