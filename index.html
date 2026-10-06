@@ -6919,7 +6919,7 @@ g.ULB={open:open,close:close,nav:nav,
   function idle(f){ (window.requestIdleCallback || function(g){ setTimeout(g, 250); })(f, { timeout: 1200 }); }
   function mount3d(){
     if (!window.Kostel3D) { st.classList.add('nogl'); return; }
-    Kostel3D.mount(cv, { zoom: false, touch: 'pan-y', view: [46, 14, 52], targetY: 15.6, fit: innerWidth < 980 ? 1.1 : 1.07, pixelRatio: 1.75,
+    Kostel3D.mount(cv, { zoom: false, touch: 'pan-y', view: [46, 14, 52], targetY: 16.5, fit: innerWidth < 980 ? 1.1 : 1.07, pixelRatio: 1.75,
       shadow: innerWidth < 700 ? 1024 : 2048, motes: true, autoRotateSpeed: .55,
       onStart: function(){ st.classList.add('touched'); },
       onReady: function(){ st.classList.add('live'); },

@@ -116,7 +116,7 @@ h1{margin:0;font:400 clamp(1.8rem,3.4vw,2.8rem)/1 var(--display);letter-spacing:
     <dt>1945</dt><dd>Костел зачинено: дзвони вивезено, орган знищено, будівлю віддано під склад.</dd>
     <dt>1992</dt><dd>Повторно освячений і повернутий громаді.</dd>
   </dl>
-  <blockquote><b>SAMEMU BOGU CZEŚĆ I CHWAŁA</b>«Самому Богові честь і слава» — напис на фризі головного фасаду.</blockquote>
+  <blockquote><b>SAMEMU BOGU CZESC I CHWALA</b>«Самому Богові честь і слава» — напис на фризі головного фасаду (на будівлі — без польських діакритиків).</blockquote>
   <a class="go" href="architecture.html">Історія костелу й інтер'єр →</a>
   <p class="src">Модель відтворює теперішній вигляд будівлі; пропорції — за обмірним кресленням і фотографіями, дрібний декор спрощено.</p>
 </aside>
@@ -145,7 +145,7 @@ h1{margin:0;font:400 clamp(1.8rem,3.4vw,2.8rem)/1 var(--display);letter-spacing:
   }
   if (!window.Kostel3D){ fail('load'); return; }
   var narrow = matchMedia('(max-width:640px)').matches;
-  Kostel3D.mount(cv, {motes: true, view: [46, 11, 52], targetY: 15.5, fit: narrow ? 1.08 : 1.14,
+  Kostel3D.mount(cv, {motes: true, view: [46, 11, 52], targetY: 16.4, fit: narrow ? 1.08 : 1.14,
     onStart: function(){ hint.style.opacity = 0; spin.setAttribute('aria-pressed', 'false'); },
     onReady: function(){ cv.classList.add('on'); poster.classList.add('off'); load.classList.add('off'); },
     onFail: fail

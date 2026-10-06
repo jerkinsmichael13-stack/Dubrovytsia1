@@ -51,9 +51,9 @@ var M = {
   wall:  mat('#eebf30'),
   trim:  mat('#f5f2ea'),
   roof:  mat('#4b3430', {roughness:.55}),
-  field: mat('#e2dacb', {roughness:.95}),
-  dome:  mat('#3a3a3b', {roughness:.62, metalness:.22}),
-  domeF: mat('#3a3a3b', {roughness:.55, metalness:.25, flatShading:true}),
+  field: mat('#efebe2', {roughness:.95}),
+  dome:  mat('#3f4239', {roughness:.62, metalness:.22}),
+  domeF: mat('#43473d', {roughness:.55, metalness:.25, flatShading:true}),
   glass: mat('#2a3036', {roughness:.18, metalness:.1}),
   louv:  mat('#2a2622', {roughness:.7}),
   door:  mat('#3b2a1c', {roughness:.8}),
@@ -77,6 +77,8 @@ var FRONT = 0, RIGHT = Math.PI/2, LEFT = -Math.PI/2, BACK = Math.PI;
 function ext(shape, depth, seg){ return new THREE.ExtrudeGeometry(shape, {depth:depth, bevelEnabled:false, curveSegments:seg||20}); }
 function V(x, y){ return new THREE.Vector2(x, y); }
 function archS(w, yb, yc, path){ var r = w/2, s = path ? new THREE.Path() : new THREE.Shape(); s.moveTo(-r, yb); s.lineTo(r, yb); s.lineTo(r, yc); s.absarc(0, yc, r, 0, Math.PI, false); s.lineTo(-r, yb); return s; }
+function segS(w, yb, yt, rise, path){ var r = w/2, R = (r*r + rise*rise)/(2*rise), cy = yt - R, a0 = Math.atan2(yt - rise - cy, r), s = path ? new THREE.Path() : new THREE.Shape();
+  s.moveTo(-r, yb); s.lineTo(r, yb); s.lineTo(r, yt - rise); s.absarc(0, cy, R, a0, Math.PI - a0, false); s.lineTo(-r, yb); return s; }
 function rectS(w, yb, yt, path){ var s = path ? new THREE.Path() : new THREE.Shape(); s.moveTo(-w/2, yb); s.lineTo(w/2, yb); s.lineTo(w/2, yt); s.lineTo(-w/2, yt); s.lineTo(-w/2, yb); return s; }
 function ring(r0, r1){ var s = new THREE.Shape(); s.absarc(0, 0, r1, 0, Math.PI*2, false); s.holes.push(new THREE.Path().absarc(0, 0, r0, 0, Math.PI*2, true)); return s; }
 
@@ -92,31 +94,49 @@ var holeDepth = new THREE.ShaderMaterial({
   stencilWrite: true, stencilRef: 1, stencilFunc: THREE.EqualStencilFunc, stencilZPass: THREE.KeepStencilOp
 });
 var revealMat = mat('#f1ede4', {side: THREE.BackSide});
+var revealWall = mat('#e6b62c', {side: THREE.BackSide});
+M.void = mat('#16130f', {roughness:1});
+M.frameG = mat('#8e8a82', {roughness:.8});
+/* leaded glass of the centre window: small panes with a lozenge at every crossing */
+M.leaded = mat('#ffffff', {roughness:.25, metalness:.1});
+M.leaded.map = canvasTex(128, 128, function(k){
+  k.fillStyle = '#2b3238'; k.fillRect(0, 0, 128, 128);
+  var g = k.createLinearGradient(0, 0, 128, 128); g.addColorStop(0, 'rgba(160,180,195,.25)'); g.addColorStop(1, 'rgba(160,180,195,0)'); k.fillStyle = g; k.fillRect(0, 0, 128, 128);
+  k.strokeStyle = '#c9c4b8'; k.lineWidth = 3; k.strokeRect(1.5, 1.5, 125, 125);
+  k.lineWidth = 2.5; k.beginPath(); k.moveTo(64, 34); k.lineTo(94, 64); k.lineTo(64, 94); k.lineTo(34, 64); k.closePath(); k.stroke();
+  [[0,0],[128,0],[0,128],[128,128]].forEach(function(c){ k.beginPath(); k.moveTo(c[0], c[1] + (c[1] ? -22 : 22)); k.lineTo(c[0] + (c[0] ? -22 : 22), c[1]); k.stroke(); });
+});
+M.leaded.map.wrapS = M.leaded.map.wrapT = THREE.RepeatWrapping; M.leaded.map.repeat.set(1/.48, 1/.48);
 M.sash = mat('#f7f5f0', {roughness:.6});
 M.pipe = mat('#4e342b', {roughness:.45, metalness:.35});
 function sunk(o, order){ o.renderOrder = order; o.castShadow = false; o.receiveShadow = false; return o; }
 /* bars: number of rows, or a list of transom heights as fractions of the opening's straight part */
-function win(g, x, y, w, h, arched, fw, bars, glassMat, depth){
-  fw = fw || .2; depth = depth || .35;
-  var yc = y + h - w/2;
-  function opening(path){ return arched ? archS(w, y, yc, path) : rectS(w, y, y + h, path); }
-  var o = arched ? archS(w + 2*fw, y - fw*.6, yc) : rectS(w + 2*fw, y - fw, y + h + fw);
-  o.holes.push(opening(true));
-  add(ext(o, .06), M.trim, x, 0, 0, g);                                            // flat surround
-  box(w + 2*fw + .14, .1, .24, x, y - fw*.6 - .1, .12, M.trim, g);                  // sill
+/* opt: {frame: surround material or null, sill: material or null, reveal: material, seg: rise of a segmental top} */
+function win(g, x, y, w, h, arched, fw, bars, glassMat, depth, opt){
+  fw = fw || .2; depth = depth || .35; opt = opt || {};
+  var yc = y + h - w/2, seg = opt.seg || 0;
+  function opening(path){ return arched ? archS(w, y, yc, path) : seg ? segS(w, y, y + h, seg, path) : rectS(w, y, y + h, path); }
+  var frameM = opt.frame === undefined ? M.trim : opt.frame, sillM = opt.sill === undefined ? M.trim : opt.sill;
+  if (frameM){
+    var o = arched ? archS(w + 2*fw, y - fw*.6, yc) : seg ? segS(w + 2*fw, y - fw, y + h + fw, seg*1.15) : rectS(w + 2*fw, y - fw, y + h + fw);
+    o.holes.push(opening(true));
+    add(ext(o, .06), frameM, x, 0, 0, g);                                          // flat surround
+  }
+  if (sillM) box(w + 2*fw + .14, .1, .24, x, y - fw*.6 - .1, .12, sillM, g);       // sill
   var hg = new THREE.ShapeGeometry(opening(), 24);
   [holeStencil, holeDepth].forEach(function(hm, i){ var m = new THREE.Mesh(hg, hm); m.position.set(x, 0, .02); m.renderOrder = 1 + i; m.frustumCulled = false; g.add(m); });
-  sunk(add(ext(opening(), depth, 24), revealMat, x, 0, -depth, g), 3);              // reveals
+  sunk(add(ext(opening(), depth, 24), opt.reveal || revealMat, x, 0, -depth, g), 3);   // reveals
   sunk(add(new THREE.ShapeGeometry(opening(), 24), glassMat || M.glass, x, 0, -depth + .02, g), 3);
   if (!bars) return;
   var zb = -depth + .03, f = .07, b = .045, top = arched ? yc : y + h;
-  var frame = arched ? archS(w, y, yc) : rectS(w, y, y + h);                        // sash frame round the opening
-  frame.holes.push(arched ? archS(w - 2*f, y + f, yc, true) : rectS(w - 2*f, y + f, y + h - f, true));
-  sunk(add(ext(frame, .05, 24), M.sash, x, 0, zb, g), 3);
-  sunk(box(b, (arched ? yc + w/2 : top) - y - 2*f, .05, x, y + f, zb, M.sash, g), 3); // mullion
+  var sashM = opt.sash || M.sash;
+  var frame = arched ? archS(w, y, yc) : seg ? segS(w, y, y + h, seg) : rectS(w, y, y + h);   // sash frame round the opening
+  frame.holes.push(arched ? archS(w - 2*f, y + f, yc, true) : seg ? segS(w - 2*f, y + f, y + h - f, seg*.9, true) : rectS(w - 2*f, y + f, y + h - f, true));
+  sunk(add(ext(frame, .05, 24), sashM, x, 0, zb, g), 3);
+  sunk(box(b, (arched ? yc + w/2 : top) - y - 2*f, .05, x, y + f, zb, sashM, g), 3); // mullion
   var tr = Array.isArray(bars) ? bars : Array.from({length: bars - 1}, function(_, i){ return (i + 1)/bars; });
   if (arched) tr = tr.concat([1]);
-  tr.forEach(function(t){ sunk(box(w - 2*f, b, .05, x, y + (top - y)*t - b/2, zb, M.sash, g), 3); });
+  tr.forEach(function(t){ sunk(box(w - 2*f, b, .05, x, y + (top - y)*t - b/2, zb, sashM, g), 3); });
 }
 /* raised moulding round a recessed panel */
 function panel(g, x, y, w, h, t, m){
@@ -193,13 +213,25 @@ function corners(y0, y1){ [-1, 1].forEach(function(s){ boxX(s*(HW - 1.28), s*(HW
 frontGroups(.8, 8.6); corners(.8, 8.6);
 boxX(-HW - .05, HW + .05, 8.6, 8.9, -FD - .05, .05, M.trim);                 // architrave
 cornice(-HW, HW, -FD, 0, 9.5, [[.25,.12],[.3,.3],[.2,.42],[.15,.5]]);           // → 10.4
-[-1, 1].forEach(function(s){ panel(FF, s*7.99, 1.5, 2.9, 6.7); panel(FF, s*4.51, 1.5, .9, 6.7, .12); });
+boxX(-HW + .3, HW - .3, 8.16, 8.24, -.02, .05, M.trim);                        // thin band under the capitals
+(function(){                                                                      // tin flashing on the lower cornice
+  var a = Math.atan2(.16, .62);
+  var f = box(2*HW + 1.1, .04, .66, 0, 10.46, .27, M.roof); f.rotation.x = a;
+  [-1, 1].forEach(function(s){ var b = box(.66, .04, FD + .5, s*(HW + .27), 10.46, -FD/2 + .25, M.roof); b.rotation.z = -s*a; });
+})();
+[-1, 1].forEach(function(s){                                                      // small pediments over the narrow bays
+  var t = new THREE.Shape([V(-1.0, 0), V(1.0, 0), V(0, .95)]); t.holes.push(new THREE.Path([V(-.72, .12), V(0, .72), V(.72, .12)]));
+  add(ext(t, .34), M.trim, s*4.51, 8.92, .02);
+  add(ext(new THREE.Shape([V(-.72, .12), V(.72, .12), V(0, .72)]), .2), M.wall, s*4.51, 8.92, .02);
+});
 /* portal */
 (function(){
   box(2.1, 3.8, .14, 0, .8, .07, M.door);
   box(.06, 3.6, .03, 0, .9, .15, M.orn);
   [-1, 1].forEach(function(s){ box(.4, 4.1, .44, s*1.27, .8, .22, M.trim); });
-  box(3.3, .38, .58, 0, 4.9, .29, M.trim);
+  [-1, 1].forEach(function(s){ box(.5, .22, .5, s*1.27, 4.62, .24, M.orn); });
+  (function(){ var b = new THREE.Shape(); b.moveTo(-1.62, 4.84); b.quadraticCurveTo(0, 5.3, 1.62, 4.84); b.lineTo(1.62, 5.16); b.quadraticCurveTo(0, 5.62, -1.62, 5.16); b.lineTo(-1.62, 4.84);
+    add(ext(b, .56, 24), M.trim, 0, 0, .02); })();
   var pl = rectS(2.4, 0, 1.05); pl.holes.push(rectS(2.0, .17, .88, true));
   add(ext(pl, .18), M.trim, 0, 5.45, .05);
   function plaque(w, h, r){ var s = new THREE.Shape(), a = w/2, b = h/2;
@@ -208,14 +240,28 @@ cornice(-HW, HW, -FD, 0, 9.5, [[.25,.12],[.3,.3],[.2,.42],[.15,.5]]);           
   var pb = plaque(1.9, .66, .16); pb.holes.push(new THREE.Path(plaque(1.72, .5, .12).getPoints(12)));
   add(ext(pb, .1, 12), M.orn, 0, 5.975, .1);
   add(ext(plaque(1.72, .5, .12), .06, 12), M.wall, 0, 5.975, .08);
-  /* broken pediment: two white scrolls rising towards the middle, dark vases on their outer ends, a dark urn between them */
+  /* C-scrolls beside the plaque */
   [-1, 1].forEach(function(s){
-    var c = new THREE.CatmullRomCurve3([[1.3,0],[1.18,.32],[.92,.6],[.6,.78],[.36,.76],[.28,.6],[.38,.5],[.48,.56]].map(function(p){ return new THREE.Vector3(s*p[0], 6.62 + p[1], .28); }));
-    add(new THREE.TubeGeometry(c, 70, .11, 10, false), M.trim);
-    add(new THREE.LatheGeometry([V(0,0),V(.15,0),V(.1,.07),V(.2,.22),V(.2,.34),V(.1,.48),V(.05,.5),V(.12,.62),V(.03,.78),V(0,.8)], 16), M.orn, s*1.28, 6.62, .28);
+    var c = new THREE.CatmullRomCurve3([[1.22,1.0],[1.4,.75],[1.38,.42],[1.2,.18],[1.0,.1],[.92,.26],[1.04,.36]].map(function(p){ return new THREE.Vector3(s*p[0], 5.45 + p[1], .2); }));
+    add(new THREE.TubeGeometry(c, 50, .085, 8, false), M.trim);
   });
-  box(.5, .28, .36, 0, 6.62, .26, M.trim);
-  add(new THREE.LatheGeometry([V(0,0),V(.16,0),V(.11,.08),V(.24,.3),V(.22,.46),V(.1,.58),V(.15,.66),V(.04,.9),V(0,.92)], 18), M.orn, 0, 6.9, .26);
+  /* gabled pediment: two moulded rakes meeting under a pedestal; dark sculptures on the ends and on top */
+  var PB = 6.55, PT = 7.3, pa = Math.atan2(PT - PB, 1.35), pl2 = Math.hypot(1.35, PT - PB) + .1;
+  box(2.9, .16, .46, 0, PB, .23, M.trim);
+  [-1, 1].forEach(function(s){ var r = box(pl2, .2, .46, s*.67, PB + (PT - PB)/2 - .02, .23, M.trim); r.rotation.z = -s*pa; });
+  box(.46, .3, .4, 0, PT - .06, .22, M.trim);
+  function figure(x, y, z, flip, sc){       // a kneeling figure, simplified to a dark silhouette in relief
+    var p = [[0,0],[.42,0],[.44,.12],[.3,.18],[.34,.42],[.28,.62],[.2,.7],[.22,.82],[.16,.9],[.08,.88],[.06,.78],[.1,.68],[.0,.55],[-.16,.75],[-.3,.82],[-.22,.6],[-.1,.42],[-.04,.2]];
+    var sh = new THREE.Shape(p.map(function(q){ return V(flip*q[0]*sc, q[1]*sc); }));
+    add(ext(sh, .22, 6), M.orn, x, y, z);
+  }
+  figure(-1.12, PB + .14, .16, 1, 1.0); figure(1.12, PB + .14, .16, -1, 1.0);
+  /* St John the Baptist on top: a seated figure with a cross-staff */
+  (function(){
+    var p = [[-.42,0],[.42,0],[.4,.16],[.18,.22],[.22,.5],[.16,.66],[.18,.8],[.08,.9],[-.04,.88],[-.08,.76],[-.04,.66],[-.18,.52],[-.3,.28],[-.42,.2]];
+    add(ext(new THREE.Shape(p.map(function(q){ return V(q[0]*1.15, q[1]*1.15); })), .26, 6), M.orn, 0, PT + .24, .1);
+    box(.04, 1.1, .04, .38, PT + .24, .24, M.orn); box(.26, .04, .04, .38, PT + 1.12, .24, M.orn);
+  })();
 })();
 /* lower tier sides: small square window */
 [-1, 1].forEach(function(s){ var g = face(s*HW, -3.0, s*RIGHT); win(g, 0, 6.2, .8, .8, false, .14); panel(g, 0, 1.5, 2.6, 6.7); });
@@ -226,30 +272,27 @@ frontGroups(H1 + .35, 15.7); corners(H1 + .35, 15.7);
 boxX(-HW - .05, HW + .05, 15.7, 15.95, -FD - .05, .05, M.trim);              // architrave
 cornice(-HW, HW, -FD, 0, 16.85, [[.25,.12],[.35,.3],[.3,.48],[.25,.55]]);      // → 18.0
 [-1, 1].forEach(function(s){
-  panel(FF, s*7.99, 11.0, 2.9, 4.5);
-  win(FF, s*7.99, 12.55, 1.1, 2.45, true, .2, 2);
-  panel(FF, s*4.51, 11.0, .9, 4.5, .12);
+  win(FF, s*7.99, 12.55, 1.1, 2.45, true, .2, 0, M.void, .5, {frame: null, sill: M.wall, reveal: revealWall});
   var g = face(s*HW, -3.0, s*RIGHT);
   panel(g, 0, 11.0, 2.6, 4.5);
   win(g, 0, 12.65, 1.0, 2.3, true, .18, 2);
   win(g, 0, 11.3, .55, .55, false, .12);
 });
-panel(FF, 0, 11.0, 4.0, 4.5);
-win(FF, 0, 11.95, 1.9, 3.0, false, .22, [.64]);
-[-1, 1].forEach(function(s){ box(.2, .5, .06, s*1.27, 14.67, .03, M.trim, FF); });
-box(2.75, .3, .3, 0, 15.2, .15, M.trim, FF);                                   // eared lintel over the centre window
+win(FF, 0, 12.0, 1.85, 2.75, false, .2, [.64], M.leaded, .35, {frame: M.frameG, sill: M.frameG, seg: .22, sash: M.sash});
 /* inscription in the frieze */
 (function(){
   function label(text, w, x){
     var t = canvasTex(1024, 180, function(k){
       k.fillStyle = '#eebf30'; k.fillRect(0, 0, 1024, 180);
-      k.fillStyle = '#2b1f10'; k.font = 'bold 150px "Times New Roman", Georgia, serif'; k.textAlign = 'center'; k.textBaseline = 'middle';
+      k.font = 'bold 150px "Times New Roman", Georgia, serif'; k.textAlign = 'center'; k.textBaseline = 'middle';
       try { k.letterSpacing = '10px'; } catch(e){}
-      k.fillText(text, 512, 98, 1000);
+      /* bronze letters with a gilded edge, as on the facade */
+      k.lineJoin = 'round'; k.strokeStyle = '#b8924a'; k.lineWidth = 9; k.strokeText(text, 512, 98, 1000);
+      k.fillStyle = '#5a3a26'; k.fillText(text, 512, 98, 1000);
     });
     add(new THREE.PlaneGeometry(w, w*180/1024), new THREE.MeshStandardMaterial({map:t, roughness:.9}), x, 16.4, .015).castShadow = false;
   }
-  label('SAMEMU', 3.3, -7.99); label('BOGU CZESC I', 4.4, 0); label('CHWALA', 3.3, 7.99);
+  label('SAMEMU', 3.7, -7.99); label('BOGU CZESC I', 4.9, 0); label('CHWALA', 3.7, 7.99);
 })();
 
 /* ═══════════ TOWERS · 5.6 m square, flush with the facade's corners ═══════════ */
@@ -286,8 +329,8 @@ function tower(cx){
   /* openings on all four faces; clocks on the front faces */
   [[cx, cz + h, FRONT],[cx, cz - h, BACK],[cx + h, cz, RIGHT],[cx - h, cz, LEFT]].forEach(function(f, i){
     var g = face(f[0], f[1], f[2]);
-    win(g, 0, 19.1, .9, 1.65, true, .16, 0, M.louv, .45);
-    win(g, 0, 23.35, .85, 2.0, true, .18, 0, M.louv, .45);
+    win(g, 0, 19.1, .9, 1.65, true, .16, 0, M.void, .55, {frame: null, sill: M.wall, reveal: revealWall});
+    win(g, 0, 23.35, .85, 2.0, true, .18, 0, M.void, .55, {frame: null, sill: M.wall, reveal: revealWall});
     if (i === 0){                                                   // black clock face in a white square frame
       box(1.55, 1.55, .1, 0, 21.5, .05, M.trim, g);
       add(new THREE.PlaneGeometry(1.31, 1.31), clockMat, 0, 22.275, .102, g).castShadow = false;
@@ -356,8 +399,16 @@ tower(-8.2); tower(8.2);
   add(ext(shapeOf(fo), 1.08, 4), M.wall, 0, 0, z0 - 1.1);
   add(ext(shapeOf(fo), .07, 4), M.trim, 0, 0, z0 - .02);
 
-  /* the white frame, a rib following its top edge, the field sunk deep inside a rounded edge */
-  add(ext(shapeOf(fo, fi), FR, 4), M.trim, 0, 0, zf);
+  /* the frame: yellow like the wall (as on the building today), a white border along its upper edge down to the
+     consoles, a rib following the top edge, the white shield sunk inside a rounded edge */
+  add(ext(shapeOf(fo, fi), FR, 4), M.wall, 0, 0, zf);
+  (function(){
+    var run = half(OUT.slice(0, 26), 420, 4.89).slice(0, -1);
+    run = mirror(run.slice(1)).reverse().concat(run);
+    var strip = run.map(function(p, i){ var a = run[Math.max(0, i - 2)], b = run[Math.min(run.length - 1, i + 2)], tx = b.x - a.x, ty = b.y - a.y, L = Math.hypot(tx, ty) || 1; return [V(p.x - ty/L*.015, p.y + tx/L*.015), V(p.x + ty/L*.27, p.y - tx/L*.27)]; });
+    var shp = strip.map(function(q){ return q[0]; }).concat(strip.map(function(q){ return q[1]; }).reverse());
+    add(ext(new THREE.Shape(shp), FR + .03, 4), M.trim, 0, 0, zf);
+  })();
   (function(){
     var run = half(OUT.slice(0, 10), 160, 7.75).slice(0, -1);
     run = mirror(run.slice(1)).reverse().concat(run);                // left slope … top … right slope
@@ -387,12 +438,14 @@ tower(-8.2); tower(8.2);
     add(ext(new THREE.Shape(pts.concat(ins.reverse())), .18, 4), M.trim, 0, 0, zf + FR);
     add(new THREE.SphereGeometry(.1, 14, 10), M.trim, cx, cy, zf + FR + .08);
     /* pier under the console, with a capital */
-    boxX(s*4.56, s*5.37, gy + BT, gy + 2.96, zf - .02, zf + FR - .04, M.trim);
+    boxX(s*4.56, s*5.37, gy + BT, gy + 2.96, zf - .02, zf + FR - .04, M.wall);
     boxX(s*4.5, s*(TW + .02), gy + 2.84, gy + 2.98, zf - .02, zf + FR + .06, M.trim);
-    boxX(s*4.5, s*(TW + .02), gy + BT, gy + BT + .2, zf - .02, zf + FR + .02, M.trim);
+    boxX(s*4.5, s*(TW + .02), gy + BT, gy + BT + .2, zf - .02, zf + FR + .02, M.wall);
   });
-  box(1.1, .45, .9, 0, top - .05, z0 - .35, M.trim);
+  box(1.1, .45, .9, 0, top - .05, z0 - .35, M.roof);                              // tin-clad block under the cross
   crossAt(0, top + .4, z0 - .35, 2.3);
+  var cr = new THREE.Shape(); cr.absarc(0, 0, .42, Math.PI*1.05, Math.PI*1.95, false); cr.absarc(0, .14, .36, Math.PI*1.9, Math.PI*1.1, true);
+  add(ext(cr, .07, 16), M.cross, 0, top + .78, z0 - .385);
 })();
 
 /* ═══════════ NAVE · three bays, a full gabled roof ending in a gable wall at the back ═══════════ */
@@ -553,6 +606,31 @@ function shapeOf2(loop, hole){ var s = new THREE.Shape(loop); if (hole) s.holes.
   root.children.slice().forEach(function(c){ if (!c.isMesh && c.children.length === 0) root.remove(c); });
 })(church);
 
+/* ═══════════ PROPORTIONS · checked against photographs taken from the square: the second tier is about 15 %
+   and the towers with the gable about 8 % taller than the measured drawing gives; the lower tier and the domes stay
+   as they are. Applied as a vertical stretch by zones, baked into the geometry (normals corrected). ═══════════ */
+var Z1 = 10.4, Z2 = 18.0, Z3 = 26.3, K2 = 1.15, K3 = 1.08;
+function lift(y){ if (y <= Z1) return y; if (y <= Z2) return Z1 + (y - Z1)*K2; var y2 = Z1 + (Z2 - Z1)*K2; if (y <= Z3) return y2 + (y - Z2)*K3; return y2 + (Z3 - Z2)*K3 + (y - Z3); }
+function liftK(y){ return y <= Z1 ? 1 : y <= Z2 ? K2 : y <= Z3 ? K3 : 1; }
+(function(root){
+  root.updateMatrixWorld(true);
+  var meshes = []; root.traverse(function(o){ if (o.isMesh) meshes.push(o); });
+  meshes.forEach(function(o){
+    var g = o.geometry.clone(); g.applyMatrix4(o.matrixWorld);
+    var p = g.attributes.position, n = g.attributes.normal, v = new THREE.Vector3();
+    for (var i = 0; i < p.count; i++){
+      var y = p.getY(i), k = liftK(y);
+      if (n){ v.set(n.getX(i), n.getY(i)/k, n.getZ(i)).normalize(); n.setXYZ(i, v.x, v.y, v.z); }
+      p.setY(i, lift(y));
+    }
+    g.computeBoundingSphere(); g.computeBoundingBox();
+    o.geometry = g;
+    if (o.parent !== root){ o.parent.remove(o); root.add(o); }
+    o.position.set(0, 0, 0); o.rotation.set(0, 0, 0); o.scale.set(1, 1, 1); o.updateMatrix();
+  });
+  root.children.slice().forEach(function(c){ if (!c.isMesh && c.children.length === 0) root.remove(c); });
+})(church);
+
 /* ═══════════ GROUND · a turntable engraved with the church's name ═══════════ */
 var GC = -15;                                         // centre of the church on the long axis
 (function(){
@@ -584,7 +662,7 @@ var GC = -15;                                         // centre of the church on
       });
     }
     arc('КОСТЕЛ  ІОАННА  ХРЕСТИТЕЛЯ', 0, false, fs*.22);
-    arc('ДУБРОВИЦЯ  ·  1740 — 1742', Math.PI, true, fs*.22);
+    arc('ДУБРОВИЦЯ  ·  1740', Math.PI, true, fs*.22);
     [Math.PI/2, -Math.PI/2].forEach(function(t){ k.save(); k.translate(c + Math.sin(t)*rt, c - Math.cos(t)*rt); k.rotate(t + Math.PI/4); k.fillRect(-fs*.13, -fs*.13, fs*.26, fs*.26); k.restore(); });
   });
   var gm = new THREE.MeshStandardMaterial({map:tex, roughness:1, transparent:true, depthWrite:false});
@@ -615,7 +693,7 @@ var fill = new THREE.DirectionalLight('#d3dcff', .5); fill.position.set(42, 18, 
 
 /* ── camera + controls ── */
 var controls = new THREE.OrbitControls(camera, canvas);
-controls.target.set(0, o.targetY || 16.5, -14);
+controls.target.set(0, o.targetY || 17.3, -14);
 var viewDir = new THREE.Vector3(o.view[0], o.view[1], o.view[2]).normalize(), touched = false;
 controls.enableDamping = true; controls.dampingFactor = .07;
 controls.minDistance = 22; controls.maxDistance = 180;
@@ -629,7 +707,7 @@ controls.autoRotate = !!o.autoRotate && !reduced; controls.autoRotateSpeed = o.a
 controls.addEventListener('start', function(){ controls.autoRotate = false; touched = true; tween = null; if (o.onStart) o.onStart(); });
 
 function home(){
-  var t = Math.tan(camera.fov*Math.PI/360), dist = Math.max(25.5/t, 25/(t*camera.aspect))*o.fit;
+  var t = Math.tan(camera.fov*Math.PI/360), dist = Math.max(27/t, 25/(t*camera.aspect))*o.fit;
   return controls.target.clone().addScaledVector(viewDir, dist);
 }
 function resize(){
