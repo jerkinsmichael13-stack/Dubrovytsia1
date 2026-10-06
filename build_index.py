@@ -66,33 +66,47 @@ for pk, ik in inv_for.items():
     EV[pk].append([1800, 'Інвентар маєтку графа Плятера' + (' (' + fwn.lower() + ')' if fwn else '') + ': ' + d.get('title', d['name']) + ' — %d дворів поіменно.' % hh, 'Інвентар Плятера, бл. 1780–1820', 'inventar-naselennia.html?p=' + ik, 'бл. 1800'])
 
 # ── згадки в пресі й фото ──
-def forms(name):
-    n = name.strip()
-    stem = re.sub(r"(ця|ія|ля|ня|ка|на|ла|ра|а|я|е|і|и|ь|о)$", '', n) if len(n) > 4 else n
-    return n, stem
-def mentions(text, places_field, p):
-    nm, stem = forms(p['name'])
+# Нестандартні основи назв (відмінки, давні форми) і слова, що лише схожі на назву села
+STEMS = {'dombrovytsia': ['Дубровиц', 'Домбровиц'], 'selets': ['Сельц', 'Селець'], 'liutynsk': ['Лютинськ', 'Лютинич'], 'nyvetsk': ['Нивецьк', 'Нивецьк', 'Грицьк', 'Йовтах'],
+         'vysotsk': ['Висоцьк'], 'strilsk': ['Стрільськ'], 'stepanhorod': ['Степангород'], 'orvianytsia': ["Орв'яниц", 'Орв’яниц', 'Орвяниц'], 'mochulyshche': ['Мочулищ'],
+         'berestia': ['Берест', 'Плоск'], 'vorobyn': ['Воробин'], 'kolky': ['Колк'], 'krupove': ['Крупов'], 'zolote': ['Золот'], 'tryputnia': ['Трипутн'], 'ostrivtsi': ['Острівц'],
+         'berezhky': ['Бережк'], 'berezhnytsia': ['Бережниц'], 'liudyn': ['Людин'], 'veliun': ['Велюн'], 'zalishany': ['Залішан'], 'pratsiuky': ['Працюк', 'Працук'], 'kryvytsia': ['Кривиц'],
+         'litvytsia': ['Літвиц'], 'yasenets': ['Ясенц', 'Ясинц', 'Ясенець', 'Ясинець'], 'remchytsi': ['Ремчиц'], 'khynochi': ['Хиноч'], 'hlushytsia': ['Глушиц'], 'karpylivka': ['Карпилівк']}
+FALSE = {'zolote': ['Золотий', 'Золото', 'Золотих', 'Золотом', 'Золотої', 'Золоту', 'Золота'], 'kolky': ['Колка'], 'liudyn': ['Людина', 'Людини', 'Людину', 'Людиною'],
+         'vorobyn': [], 'berestia': ['Берестечк', 'Берестейськ']}
+def stems_for(k, p):
+    if k in STEMS: return STEMS[k]
+    n = p['name'].strip()
+    if len(n) < 5: return []
+    return [re.sub(r"(ця|ія|ля|ня|ка|на|ла|ра|а|я|е|і|и|ь|о)$", '', n)]
+def mentions(text, places_field, p, k=None):
+    k = k or p.get('slug')
+    st = stems_for(k, p) if k else []
+    nm = p['name']
     for pl in places_field or []:
-        if norm(pl).startswith(norm(stem)) and len(stem) >= 3: return True
-    if len(nm) < 5: return False
-    return re.search(r'(?<![А-Яа-яІіЇїЄєҐґ])' + re.escape(stem) + r"[а-яіїєґ']{0,4}(?![А-Яа-яІіЇїЄєҐґ])", text or '') is not None
+        npl = norm(pl)
+        if norm(nm) == npl or any(npl.startswith(norm(x)) and len(x) >= 4 for x in st): return True
+    if not text: return False
+    for x in st:
+        for m in re.finditer(r'(?<![А-Яа-яІіЇїЄєҐґ])(' + re.escape(x) + r"[а-яіїєґ'’]{0,4})(?![А-Яа-яІіЇїЄєҐґ])", text):
+            w = m.group(1)
+            if any(w.startswith(f) for f in FALSE.get(k, [])): continue
+            nxt = text[m.end():m.end() + 2]
+            if k == 'zolote' and not re.match(r'^Золот(е|ого|ому|им)$', w): continue
+            return True
+    return False
 
 def pid(u):
     m = re.search(r'imgur\.com/([A-Za-z0-9]+)\.', u or ''); return m.group(1) if m else ''
 OUT = {}
 for k, p in PLACES.items():
-    if k == 'dombrovytsia': p_alt = ['Домбровиц', 'Dąbrowic']
     press = [[d['id'], d['year'], d['headline'], d['source']] for d in PRESS
-             if mentions((d.get('headline') or '') + ' ' + (d.get('translation') or '')[:6000], d.get('places'), p)]
-    for d in PRESS:
-        if any(mentions('', d.get('places'), {'name': a}) for a in p['alt'] if a and len(a) > 4 and ' ' not in a) and d['id'] not in [x[0] for x in press]:
-            press.append([d['id'], d['year'], d['headline'], d['source']])
+             if mentions((d.get('headline') or '') + ' ' + (d.get('subheadline') or '') + ' ' + (d.get('translation') or '')[:8000], d.get('places'), p, k)]
     press.sort(key=lambda x: x[1])
-    photos = []
-    seen = set()
+    photos, seen = [], set()
     for ph in PHOTOS:
         if ph.get('imageUrl') in seen: continue
-        if mentions(ph.get('title', ''), [], p):
+        if mentions(ph.get('title', ''), [], p, k):
             seen.add(ph['imageUrl']); photos.append([pid(ph['imageUrl']), ph['imageUrl'], ph.get('title', ''), str(ph.get('date', ''))])
     OUT[k] = {'name': p['name'], 'atlas': p['atlas'], 'inv': inv_for.get(k, ''), 'events': sorted(EV.get(k, []), key=lambda e: e[0]),
               'press': press, 'photos': photos[:60], 'photosTotal': len(photos)}
@@ -204,6 +218,42 @@ for d in PRESS:
             if d['id'] not in [x[0] for x in SR[k]['press']]:
                 SR[k]['press'].append([d['id'], d['year'], d['headline'], full.strip()])
                 SR[k]['forms'][s] = SR[k]['forms'].get(s, 0) + 5
+# ── зведення прізвищ, що різняться однією літерою (Приходько / Приходико) ──
+def lev1(a, b):
+    """True, якщо слова різняться рівно одною вставкою, пропуском чи заміною."""
+    if a == b or abs(len(a) - len(b)) > 1: return False
+    if len(a) > len(b): a, b = b, a
+    i = 0
+    while i < len(a) and a[i] == b[i]: i += 1
+    return a[i + (len(a) == len(b)):] == b[i + 1:]
+VOW = set('aeiou')
+def diff_soft(a, b):
+    """Різниця лише в голосній або в i/e (типово для передачі писарем), а не в приголосній."""
+    if len(a) == len(b): return [x for x, y in zip(a, b) if x != y][0] in VOW and [y for x, y in zip(a, b) if x != y][0] in VOW
+    l, sh = (a, b) if len(a) > len(b) else (b, a)
+    i = 0
+    while i < len(sh) and sh[i] == l[i]: i += 1
+    return l[i] in VOW
+def size(b): return len(b['inv']) + len(b['ww']) + len(b['vot']) + len(b['press'])
+keys = sorted(SR, key=lambda k: -size(SR[k]))
+ALIAS = {}
+by3 = {}
+for k in keys: by3.setdefault(k[:3], []).append(k)
+for k in keys:
+    if k in ALIAS or len(k) < 6: continue
+    for o in by3.get(k[:3], []):
+        if o == k or o in ALIAS or len(o) < 6 or o[-2:] != k[-2:]: continue
+        so = [f for f in ('inv', 'ww', 'vot') if SR[o][f]]; sk = [f for f in ('inv', 'ww', 'vot') if SR[k][f]]
+        cross = len(so) == 1 and so[0] not in sk          # варіант трапляється лише в одному джерелі, і не в тому, де основне написання
+        ins_i = len(k) != len(o) and len(set(k) ^ set(o)) <= 1 and ('i' in (set(k) ^ set(o)) or 'e' in (set(k) ^ set(o)))
+        ao = len(k) == len(o) and any(i < 4 and {x, y} == {'a', 'o'} for i, (x, y) in enumerate(zip(k, o)) if x != y)
+        iko = (k.endswith('ko') and o == k[:-2] + 'iko') or (o.endswith('ko') and k == o[:-2] + 'iko')   # Приходько / Приходико
+        if iko or (lev1(k, o) and diff_soft(k, o) and cross and not ao and (len(k) == len(o) or ins_i) and size(SR[o]) <= size(SR[k])):
+            t = SR[k]; f = SR.pop(o)
+            for fld in ('inv', 'ww', 'vot', 'press'): t[fld] += f[fld]
+            for fm, c in f['forms'].items(): t['forms'][fm] = t['forms'].get(fm, 0) + c
+            ALIAS[o] = k
+by3 = None
 def disp(b):
     cyr = [f for f in b['forms'] if re.search(r'[А-Яа-яІіЇїЄєҐґ]', f)]
     pool = cyr or list(b['forms'])
@@ -218,6 +268,7 @@ for k, b in SR.items():
 for c, part in CH.items():
     json.dump(part, open(os.path.join(ROOT, 'surnames-' + c + '.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
 SUM.sort(key=lambda x: x[1].lower())
+json.dump(ALIAS, open(os.path.join(ROOT, 'surnames-alias.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
 json.dump(SUM, open(os.path.join(ROOT, 'surnames-index.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
 # у пошуку: прізвища ведуть на сторінку прізвища
 S[:] = [x for x in S if x['t'] != 'surname']
@@ -230,4 +281,4 @@ for k, nm, a, w, v, pr in SUM:
     if a + w + v + pr < 1: continue
     S.append({'t': 'surname', 'n': nm, 's': ' · '.join(parts), 'u': 'prizvyshcha.html?s=' + k, 'k': norm(' '.join(SR[k]['variants']))[:200]})
 json.dump(S, open(os.path.join(ROOT, 'search-index.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
-print('surnames:', len(SUM), '| multi-source:', sum(1 for x in SUM if sum(1 for y in x[2:] if y) >= 2), '| search items:', len(S))
+print('merged variants:', len(ALIAS), '| surnames:', len(SUM), '| multi-source:', sum(1 for x in SUM if sum(1 for y in x[2:] if y) >= 2), '| search items:', len(S))

@@ -309,7 +309,7 @@ function renderPlace(k, P){
   var name = X.name, tot = (r.male || 0) + (r.female || 0);
   document.title = name + ' — поселення Дубровиччини';
   var fwName = I && I.d.folwark && FW[I.d.folwark] ? FW[I.d.folwark].name : '';
-  var kick = (KIND[r.kind] || (I ? 'Село' : 'Поселення')) + (own.name ? ' · ' + own.name : (I ? ' · маєток графа Плятера' : '')) + (fwName ? ' · ' + fwName.replace(/^Ф/, 'ф') : '');
+  var kick = (KIND[r.kind] || (I ? 'Село' : 'Поселення')) + (own.name ? ' · власник у 1798 р. — ' + own.name.charAt(0).toLowerCase() + own.name.slice(1) : (I ? ' · маєток графа Плятера' : '')) + (fwName ? ' · ' + fwName.replace(/^Ф/, 'ф') : '');
   var lede = [];
   if (r.dvory) lede.push('У 1798 році тут було ' + r.dvory + ' ' + plural(r.dvory, 'двір', 'двори', 'дворів') + (tot ? ' і ' + fmt(tot) + ' ' + plural(tot, 'мешканець', 'мешканці', 'мешканців') : '') + '.');
   if (I) lede.push('Інвентар Плятера поіменно називає ' + fmt(I.pp) + ' ' + plural(I.pp, 'особу', 'особи', 'осіб') + ' в ' + I.hh + ' ' + plural(I.hh, 'дворі', 'дворах', 'дворах') + '.');

@@ -205,7 +205,7 @@ function plural(n, a, b, c){ var x = n % 10, y = n % 100; return x === 1 && y !=
 function fmt(n){ return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '\u202f'); }
 var params = new URLSearchParams(location.search), K = params.get('s');
 var LIM = { inv: 30, ww: 30, vot: 40 };
-if (K) fetch('surnames-' + K[0] + '.json').then(function(r){ return r.json(); }).then(function(D){ D[K] ? page(D[K]) : catalog(); }).catch(catalog);
+if (K) fetch('surnames-alias.json').then(function(r){ return r.ok ? r.json() : {}; }).catch(function(){ return {}; }).then(function(A){ if (A[K]) { K = A[K]; history.replaceState(null, '', '?s=' + K); } return fetch('surnames-' + K[0] + '.json'); }).then(function(r){ return r.json(); }).then(function(D){ D[K] ? page(D[K]) : catalog(); }).catch(catalog);
 else catalog();
 
 function page(b){
