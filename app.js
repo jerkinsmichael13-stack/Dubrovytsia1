@@ -1247,7 +1247,7 @@ window.addEventListener('error', e => console.error('❌', e.message));
         place:   ['Поселення', '<path d="M12 21s-6-5.3-6-10a6 6 0 1 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/>'],
         press:   ['Преса', '<path d="M5 5h11v14H6a1 1 0 0 1-1-1V5z"/><path d="M16 8h3v10a1 1 0 0 1-1 1h-2"/><path d="M8 9h5M8 12h5M8 15h3"/>'],
         person:  ['Люди', '<circle cx="12" cy="8" r="3.2"/><path d="M5.5 19c.8-3.3 3.4-5 6.5-5s5.7 1.7 6.5 5"/>'],
-        surname: ['Прізвища з інвентаря', '<path d="M6 4h9l3 3v13H6z"/><path d="M9 10h6M9 13h6M9 16h4"/>'],
+        surname: ['Прізвища й родини', '<path d="M6 4h9l3 3v13H6z"/><path d="M9 10h6M9 13h6M9 16h4"/>'],
         photo:   ['Фото', '<rect x="4" y="6" width="16" height="12" rx="1.5"/><circle cx="12" cy="12" r="3"/><path d="M9 6l1-2h4l1 2"/>'],
         doc:     ['Документи', '<path d="M7 4h7l4 4v12H7z"/><path d="M14 4v4h4"/>'],
         page:    ['Розділи сайту', '<path d="M4 6h16M4 12h16M4 18h10"/>']
@@ -1312,6 +1312,7 @@ window.addEventListener('error', e => console.error('❌', e.message));
         load().then(function () { render(''); }).catch(function () { document.getElementById('dxkRes').innerHTML = '<div class="dxk-empty">Не вдалося завантажити пошук.</div>'; });
     }
     function hide() { open = false; ov.classList.remove('on'); document.body.style.overflow = ''; }
+    window.dxSearch = function (q) { show(); var inp = document.getElementById('dxkQ'); load().then(function () { inp.value = q || ''; sel = 0; render(inp.value); inp.focus(); }); };
     function go(u) { if (!u) return; hide(); if (/^https?:/.test(u) && u.indexOf(location.host) < 0) window.open(u, '_blank', 'noopener'); else location.href = u; }
     function hl(s, words) {
         s = String(s || ''); if (!words.length) return esc(s);

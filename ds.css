@@ -1,0 +1,60 @@
+/* ═══════════════════════════════════════════════════════════════
+   ДИЗАЙН-СИСТЕМА «Дубровиця» · ds.css
+   Спільні токени й компоненти для нових сторінок і головної.
+   Підключення: <link rel="stylesheet" href="ds.css"> після app.css
+   ═══════════════════════════════════════════════════════════════ */
+:root{
+  --ds-ink:#2b2418;--ds-ink-2:#5a4a2e;--ds-ink-3:#8a7a5c;
+  --ds-paper:#f7f1e3;--ds-paper-2:#efe6d0;--ds-desk:#1b150d;
+  --ds-gold:#a9822f;--ds-gold-hi:#d4b25a;--ds-red:#a8322a;
+  --ds-rule:rgba(90,74,46,.18);--ds-rule-2:rgba(90,74,46,.09);
+  --ds-r-sm:9px;--ds-r:14px;--ds-r-lg:22px;
+  --ds-shadow:0 18px 44px rgba(20,15,8,.14);--ds-shadow-lg:0 30px 70px rgba(0,0,0,.45);
+  --ds-ease:cubic-bezier(.16,1,.3,1);--ds-hdr:76px;
+  --ds-display:var(--font-display,'Cormorant Garamond',serif);--ds-body:var(--font-body,'Manrope',sans-serif)
+}
+[data-theme="dark"]{--ds-ink:#efe4c6;--ds-ink-2:#cdbb92;--ds-ink-3:#93825f;--ds-paper:#1f190f;--ds-paper-2:#2a2216;--ds-gold:#d4b25a;--ds-rule:rgba(212,178,90,.2);--ds-rule-2:rgba(212,178,90,.1)}
+@media(max-width:768px){:root{--ds-hdr:68px}}
+.ds-wrap{max-width:1240px;margin:0 auto;padding:0 2rem}@media(max-width:900px){.ds-wrap{padding:0 1.1rem}}
+/* титул «стіл архіваріуса» */
+.ds-desk{position:relative;overflow:hidden;padding:calc(var(--ds-hdr) + 2.8rem) 0 3.2rem;background:radial-gradient(120% 100% at 80% 20%,#3a2f1d 0%,#211a10 55%,#15110a 100%);color:#f4e9c8}
+.ds-desk::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,rgba(255,255,255,.018) 0 1px,transparent 1px 3px);pointer-events:none}
+.ds-kick{margin:0 0 .7rem;font:600 .8rem var(--ds-body);color:var(--ds-gold-hi)}
+.ds-title{margin:0;font:300 clamp(3rem,7.5vw,6rem)/.92 var(--ds-display);letter-spacing:-.03em;color:#f4e9c8}
+.ds-title em{color:var(--ds-gold-hi)}
+.ds-lede{margin:1.2rem 0 0;max-width:52ch;font:400 clamp(1.08rem,1.6vw,1.28rem)/1.6 var(--ds-display);color:rgba(244,233,200,.8)}
+.ds-facts{display:flex;flex-wrap:wrap;gap:1.4rem 2.4rem;margin:2rem 0 0;padding-top:1.1rem;border-top:1px solid rgba(244,233,200,.18)}
+.ds-facts dd{margin:0;font:400 2.3rem/1 var(--ds-display);color:#f4e9c8;font-variant-numeric:lining-nums}
+.ds-facts dt{margin-top:.3rem;font:400 .74rem var(--ds-body);color:rgba(244,233,200,.6)}
+.ds-crumbs{margin:0 0 1.2rem;font:400 .78rem var(--ds-body);color:rgba(244,233,200,.55)}.ds-crumbs a{color:inherit;text-decoration:none}.ds-crumbs a:hover{color:var(--ds-gold-hi)}
+/* заголовок розділу § */
+.ds-sec{padding:4rem 0 1rem;scroll-margin-top:calc(var(--ds-hdr) + 1rem)}
+.ds-sh{display:flex;align-items:baseline;gap:1rem;margin:0 0 1.5rem;padding-bottom:.7rem;border-bottom:2px solid var(--color-text,var(--ds-ink))}
+.ds-sh b{font:italic 400 1.6rem var(--ds-display);color:var(--ds-gold)}
+.ds-sh h2{margin:0;font:400 clamp(1.8rem,3.2vw,2.5rem) var(--ds-display);color:var(--color-text,var(--ds-ink))}
+.ds-sh span{margin-left:auto;font:400 .8rem var(--ds-body);color:var(--color-text-light,var(--ds-ink-3))}
+.ds-note{margin:0 0 1.4rem;max-width:72ch;font:400 .88rem/1.7 var(--ds-body);color:var(--color-text-secondary,var(--ds-ink-2))}
+/* кнопки, пігулки, картки */
+.ds-btn{display:inline-flex;align-items:center;gap:.45rem;padding:.65rem 1.05rem;border-radius:10px;border:1px solid var(--color-border,var(--ds-rule));font:500 .82rem var(--ds-body);color:var(--color-text,var(--ds-ink));text-decoration:none;background:none;cursor:pointer;transition:border-color .2s,background .2s}
+.ds-btn:hover{border-color:var(--ds-gold)}
+.ds-btn--gold{background:var(--ds-gold-hi);border-color:var(--ds-gold-hi);color:#1a1408;font-weight:600}
+.ds-btn--dark{background:#1c170e;border-color:#1c170e;color:#f4e9c8}[data-theme="dark"] .ds-btn--dark{background:var(--ds-gold-hi);border-color:var(--ds-gold-hi);color:#1a1408}
+.ds-btn--ghost{border-color:rgba(244,233,200,.28);color:#f4e9c8}.ds-btn--ghost:hover{background:rgba(244,233,200,.08);border-color:var(--ds-gold-hi)}
+.ds-chip{display:inline-flex;align-items:baseline;gap:.35rem;padding:.38rem .8rem;border-radius:999px;border:1px solid var(--color-border,var(--ds-rule));font:400 .8rem var(--ds-body);color:var(--color-text,var(--ds-ink));text-decoration:none;background:none;cursor:pointer}
+.ds-chip:hover{border-color:var(--ds-gold);color:var(--ds-gold)}.ds-chip sup{font-size:.66rem;color:var(--ds-gold);font-weight:600}
+.ds-chip[aria-pressed="true"]{background:var(--color-text,var(--ds-ink));border-color:var(--color-text,var(--ds-ink));color:var(--color-bg,#fff)}
+.ds-card{padding:1.3rem 1.4rem;border:1px solid var(--color-border-light,var(--ds-rule-2));border-radius:var(--ds-r);background:var(--color-bg-card,var(--color-bg,#fff))}
+.ds-card h3{margin:0 0 .8rem;font:500 1.35rem var(--ds-display);color:var(--color-text,var(--ds-ink))}
+/* лінза атласу */
+.ds-lens{position:relative;display:block;aspect-ratio:1/1;border-radius:50%;overflow:hidden;background:#e8dcc0;box-shadow:var(--ds-shadow-lg),inset 0 0 0 1px rgba(244,233,200,.2)}
+.ds-lens>i{position:absolute;inset:0;background-repeat:no-repeat;filter:sepia(.25) contrast(1.05)}
+.ds-lens::after{content:'';position:absolute;inset:0;border-radius:50%;box-shadow:inset 0 0 60px rgba(30,20,8,.55);pointer-events:none}
+.ds-pin{position:absolute;left:50%;top:50%;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;border:2px solid var(--ds-red);animation:dsPulse 2.2s infinite}
+@keyframes dsPulse{0%{box-shadow:0 0 0 0 rgba(168,50,42,.55)}70%{box-shadow:0 0 0 26px rgba(168,50,42,0)}100%{box-shadow:0 0 0 0 rgba(168,50,42,0)}}
+/* стрічка часу */
+.ds-tl{position:relative;margin:0;padding:0 0 0 2rem;list-style:none}
+.ds-tl::before{content:'';position:absolute;left:.45rem;top:.4rem;bottom:.4rem;width:2px;background:linear-gradient(var(--ds-gold),var(--ds-rule))}
+.ds-tl>li{position:relative;padding:.9rem 0;border-bottom:1px dotted var(--ds-rule)}
+.ds-tl>li::before{content:'';position:absolute;left:-1.95rem;top:1.3rem;width:12px;height:12px;border-radius:50%;background:var(--color-bg,#fff);border:2px solid var(--ds-gold)}
+.ds-reveal{opacity:0;transform:translateY(16px);transition:opacity .8s var(--ds-ease),transform .8s var(--ds-ease)}.ds-reveal.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.ds-pin{animation:none}.ds-reveal{opacity:1;transform:none;transition:none}}

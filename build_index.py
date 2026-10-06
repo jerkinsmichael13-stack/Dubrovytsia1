@@ -155,3 +155,79 @@ for sec in SITE:
 json.dump(S, open(os.path.join(ROOT, 'search-index.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
 from collections import Counter
 print('places:', len(OUT), '| search items:', len(S), dict(Counter(x['t'] for x in S)))
+
+# ═════════ ПРІЗВИЩА: інвентар бл. 1800 · Перша світова · виборці 1938 · преса ═════════
+import sys; sys.path.insert(0, HERE if os.path.exists(os.path.join(HERE, 'surnames.py')) else os.path.join(ROOT, 'tools'))
+from surnames import key as skey
+VOT = J('voters.json')['voters']; WW = J('ww1.json')
+SR = {}
+def bucket(k, disp, script):
+    b = SR.setdefault(k, {'k': k, 'forms': {}, 'inv': [], 'ww': [], 'vot': [], 'press': []})
+    b['forms'][disp] = b['forms'].get(disp, 0) + (10 if script == 'ua' else 1)
+    return b
+VILL = {r['mapName']: k for k, r in SELA.items()}
+for k, p in PLACES.items(): VILL.setdefault(p['name'], k)
+VILL.update({'Орв\'яниця': 'orvianytsia', 'Працуки': 'pratsiuky', 'Ясинець': 'yasenets', 'Заріччя (ст. Дубровиця)': 'dombrovytsia', 'Домбровиця': 'dombrovytsia'})
+for ik, d in INV.items():
+    vname = d['name']; pk = next((x for x, y in inv_for.items() if y == ik), ik)
+    for st in d['streets']:
+        for sd in st['sides']:
+            for it in sd['items']:
+                if it.get('lm') or not it.get('s') or it.get('c') == 'j' or str(it.get('n', '')).startswith('Пан '): continue
+                k = skey(it['s'])
+                if len(k) < 3: continue
+                b = bucket(k, it['s'], 'ua')
+                fam = [m.get('n', '') for m in (it.get('m') or []) if m.get('n')]
+                b['inv'].append([ik, pk, vname, it['n'], len(fam), ', '.join(fam[:6])])
+for w in WW:
+    ln = re.sub(r'\s*\(.*?\)', '', w.get('last_name') or '').strip()
+    if not ln: continue
+    k = skey(ln)
+    if len(k) < 3: continue
+    lu = re.sub(r'ский$', 'ський', re.sub(r'цкий$', 'цький', ln)); lu = re.sub(r'ец$', 'ець', lu); lu = re.sub(r'ой$', 'ий', lu).replace('ъ', '')
+    b = bucket(k, lu, 'ru')
+    b['ww'].append([w.get('first_name', ''), w.get('middle_name', ''), w.get('place_ua') or w.get('birth_place') or '', w.get('cause', ''), w.get('doc_type', ''), w.get('rank', ''),
+                    ' '.join(x for x in [w.get('archive', ''), w.get('fond', '') and 'ф. ' + w['fond'], w.get('opis', '') and 'оп. ' + w['opis'], w.get('delo', '') and 'спр. ' + w['delo']] if x), w.get('image_url', ''),
+                    VILL.get(w.get('place_ua') or '', 'dombrovytsia' if (w.get('place_ua') or '') in ('Домбровиця', 'Дубровиця') else '')])
+for v in VOT:
+    ln = (v.get('surname') or '').strip()
+    if not ln: continue
+    k = skey(ln)
+    if len(k) < 3: continue
+    b = bucket(k, ln, 'pl')
+    b['vot'].append([v.get('first', ''), v.get('born', ''), v.get('village', ''), VILL.get(v.get('village', ''), ''), v.get('addr', ''), v.get('prof', '')])
+for d in PRESS:
+    for full in d.get('people') or []:
+        s = surname(full)
+        k = skey(s)
+        if k in SR and len(k) >= 3:
+            if d['id'] not in [x[0] for x in SR[k]['press']]:
+                SR[k]['press'].append([d['id'], d['year'], d['headline'], full.strip()])
+                SR[k]['forms'][s] = SR[k]['forms'].get(s, 0) + 5
+def disp(b):
+    cyr = [f for f in b['forms'] if re.search(r'[А-Яа-яІіЇїЄєҐґ]', f)]
+    pool = cyr or list(b['forms'])
+    return sorted(pool, key=lambda f: (-b['forms'][f], len(f)))[0]
+SUM, CH = [], {}
+for k, b in SR.items():
+    b['name'] = disp(b); b['variants'] = sorted(b['forms'], key=lambda f: -b['forms'][f])
+    del b['forms']
+    tot = len(b['inv']) + len(b['ww']) + len(b['vot']) + len(b['press'])
+    SUM.append([k, b['name'], len(b['inv']), len(b['ww']), len(b['vot']), len(b['press'])])
+    CH.setdefault(k[0], {})[k] = b
+for c, part in CH.items():
+    json.dump(part, open(os.path.join(ROOT, 'surnames-' + c + '.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
+SUM.sort(key=lambda x: x[1].lower())
+json.dump(SUM, open(os.path.join(ROOT, 'surnames-index.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
+# у пошуку: прізвища ведуть на сторінку прізвища
+S[:] = [x for x in S if x['t'] != 'surname']
+for k, nm, a, w, v, pr in SUM:
+    parts = []
+    if a: parts.append('бл. 1800: %d %s' % (a, 'двір' if a == 1 else 'двори' if a < 5 else 'дворів'))
+    if w: parts.append('1914–1917: %d' % w)
+    if v: parts.append('1938: %d' % v)
+    if pr: parts.append('преса: %d' % pr)
+    if a + w + v + pr < 1: continue
+    S.append({'t': 'surname', 'n': nm, 's': ' · '.join(parts), 'u': 'prizvyshcha.html?s=' + k, 'k': norm(' '.join(SR[k]['variants']))[:200]})
+json.dump(S, open(os.path.join(ROOT, 'search-index.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
+print('surnames:', len(SUM), '| multi-source:', sum(1 for x in SUM if sum(1 for y in x[2:] if y) >= 2), '| search items:', len(S))
