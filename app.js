@@ -1235,3 +1235,139 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 window.addEventListener('error', e => console.error('❌', e.message));
+
+// ================================================
+// ПОШУК НА ВЕСЬ САЙТ · Ctrl+K / ⌘K
+// ================================================
+(function () {
+    'use strict';
+    if (window.__dxPalette) return; window.__dxPalette = true;
+    var IDX = null, loading = null, open = false, sel = 0, flat = [];
+    var TYPES = {
+        place:   ['Поселення', '<path d="M12 21s-6-5.3-6-10a6 6 0 1 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/>'],
+        press:   ['Преса', '<path d="M5 5h11v14H6a1 1 0 0 1-1-1V5z"/><path d="M16 8h3v10a1 1 0 0 1-1 1h-2"/><path d="M8 9h5M8 12h5M8 15h3"/>'],
+        person:  ['Люди', '<circle cx="12" cy="8" r="3.2"/><path d="M5.5 19c.8-3.3 3.4-5 6.5-5s5.7 1.7 6.5 5"/>'],
+        surname: ['Прізвища з інвентаря', '<path d="M6 4h9l3 3v13H6z"/><path d="M9 10h6M9 13h6M9 16h4"/>'],
+        photo:   ['Фото', '<rect x="4" y="6" width="16" height="12" rx="1.5"/><circle cx="12" cy="12" r="3"/><path d="M9 6l1-2h4l1 2"/>'],
+        doc:     ['Документи', '<path d="M7 4h7l4 4v12H7z"/><path d="M14 4v4h4"/>'],
+        page:    ['Розділи сайту', '<path d="M4 6h16M4 12h16M4 18h10"/>']
+    };
+    var ORDER = ['place', 'person', 'surname', 'press', 'photo', 'doc', 'page'];
+    function norm(s) { return String(s || '').toLowerCase().replace(/[’'ʼ`]/g, '').replace(/ї/g, 'і').replace(/є/g, 'е').replace(/ґ/g, 'г'); }
+    function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+    var css = '.dxk-btn{display:inline-flex;align-items:center;gap:.45rem;height:38px;padding:0 .75rem;margin-right:.5rem;border-radius:999px;border:1px solid var(--color-border,rgba(90,74,46,.25));background:transparent;color:var(--color-text-secondary,#5a4a2e);font:500 .78rem var(--font-body,sans-serif);cursor:pointer;transition:border-color .2s,color .2s}' +
+        '.dxk-btn:hover{border-color:var(--color-accent,#a9822f);color:var(--color-text,#2b2418)}.dxk-btn svg{width:16px;height:16px}.dxk-btn kbd{font:600 .66rem var(--font-body,sans-serif);padding:.1rem .35rem;border-radius:5px;background:var(--color-bg-alt,rgba(90,74,46,.08));color:inherit}' +
+        '@media(max-width:1480px){.dxk-btn span{display:none}.dxk-btn{padding:0 .6rem}}' +
+        '@media(max-width:1100px){.dxk-btn kbd{display:none}.dxk-btn{width:38px;padding:0;justify-content:center}}' +
+        '.dxk{position:fixed;inset:0;z-index:3000;display:none;align-items:flex-start;justify-content:center;padding:12vh 1rem 1rem;background:rgba(15,11,6,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}' +
+        '.dxk.on{display:flex;animation:dxkIn .18s ease}@keyframes dxkIn{from{opacity:0}to{opacity:1}}' +
+        '.dxk-box{width:min(680px,100%);max-height:72vh;display:flex;flex-direction:column;border-radius:16px;background:var(--color-bg,#faf6ec);box-shadow:0 30px 80px rgba(0,0,0,.45);overflow:hidden;animation:dxkUp .25s cubic-bezier(.16,1,.3,1)}@keyframes dxkUp{from{transform:translateY(12px) scale(.98)}to{transform:none}}' +
+        '.dxk-in{display:flex;align-items:center;gap:.7rem;padding:1rem 1.1rem;border-bottom:1px solid var(--color-border-light,rgba(90,74,46,.12))}.dxk-in svg{width:20px;height:20px;flex:0 0 auto;color:var(--color-text-light,#8a7a5c)}' +
+        '.dxk-in input{flex:1;border:0;outline:0;background:none;font:400 1.15rem var(--font-body,sans-serif);color:var(--color-text,#2b2418)}' +
+        '.dxk-in input::-webkit-search-cancel-button{display:none}' +
+        '.dxk-in kbd{font:600 .66rem var(--font-body,sans-serif);padding:.15rem .4rem;border-radius:5px;background:var(--color-bg-alt,rgba(90,74,46,.08));color:var(--color-text-light,#8a7a5c)}' +
+        '.dxk-res{overflow-y:auto;overscroll-behavior:contain;padding:.4rem 0 .6rem}' +
+        '.dxk-g{padding:.75rem 1.1rem .3rem;font:600 .68rem var(--font-body,sans-serif);color:var(--color-accent,#a9822f)}' +
+        '.dxk-i{display:flex;align-items:center;gap:.85rem;margin:0 .45rem;padding:.6rem .7rem;border-radius:10px;color:inherit;text-decoration:none;cursor:pointer}' +
+        '.dxk-i svg{width:18px;height:18px;flex:0 0 auto;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;color:var(--color-text-light,#8a7a5c)}' +
+        '.dxk-i b{display:block;font:500 1.02rem var(--font-display,serif);color:var(--color-text,#2b2418);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}' +
+        '.dxk-i small{display:block;font:400 .74rem var(--font-body,sans-serif);color:var(--color-text-light,#8a7a5c);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}' +
+        '.dxk-i span{min-width:0;flex:1}.dxk-i mark{background:rgba(212,178,90,.38);color:inherit;border-radius:2px}' +
+        '.dxk-i.on{background:var(--color-bg-alt,rgba(169,130,47,.1))}.dxk-i.on svg{color:var(--color-accent,#a9822f)}' +
+        '.dxk-empty{padding:2rem 1.2rem;text-align:center;font:400 .9rem var(--font-body,sans-serif);color:var(--color-text-light,#8a7a5c)}' +
+        '.dxk-ft{display:flex;gap:1rem;flex-wrap:wrap;padding:.6rem 1.1rem;border-top:1px solid var(--color-border-light,rgba(90,74,46,.12));font:400 .7rem var(--font-body,sans-serif);color:var(--color-text-light,#8a7a5c)}.dxk-ft kbd{font-weight:600;padding:.05rem .3rem;border-radius:4px;background:var(--color-bg-alt,rgba(90,74,46,.08))}' +
+        '@media(max-width:600px){.dxk{padding:0}.dxk-box{max-height:100vh;height:100%;border-radius:0}}';
+    var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
+    var isMac = /Mac|iPhone|iPad/.test(navigator.platform);
+    var ov = document.createElement('div'); ov.className = 'dxk'; ov.setAttribute('role', 'dialog'); ov.setAttribute('aria-modal', 'true'); ov.setAttribute('aria-label', 'Пошук по сайту');
+    ov.innerHTML = '<div class="dxk-box"><div class="dxk-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>' +
+        '<input type="search" id="dxkQ" placeholder="Село, прізвище, стаття, світлина…" autocomplete="off" aria-label="Пошук по сайту"><kbd>Esc</kbd></div>' +
+        '<div class="dxk-res" id="dxkRes"></div><div class="dxk-ft"><span><kbd>↑</kbd> <kbd>↓</kbd> вибір</span><span><kbd>Enter</kbd> відкрити</span><span><kbd>' + (isMac ? '⌘' : 'Ctrl') + '</kbd> <kbd>K</kbd> пошук з будь-якої сторінки</span></div></div>';
+    function mount() {
+        document.body.appendChild(ov);
+        var acts = document.querySelector('.header-actions');
+        if (acts && !acts.querySelector('.dxk-btn')) {
+            var b = document.createElement('button'); b.type = 'button'; b.className = 'dxk-btn'; b.setAttribute('aria-label', 'Пошук по сайту');
+            b.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><span>Пошук</span><kbd>' + (isMac ? '⌘K' : 'Ctrl K') + '</kbd>';
+            b.addEventListener('click', show); acts.insertBefore(b, acts.firstChild);
+        }
+        ov.addEventListener('click', function (e) { if (e.target === ov) hide(); });
+        var inp = document.getElementById('dxkQ');
+        inp.addEventListener('input', function () { sel = 0; render(this.value); });
+        inp.addEventListener('keydown', function (e) {
+            if (e.key === 'ArrowDown') { e.preventDefault(); move(1); } else if (e.key === 'ArrowUp') { e.preventDefault(); move(-1); }
+            else if (e.key === 'Enter') { e.preventDefault(); var it = flat[sel]; if (it) go(it.u); }
+        });
+        document.getElementById('dxkRes').addEventListener('mousemove', function (e) { var a = e.target.closest('.dxk-i'); if (a) { sel = +a.dataset.i; mark(); } });
+    }
+    function load() {
+        if (IDX) return Promise.resolve(IDX);
+        if (!loading) loading = fetch('search-index.json').then(function (r) { return r.json(); }).then(function (d) { IDX = d; d.forEach(function (x) { x._n = norm(x.n); x._s = norm(x.s); }); return d; });
+        return loading;
+    }
+    function show() {
+        if (open) return; open = true; ov.classList.add('on'); document.body.style.overflow = 'hidden';
+        var inp = document.getElementById('dxkQ'); inp.value = ''; setTimeout(function () { inp.focus(); }, 30);
+        document.getElementById('dxkRes').innerHTML = '<div class="dxk-empty">Завантаження індексу…</div>';
+        load().then(function () { render(''); }).catch(function () { document.getElementById('dxkRes').innerHTML = '<div class="dxk-empty">Не вдалося завантажити пошук.</div>'; });
+    }
+    function hide() { open = false; ov.classList.remove('on'); document.body.style.overflow = ''; }
+    function go(u) { if (!u) return; hide(); if (/^https?:/.test(u) && u.indexOf(location.host) < 0) window.open(u, '_blank', 'noopener'); else location.href = u; }
+    function hl(s, words) {
+        s = String(s || ''); if (!words.length) return esc(s);
+        var n = norm(s), out = '', p = 0, marks = [];
+        words.forEach(function (w) { var i = n.indexOf(w); if (i >= 0) marks.push([i, i + w.length]); });
+        marks.sort(function (a, b) { return a[0] - b[0]; });
+        marks.forEach(function (m) { if (m[0] < p) return; out += esc(s.slice(p, m[0])) + '<mark>' + esc(s.slice(m[0], m[1])) + '</mark>'; p = m[1]; });
+        return out + esc(s.slice(p));
+    }
+    function score(x, words, q) {
+        var sc = 0;
+        for (var i = 0; i < words.length; i++) {
+            var w = words[i], inN = x._n.indexOf(w);
+            if (inN === 0) sc += 30; else if (inN > 0 && /[\s«(\-]/.test(x._n[inN - 1])) sc += 20; else if (inN > 0) sc += 10;
+            else if (x._s.indexOf(w) >= 0) sc += 5; else if (x.k && x.k.indexOf(w) >= 0) sc += 3; else return 0;
+        }
+        if (x._n === q) sc += 50;
+        if (x.t === 'place') sc += 8;
+        return sc;
+    }
+    var SUGGEST = [['place', ['poselennia.html', 'Усі поселення Дубровиччини', 'Атлас 1798, інвентар, преса, фото']], ['page', ['presa.html', 'Преса', '163 статті 1823–1991']], ['page', ['inventar-naselennia.html', 'Люди Домбровиці', 'Поіменно за інвентарем Плятера']], ['page', ['atlas-1798.html', 'Атлас 1798', 'Інтерактивна мапа']], ['page', ['doslidnyk.html', 'Дослідник', 'Хронологія й постаті']]];
+    function render(q) {
+        var res = document.getElementById('dxkRes'); q = norm(q.trim());
+        flat = [];
+        if (!q) {
+            flat = SUGGEST.map(function (s) { return { t: s[0], u: s[1][0], n: s[1][1], s: s[1][2] }; });
+            res.innerHTML = '<div class="dxk-g">Почніть звідси</div>' + flat.map(item.bind(null, [])).join('');
+            mark(); return;
+        }
+        var words = q.split(/\s+/).filter(Boolean), groups = {};
+        IDX.forEach(function (x) { var s = score(x, words, q); if (s) (groups[x.t] = groups[x.t] || []).push([s, x]); });
+        var html = '', total = 0;
+        ORDER.forEach(function (t) {
+            var g = groups[t]; if (!g) return;
+            g.sort(function (a, b) { return b[0] - a[0] || a[1].n.localeCompare(b[1].n, 'uk'); });
+            var lim = t === 'place' || t === 'person' ? 5 : 4;
+            html += '<div class="dxk-g">' + TYPES[t][0] + (g.length > lim ? ' · ' + g.length : '') + '</div>';
+            g.slice(0, lim).forEach(function (e) { html += item(words, e[1]); flat.push(e[1]); });
+            total += g.length;
+        });
+        res.innerHTML = html || '<div class="dxk-empty">Нічого не знайдено. Спробуйте іншу форму слова або лише початок прізвища.</div>';
+        res.querySelectorAll('.dxk-i').forEach(function (a, i) { a.dataset.i = i; });
+        if (sel >= flat.length) sel = 0; mark();
+    }
+    function item(words, x) {
+        return '<a class="dxk-i" href="' + esc(x.u) + '"' + (/^https?:/.test(x.u) ? ' target="_blank" rel="noopener"' : '') + '><svg viewBox="0 0 24 24">' + TYPES[x.t][1] + '</svg><span><b>' + hl(x.n, words) + '</b><small>' + hl(x.s, words) + '</small></span></a>';
+    }
+    function mark() {
+        var els = document.querySelectorAll('#dxkRes .dxk-i');
+        els.forEach(function (a, i) { a.dataset.i = i; a.classList.toggle('on', i === sel); });
+        var on = els[sel]; if (on) on.scrollIntoView({ block: 'nearest' });
+    }
+    function move(d) { if (!flat.length) return; sel = (sel + d + flat.length) % flat.length; mark(); }
+    document.addEventListener('keydown', function (e) {
+        if ((e.ctrlKey || e.metaKey) && (e.key === 'k' || e.key === 'K' || e.key === 'л' || e.key === 'Л')) { e.preventDefault(); open ? hide() : show(); }
+        else if (e.key === 'Escape' && open) hide();
+    });
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mount); else mount();
+})();

@@ -707,6 +707,10 @@ if (VILLAGE) {
         $('ivAtlasBtn').href = 'atlas-1798.html#' + D.atlas;
         if (D.atlasLabel) $('ivAtlasBtn').querySelector('span').textContent = D.atlasLabel;
     }
+    (function(){ var b = $('ivAtlasBtn'); if (!b || document.getElementById('ivPlaceBtn')) return;
+      var pk = typeof D.atlas === 'string' ? D.atlas : SLUG;
+      var a = document.createElement('a'); a.id = 'ivPlaceBtn'; a.className = b.className; a.href = 'poselennia.html?p=' + pk;
+      a.innerHTML = '<span>Усе про ' + (D.kind === 'town' ? 'місто' : 'село') + '</span>'; b.parentNode.insertBefore(a, b.nextSibling); })();
     document.querySelector('.iv-crumbs').lastChild.textContent = nm;
 }
 (function(){

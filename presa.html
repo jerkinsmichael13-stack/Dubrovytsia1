@@ -739,6 +739,7 @@ document.addEventListener('keydown', function(e){
 });
 
 render();
+var q0 = new URLSearchParams(location.search).get('q'); if (q0) { S.q = q0; $('psQ').value = q0; $('psSearchBox').classList.add('has'); apply(false); }
 var id0 = new URLSearchParams(location.search).get('id'); if (id0) openId(id0);
 })();
 </script>

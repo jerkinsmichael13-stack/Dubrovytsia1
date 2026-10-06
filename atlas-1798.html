@@ -1197,7 +1197,7 @@ function openDrawer(p){
     }
     if (r.note) h += '<p class="d-note">' + esc(r.note) + '</p>';
     h += '<p class="d-src">За атласом Волинської губернії 1798 року.</p>';
-    h += '<a class="d-more" href="sela-1798.html?v=' + encodeURIComponent(r.slug) + '"><span>Повний опис: стани, відстань, текст 1798 року</span>' + ARROW + '</a>';
+    h += '<a class="d-more" href="poselennia.html?p=' + encodeURIComponent(r.slug) + '"><span>Усе про поселення: атлас, інвентар, преса, фото</span>' + ARROW + '</a><a class="d-more" href="sela-1798.html?v=' + encodeURIComponent(r.slug) + '"><span>Повний опис: стани, відстань, текст 1798 року</span>' + ARROW + '</a>';
 
     if (INV_FOR[r.slug]) {
         var inv = state.dTab === 'inv';

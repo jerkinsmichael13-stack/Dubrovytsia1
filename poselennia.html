@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="uk" data-theme="light">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WGBZ0BD23K"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WGBZ0BD23K');</script>
+<meta charset="UTF-8">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="manifest" href="site.webmanifest">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Міста й села Дубровиччини: атлас 1798 року, поіменні списки з інвентаря графа Плятера, газетні згадки та світлини на одній сторінці.">
+<meta property="og:title" content="Поселення Дубровиччини">
+<meta property="og:description" content="Усе про кожне село: атлас 1798, інвентар Плятера, преса, світлини.">
+<meta property="og:image" content="https://i.imgur.com/mXCrjjG.png">
+<meta property="og:type" content="website">
+<title>Поселення Дубровиччини — Цифровий архів</title>
+<script>!function(){var t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t)}()</script>
+<link rel="stylesheet" href="app.css?v=11">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#2b2418;--ink2:#5a4a2e;--ink3:#8a7a5c;--paper:#f7f1e3;--paper2:#efe6d0;--gold:#a9822f;--goldhi:#d4b25a;--rule:rgba(90,74,46,.18);--ease:cubic-bezier(.16,1,.3,1);--hdr:76px}
+[data-theme="dark"]{--ink:#efe4c6;--ink2:#cdbb92;--ink3:#93825f;--paper:#1f190f;--paper2:#2a2216;--gold:#d4b25a;--rule:rgba(212,178,90,.2)}
+.pp{min-height:70vh}
+.pp-load{padding:calc(var(--hdr) + 6rem) 2rem;text-align:center;font-family:var(--font-display);font-size:1.3rem;color:var(--color-text-light)}
+.pw{max-width:1240px;margin:0 auto;padding:0 2rem}
+@media(max-width:900px){.pw{padding:0 1.1rem}}
+/* ── титул поселення ── */
+.pv-hero{position:relative;overflow:hidden;padding:calc(var(--hdr) + 2.6rem) 0 3rem;background:radial-gradient(120% 100% at 80% 20%,#3a2f1d 0%,#211a10 55%,#15110a 100%);color:#f4e9c8}
+.pv-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:3rem;align-items:center}
+@media(max-width:900px){.pv-grid{grid-template-columns:minmax(0,1fr);gap:2rem}}
+.pv-crumbs{margin:0 0 1.2rem;font-family:var(--font-body);font-size:.78rem;color:rgba(244,233,200,.55)}
+.pv-crumbs a{color:inherit;text-decoration:none}.pv-crumbs a:hover{color:var(--goldhi)}
+.pv-kick{margin:0 0 .6rem;font-family:var(--font-body);font-size:.8rem;font-weight:600;color:var(--goldhi)}
+.pv-title{margin:0;font-family:var(--font-display);font-weight:300;font-size:clamp(3.2rem,8vw,6.4rem);line-height:.9;letter-spacing:-.03em;color:#f4e9c8}
+.pv-lede{margin:1.3rem 0 0;max-width:48ch;font-family:var(--font-display);font-size:clamp(1.1rem,1.6vw,1.3rem);line-height:1.6;color:rgba(244,233,200,.8)}
+.pv-facts{display:flex;flex-wrap:wrap;gap:1.6rem 2.4rem;margin:2rem 0 0;padding-top:1.1rem;border-top:1px solid rgba(244,233,200,.18)}
+.pv-facts dd{margin:0;font-family:var(--font-display);font-size:2.3rem;line-height:1;color:#f4e9c8;font-variant-numeric:lining-nums}
+.pv-facts dt{margin-top:.3rem;font-family:var(--font-body);font-size:.74rem;color:rgba(244,233,200,.6)}
+.pv-jump{display:flex;flex-wrap:wrap;gap:.45rem;margin:1.8rem 0 0}
+.pv-jump a{padding:.5rem .9rem;border-radius:999px;border:1px solid rgba(244,233,200,.25);font-family:var(--font-body);font-size:.78rem;color:#f4e9c8;text-decoration:none;transition:background .2s,border-color .2s}
+.pv-jump a:hover{background:rgba(244,233,200,.1);border-color:var(--goldhi)}
+.pv-jump a.main{background:var(--goldhi);border-color:var(--goldhi);color:#1a1408;font-weight:600}
+/* лінза атласу */
+.pv-lens{position:relative;aspect-ratio:1/1;max-width:440px;width:100%;justify-self:center;border-radius:50%;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.55),inset 0 0 0 1px rgba(244,233,200,.2);background:#e8dcc0;text-decoration:none}
+.pv-lens-img{position:absolute;inset:0;background-repeat:no-repeat;filter:sepia(.25) contrast(1.05);transform:scale(1.15);transition:transform 1.6s var(--ease)}
+.pv-lens.in .pv-lens-img{transform:scale(1)}
+.pv-lens::after{content:'';position:absolute;inset:0;border-radius:50%;box-shadow:inset 0 0 60px rgba(30,20,8,.55);pointer-events:none}
+.pv-lens-pin{position:absolute;left:50%;top:50%;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;border:2px solid #a8322a;box-shadow:0 0 0 0 rgba(168,50,42,.5);animation:pvPulse 2.2s infinite}
+@keyframes pvPulse{0%{box-shadow:0 0 0 0 rgba(168,50,42,.55)}70%{box-shadow:0 0 0 26px rgba(168,50,42,0)}100%{box-shadow:0 0 0 0 rgba(168,50,42,0)}}
+.pv-lens-cap{position:absolute;left:50%;bottom:9%;transform:translateX(-50%);padding:.35rem .8rem;border-radius:999px;background:rgba(20,15,8,.78);color:#f4e9c8;font-family:var(--font-body);font-size:.7rem;white-space:nowrap}
+.pv-nolens{display:grid;place-items:center;aspect-ratio:1/1;max-width:380px;width:100%;justify-self:center;border-radius:50%;border:1px dashed rgba(244,233,200,.3);font-family:var(--font-display);font-size:1.1rem;color:rgba(244,233,200,.6);text-align:center;padding:2rem}
+@media(prefers-reduced-motion:reduce){.pv-lens-pin{animation:none}.pv-lens-img{transition:none}}
+/* ── розділи ── */
+.pv-sec{padding:4rem 0 1rem;scroll-margin-top:calc(var(--hdr) + 1rem)}
+.pv-sh{display:flex;align-items:baseline;gap:1rem;margin:0 0 1.6rem;padding-bottom:.7rem;border-bottom:2px solid var(--color-text)}
+.pv-sh b{font-family:var(--font-display);font-style:italic;font-weight:400;font-size:1.6rem;color:var(--gold)}
+.pv-sh h2{margin:0;font-family:var(--font-display);font-weight:400;font-size:clamp(1.8rem,3.2vw,2.5rem);color:var(--color-text)}
+.pv-sh span{margin-left:auto;font-family:var(--font-body);font-size:.8rem;color:var(--color-text-light)}
+.pv-note{margin:0 0 1.4rem;max-width:72ch;font-family:var(--font-body);font-size:.88rem;line-height:1.7;color:var(--color-text-secondary)}
+/* стрічка часу */
+.pv-tl{position:relative;margin:0;padding:0 0 0 2rem;list-style:none}
+.pv-tl::before{content:'';position:absolute;left:.45rem;top:.4rem;bottom:.4rem;width:2px;background:linear-gradient(var(--gold),var(--rule))}
+.pv-tl li{position:relative;display:grid;grid-template-columns:7.5rem minmax(0,1fr);gap:1.2rem;padding:.9rem 0;border-bottom:1px dotted var(--rule)}
+.pv-tl li::before{content:'';position:absolute;left:-1.95rem;top:1.25rem;width:12px;height:12px;border-radius:50%;background:var(--color-bg);border:2px solid var(--gold)}
+.pv-tl li.press::before{background:var(--gold)}
+.pv-tl-y{font-family:var(--font-display);font-size:1.5rem;line-height:1.1;color:var(--gold)}
+.pv-tl-y small{display:block;font-family:var(--font-body);font-size:.68rem;color:var(--color-text-light)}
+.pv-tl-t{font-family:var(--font-body);font-size:.92rem;line-height:1.65;color:var(--color-text)}
+.pv-tl-t a{color:inherit;text-decoration:none;font-family:var(--font-display);font-size:1.12rem}
+.pv-tl-t a:hover{color:var(--gold)}
+.pv-tl-s{display:block;margin-top:.25rem;font-size:.74rem;color:var(--color-text-light)}
+.pv-tl-s a{font-family:var(--font-body);font-size:.74rem;color:var(--gold)}
+@media(max-width:600px){.pv-tl li{grid-template-columns:minmax(0,1fr);gap:.2rem}}
+.pv-more{margin-top:1rem;font:inherit;font-family:var(--font-body);font-size:.82rem;padding:.55rem 1rem;border-radius:10px;border:1px solid var(--color-border);background:none;color:var(--color-text);cursor:pointer}
+/* атлас: стани */
+.pv-two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:2.4rem}
+@media(max-width:900px){.pv-two{grid-template-columns:minmax(0,1fr)}}
+.pv-card{padding:1.4rem 1.5rem;border:1px solid var(--color-border-light);border-radius:14px;background:var(--color-bg-card,var(--color-bg))}
+.pv-card h3{margin:0 0 .9rem;font-family:var(--font-display);font-weight:500;font-size:1.4rem;color:var(--color-text)}
+.pv-row{display:grid;grid-template-columns:minmax(0,10rem) minmax(0,1fr) 3.4rem;gap:.8rem;align-items:center;margin:.45rem 0;font-family:var(--font-body);font-size:.82rem;color:var(--color-text-secondary)}
+.pv-bar{height:10px;border-radius:99px;background:var(--paper2);overflow:hidden}
+.pv-bar i{display:block;height:100%;border-radius:99px;background:var(--gold)}
+.pv-row b{text-align:right;color:var(--color-text);font-variant-numeric:tabular-nums}
+.pv-kv{margin:.9rem 0 0;font-family:var(--font-body);font-size:.84rem;line-height:1.7;color:var(--color-text-secondary)}
+.pv-kv b{color:var(--color-text)}
+.pv-btns{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.1rem}
+.pv-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.6rem 1rem;border-radius:10px;border:1px solid var(--color-border);font-family:var(--font-body);font-size:.8rem;font-weight:500;color:var(--color-text);text-decoration:none}
+.pv-btn.dark{background:#1c170e;border-color:#1c170e;color:#f4e9c8}
+[data-theme="dark"] .pv-btn.dark{background:#d4b25a;border-color:#d4b25a;color:#1a1408}
+.pv-btn:hover{border-color:var(--gold)}
+/* прізвища */
+.pv-sn{display:flex;flex-wrap:wrap;gap:.4rem}
+.pv-sn a{display:inline-flex;align-items:baseline;gap:.35rem;padding:.35rem .75rem;border:1px solid var(--color-border-light);border-radius:9px;font-family:var(--font-display);font-size:1.05rem;color:var(--color-text);text-decoration:none}
+.pv-sn a:hover{border-color:var(--gold)}
+.pv-sn sup{font-family:var(--font-body);font-size:.66rem;color:var(--gold);font-weight:600}
+/* фото */
+.pv-ph{columns:4 220px;column-gap:.9rem}
+.pv-ph a{display:block;break-inside:avoid;margin:0 0 .9rem;border-radius:10px;overflow:hidden;background:var(--paper2);text-decoration:none;color:inherit}
+.pv-ph img{display:block;width:100%;height:auto;filter:sepia(.15);transition:transform .6s var(--ease)}
+.pv-ph a:hover img{transform:scale(1.04)}
+.pv-ph span{display:block;padding:.5rem .65rem .6rem;font-family:var(--font-body);font-size:.74rem;line-height:1.45;color:var(--color-text-secondary)}
+/* сусіди */
+.pv-nb{display:flex;flex-wrap:wrap;gap:.4rem}
+.pv-nb a{padding:.4rem .85rem;border-radius:999px;border:1px solid var(--color-border);font-family:var(--font-body);font-size:.8rem;color:var(--color-text);text-decoration:none}
+.pv-nb a:hover{border-color:var(--gold);color:var(--gold)}
+.pv-foot{padding:4rem 0 5rem}
+/* ── каталог ── */
+.pc-hero{padding:calc(var(--hdr) + 3rem) 0 2.4rem;background:var(--paper);border-bottom:1px solid var(--rule)}
+.pc-hero h1{margin:0;font-family:var(--font-display);font-weight:300;font-size:clamp(2.8rem,6vw,4.8rem);line-height:.95;letter-spacing:-.02em;color:var(--color-text)}
+.pc-hero h1 em{color:var(--gold)}
+.pc-hero p{margin:1rem 0 0;max-width:62ch;font-family:var(--font-display);font-size:1.2rem;line-height:1.6;color:var(--color-text-secondary)}
+.pc-tools{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin:1.6rem 0 0}
+.pc-tools input{flex:1 1 260px;max-width:360px;font:inherit;font-family:var(--font-body);font-size:.92rem;padding:.7rem 1rem;border-radius:10px;border:1px solid var(--color-border);background:var(--color-bg);color:var(--color-text)}
+.pc-chip{font:inherit;font-family:var(--font-body);font-size:.78rem;padding:.42rem .85rem;border-radius:999px;border:1px solid var(--color-border);background:none;color:var(--color-text-secondary);cursor:pointer}
+.pc-chip[aria-pressed="true"]{background:var(--color-text);border-color:var(--color-text);color:var(--color-bg)}
+.pc-grp{padding:2.6rem 0 0}
+.pc-grp h2{display:flex;align-items:baseline;gap:.8rem;margin:0 0 1rem;padding-bottom:.6rem;border-bottom:2px solid var(--color-text);font-family:var(--font-display);font-weight:400;font-size:1.7rem;color:var(--color-text)}
+.pc-grp h2 span{margin-left:auto;font-family:var(--font-body);font-size:.78rem;color:var(--color-text-light)}
+.pc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1rem}
+.pc-card{display:grid;grid-template-columns:76px minmax(0,1fr);gap:.9rem;align-items:center;padding:.8rem;border:1px solid var(--color-border-light);border-radius:14px;text-decoration:none;color:inherit;background:var(--color-bg-card,var(--color-bg));transition:border-color .2s,transform .3s var(--ease)}
+.pc-card:hover{border-color:var(--gold);transform:translateY(-2px)}
+.pc-dot{width:76px;height:76px;border-radius:50%;background-color:#e8dcc0;background-repeat:no-repeat;box-shadow:inset 0 0 18px rgba(30,20,8,.35);filter:sepia(.2)}
+.pc-dot.none{display:grid;place-items:center;font-family:var(--font-display);font-size:1.6rem;color:var(--ink3);background:var(--paper2)}
+.pc-card b{display:block;font-family:var(--font-display);font-weight:500;font-size:1.2rem;color:var(--color-text)}
+.pc-card small{display:block;margin-top:.15rem;font-family:var(--font-body);font-size:.72rem;line-height:1.45;color:var(--color-text-light)}
+.pc-tags{display:flex;flex-wrap:wrap;gap:.25rem;margin-top:.35rem}
+.pc-tags i{font-style:normal;font-family:var(--font-body);font-size:.62rem;padding:.08rem .45rem;border-radius:999px;background:var(--paper2);color:var(--ink2)}
+</style>
+
+
+
+
+
+
+
+</head>
+<body>
+
+<header class="header">
+    <div class="header-container">
+        <a href="index.html" class="logo" aria-label="Дубровиця — Цифровий архів, головна сторінка">
+            <img src="https://i.imgur.com/mXCrjjG.png" alt="" class="logo-img" width="40" height="40" decoding="async">
+            <span class="logo-text">
+                <span class="logo-city">Дубровиця</span>
+                <span class="logo-subtitle">Цифровий архів</span>
+            </span>
+        </a>
+
+        <nav class="nav" id="mainNav" aria-label="Головне меню">
+            <ul class="nav-list">
+                <li class="nav-item nav-item--home" style="--i:0"><a href="index.html" class="nav-link">Головна</a></li>
+                <li class="nav-item" style="--i:1"><a href="history.html" class="nav-link">Історія</a></li>
+                <li class="nav-item" style="--i:2"><a href="photo-archive.html" class="nav-link">Фотоархів</a></li>
+                <li class="nav-item" style="--i:3"><a href="architecture.html" class="nav-link">Пам'ятки</a></li>
+                <li class="nav-item has-menu" style="--i:4">
+                    <a href="metrychni-knyhy.html" class="nav-link">Архівні справи</a>
+                    <button type="button" class="nav-caret" aria-expanded="false" aria-controls="navArchive" aria-label="Показати документи архіву"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                    <div class="nav-menu" id="navArchive">
+                        <div class="nav-menu-inner">
+                            <div class="nav-menu-main">
+                                <p class="nav-menu-label">Документи за роками</p>
+                                <div class="nav-docs">
+                                    <a href="sumariusz-1642.html" class="nav-doc"><span class="nav-doc-year">1642</span><span class="nav-doc-name">Сумаріуш маєтку</span><span class="nav-doc-note">Доходи маєтку Дубровиця</span></a>
+                                    <a href="zhaloba-1650.html" class="nav-doc"><span class="nav-doc-year">1650</span><span class="nav-doc-name">Жалоба про спустошення</span><span class="nav-doc-note">Гродські книги Пінські</span></a>
+                                    <a href="rejestr-1665.html" class="nav-doc"><span class="nav-doc-year">1665</span><span class="nav-doc-name">Реєстр збитків</span><span class="nav-doc-note">Пінський гродський суд</span></a>
+                                    <a href="inventar-1780.html" class="nav-doc"><span class="nav-doc-year">1780</span><span class="nav-doc-name">Інвентар маєтку</span><span class="nav-doc-note">Містечко, вулиці, мешканці</span></a>
+                                    <a href="inventar-naselennia.html" class="nav-doc"><span class="nav-doc-year">1780</span><span class="nav-doc-name">Мешканці маєтку</span><span class="nav-doc-note">Місто й села поіменно</span></a>
+                                    <a href="atlas-1798.html" class="nav-doc"><span class="nav-doc-year">1798</span><span class="nav-doc-name">Атлас губернії</span><span class="nav-doc-note">Інтерактивна мапа сіл</span></a>
+                                    <a href="atlas-1798-analityka.html" class="nav-doc"><span class="nav-doc-year">1798</span><span class="nav-doc-name">Край у цифрах</span><span class="nav-doc-note">Аналітика атласу</span></a>
+                                    <a href="persha-svitova.html" class="nav-doc"><span class="nav-doc-year">1914</span><span class="nav-doc-name">Перша світова війна</span><span class="nav-doc-note">Мобілізовані мешканці</span></a>
+                                    <a href="vyborchi-1938.html" class="nav-doc"><span class="nav-doc-year">1938</span><span class="nav-doc-name">Список виборців</span><span class="nav-doc-note">8 619 записів</span></a>
+                                </div>
+                            </div>
+                            <div class="nav-menu-side">
+                                <p class="nav-menu-label">Постаті</p>
+                                <a href="plater.html" class="nav-person"><img src="nav-plater.jpg" alt="" width="40" height="40" loading="lazy" decoding="async"><span><span class="nav-person-name">Граф Юзеф Плятер</span><span class="nav-person-role">Власник Дубровиці</span></span></a>
+                                <a href="radzyvil.html" class="nav-person"><img src="nav-radzyvil.jpg" alt="" width="40" height="40" loading="lazy" decoding="async"><span><span class="nav-person-name">Князь Домінік Радзивілл</span><span class="nav-person-role">Власник сіл над Горинню</span></span></a>
+                                <p class="nav-menu-label nav-menu-label--gap">Каталоги</p>
+                                <a href="metrychni-knyhy.html#mkcalSection" class="nav-cat"><span>Метричні книги</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                                <a href="metrychni-knyhy.html#booksCatalog" class="nav-cat"><span>Книги про Дубровицю</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                                <a href="metrychni-knyhy.html" class="nav-menu-all">Усі архівні справи <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item" style="--i:5"><a href="jewish-history.html" class="nav-link">Єврейська спадщина</a></li>
+                <li class="nav-item" style="--i:6"><a href="presa.html" class="nav-link nav-link-with-badge">Преса<span class="ph-nav-badge" id="navBadge"></span></a></li>
+                <li class="nav-item" style="--i:7"><a href="doslidnyk.html" class="nav-link">Дослідник</a></li>
+                <li class="nav-item" style="--i:8"><a href="contacts.html" class="nav-link">Про проєкт</a></li>
+            </ul>
+            <p class="nav-foot">Цифровий архів історичної спадщини Дубровиці · <a href="contacts.html">Написати нам</a></p>
+        </nav>
+
+        <div class="header-actions">
+            <button type="button" class="theme-toggle" id="themeToggle" aria-label="Перемкнути тему">
+                <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg>
+                <svg class="theme-icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.3A8.5 8.5 0 0 1 9.7 3.5a8.5 8.5 0 1 0 10.8 10.8z"/></svg>
+            </button>
+            <button type="button" class="mobile-toggle" id="mobileToggle" aria-label="Відкрити меню" aria-expanded="false" aria-controls="mainNav">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<main class="pp" id="pp">
+  <div class="pp-load" id="ppLoad">Завантаження…</div>
+</main>
+
+
+<footer class="footer">
+    <div class="ft">
+        <div class="ft-top">
+            <div class="ft-brand">
+                <a href="index.html" class="ft-logo">
+                    <img src="https://i.imgur.com/mXCrjjG.png" alt="" width="44" height="44" loading="lazy" decoding="async">
+                    <span><span class="ft-logo-city">Дубровиця</span><span class="ft-logo-sub">Цифровий архів</span></span>
+                </a>
+                <p class="ft-about">Цифровий архів історичної спадщини міста Дубровиця — Сарненський район, Рівненська область, Україна.</p>
+                <a href="contacts.html" class="ft-cta"><span>Маєте старі фото чи документи?</span><strong>Напишіть нам <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></strong></a>
+            </div>
+            <nav class="ft-col" aria-label="Розділи сайту">
+                <p class="ft-title">Розділи</p>
+                <a href="history.html">Історія</a>
+                <a href="photo-archive.html">Фотоархів</a>
+                <a href="architecture.html">Пам'ятки</a>
+                <a href="jewish-history.html">Єврейська спадщина</a>
+                <a href="presa.html">Преса</a>
+                <a href="doslidnyk.html">Дослідник</a>
+                <a href="contacts.html">Про проєкт</a>
+            </nav>
+            <nav class="ft-col" aria-label="Архівні справи">
+                <p class="ft-title">Архівні справи</p>
+                <a href="sumariusz-1642.html"><span class="ft-year">1642</span>Сумаріуш маєтку</a>
+                <a href="zhaloba-1650.html"><span class="ft-year">1650</span>Жалоба про спустошення</a>
+                <a href="rejestr-1665.html"><span class="ft-year">1665</span>Реєстр збитків</a>
+                <a href="inventar-1780.html"><span class="ft-year">1780</span>Інвентар маєтку</a>
+                <a href="inventar-naselennia.html"><span class="ft-year">1780</span>Мешканці маєтку</a>
+                <a href="atlas-1798.html"><span class="ft-year">1798</span>Атлас губернії</a>
+                <a href="atlas-1798-analityka.html"><span class="ft-year">1798</span>Край у цифрах</a>
+                <a href="persha-svitova.html"><span class="ft-year">1914</span>Перша світова війна</a>
+                <a href="vyborchi-1938.html"><span class="ft-year">1938</span>Список виборців</a>
+            </nav>
+            <nav class="ft-col" aria-label="Постаті й каталоги">
+                <p class="ft-title">Постаті й каталоги</p>
+                <a href="plater.html">Граф Юзеф Плятер</a>
+                <a href="radzyvil.html">Князь Домінік Радзивілл</a>
+                <a href="metrychni-knyhy.html#mkcalSection">Метричні книги</a>
+                <a href="metrychni-knyhy.html#booksCatalog">Книги про Дубровицю</a>
+                <a href="metrychni-knyhy.html">Усі архівні справи</a>
+            </nav>
+        </div>
+        <div class="ft-bottom">
+            <p class="ft-copy">&copy; 2026 <a href="https://dubrovytsia.site">dubrovytsia.site</a> — Цифровий архів Дубровиці, Рівненська область, Україна. Сайт є некомерційним краєзнавчим проєктом, створеним з любові до міста та його історії.</p>
+            <p class="ft-notice">Публікуючи ці матеріали, ми прагнемо зберегти та популяризувати культурну й історичну спадщину міста Дубровиця для нинішніх і майбутніх поколінь. Усі фотографії, документи та архівні матеріали розміщено виключно в освітніх, краєзнавчих і науково-дослідних цілях. Відтворення, поширення або комерційне використання будь-яких матеріалів без письмового дозволу адміністрації сайту — заборонено. При цитуванні або використанні матеріалів у будь-якому форматі — обов'язкове активне посилання на <em>dubrovytsia.site</em>. Якщо ви є власником авторських прав на будь-які з опублікованих матеріалів і маєте заперечення щодо їх розміщення — будь ласка, <a href="contacts.html">зв'яжіться з нами</a> і ми негайно розглянемо ваш запит. Фотографії, завантажені з архіву, містять водяний знак сайту і не можуть публікуватись без нього.</p>
+        </div>
+    </div>
+</footer>
+
+<script src="app.js?v=11"></script>
+<script src="sela_data_embed.js"></script>
+<script src="inventar-plater-data.js"></script>
+<script>
+(function(){
+'use strict';
+var $ = function(id){ return document.getElementById(id); };
+function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+function plural(n, a, b, c){ var x = n % 10, y = n % 100; return x === 1 && y !== 11 ? a : (x >= 2 && x <= 4 && (y < 12 || y > 14)) ? b : c; }
+function fmt(n){ return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '\u202f'); }
+var S = window.ATLAS_SELA_1798 || {}, OWN = window.ATLAS_OWNERS_1798 || {}, INV = window.INVENTAR_PLATER || {}, FW = window.INVENTAR_FOLWARKS || {};
+/* аркуші атласу: координати поселень (з atlas-1798.html) */
+var SHEETS = [
+  {"n": 1, "title": "Дубровиця і Висоцьк", "img": "atlas-1798-chastyna-1.jpg", "w": 2351, "h": 2595, "places": [{"name": "Дубровиця", "kind": "town", "at": [563, 861], "slug": "dombrovytsia"}, {"name": "Висоцьк", "kind": "town", "at": [2120, 1498], "slug": "vysotsk"}, {"name": "Удрицьк", "kind": "village", "at": [2405, 1848], "slug": "udrytsk"}, {"name": "Людинь", "kind": "village", "at": [1782, 884], "slug": "liudyn"}, {"name": "Рудня", "kind": "village", "at": [1778, 1048], "slug": "rudnia"}, {"name": "Золоте", "kind": "village", "at": [1653, 392], "slug": "zolote"}, {"name": "Пузня", "kind": "village", "at": [1658, 790], "slug": "puznia"}, {"name": "Біла", "kind": "village", "at": [1619, 1959], "slug": "bila"}, {"name": "Ясенець", "kind": "village", "at": [1305, 1009], "slug": "yasenets"}, {"name": "Лютинськ", "kind": "village", "at": [1347, 1261], "slug": "liutynsk"}, {"name": "Велюнь", "kind": "village", "at": [1430, 1465], "slug": "veliun"}, {"name": "Селець", "kind": "village", "at": [1081, 1119], "slug": "selets"}, {"name": "Острівці", "kind": "village", "at": [854, 441], "slug": "ostrivtsi"}, {"name": "Мочулище", "kind": "village", "at": [787, 367], "slug": "mochulyshche"}, {"name": "Крупове", "kind": "village", "at": [540, 424], "slug": "krupove"}, {"name": "Колки", "kind": "village", "at": [740, 1249], "slug": "kolky"}, {"name": "Берестя", "kind": "village", "at": [200, 812], "slug": "berestia"}, {"name": "Бережки", "kind": "village", "at": [145, 1232], "slug": "berezhky"}, {"name": "Нивецьк", "kind": "village", "at": [45, 120], "slug": "nyvetsk"}, {"name": "Сохи", "kind": "village", "at": [35, 380], "slug": "sokhy"}, {"name": "Воробин", "kind": "folwark", "at": [889, 938], "slug": "vorobyn"}, {"name": "Підвисоччя", "kind": "village", "at": [2022, 1474], "slug": "pidvysocchia"}, {"name": "Ютовщизна", "kind": "village", "at": [27, 596], "slug": "yutovshchyzna"}, {"name": "Хилін", "kind": "village", "at": [2082, 1830], "slug": "chylin"}]},
+  {"n": 2, "title": "Бережниця, Стрільськ і Сарни", "img": "atlas-1798-chastyna-2.jpg", "w": 2080, "h": 2166, "places": [{"name": "Бережниця", "kind": "town", "at": [1476, 306], "slug": "berezhnytsia"}, {"name": "Ремчиці", "kind": "village", "at": [1301, 396], "slug": "remchytsi"}, {"name": "Працюки", "kind": "village", "at": [1971, 229], "slug": "pratsiuky"}, {"name": "Орв’яниця", "kind": "village", "at": [2017, 771], "slug": "orvianytsia"}, {"name": "Любиковичі", "kind": "village", "at": [1932, 1219], "slug": "liubykovychi"}, {"name": "Кураш", "kind": "village", "at": [1545, 637], "slug": "kurash"}, {"name": "Білятичі", "kind": "village", "at": [1636, 953], "slug": "biliatychi"}, {"name": "Стрільськ", "kind": "village", "at": [1332, 1519], "slug": "strilsk"}, {"name": "Глушиця", "kind": "village", "at": [1051, 1442], "slug": "hlushytsia"}, {"name": "Люхча", "kind": "village", "at": [806, 1323], "slug": "liukhcha"}, {"name": "Карпилівка", "kind": "village", "at": [1148, 1797], "slug": "karpylivka"}, {"name": "Тристень", "kind": "village", "at": [962, 197], "slug": "trysten"}]},
+  {"n": 3, "title": "Володимирець і Цепцевичі", "img": "atlas-1798-chastyna-3.jpg", "w": 2689, "h": 1876, "places": [{"name": "Володимирець", "kind": "town", "at": [1028, 985], "slug": "volodymyrets"}, {"name": "Осова", "kind": "village", "at": [1504, 2263], "slug": "osova"}, {"name": "Новаки", "kind": "village", "at": [1530, 1251], "slug": "novaky"}, {"name": "Каноничі", "kind": "village", "at": [1218, 1530], "slug": "kanonychi"}, {"name": "Дубівка", "kind": "village", "at": [1073, 1527], "slug": "dubivka"}, {"name": "Кідри", "kind": "village", "at": [1333, 2251], "slug": "kidry"}, {"name": "Великі Цепцевичі", "kind": "village", "at": [638, 2468], "slug": "velyki-tseptsevychi"}, {"name": "Малі Цепцевичі", "kind": "village", "at": [482, 2593], "slug": "mali-tseptsevychi"}, {"name": "Тутовичі", "kind": "village", "at": [290, 2370], "slug": "tutovychi"}, {"name": "Буда Цепцевицька", "kind": "village", "at": [186, 1587], "slug": "buda-tseptsevytska"}, {"name": "Зульня", "kind": "village", "at": [1368, 2445], "slug": "zulnia"}, {"name": "Рудня Бережницька", "kind": "village", "at": [1319, 2615], "slug": "rudnia-berezhnytsia"}]},
+  {"n": 4, "title": "Степангород і Хиночі", "img": "atlas-1798-chastyna-4.jpg", "w": 2751, "h": 2323, "places": [{"name": "Степангород", "kind": "village", "at": [1286, 1253], "slug": "stepanhorod"}, {"name": "Воронки", "kind": "village", "at": [468, 762], "slug": "voronky"}, {"name": "Радижеве", "kind": "village", "at": [311, 1053], "slug": "radyzheve"}, {"name": "Трипутня", "kind": "village", "at": [389, 2150], "slug": "tryputnia"}, {"name": "Рибчиця", "kind": "village", "at": [479, 2273], "slug": "rybchytsia"}, {"name": "Хиночі", "kind": "village", "at": [709, 1041], "slug": "khynochi"}, {"name": "Грані", "kind": "village", "at": [178, 2287], "slug": "hrani"}, {"name": "Заморочення", "kind": "village", "at": [1568, 2607], "slug": "zamorochennia"}, {"name": "Озерськ", "kind": "village", "at": [2136, 2722], "slug": "ozersk"}, {"name": "Лука", "kind": "village", "at": [1042, 352], "slug": "luko"}, {"name": "Залішани", "kind": "village", "at": [352, 2722], "slug": "zalishany"}, {"name": "Літвиця", "kind": "village", "at": [580, 2367], "slug": "litvytsia"}]}
+];
+var AT = {}; SHEETS.forEach(function(sh){ (sh.places || []).forEach(function(p){ if (p.slug && !AT[p.slug]) AT[p.slug] = { sh: sh, at: p.at }; }); });
+function lens(slug, size){
+  var a = AT[slug]; if (!a) return null;
+  var sh = a.sh, x = a.at[1], y = sh.h - a.at[0], zoom = size / 520;       /* вікно ~520 px аркуша */
+  var bw = sh.w * zoom, bh = sh.h * zoom;
+  return { css: 'background-image:url(' + sh.img + ');background-size:' + bw + 'px ' + bh + 'px;background-position:' + (size / 2 - x * zoom) + 'px ' + (size / 2 - y * zoom) + 'px', sheet: sh };
+}
+function invStats(k){
+  var d = INV[k]; if (!d) return null; var hh = 0, pp = 0, sur = {};
+  d.streets.forEach(function(st){ st.sides.forEach(function(sd){ sd.items.forEach(function(it){ if (it.lm) return; hh++; pp += 1 + (it.m ? it.m.length : 0); if (it.s && it.c !== 'j' && !/^Пан /.test(it.n)) sur[it.s] = (sur[it.s] || 0) + 1; }); }); });
+  return { d: d, hh: hh, pp: pp, sur: sur };
+}
+var KIND = { town: 'Місто', village: 'Село', manor: 'Фільварок' };
+var params = new URLSearchParams(location.search), slug = params.get('p');
+
+fetch('places-index.json').then(function(r){ return r.json(); }).then(function(P){
+  if (slug && P[slug]) renderPlace(slug, P); else renderCatalog(P);
+}).catch(function(){ $('pp').innerHTML = '<p class="pp-load">Не вдалося завантажити дані.</p>'; });
+
+/* ═══ сторінка поселення ═══ */
+function renderPlace(k, P){
+  var X = P[k], r = S[k] || {}, ik = X.inv, I = ik ? invStats(ik) : null, own = OWN[r.ownerId] || {};
+  var name = X.name, tot = (r.male || 0) + (r.female || 0);
+  document.title = name + ' — поселення Дубровиччини';
+  var fwName = I && I.d.folwark && FW[I.d.folwark] ? FW[I.d.folwark].name : '';
+  var kick = (KIND[r.kind] || (I ? 'Село' : 'Поселення')) + (own.name ? ' · ' + own.name : (I ? ' · маєток графа Плятера' : '')) + (fwName ? ' · ' + fwName.replace(/^Ф/, 'ф') : '');
+  var lede = [];
+  if (r.dvory) lede.push('У 1798 році тут було ' + r.dvory + ' ' + plural(r.dvory, 'двір', 'двори', 'дворів') + (tot ? ' і ' + fmt(tot) + ' ' + plural(tot, 'мешканець', 'мешканці', 'мешканців') : '') + '.');
+  if (I) lede.push('Інвентар Плятера поіменно називає ' + fmt(I.pp) + ' ' + plural(I.pp, 'особу', 'особи', 'осіб') + ' в ' + I.hh + ' ' + plural(I.hh, 'дворі', 'дворах', 'дворах') + '.');
+  if (X.press.length) lede.push('У газетах село згадано ' + X.press.length + ' ' + plural(X.press.length, 'раз', 'рази', 'разів') + ', від ' + X.press[0][1] + ' до ' + X.press[X.press.length - 1][1] + ' року.');
+  if (!lede.length) lede.push('Поселення Дубровиччини за архівними джерелами.');
+  var L = lens(k, 440);
+  var facts = [];
+  if (r.dvory) facts.push([r.dvory, 'дворів у 1798 р.']);
+  if (tot) facts.push([fmt(tot), 'мешканців у 1798 р.']);
+  if (I) facts.push([I.hh, 'дворів за інвентарем']);
+  if (X.press.length) facts.push([X.press.length, plural(X.press.length, 'стаття', 'статті', 'статей') + ' у пресі']);
+  if (X.photosTotal) facts.push([X.photosTotal, plural(X.photosTotal, 'світлина', 'світлини', 'світлин')]);
+  if (r.distVerst) facts.push([r.distVerst, 'верст до Дубровиці']);
+  var jump = [];
+  if (I) jump.push('<a class="main" href="inventar-naselennia.html?p=' + ik + '">Поіменний список →</a>');
+  if (L) jump.push('<a href="atlas-1798.html#' + k + '">На атласі 1798</a>');
+  jump.push('<a href="#chas">Стрічка часу</a>');
+  if (X.press.length) jump.push('<a href="#presa">Преса</a>');
+  if (X.photosTotal) jump.push('<a href="#foto">Фото</a>');
+  var h = '<section class="pv-hero"><div class="pw pv-grid"><div>' +
+    '<p class="pv-crumbs"><a href="index.html">Головна</a> / <a href="poselennia.html">Поселення</a> / ' + esc(name) + '</p>' +
+    '<p class="pv-kick">' + esc(kick) + '</p><h1 class="pv-title">' + esc(name) + '</h1><p class="pv-lede">' + esc(lede.join(' ')) + '</p>' +
+    (facts.length ? '<dl class="pv-facts">' + facts.slice(0, 4).map(function(f){ return '<div><dd>' + f[0] + '</dd><dt>' + f[1] + '</dt></div>'; }).join('') + '</dl>' : '') +
+    '<div class="pv-jump">' + jump.join('') + '</div></div>' +
+    (L ? '<a class="pv-lens" id="pvLens" href="atlas-1798.html#' + k + '" aria-label="Відкрити на атласі"><span class="pv-lens-img" style="' + L.css + '"></span><span class="pv-lens-pin"></span><span class="pv-lens-cap">Атлас 1798 · аркуш ' + ['I','II','III','IV'][L.sheet.n - 1] + ' · ' + esc(L.sheet.title) + '</span></a>'
+       : '<div class="pv-nolens">На аркушах атласу 1798 року цього поселення немає</div>') +
+    '</div></section>';
+
+  /* §1 стрічка часу */
+  var ev = X.events.map(function(e){ return { y: e[0], label: e[4] || e[0], t: '<span>' + esc(e[1]) + '</span>', s: e[2], u: e[3], cls: '' }; });
+  X.press.forEach(function(a){ ev.push({ y: a[1], label: a[1], t: '<a href="presa.html?id=' + a[0] + '">' + esc(a[2]) + '</a>', s: a[3], u: '', cls: 'press' }); });
+  ev.sort(function(a, b){ return a.y - b.y; });
+  var LIM = 14;
+  h += '<div class="pw"><section class="pv-sec" id="chas"><div class="pv-sh"><b>§ 1</b><h2>Стрічка часу</h2><span>' + ev.length + ' ' + plural(ev.length, 'подія', 'події', 'подій') + '</span></div>' +
+    '<p class="pv-note">Усе, що архів знає про поселення, в одній послідовності: поділ маєтностей 1558 року, атлас 1798 року, інвентар Плятера, газетні статті. Темна позначка — стаття в пресі.</p>' +
+    '<ol class="pv-tl" id="pvTl">' + ev.map(function(e, i){ return '<li class="' + e.cls + '"' + (i >= LIM ? ' hidden' : '') + '><div class="pv-tl-y">' + esc(e.label) + '</div><div class="pv-tl-t">' + e.t + '<span class="pv-tl-s">' + (e.u ? '<a href="' + esc(e.u) + '">' + esc(e.s) + '</a>' : esc(e.s)) + '</span></div></li>'; }).join('') + '</ol>' +
+    (ev.length > LIM ? '<button type="button" class="pv-more" id="pvMore">Показати всі ' + ev.length + '</button>' : '') + '</section>';
+
+  /* §2 атлас + інвентар */
+  var sec2 = '';
+  if (r.slug || I) {
+    sec2 += '<section class="pv-sec" id="dzherela"><div class="pv-sh"><b>§ 2</b><h2>Два джерела поруч</h2></div><div class="pv-two">';
+    if (r.slug) {
+      var br = (r.breakdown || []).map(function(b){ return [b.label, (b.m || 0) + (b.f || 0)]; }).filter(function(b){ return b[1]; });
+      var mx = Math.max.apply(null, br.map(function(b){ return b[1]; }).concat([1]));
+      sec2 += '<div class="pv-card"><h3>Атлас Волинської губернії, 1798</h3>' +
+        (br.length ? br.map(function(b){ return '<div class="pv-row"><span>' + esc(b[0]) + '</span><span class="pv-bar"><i style="width:' + (b[1] / mx * 100) + '%"></i></span><b>' + b[1] + '</b></div>'; }).join('') : '') +
+        '<p class="pv-kv">' + (own.name ? '<b>Власник:</b> ' + (own.page ? '<a href="' + own.page + '">' + esc(own.name) + '</a>' : esc(own.name)) + '<br>' : '') +
+        (r.male || r.female ? '<b>Чоловіків і жінок:</b> ' + (r.male || 0) + ' / ' + (r.female || 0) + '<br>' : '') + (r.note ? esc(r.note) : '') + '</p>' +
+        '<div class="pv-btns"><a class="pv-btn" href="atlas-1798.html#' + k + '">Атлас</a><a class="pv-btn" href="sela-1798.html?v=' + k + '">Повний опис 1798</a></div></div>';
+    }
+    if (I) {
+      var top = Object.keys(I.sur).sort(function(a, b){ return I.sur[b] - I.sur[a] || a.localeCompare(b, 'uk'); }).slice(0, 18);
+      sec2 += '<div class="pv-card"><h3>Інвентар графа Плятера, бл. 1780–1820</h3>' +
+        '<p class="pv-kv" style="margin-top:0">' + esc(I.d.title || I.d.name) + (fwName ? ' · ' + esc(fwName) : '') + '<br><b>' + I.hh + '</b> ' + plural(I.hh, 'двір', 'двори', 'дворів') + ', <b>' + fmt(I.pp) + '</b> ' + plural(I.pp, 'особа', 'особи', 'осіб') + ' поіменно.</p>' +
+        (top.length ? '<p class="pv-kv">Найчастіші прізвища:</p><div class="pv-sn">' + top.map(function(s){ return '<a href="inventar-naselennia.html?p=' + ik + '&q=' + encodeURIComponent(s) + '">' + esc(s) + (I.sur[s] > 1 ? '<sup>' + I.sur[s] + '</sup>' : '') + '</a>'; }).join('') + '</div>' : '') +
+        '<div class="pv-btns"><a class="pv-btn dark" href="inventar-naselennia.html?p=' + ik + '">Відкрити поіменний список</a></div></div>';
+    }
+    sec2 += '</div></section>';
+  }
+  h += sec2;
+
+  /* §3 преса */
+  var n = 3;
+  if (X.press.length) {
+    n = 3;
+    h += '<section class="pv-sec" id="presa"><div class="pv-sh"><b>§ 3</b><h2>У пресі</h2><span>' + X.press.length + ' ' + plural(X.press.length, 'стаття', 'статті', 'статей') + '</span></div>' +
+      '<div class="pv-sn">' + X.press.slice(0, 40).map(function(a){ return '<a href="presa.html?id=' + a[0] + '" style="font-size:.98rem"><sup style="font-size:.72rem">' + a[1] + '</sup> ' + esc(a[2]) + '</a>'; }).join('') + '</div>' +
+      (X.press.length > 40 ? '<p class="pv-note" style="margin-top:1rem">Показано 40 з ' + X.press.length + '. <a href="presa.html?q=' + encodeURIComponent(name) + '">Усі статті в розділі «Преса» →</a></p>' : '') + '</section>';
+  }
+  /* §4 фото */
+  if (X.photosTotal) {
+    h += '<section class="pv-sec" id="foto"><div class="pv-sh"><b>§ ' + (X.press.length ? 4 : 3) + '</b><h2>Світлини</h2><span>' + X.photosTotal + '</span></div><div class="pv-ph">' +
+      X.photos.slice(0, 24).map(function(p){ return '<a href="photo-archive.html?photo=' + p[0] + '"><img src="' + esc(p[1]) + '" alt="" loading="lazy" decoding="async"><span>' + esc(p[2]) + (p[3] && p[3] !== '2026' ? ' · ' + esc(p[3]) : '') + '</span></a>'; }).join('') + '</div>' +
+      (X.photosTotal > 24 ? '<p class="pv-note" style="margin-top:.6rem"><a href="photo-archive.html?q=' + encodeURIComponent(name) + '">Усі ' + X.photosTotal + ' світлин у Фотоархіві →</a></p>' : '') + '</section>';
+  }
+  /* сусіди: той самий власник або фільварок */
+  var nb = Object.keys(P).filter(function(x){ if (x === k) return false; var rx = S[x] || {}; if (r.ownerId && rx.ownerId === r.ownerId) return true; var ix = P[x].inv && INV[P[x].inv]; return !!(I && ix && ix.folwark && ix.folwark === I.d.folwark); });
+  if (nb.length) h += '<section class="pv-sec"><div class="pv-sh"><b>·</b><h2>' + (own.name ? 'Інші поселення маєтку' : 'Сусідні поселення') + '</h2></div><div class="pv-nb">' + nb.sort(function(a, b){ return P[a].name.localeCompare(P[b].name, 'uk'); }).map(function(x){ return '<a href="poselennia.html?p=' + x + '">' + esc(P[x].name) + '</a>'; }).join('') + '</div></section>';
+  h += '<div class="pv-foot"><a class="pv-btn" href="poselennia.html">← Усі поселення</a></div></div>';
+  $('pp').innerHTML = h;
+  if ($('pvMore')) $('pvMore').onclick = function(){ $('pvTl').querySelectorAll('li[hidden]').forEach(function(li){ li.hidden = false; }); this.remove(); };
+  requestAnimationFrame(function(){ setTimeout(function(){ var l = $('pvLens'); if (l) l.classList.add('in'); }, 60); });
+}
+
+/* ═══ каталог поселень ═══ */
+function renderCatalog(P){
+  document.title = 'Поселення Дубровиччини — Цифровий архів';
+  var groups = {};
+  Object.keys(P).forEach(function(k){
+    var r = S[k] || {}, g = r.ownerId || 'plater';
+    (groups[g] = groups[g] || []).push(k);
+  });
+  var order = Object.keys(groups).sort(function(a, b){ return groups[b].length - groups[a].length; });
+  var h = '<section class="pc-hero"><div class="pw"><h1>Поселення <em>Дубровиччини</em></h1><p>Кожне місто й село — з атласом 1798 року, поіменними списками з інвентаря Плятера, газетними згадками й світлинами на одній сторінці. Згруповано за власниками 1798 року.</p>' +
+    '<div class="pc-tools"><input type="search" id="pcQ" placeholder="Знайти поселення…" autocomplete="off" aria-label="Знайти поселення"><button type="button" class="pc-chip" data-f="" aria-pressed="true">Усі</button><button type="button" class="pc-chip" data-f="inv" aria-pressed="false">Є поіменний список</button><button type="button" class="pc-chip" data-f="press" aria-pressed="false">Є в пресі</button></div></div></section><div class="pw" id="pcList"></div><div class="pw pv-foot"></div>';
+  $('pp').innerHTML = h;
+  var F = '', Q = '';
+  function card(k){
+    var r = S[k] || {}, X = P[k], L = lens(k, 76), ik = X.inv, I = ik ? invStats(ik) : null;
+    var tags = []; if (I) tags.push('<i>інвентар · ' + I.hh + '</i>'); if (X.press.length) tags.push('<i>преса · ' + X.press.length + '</i>'); if (X.photosTotal) tags.push('<i>фото · ' + X.photosTotal + '</i>');
+    return '<a class="pc-card" href="poselennia.html?p=' + k + '" data-k="' + k + '">' + (L ? '<span class="pc-dot" style="' + L.css + '"></span>' : '<span class="pc-dot none">' + esc(X.name[0]) + '</span>') +
+      '<span><b>' + esc(X.name) + '</b><small>' + esc(KIND[r.kind] || 'Село') + (r.dvory ? ' · ' + r.dvory + ' ' + plural(r.dvory, 'двір', 'двори', 'дворів') + ' у 1798' : (X.atlas ? '' : ' · немає в атласі')) + '</small><span class="pc-tags">' + tags.join('') + '</span></span></a>';
+  }
+  function draw(){
+    var q = Q.toLowerCase();
+    $('pcList').innerHTML = order.map(function(g){
+      var ks = groups[g].filter(function(k){ var X = P[k];
+        if (F === 'inv' && !X.inv) return false; if (F === 'press' && !X.press.length) return false;
+        return !q || X.name.toLowerCase().indexOf(q) >= 0; }).sort(function(a, b){ return P[a].name.localeCompare(P[b].name, 'uk'); });
+      if (!ks.length) return '';
+      return '<section class="pc-grp"><h2>' + esc((OWN[g] || {}).name || 'Маєток графа Плятера') + '<span>' + ks.length + '</span></h2><div class="pc-grid">' + ks.map(card).join('') + '</div></section>';
+    }).join('') || '<p class="pv-note" style="padding:3rem 0">Нічого не знайдено.</p>';
+  }
+  draw();
+  $('pcQ').oninput = function(){ Q = this.value.trim(); draw(); };
+  document.querySelector('.pc-tools').addEventListener('click', function(e){ var b = e.target.closest('[data-f]'); if (!b) return; F = b.dataset.f; this.querySelectorAll('[data-f]').forEach(function(x){ x.setAttribute('aria-pressed', String(x === b)); }); draw(); });
+}
+})();
+</script>
+
+</body>
+</html>
