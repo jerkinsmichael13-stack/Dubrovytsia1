@@ -361,10 +361,31 @@ a, button, [role="button"], input, select, textarea,
                 <span class="hx-new"><i></i>Новинка · 3D-модель</span>
                 <p class="hx-hint" id="hxHint"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10c0-2 3-3.5 7-3.5s7 1.5 7 3.5-3 3.5-7 3.5"/><path d="M12 11.4 10 13.5l2 2.1"/></svg>Потягніть, щоб обернути</p>
                 <div class="hx-cap">
-                    <div><b>Костел Іоанна Хрестителя</b><small>мурований 1740 · освячений 1742 · пам'ятка національного значення</small></div>
-                    <a class="hx-full" href="kostel-3d.html">Розглянути зблизька <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 6V2.5H6M13.5 6V2.5H10M2.5 10v3.5H6M13.5 10v3.5H10"/></svg></a>
+                    <div><b id="hxTitle">Костел Іоанна Хрестителя</b><small id="hxSub">мурований 1740 · освячений 1742 · пам'ятка національного значення</small></div>
+                    <a class="hx-full" id="hxFull" href="kostel-3d.html">Розглянути зблизька <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 6V2.5H6M13.5 6V2.5H10M2.5 10v3.5H6M13.5 10v3.5H10"/></svg></a>
                 </div>
             </div>
+            <script>
+            /* на кожному відкритті обкладинки — випадково костел або церква */
+            (function(){
+              var M = {
+                kostel: {js: 'kostel-3d.js', g: 'Kostel3D', poster: 'kostel-3d-poster.webp', href: 'kostel-3d.html', title: 'Костел Іоанна Хрестителя',
+                         sub: "мурований 1740 · освячений 1742 · пам'ятка національного значення", alt: 'Костел Іоанна Хрестителя в Дубровиці — 3D-модель',
+                         aria: '3D-модель костелу Іоанна Хрестителя. Потягніть убік, щоб обернути.', opts: {view: [46, 14, 52], targetY: 16.5, fit: innerWidth < 980 ? 1.1 : 1.07}},
+                cerkva: {js: 'cerkva-3d.js', g: 'Cerkva3D', poster: 'cerkva-3d-poster.webp', href: 'cerkva-3d.html', title: 'Церква Різдва Богородиці',
+                         sub: "збудована 1861 · пам'ятка національного значення", alt: 'Церква Різдва Пресвятої Богородиці в Дубровиці — 3D-модель',
+                         aria: '3D-модель церкви Різдва Богородиці. Потягніть убік, щоб обернути.', opts: {view: [-50, 14, 46], targetY: 13.2, fit: innerWidth < 980 ? 1.04 : 1.0}}
+              };
+              var k = Math.random() < .5 ? 'kostel' : 'cerkva', m = M[k];
+              var st = document.getElementById('hxStage'), img = st.querySelector('.hx-poster');
+              img.src = m.poster; img.alt = m.alt;
+              document.getElementById('hx3d').setAttribute('aria-label', m.aria);
+              document.getElementById('hxTitle').textContent = m.title;
+              document.getElementById('hxSub').textContent = m.sub;
+              document.getElementById('hxFull').href = m.href;
+              st.dataset.model = k; window.__hx3d = m;
+            })();
+            </script>
         </div>
     </section>
 
@@ -6898,7 +6919,6 @@ g.ULB={open:open,close:close,nav:nav,
 })(window);
     </script>
 
-<script src="kostel-3d.js" defer></script>
 <script>
 (function(){
   var SH = { img: 'atlas-1798-chastyna-1.jpg', w: 2351, h: 2595 };
@@ -6918,12 +6938,17 @@ g.ULB={open:open,close:close,nav:nav,
   var st = document.getElementById('hxStage'), cv = document.getElementById('hx3d');
   function idle(f){ (window.requestIdleCallback || function(g){ setTimeout(g, 250); })(f, { timeout: 1200 }); }
   function mount3d(){
-    if (!window.Kostel3D) { st.classList.add('nogl'); return; }
-    Kostel3D.mount(cv, { zoom: false, touch: 'pan-y', view: [46, 14, 52], targetY: 16.5, fit: innerWidth < 980 ? 1.1 : 1.07, pixelRatio: 1.75,
-      shadow: innerWidth < 700 ? 1024 : 2048, motes: true, autoRotateSpeed: .55,
-      onStart: function(){ st.classList.add('touched'); },
-      onReady: function(){ st.classList.add('live'); },
-      onFail: function(){ st.classList.add('nogl'); } });
+    var m = window.__hx3d; if (!m){ st.classList.add('nogl'); return; }
+    var sc = document.createElement('script'); sc.src = m.js; sc.async = true;
+    sc.onerror = function(){ st.classList.add('nogl'); };
+    sc.onload = function(){
+      var G = window[m.g]; if (!G){ st.classList.add('nogl'); return; }
+      G.mount(cv, Object.assign({ zoom: false, touch: 'pan-y', pixelRatio: 1.75, shadow: innerWidth < 700 ? 1024 : 2048, motes: true, autoRotateSpeed: .55,
+        onStart: function(){ st.classList.add('touched'); },
+        onReady: function(){ st.classList.add('live'); },
+        onFail: function(){ st.classList.add('nogl'); } }, m.opts));
+    };
+    document.head.appendChild(sc);
   }
   if (st && cv) { if (document.readyState === 'complete') idle(mount3d); else addEventListener('load', function(){ idle(mount3d); }); }
   var f = document.getElementById('hxSearch'), q = document.getElementById('hxQ');
