@@ -334,12 +334,14 @@ function chfVert(P, i){
 function chfPts(P){ var p = []; for (var i = 0; i < 8; i++) p.push(chfVert(P, i)); return p; }
 function chfPrism(P, y0, y1, m, cx, cz){ var o = add(ext(poly(chfPts(P).map(function(v){ return [v[0], -v[1]]; })), y1 - y0, 1), m, cx || 0, y0, cz || 0); o.rotation.x = -Math.PI/2; return o; }
 function chfFaces(P, cx, cz){ var f = []; for (var i = 0; i < 8; i++){ var d = chfDir(i), a = chfApo(P, i); f.push({g: face((cx || 0) + a*d[0], (cz || 0) + a*d[1], d[2]), cardinal: i % 2 === 0, i: i, len: chfLen(P, i), apo: a, dir: d}); } return f; }
-function chfTent(P0, y0, P1, y1, m, cx, cz){
-  var b = chfPts(P0), t = chfPts(P1);
+function chfTent(P0, y0, P1, y1, m, cx, cz, rs){
+  var b = chfPts(P0), t = chfPts(P1); rs = rs || 0;
   for (var k = 0; k < 8; k++){
     var j = (k + 1) % 8;
     quad([cx + b[k][0], y0, cz + b[k][1]], [cx + b[j][0], y0, cz + b[j][1]], [cx + t[j][0], y1, cz + t[j][1]], [cx + t[k][0], y1, cz + t[k][1]], m);
-    rod([cx + b[k][0]*1.012, y0 + .03, cz + b[k][1]*1.012], [cx + t[k][0], y1, cz + t[k][1]], .055, M.roof);
+    var r0 = [b[k][0] + (t[k][0] - b[k][0])*rs, b[k][1] + (t[k][1] - b[k][1])*rs];
+    rod([cx + r0[0]*1.012, y0 + (y1 - y0)*rs + .03, cz + r0[1]*1.012], [cx + t[k][0], y1, cz + t[k][1]], .055, M.roof);
+    if (rs) add(new THREE.SphereGeometry(.075, 10, 8), M.roof, cx + r0[0]*1.012, y0 + (y1 - y0)*rs + .03, cz + r0[1]*1.012);
   }
 }
 function triU(a, b, c, m){
@@ -575,7 +577,7 @@ var WK = .3, WRID = gableZ(-WH - .35, WH + .35, WC, (WX1 - WX0)/2 + .42, WE, WK)
      is skirted up to the chamfered octagon (wide faces with louvres, narrow faces with blind arches). Every gable rises the
      same height from the corners, so over the narrow faces they are steeper; the spire springs from the octagon itself, so
      between the gables only short valleys show */
-  var cx = BX, Q = BQ, sbt = 12.3, oy = 12.45, ye = 16.8, BP = {A: 3.4, c: 1.82}, GR = 2.05;   // wide faces 3.15 m, narrow 2.6 m
+  var cx = BX, Q = BQ, sbt = 12.3, oy = 12.45, ye = 16.8, BP = {A: 3.4, c: 1.68}, GR = 2.05;   // wide faces 3.45 m, narrow 2.35 m
   /* body: the part east of the porch, with corner lesenes, the porch's mid cornice and eaves entablature run round it */
   boxX(WX1, cx + Q, 0, PL, -Q - .12, Q + .12, M.plinth);
   boxX(WX1, cx + Q, PL, WW, -Q, Q, M.wall);
@@ -604,12 +606,16 @@ var WK = .3, WRID = gableZ(-WH - .35, WH + .35, WC, (WX1 - WX0)/2 + .42, WE, WK)
     }
     var hw = F.len/2, k = GR/hw;
     add(ext(poly([[-hw - .01, 0], [hw + .01, 0], [0, GR]]), .35), M.wall, 0, ye, -.35, F.g);
-    rakes(F.g, hw + .05, ye - .03, (hw + .05)*k, .02, .17, .3);
-    [-1, 1].forEach(function(sd){ box(.34, .12, .3, sd*(hw - .08), ye - .14, .1, M.trim, F.g); });   // short cornice returns at the feet of the rakes
+    /* white raking mouldings lying on the gable's edges: they run from the very corner, where the neighbouring gable's
+       moulding meets them in a clean V, up to the apex */
+    var tv = .17/Math.cos(Math.atan2(GR, hw));             // vertical depth of a band 17 cm wide across the slope
+    [-1, 1].forEach(function(sd){
+      add(ext(poly(sd > 0 ? [[0, GR], [hw, 0], [hw, tv], [0, GR + tv]] : [[-hw, 0], [0, GR], [0, GR + tv], [-hw, tv]]), .24), M.trim, 0, ye, -.02, F.g);
+    });
     /* the gable's own little roof, running back into the spire */
     add(ext(poly([[-hw, 0], [hw, 0], [0, GR + .03]]), 1.3), M.slate, 0, ye + .04, -1.3 - .06, F.g);   // kept behind the wall plane so the arched heads stay clean
   });
-  chfTent(BP, ye, saP, st, M.slate, cx, 0);
+  chfTent(BP, ye, saP, st, M.slate, cx, 0, (GR + .3)/(st - ye));   // hip rolls start above the gables
   chfFaces(BP, cx, 0).forEach(function(F){
     if (!F.cardinal) return;
     var t = .48, r = BP.A - t*(BP.A - saP.A), yy = ye + t*(st - ye);
