@@ -50,7 +50,7 @@ function mat(c, o){ return new THREE.MeshStandardMaterial(Object.assign({color:c
 var M = {
   wall:  mat('#eebf30'),
   trim:  mat('#f5f2ea'),
-  roof:  mat('#4b3430', {roughness:.55}),
+  roof:  mat('#5b3b31', {roughness:.5, metalness:.3}),
   field: mat('#efebe2', {roughness:.95}),
   dome:  mat('#3f4239', {roughness:.62, metalness:.22}),
   domeF: mat('#43473d', {roughness:.55, metalness:.25, flatShading:true}),
@@ -567,51 +567,6 @@ function shapeOf2(loop, hole){ var s = new THREE.Shape(loop); if (hole) s.holes.
   win(lb, 0, 2.2, 1.1, 1.8, false, .18, 2);
 });
 
-/* ═══════════ REALISM · weathering worked out in the shader, in world space, so it is the same scale on every part:
-   lime-wash blotches, fine plaster grain (bumped, so it catches the light), rain streaks running down from the
-   cornices, darker damp near the ground; metal and slate get gentle tonal variation ═══════════ */
-function weather(m, o){
-  if (!m || !m.isMeshStandardMaterial || m.userData.weathered) return;
-  o = Object.assign({blotch: .1, grain: .05, streak: .12, grime: .22, bump: .012, scale: 1, rough: .06}, o || {});
-  m.userData.weathered = true;
-  m.extensions = m.extensions || {}; m.extensions.derivatives = true;
-  var key = 'w' + [o.blotch, o.grain, o.streak, o.grime, o.bump, o.scale, o.rough].join('_');
-  function f(v){ v = String(+v); return v.indexOf('.') < 0 && v.indexOf('e') < 0 ? v + '.0' : v; }
-  m.onBeforeCompile = function(sh){
-    sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vWPos;')
-      .replace('#include <begin_vertex>', '#include <begin_vertex>\nvWPos = (modelMatrix * vec4(transformed, 1.0)).xyz;');
-    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', [
-      '#include <common>', 'varying vec3 vWPos;',
-      'float wHash(vec3 p){ p = fract(p*0.3183099 + 0.1); p *= 17.0; return fract(p.x*p.y*p.z*(p.x + p.y + p.z)); }',
-      'float wNoise(vec3 x){ vec3 i = floor(x), f = fract(x); f = f*f*(3.0 - 2.0*f);',
-      '  return mix(mix(mix(wHash(i), wHash(i + vec3(1,0,0)), f.x), mix(wHash(i + vec3(0,1,0)), wHash(i + vec3(1,1,0)), f.x), f.y),',
-      '             mix(mix(wHash(i + vec3(0,0,1)), wHash(i + vec3(1,0,1)), f.x), mix(wHash(i + vec3(0,1,1)), wHash(i + vec3(1,1,1)), f.x), f.y), f.z); }',
-      'float wFbm(vec3 p){ return 0.5*wNoise(p) + 0.3*wNoise(p*2.07 + 3.1) + 0.2*wNoise(p*4.13 + 7.7); }'
-    ].join('\n'))
-    .replace('#include <map_fragment>', [
-      '#include <map_fragment>',
-      'vec3 wp = vWPos*' + f(o.scale) + ';',
-      'float wB = wFbm(wp*0.45);',
-      'float wG = wNoise(wp*9.0);',
-      'float wS = wNoise(vec3(wp.x*0.9, wp.y*0.08, wp.z*0.9)) * smoothstep(0.35, 0.8, wNoise(vec3(wp.x*3.1, wp.y*0.22, wp.z*3.1)));',
-      'float wShade = 1.0 + ' + f(o.blotch) + '*(wB - 0.5)*2.0 + ' + f(o.grain) + '*(wG - 0.5);',
-      'wShade *= 1.0 - ' + f(o.streak) + '*smoothstep(0.18, 0.55, wS);',
-      'wShade *= mix(1.0 - ' + f(o.grime) + ', 1.0, smoothstep(0.15, 1.6, vWPos.y));',
-      'diffuseColor.rgb *= wShade;'
-    ].join('\n'))
-    .replace('#include <roughnessmap_fragment>', '#include <roughnessmap_fragment>\nroughnessFactor = clamp(roughnessFactor + ' + f(o.rough) + '*(wB - 0.5)*2.0, 0.04, 1.0);')
-    .replace('#include <normal_fragment_maps>', [
-      '#include <normal_fragment_maps>',
-      '{ float wh = wNoise(vWPos*' + f(o.scale) + '*14.0)*0.6 + wNoise(vWPos*' + f(o.scale) + '*37.0)*0.4;',
-      '  vec2 dh = vec2(dFdx(wh), dFdy(wh)); vec3 sx = dFdx(-vViewPosition), sy = dFdy(-vViewPosition);',
-      '  vec3 r1 = cross(sy, normal), r2 = cross(normal, sx); float det = dot(sx, r1);',
-      '  vec3 grad = sign(det)*(dh.x*r1 + dh.y*r2);',
-      '  normal = normalize(abs(det)*normal - ' + f(o.bump) + '*grad*' + f(1/(o.scale||1)) + '); }'
-    ].join('\n'));
-  };
-  m.customProgramCacheKey = function(){ return key; };
-  m.needsUpdate = true;
-}
 /* a soft sky for every surface to pick up light from, not only the gilded and glazed ones */
 function skyEnv(renderer){
   var es = new THREE.Scene(), g = new THREE.SphereGeometry(50, 32, 16), col = [], p = g.attributes.position, c = new THREE.Color();
@@ -626,16 +581,28 @@ function skyEnv(renderer){
 }
 
 scene.environment = skyEnv(renderer);
-weather(M.wall,  {blotch: .12, grain: .05, streak: .2, grime: .28, bump: .014});
-weather(M.trim,  {blotch: .05, grain: .04, streak: .16, grime: .22, bump: .01});
-weather(M.field, {blotch: .05, grain: .04, streak: .12, grime: .1, bump: .01});
-weather(revealMat, {blotch: .04, streak: .08, grime: .1}); weather(revealWall, {blotch: .1, streak: .12, grime: .1});
-weather(M.roof,  {blotch: .16, grain: .06, streak: 0, grime: 0, bump: .004, rough: .12, scale: .7});
-weather(M.dome,  {blotch: .14, grain: .05, streak: .12, grime: 0, bump: .003, rough: .1});
-weather(M.domeF, {blotch: .14, grain: .05, streak: .12, grime: 0, bump: .003, rough: .1});
-weather(M.door,  {blotch: .1, streak: 0, grime: .15}); weather(M.orn, {blotch: .12, streak: 0, grime: 0});
-weather(M.sash,  {blotch: .04, streak: 0, grime: 0}); weather(M.frameG, {blotch: .08, streak: .1, grime: 0});
-weather(M.pipe,  {blotch: .1, streak: 0, grime: .1, bump: .003});
+/* the roofs as on the building: brown sheet metal laid in standing seams running down the slopes (seams every 0.6 m,
+   each a thin ridge with a highlight on one side and a shadow on the other), with a faint unevenness between sheets */
+(function(m){
+  m.onBeforeCompile = function(sh){
+    sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vWPos;')
+      .replace('#include <begin_vertex>', '#include <begin_vertex>\nvWPos = (modelMatrix * vec4(transformed, 1.0)).xyz;');
+    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying vec3 vWPos;\nfloat rHash(float n){ return fract(sin(n)*43758.5453); }')
+      .replace('#include <map_fragment>', [
+        '#include <map_fragment>',
+        'vec3 wn = normalize(cross(dFdx(vWPos), dFdy(vWPos)));',
+        'float along = abs(wn.x) > abs(wn.z) ? vWPos.z : vWPos.x;',          /* seams run down the slope */
+        'float u = along/0.6, f = fract(u), id = floor(u);',
+        'float seam = smoothstep(0.0, 0.035, f)*(1.0 - smoothstep(0.93, 1.0, f));',
+        'float lit = smoothstep(0.035, 0.07, f)*(1.0 - smoothstep(0.07, 0.11, f));',
+        'diffuseColor.rgb *= (0.78 + 0.22*seam) * (1.0 + 0.18*lit) * (0.95 + 0.1*rHash(id*7.13));'
+      ].join('\n'));
+  };
+  m.extensions = {derivatives: true};
+  m.customProgramCacheKey = function(){ return 'roofSeams'; };
+  m.needsUpdate = true;
+})(M.roof);
+
 
 /* ═══════════ PERFORMANCE · bake the ~800 static parts into a handful of meshes (one per material and pass),
    so a phone draws a few dozen batches a frame instead of well over a thousand ═══════════ */
