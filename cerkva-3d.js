@@ -314,7 +314,7 @@ function dormer(g, y, w, h, d, bars){
    sanctuary 7.6 × 7.6 m with an attic band under the eaves */
 var NH = 7.5, PL = .6;
 var WX0 = -21.2, WX1 = -15.0, WH = 6.5, WC = -18.1;       // porch (6.2 m deep, measured on the 1930s photograph)
-var BX = -16.6, BQ = 3.6;                                // the bell tower's square body: its east part stands proud of the porch
+var BX = -17.4, BQ = 3.6;                                // the bell tower's square body: its east part stands proud of the porch
 var TX1 = BX + BQ;                                       // east face of the tower body; the link runs from here to the naos
 var LX1 = -7.5, LH = 4.6;                                // link
 var EX1 = 14.2, EH = 4.1;                                // sanctuary
@@ -577,7 +577,7 @@ var WK = .3, WRID = gableZ(-WH - .35, WH + .35, WC, (WX1 - WX0)/2 + .42, WE, WK)
      is skirted up to the chamfered octagon (wide faces with louvres, narrow faces with blind arches). Every gable rises the
      same height from the corners, so over the narrow faces they are steeper; the spire springs from the octagon itself, so
      between the gables only short valleys show */
-  var cx = BX, Q = BQ, sbt = 12.3, oy = 12.45, ye = 16.8, BP = {A: 3.4, c: 1.68}, GR = 2.05;   // wide faces 3.45 m, narrow 2.35 m
+  var cx = BX, Q = BQ, sbt = 12.95, oy = 13.1, ye = 17.2, BP = {A: 3.4, c: 1.68}, GR = 2.05;   // wide faces 3.45 m, narrow 2.35 m
   /* body: the part east of the porch, with corner lesenes, the porch's mid cornice and eaves entablature run round it */
   boxX(WX1, cx + Q, 0, PL, -Q - .12, Q + .12, M.plinth);
   boxX(WX1, cx + Q, PL, WW, -Q, Q, M.wall);
