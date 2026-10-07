@@ -313,8 +313,9 @@ function dormer(g, y, w, h, d, bars){
    porch 7 × 13 m in two tiers; the bell tower a chamfered octagon 6 m across on a square base;
    sanctuary 7.6 × 7.6 m with an attic band under the eaves */
 var NH = 7.5, PL = .6;
-var WX0 = -21.7, WX1 = -14.1, WH = 6.5, WC = -17.9;       // porch (7.6 m deep, measured on the 1930s photograph)
-var BX = -16.9;                                          // axis of the bell tower: 1 m east of the porch's centre
+var WX0 = -21.2, WX1 = -15.0, WH = 6.5, WC = -18.1;       // porch (6.2 m deep, measured on the 1930s photograph)
+var BX = -16.9, BQ = 3.6;                                // the bell tower's square body: its east part stands proud of the porch
+var TX1 = BX + BQ;                                       // east face of the tower body; the link runs from here to the naos
 var LX1 = -7.5, LH = 4.6;                                // link
 var EX1 = 14.2, EH = 4.1;                                // sanctuary
 var DS = Math.SQRT2;
@@ -522,14 +523,14 @@ var DP = {A: 4.6, c: 1.7};                                      // drum: wide fa
 })();
 
 /* ═══════════ LINK between the porch and the naos ═══════════ */
-boxX(WX1, LX1, 0, PL, -LH - .12, LH + .12, M.plinth);
-boxX(WX1, LX1, PL, 6.2, -LH, LH, M.wall);
-var LE = entab(WX1, LX1, -LH, LH, 6.2, {n:1, s:1, e:0, w:0});
-gableX(WX1, LX1, 0, LH + .42, LE, .3);
+boxX(TX1, LX1, 0, PL, -LH - .12, LH + .12, M.plinth);
+boxX(TX1, LX1, PL, 6.2, -LH, LH, M.wall);
+var LE = entab(TX1, LX1, -LH, LH, 6.2, {n:1, s:1, e:0, w:0});
+gableX(TX1, LX1, 0, LH + .42, LE, .3);
 [S_, N_].forEach(function(rot){
-  var F = face((WX1 + LX1)/2, rot === S_ ? LH : -LH, rot);
+  var F = face((TX1 + LX1)/2, rot === S_ ? LH : -LH, rot);
   win(F, 0, 2.1, .95, 3.0, true, .18, 3, M.glass, .4);
-  var hl = (LX1 - WX1)/2; [-1, 1].forEach(function(s){ lesene(F, Math.min(s*(hl - .55), s*hl), Math.max(s*(hl - .55), s*hl), PL, 6.2, 0, .1, true); });
+  var hl = (LX1 - TX1)/2; [-1, 1].forEach(function(s){ lesene(F, Math.min(s*(hl - .55), s*hl), Math.max(s*(hl - .55), s*hl), PL, 6.2, 0, .1, true); });
 });
 
 /* ═══════════ PORCH · two tiers: lower tier up to the double mid cornice that runs round the block, upper tier to the eaves;
@@ -563,45 +564,53 @@ var WK = .3, WRID = gableZ(-WH - .35, WH + .35, WC, (WX1 - WX0)/2 + .42, WE, WK)
   });
   frameR(F, 0, 9.0, 4.6, .8, .02);                             // a long frame under the eaves, behind the pediment
 })();
-(function(){ var F = face(WX1, 0, E_); [-1, 1].forEach(function(s){ midEntab(F, Math.min(s*LH, s*5.75), Math.max(s*LH, s*5.75), WB, 0, 0); frameR(F, s*5.2, 7.95, .9, 1.6, .02); }); })();
+(function(){ var F = face(WX1, 0, E_); [-1, 1].forEach(function(s){ midEntab(F, Math.min(s*BQ, s*5.75), Math.max(s*BQ, s*5.75), WB, 0, 0); frameR(F, s*5.0, 7.95, 1.1, 1.6, .02); frameR(F, s*5.0, 1.3, 1.1, 4.7, .02); }); })();
 
 /* ═══════════ BELL TOWER · a square base rising out of the porch roof, skirted up to a chamfered octagon: louvred openings
    with railings on the wide faces, blind arches on the narrow ones, a gable over every face (large over the wide faces,
    small over the narrow), a slate spire with four dormers ═══════════ */
 (function(){
-  /* measured on the 1930s photograph and the close-up of the 2020s: wide faces about 3.9 m, the cut corners about 2.4 m;
-     every gable rises 2.4 m, so over the narrow faces they are steeper and all the apexes stand at one height */
-  var cx = BX, Q = 3.6, sb0 = 7.0, sbt = 12.6, oy = 12.72, ye = 16.9, BP = {A: 3.55, c: 1.55}, GR = 1.9;
-  /* the base: square on the west, running on eastwards over the link (as seen from the north-west) */
-  var QE = Q + .8;
-  boxX(cx - Q, cx + QE, sb0, sbt, -Q, Q, M.wall);
-  [[-Q, -1], [QE, 1]].forEach(function(c){ [-1, 1].forEach(function(sz){ boxX(cx + c[0] - c[1]*.35, cx + c[0] + c[1]*.04, sb0, sbt, sz*(Q - .35), sz*(Q + .04), M.trim); }); });
-  boxX(cx - Q - .1, cx + QE + .1, sbt - .05, sbt + .12, -Q - .1, Q + .1, M.trim);
-  boxX(cx + Q - .2, cx + QE + .1, sbt + .12, sbt + .2, -Q - .1, Q + .1, M.roof);
-  apronChf(cx, 0, Q + .08, sbt + .12, chfGrow(BP, .04), oy, M.wall);
+  /* measured on the 1930s photograph and the close-ups of the 2020s. The tower's square body rises inside the porch and
+     stands 2.2 m proud of its east wall, carrying the porch's two cornices round; above the porch roof a short square base
+     is skirted up to the chamfered octagon (wide faces with louvres, narrow faces with blind arches). Every gable rises the
+     same height from the corners, so over the narrow faces they are steeper; the spire springs from the octagon itself, so
+     between the gables only short valleys show */
+  var cx = BX, Q = BQ, sbt = 12.3, oy = 12.45, ye = 17.3, BP = {A: 3.55, c: 1.55}, GR = 1.55;
+  /* body: the part east of the porch, with corner lesenes, the porch's mid cornice and eaves entablature run round it */
+  boxX(WX1, cx + Q, 0, PL, -Q - .12, Q + .12, M.plinth);
+  boxX(WX1, cx + Q, PL, WW, -Q, Q, M.wall);
+  [-1, 1].forEach(function(sz){ cornerBlock(cx + Q, sz*Q, 1, sz, PL, WW, .7, WB); });
+  entab(WX1, cx + Q, -Q, Q, WW, {n:1, s:1, e:1, w:0}, false);
+  [S_, N_].forEach(function(rot){
+    var F = face((WX1 + cx + Q)/2, rot === S_ ? Q : -Q, rot), L = (cx + Q - WX1)/2;
+    midEntab(F, -L, L - .7, WB, 0, 0);
+    frameR(F, -.3, 8.0, L*2 - 1.6, 1.55, .02);
+  });
+  (function(){ var F = face(cx + Q, 0, E_); midEntab(F, -Q + .7, Q - .7, WB, 0, 0); frameR(F, 0, 8.0, 2*Q - 2.3, 1.55, .02); })();
+  /* the square base above the porch roof */
+  boxX(cx - Q, cx + Q, WE - .4, sbt, -Q, Q, M.wall);
+  boxX(cx - Q - .08, cx + Q + .08, sbt - .16, sbt, -Q - .08, Q + .08, M.trim);
+  apronChf(cx, 0, Q + .02, sbt, chfGrow(BP, .03), oy, M.wall);
   chfPrism(BP, sbt, ye, M.wall, cx, 0);
-  chfPrism(chfGrow(BP, .08), oy, oy + .16, M.trim, cx, 0);
-  chfPrism(chfGrow(BP, .06), ye - .26, ye, M.trim, cx, 0);
-  var ob = oy + .3, oh = ye - .5 - (oy + .3), sbP = chfGrow(BP, -.75), st = 26.3, saP = chfReg(.42);
+  chfPrism(chfGrow(BP, .07), oy, oy + .15, M.trim, cx, 0);
+  var ob = oy + .35, oh = ye - .45 - (oy + .35), st = 26.3, saP = chfReg(.42);
   chfFaces(BP, cx, 0).forEach(function(F){
-    if (F.cardinal){
-      win(F.g, 0, ob, 1.25, oh, true, .15, 0, M.louv, .55, {reveal: revealW});
-      for (var i = -2; i <= 2; i++) sunk(box(.04, .8, .04, i*.25, ob, -.25, M.trim, F.g), 3);
-      sunk(box(1.3, .06, .06, 0, ob + .8, -.25, M.trim, F.g), 3);
-    } else {
+    if (F.cardinal) win(F.g, 0, ob, 1.25, oh, true, .15, 0, M.louv, .55, {reveal: revealW});
+    else {
       win(F.g, 0, ob, 1.3, oh, true, .14, 0, M.trim, .1, {reveal: revealW});
       box(1.28, .06, .05, 0, ob + oh - .65 - .04, -.07, M.trim, F.g);
       box(1.28, .05, .05, 0, ob + .55, -.07, M.trim, F.g);
     }
     var hw = F.len/2, k = GR/hw;
-    add(ext(poly([[-hw - .02, 0], [hw + .02, 0], [0, GR]]), .4), M.wall, 0, ye, -.4, F.g);
-    rakes(F.g, hw + .05, ye - .03, (hw + .05)*k, .02, .13, .26);
-    var gb = hw + .12, gd = F.apo - 1.85; add(ext(poly([[-gb, 0], [gb, 0], [0, GR - .02]]), gd), M.slate, 0, ye + .02, -gd + .04, F.g);
+    add(ext(poly([[-hw - .01, 0], [hw + .01, 0], [0, GR]]), .35), M.wall, 0, ye, -.35, F.g);
+    rakes(F.g, hw + .04, ye - .02, (hw + .04)*k, .02, .12, .24);
+    /* the gable's own little roof, running back into the spire */
+    add(ext(poly([[-hw, 0], [hw, 0], [0, GR + .03]]), 1.3), M.slate, 0, ye + .04, -1.3 + .02, F.g);
   });
-  chfTent(sbP, ye + .25, saP, st, M.slate, cx, 0);
+  chfTent(BP, ye, saP, st, M.slate, cx, 0);
   chfFaces(BP, cx, 0).forEach(function(F){
     if (!F.cardinal) return;
-    var t = .5, r = sbP.A - t*(sbP.A - saP.A), yy = ye + .25 + t*(st - ye - .25);
+    var t = .48, r = BP.A - t*(BP.A - saP.A), yy = ye + t*(st - ye);
     dormer(face(cx + F.dir[0]*(r + .03), F.dir[1]*(r + .03), F.dir[2]), yy - .2, .66, .78, 1.1, [.55]);
   });
   dome(cx, 0, st - .05, .42, .66, 1.45, true, 1.05);
@@ -695,7 +704,8 @@ function lowCornice(g, x0, x1, y, zf){
   var o = .33;
   [-1, 1].forEach(function(s){
     dp(WX0 - o, s*(WH - .25), 10.35, -1, 0);          // west front
-    dp(WX1 + .25, s*(WH + o), 10.35, 0, s);            // porch, east corners
+    dp(WX1 + .25, s*(WH + o), 10.35, 0, s);
+    dp(TX1 - .95, s*(BQ + o), 10.35, 0, s);           // tower body            // porch, east corners
     dp(-NH - .25, s*(NH + o), 11.3, 0, s);            // naos
     dp(NH + .25, s*(NH + o), 11.3, 0, s);
     dp(EX1 - .3, s*(EH + o), 7.4, 0, s);              // sanctuary
@@ -754,7 +764,7 @@ function lowCornice(g, x0, x1, y, zf){
 })(church);
 
 /* ═══════════ GROUND · a turntable engraved with the church's name ═══════════ */
-var GX = -3.3;                                        // centre of the church on its long axis
+var GX = -3.0;                                        // centre of the church on its long axis
 (function(){
   var R = 34, W = 2048;
   var tex = canvasTex(W, W, function(k){
