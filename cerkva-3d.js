@@ -419,16 +419,13 @@ function halfRing(r0, r1, yc){ var s = new THREE.Shape(); s.moveTo(r1, yc); s.ab
 /* a deep round-headed porch with a broad white archivolt on imposts; at its back the blue double door
    under a fanlight, framed by its own white archivolt */
 function porch(F, zf, nw, crown, dw, dcrown, nd){
-  var ny = crown - nw/2, r = nw/2;
-  add(ext(halfRing(r, r + .42, ny), .12, 40), M.trim, 0, 0, zf, F);
-  [-1, 1].forEach(function(s){
-    boxX(s*r, s*(r + .42), PL, ny, zf, zf + .1, M.trim, F);
-    boxX(s*(r - .04), s*(r + .5), ny - .24, ny, zf, zf + .16, M.trim, F);
-  });
+  var ny = crown - nw/2, r = nw/2, AW = .48;                   // the archivolt runs unbroken down to the plinth
+  add(ext(halfRing(r, r + AW, ny), .1, 40), M.trim, 0, 0, zf, F);
+  [-1, 1].forEach(function(s){ boxX(s*r, s*(r + AW), PL, ny, zf, zf + .1, M.trim, F); });
   hole(F, function(){ return archS(nw, PL, ny); }, 0, 0, nd + zf, revealB, zf);
   var zb = -nd + .03, dr = dw/2, dy = dcrown - dr;
-  sunk(add(ext(halfRing(dr, dr + .36, dy), .1, 40), M.trim, 0, 0, zb, F), 3);
-  [-1, 1].forEach(function(s){ sunk(boxX(s*dr, s*(dr + .36), PL, dy, zb, zb + .1, M.trim, F), 3); });
+  sunk(add(ext(halfRing(dr, dr + .34, dy), .07, 40), M.trim, 0, 0, zb, F), 3);
+  [-1, 1].forEach(function(s){ sunk(boxX(s*dr, s*(dr + .34), PL, dy, zb, zb + .07, M.trim, F), 3); });
   sunk(box(dw, dy - PL, .06, 0, PL, zb + .02, M.door, F), 3);
   sunk(box(dw + .02, .1, .08, 0, dy - .05, zb + .03, M.trim, F), 3);
   sunk(add(new THREE.ShapeGeometry(archS(dw, dy, dy), 32), M.glass, 0, 0, zb + .02, F), 3);
@@ -439,7 +436,7 @@ function porch(F, zf, nw, crown, dw, dcrown, nd){
 }
 /* portico: a risalit .3 proud carrying lesenes, the cornice pieces, an open-bed pediment, the oculus, the porch and steps */
 function portico(F, o){
-  var RZ = .3, hw = o.hw, pb = o.pedBase, rx = o.rake, apex = pb + rx*o.slope;
+  var RZ = .18, hw = o.hw, pb = o.pedBase, rx = o.rake, apex = pb + rx*o.slope;
   add(ext(poly([[-hw, PL], [hw, PL], [hw, pb], [0, apex - .25], [-hw, pb]]), RZ), M.wall, 0, 0, 0, F);
   [-1, 1].forEach(function(s){
     var x0 = Math.min(s*o.les[0], s*o.les[1]), x1 = Math.max(s*o.les[0], s*o.les[1]);
@@ -450,11 +447,9 @@ function portico(F, o){
   rakes(F, rx, pb - .04, rx*o.slope, RZ, .3, .52);
   box(.46, .32, .52, 0, apex - .14, RZ + .14, M.trim, F);
   oculus(F, 0, o.oc[0], o.oc[1], RZ);
-  porch(F, RZ, o.niche[0], o.niche[1], o.door[0], o.door[1], .7);
+  porch(F, RZ, o.niche[0], o.niche[1], o.door[0], o.door[1], .42);
   if (o.steps){
     o.steps.forEach(function(S){ boxX(-S[2], S[2], 0, S[0], RZ - .1, RZ + S[1], M.step, F); });
-    var sw = o.steps[o.steps.length - 1][2], sd = o.steps[o.steps.length - 1][1];
-    [-1, 1].forEach(function(s){ boxX(s*sw, s*(sw + .38), 0, .78, RZ - .1, RZ + sd, M.plinth, F); boxX(s*(sw - .03), s*(sw + .41), .78, .86, RZ - .1, RZ + sd + .03, M.step, F); });
   }
   return apex;
 }
@@ -469,7 +464,7 @@ var NE = entab(-NH, NH, -NH, NH, NW, null, true);             // → 11.87
 [S_, N_].forEach(function(rot){
   var F = face(0, rot === S_ ? NH : -NH, rot);
   portico(F, {hw: 3.75, les: [2.5, 3.75], band: NB, cor: 2.3, pedBase: NB + 1.04, rake: 4.25, slope: .43,
-              oc: [7.95, .58], niche: [3.0, 6.15], door: [1.6, 5.15], steps: [[.6, 1.25, 3.0], [.4, 1.6, 3.3], [.2, 1.95, 3.6]]});
+              oc: [7.95, .58], niche: [3.0, 6.2], door: [1.75, 5.6], steps: [[.6, 1.25, 3.0], [.4, 1.6, 3.3], [.2, 1.95, 3.6]]});
   [-1, 1].forEach(function(s){
     midEntab(F, Math.min(s*3.75, s*6.45), Math.max(s*3.75, s*6.45), NB, 0, 0);
     win(F, s*5.1, 2.55, 1.0, 3.15, true, .2, 3, M.glass, .4);
@@ -509,8 +504,7 @@ var DP = {A: 4.6, c: 1.7};                                      // drum: wide fa
   chfPrism(chfGrow(DP, .1), yl, yl + .2, M.trim);
   chfPrism(chfGrow(DP, .05), yf - .2, yf, M.trim);
   var y = yf + .22; [[.1, .08], [.12, .18], [.14, .3]].forEach(function(L){ chfPrism(chfGrow(DP, L[1]), y, y + L[0], M.trim); y += L[0]; });
-  /* the tent's eave: a thin overhang reaching past the cornice and dipping just below its top, its soffit in shadow */
-  var EO = chfGrow(DP, .58); chfPrism(EO, y - .2, y - .12, M.roof); y -= .12;
+  var EO = chfGrow(DP, .32);                                  // the tent springs straight from the cornice's edge
   chfFaces(DP).forEach(function(F){
     if (F.cardinal){
       win(F.g, 0, ya, .95, ah, true, .14, 3, M.glass, .45, {sill: null});
@@ -562,7 +556,7 @@ var WK = .3, WRID = gableZ(-WH - .35, WH + .35, WC, (WX1 - WX0)/2 + .42, WE, WK)
 (function(){
   var F = face(WX0, 0, W_);
   portico(F, {hw: 3.7, les: [2.45, 3.7], band: WB, cor: 2.05, pedBase: WB + 1.04, rake: 3.55, slope: .45,
-              oc: [7.45, .46], niche: [3.5, 6.0], door: [1.75, 5.15], steps: [[.6, 1.3, 2.7], [.4, 1.65, 3.0], [.2, 2.0, 3.3]]});
+              oc: [7.45, .46], niche: [3.05, 6.0], door: [1.75, 5.45], steps: [[.6, 1.3, 2.7], [.4, 1.65, 3.0], [.2, 2.0, 3.3]]});
   [-1, 1].forEach(function(s){
     midEntab(F, Math.min(s*3.7, s*5.75), Math.max(s*3.7, s*5.75), WB, 0, 0);
     frameR(F, s*4.55, 8.55, 1.85, 1.15, .02);                 // upper tier: wide frame over the outer bay
@@ -601,8 +595,8 @@ var WK = .3, WRID = gableZ(-WH - .35, WH + .35, WC, (WX1 - WX0)/2 + .42, WE, WK)
     }
     var hw = F.len/2, k = GR/hw;
     add(ext(poly([[-hw - .02, 0], [hw + .02, 0], [0, GR]]), .4), M.wall, 0, ye, -.4, F.g);
-    rakes(F.g, hw + .06, ye - .04, (hw + .06)*k, .02, .17, .3);
-    var gb = hw + .18, gd = F.apo - 1.85; add(ext(poly([[-gb, 0], [gb, 0], [0, gb*k]]), gd), M.slate, 0, ye + .08, -gd + .04, F.g);
+    rakes(F.g, hw + .05, ye - .03, (hw + .05)*k, .02, .13, .26);
+    var gb = hw + .12, gd = F.apo - 1.85; add(ext(poly([[-gb, 0], [gb, 0], [0, GR - .02]]), gd), M.slate, 0, ye + .02, -gd + .04, F.g);
   });
   chfTent(sbP, ye + .25, saP, st, M.slate, cx, 0);
   chfFaces(BP, cx, 0).forEach(function(F){
