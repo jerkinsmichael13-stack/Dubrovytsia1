@@ -133,11 +133,13 @@ h1{margin:0;font:400 clamp(1.8rem,3.4vw,2.8rem)/1 var(--display);letter-spacing:
     <i></i>
     <button type="button" id="spin" aria-label="Обертати автоматично" aria-pressed="true" title="Автоматичне обертання"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16.2 7.5A6.5 6.5 0 1 0 16.5 12"/><path d="M16.6 3.6v4.1h-4.1"/></svg></button>
     <button type="button" id="home" aria-label="Повернути початковий вигляд" title="Початковий вигляд (0)"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 9.2 10 3.8l6.5 5.4M5.5 7.8v8h9v-8"/></svg></button>
+    <button type="button" id="sunBtn" aria-label="Сонце: світло за датою й годиною" aria-pressed="false" aria-controls="sunPanel" title="Сонце за датою й годиною"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="10" cy="10" r="3.4"/><path d="M10 2.2v1.9M10 15.9v1.9M2.2 10h1.9M15.9 10h1.9M4.5 4.5l1.35 1.35M14.15 14.15l1.35 1.35M4.5 15.5l1.35-1.35M14.15 5.85l1.35-1.35"/></svg></button>
     <button type="button" id="fs" aria-label="На весь екран" title="На весь екран"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 7.5v-4h4M16.5 7.5v-4h-4M3.5 12.5v4h4M16.5 12.5v4h-4"/></svg></button>
   </div>
 </div>
 
 <script src="kostel-3d.js"></script>
+<script src="sun-3d.js"></script>
 <script>
 (function(){
   var cv = document.getElementById('view'), hint = document.getElementById('hint'), load = document.getElementById('load'), poster = document.getElementById('poster');
@@ -159,6 +161,8 @@ h1{margin:0;font:400 clamp(1.8rem,3.4vw,2.8rem)/1 var(--display);letter-spacing:
     document.getElementById('zIn').onclick = api.zoomIn;
     document.getElementById('zOut').onclick = api.zoomOut;
     document.getElementById('home').onclick = function(){ api.reset(); };
+    if (window.Sun3D) Sun3D.attach(api, {button: document.getElementById('sunBtn'), onToggle: function(v){ if (v){ hint.style.opacity = 0; setInfo(false); } }});
+    else document.getElementById('sunBtn').style.display = 'none';
     spin.onclick = function(){ spin.setAttribute('aria-pressed', String(api.autoRotate(!api.autoRotate()))); };
     addEventListener('keydown', function(e){
       if (e.target.closest && e.target.closest('input,textarea')) return;

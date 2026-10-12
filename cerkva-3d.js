@@ -824,7 +824,7 @@ if (o.motes){
 }
 
 /* ── light: a low western sun, as on the archival photographs ── */
-scene.add(new THREE.HemisphereLight('#fff4de', '#3a2c1c', .45));
+var hemi = new THREE.HemisphereLight('#fff4de', '#3a2c1c', .45); scene.add(hemi);
 var sun = new THREE.DirectionalLight('#ffeccd', 1.5);
 sun.position.set(-44, 50, 30); sun.target.position.set(GX, 8, 0);
 sun.castShadow = true; sun.shadow.mapSize.set(o.shadow, o.shadow);
@@ -832,6 +832,31 @@ var sc = sun.shadow.camera; sc.left = -36; sc.right = 36; sc.top = 36; sc.bottom
 sun.shadow.bias = -.0003; sun.shadow.normalBias = .035;
 scene.add(sun); scene.add(sun.target);
 var fill = new THREE.DirectionalLight('#d3dcff', .5); fill.position.set(40, 18, -26); scene.add(fill);
+
+/* ── daylight for the sun slider (sun-3d.js): s = null restores the studio light ── */
+var L0 = {sp: sun.position.clone(), sc: sun.color.clone(), si: sun.intensity, fp: fill.position.clone(), fc: fill.color.clone(), fi: fill.intensity,
+          hs: hemi.color.clone(), hg: hemi.groundColor.clone(), hi: hemi.intensity, ex: renderer.toneMappingExposure, box: sc.right, far: sc.far};
+function shadowBox(r, far){ sc.left = -r; sc.right = r; sc.top = r; sc.bottom = -r; sc.far = far; sc.updateProjectionMatrix(); }
+var envMats = null;
+function envScale(k){
+  if (!envMats){ envMats = []; scene.traverse(function(ob){ if (!ob.material) return; (Array.isArray(ob.material) ? ob.material : [ob.material]).forEach(function(m){ if (m.envMapIntensity !== undefined && envMats.indexOf(m) < 0){ m.userData.env0 = m.envMapIntensity; envMats.push(m); } }); }); }
+  envMats.forEach(function(m){ m.envMapIntensity = m.userData.env0*k; });
+}
+function setLight(s){
+  if (!s){ envScale(1);
+    sun.position.copy(L0.sp); sun.color.copy(L0.sc); sun.intensity = L0.si; fill.position.copy(L0.fp); fill.color.copy(L0.fc); fill.intensity = L0.fi;
+    hemi.color.copy(L0.hs); hemi.groundColor.copy(L0.hg); hemi.intensity = L0.hi; renderer.toneMappingExposure = L0.ex; shadowBox(L0.box, L0.far);
+  } else {
+    var d = new THREE.Vector3(s.dir[0], s.dir[1], s.dir[2]).normalize();
+    sun.position.copy(sun.target.position).addScaledVector(d, 110); sun.color.set(s.sunColor); sun.intensity = s.sunI;
+    var h = new THREE.Vector3(-d.x, 0, -d.z); if (h.lengthSq() < 1e-4) h.set(1, 0, 0); h.normalize();
+    fill.position.copy(sun.target.position).addScaledVector(h, 60).add(new THREE.Vector3(0, 34, 0)); fill.color.set(s.fillColor); fill.intensity = s.fillI;
+    hemi.color.set(s.sky); hemi.groundColor.set(s.ground); hemi.intensity = s.hemiI; renderer.toneMappingExposure = s.exposure;
+    envScale(s.env);
+    var lo = Math.max(.12, d.y); shadowBox(Math.min(L0.box*2.2, L0.box/Math.sqrt(lo)*.62 + L0.box*.4), 240);
+  }
+  wake();
+}
 
 /* ── camera + controls ── */
 var controls = new THREE.OrbitControls(camera, canvas);
@@ -911,7 +936,10 @@ var api = {
   zoomIn: function(){ zoomBy(1/1.35); }, zoomOut: function(){ zoomBy(1.35); },
   reset: function(){ touched = false; moveTo(home()); },
   autoRotate: function(on){ if (on === undefined) return controls.autoRotate; controls.autoRotate = !!on; return controls.autoRotate; },
-  snapshot: function(){ renderer.render(scene, camera); return canvas.toDataURL('image/png'); }
+  snapshot: function(){ renderer.render(scene, camera); return canvas.toDataURL('image/png'); },
+  /* model-space directions of geographic east and north (x, z), from the 1855 town plan: both churches face west, altar to the east */
+  compass: {east: [1, 0], north: [0, -1]},
+  light: setLight
 };
 return api;
 }
