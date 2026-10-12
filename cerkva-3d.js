@@ -725,7 +725,7 @@ function lowCornice(g, x0, x1, y, zf){
   var x = -4.9, z = NH + 3.0;
   add(new THREE.CylinderGeometry(.16, .2, .5, 12), M.dark, x, .25, z);
   add(new THREE.CylinderGeometry(.06, .08, 3.3, 10), M.dark, x, 1.9, z);
-  var lamp = mat('#fff2cc', {emissive: '#ffcf7a', emissiveIntensity: .25, roughness: .3});
+  var lamp = mat('#fff2cc', {emissive: '#ffcf7a', emissiveIntensity: .25, roughness: .3}); M.lamp = lamp;
   for (var i = 0; i < 4; i++){
     var a = i*Math.PI/2 + Math.PI/4, lx = x + Math.cos(a)*.45, lz = z + Math.sin(a)*.45;
     rod([x, 3.1, z], [lx, 3.25, lz], .025, M.dark);
@@ -833,6 +833,24 @@ sun.shadow.bias = -.0003; sun.shadow.normalBias = .035;
 scene.add(sun); scene.add(sun.target);
 var fill = new THREE.DirectionalLight('#d3dcff', .5); fill.position.set(40, 18, -26); scene.add(fill);
 
+/* ── night: floodlights on the walls, a warm glow in the windows (sun-3d.js, s.lamps 0…1) ── */
+var NL = {spots: [], points: []};
+function flood(p, t, ang, i){
+  var sp = new THREE.SpotLight('#ffd7a0', 0, 110, ang, .9, 1); sp.position.set(p[0], p[1], p[2]); sp.target.position.set(t[0], t[1], t[2]);
+  sp.userData.i = i; scene.add(sp); scene.add(sp.target); NL.spots.push(sp);
+}
+flood([-38, .3, 0], [-20, 9, 0], .42, 5.5); flood([-36, .3, 0], [-17.4, 20, 0], .22, 6.5);
+flood([-3, .3, 27], [-3, 8, 7.5], .6, 4.6); flood([-3, .3, -27], [-3, 8, -7.5], .6, 4.6); flood([33, .3, 0], [14, 6, 0], .4, 3.8);
+flood([8, .3, 28], [0, 16, 0], .2, 4.5);
+(function(){ var pt = new THREE.PointLight('#ffc77a', 0, 16, 1.6); pt.position.set(-4.9, 3.5, NH + 3.0); pt.userData.i = 2.2; scene.add(pt); NL.points.push(pt); })();
+M.glass.emissive = new THREE.Color('#ffb15a'); M.glass.emissiveIntensity = 0;
+function setLamps(n){
+  NL.spots.forEach(function(sp){ sp.intensity = n*sp.userData.i; });
+  NL.points.forEach(function(pt){ pt.intensity = n*pt.userData.i; });
+  M.glass.emissiveIntensity = n*.9;
+  if (M.lamp) M.lamp.emissiveIntensity = .25 + n*4;
+}
+
 /* ── daylight for the sun slider (sun-3d.js): s = null restores the studio light ── */
 var L0 = {sp: sun.position.clone(), sc: sun.color.clone(), si: sun.intensity, fp: fill.position.clone(), fc: fill.color.clone(), fi: fill.intensity,
           hs: hemi.color.clone(), hg: hemi.groundColor.clone(), hi: hemi.intensity, ex: renderer.toneMappingExposure, box: sc.right, far: sc.far};
@@ -843,6 +861,7 @@ function envScale(k){
   envMats.forEach(function(m){ m.envMapIntensity = m.userData.env0*k; });
 }
 function setLight(s){
+  setLamps(s ? s.lamps || 0 : 0);
   if (!s){ envScale(1);
     sun.position.copy(L0.sp); sun.color.copy(L0.sc); sun.intensity = L0.si; fill.position.copy(L0.fp); fill.color.copy(L0.fc); fill.intensity = L0.fi;
     hemi.color.copy(L0.hs); hemi.groundColor.copy(L0.hg); hemi.intensity = L0.hi; renderer.toneMappingExposure = L0.ex; shadowBox(L0.box, L0.far);

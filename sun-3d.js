@@ -47,8 +47,8 @@ function lightFor(h){
     sunColor: h < 6 ? mix('#ff7a3a', '#ffc98f', smooth(-1, 6, h)) : mix('#ffd9a8', '#fff3e0', high),
     fillI: .08 + .2*day, fillColor: mix('#5f73b0', '#d3dcff', day),
     sky: mix(mix('#3a4a7a', '#e9a37a', twi*(1 - day)*1.6), '#fff4de', day), ground: mix('#141722', '#3a2c1c', day),
-    hemiI: .18 + .27*day, exposure: .3 + .28*twi + .46*day, env: .05 + .1*twi + .33*day,
-    night: 1 - twi, warm: twi*(1 - day)
+    hemiI: .18 + .27*day, exposure: .4 + .18*twi + .46*day, env: .05 + .1*twi + .33*day,
+    night: 1 - twi, warm: twi*(1 - day), lamps: 1 - smooth(-4, 2, h)
   };
 }
 
@@ -71,6 +71,8 @@ var CSS = '.sun-p{position:fixed;z-index:3;left:50%;bottom:calc(env(safe-area-in
   '.sun-i{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.2rem .8rem;margin:.6rem 0 0;font:400 .72rem/1.5 var(--body);color:var(--muted)}.sun-i b{font-weight:600;color:var(--text)}' +
   '.sun-n{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(90% 70% at 50% 40%,rgba(18,26,52,.55),rgba(4,6,14,.92));opacity:0;transition:opacity .4s}' +
   '.sun-w{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(80% 60% at 50% 70%,rgba(255,130,60,.22),transparent 70%);opacity:0;transition:opacity .4s}' +
+  '.sun-l{display:inline-flex;align-items:center;gap:.45rem;margin:.55rem 0 0;padding:.34rem .7rem;border-radius:999px;border:1px solid var(--faint);background:none;color:var(--muted);font:500 .7rem var(--body);cursor:pointer}.sun-l[hidden]{display:none}' +
+  '.sun-l i{width:8px;height:8px;border-radius:50%;background:#5a5040}.sun-l[aria-pressed="true"]{color:var(--text);border-color:rgba(255,200,110,.5)}.sun-l[aria-pressed="true"] i{background:#ffc46a;box-shadow:0 0 8px #ffb347}' +
   '#view{z-index:1}' +
   '@media(min-width:1000px){.sun-p{left:clamp(16px,3vw,36px);bottom:calc(env(safe-area-inset-bottom,0px) + 24px);transform:translateY(8px)}.sun-p.open{transform:none}}' +
   '@media(max-width:640px){.sun-p{bottom:calc(env(safe-area-inset-bottom,0px) + 80px);padding:.8rem .9rem .7rem}.sun-d{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}.sun-d>*{flex:none}}';
@@ -95,13 +97,15 @@ function attach(api, o){
     '<button type="button" data-p="now">зараз</button><label title="Будь-яка дата"><input type="date" id="sunPick" aria-label="Дата"></label></div>' +
     '<div class="sun-t"><button type="button" class="sun-play" id="sunPlay" aria-label="Прогорнути день" title="Прогорнути день від сходу до заходу"></button>' +
     '<input type="range" id="sunTime" min="0" max="1439" step="1" aria-label="Година за київським часом"><output id="sunOut"></output></div>' +
-    '<p class="sun-i"><span id="sunRS"></span><span id="sunPos"></span></p>';
+    '<p class="sun-i"><span id="sunRS"></span><span id="sunPos"></span></p>' +
+    '<button type="button" class="sun-l" id="sunLamps" aria-pressed="true" title="Нічна підсвітка храму"><i></i>Нічна підсвітка</button>';
   (o.mount || document.body).appendChild(p);
   var $ = function(id){ return document.getElementById(id); }, rng = $('sunTime'), out = $('sunOut'), pick = $('sunPick'), play = $('sunPlay');
   var MON = ['січня', 'лютого', 'березня', 'квітня', 'травня', 'червня', 'липня', 'серпня', 'вересня', 'жовтня', 'листопада', 'грудня'];
   var PLAY = '<svg viewBox="0 0 14 14" fill="currentColor"><path d="M3 1.8v10.4L12 7z"/></svg>', PAUSE = '<svg viewBox="0 0 14 14" fill="currentColor"><path d="M3 2h3v10H3zM8 2h3v10H8z"/></svg>';
   play.innerHTML = PLAY;
-  var rs = null, on = false, anim = null;
+  var rs = null, on = false, anim = null, lampsOn = true;
+  $('sunLamps').addEventListener('click', function(){ lampsOn = !lampsOn; this.setAttribute('aria-pressed', String(lampsOn)); apply(); });
 
   function track(){
     var a = rs && rs.rise != null ? rs.rise/14.4 : 0, b = rs && rs.set != null ? rs.set/14.4 : 100;
@@ -123,6 +127,8 @@ function attach(api, o){
     var ce = Math.cos(h)*Math.sin(A), cn = Math.cos(h)*Math.cos(A);
     var L = lightFor(s.alt);
     L.dir = [E[0]*ce + N[0]*cn, Math.sin(h), E[1]*ce + N[1]*cn];
+    $('sunLamps').hidden = L.lamps <= 0;
+    if (!lampsOn) L.lamps = 0;
     if (on) api.light(L);
     night.style.opacity = on ? (L.night*.9).toFixed(3) : 0; warm.style.opacity = on ? (L.warm*1.1).toFixed(3) : 0;
     $('sunPos').innerHTML = s.alt > -.83 ? 'Сонце: висота <b>' + Math.round(s.alt) + '°</b>, з боку <b>' + DIRS[Math.round(s.az/22.5) % 16] + '</b>' : (s.alt > -6 ? '<b>Сутінки</b>' : '<b>Ніч</b>');

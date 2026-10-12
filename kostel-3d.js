@@ -728,6 +728,22 @@ sun.shadow.bias = -.0003; sun.shadow.normalBias = .035;
 scene.add(sun); scene.add(sun.target);
 var fill = new THREE.DirectionalLight('#d3dcff', .5); fill.position.set(42, 18, -20); scene.add(fill);
 
+/* ── night: floodlights on the walls, a warm glow in the windows (sun-3d.js, s.lamps 0…1) ── */
+var NL = {spots: [], points: []};
+function flood(p, t, ang, i){
+  var sp = new THREE.SpotLight('#ffd7a0', 0, 110, ang, .9, 1); sp.position.set(p[0], p[1], p[2]); sp.target.position.set(t[0], t[1], t[2]);
+  sp.userData.i = i; scene.add(sp); scene.add(sp.target); NL.spots.push(sp);
+}
+flood([-9, .3, 24], [-6.5, 16, 0], .42, 4.2); flood([9, .3, 24], [6.5, 16, 0], .42, 4.2); flood([0, .3, 26], [0, 25, 0], .24, 4);
+flood([30, 2, -14], [6.3, 9, -14], .75, 2); flood([-30, 2, -14], [-6.3, 9, -14], .75, 2); flood([0, .3, -52], [0, 11, -29], .38, 2.8);
+M.glass.emissive = new THREE.Color('#ffb15a'); M.glass.emissiveIntensity = 0;
+function setLamps(n){
+  NL.spots.forEach(function(sp){ sp.intensity = n*sp.userData.i; });
+  NL.points.forEach(function(pt){ pt.intensity = n*pt.userData.i; });
+  M.glass.emissiveIntensity = n*.9;
+  if (M.lamp) M.lamp.emissiveIntensity = .25 + n*4;
+}
+
 /* ── daylight for the sun slider (sun-3d.js): s = null restores the studio light ── */
 var L0 = {sp: sun.position.clone(), sc: sun.color.clone(), si: sun.intensity, fp: fill.position.clone(), fc: fill.color.clone(), fi: fill.intensity,
           hs: hemi.color.clone(), hg: hemi.groundColor.clone(), hi: hemi.intensity, ex: renderer.toneMappingExposure, box: sc.right, far: sc.far};
@@ -738,6 +754,7 @@ function envScale(k){
   envMats.forEach(function(m){ m.envMapIntensity = m.userData.env0*k; });
 }
 function setLight(s){
+  setLamps(s ? s.lamps || 0 : 0);
   if (!s){ envScale(1);
     sun.position.copy(L0.sp); sun.color.copy(L0.sc); sun.intensity = L0.si; fill.position.copy(L0.fp); fill.color.copy(L0.fc); fill.intensity = L0.fi;
     hemi.color.copy(L0.hs); hemi.groundColor.copy(L0.hg); hemi.intensity = L0.hi; renderer.toneMappingExposure = L0.ex; shadowBox(L0.box, L0.far);
