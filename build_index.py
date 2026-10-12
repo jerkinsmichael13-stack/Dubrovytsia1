@@ -100,9 +100,9 @@ def pid(u):
     m = re.search(r'imgur\.com/([A-Za-z0-9]+)\.', u or ''); return m.group(1) if m else ''
 OUT = {}
 for k, p in PLACES.items():
-    press = [[d['id'], d['year'], d['headline'], d['source']] for d in PRESS
+    press = [[d['id'], d['year'] or '', d['headline'], d['source']] for d in PRESS
              if mentions((d.get('headline') or '') + ' ' + (d.get('subheadline') or '') + ' ' + (d.get('translation') or '')[:8000], d.get('places'), p, k)]
-    press.sort(key=lambda x: x[1])
+    press.sort(key=lambda x: x[1] or 9999)
     photos, seen = [], set()
     for ph in PHOTOS:
         if ph.get('imageUrl') in seen: continue
@@ -121,7 +121,7 @@ for k, p in PLACES.items():
     sub = (KIND.get(r.get('kind'), 'Поселення')) + (' · ' + o if o else '') + (' · %d дворів у 1798 р.' % r['dvory'] if r.get('dvory') else '')
     add('place', p['name'], sub, 'poselennia.html?p=' + k, ' '.join(p['alt']))
 for d in PRESS:
-    add('press', d['headline'], '%s · %s' % (d['year'], d['source']), 'presa.html?id=' + d['id'], ' '.join((d.get('places') or []) + (d.get('people') or [])))
+    add('press', d['headline'], '%s · %s' % (d['year'] or 'без дати', d['source']), 'presa.html?id=' + d['id'], ' '.join((d.get('places') or []) + (d.get('people') or [])))
 seen = set()
 for ph in PHOTOS:
     u = ph.get('imageUrl')
@@ -138,9 +138,10 @@ for d in PRESS:
         if len(s) < 3: continue
         key = norm(s).rstrip('иі'); key = key.split('-')[-1] if '-' in key else key
         g = PPL.setdefault(key, {'name': s, 'forms': set(), 'n': 0, 'years': set()})
-        g['forms'].add(full.strip()); g['n'] += 1; g['years'].add(d['year'])
+        g['forms'].add(full.strip()); g['n'] += 1
+        if d['year']: g['years'].add(d['year'])
 for key, g in PPL.items():
-    ys = sorted(g['years']); yr = str(ys[0]) if len(ys) == 1 else '%d–%d' % (ys[0], ys[-1])
+    ys = sorted(g['years']); yr = '' if not ys else str(ys[0]) if len(ys) == 1 else '%d–%d' % (ys[0], ys[-1])
     add('person', g['name'], 'У пресі · %d %s · %s' % (g['n'], 'згадка' if g['n'] == 1 else 'згадки' if g['n'] < 5 else 'згадок', yr), 'presa.html?q=' + g['name'], ' '.join(g['forms']))
 for p in PERS:
     add('person', p.get('name', ''), ' · '.join(x for x in [p.get('role', ''), p.get('years', '')] if x), p.get('sourceUrl') or 'doslidnyk.html?tab=people', p.get('description', '')[:200])
@@ -242,7 +243,7 @@ for d in PRESS:
         k = skey(s)
         if k in SR and len(k) >= 3:
             if d['id'] not in [x[0] for x in SR[k]['press']]:
-                SR[k]['press'].append([d['id'], d['year'], d['headline'], full.strip()])
+                SR[k]['press'].append([d['id'], d['year'] or '', d['headline'], full.strip()])
                 SR[k]['forms'][s] = SR[k]['forms'].get(s, 0) + 5
 # ── зведення прізвищ, що різняться однією літерою (Приходько / Приходико) ──
 def lev1(a, b):

@@ -2093,11 +2093,11 @@
   ]
  },
  {
-  "id": "1870-vev-8-khoinatskyi-skazannia-pro-yuliianiiu",
-  "date": "1870",
-  "year": 1870,
+  "id": "khoinatskyi-skazannia-pro-yuliianiiu",
+  "date": "",
+  "year": null,
   "headline": "Історичне сказання про святу Іуліанію з Дубровиці",
-  "source": "Волынские епархиальные ведомости",
+  "source": "Видання не встановлено",
   "language": "ru",
   "tags": [
    "Культура й спорт"
@@ -2149,8 +2149,8 @@
   ]
  },
  {
-  "id": "1888-08-21-vev-24-istoryko-statystychnyi-opys-dubrovytsia",
-  "date": "1888-08-21",
+  "id": "1888-vev-24-istoryko-statystychnyi-opys-dubrovytsia",
+  "date": "1888",
   "year": 1888,
   "headline": "Висоцьк і Дубровиця в «Історико-статистичному описі» 1888 року: князі Гольшанські й Курбський",
   "source": "Волынские епархиальные ведомости",
@@ -2202,8 +2202,8 @@
   ]
  },
  {
-  "id": "1855-01-12-dziennik-warszawski-dabrowica-plater",
-  "date": "1855-01-12",
+  "id": "1855-12-31-dziennik-warszawski-dabrowica-plater",
+  "date": "1855-12-31",
   "year": 1855,
   "headline": "«Домбровиця»: родовідна розвідка Влодзімежа Платера",
   "source": "Dziennik Warszawski",

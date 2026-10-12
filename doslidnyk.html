@@ -862,7 +862,7 @@ var FL={pl:'\u{1F1F5}\u{1F1F1}',ru:'\u{1F1F7}\u{1F1FA}',uk:'\u{1F1FA}\u{1F1E6}',
 var LC={pl:'lpl',ru:'lru',uk:'luk',de:'lde'};
 var PRESS=[], SITE=[], PHOTOS=[], DOCS=[];
 
-function fd(s){var d=new Date(s+'T12:00:00');return d.toLocaleDateString('uk-UA',{day:'numeric',month:'long',year:'numeric'});}
+function fd(s){if(!/^\d{4}-\d{2}-\d{2}$/.test(s||''))return s?String(s).slice(0,4)+' р.':'дата не встановлена';var d=new Date(s+'T12:00:00');return d.toLocaleDateString('uk-UA',{day:'numeric',month:'long',year:'numeric'});}
 function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function rxEsc(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');}
 function hl(text,q){if(!q||!q.trim())return esc(text);var safe=esc(text);var re=new RegExp('('+rxEsc(q)+')','gi');return safe.replace(re,'<mark class="dh-hl">$1</mark>');}
@@ -1009,7 +1009,7 @@ function buildTimeline(){
     var el=document.getElementById('dhTl');
     var cnt={}; PRESS.forEach(function(e){var k=eraOf(e);cnt[k]=(cnt[k]||0)+1;});
     var chips='<div class="dx-chips" id="dxTlChips"><button class="dx-chip" data-era="" aria-pressed="'+(!TL_ERA)+'">Усі періоди</button>'+DH_ERAS.filter(function(r){return cnt[r[0]];}).map(function(r){return '<button class="dx-chip" data-era="'+r[0]+'" aria-pressed="'+(TL_ERA===r[0])+'">'+r[1]+' <sup>'+cnt[r[0]]+'</sup></button>';}).join('')+'</div>';
-    var sorted=PRESS.slice().sort(function(a,b){return a.date.localeCompare(b.date);});
+    var sorted=PRESS.slice().sort(function(a,b){return (a.date||'9999').localeCompare(b.date||'9999');});
     var html='';
     DH_ERAS.forEach(function(r){
         if(TL_ERA&&TL_ERA!==r[0])return;
@@ -1017,15 +1017,15 @@ function buildTimeline(){
         html+='<section class="dx-era"><h3 class="dx-era-h">'+r[1]+' <i>'+r[2]+'</i><span>'+items.length+'</span></h3>';
         var lastDec='';
         items.forEach(function(e){
-            var dec=Math.floor(e.year/10)*10+'-ті';
+            var dec=e.year?Math.floor(e.year/10)*10+'-ті':'Без дати';
             if(dec!==lastDec){html+='<div class="dx-dec">'+dec+'</div>';lastDec=dec;}
-            html+='<div class="dh-tl-item" onclick="openPress(\''+e.id+'\')"><div class="dh-tl-year">'+e.year+'</div><div class="dh-tl-dot-wrap"><div class="dh-tl-dot"></div></div><div class="dh-tl-card"><div class="dh-tl-date">'+fd(e.date)+' · '+esc(e.source)+'</div><div class="dh-tl-title">'+esc(e.headline)+'<span class="dh-tl-lang '+(LC[e.language]||'lpl')+'">'+(e.language||'').toUpperCase()+'</span></div>'+((e.places||[]).length?'<div class="dh-tl-src">'+esc((e.places||[]).slice(0,5).join(' · '))+'</div>':'')+'</div></div>';
+            html+='<div class="dh-tl-item" onclick="openPress(\''+e.id+'\')"><div class="dh-tl-year">'+(e.year||'б. д.')+'</div><div class="dh-tl-dot-wrap"><div class="dh-tl-dot"></div></div><div class="dh-tl-card"><div class="dh-tl-date">'+fd(e.date)+' · '+esc(e.source)+'</div><div class="dh-tl-title">'+esc(e.headline)+'<span class="dh-tl-lang '+(LC[e.language]||'lpl')+'">'+(e.language||'').toUpperCase()+'</span></div>'+((e.places||[]).length?'<div class="dh-tl-src">'+esc((e.places||[]).slice(0,5).join(' · '))+'</div>':'')+'</div></div>';
         });
         html+='</section>';
     });
-    var ys=PRESS.map(function(e){return e.year;}),Y0=Math.floor(Math.min.apply(null,ys)/5)*5,Y1=Math.floor(Math.max.apply(null,ys)/5)*5,B=[];
+    var ys=PRESS.map(function(e){return e.year;}).filter(Boolean),Y0=Math.floor(Math.min.apply(null,ys)/5)*5,Y1=Math.floor(Math.max.apply(null,ys)/5)*5,B=[];
     for(var y=Y0;y<=Y1;y+=5)B.push({y:y,n:0});
-    PRESS.forEach(function(e){if(!TL_ERA||eraOf(e)===TL_ERA)B[Math.floor((e.year-Y0)/5)].n++;});
+    PRESS.forEach(function(e){if(e.year&&(!TL_ERA||eraOf(e)===TL_ERA))B[Math.floor((e.year-Y0)/5)].n++;});
     var mx=Math.max.apply(null,B.map(function(b){return b.n;}))||1;
     var hist='<div class="dx-hist" aria-label="Статті за роками">'+B.map(function(b){return '<button type="button" class="dx-hb'+(b.n?'':' z')+'" data-y="'+b.y+'" title="'+b.y+'–'+(b.y+4)+': '+b.n+'"'+(b.n?'':' disabled')+'><i style="height:'+(b.n?Math.max(8,b.n/mx*100):3)+'%"></i></button>';}).join('')+'</div><div class="dx-hist-ax"><span>'+Y0+'</span><span>'+(Y1+4)+'</span></div>';
     el.innerHTML=hist+chips+html;
@@ -1095,7 +1095,7 @@ function renderPeople(){
     document.getElementById('dhPeople').innerHTML=list.length?list.map(function(p){
         var arts=p.arts.filter(function(a){return !PPL_PER||perOf(a.year)===PPL_PER;});
         return '<div class="dx-p"><div class="dx-p-h"><b>'+esc(p.name)+'</b><span>'+arts.length+'</span></div>'+(p.variants.length?'<div class="dx-p-v">'+esc(p.variants.slice(0,6).join(' · '))+'</div>':'')+
-          '<ul>'+arts.map(function(a){return '<li><a href="presa.html?id='+a.id+'" onclick="openPress(\''+a.id+'\');return false;"><i>'+a.year+'</i>'+esc(a.headline)+'</a></li>';}).join('')+'</ul></div>';
+          '<ul>'+arts.map(function(a){return '<li><a href="presa.html?id='+a.id+'" onclick="openPress(\''+a.id+'\');return false;"><i>'+(a.year||'б. д.')+'</i>'+esc(a.headline)+'</a></li>';}).join('')+'</ul></div>';
     }).join(''):'<p class="dx-note">Нічого не знайдено.</p>';
 }
 function buildInvSurnames(){
