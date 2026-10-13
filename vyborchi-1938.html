@@ -59,7 +59,9 @@ html,body{touch-action:manipulation;}
 @media(max-width:640px){.vbc-in{padding:0 1.2rem;gap:1rem;grid-template-columns:1fr;}}
 .vbc-card{background:rgba(255,255,255,.025);border:1px solid rgba(201,162,39,.09);border-radius:16px;padding:1.8rem 2rem;display:flex;gap:1.1rem;align-items:flex-start;transition:border-color .3s,box-shadow .3s;}
 .vbc-card:hover{border-color:rgba(201,162,39,.2);box-shadow:0 12px 40px rgba(0,0,0,.3);}
-.vbc-ico{width:38px;height:38px;border-radius:10px;background:rgba(201,162,39,.09);border:1px solid rgba(201,162,39,.14);display:flex;align-items:center;justify-content:center;font-size:1.05rem;flex-shrink:0;margin-top:.1rem;}
+.vbc-ico{width:38px;height:38px;border-radius:10px;background:rgba(201,162,39,.09);border:1px solid rgba(201,162,39,.14);display:flex;align-items:center;justify-content:center;color:#c9a227;flex-shrink:0;margin-top:.1rem;}
+.vbc-ico svg{width:19px;height:19px;}
+[data-theme="light"] .vbc-ico{color:#8a6516;}
 .vbc-ttl{font-family:'Cormorant Garamond',serif;font-size:1.08rem;font-weight:500;color:#e8dbb5;margin-bottom:.4rem;}
 .vbc-txt{font-family:'Manrope',sans-serif;font-size:.75rem;line-height:1.7;color:rgba(232,219,181,.42);}
 .vbc-txt em{color:rgba(201,162,39,.68);font-style:normal;}
@@ -309,7 +311,24 @@ html,body{touch-action:manipulation;}
   [data-theme="light"] .vbr-t .td-born{color:rgba(80,55,15,.45);}
 }
 @media(max-width:600px){.vbs-grid{grid-template-columns:1fr;}.vbr-hd-row{flex-direction:column;gap:.8rem;}.vbr-bdg{align-self:flex-start;}.vbs-strip{grid-template-columns:repeat(2,1fr);}}
-.vbs-rare-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;}
+.vbs-rare-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-bottom:2rem;}
+.vbs-rare-hd{display:flex;align-items:center;gap:.8rem;margin:2.5rem 0 1.2rem;}
+.vbs-rare-hd i{flex:1;height:1px;background:linear-gradient(90deg,rgba(201,162,39,.22),transparent);}
+.vbs-rare-k{font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(201,162,39,.6);}
+.vbs-rare-s{font-family:'Cormorant Garamond',serif;font-size:.95rem;font-style:italic;color:rgba(201,162,39,.55);}
+.vbs-rare{background:rgba(201,162,39,.04);border:1px solid rgba(201,162,39,.16);border-radius:16px;padding:1.6rem 1.5rem;}
+.vbs-rare-ico{width:42px;height:42px;border-radius:11px;display:grid;place-items:center;margin-bottom:.9rem;color:#c9a227;background:rgba(201,162,39,.08);border:1px solid rgba(201,162,39,.16);}
+.vbs-rare-ico svg{width:22px;height:22px;}
+.vbs-rare-t{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:500;color:#e8dbb5;margin-bottom:.2rem;}
+.vbs-rare-pl{font-family:'Manrope',sans-serif;font-size:.62rem;color:rgba(201,162,39,.6);letter-spacing:.06em;margin-bottom:.9rem;font-style:italic;}
+.vbs-rare-d{font-family:'Manrope',sans-serif;font-size:.74rem;line-height:1.7;color:rgba(232,219,181,.55);}
+.vbs-rare-d strong{color:#e8dbb5;}
+[data-theme="light"] .vbs-rare{background:#fff;border-color:rgba(201,162,39,.24);}
+[data-theme="light"] .vbs-rare-ico{color:#8a6516;}
+[data-theme="light"] .vbs-rare-t,[data-theme="light"] .vbs-rare-d strong{color:#1a1000;}
+[data-theme="light"] .vbs-rare-d{color:rgba(60,40,10,.72);}
+[data-theme="light"] .vbs-rare-pl,[data-theme="light"] .vbs-rare-s{color:rgba(140,90,10,.75);}
+[data-theme="light"] .vbs-rare-k{color:rgba(120,90,10,.7);}
 @media(max-width:760px){.vbs-rare-grid-3{grid-template-columns:1fr;}}
 
 .vbs-donuts{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-top:1.5rem;}
@@ -337,6 +356,18 @@ html,body{touch-action:manipulation;}
 .fp.on:hover{box-shadow:0 4px 18px rgba(201,162,39,.4);}
 .fp-ic{font-size:.8em;}
 .fp-ct{font-size:.54rem;opacity:.7;margin-left:.05rem;}
+.fp-more{border-style:dashed !important;}
+.prof-panel{margin:-.6rem 0 1.4rem;padding:1rem 1.1rem 1.1rem;border:1px solid rgba(201,162,39,.16);border-radius:12px;background:rgba(201,162,39,.03);}
+.prof-panel[hidden]{display:none;}
+.prof-find input{width:100%;padding:.6rem .9rem;border-radius:8px;border:1px solid rgba(201,162,39,.25);background:transparent;color:inherit;font-family:'Manrope',sans-serif;font-size:.78rem;}
+.prof-find input:focus{outline:none;border-color:#c9a227;}
+.prof-grp{margin-top:.9rem;}
+.prof-grp[hidden]{display:none;}
+.prof-grp-h{margin:0 0 .45rem;font-family:'Manrope',sans-serif;font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(201,162,39,.7);}
+.prof-grp-b{display:flex;flex-wrap:wrap;gap:.4rem;}
+.prof-grp-b .fp[hidden]{display:none;}
+.prof-none{margin:.9rem 0 0;font-family:'Manrope',sans-serif;font-size:.74rem;opacity:.7;}
+[data-theme="light"] .prof-grp-h{color:#8a6516;}
 [data-theme="dark"] .fp{background:rgba(255,255,255,.05);color:rgba(255,255,255,.55);border-color:rgba(255,255,255,.1);}
 [data-theme="dark"] .fp:hover{color:#fff;border-color:rgba(201,162,39,.32);background:rgba(201,162,39,.07);}
 [data-theme="dark"] .fp.on{background:linear-gradient(135deg,#c9a227,#9d7b0c);color:#0a0805;border-color:transparent;}
@@ -354,6 +385,22 @@ html,body{touch-action:manipulation;}
 .vb-map-wrap{position:relative;height:72vh;min-height:420px;overflow:hidden;}
 .vb-map-img{width:100%;height:100%;display:block;object-fit:cover;object-position:center 62%;filter:sepia(.1) contrast(1.05) brightness(.97);transition:transform 22s ease-out;}
 .vb-map-sec:hover .vb-map-img{transform:scale(1.02);}
+.vb-map-img{cursor:zoom-in;}
+.vb-map-open{position:absolute;z-index:3;right:1.4rem;top:1.4rem;display:inline-flex;align-items:center;gap:.5rem;padding:.6rem 1rem;border-radius:100px;border:1px solid rgba(201,162,39,.45);background:rgba(18,14,8,.72);color:#f4e9c8;font-family:'Manrope',sans-serif;font-size:.72rem;font-weight:600;cursor:pointer;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);transition:border-color .2s,background .2s;}
+.vb-map-open:hover{border-color:#d4b25a;background:rgba(18,14,8,.85);}
+.vb-map-open:focus-visible{outline:2px solid #d4b25a;outline-offset:2px;}
+.vb-map-open svg{width:16px;height:16px;}
+.vb-mz{position:fixed;inset:0;z-index:2000;background:#0c0a07;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto;}
+.vb-mz[hidden]{display:none;}
+.vb-mz-bar{display:flex;align-items:center;gap:.5rem;padding:calc(env(safe-area-inset-top,0px) + .7rem) 1rem .7rem;color:#f4e9c8;font-family:'Manrope',sans-serif;font-size:.8rem;}
+.vb-mz-bar b{flex:1 1 0;min-width:0;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.vb-mz-bar button{flex:none;width:40px;height:40px;border-radius:100px;border:1px solid rgba(244,233,200,.25);background:rgba(244,233,200,.06);color:#f4e9c8;font-size:1.05rem;cursor:pointer;}
+.vb-mz-bar button:hover{border-color:#d4b25a;}
+.vb-mz-stage{position:relative;overflow:hidden;touch-action:none;cursor:grab;}
+.vb-mz-stage.drag{cursor:grabbing;}
+.vb-mz-stage img{position:absolute;left:0;top:0;transform-origin:0 0;max-width:none;user-select:none;-webkit-user-select:none;}
+@media(max-width:480px){.vb-mz-bar b{font-size:.7rem;}}
+.vb-mz-hint{margin:0;padding:.5rem 1rem calc(env(safe-area-inset-bottom,0px) + .7rem);text-align:center;color:rgba(244,233,200,.5);font-family:'Manrope',sans-serif;font-size:.7rem;}
 .vb-map-wrap::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(237,232,223,.55) 0%,transparent 14%,transparent 60%,rgba(237,232,223,.96) 100%);z-index:1;pointer-events:none;}
 .vb-map-cap{position:absolute;bottom:1.8rem;left:50%;transform:translateX(-50%);z-index:2;display:flex;align-items:center;gap:1.2rem;white-space:nowrap;}
 .vb-map-cap-line{display:block;width:60px;height:1px;background:rgba(100,70,10,.35);}
@@ -362,7 +409,7 @@ html,body{touch-action:manipulation;}
 [data-theme="dark"] .vb-map-wrap::before{background:linear-gradient(180deg,rgba(10,8,5,.55) 0%,transparent 14%,transparent 60%,rgba(10,8,5,.96) 100%);}
 [data-theme="dark"] .vb-map-cap-line{background:rgba(201,162,39,.4);}
 [data-theme="dark"] .vb-map-cap-txt{color:rgba(201,162,39,.7);}
-@media(max-width:600px){.vb-map-wrap{height:52vh;min-height:280px;}.vb-map-cap-line{width:28px;}.vb-map-cap-txt{font-size:.65rem;}}
+@media(max-width:600px){.vb-map-open{top:auto;bottom:3.6rem;right:50%;transform:translateX(50%);}.vb-map-wrap{height:52vh;min-height:280px;}.vb-map-cap-line{width:28px;}.vb-map-cap-txt{font-size:.65rem;}}
 </style>
 <link rel="stylesheet" href="ds.css">
 </head>
@@ -415,16 +462,7 @@ html,body{touch-action:manipulation;}
 [data-theme="light"] .donut-leg-label{color:rgba(60,40,10,.7);}
 [data-theme="light"] .donut-leg-pct{color:rgba(140,100,10,.8);}
 /* Interesting professions cards in light mode */
-[data-theme="light"] .vbs-rare-grid-3 > div{border-color:rgba(201,162,39,.3) !important;background:#fff !important;}
-[data-theme="light"] .vbs-rare-grid-3 > div > div[style*="font-family:'Cormorant"]{color:#1a1000 !important;}
-[data-theme="light"] .vbs-rare-grid-3 > div > div[style*="font-style:italic"]{color:rgba(140,90,10,.7) !important;}
-[data-theme="light"] .vbs-rare-grid-3 > div > div[style*="line-height:1.7"]{color:rgba(60,40,10,.72) !important;}
-[data-theme="light"] .vbs-rare-grid-3 strong{color:#1a1000 !important;}
-[data-theme="light"] .vbs-rare-grid-3 > div:nth-child(2){border-color:rgba(120,80,180,.28) !important;background:#fff !important;}
-[data-theme="light"] .vbs-rare-grid-3 > div:nth-child(3){border-color:rgba(60,160,80,.28) !important;background:#fff !important;}
 /* Rare section eyebrow */
-[data-theme="light"] .vbs-rare-hd span[style*="rgba(201"]{color:rgba(120,90,10,.65) !important;}
-[data-theme="light"] .vbs-rare-hd span[style*="font-style:italic"]{color:rgba(140,90,10,.55) !important;}
 
 /* ── TABLE — light theme ── */
 [data-theme="light"] .vbr-tw{box-shadow:0 8px 40px rgba(0,0,0,.1);}
@@ -467,7 +505,6 @@ html,body{touch-action:manipulation;}
 [data-theme="light"] .vbr-ib-c strong{color:#a07c10;}
 [data-theme="light"] .vbr-ib-p{color:rgba(60,40,10,.5);}
 /* scroll bar label */
-[data-theme="light"] .vbs-rare-hd div[style*="height:1px"]{background:linear-gradient(90deg,rgba(201,162,39,.25),transparent) !important;}
 </style>
 <header class="header">
     <div class="header-container">
@@ -561,8 +598,14 @@ html,body{touch-action:manipulation;}
 </section>
 
 <section class="vb-map-sec">
+<div class="vb-mz" id="vbMz" role="dialog" aria-modal="true" aria-label="Карта Дубровиці та околиць 1928 р." hidden>
+  <div class="vb-mz-bar"><b>Карта Дубровиці та околиць · 1928</b><button type="button" id="vbMzOut" aria-label="Віддалити">−</button><button type="button" id="vbMzIn" aria-label="Наблизити">+</button><button type="button" id="vbMzFit" aria-label="Уся карта">⤢</button><button type="button" id="vbMzClose" aria-label="Закрити">✕</button></div>
+  <div class="vb-mz-stage" id="vbMzStage"><img id="vbMzImg" alt="Карта Дубровиці та околиць 1928 р." draggable="false"></div>
+  <p class="vb-mz-hint">Колесо миші або два пальці — наблизити · тягніть, щоб рухати</p>
+</div>
   <div class="vb-map-wrap">
     <img src="https://i.imgur.com/UsBqTTF.jpeg" alt="Карта Дубровиці та околиць 1928 р." class="vb-map-img">
+    <button type="button" class="vb-map-open" id="vbMapOpen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.8-4.8M10.5 7.5v6M7.5 10.5h6"/></svg>Відкрити карту</button>
     <div class="vb-map-cap">
       <span class="vb-map-cap-line"></span>
       <span class="vb-map-cap-txt">Карта Дубровиці та околиць · 1928 р.</span>
@@ -573,10 +616,10 @@ html,body{touch-action:manipulation;}
 
 <section class="vbc">
   <div class="vbc-in">
-    <div class="vbc-card"><div class="vbc-ico">🗺️</div><div><div class="vbc-ttl">Польський період</div><div class="vbc-txt">У 1938 р. Дубровиця входила до Польської Республіки. Список складався для парламентських виборів і фіксував дорослих мешканців з правом голосу.</div></div></div>
-    <div class="vbc-card"><div class="vbc-ico">📋</div><div><div class="vbc-ttl">Що містить список</div><div class="vbc-txt">Прізвище та ім'я, дата народження, <em>рід занять</em>, адреса та дата поселення. Понад <em>65 різних професій</em> зафіксовано в реєстрі.</div></div></div>
-    <div class="vbc-card"><div class="vbc-ico">🔍</div><div><div class="vbc-ttl">Для генеалогічних досліджень</div><div class="vbc-txt">Унікальне першоджерело для пошуку предків 1930-х. Пошук за прізвищем або ім'ям, фільтр за пунктом або родом занять.</div></div></div>
-    <div class="vbc-card"><div class="vbc-ico">📂</div><div><div class="vbc-ttl">Архівне джерело</div><div class="vbc-txt"><em>Фонд 263 ДАРО</em> — Державний архів Рівненської обл. П'ять описів: місто Домбровіца, гміна Домбровіца та навколишні села: Соломіївка, Орв'яниця, Селець, Ясинець, Воробин та інші.</div></div></div>
+    <div class="vbc-card"><div class="vbc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4 3 6.5v13.5l6-2.5 6 2.5 6-2.5V4l-6 2.5z"/><path d="M9 4v13.5M15 6.5V20"/></svg></div><div><div class="vbc-ttl">Польський період</div><div class="vbc-txt">У 1938 р. Дубровиця входила до Польської Республіки. Список складався для парламентських виборів і фіксував дорослих мешканців з правом голосу.</div></div></div>
+    <div class="vbc-card"><div class="vbc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3.5" width="14" height="17" rx="2"/><path d="M9 3.5h6v2.5H9zM8.5 10.5h7M8.5 14h7M8.5 17.5h4"/></svg></div><div><div class="vbc-ttl">Що містить список</div><div class="vbc-txt">Прізвище та ім'я, дата народження, <em>рід занять</em>, адреса та дата поселення. Понад <em>65 різних професій</em> зафіксовано в реєстрі.</div></div></div>
+    <div class="vbc-card"><div class="vbc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5.5" r="2.2"/><circle cx="6" cy="17.5" r="2.2"/><circle cx="18" cy="17.5" r="2.2"/><path d="M12 7.7V12M6 15.3V12h12v3.3"/></svg></div><div><div class="vbc-ttl">Для генеалогічних досліджень</div><div class="vbc-txt">Унікальне першоджерело для пошуку предків 1930-х. Пошук за прізвищем або ім'ям, фільтр за пунктом або родом занять.</div></div></div>
+    <div class="vbc-card"><div class="vbc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 7.5 12 3.5l8.5 4v9L12 20.5l-8.5-4z"/><path d="M3.5 7.5 12 11.5l8.5-4M12 11.5v9"/></svg></div><div><div class="vbc-ttl">Архівне джерело</div><div class="vbc-txt"><em>Фонд 263 ДАРО</em> — Державний архів Рівненської обл. П'ять описів: місто Домбровіца, гміна Домбровіца та навколишні села: Соломіївка, Орв'яниця, Селець, Ясинець, Воробин та інші.</div></div></div>
   </div>
 </section>
 
@@ -609,37 +652,26 @@ html,body{touch-action:manipulation;}
     </div>
 
       <!-- ЦІКАВІ ПРОФЕСІЇ -->
-      <div class="vbs-rare-hd" style="margin:2.5rem 0 1.2rem;display:flex;align-items:center;gap:.8rem;">
-        <span style="font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(201,162,39,.42);">Рідкісне · Незвичайне</span>
-        <div style="flex:1;height:1px;background:linear-gradient(90deg,rgba(201,162,39,.15),transparent);"></div>
-        <span style="font-family:'Cormorant Garamond',serif;font-size:.9rem;font-style:italic;color:rgba(201,162,39,.35);">Топ&#x2011;3 найцікавіші професії</span>
-      </div>
-      <div class="vbs-rare-grid-3" style="margin-bottom:2rem;">
-
-        <div style="background:rgba(201,162,39,.05);border:1px solid rgba(201,162,39,.18);border-radius:16px;padding:1.6rem 1.5rem;position:relative;overflow:hidden;">
-          <div style="position:absolute;top:-.5rem;right:-.5rem;font-size:3.5rem;opacity:.08;pointer-events:none;">🦴</div>
-          <div style="font-size:1.6rem;margin-bottom:.7rem;">🦴</div>
-          <div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:500;color:#e8dbb5;margin-bottom:.2rem;">Ракарник</div>
-          <div style="font-family:'Manrope',sans-serif;font-size:.62rem;color:rgba(201,162,39,.55);letter-spacing:.08em;margin-bottom:.9rem;font-style:italic;">rakarz · 1 особа</div>
-          <div style="font-family:'Manrope',sans-serif;font-size:.72rem;line-height:1.7;color:rgba(232,219,181,.5);">Найменш престижна, але незамінна посада. <strong style="color:#e8dbb5;">Збирав трупи тварин</strong> з вулиць та полів, утилізовував їх або переробляв на добриво і клей. Санітар міста.</div>
+      <div class="vbs-rare-hd"><span class="vbs-rare-k">Рідкісне · незвичайне</span><i></i><span class="vbs-rare-s">Три найцікавіші професії</span></div>
+      <div class="vbs-rare-grid-3">
+        <div class="vbs-rare">
+          <div class="vbs-rare-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 15.5l7-7"/><path d="M7.2 13.4a2.2 2.2 0 1 0-1.6 3.8 2.2 2.2 0 1 0 3.8-1.6M16.8 10.6a2.2 2.2 0 1 0 1.6-3.8 2.2 2.2 0 1 0-3.8 1.6"/></svg></div>
+          <div class="vbs-rare-t">Ракарник</div>
+          <div class="vbs-rare-pl">rakarz · 1 особа</div>
+          <div class="vbs-rare-d">Найменш престижна, але незамінна посада. <strong style="color:#e8dbb5;">Збирав трупи тварин</strong> з вулиць та полів, утилізовував їх або переробляв на добриво і клей. Санітар міста.</div>
         </div>
-
-        <div style="background:rgba(120,80,180,.05);border:1px solid rgba(140,90,200,.18);border-radius:16px;padding:1.6rem 1.5rem;position:relative;overflow:hidden;">
-          <div style="position:absolute;top:-.5rem;right:-.5rem;font-size:3.5rem;opacity:.08;pointer-events:none;">🍶</div>
-          <div style="font-size:1.6rem;margin-bottom:.7rem;">🍶</div>
-          <div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:500;color:#e8dbb5;margin-bottom:.2rem;">Горілчаний майстер</div>
-          <div style="font-family:'Manrope',sans-serif;font-size:.62rem;color:rgba(201,162,39,.55);letter-spacing:.08em;margin-bottom:.9rem;font-style:italic;">gorzelniczy · 1 особа</div>
-          <div style="font-family:'Manrope',sans-serif;font-size:.72rem;line-height:1.7;color:rgba(232,219,181,.5);">Фахівець горілчаного виробництва. <strong style="color:#e8dbb5;">Гуральня</strong> — типове підприємство поміщицьких маєтків Полісся. Виробництво горілки у 1930-х часто підконтрольне єврейським орендарям або шляхті.</div>
+        <div class="vbs-rare">
+          <div class="vbs-rare-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 20.5h10M9 20.5v-6.5a3 3 0 0 1 6 0v6.5"/><path d="M12 11V6.5h4.5v2.5"/><path d="M16.5 9c1.5 0 2.5 1 2.5 2.5V14"/><path d="M19 16.5v.5"/></svg></div>
+          <div class="vbs-rare-t">Горілчаний майстер</div>
+          <div class="vbs-rare-pl">gorzelniczy · 1 особа</div>
+          <div class="vbs-rare-d">Фахівець горілчаного виробництва. <strong style="color:#e8dbb5;">Гуральня</strong> — типове підприємство поміщицьких маєтків Полісся. Виробництво горілки у 1930-х часто підконтрольне єврейським орендарям або шляхті.</div>
         </div>
-
-        <div style="background:rgba(60,160,80,.05);border:1px solid rgba(60,160,80,.18);border-radius:16px;padding:1.6rem 1.5rem;position:relative;overflow:hidden;">
-          <div style="position:absolute;top:-.5rem;right:-.5rem;font-size:3.5rem;opacity:.08;pointer-events:none;">👒</div>
-          <div style="font-size:1.6rem;margin-bottom:.7rem;">👒</div>
-          <div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:500;color:#e8dbb5;margin-bottom:.2rem;">Капелюшниця</div>
-          <div style="font-family:'Manrope',sans-serif;font-size:.62rem;color:rgba(201,162,39,.55);letter-spacing:.08em;margin-bottom:.9rem;font-style:italic;">kapelusznica · 1 особа</div>
-          <div style="font-family:'Manrope',sans-serif;font-size:.72rem;line-height:1.7;color:rgba(232,219,181,.5);">Єдина жінка-майстриня на виробництво <strong style="color:#e8dbb5;">модних дамських капелюхів</strong>. Обслуговувала дружин чиновників і заможних торговців. «Міське» ремесло у сільській місцевості.</div>
+        <div class="vbs-rare">
+          <div class="vbs-rare-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 16.5c2.5 1.6 15.5 1.6 18 0"/><path d="M6 16v-3.5C6 8.5 8.5 6 12 6s6 2.5 6 6.5V16"/><path d="M6.3 12.5c3.5 1 7.9 1 11.4 0"/></svg></div>
+          <div class="vbs-rare-t">Капелюшниця</div>
+          <div class="vbs-rare-pl">kapelusznica · 1 особа</div>
+          <div class="vbs-rare-d">Єдина жінка-майстриня на виробництво <strong style="color:#e8dbb5;">модних дамських капелюхів</strong>. Обслуговувала дружин чиновників і заможних торговців. «Міське» ремесло у сільській місцевості.</div>
         </div>
-
       </div>
 
       <!-- DONUT CHARTS -->
@@ -738,52 +770,29 @@ html,body{touch-action:manipulation;}
           Рід занять
         </div>
         <div class="vbr-fp" id="tProf">
-          <button class="fp on" data-prof="all">✦ Усі заняття<span class="fp-ct">8 619</span></button>
-<button class="fp" data-prof="__empty__">— Не вказано<span class="fp-ct">1 721</span></button>
+<button class="fp on" data-prof="all">✦ Усі заняття<span class="fp-ct">8 619</span></button>
 <button class="fp" data-prof="рільник">🌾 Рільник<span class="fp-ct">4 217</span></button>
 <button class="fp" data-prof="домашнє господарство">🏠 Домашнє господарство<span class="fp-ct">1 586</span></button>
 <button class="fp" data-prof="торгівля">🛒 Торгівля<span class="fp-ct">377</span></button>
 <button class="fp" data-prof="робітник">⚒️ Робітник<span class="fp-ct">244</span></button>
-<button class="fp" data-prof="швець">👟 Швець<span class="fp-ct">54</span></button>
+<button class="fp" data-prof="__empty__">— Не вказано<span class="fp-ct">1 721</span></button>
 <button class="fp" data-prof="без професії">— Без професії<span class="fp-ct">47</span></button>
-<button class="fp" data-prof="вчитель">📖 Вчитель<span class="fp-ct">43</span></button>
-<button class="fp" data-prof="кравець">🧵 Кравець<span class="fp-ct">41</span></button>
-<button class="fp" data-prof="різник">🔪 Різник<span class="fp-ct">33</span></button>
-<button class="fp" data-prof="урядовець">📋 Урядовець<span class="fp-ct">26</span></button>
-<button class="fp" data-prof="столяр">🪑 Столяр<span class="fp-ct">21</span></button>
-<button class="fp" data-prof="коваль">⚒️ Коваль<span class="fp-ct">18</span></button>
-<button class="fp" data-prof="візник">🐴 Візник<span class="fp-ct">15</span></button>
-<button class="fp" data-prof="тесля">🪚 Тесля<span class="fp-ct">14</span></button>
-<button class="fp" data-prof="лісник">🌲 Лісник<span class="fp-ct">11</span></button>
-<button class="fp" data-prof="шапкар">🎩 Шапкар<span class="fp-ct">10</span></button>
-<button class="fp" data-prof="залізничник">🚂 Залізничник<span class="fp-ct">9</span></button>
-<button class="fp" data-prof="браківник">🪵 Браківник<span class="fp-ct">9</span></button>
-<button class="fp" data-prof="поліцейський">🛡️ Поліцейський<span class="fp-ct">8</span></button>
-<button class="fp" data-prof="священник">⛪ Священник<span class="fp-ct">8</span></button>
-<button class="fp" data-prof="власник">🏪 Власник<span class="fp-ct">8</span></button>
-<button class="fp" data-prof="бляхар">🔧 Бляхар<span class="fp-ct">7</span></button>
-<button class="fp" data-prof="перукар">✂️ Перукар<span class="fp-ct">6</span></button>
-<button class="fp" data-prof="механік">🔩 Механік<span class="fp-ct">5</span></button>
-<button class="fp" data-prof="бухгалтер">📊 Бухгалтер<span class="fp-ct">5</span></button>
-<button class="fp" data-prof="муляр">🧱 Муляр<span class="fp-ct">4</span></button>
-<button class="fp" data-prof="слюсар">🔧 Слюсар<span class="fp-ct">4</span></button>
-<button class="fp" data-prof="скляр">🪟 Скляр<span class="fp-ct">4</span></button>
-<button class="fp" data-prof="мельник">⚙️ Мельник<span class="fp-ct">3</span></button>
-<button class="fp" data-prof="лікар">⚕️ Лікар<span class="fp-ct">3</span></button>
-<button class="fp" data-prof="акушерка">👶 Акушерка<span class="fp-ct">3</span></button>
-<button class="fp" data-prof="стельмах">🛞 Стельмах<span class="fp-ct">3</span></button>
-<button class="fp" data-prof="кушнір">🧥 Кушнір<span class="fp-ct">3</span></button>
-<button class="fp" data-prof="пекар">🍞 Пекар<span class="fp-ct">2</span></button>
-<button class="fp" data-prof="садівник">🌱 Садівник<span class="fp-ct">2</span></button>
-<button class="fp" data-prof="інженер">📐 Інженер<span class="fp-ct">2</span></button>
-<button class="fp" data-prof="годинникар">⌚ Годинникар<span class="fp-ct">2</span></button>
-<button class="fp" data-prof="фотограф">📷 Фотограф<span class="fp-ct">2</span></button>
-<button class="fp" data-prof="ткач">🧶 Ткач<span class="fp-ct">1</span></button>
-<button class="fp" data-prof="юрист">⚖️ Юрист<span class="fp-ct">1</span></button>
-<button class="fp" data-prof="дантист">🦷 Дантист<span class="fp-ct">1</span></button>
-<button class="fp" data-prof="друкар">🖨️ Друкар<span class="fp-ct">1</span></button>
-<button class="fp" data-prof="музикант">🎵 Музикант<span class="fp-ct">1</span></button>
-
+<button type="button" class="fp fp-more" id="profMore" aria-expanded="false" aria-controls="profPanel">Інші заняття · 38</button>
+        </div>
+        <div class="prof-panel" id="profPanel" hidden>
+          <div class="prof-find"><input type="search" id="profFind" placeholder="Знайти заняття: коваль, вчитель, лікар…" autocomplete="off" aria-label="Знайти заняття"></div>
+          <div class="prof-grp" data-grp="agri"><p class="prof-grp-h">Землеробство</p><div class="prof-grp-b"><button class="fp" data-prof="садівник">🌱 Садівник<span class="fp-ct">2</span></button></div></div>
+          <div class="prof-grp" data-grp="craft"><p class="prof-grp-h">Ремесло</p><div class="prof-grp-b"><button class="fp" data-prof="швець">👟 Швець<span class="fp-ct">54</span></button><button class="fp" data-prof="кравець">🧵 Кравець<span class="fp-ct">41</span></button><button class="fp" data-prof="столяр">🪑 Столяр<span class="fp-ct">21</span></button><button class="fp" data-prof="коваль">⚒️ Коваль<span class="fp-ct">18</span></button><button class="fp" data-prof="тесля">🪚 Тесля<span class="fp-ct">14</span></button><button class="fp" data-prof="шапкар">🎩 Шапкар<span class="fp-ct">10</span></button><button class="fp" data-prof="бляхар">🔧 Бляхар<span class="fp-ct">7</span></button><button class="fp" data-prof="муляр">🧱 Муляр<span class="fp-ct">4</span></button><button class="fp" data-prof="слюсар">🔧 Слюсар<span class="fp-ct">4</span></button><button class="fp" data-prof="скляр">🪟 Скляр<span class="fp-ct">4</span></button><button class="fp" data-prof="стельмах">🛞 Стельмах<span class="fp-ct">3</span></button><button class="fp" data-prof="кушнір">🧥 Кушнір<span class="fp-ct">3</span></button><button class="fp" data-prof="годинникар">⌚ Годинникар<span class="fp-ct">2</span></button><button class="fp" data-prof="ткач">🧶 Ткач<span class="fp-ct">1</span></button></div></div>
+          <div class="prof-grp" data-grp="trade"><p class="prof-grp-h">Торгівля</p><div class="prof-grp-b"><button class="fp" data-prof="власник">🏪 Власник<span class="fp-ct">8</span></button></div></div>
+          <div class="prof-grp" data-grp="food"><p class="prof-grp-h">Харчування</p><div class="prof-grp-b"><button class="fp" data-prof="різник">🔪 Різник<span class="fp-ct">33</span></button><button class="fp" data-prof="пекар">🍞 Пекар<span class="fp-ct">2</span></button></div></div>
+          <div class="prof-grp" data-grp="transport"><p class="prof-grp-h">Транспорт</p><div class="prof-grp-b"><button class="fp" data-prof="візник">🐴 Візник<span class="fp-ct">15</span></button><button class="fp" data-prof="залізничник">🚂 Залізничник<span class="fp-ct">9</span></button></div></div>
+          <div class="prof-grp" data-grp="intell"><p class="prof-grp-h">Освіта і наука</p><div class="prof-grp-b"><button class="fp" data-prof="вчитель">📖 Вчитель<span class="fp-ct">43</span></button><button class="fp" data-prof="урядовець">📋 Урядовець<span class="fp-ct">26</span></button><button class="fp" data-prof="бухгалтер">📊 Бухгалтер<span class="fp-ct">5</span></button><button class="fp" data-prof="інженер">📐 Інженер<span class="fp-ct">2</span></button><button class="fp" data-prof="юрист">⚖️ Юрист<span class="fp-ct">1</span></button></div></div>
+          <div class="prof-grp" data-grp="medical"><p class="prof-grp-h">Медицина</p><div class="prof-grp-b"><button class="fp" data-prof="лікар">⚕️ Лікар<span class="fp-ct">3</span></button><button class="fp" data-prof="акушерка">👶 Акушерка<span class="fp-ct">3</span></button><button class="fp" data-prof="дантист">🦷 Дантист<span class="fp-ct">1</span></button></div></div>
+          <div class="prof-grp" data-grp="state"><p class="prof-grp-h">Держава</p><div class="prof-grp-b"><button class="fp" data-prof="поліцейський">🛡️ Поліцейський<span class="fp-ct">8</span></button></div></div>
+          <div class="prof-grp" data-grp="relig"><p class="prof-grp-h">Духовенство</p><div class="prof-grp-b"><button class="fp" data-prof="священник">⛪ Священник<span class="fp-ct">8</span></button></div></div>
+          <div class="prof-grp" data-grp="service"><p class="prof-grp-h">Послуги</p><div class="prof-grp-b"><button class="fp" data-prof="перукар">✂️ Перукар<span class="fp-ct">6</span></button><button class="fp" data-prof="фотограф">📷 Фотограф<span class="fp-ct">2</span></button><button class="fp" data-prof="друкар">🖨️ Друкар<span class="fp-ct">1</span></button><button class="fp" data-prof="музикант">🎵 Музикант<span class="fp-ct">1</span></button></div></div>
+          <div class="prof-grp" data-grp="industry"><p class="prof-grp-h">Промисловість</p><div class="prof-grp-b"><button class="fp" data-prof="лісник">🌲 Лісник<span class="fp-ct">11</span></button><button class="fp" data-prof="браківник">🪵 Браківник<span class="fp-ct">9</span></button><button class="fp" data-prof="механік">🔩 Механік<span class="fp-ct">5</span></button><button class="fp" data-prof="мельник">⚙️ Мельник<span class="fp-ct">3</span></button></div></div>
+          <p class="prof-none" id="profNone" hidden>Такого заняття в реєстрі немає. Спробуйте пошук за текстом нижче.</p>
         </div>
       </div>
 
@@ -1431,6 +1440,23 @@ document.getElementById('vbrSrch').addEventListener('input',function(){
   st=setTimeout(function(){ q=v; doF(); }, 190);
 });
 
+// Profession panel: open/close and quick find
+(function(){
+  var more=document.getElementById('profMore'), panel=document.getElementById('profPanel'), find=document.getElementById('profFind'), none=document.getElementById('profNone');
+  if(!more||!panel) return;
+  function setOpen(o){ panel.hidden=!o; more.setAttribute('aria-expanded',String(o)); more.classList.toggle('on',o); }
+  more.addEventListener('click',function(e){ e.stopImmediatePropagation(); setOpen(panel.hidden); if(!panel.hidden) find.focus(); });
+  find.addEventListener('input',function(){
+    var q=this.value.trim().toLowerCase(), any=false;
+    panel.querySelectorAll('.prof-grp').forEach(function(g){
+      var vis=0; g.querySelectorAll('.fp').forEach(function(b){ var ok=!q||b.textContent.toLowerCase().indexOf(q)>=0||b.getAttribute('data-prof').indexOf(q)>=0; b.hidden=!ok; if(ok) vis++; });
+      g.hidden=!vis; if(vis) any=true;
+    });
+    none.hidden=any;
+  });
+  window.vbrOpenProfPanel=function(key){ if(panel.querySelector('[data-prof="'+key+'"]')) setOpen(true); };
+})();
+
 // ── Exposed API for glossary click ────────────────────────────────────
 window.vbrSetProfFilter = function(profName) {
   selectedProfs = [];
@@ -1445,6 +1471,7 @@ window.vbrSetProfFilter = function(profName) {
     if (allBtn) allBtn.classList.remove('on');
     var btn = document.querySelector('[data-prof="' + profName + '"]');
     if (btn) btn.classList.add('on');
+    if (window.vbrOpenProfPanel) window.vbrOpenProfPanel(profName);
   }
   updateFilterHint();
   doF();
@@ -1462,6 +1489,41 @@ doF();
     document.getElementById('vbrBody').innerHTML =
       '<tr><td colspan="9" style="padding:2rem;color:#c9a227;text-align:center">⚠ Не вдалося завантажити voters.json: ' + err + '</td></tr>';
   });
+</script>
+<script>
+/* карта 1928: на весь екран, наближення колесом, щипком і кнопками, перетягування */
+(function(){
+  var box=document.getElementById('vbMz'), st=document.getElementById('vbMzStage'), img=document.getElementById('vbMzImg'), src=document.querySelector('.vb-map-img');
+  if(!box||!src) return;
+  var k=1, x=0, y=0, fit=1, ptrs={}, last=null, pinch=null, back=null;
+  function apply(){ img.style.transform='translate('+x+'px,'+y+'px) scale('+k+')'; }
+  function clamp(){ var W=st.clientWidth,H=st.clientHeight,w=img.naturalWidth*k,h=img.naturalHeight*k;
+    x=w<=W?(W-w)/2:Math.min(0,Math.max(W-w,x)); y=h<=H?(H-h)/2:Math.min(0,Math.max(H-h,y)); }
+  function fitAll(){ fit=Math.min(st.clientWidth/img.naturalWidth, st.clientHeight/img.naturalHeight); k=fit; clamp(); apply(); }
+  function zoomAt(f,cx,cy){ var nk=Math.min(Math.max(k*f,fit),fit*8); x=cx-(cx-x)*nk/k; y=cy-(cy-y)*nk/k; k=nk; clamp(); apply(); }
+  function open(){ back=document.activeElement; box.hidden=false; document.body.style.overflow='hidden';
+    if(!img.src) img.src=src.currentSrc||src.src;
+    if(img.complete&&img.naturalWidth) fitAll(); else img.onload=fitAll;
+    document.getElementById('vbMzClose').focus(); }
+  function close(){ box.hidden=true; document.body.style.overflow=''; if(back) back.focus(); }
+  document.getElementById('vbMapOpen').onclick=open; src.addEventListener('click',open);
+  document.getElementById('vbMzClose').onclick=close;
+  document.getElementById('vbMzFit').onclick=fitAll;
+  document.getElementById('vbMzIn').onclick=function(){ zoomAt(1.5,st.clientWidth/2,st.clientHeight/2); };
+  document.getElementById('vbMzOut').onclick=function(){ zoomAt(1/1.5,st.clientWidth/2,st.clientHeight/2); };
+  addEventListener('keydown',function(e){ if(box.hidden) return; if(e.key==='Escape') close(); else if(e.key==='+'||e.key==='=') zoomAt(1.5,st.clientWidth/2,st.clientHeight/2); else if(e.key==='-') zoomAt(1/1.5,st.clientWidth/2,st.clientHeight/2); });
+  addEventListener('resize',function(){ if(!box.hidden){ var was=k===fit; fit=Math.min(st.clientWidth/img.naturalWidth, st.clientHeight/img.naturalHeight); if(was||k<fit) k=fit; clamp(); apply(); } });
+  st.addEventListener('wheel',function(e){ e.preventDefault(); var r=st.getBoundingClientRect(); zoomAt(e.deltaY<0?1.2:1/1.2,e.clientX-r.left,e.clientY-r.top); },{passive:false});
+  st.addEventListener('dblclick',function(e){ var r=st.getBoundingClientRect(); zoomAt(2,e.clientX-r.left,e.clientY-r.top); });
+  st.addEventListener('pointerdown',function(e){ st.setPointerCapture(e.pointerId); ptrs[e.pointerId]={x:e.clientX,y:e.clientY}; last={x:e.clientX,y:e.clientY}; st.classList.add('drag'); });
+  st.addEventListener('pointermove',function(e){ if(!ptrs[e.pointerId]) return; ptrs[e.pointerId]={x:e.clientX,y:e.clientY};
+    var ids=Object.keys(ptrs), r=st.getBoundingClientRect();
+    if(ids.length===2){ var a=ptrs[ids[0]],b=ptrs[ids[1]],d=Math.hypot(a.x-b.x,a.y-b.y),cx=(a.x+b.x)/2-r.left,cy=(a.y+b.y)/2-r.top;
+      if(pinch){ zoomAt(d/pinch.d,cx,cy); x+=cx-pinch.cx; y+=cy-pinch.cy; clamp(); apply(); } pinch={d:d,cx:cx,cy:cy}; }
+    else if(last){ x+=e.clientX-last.x; y+=e.clientY-last.y; last={x:e.clientX,y:e.clientY}; clamp(); apply(); } });
+  function up(e){ delete ptrs[e.pointerId]; pinch=null; var ids=Object.keys(ptrs); last=ids.length?ptrs[ids[0]]:null; if(!ids.length) st.classList.remove('drag'); }
+  st.addEventListener('pointerup',up); st.addEventListener('pointercancel',up);
+})();
 </script>
 </body>
 </html>
