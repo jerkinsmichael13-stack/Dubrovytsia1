@@ -91,7 +91,7 @@ var CSS = [
   '.xc-b button:hover{border-color:var(--gold)}.xc-b button.pri{border-color:rgba(212,178,90,.55);background:rgba(212,178,90,.16)}',
   '.xc-tools{position:absolute;right:.5rem;top:.5rem;display:flex;gap:2px}',
   '.xc-x,.xc-v{display:grid;place-items:center;width:32px;height:32px;border:0;border-radius:50%;background:none;color:var(--muted);font-size:1.2rem;cursor:pointer}.xc-x:hover,.xc-v:hover{color:var(--text);background:rgba(244,233,200,.08)}',
-  '.xc-v{display:none}.xc.tour .xc-v{display:grid}.xc-v svg{width:18px;height:18px}.xc-v[aria-pressed="false"] .w1,.xc-v[aria-pressed="false"] .w2{display:none}.xc-v[aria-pressed="true"] .mx{display:none}.xc-v[aria-pressed="true"]{color:var(--gold)}',
+  '.xc-v{display:none}.xc.tour .xc-v{display:grid}.xc.nov .xc-v{display:none!important}.xc-v svg{width:18px;height:18px}.xc-v[aria-pressed="false"] .w1,.xc-v[aria-pressed="false"] .w2{display:none}.xc-v[aria-pressed="true"] .mx{display:none}.xc-v[aria-pressed="true"]{color:var(--gold)}',
   '.xc-k{margin:0 4.5rem .3rem 0;font:600 .6rem var(--body);letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}.xc-k:empty{display:none}',
   '.xc-d{max-height:42vh;overflow:auto;overscroll-behavior:contain}',
   '.xc-l{display:none;flex-direction:column;gap:.35rem;margin-top:.8rem;padding-top:.75rem;border-top:1px solid rgba(212,178,90,.22)}.xc.has-l .xc-l{display:flex}',
@@ -236,10 +236,10 @@ function init(api){
   function narrate(i, now){
     hush(); if (!voiceOn) return;
     var src = AUDIO + MODEL + '-' + i + '.mp3', delay = now ? 0 : 900;
-    if (voOk[src] === false){ speak(i, delay); return; }
+    if (voOk[src] === false){ card.classList.add('nov'); return; }
     vo.src = src; vo.currentTime = 0;
-    vo.onloadedmetadata = function(){ voOk[src] = true; if (touring && tIdx === i) retime(); };
-    vo.onerror = function(){ voOk[src] = false; if (touring && tIdx === i) speak(i, 0); };
+    vo.onloadedmetadata = function(){ voOk[src] = true; card.classList.remove('nov'); if (touring && tIdx === i) retime(); };
+    vo.onerror = function(){ voOk[src] = false; if (tIdx === i) card.classList.add('nov'); };   // no recording for this chapter yet: it runs on its reading timer
     var p = vo.play(); if (p && p.catch) p.catch(function(){});        // started inside the click: the browser lets later chapters play too
     if (delay){ vo.pause(); setTimeout(function(){ if (touring && tIdx === i && !paused && voiceOn) { var q = vo.play(); if (q && q.catch) q.catch(function(){}); } }, delay); }
   }
