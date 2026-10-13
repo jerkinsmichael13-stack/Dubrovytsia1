@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="uk" data-theme="light">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WGBZ0BD23K"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-WGBZ0BD23K');
+</script>
+    <meta charset="UTF-8">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="manifest" href="site.webmanifest">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="П’ять записів пінських гродських книг 1654–1663 років про Дубровицю, Воробин і Кураш у роки війни: оригінальний текст, скани видання 1909 року, покажчики осіб, місць і термінів.">
+    <meta property="og:title" content="Акти Руїни">
+    <meta property="og:description" content="П’ять записів пінських гродських книг 1654–1663 років про Дубровицю, Воробин і Кураш у роки війни: оригінальний текст, скани видання 1909 року, покажчики осіб, місць і термінів.">
+    <meta property="og:type" content="article">
+    <title>Акти Руїни · 1654–1663 — Дубровиця · Цифровий архів</title>
+    <script>!function(){var t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t)}()</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="app.css?v=11">
+<style>
+/* layout: a sticky list of acts on the left, the acts themselves on the right; one column on phones */
+.ak { background: var(--color-bg); color: var(--color-text); padding: 4.5rem 0 5rem; }
+.ak-wrap { max-width: 1180px; margin: 0 auto; padding: 0 2rem; display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 3.5rem; }
+@media (max-width: 900px) { .ak-wrap { grid-template-columns: minmax(0, 1fr); gap: 2rem; padding: 0 1.1rem; } .ak { padding-top: 3rem; } }
+.ak-toc { position: sticky; top: 96px; align-self: start; }
+@media (max-width: 900px) { .ak-toc { position: static; } }
+.ak-toc-h { font-family: var(--font-body, 'Manrope', sans-serif); font-size: .62rem; letter-spacing: .26em; text-transform: uppercase; color: var(--color-primary); margin: 0 0 .9rem; }
+.ak-toc ol { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--color-border); }
+.ak-toc a { display: block; padding: .55rem 0 .55rem 1rem; margin-left: -1px; border-left: 2px solid transparent; text-decoration: none; color: var(--color-text-secondary); transition: color .2s, border-color .2s; }
+.ak-toc a:hover, .ak-toc a.on { color: var(--color-text); border-left-color: var(--color-accent); }
+.ak-toc b { display: block; font-family: 'Manrope', sans-serif; font-weight: 600; font-size: .66rem; letter-spacing: .08em; color: var(--color-primary); font-variant-numeric: tabular-nums; }
+.ak-toc span { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; line-height: 1.25; }
+.ak-toc .ak-also { margin-top: 1.4rem; font-family: 'Manrope', sans-serif; font-size: .74rem; line-height: 1.55; color: var(--color-text-light); }
+.ak-toc .ak-also a { display: inline; padding: 0; border: 0; color: var(--color-primary); }
+.ak-main { min-width: 0; }
+.ak-intro { max-width: 46rem; margin: 0 0 3rem; }
+.ak-intro p { font-family: 'Cormorant Garamond', serif; font-size: 1.22rem; line-height: 1.7; color: var(--color-text-secondary); margin: 0 0 1rem; }
+.ak-intro .ak-src { font-family: 'Manrope', sans-serif; font-size: .74rem; line-height: 1.6; color: var(--color-text-light); font-style: italic; }
+
+.ak-doc { padding: 3rem 0 3.2rem; border-top: 1px solid var(--color-border); scroll-margin-top: 90px; }
+.ak-head { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 1.4rem; align-items: start; }
+.ak-date { width: 5.2rem; padding: .7rem 0 .6rem; text-align: center; border: 1px solid var(--color-border); border-radius: 10px; background: var(--color-bg-card); line-height: 1; }
+.ak-date b { display: block; font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 2.3rem; color: var(--color-text); }
+.ak-date span { display: block; margin-top: .25rem; font-family: 'Manrope', sans-serif; font-size: .62rem; letter-spacing: .08em; color: var(--color-text-light); }
+.ak-date i { display: block; margin-top: .45rem; padding-top: .45rem; border-top: 1px solid var(--color-border); font-style: normal; font-family: 'Manrope', sans-serif; font-weight: 600; font-size: .78rem; letter-spacing: .06em; color: var(--color-primary); }
+.ak-kick { margin: .2rem 0 .4rem; font-family: 'Manrope', sans-serif; font-size: .62rem; letter-spacing: .22em; text-transform: uppercase; color: var(--color-primary); }
+.ak-h2 { margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: clamp(1.6rem, 3vw, 2.2rem); line-height: 1.12; color: var(--color-text); text-wrap: balance; }
+.ak-places { display: flex; flex-wrap: wrap; gap: .35rem; margin: .8rem 0 0; }
+.ak-places span { padding: .2rem .6rem; border-radius: 100px; border: 1px solid var(--color-border); font-family: 'Manrope', sans-serif; font-size: .68rem; color: var(--color-text-secondary); }
+.ak-sum { max-width: 46rem; margin: 1.4rem 0 1.6rem; font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; line-height: 1.65; color: var(--color-text-secondary); }
+
+.ak-scans { display: flex; gap: .6rem; overflow-x: auto; padding: .2rem .1rem .6rem; margin: 0 0 1.4rem; scrollbar-width: thin; }
+.ak-scan { position: relative; flex: none; width: 128px; height: 168px; padding: 0; border: 1px solid var(--color-border); border-radius: 6px; overflow: hidden; background: #f3eee2; cursor: zoom-in; transition: border-color .2s, transform .2s; }
+.ak-scan:hover { border-color: var(--color-accent); transform: translateY(-2px); }
+.ak-scan:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.ak-scan img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; filter: sepia(.12); }
+.ak-scan span { position: absolute; left: .4rem; bottom: .4rem; min-width: 1.4rem; padding: .1rem .35rem; border-radius: 4px; background: rgba(28,22,10,.78); color: #f4e9c8; font-family: 'Manrope', sans-serif; font-size: .64rem; font-weight: 600; text-align: center; }
+
+.ak-block { border: 1px solid var(--color-border); border-radius: 10px; background: var(--color-bg-card); margin: 0 0 .8rem; }
+.ak-block summary { list-style: none; cursor: pointer; padding: .85rem 1.1rem; font-family: 'Manrope', sans-serif; font-size: .7rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--color-text); display: flex; align-items: center; gap: .6rem; }
+.ak-block summary::-webkit-details-marker { display: none; }
+.ak-block summary::after { content: ''; margin-left: auto; width: .5rem; height: .5rem; border-right: 1.5px solid var(--color-primary); border-bottom: 1.5px solid var(--color-primary); transform: rotate(45deg); transition: transform .2s; }
+.ak-block[open] summary::after { transform: rotate(-135deg); }
+.ak-block summary small { font-weight: 500; letter-spacing: .04em; color: var(--color-text-light); text-transform: none; }
+.ak-block summary:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; border-radius: 10px; }
+.ak-block > div { padding: 0 1.2rem 1rem; font-family: 'Manrope', sans-serif; font-size: .84rem; line-height: 1.65; color: var(--color-text-secondary); }
+.ak-block ul, .ak-block ol { margin: 0; padding-left: 1.2rem; }
+.ak-block li { margin: 0 0 .35rem; }
+.ak-block li p { margin: 0; }
+.ak-block li ul { margin-top: .35rem; }
+.ak-block strong { color: var(--color-text); font-weight: 600; }
+
+.ak-text { margin: 1.4rem 0 1.4rem; padding: 1.6rem 1.8rem 1.4rem 2.6rem; border-radius: 10px; background: var(--color-bg-alt); border: 1px solid var(--color-border-light); position: relative; }
+@media (max-width: 560px) { .ak-text { padding: 1.2rem 1rem 1rem 1.9rem; } }
+.ak-label { margin: 0 0 1rem; font-family: 'Manrope', sans-serif; font-size: .62rem; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--color-primary); }
+.ak-label small { margin-left: .6rem; font-weight: 400; letter-spacing: .02em; text-transform: none; color: var(--color-text-light); }
+.ak-text-body { max-width: 44rem; font-family: 'Cormorant Garamond', serif; font-size: 1.14rem; line-height: 1.72; color: var(--color-text); overflow-wrap: anywhere; }
+.ak-text-body p { margin: 0 0 .9rem; }
+.ak-text-body .ak-no { font-family: 'Manrope', sans-serif; font-size: .74rem; font-weight: 600; letter-spacing: .08em; color: var(--color-text-light); margin-bottom: .3rem; }
+.ak-text-body .ak-ptitle { font-weight: 500; font-style: italic; color: var(--color-text-secondary); margin-bottom: 1.2rem; }
+.ak-pg { position: absolute; left: .7rem; margin-top: .2rem; width: 1.3rem; height: 1.3rem; border-radius: 50%; display: inline-grid; place-items: center; background: var(--color-bg-card); border: 1px solid var(--color-border); font-family: 'Manrope', sans-serif; font-size: .58rem; font-weight: 600; color: var(--color-primary); line-height: 1; }
+@media (max-width: 560px) { .ak-pg { left: .35rem; } }
+.ak-idx { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .8rem; align-items: start; }
+.ak-idx .ak-block { margin: 0; }
+@media (max-width: 760px) { .ak-idx { grid-template-columns: minmax(0, 1fr); } }
+
+/* lightbox */
+.ak-lb { position: fixed; inset: 0; z-index: 1000; display: none; background: rgba(12,10,6,.94); }
+.ak-lb.open { display: grid; grid-template-rows: auto minmax(0, 1fr); }
+.ak-lb-bar { display: flex; align-items: center; gap: 1rem; padding: calc(env(safe-area-inset-top, 0px) + .8rem) 1rem .8rem; color: #f4e9c8; font-family: 'Manrope', sans-serif; font-size: .8rem; }
+.ak-lb-bar b { font-weight: 500; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ak-lb button { border: 1px solid rgba(244,233,200,.25); background: rgba(244,233,200,.06); color: #f4e9c8; border-radius: 100px; height: 40px; min-width: 40px; padding: 0 .9rem; cursor: pointer; font: inherit; }
+.ak-lb button:hover { border-color: #d4b25a; }
+.ak-lb-stage { overflow: auto; display: grid; place-items: start center; padding: 0 1rem calc(env(safe-area-inset-bottom, 0px) + 1rem); }
+.ak-lb-stage img { max-width: min(100%, 900px); height: auto; background: #f3eee2; border-radius: 4px; }
+</style>
+<link rel="stylesheet" href="ds.css">
+</head>
+<body class="ak-page">
+
+<!-- Header -->
+<header class="header">
+    <div class="header-container">
+        <a href="index.html" class="logo" aria-label="Дубровиця — Цифровий архів, головна сторінка">
+            <img src="https://i.imgur.com/mXCrjjG.png" alt="" class="logo-img" width="40" height="40" decoding="async">
+            <span class="logo-text">
+                <span class="logo-city">Дубровиця</span>
+                <span class="logo-subtitle">Цифровий архів</span>
+            </span>
+        </a>
+
+        <nav class="nav" id="mainNav" aria-label="Головне меню">
+            <ul class="nav-list">
+                <li class="nav-item nav-item--home" style="--i:0"><a href="index.html" class="nav-link">Головна</a></li>
+                <li class="nav-item" style="--i:1"><a href="history.html" class="nav-link">Історія</a></li>
+                <li class="nav-item" style="--i:2"><a href="photo-archive.html" class="nav-link">Фотоархів</a></li>
+                <li class="nav-item" style="--i:3"><a href="architecture.html" class="nav-link">Пам'ятки</a></li>
+                <li class="nav-item has-menu" style="--i:4">
+                    <a href="metrychni-knyhy.html" class="nav-link active">Архівні справи</a>
+                    <button type="button" class="nav-caret" aria-expanded="false" aria-controls="navArchive" aria-label="Показати документи архіву"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                    <div class="nav-menu" id="navArchive">
+                        <div class="nav-menu-inner">
+                            <div class="nav-menu-main">
+                                <p class="nav-menu-label">Документи за роками</p>
+                                <div class="nav-docs">
+                                    <a href="sumariusz-1642.html" class="nav-doc"><span class="nav-doc-year">1642</span><span class="nav-doc-name">Сумаріуш маєтку</span><span class="nav-doc-note">Доходи маєтку Дубровиця</span></a>
+                                    <a href="zhaloba-1650.html" class="nav-doc"><span class="nav-doc-year">1650</span><span class="nav-doc-name">Жалоба про спустошення</span><span class="nav-doc-note">Гродські книги Пінські</span></a>
+                                    <a href="akty-ruina.html" class="nav-doc is-current" aria-current="page"><span class="nav-doc-year">1654</span><span class="nav-doc-name">Акти Руїни</span><span class="nav-doc-note">Дубровиця, Воробин, Кураш</span></a>
+                                    <a href="rejestr-1665.html" class="nav-doc"><span class="nav-doc-year">1665</span><span class="nav-doc-name">Реєстр збитків</span><span class="nav-doc-note">Пінський гродський суд</span></a>
+                                    <a href="inventar-1780.html" class="nav-doc"><span class="nav-doc-year">1780</span><span class="nav-doc-name">Інвентар маєтку</span><span class="nav-doc-note">Містечко, вулиці, мешканці</span></a>
+                                    <a href="inventar-naselennia.html" class="nav-doc"><span class="nav-doc-year">1780</span><span class="nav-doc-name">Мешканці маєтку</span><span class="nav-doc-note">Місто й села поіменно</span></a>
+                                    <a href="atlas-1798.html" class="nav-doc"><span class="nav-doc-year">1798</span><span class="nav-doc-name">Атлас губернії</span><span class="nav-doc-note">Інтерактивна мапа сіл</span></a>
+                                    <a href="atlas-1798-analityka.html" class="nav-doc"><span class="nav-doc-year">1798</span><span class="nav-doc-name">Край у цифрах</span><span class="nav-doc-note">Аналітика атласу</span></a>
+                                    <a href="persha-svitova.html" class="nav-doc"><span class="nav-doc-year">1914</span><span class="nav-doc-name">Перша світова війна</span><span class="nav-doc-note">Мобілізовані мешканці</span></a>
+                                    <a href="vyborchi-1938.html" class="nav-doc"><span class="nav-doc-year">1938</span><span class="nav-doc-name">Список виборців</span><span class="nav-doc-note">8 619 записів</span></a>
+                                </div>
+                            </div>
+                            <div class="nav-menu-side">
+                                <p class="nav-menu-label">Постаті</p>
+                                <a href="plater.html" class="nav-person"><img src="nav-plater.jpg" alt="" width="40" height="40" loading="lazy" decoding="async"><span><span class="nav-person-name">Граф Юзеф Плятер</span><span class="nav-person-role">Власник Дубровиці</span></span></a>
+                                <a href="radzyvil.html" class="nav-person"><img src="nav-radzyvil.jpg" alt="" width="40" height="40" loading="lazy" decoding="async"><span><span class="nav-person-name">Князь Домінік Радзивілл</span><span class="nav-person-role">Власник сіл над Горинню</span></span></a>
+                                <p class="nav-menu-label nav-menu-label--gap">Каталоги</p>
+                                    <a href="poselennia.html" class="nav-cat"><span>Поселення Дубровиччини</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                                    <a href="prizvyshcha.html" class="nav-cat"><span>Прізвища й родини</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                                <a href="metrychni-knyhy.html#mkcalSection" class="nav-cat"><span>Метричні книги</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                                <a href="metrychni-knyhy.html#booksCatalog" class="nav-cat"><span>Книги про Дубровицю</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                                <a href="jewish-history.html" class="nav-cat"><span>Єврейська спадщина</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                                <a href="metrychni-knyhy.html" class="nav-menu-all">Усі архівні справи <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item" style="--i:5"><a href="atlas-1798.html" class="nav-link">Атлас 1798</a></li>
+                <li class="nav-item" style="--i:6"><a href="presa.html" class="nav-link">Преса</a></li>
+                <li class="nav-item" style="--i:7"><a href="doslidnyk.html" class="nav-link">Дослідник</a></li>
+                <li class="nav-item" style="--i:8"><a href="contacts.html" class="nav-link">Про проєкт</a></li>
+            </ul>
+            <p class="nav-foot">Цифровий архів історичної спадщини Дубровиці · <a href="contacts.html">Написати нам</a></p>
+        </nav>
+
+        <div class="header-actions">
+            <button type="button" class="theme-toggle" id="themeToggle" aria-label="Перемкнути тему">
+                <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg>
+                <svg class="theme-icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.3A8.5 8.5 0 0 1 9.7 3.5a8.5 8.5 0 1 0 10.8 10.8z"/></svg>
+            </button>
+            <button type="button" class="mobile-toggle" id="mobileToggle" aria-label="Відкрити меню" aria-expanded="false" aria-controls="mainNav">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<section class="cover" aria-label="Акти Руїни">
+    <img class="cover-img cover-img--paper" src="https://i.imgur.com/D172q8D.png" alt="" fetchpriority="high" decoding="async" style="--cover-pos:center 20%">
+    <div class="cover-shade"></div>
+    <div class="cover-inner">
+        <nav class="cover-crumbs" aria-label="Навігаційний ланцюжок"><a href="metrychni-knyhy.html">Архівні справи</a><span>/</span>Акти Руїни</nav>
+        <p class="cover-kicker">Пінські гродські книги · 1654–1663</p>
+        <h1 class="cover-title cover-title--long">Акти <em>Руїни</em></h1>
+        <p class="cover-lede">Татари, козацькі залоги й московські полки на Горині: п’ять скарг і присяг, вписаних до пінських гродських книг, про Дубровицю, Воробин і Кураш.</p>
+        <dl class="cover-facts">
+            <div><dt>актів</dt><dd>5</dd></div>
+            <div><dt>роки</dt><dd>1654–1663</dd></div>
+            <div><dt>сканів видання</dt><dd>15</dd></div>
+            <div><dt>осіб у покажчиках</dt><dd>46</dd></div>
+        </dl>
+        <p class="cover-credit"><b>На зображенні</b>Друкована сторінка видання 1909 року</p>
+    </div>
+</section>
+
+<main class="ak">
+  <div class="ak-wrap">
+    <nav class="ak-toc" aria-label="Акти на сторінці">
+      <p class="ak-toc-h">5 актів</p>
+      <ol><li><a href="#1654-kurash-tatary"><b>21 січня 1654</b><span>Скарга про спустошення Кураша татарами</span></a></li><li><a href="#1658-kurash-kozaky"><b>29 серпня 1658</b><span>Маніфестація про Кураш під владою козаків</span></a></li><li><a href="#1660-firlej-dubrovytsia"><b>18 вересня 1660</b><span>Скарга про напад на села Дубровицького маєтку</span></a></li><li><a href="#1660-spalennia-vorobyna"><b>12 грудня 1660</b><span>Маніфестація про спалення Воробина</span></a></li><li><a href="#1663-prysiaha-mishchan"><b>13 січня 1663</b><span>Присяга дубровицьких міщан про розорення</span></a></li></ol>
+      <p class="ak-also">Про євреїв Дубровиці в цих самих книгах: <a href="akty-yevrei.html">акти 1645–1646</a>.</p>
+    </nav>
+    <div class="ak-main">
+      <div class="ak-intro"><p>Після 1648 року Дубровиччина опинилася на шляху всіх армій: татар, козацьких залог над Горинню, московських полків, що йшли на Пінськ. Шляхта й міщани приходили до пінського гродського суду, щоб записати збитки: це звільняло від податків, які платити вже не було з чого.</p><p>Тексти подано так, як їх надрукувала Віленська археографічна комісія 1909 року: польською з руськими судовими формулами. До кожного акта — короткий переказ, скани друкованого видання й покажчики осіб, місць і термінів.</p><p class="ak-src">Джерело: «Акты, издаваемые Виленскою коммиссіею для разбора древнихъ актовъ», т. XXXIV: «Акты, относящіеся ко времени войны за Малороссію (1654–1667)». Вильна, 1909.</p></div>
+      
+<article class="ak-doc" id="1654-kurash-tatary">
+  <header class="ak-head">
+    <div class="ak-date"><b>21</b><span>січня</span><i>1654</i></div>
+    <div class="ak-head-main">
+      <p class="ak-kick">№ 7 · Пінський гродський суд</p>
+      <h2 class="ak-h2">Скарга про спустошення Кураша татарами</h2>
+      <p class="ak-places"><span>Кураш</span></p>
+    </div>
+  </header>
+  <p class="ak-sum">Мар’яна Кошовська, дружина волинського ловчого, скаржиться, що в грудні 1653 року, перед католицьким Різдвом, татари вдерлися на Волинь і в Пінський повіт, брали людей у полон, палили міста, села й фільварки. Спустошено й маєтність Кураш, тож податки, якщо їх ухвалять, платити нікому.</p>
+  <div class="ak-scans"><button type="button" class="ak-scan" data-doc="1654-kurash-tatary" data-i="0" aria-label="Скан 1 з 3"><img src="https://i.imgur.com/D172q8D.png" alt="" loading="lazy" decoding="async"><span>1</span></button><button type="button" class="ak-scan" data-doc="1654-kurash-tatary" data-i="1" aria-label="Скан 2 з 3"><img src="https://i.imgur.com/eMd7JhN.png" alt="" loading="lazy" decoding="async"><span>2</span></button><button type="button" class="ak-scan" data-doc="1654-kurash-tatary" data-i="2" aria-label="Скан 3 з 3"><img src="https://i.imgur.com/HgswzrW.png" alt="" loading="lazy" decoding="async"><span>3</span></button></div>
+  <details class="ak-block ak-meta"><summary>Опис документа</summary><div class="ak-meta-body"><ul>
+<li><p><strong>Видання:</strong> «Акты издаваемые Виленскою коммиссіею для разбора древнихъ актовъ. Томъ XXXIV. Акты относящіеся ко времени войны за Малороссію (1654—1667)». Вильна, 1909 г.</p></li>
+<li><p><strong>Номер документа:</strong> № 7.</p></li>
+<li><p><strong>Заголовок публікації:</strong> <em>Заявленіе жены Волынскаго ловчаго Марьяны Кошовской о разореніи татарами имѣнія Кураша, Пинскаго повѣта</em>.</p></li>
+<li><p><strong>Латиномовний заголовок акта:</strong> <em>Prot. p. Koszowskiey łowczyney wołynskiey o spustoszenie Kurasza od tatar</em>.</p></li>
+<li><p><strong>Дата документа:</strong> 21 січня 1654 року («тисеча шестсот пятдесят четвертого, мца Генваря двадцат первого дня» / «1654 Января 21»).</p></li>
+<li><p><strong>Час описаних подій (нападу):</strong> грудень 1653 року, перед святом Божого Народження за римським календарем («w roku przeszłym tysiąc szescset pięcdziesiąt trzecim, w mscu decembrze przed Bożym Narodzeniem, swięcie rzymskim»).</p></li>
+<li><p><strong>Місце складання:</strong> м. Пінськ, ґродський уряд у замку господарському Пінському («На враде кгродском в замку гдарском Пинском»).</p></li>
+<li><p><strong>Судовий урядник:</strong> Владислав Казимир Война, підстароста пінський, встановлений від ясноосвіченого князя Альбрехта Станіслава Радзивілла.</p></li>
+<li><p><strong>Архівне посилання / шифр оригіналу:</strong> Изъ акт. кн. Пинскаго Гродскаго суда за 1654—5 годы, № 13008, л. 209.</p></li>
+<li><p><strong>Мова документа:</strong> змішана — староукраїнська / руська (судова вступна клаузула й кінцева формула запису) та польська (основний текст скарги).</p></li>
+</ul></div></details>
+  <section class="ak-text" aria-label="Текст документа">
+    <p class="ak-label">Текст оригіналу <small>цифри на полях — сторінки видання</small></p>
+    <div class="ak-text-body"><p class="ak-no">№ 7 1654 Января 21</p><p class="ak-ptitle">Заявленіе жены Волынскаго ловчаго Марьяны Кошовской о разореніи татарами имѣнія Кураша, Пинскаго повѣта.</p>
+<p>Prot. p. Koszowskiey łowczyney wołynskiey o spustoszenie Kurasza od tatar.</p><p><span class="ak-pg" aria-label="сторінка 2">2</span>Лета от нароженя Сына Божого тисеча шестсот пятдесят четвертого, мца Генваря двадцат первого дня.</p>
+<p>На враде кгродском в замку гдарском Пинском, передо мною Владыславом Казимером Войною, подстаростим Пинским, од ясне освецоного княжати его млсти Альбрыхта Станислава Радивила, княжати на Олыце и Несвежу, канцлера вел. княз. Лит., старосты Пинъского, Кгневского и Тухолскаго установленым жаłowała y z wielkim żalem opowiadała ieymosc pani Maryanna Czetwertenska Andrzeiowa Koszowska, łowczyna Wołynska w nieznosney krzywdzie y szkodzie swoiey o tym, iż gdy w roku przeszłym tysiąc szescset pięcdziesiąt trzecim, w mscu decembrze przed Bożym Narodzeniem, swięcie rzymskim, poganstwo nieprzyiaciele krzyża swiętego tatarowie do woiewodstwa Wołynskiego, a potym y do wielkiego xięstwa Litewskiego w powiat Pinski wtargnowszy, wiele ludzi rożney condycy doganiaiąc w drodze, w miastach, we wsiach insperate napadaiąc, w niewolą brali y w płon pędzili, miasta, wsi, folwarki, gumna palili, pustoszyli y wniwecz obracali, pod ktory czas ledwo żałobliwa z maiętnosci y dworu swego Kurasza, w powiecie Pinskim leżącey, z duszą, wszystkic dostatki w tym dworze y innych folwarkach porzuciwszy, uszła, a iako teraz żałobliwey wiadomosć doszła, że dwor w Kuraszu y wsi do niego należące Lubiekowicze, Kołki, Bereski, Belatycze ze zbożem, z gruntami popalili, poddanych męzskiey y białey płci więcy stu dusz w płon popędzili, sprawy wszystkie a wszystkic we dworze Kuraszu odbieżone popalono, bydło cokolwiek było rogatego y nierogatego we dworze Kuraszu y po folwarkach od mała do wiela pobrano, owo zgoła ze wszystkich dostatkow y chudoby złupiono y wniwecz dwory y wsi spustoszono, a co ieno poddanych zostało, bez żon y dzieci y ci żywic się nie maią czym od tak wielkiego spustoszenia od tych poganskich ręku stałe. Zaczym nie tylko żałobliwey powinnosci pełnić ale<span class="ak-pg" aria-label="сторінка 3">3</span>y podatkow ieżeliby iakie ufalonę będą dawać niemasz komu. Ktore opowiadanie swoie do urzędu doniosszy, prosiła ieymsc pani łowczyna, aby do xiąg zapisano było.</p>
+<p>Што есть записано.</p>
+<p>Изъ акт. кн. Пинскаго Гродскаго суда за 1654—5 годы № 13008 л. 209.</p></div>
+  </section>
+  <div class="ak-idx">
+    <details class="ak-block"><summary>Особи <small>4</small></summary><div><ol type="1">
+<li><p><strong>Война Владислав Казимир (Владыслав Казимер Война / Władysław Kazimierz Woyna)</strong> — підстароста пінський; судовий урядник, перед яким вчинено заяву.</p></li>
+<li><p><strong>Кошовська / Кашевська Мар'яна (Maryanna Czetwerteńska Andrzeiowa Koszowska / Марьяна Кошовская)</strong> — княжна Четвертинська, дружина волинського ловчого Андрія Кошовського (Кашевського); дідичка маєтності Кураш; потерпіла й заявниця протестації.</p></li>
+<li><p><strong>Кошовський / Кашевський Андрій (Andrzej Koszowski / Kaszewski)</strong> — ловчий волинський (згаданий титулярно через ім'я дружини: «Andrzeiowa Koszowska, łowczyna Wołynska»).</p></li>
+<li><p><strong>Радзивілл Альбрехт Станіслав (Альбрыхт Станислав Радивил / Albrycht Stanisław Radziwiłł)</strong> — князь на Олиці та Несвіжі, великий канцлер Великого князівства Литовського, староста пінський, ґнєвський і тухольський.</p></li>
+</ol></div></details>
+    <details class="ak-block"><summary>Місця</summary><div><ul>
+<li><p><strong>Бережки / Березки (Bereski)</strong> — село маєтності Кураш у Пінському повіті.</p></li>
+<li><p><strong>Білятичі (Belatycze)</strong> — село маєтності Кураш у Пінському повіті.</p></li>
+<li><p><strong>Велике князівство Литовське (Wielkie Xięstwo Litewskie)</strong> — держава.</p></li>
+<li><p><strong>Волинське воєводство (woiewodztwo Wołynskie)</strong> — суміжний регіон, спустошений татарами перед вторгненням на Пінщину.</p></li>
+<li><p><strong>Ґнєв (Кгнев / Gniew)</strong> — староство князя А. С. Радзивілла.</p></li>
+<li><p><strong>Колки (Kołki)</strong> — село маєтності Кураш у Пінському повіті.</p></li>
+<li><p><strong>Кураш (Kurasz)</strong> — панський двір («dwor»), фільварки та ключ маєтності в Пінському повіті.</p></li>
+<li><p><strong>Любековичі (Lubiekowicze)</strong> — село маєтності Кураш у Пінському повіті.</p></li>
+<li><p><strong>Несвіж (Несвеж / Nieśwież)</strong> — князівська ординація/титулярне володіння Радзивіллів.</p></li>
+<li><p><strong>Олика (Олыка / Ołyka)</strong> — князівська ординація/титулярне володіння Радзивіллів.</p></li>
+<li><p><strong>Пінськ (Пинск, Pinsk)</strong> — повітове місто.</p></li>
+<li><p><strong>Пінський замок (замок гдарский Пинский)</strong> — резиденція ґродського суду.</p></li>
+<li><p><strong>Пінський повіт (powiat Pinski)</strong> — повіт Берестейського воєводства.</p></li>
+<li><p><strong>Тухоля (Тухол / Tuchola)</strong> — староство князя А. С. Радзивілла.</p></li>
+</ul></div></details>
+    <details class="ak-block"><summary>Терміни й теми</summary><div><ul>
+<li><p><strong>Воєнні дії та наслідки татарського набігу:</strong></p>
+<ul>
+<li><p><em>Нападники:</em> кримські татари («poganstwo nieprzyiaciele krzyża swiętego tatarowie»);</p></li>
+<li><p><em>Час нападу:</em> грудень 1653 року (напередодні католицького/григоріанського Різдва);</p></li>
+<li><p><em>Ясир / полон:</em> захоплення в неволю та виведення в полон понад 100 підданих чоловічої та жіночої статі («poddanych męzskiey y białey płci więcy stu dusz w płon popędzili»);</p></li>
+<li><p><em>Втрата майна й документів:</em> повне спалення панського двору в Кураші, гумен, збіжжя та всієї домашньої документації/архіву («sprawy wszystkie a wszystkic we dworze Kuraszu odbieżone popalono»);</p></li>
+<li><p><em>Грабіж худоби:</em> викрадення всієї рогатої та нерогатої худоби у дворі й по фільварках («bydło cokolwiek było rogatego y nierogatego... od mała do wiela pobrano»).</p></li>
+</ul></li>
+<li><p><strong>Соціально-економічне становище та демографія:</strong></p>
+<ul>
+<li><p>Залишок уцілілих селян — самотні чоловіки без сімей, які втратили будь-які засоби для існування («bez żon y dzieci y ci żywic się nie maią czym»);</p></li>
+<li><p>Руйнування господарської інфраструктури: двори, фільварки, села, гумна обернено нанівець.</p></li>
+</ul></li>
+<li><p><strong>Судово-фіскальні наслідки:</strong></p>
+<ul>
+<li><p><em>Звільнення від податків:</em> констатація повної неможливості відбувати феодальні повинності чи сплачувати сеймові податки («podatkow ieżeliby iakie ufalonę będą dawać niemasz komu»);</p></li>
+<li><p><em>Протестація (Prot. / opowiadanie / żałowała y z wielkim żalem opowiadała):</em> офіційна заява до судових книг для засвідчення стану крайнього спустошення та захисту прав землевласниці від податкових претензій.</p></li>
+</ul></li>
+</ul></div></details>
+  </div>
+</article>
+<article class="ak-doc" id="1658-kurash-kozaky">
+  <header class="ak-head">
+    <div class="ak-date"><b>29</b><span>серпня</span><i>1658</i></div>
+    <div class="ak-head-main">
+      <p class="ak-kick">№ 118 · Пінський гродський суд</p>
+      <h2 class="ak-h2">Маніфестація про Кураш під владою козаків</h2>
+      <p class="ak-places"><span>Кураш</span><span>Любиковичі</span><span>Білятичі</span></p>
+    </div>
+  </header>
+  <p class="ak-sum">Волинська ловчина Мар’яна з Четвертні Кашевська заявляє, що її маєтність Кураш, Любиковичі, Білятичі та інші села над Горинню й за Горинню з 1655 року тримають українські й низові козаки: стоять залогами й збирають чинші, дякло й подимне на Запорозьке військо. Тож податків, ухвалених сеймом 1658 року, вона платити не може.</p>
+  <div class="ak-scans"><button type="button" class="ak-scan" data-doc="1658-kurash-kozaky" data-i="0" aria-label="Скан 1 з 2"><img src="https://i.imgur.com/qEWBzsC.png" alt="" loading="lazy" decoding="async"><span>1</span></button><button type="button" class="ak-scan" data-doc="1658-kurash-kozaky" data-i="1" aria-label="Скан 2 з 2"><img src="https://i.imgur.com/rTWt5R9.png" alt="" loading="lazy" decoding="async"><span>2</span></button></div>
+  <details class="ak-block ak-meta"><summary>Опис документа</summary><div class="ak-meta-body"><ul>
+<li><p><strong>Видання:</strong> «Акты издаваемые Виленскою коммиссіею для разбора древнихъ актовъ. Томъ XXXIV. Акты относящіеся ко времени войны за Малороссію (1654—1667)». Вильна, 1909 г.</p></li>
+<li><p><strong>Номер документа:</strong> № 118.</p></li>
+<li><p><strong>Заголовок публікації:</strong> <em>Заявленіе Ловчиной Волынской Марьяны Кашевской объ отказѣ внести подымное и другія подати съ им. Куражъ, Любековичи и Юратичи, вслѣдствіе опустошенія ихъ низовыми козаками</em>.</p></li>
+<li><p><strong>Латиномовний заголовок акта:</strong> <em>Manifestacya p. łowczyney Wołynskiey na kozakow o Kurasz</em>.</p></li>
+<li><p><strong>Дата документа (внесення маніфестації):</strong> 29 серпня 1658 року («тисеча шестсотъ пятдесят осмого, мца августа двадцат девятого дня» / «1658 г. Августа 29 дня»).</p></li>
+<li><p><strong>Місце складання:</strong> м. Пінськ, ґродський уряд у замку господарському Пінському («На враде кгродском в замку гдарском Пинском»).</p></li>
+<li><p><strong>Судовий урядник:</strong> Войтех Зеленський, стольник і підстароста пінський, встановлений від вельможного пана Яна Кароля Млоцького, пінського і гельметського старости.</p></li>
+<li><p><strong>Архівне посилання / шифр оригіналу:</strong> Изъ актовой книги Пинскаго грод. суда за 1658 г. № 13010, л. 65.</p></li>
+<li><p><strong>Мова документа:</strong> змішана — староукраїнська / руська (судова преамбула та формули внесення) і польська (основний текст скарги-маніфестації).</p></li>
+</ul></div></details>
+  <section class="ak-text" aria-label="Текст документа">
+    <p class="ak-label">Текст оригіналу <small>цифри на полях — сторінки видання</small></p>
+    <div class="ak-text-body"><p class="ak-no">№ 118—1658 г. Августа 29 дня.</p><p class="ak-ptitle">Заявленіе Ловчиной Волынской Марьяны Кашевской объ отказѣ внести подымное и другія подати съ им. Куражъ, Любековичи и Юратичи, вслѣдствіе опустошенія ихъ низовыми козаками.</p>
+<p>Manifestacya p. łowczyney Wołynskiey na kozakow o Kurasz.</p>
+<p>Лета от нароженя Сына Божого тисеча шестсотъ пятдесят осмого, мца августа двадцат девятого дня.</p>
+<p>На враде кгродском в замку гдарском Пинском передо мною Войтехом Зеленским столником и подстаростим Пинским од велможного его милости пана Яна Кароля Млоцъкого Пинского Гелметъского старосты установленнымъ, opowiadała żałowała y solenną swoią ieymosć pani Maryanna z Czetwertni Czetwertenska Andrzeiowa Kaszewska łowczyna Wołynska zanosiła o tem manifestatią, iż co ieszeze w roku tysiąc szesćset pię-<span class="ak-pg" aria-label="сторінка 2">2</span>dziesiąt piątym y dawniey, iako kozacka wczęła się incursya, maiętnosć manifestuiącey nazwana Kurasz Lubiekowicze Bielatycze y inne wsi nad Horynią y za Horynią rzeką w powiecie Pinskim leżące ze władzy posłuszenstwa y żałuiącey dispositiey hostyli modo ukrainni y nizowi odiąwszy kozacy przez tę wszystkie niemałe czasy tę pomienioną maiętnosć w dispositiey swoiey, za załogami trzymaiąc oney y wszelakich z niey pożytkow zażywając, cynsze, dziakła, podymne y inne nieznosne contrybutie ubogich onemi ciężko oneruiąc poddanych na woysko Zaporozskie wybieraią y tey maiętnosci aż y po te czasy dysponuiącemi y dzierzącemi zostaią, żałuiąca od pomienionego czasu y dawniey z tey swoiey własnosci wyzuta będąc, nie tylko żeby iakowy pożytek mieć miała, ale y dysponuiącą być nie może, zaczem to przez tę swoią manifestatią do wiadomosci naszey urzędowey doniosszy, swiadczyli się iż iako przed tym uchwalonych podymnych dla odięcia tych dobr y nie zażywania onych wydawać nie mogła, tak y teraz z tego seymu w roku teraznieyszym tysiąc szesćset piędziesiąt osmym uchwalonego podymnego iako y żadnych, iesliby iakie lub z seymu lub też z powiatowego laudum postanowione były, z tey maiętnosci swey w załogach y dispositiey kozackiey y po te czasy zostaiącey wydawać nie może podatkow, w czem iterum atque iterum oswiadczaiąc się, tę swoią solenną manifestatią, aby swoią słuszną w potrzebie tego miała testimonium, do xiąg dała inserować, што ест записано.</p>
+<p>Изъ актовой книги Пинскаго грод. суда за 1658 г. № 13010 л. 65.</p></div>
+  </section>
+  <div class="ak-idx">
+    <details class="ak-block"><summary>Особи <small>4</small></summary><div><ol type="1">
+<li><p><strong>Зеленський Войтех (Войтех Зеленский / Wojciech Zieleński)</strong> — стольник і підстароста пінський, судовий урядник, що прийняв маніфестацію.</p></li>
+<li><p><strong>Кашевська Мар'яна (Maryanna z Czetwertni Czetwerteńska Andrzeiowa Kaszewska / Марьяна Кашевская)</strong> — уроджена княжна Четвертенська, дружина волинського ловчого Андрія Кашевського («łowczyna Wołynska»); власниця маєтностей Кураш, Любековичі, Білятичі; маніфестантка (заявниця).</p></li>
+<li><p><strong>Кашевський Андрій (Andrzej Kaszewski)</strong> — ловчий волинський, чоловік Мар'яни Кашевської (згаданий титулярно через ім'я дружини: «Andrzeiowa Kaszewska»).</p></li>
+<li><p><strong>Млоцький Ян Кароль (Ян Кароль Млоцкій / Jan Karol Młocki)</strong> — староста пінський і гельметський.</p></li>
+</ol></div></details>
+    <details class="ak-block"><summary>Місця</summary><div><ul>
+<li><p><strong>Білятичі (Bielatycze)</strong> — село над Горинню в Пінському повіті, що входило до маєтності Кураш <em>(у російському археографічному заголовку помилково передано як «Юратичи»)</em>.</p></li>
+<li><p><strong>Волинь (Wołyń)</strong> — земля / воєводство (титулярна згадка ловчини волинської).</p></li>
+<li><p><strong>Гельмет (Гелмет / Helmet)</strong> — староство.</p></li>
+<li><p><strong>Горинь (Horyń)</strong> — річка («nad Horynią y za Horynią rzeką»).</p></li>
+<li><p><strong>Кураж / Кураш (Kurasz)</strong> — маєтність і ключове поселення в Пінському повіті над р. Горинь.</p></li>
+<li><p><strong>Любековичі (Lubiekowicze)</strong> — село в Пінському повіті, частина маєтності Кураш.</p></li>
+<li><p><strong>Пінськ (Пинск, Pinsk)</strong> — місто, центр повіту.</p></li>
+<li><p><strong>Пінський замок (замок гдарский Пинский)</strong> — місце функціонування ґродського уряду.</p></li>
+<li><p><strong>Пінський повіт (powiat Pinski)</strong> — адміністративна одиниця Берестейського воєводства.</p></li>
+<li><p><strong>Четвертня (Czetwertnia)</strong> — родове гніздо князів Четвертинських («z Czetwertni Czetwertenska»).</p></li>
+</ul></div></details>
+    <details class="ak-block"><summary>Терміни й теми</summary><div><ul>
+<li><p><strong>Військово-політичні реалії та сторони протистояння:</strong></p>
+<ul>
+<li><p><em>Військо Запорозьке (woysko Zaporozskie)</em> — на користь якого стягувалися збори та доходи з окупованих сіл;</p></li>
+<li><p><em>Козаки українні та низові («ukrainni y nizowi kozacy»)</em> — військові формування, що встановили контроль над землями Полісся ворожим чином («hostili modo»);</p></li>
+<li><p><em>Козацькі залоги («załogi kozackie», «w załogach y dispositiey kozackiey»)</em> — стаціонарні військові гарнізони, які тримали села під контролем із 1655 року («w roku tysiąc szesćset pięćdziesiąt piątym y dawniey») аж до моменту подання скарги в 1658 році.</p></li>
+</ul></li>
+<li><p><strong>Фіскальні терміни, податки та феодальні повинності:</strong></p>
+<ul>
+<li><p><em>Подимне (podymne)</em> — державний податок на користь Речі Посполитої (ухвалений сеймом 1658 року), який власниця відмовляється сплачувати через відсутність контролю над маєтком;</p></li>
+<li><p><em>Чинші (cynsze)</em> — грошова рента з селянських господарств, що привласнювалася козаками;</p></li>
+<li><p><em>Дякла (dziakła)</em> — натуральний побір (зерном, продуктами), який козацька адміністрація збирала на користь Війська Запорозького;</p></li>
+<li><p><em>Контрибуції (nieznosne contrybutie)</em> — примусові військові побори з підданих;</p></li>
+<li><p><em>Сеймові та повітові ухвали:</em> сеймові податкові конституції («z seymu uchwalonego») та місцеві сеймикові ухвали («powiatowe laudum»).</p></li>
+</ul></li>
+<li><p><strong>Правовий статус та судово-процесуальні терміни:</strong></p>
+<ul>
+<li><p><em>Manifestacya (маніфестація)</em> — судова заява шляхтича з протестом проти нарахування податків або для фіксації втрати контролю над майном;</p></li>
+<li><p><em>Wyzuta z własnosci</em> — юридична експропріація / фактичне позбавлення права володіння та розпорядження маєтком;</p></li>
+<li><p><em>Testimonium</em> — письмове судове посвідчення/доказ законності дій;</p></li>
+<li><p><em>Inserować do xiąg</em> — офіційне внесення (інсеровання) тексту заяви до ґродських книг.</p></li>
+</ul></li>
+</ul></div></details>
+  </div>
+</article>
+<article class="ak-doc" id="1660-firlej-dubrovytsia">
+  <header class="ak-head">
+    <div class="ak-date"><b>18</b><span>вересня</span><i>1660</i></div>
+    <div class="ak-head-main">
+      <p class="ak-kick">№ 160 · Пінський гродський суд</p>
+      <h2 class="ak-h2">Скарга про напад на села Дубровицького маєтку</h2>
+      <p class="ak-places"><span>Дубровиця</span><span>Клесів</span><span>Корпилівка</span><span>Стрільськ</span><span>Кривиця</span></p>
+    </div>
+  </header>
+  <p class="ak-sum">Урядник Миколая Фірлея Ян Сохацький скаржиться: після московсько-козацького рейду влітку 1660 року на села маєтку напали не вороги, а піддані маршалка Єльського з Кривиці на чолі з Марцином Пуцятою. У Клесові закатували боярку, у Корпилівці покалічили вагітну дружину війта, у Стрільську вбили двох панцерних бояр. Возні оглянули наслідки й засвідчили.</p>
+  <div class="ak-scans"><button type="button" class="ak-scan" data-doc="1660-firlej-dubrovytsia" data-i="0" aria-label="Скан 1 з 5"><img src="https://i.imgur.com/8nF8Syt.png" alt="" loading="lazy" decoding="async"><span>1</span></button><button type="button" class="ak-scan" data-doc="1660-firlej-dubrovytsia" data-i="1" aria-label="Скан 2 з 5"><img src="https://i.imgur.com/M7KKGpN.png" alt="" loading="lazy" decoding="async"><span>2</span></button><button type="button" class="ak-scan" data-doc="1660-firlej-dubrovytsia" data-i="2" aria-label="Скан 3 з 5"><img src="https://i.imgur.com/iiL2Xfv.png" alt="" loading="lazy" decoding="async"><span>3</span></button><button type="button" class="ak-scan" data-doc="1660-firlej-dubrovytsia" data-i="3" aria-label="Скан 4 з 5"><img src="https://i.imgur.com/np5A4CB.png" alt="" loading="lazy" decoding="async"><span>4</span></button><button type="button" class="ak-scan" data-doc="1660-firlej-dubrovytsia" data-i="4" aria-label="Скан 5 з 5"><img src="https://i.imgur.com/JRtjTui.png" alt="" loading="lazy" decoding="async"><span>5</span></button></div>
+  <details class="ak-block ak-meta"><summary>Опис документа</summary><div class="ak-meta-body"><ul>
+<li><p><strong>Повна назва видання:</strong> «Акты издаваемые Виленскою коммиссіею для разбора древнихъ актовъ. Томъ XXXIV. Акты относящіеся ко времени войны за Малороссію (1654—1667)».</p></li>
+<li><p><strong>Місце та рік видання:</strong> Вильна, Электро-Типографія «Русскій Починъ», Сиротская, д. 20, 1909 г.</p></li>
+<li><p><strong>Номер документа:</strong> № 160.</p></li>
+<li><p><strong>Дата заголовочна:</strong> 1660 г. Сентября 18.</p></li>
+<li><p><strong>Дата подання протестації до суду:</strong> 18 вересня 1660 року («тисеча шестсот шестдесятого, мца Сентября осмнадцатого дня»).</p></li>
+<li><p><strong>Дата реляційного квиту возних:</strong> 14 вересня 1660 року («tysiąc szesćset szesćdziesiątego, msca Septembra czternastego dnia»).</p></li>
+<li><p><strong>Дата нападу:</strong> 20 вересня [у тексті зазначено «Septembra dwudziestego dnia», що, ймовірно, є опискою в тексті писаря або малося на увазі попередній місяць чи інша хронологія щодо дати реляції від 14 вересня].</p></li>
+<li><p><strong>Місце складання акта:</strong> місто Пінськ, ґродський уряд у Пінському замку («На враде кгродском в замку гдарском Пинском»).</p></li>
+<li><p><strong>Архівне посилання / шифр оригіналу:</strong> Изъ актовой книги Пинскаго грод. суда за 1660 г. № 13012, л. 795.</p></li>
+<li><p><strong>Мова документа:</strong> польська (з руською/староукраїнською судовою клаузулою та підписами возних).</p></li>
+</ul></div></details>
+  <section class="ak-text" aria-label="Текст документа">
+    <p class="ak-label">Текст оригіналу <small>цифри на полях — сторінки видання</small></p>
+    <div class="ak-text-body"><p class="ak-no">№ 160—1660 г. Сентября 18.</p><p class="ak-ptitle">Заявленіе Люблинскаго старостича Николая Фирлея объ опустошеніяхъ, грабежахъ и обидахъ отъ московскихъ войскъ въ имѣніи Дубровицѣ, Пинскаго повѣта.</p>
+<p>Prot. urzędnika Dubrowickiego iegom. p. Firleia na poddanych.</p>
+<p>Лета от нароженя Сына Божого тисеча шестсот шестдесятого, мца Сентября осмнадцатого дня.</p>
+<p>На враде кгродском в замку гдарском Пинском, передо мною Войтехом Зеленским, столником и подстаростим Пин-<span class="ak-pg" aria-label="сторінка 2">2</span>ским, от велможного его млсти пана Яна Кароля Млоцкого, Пинского, Гелметского старосты установленым оповядал у soleniter protestował sługa wielmożnego iegomsci pana Mikołaia Firleia, staroscica Lubelskiego y urzędnik maiętności iegomsci Dobrowickiey, w Pinskim powiecie leżącey, pan Jan Sochacki, iż ta maiętność ze wszystkiemi przysiołkami nie tylko przed tym po zaczęciu rebeliy od swawolnych kozakow zdezolowaną, ale y od pogan, nieprzyiacioł krzyża swiętego, tatar była zruynowaną, niemniey po obięciu onego w zawiadywanie, na co są y piersze proby, częstokroć znisczenie ponosiła, iako to y w tym tysiąc szesćset szesćdziesiątym roku, gdy y w Pinsk wiarołomni nieprzyiaciele moskwa z kozactwem hultaystwem wpadli, przez cały miesiąc Juliy od nieiakiegoś ymieniem Andryana, nakaznego moskiewskiego pułkownika, ktury nie maiąc w sercu boiazni Bożey y przed oczyma nad niewinnemi ludzmi miłosierdzia, z woyskiem swoym ogniem y mieczem tameczny kray wypustoszywszy, konie, bydełko rogate y nierogate, owce, swinie, kury, gęsi że ledwo co się u kogo mogło przez ukrycie zostać, pozabierali, maiętności powymęczywali y to wszystko, snać podzieliwszy się z moskwo, rożno sobie po Olewsczyznach, Uborciach, Norynskach, Turowsczyznach y inszych postronnych lesunskich pozycich porozganiali y porozwozywali, niżli po wroceniu onych, kiedy o sczęsliwie następuiącym woysku Jego kr. msci pana нашего miłościwego na zdraycow kozakow y krzywoprzysiężnych chitrych moskalow w Ukraynie wzieliśmy dostateczną wiadomość, tedy pan Sochacki, powrociwszy się, lubo do srogich pustek z ucieczki, zarazem postrzegaiąc honoru panskiego, poczet pod chorągiew powiatową poddawszy sam swe y ubogich poddanych iegom. iuż nie nabyte dobra, ktorich nie wiele zostało, ale szczegulnie zdrowie y nieco od nieprzyiaciela niedodarte w borciach y pasiekach pszczoły ochraniaiąc, patrząc na drugich, ze-<span class="ak-pg" aria-label="сторінка 3">3</span>brawszy хлопков ubogich we wsi Strzelsku stanoł y na wszelakiey ostrożnosci chcąc dawać wiedzieć o nieprzyjacielu iegomsci panu chorążemu powiatowemu zostawał, tamże poddani y strzelcy wielmożnego iegomsci pana Łukasza Jelskiego, marszałka powiatu Pinskiego y samey ieymsci, do drugiey częsci maiętności Dobrowicy przysluchaiące, a w dzierzeniu iegomsci pana Krzysztopha Trzeciaka y paniey małżonki iegomsci, ieymsci paniey Leonory Jelskiey, marszałkowey Pinskiey będące, we wsi Krzywicy żyiące imieniem Lewon y Weles Kruszki, Wasko y Hrycko Chmielnikowie, Jan Dobrałowicz, Ławryn Putrenia, Iwan Maksioła s potużnikami, w tey wsi y w ynszych wioskach mieszkaiącemi, miedzy nimi samemi imionami y przezwiskami wiadomemi, zgromadziwszy się y maiąc nad sobo urzędnika ichmosciow pana Marcina Puciate starszym, nie trzymaiąc się dobr panow swoich, w dobra wielmożnego iegomsci pana Firleia, bez dania żadney namnieyszey przyczyny, w niewiadomosci ludzkiey, swawolnie z chorągwiami, bębnami, tegoż roku, msca Septembra dwudziestego dnia, nie uganiaiąc się za nieprzyjacielem, nie sprawuiąc się po żołnersku, wtargneli y zaraz we wsi Klesowie, zaskoczywszy boiarkę, żone Hurynowicza, sposobem nieprzyiacielskim o pieniądzach pytaiąc morduiąc, na smierć zamęczyli, pszczoły tak w pasiece iegomsci iako y w barciach osmdziesiąt gwałtownie wydarli, potym w Korpiłowce napadszy woytową żonę brzemienno, że dziecie dziewczyne zrzucić musiała y sama nie wiedzieć żywa li będzie, spiekli, drzwi, okna posiekli, powybiiali, naczym nie maiąc dosić y podobno niespodziewaiąc się bytności protestuiącego, nazaiutrz do wsi Strzelska także cicho, albowiem ni odkogo pan Sochacki o takowey ich wiolencyi, bo wszyscy przed nieprzyiacielem w puszczy się kryli, drudzy przy nim byli, wiedzieć nie mogł, szli, gdzie napadszy okrzyk uczynili, drzwi, okna sieć, wybrancow bić, obdzierać poczeli, co żało-<span class="ak-pg" aria-label="сторінка 4">4</span>bliwy postrzegszy y niekturych хлопow iego msci pana marszałkowych przy panu Puciacie poznawszy, co by tego za przyczyna była pytać y żeby w dobry sposob brawaryie porzuciwszy, kędy yndziey ustępowali, naupominać poczoł, na kturą takową submissyą by namniey nie dbaiąc, wprzud pana Sochackiego słowami karczemnemi łaiąc do piechoty iegomsci pana Firleiowey chcąc ze wsi wyfurować y takież, iak po drugich siołach exaccye czynić, z brońmi do woyny należącemi porwalisię strzelać, bić stali, iakoż ze wsi Klesowa Miska Żuka, a ze wsi Korpiłowki Tyszyca boiar pancernych zaraz zabili, lecz piesze s tey strony widząc na sie takowy ucisk, ostatek zdrowia swego ochraniaiąc, bronili y w tey wsi dalszego zaboystwa, bezprawia działać nie dopuscili, więc odchodząc, ułapiwszy ięzyka, bydła rogatego wielkiego kop pięć, po kop piąciu kładąc, gwałtem zagrabili w puszczy; s tych tedy pryncypałow, lubo by na zdrowiu swoym ktory szwankował, to w obronie na sobie ponieść by musiał. A po takowym uczynku, na dalszy żal, wychodząc iuż z dobr tych, pochwałkę na poddanych iegomsci pana Firleiowych na kożdym mieyscu biciem y na smierć zabiianiem uczynili, w czym wszystkim pod niebytnosci wielmożnego iegomsci pana Firleia, pana y dobrodzieia swego, pan Sochacki te żałobę zanosząc, salwe do czynienia prawem y meliorowania procesu zachowuiąc, do xiąg ninieyszych dał zapisać.</p>
+<p>При которомъ оповеданю енералове нижей помененые реляцыею своею сознали очевисто тыми словы:</p>
+<p>Ja Andrzey y ia Roman Saczkowscy, ienerałowie Jego kr. msci powiatu Pinskiego, zeznawami tym нашим relacynym kwitem, iż za użyciem od iegomsci pana Jana Sochackiego, sługi wielmożnego iegomsci pana Mikołaia Firleia, staroscica Lubelskiego y urzędnika na ten czas maiętności iego msci Dubrowicy, w Pinskim powiecie leżącey, roku teraznieyszego tysiąc szesćset szesćdziesiątego, msca Septembra czternastego dnia, z<span class="ak-pg" aria-label="сторінка 5">5</span>strono szlachto, panami Janem y Stephanem Bułachami, Alexandrem y Dominikiem Żarskimi, iezdziliśmy do tey Dubrowicy, a stamtąd byliśmy nazaiutrz we wsi Klesowie, gdzie białogłowe mienił być sam Hurynowicz, boiarzyn tameczny, żonę swoią wszystką haniebnie y niemiłosierdnie pomęczoną y popieczoną, y od tego umarła, a w pasiece Zieleynie czterdziesciory w barciach, w tąż czterdziesciory pszczoł wydartych, za pokazywaniem widziałem, w drugiey wsi Korpiłowce woytową żone chorą, na smiertelney poscieli leżąco, na twarzy zbitą, po ręku popieczoną, s czego, prawi dziecie dziewczyne, będąc brzemienną, zrzucić musiała, iakoż y te ciałko w trunie pokazywano oglondaliszmy; w trzeciey wsi Strzelsku Miska Żuka y Tyszyca boiar przy panu Sochackim w ow raz będących, wpuł przestrzelonych, zabitych y inszą swawolą, drzwi, okien posieczenie tam baczyliśmy. Co wszystko mienili być woytowie y boiarowie tych dobr od chłopow y strzelcow iegomsci pana marszałkowych, w dzierzeniu iegomsci pana Trzeciakowym zostaiących Dubrowickich, we wsi Krzywicy mieszkaiących y drugich potużnikow y od wielu pomocnikow ych sposobem w procesie wyrażonym stało. My tedy ienerałowie s pomienioną stroną, będąc na tey sprawie, gdy chorągiew nasza powiatowa za Horyniem swawolą znosiła y uskramiała, cośmy widzieli y słyszeli, to w te moią relacyo wpisawszy, prawnym porządkiem s panami szlachtą zeznawamy. Pisan wyszszo datą. Анъдрей Сачъковский енералъ. Романъ Сачъковский енералъ рукою. Которое оповедане и енералское сознане до книг кгродских Пинских есть уписано.</p>
+<p>Изъ актовой книги Пинскаго грод. суда за 1660 г. № 13012 л. 795.</p></div>
+  </section>
+  <div class="ak-idx">
+    <details class="ak-block"><summary>Особи <small>27</small></summary><div><ol type="1">
+<li><p><strong>Андрян (Andryan)</strong> — наказний московський полковник («nakazny moskiewski pułkownik»).</p></li>
+<li><p><strong>Булах Іван (Jan Bułach)</strong> — шляхтич, асистент/свідок огляду возних («strona szlachta»).</p></li>
+<li><p><strong>Булах Степан (Stephan Bułach)</strong> — шляхтич, асистент/свідок огляду возних («strona szlachta»).</p></li>
+<li><p><strong>Добралович Ян (Jan Dobrałowicz)</strong> — селянин/підданий с. Кривиця, учасник нападу.</p></li>
+<li><p><strong>Єльська Леонора (Leonora Jelska)</strong> — дружина Лукаша Єльського, маршалкова пінська; співвласниця частини маєтності Дубровиця.</p></li>
+<li><p><strong>Єльський Лукаш (Łukasz Jelski)</strong> — маршалок повіту Пінського; співвласник другої частини маєтності Дубровиця.</p></li>
+<li><p><strong>Жарський Олександр (Alexander Żarski)</strong> — шляхтич, асистент/свідок огляду возних.</p></li>
+<li><p><strong>Жарський Домінік (Dominik Żarski)</strong> — шляхтич, асистент/свідок огляду возних.</p></li>
+<li><p><strong>Жук Місько (Misko Żuk)</strong> — боярин панцерний зі с. Клесів (убитий під час нападу у с. Стрільськ).</p></li>
+<li><p><strong>Зеленський Войтех (Войтех Зеленский / Wojciech Zieleński)</strong> — стольник і підстароста пінський, судовий урядник, перед яким складено протестацію.</p></li>
+<li><p><strong>Гуринович (Hurynowicz)</strong> — боярин зі с. Клесів.</p></li>
+<li><p><strong>Гуриновича дружина (żona Hurynowicza, boiarka)</strong> — боярська жінка зі с. Клесів, закатована насмерть за гроші.</p></li>
+<li><p><strong>Крушка Велес (Weles Kruszka)</strong> — селянин/підданий с. Кривиця, учасник нападу.</p></li>
+<li><p><strong>Крушка Левон (Lewon Kruszka)</strong> — селянин/підданий с. Кривиця, учасник нападу.</p></li>
+<li><p><strong>Максьола Іван (Iwan Maksioła)</strong> — селянин/підданий с. Кривиця, учасник нападу.</p></li>
+<li><p><strong>Млоцький Ян Кароль (Ян Кароль Млоцкий / Jan Karol Młocki)</strong> — староста пінський та гелметський.</p></li>
+<li><p><strong>Путреня Лаврін (Ławryn Putrenia)</strong> — селянин/підданий с. Кривиця, учасник нападу.</p></li>
+<li><p><strong>Пуцята Марцин (Marcin Puciata)</strong> — пан, урядник володінь маршалка Єльського та пана Тшецяка, ватажок нападу на села Фірлея.</p></li>
+<li><p><strong>Сачковський Андрій (Andrzey Saczkowski / Анъдрей Сачъковский)</strong> — генерал (возний гродський) Його королівської милості повіту Пінського.</p></li>
+<li><p><strong>Сачковський Роман (Roman Saczkowski / Романъ Сачъковский)</strong> — генерал (возний гродський) Його королівської милості повіту Пінського.</p></li>
+<li><p><strong>Сохацький Ян (Jan Sochacki)</strong> — пан, слуга Миколая Фірлея, урядник маєтності Дубровицької, возничий протестації (протестуючий).</p></li>
+<li><p><strong>Тржецяк / Тшецяк Кшиштоф (Krzysztoph Trzeciak)</strong> — пан, державець (орендар/посідач) частки маєтності Дубровиця, що належала Єльським.</p></li>
+<li><p><strong>Тишиця (Tyszyc)</strong> — боярин панцерний зі с. Корпилівка (убитий під час нападу у с. Стрільськ).</p></li>
+<li><p><strong>Фірлей Миколай (Николай Фирлей / Mikołaj Firlej)</strong> — пан, старостич люблінський, власник маєтності Дубровиця.</p></li>
+<li><p><strong>Хмельницький / Хмельник Васько (Wasko Chmielnik)</strong> — селянин/підданий с. Кривиця, учасник нападу.</p></li>
+<li><p><strong>Хмельницький / Хмельник Грицько (Hrycko Chmielnik)</strong> — селянин/підданий с. Кривиця, учасник нападу.</p></li>
+<li><p><strong>Війтова дружина з Корпилівки (woytowa żona z Korpiłowki)</strong> — вагітна жінка війта, катована вогнем, внаслідок чого втратила дитину.</p></li>
+</ol></div></details>
+    <details class="ak-block"><summary>Місця</summary><div><ul>
+<li><p><strong>Дубровиця (Дубровицѣ, Dobrowica, Dubrowica)</strong> — маєтність і ключ у Пінському повіті.</p></li>
+<li><p><strong>Горинь (Horyń)</strong> — річка («za Horyniem»).</p></li>
+<li><p><strong>Зелейня (Zieleynia)</strong> — назва пасіки/урочища.</p></li>
+<li><p><strong>Клесів (Klesow, Klesowo)</strong> — село маєтності Дубровиця.</p></li>
+<li><p><strong>Корпилівка (Korpiłowka)</strong> — село маєтності Дубровиця.</p></li>
+<li><p><strong>Кривиця (Krzywica)</strong> — село другої частини маєтності Дубровиця (під юрисдикцією Єльських/Тшецяка).</p></li>
+<li><p><strong>Норинськ (Norynsk, Norynska)</strong> — «Norynskach», місцевість/повіт куди зганяли награбоване.</p></li>
+<li><p><strong>Олевщина (Olewsczyzna)</strong> — довкілля Олевська («Olewsczyznach»).</p></li>
+<li><p><strong>Пінськ (Пинск, Pinsk)</strong> — місто, центр повіту.</p></li>
+<li><p><strong>Пінський замок (замок гдарский Пинский)</strong> — місцезнаходження ґродського суду.</p></li>
+<li><p><strong>Пінський повіт (Пинский повѣт, powiat Pinski)</strong> — адміністративна одиниця Великого князівства Литовського.</p></li>
+<li><p><strong>Стрільськ (Strzelsk, Strzelsko)</strong> — село.</p></li>
+<li><p><strong>Турівщина (Turowsczyzna)</strong> — регіон Турова («Turowsczyznach»).</p></li>
+<li><p><strong>Уборть (Uborć, Uborcie)</strong> — річка/волость на Поліссі («Uborciach»).</p></li>
+<li><p><strong>Україна (Ukrayna)</strong> — край («w Ukraynie»).</p></li>
+</ul></div></details>
+    <details class="ak-block"><summary>Терміни й теми</summary><div><ul>
+<li><p><strong>Стани та уряди:</strong> старостич люблінський, староста пінський і гелметський, стольник і підстароста пінський, маршалок повіту, урядник, генерал / енерал (возний гродський), бояри / бояри панцерні, піддані (селяни), стрільці, війт, шляхта.</p></li>
+<li><p><strong>Військові терміни та формування:</strong> chorągiew powiatowa (повітова корогва), chorągwie (прапори), bębny (бубни), piechota (піхота), wybrańcy (вибранці), pułkownik nakazny, poczet, ułapiwszy ięzyka («взявши язика»).</p></li>
+<li><p><strong>Сторони конфлікту:</strong> московські війська («moskwa», «moskale»), козаки («swawolni kozacy», «kozactwo hultaystwo», «zdraycy kozacy»), татари («pogani, nieprzyiaciele krzyża swiętego»), шляхетські піддані / загін Пуцяти.</p></li>
+<li><p><strong>Судово-процесуальні акти й терміни:</strong></p>
+<ul>
+<li><p><em>Protestatio / soleniter protestował / оповядал</em> (судова скарга/протестація);</p></li>
+<li><p><em>Relacyny kwit / relacya / сознане очевисто</em> (офіційний протокол огляду місця злочину та трупів возними);</p></li>
+<li><p><em>Księgi grodzkie</em> (ґродські книги);</p></li>
+<li><p><em>Salwa do czynienia prawem y meliorowania procesu</em> (застереження судових прав для подальшого позову);</p></li>
+<li><p><em>Exaccye</em> (незаконні побори/стягнення);</p></li>
+<li><p><em>Pochwałka</em> (погроза подальшою розправою).</p></li>
+</ul></li>
+<li><p><strong>Матеріальні збитки та сільське господарство:</strong></p>
+<ul>
+<li><p>Грабіж худоби: коні, биделко рогате й нерогате, вівці, свині, птиця (кури, гуси), велика рогата худоба («kop pięć, po kop piąciu kładąc»);</p></li>
+<li><p>Бортництво та бджільництво: пасіки, борті («borcie»), крадіжка бджіл (80 бортей/вуликів у Клесові, 40 у Зелейні);</p></li>
+<li><p>Руйнування житла: вибиті та посічені вікна й двері.</p></li>
+</ul></li>
+</ul></div></details>
+  </div>
+</article>
+<article class="ak-doc" id="1660-spalennia-vorobyna">
+  <header class="ak-head">
+    <div class="ak-date"><b>12</b><span>грудня</span><i>1660</i></div>
+    <div class="ak-head-main">
+      <p class="ak-kick">№ 168 · Пінський гродський суд</p>
+      <h2 class="ak-h2">Маніфестація про спалення Воробина</h2>
+      <p class="ak-places"><span>Воробин</span><span>Селець</span><span>Пінськ</span><span>Дубровиця</span></p>
+    </div>
+  </header>
+  <p class="ak-sum">Дозорця Максим Сілецький від імені Казимира Нарушевича заявляє: фільварок і село Воробин та село Селець спалили татари в грудні 1653 року, потім там стояли козацькі залоги, а в липні 1660-го московські й козацькі полки спалили їх знову. Возний бачив лише обгорілі стовпи й попелища. Замість 7 димів у Воробині й понад 20 у Сельці подимне можна сплатити хіба з п’яти. У друкованому заголовку помилково стоїть 1680 рік.</p>
+  <div class="ak-scans"><button type="button" class="ak-scan" data-doc="1660-spalennia-vorobyna" data-i="0" aria-label="Скан 1 з 3"><img src="https://i.imgur.com/oK46I7w.png" alt="" loading="lazy" decoding="async"><span>1</span></button><button type="button" class="ak-scan" data-doc="1660-spalennia-vorobyna" data-i="1" aria-label="Скан 2 з 3"><img src="https://i.imgur.com/5gdBmWa.png" alt="" loading="lazy" decoding="async"><span>2</span></button><button type="button" class="ak-scan" data-doc="1660-spalennia-vorobyna" data-i="2" aria-label="Скан 3 з 3"><img src="https://i.imgur.com/AXGZ2XH.png" alt="" loading="lazy" decoding="async"><span>3</span></button></div>
+  <details class="ak-block ak-meta"><summary>Опис документа</summary><div class="ak-meta-body"><ul>
+<li><p><strong>Видання:</strong> «Акты издаваемые Виленскою коммиссіею для разбора древнихъ актовъ. Томъ XXXIV. Акты относящіеся ко времени войны за Малороссію (1654—1667)». Вильна, 1909 г.</p></li>
+<li><p><strong>Номер документа:</strong> № 168.</p></li>
+<li><p><strong>Заголовок публікації:</strong> <em>Заявленіе отъ имени землянина Казимира Нарушевича о невозможности вносить положеную подать съ его имѣній Воробина и села Сельца въ виду опустошенія ихъ во время войны</em>.</p></li>
+<li><p><strong>Латиномовний заголовок акта:</strong> <em>Manifestacyia o spalenie Worobina iegom. p. Naruszewicza</em>.</p></li>
+<li><p><strong>Дата документа (внесення маніфестації):</strong> 12 грудня 1660 року («тысеча шестсот шестдесятого, мца декабря дванадцатого дня»). <em>(Примітка: у друкованому заголовку помилка друку — 1680 замість 1660 р.)</em></p></li>
+<li><p><strong>Дата реляції возного:</strong> 4 грудня 1660 року («roku tysiąc szesćset szesćdziesiątym, msca decembra czwartego dnia»).</p></li>
+<li><p><strong>Місце складання:</strong> м. Пінськ, ґродський уряд у замку господарському Пінському («На враде кгродском в замку гдарском Пинском»).</p></li>
+<li><p><strong>Судовий урядник:</strong> Войтех Зеленський, стольник і підстароста пінський, встановлений від пана Яна Кароля Млоцького, пінського і гельметського старости.</p></li>
+<li><p><strong>Архівне посилання / шифр оригіналу:</strong> Изъ акт. кн. Пинск. грод. суда за 1660 г., № 13012, л. 973.</p></li>
+<li><p><strong>Мова документа:</strong> змішана — староукраїнська / руська (канцелярська судова преамбула, підпис возного та записова формула) та польська (текст маніфестації дозорця й реляційного квиту возного).</p></li>
+</ul></div></details>
+  <section class="ak-text" aria-label="Текст документа">
+    <p class="ak-label">Текст оригіналу <small>цифри на полях — сторінки видання</small></p>
+    <div class="ak-text-body"><p class="ak-no">№ 168—1680 г. Декабря 12.</p><p class="ak-ptitle">Заявленіе отъ имени землянина Казимира Нарушевича о невозможности вносить положеную подать съ его имѣній Воробина и села Сельца въ виду опустошенія ихъ во время войны.</p>
+<p>Manifestacyia o spalenie Worobina iegom. p. Naruszewicza.</p>
+<p>Лета от нароженя Сына Божого тысеча шестсот шестдесятого, мца декабря дванадцатого дня.</p>
+<p>На враде кгродском в замку гдарском Пинском, передо мною Войтехом Зеленским, столникомъ и подстаростимъ Пинскимъ, од велможного его милости пана Яна Кароля Млоцкого, Пинского Гелметъского старосты установленым, opowiadał y manifestacyą zanosił pan Maxim Sielecki, dozorca folwarku Worobina y wsi Sielca imsci pana Kazimierza Naruszewicza, starosty Bułakowskiego, w powiecie Pinskim lezącego, w niebytnosci imsci od dawnego czasu, dla incursy nieprzyiacielskich do Litwy, dzierzawy swey Bułakowskiey, w woiewodztwie Trockim leżącey, odiazdem, iż iako od roku tysiąc szesćset czterdziestego osmego zaczęcia incursy nieprzyjacielskich w panstwie I. kr. msci, a potym w roku tysiąc szesćset pięćdziesiąt trzecim in decembri ten folwark Worobin ze wsią Worobinem y wieś Sielec fundytus spalony został, iako y w roku tysiąc szesćset pięćdziesiątym piątym, gdy moskwa z kozakami od Kiiowa tak lądem iako y wodą do miasta Pinska przyszedszy, zamek Pinski y miasto spalili, pod ten czas załogi kozackie nad Horynią rzeką w maiętnosciach rożnych panow iako też y folwarku Worobinskim, wsi Sielcu zostawali y od pomienionego roku aż do roku tysiąc szesćset szesćdziesiątego, gdy moskwa w tymże roku z kozakami od Norzynska na Bereznice, na Dąbrowice, na Wysock, Stolin aż ku Pinskowi kilka pułkow szły, gdzie dnia<span class="ak-pg" aria-label="сторінка 2">2</span>czwartego Julij w tymże roku Pinsk spaliwszy, nazad na Dawydgrodek, na Turow aż do Norzynska powracali, pod ktore wszystkie czasy takowych incursy nieprzyiacielskich nie tylko imsć pan moy w pomienioney maiętnosci mieszkać, ale y poddani od takowego uciążenia y spalenia po rożnych mieyscach y puszczach tułać się musieli, ktorego to czasu kozackiej swawoli co kolwiek poddanych pobudowało się było y to spalone zostali. Teraz tedy za łaską Pana Naywyszego y szczęsliwego panowania krola imsci ta swawola kozacka y załogi nad Horynią rzeką dobrach szlacheckich ustąpiła, pod ktory czas dzierzenia ich nie tylko panu swemu powinnosci pełnic, pogotowiu y podatkow Rzptey przez takie zniszczenie y zubożenie oddawać, iako też y iuramentu na spustoszeniu y zniszczeniu czynić w niebytnosci pana swego nie mogli y aby to imsci panu memu w przyszły czas iakowego ciężaru o podatki Rzptey nie było, poniewaź ta maiętnoska imsci in hostilitate zostawała, teraz tedy, ieżeliby iakowe podatki z seymu uchwalone były, tedy iako teraz poddanych na popieliska swoie zebrawszy nie więcey tylko z dymow piąciu podymne mogą wydać, a więcey poddanych dla takowego zniszczenia y zubożenia niemasż, co wszystko do wiadomosci urzędowey doniosszy, prosił, aby ta manifestacya do xiąg ninieyszych przyięta y zapisana była, што ест записано.</p>
+<p>При котором оповеданю ставши енерал повету Пинского Миколай Малышыцкий квитъ свой реляцыйный с печатию и с подписомъ руки свое, такъже с печатми стороны шляхты ку записаню до книг кгродских Пинських прызнал тыми словы: Jan Mikołay Małyszczycki, ienerał l. k. msci powiatu Pinskiego zeznawam tym moym relacynym kwitem, iż w roku tysiąc szesćset szesćdziesiątym, msca decembra czwartego dnia, z stroną szlachtą panem Fedorem y panem Pawłem Sernickimi byłem wzięty na sprawę niżey mianowaną do wsi Worobina y Sielca, w po-<span class="ak-pg" aria-label="сторінка 3">3</span>wiecie Pinskim leżących, maiętnosci Jegomsci pana Kazimierza Naruszewica, starosty Bułakowskiego, do ktorych wsi przybywszy dnia wysz mianowanego z panem Maximem Sieleckim, dozorcą tych wsi y przez niegoż za okazaniem widzielismy, gdzie dwor y wieś Worobin był, żadnego budynku niemasz, tylko na niektorych mieyscach słupy ogorzałe y płoty stoią, a budynki popalone, tylko popieliska. Potym za okazaniem we wsi nazwaney Sielcu, do Worobina należącey, także popieliska, gdzie domy poddanych byli, tylko słupy ogorzałe y płoty stoią, w ktorey wsi mianował, że było dymow więcy dwudziestu, a w Worobinie siedm dymow, to wszystko popalono, iako mianował pan Sielecki, te wprzod tatarowie, a potym rożnych lat kozackie załogi nad Horynią zostawali, na ostatek w roku teraznieyszym tysiąc szesćset szesćdziesiątym, msca Juli rożnych dni, pułki moskiewskie y kozackie z Pinska powrociwszy, czaty rospusciwszy nad Horynio, wsi rożnych panow palili, pod ktory czas y te wsi Worobin y Sielec spalili. Co mną ienerałem z tą stroną szlachtą okazawszy, oswiadczył. A tak ia ienerał z tą stroną szlachtą, cośmy słyszeli y widzieli, na ten kwit relacyny napisawszy, s pieczęcią y s podpisem ręki mey także s pieczęciami strony szlachty, do xiąg grodzkich Pinskich podaię y przyznawam. Миколай Малыщыцкий енерал. Которое оповедане и енералское сознане до книг кгродских Пинских ест записано.</p>
+<p>Изъ акт. кн. Пинск. грод. суда за 1660 г. № 13012 л. 973.</p></div>
+  </section>
+  <div class="ak-idx">
+    <details class="ak-block"><summary>Особи <small>7</small></summary><div><ol type="1">
+<li><p><strong>Зеленський Войтех (Войтех Зеленский / Wojciech Zieleński)</strong> — стольник і підстароста пінський, судовий урядник.</p></li>
+<li><p><strong>Малищицький Ян Миколай (Миколай Малышыцкий / Jan Mikołay Małyszczycki / Миколай Малыщыцкий)</strong> — генерал (возний гродський) повіту Пінського.</p></li>
+<li><p><strong>Млоцький Ян Кароль (Ян Кароль Млоцкий / Jan Karol Młocki)</strong> — староста пінський і гельметський.</p></li>
+<li><p><strong>Нарушевич Казимир (Казимир Нарушевич / Kazimierz Naruszewicz)</strong> — пан, землянин, староста булаковський; дідич маєтності Воробин і села Селець.</p></li>
+<li><p><strong>Серницький Павло (Paweł Sernicki)</strong> — шляхтич («strona szlachta»), свідок огляду згарищ возним.</p></li>
+<li><p><strong>Серницький Федір (Fedor Sernicki)</strong> — шляхтич («strona szlachta»), свідок огляду згарищ возним.</p></li>
+<li><p><strong>Сілецький Максим (Maxim Sielecki)</strong> — пан, дозорця (економ/управитель) фільварку Воробин та с. Селець; заявник маніфестації.</p></li>
+</ol></div></details>
+    <details class="ak-block"><summary>Місця</summary><div><ul>
+<li><p><strong>Березниця (Bereznice)</strong> — містечко/поселення на шляху військ.</p></li>
+<li><p><strong>Булаковське староство / Булаковська держава (dzierżawa Bułakowska)</strong> — володіння К. Нарушевича у Троцькому воєводстві.</p></li>
+<li><p><strong>Висоцьк (Wysock)</strong> — поселення на шляху військ.</p></li>
+<li><p><strong>Воробин (Worobin)</strong> — шляхетський двір, фільварок і однойменне село в Пінському повіті («dwor y wieś Worobin»).</p></li>
+<li><p><strong>Горинь (Horyń)</strong> — річка («nad Horynią rzeką», «nad Horynio»).</p></li>
+<li><p><strong>Давид-Городок (Dawydgrodek)</strong> — місто на шляху відступу московсько-козацьких сил.</p></li>
+<li><p><strong>Дубровиця (Dąbrowice)</strong> — містечко/пункт на шляху військ.</p></li>
+<li><p><strong>Київ (Kiow)</strong> — місто, напрямок руху московсько-козацьких військ («od Kiiowa tak lądem iako y wodą»).</p></li>
+<li><p><strong>Литва (Litwa)</strong> — Велике князівство Литовське.</p></li>
+<li><p><strong>Норинськ (Norzynsk)</strong> — пункт зосередження та відступу військ.</p></li>
+<li><p><strong>Пінськ (Pinsk)</strong> — місто і замок.</p></li>
+<li><p><strong>Пінський повіт (powiat Pinski)</strong> — повіт Берестейського воєводства.</p></li>
+<li><p><strong>Селець (Sielec)</strong> — село, приналежне до Воробина.</p></li>
+<li><p><strong>Столін (Stolin)</strong> — місто на маршруті пересування військ.</p></li>
+<li><p><strong>Троцьке воєводство (woiewodztwo Trockie)</strong>.</p></li>
+<li><p><strong>Турів (Turow)</strong> — місто на шляху відступу військ.</p></li>
+</ul></div></details>
+    <details class="ak-block"><summary>Терміни й теми</summary><div><ul>
+<li><p><strong>Хронологія воєнних руйнувань:</strong></p>
+<ul>
+<li><p><strong>1648 р.</strong> — початок ворожих нападів у Речі Посполитій («zaczęcia incursy nieprzyiacielskich w panstwie I. kr. msci»);</p></li>
+<li><p><strong>Грудень 1653 р.</strong> — повне спалення («fundytus spalony») фільварку й села Воробин та с. Селець;</p></li>
+<li><p><strong>1655 р.</strong> — прихід московських і козацьких сил водою та суходолом з Києва, взяття та спалення Пінська й Пінського замку; розміщення козацьких гарнізонів над річкою Горинь;</p></li>
+<li><p><strong>1655–1660 рр.</strong> — безперервне перебування козацьких залог у приватних маєтках над Горинню;</p></li>
+<li><p><strong>4 липня 1660 р.</strong> — рейд московських і козацьких полків через Овруччину/Полісся (Норинськ – Березниця – Дубровиця – Висоцьк – Столін – Пінськ), спалення Пінська та зворотний відступ через Давид-Городок і Турів; розпуск загонів («czaty») над Горинню та чергове спалення сіл Воробин і Селець.</p></li>
+</ul></li>
+<li><p><strong>Фіскальні та економічні показники (статистика руйнувань):</strong></p>
+<ul>
+<li><p><em>Спустошення житлового фонду:</em> до спалення у Воробині було <strong>7 димів</strong>, у Сельці — <strong>понад 20 димів</strong>; після пожеж залишилися виключно обгорілі стовпи, плоти та згарища («słupy ogorzałe y płoty stoią, a budynki popalone, tylko popieliska»);</p></li>
+<li><p><em>Податкова спроможність:</em> після збирання людей, що переховувалися в лісах і пущах, зі всієї маєтності можливо сплатити подимний податок максимум із <strong>5 димів</strong> («nie więcey tylko z dymow piąciu podymne mogą wydać»);</p></li>
+<li><p><em>Подимне (podymne)</em> — загальнодержавний податок з житла/двору.</p></li>
+</ul></li>
+<li><p><strong>Судово-процесуальні терміни:</strong></p>
+<ul>
+<li><p><em>Manifestacya / opowiadał y manifestacyą zanosił</em> — офіційна судова заява/протест про неможливість виконання повинностей і сплати податків у зв'язку з форс-мажором (воєнними діями);</p></li>
+<li><p><em>In hostilitate zostawała</em> — правовий стан перебування території під ворожою окупацією чи в зоні воєнних дій (підстава для податкового імунітету);</p></li>
+<li><p><em>Relacyny kwit</em> — судово-слідчий протокол візуального огляду згарищ возним за участі шляхетських свідків з накладенням печаток;</p></li>
+<li><p><em>Iuramentum</em> — судова присяга щодо розміру збитків.</p></li>
+</ul></li>
+<li><p><strong>Військова справа:</strong></p>
+<ul>
+<li><p><em>Czaty</em> — роз'їзди, сторожові або грабіжницькі передові загони;</p></li>
+<li><p><em>Załogi kozackie</em> — регулярні військові гарнізони або постої козацьких сил;</p></li>
+<li><p><em>Походи комбінованим шляхом:</em> рух сил «lądem iako y wodą» (човнами по Прип'яті/Горині та суходолом).</p></li>
+</ul></li>
+</ul></div></details>
+  </div>
+</article>
+<article class="ak-doc" id="1663-prysiaha-mishchan">
+  <header class="ak-head">
+    <div class="ak-date"><b>13</b><span>січня</span><i>1663</i></div>
+    <div class="ak-head-main">
+      <p class="ak-kick">№ 223 · Пінський гродський суд</p>
+      <h2 class="ak-h2">Присяга дубровицьких міщан про розорення</h2>
+      <p class="ak-places"><span>Дубровиця</span></p>
+    </div>
+  </header>
+  <p class="ak-sum">Війт Грицько Бавтута та міщанин Гриць Ракович присягають, що їхня частина Дубровиці, спалена під час козацьких і московських нападів, не має жодного купця з капіталом у сто злотих. Лишилися тільки дрібні перекупники з п’ятьма–десятьма злотими, тож купецьку контрибуцію, ухвалену сеймом, платити нікому.</p>
+  <div class="ak-scans"><button type="button" class="ak-scan" data-doc="1663-prysiaha-mishchan" data-i="0" aria-label="Скан 1 з 2"><img src="https://i.imgur.com/4MBtLKC.png" alt="" loading="lazy" decoding="async"><span>1</span></button><button type="button" class="ak-scan" data-doc="1663-prysiaha-mishchan" data-i="1" aria-label="Скан 2 з 2"><img src="https://i.imgur.com/oFnWfzT.png" alt="" loading="lazy" decoding="async"><span>2</span></button></div>
+  <details class="ak-block ak-meta"><summary>Опис документа</summary><div class="ak-meta-body"><ul>
+<li><p><strong>Видання:</strong> «Акты издаваемые Виленскою коммиссіею для разбора древнихъ актовъ. Томъ XXXIV. Акты относящіеся ко времени войны за Малороссію (1654—1667)». Вильна, 1909 г.</p></li>
+<li><p><strong>Номер документа:</strong> № 223.</p></li>
+<li><p><strong>Заголовок публікації:</strong> <em>Присяжное показаніе мѣщанъ—купцовъ мѣстечка Дубровицы о разореніи ихъ во время Московской войны</em>.</p></li>
+<li><p><strong>Латиномовний заголовок акта:</strong> <em>Przysięga mieszczan Dubrowickich iegom. p. marszałka</em>.</p></li>
+<li><p><strong>Дата документа:</strong> 13 січня 1663 року («тисеча шестсотъ шестдесят третего, мца Генвара трынадцатого дня» / 1663 г. Января 13).</p></li>
+<li><p><strong>Судова сесія:</strong> річки ґродські, що припали на 1 січня («На рочъкохъ кгродъскыхъ... мца Генъвара перъвого дня прыпалыхъ»).</p></li>
+<li><p><strong>Місце складання / внесення до книг:</strong> замок господарський Пінський («в замъку господаръскомъ Пинъском»).</p></li>
+<li><p><strong>Судовий урядник:</strong> Ян Кароль Млоцький, староста пінський і гельметський («Яномъ Каролемъ Млоцъкимъ, Пинъсъкимъ, Гелметъскымъ старосьтою»).</p></li>
+<li><p><strong>Архівне посилання / шифр оригіналу:</strong> Изъ акт. кн. Пинск. грод. суда за 1663 г., № 13015, л. 21 обор.</p></li>
+<li><p><strong>Мова документа:</strong> змішана — староукраїнська / руська (судова протокольна преамбула та судова формула запису до книг) та польська (текст самої шляхетсько-міщанської присяги — роти).</p></li>
+</ul></div></details>
+  <section class="ak-text" aria-label="Текст документа">
+    <p class="ak-label">Текст оригіналу <small>цифри на полях — сторінки видання</small></p>
+    <div class="ak-text-body"><p class="ak-no">№ 223—1663 г. Января 13.</p><p class="ak-ptitle">Присяжное показаніе мѣщанъ—купцовъ мѣстечка Дубровицы о разореніи ихъ во время Московской войны.</p>
+<p>Przysięga mieszczan Dubrowickich iegom. p. marszałka.</p>
+<p>Лета от нароженя Сна Божого тисеча шестсотъ шестдесят третего, мца Генвара трынадцатого дня.</p>
+<p>На рочъкохъ кгродъскыхъ в замъку господаръскомъ Пинъском, мца Генъвара перъвого дня прыпалыхъ и порядкомъ правънымъ судовъне отъправованыхъ, передо мъною Яномъ Каролемъ Млоцъкимъ, Пинъсъкимъ, Гелметъскымъ старосьтою, посътановивъшысе очевисьто мещане мясътечъка его милосъти пана Лукаша Ельсъкого, маръшалька повету Пинъского Дубровицы, именами в роте менованые, прысегу на томъ, яко тыхъ купъцовъ, которые бы конътрыбуцыю одъ сумъ пенежъныхъ конъстытуцыею на купцѣ вложоную полънити могли, в томъ месътечъку не машъ в тые слова выконали;</p><p><span class="ak-pg" aria-label="сторінка 2">2</span>Ja Hrycko Bawtuta, woyt częsci iegomsci pana Łukasza Jelskiego, marszałka powiatu pinskiego, a ia Hryc Rakowicz, mieszczanin teyże częsci miasteczka Dąbrowicy, w powiecie Pinskim będącego, przysięgamy Panu Bogu Wszechmogącemu, w Troycy Swiętey Jedynemu na tym, iż ta część miasteczka Dąbrowicy częstemi incursiami Kozackiemi y moskiewskiemi spalone y z dobr y z ludzi mieczem zniszczone, w szczupłey osadzie y w wielkim spustoszeniu zostało, w ktorey częsci żadnego kupca, ktory by sto złotych pieniędzy miał y onemi handlował nie masz, kromia tych kilka, kturzy tylko po złotych dziesiąciu, albo piąciu maiąc, dla wyżywienia się drobiazgami y żywnosciami przekupuią, zaczym iako tych, z kturych by ktory złotych sto miał, w tym miasteczku pana naszego nie masz kupcow, tak y contributiey na kupce wielkiego xięstwa Litewskiego od sum seymem uchwaloney od czego y komu płacić w naszym miasteczku nie masz y nie mogą. Na czym iako sprawiedliwie przysięgamy, tak nam Panie Boże pomoż, a iesli nie sprawiedliwie, Boże nas ubiy.</p>
+<p>Которое выконанье прысеги до кънигъ кгродъскыхъ Пинъскыхъ естъ уписано.</p>
+<p>Изъ акт. кн. Пинск. грод. суда за 1663 г., № 13015 л. 21 обор.</p></div>
+  </section>
+  <div class="ak-idx">
+    <details class="ak-block"><summary>Особи <small>4</small></summary><div><ol type="1">
+<li><p><strong>Бавтута Грицько (Hrycko Bawtuta)</strong> — війт частини містечка Дубровиця, що належала маршалку Лукашу Єльському; присягальник.</p></li>
+<li><p><strong>Єльський Лукаш (Лукаш Ельскій / Łukasz Jelski)</strong> — пан, маршалок повіту Пінського; власник частки містечка Дубровиця.</p></li>
+<li><p><strong>Млоцький Ян Кароль (Ян Кароль Млоцкій / Jan Karol Młocki)</strong> — староста пінський і гельметський; судовий урядник, перед яким складалася присяга.</p></li>
+<li><p><strong>Ракович Гриць (Hryc Rakowicz)</strong> — міщанин частини містечка Дубровиця, що належала маршалку Лукашу Єльському; присягальник.</p></li>
+</ol></div></details>
+    <details class="ak-block"><summary>Місця</summary><div><ul>
+<li><p><strong>Велике князівство Литовське (Wielkie Xięstwo Litewskie)</strong> — держава («na kupce wielkiego xięstwa Litewskiego»).</p></li>
+<li><p><strong>Гельмет (Гелмет / Helmet)</strong> — староство (староста гельметський).</p></li>
+<li><p><strong>Дубровиця (Дубровица, Dąbrowica, Dubrowica)</strong> — містечко («мястечко», «miasteczko») у Пінському повіті.</p></li>
+<li><p><strong>Пінськ (Пинск, Pinsk)</strong> — місто, центр повіту.</p></li>
+<li><p><strong>Пінський замок (замокъ господаръскій Пинъскій)</strong> — місце проведення гродських судів.</p></li>
+<li><p><strong>Пінський повіт (поветъ Пинскій, powiat Pinski)</strong> — повіт Берестейського воєводства.</p></li>
+</ul></div></details>
+    <details class="ak-block"><summary>Терміни й теми</summary><div><ul>
+<li><p><strong>Судочинство та правові процедури:</strong></p>
+<ul>
+<li><p><em>Рочки гродські (рочъки кгродъскіе)</em> — регулярні судові засідання гродського суду;</p></li>
+<li><p><em>Рота присяги (рота / rota)</em> — нормативно визначена словесна формула присяги;</p></li>
+<li><p><em>Присяга (прысега, przysięga)</em> — судове свідчення під релігійною клятвою перед лицем суду («посътановивъшысе очевисьто», «przysięgamy Panu Bogu... a iesli nie sprawiedliwie, Boże nas ubiy»);</p></li>
+<li><p><em>Книги гродські Пінські (къниги кгродъскіе Пинъскіе)</em> — офіційні актові книги судової реєстрації.</p></li>
+</ul></li>
+<li><p><strong>Податки та державні фінанси:</strong></p>
+<ul>
+<li><p><em>Контрибуція (конътрыбуцыя / contributia)</em> — надзвичайний грошовий податок, ухвалений вальним сеймом на військові потреби;</p></li>
+<li><p><em>Конституція сеймова (конъстытуцыя)</em> — закон/постанова сейму Речі Посполитої («конъстытуцыею на купцѣ вложоную», «od sum seymem uchwaloney»);</p></li>
+<li><p><em>Купецький ценз:</em> статус повноправного купця для оподаткування визначався обіговим капіталом у <strong>100 злотих</strong> («ktory by sto złotych pieniędzy miał y onemi handlował»).</p></li>
+</ul></li>
+<li><p><strong>Торгівля та економічний стан населення:</strong></p>
+<ul>
+<li><p><em>Купці (kupcy)</em> — заможні торговці з великим капіталом (у містечку констатовано їх повну відсутність);</p></li>
+<li><p><em>Перекупники / дрібні торговці:</em> збіднілі міщани з капіталом лише у <strong>5–10 злотих</strong>, які торгують виключно для власного виживання дрібним крамом та харчами («dla wyżywienia się drobiazgami y żywnosciami przekupuią»);</p></li>
+<li><p><em>Щупла осада (szczupła osada)</em> — критично мала кількість жителів/господарств, що вціліли після війни.</p></li>
+</ul></li>
+<li><p><strong>Військові спустошення:</strong></p>
+<ul>
+<li><p><em>Напади та інкурсії:</em> «częstemi incursiami Kozackiemi y moskiewskiemi» (постійні напади козацьких та московських військ);</p></li>
+<li><p><em>Наслідки війни:</em> випалення поселення, винищення людей мечем, розорення майна («spalone y z dobr y z ludzi mieczem zniszczone, w szczupłey osadzie y w wielkim spustoszeniu zostało»).</p></li>
+</ul></li>
+</ul></div></details>
+  </div>
+</article>
+    </div>
+  </div>
+</main>
+
+<div class="ak-lb" id="akLb" role="dialog" aria-modal="true" aria-label="Скан сторінки">
+  <div class="ak-lb-bar"><b id="akLbCap"></b><button type="button" id="akLbPrev" aria-label="Попередній скан">←</button><button type="button" id="akLbNext" aria-label="Наступний скан">→</button><button type="button" id="akLbClose" aria-label="Закрити">✕</button></div>
+  <div class="ak-lb-stage"><img id="akLbImg" alt="Скан сторінки видання"></div>
+</div>
+
+<footer class="footer">
+    <div class="ft">
+        <div class="ft-top">
+            <div class="ft-brand">
+                <a href="index.html" class="ft-logo">
+                    <img src="https://i.imgur.com/mXCrjjG.png" alt="" width="44" height="44" loading="lazy" decoding="async">
+                    <span><span class="ft-logo-city">Дубровиця</span><span class="ft-logo-sub">Цифровий архів</span></span>
+                </a>
+                <p class="ft-about">Цифровий архів історичної спадщини міста Дубровиця — Сарненський район, Рівненська область, Україна.</p>
+                <a href="contacts.html" class="ft-cta"><span>Маєте старі фото чи документи?</span><strong>Напишіть нам <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></strong></a>
+            </div>
+            <nav class="ft-col" aria-label="Розділи сайту">
+                <p class="ft-title">Розділи</p>
+                <a href="history.html">Історія</a>
+                <a href="photo-archive.html">Фотоархів</a>
+                <a href="architecture.html">Пам'ятки</a>
+                <a href="jewish-history.html">Єврейська спадщина</a>
+                <a href="presa.html">Преса</a>
+                <a href="doslidnyk.html">Дослідник</a>
+                <a href="contacts.html">Про проєкт</a>
+            </nav>
+            <nav class="ft-col" aria-label="Архівні справи">
+                <p class="ft-title">Архівні справи</p>
+                <a href="sumariusz-1642.html"><span class="ft-year">1642</span>Сумаріуш маєтку</a>
+                <a href="zhaloba-1650.html"><span class="ft-year">1650</span>Жалоба про спустошення</a>
+                <a href="akty-ruina.html"><span class="ft-year">1654</span>Акти Руїни</a>
+                <a href="rejestr-1665.html"><span class="ft-year">1665</span>Реєстр збитків</a>
+                <a href="inventar-1780.html"><span class="ft-year">1780</span>Інвентар маєтку</a>
+                <a href="inventar-naselennia.html"><span class="ft-year">1780</span>Мешканці маєтку</a>
+                <a href="atlas-1798.html"><span class="ft-year">1798</span>Атлас губернії</a>
+                <a href="atlas-1798-analityka.html"><span class="ft-year">1798</span>Край у цифрах</a>
+                <a href="persha-svitova.html"><span class="ft-year">1914</span>Перша світова війна</a>
+                <a href="vyborchi-1938.html"><span class="ft-year">1938</span>Список виборців</a>
+            </nav>
+            <nav class="ft-col" aria-label="Постаті й каталоги">
+                <p class="ft-title">Постаті й каталоги</p>
+                <a href="plater.html">Граф Юзеф Плятер</a>
+                <a href="radzyvil.html">Князь Домінік Радзивілл</a>
+                <a href="metrychni-knyhy.html#mkcalSection">Метричні книги</a>
+                <a href="metrychni-knyhy.html#booksCatalog">Книги про Дубровицю</a>
+                <a href="metrychni-knyhy.html">Усі архівні справи</a>
+            </nav>
+        </div>
+        <div class="ft-bottom">
+            <p class="ft-copy">&copy; 2026 <a href="https://dubrovytsia.site">dubrovytsia.site</a> — Цифровий архів Дубровиці, Рівненська область, Україна. Сайт є некомерційним краєзнавчим проєктом, створеним з любові до міста та його історії.</p>
+            <p class="ft-notice">Публікуючи ці матеріали, ми прагнемо зберегти та популяризувати культурну й історичну спадщину міста Дубровиця для нинішніх і майбутніх поколінь. Усі фотографії, документи та архівні матеріали розміщено виключно в освітніх, краєзнавчих і науково-дослідних цілях. Відтворення, поширення або комерційне використання будь-яких матеріалів без письмового дозволу адміністрації сайту — заборонено. При цитуванні або використанні матеріалів у будь-якому форматі — обов'язкове активне посилання на <em>dubrovytsia.site</em>. Якщо ви є власником авторських прав на будь-які з опублікованих матеріалів і маєте заперечення щодо їх розміщення — будь ласка, <a href="contacts.html">зв'яжіться з нами</a> і ми негайно розглянемо ваш запит. Фотографії, завантажені з архіву, містять водяний знак сайту і не можуть публікуватись без нього.</p>
+        </div>
+    </div>
+</footer>
+
+<script src="app.js?v=11"></script>
+<script>
+(function(){
+  var SC = {"1654-kurash-tatary": {"t": "Скарга про спустошення Кураша татарами", "s": ["https://i.imgur.com/D172q8D.png", "https://i.imgur.com/eMd7JhN.png", "https://i.imgur.com/HgswzrW.png"]}, "1658-kurash-kozaky": {"t": "Маніфестація про Кураш під владою козаків", "s": ["https://i.imgur.com/qEWBzsC.png", "https://i.imgur.com/rTWt5R9.png"]}, "1660-firlej-dubrovytsia": {"t": "Скарга про напад на села Дубровицького маєтку", "s": ["https://i.imgur.com/8nF8Syt.png", "https://i.imgur.com/M7KKGpN.png", "https://i.imgur.com/iiL2Xfv.png", "https://i.imgur.com/np5A4CB.png", "https://i.imgur.com/JRtjTui.png"]}, "1660-spalennia-vorobyna": {"t": "Маніфестація про спалення Воробина", "s": ["https://i.imgur.com/oK46I7w.png", "https://i.imgur.com/5gdBmWa.png", "https://i.imgur.com/AXGZ2XH.png"]}, "1663-prysiaha-mishchan": {"t": "Присяга дубровицьких міщан про розорення", "s": ["https://i.imgur.com/4MBtLKC.png", "https://i.imgur.com/oFnWfzT.png"]}};
+  var lb = document.getElementById('akLb'), img = document.getElementById('akLbImg'), cap = document.getElementById('akLbCap'), cur = null, k = 0, back = null;
+  function show(){ var L = SC[cur]; img.src = L.s[k]; cap.textContent = L.t + ' · скан ' + (k + 1) + ' з ' + L.s.length; }
+  function open(id, i){ cur = id; k = i; back = document.activeElement; show(); lb.classList.add('open'); document.body.style.overflow = 'hidden'; document.getElementById('akLbClose').focus(); }
+  function close(){ lb.classList.remove('open'); document.body.style.overflow = ''; img.removeAttribute('src'); if (back) back.focus(); }
+  function step(d){ var n = SC[cur].s.length; k = (k + d + n) % n; show(); }
+  document.querySelectorAll('.ak-scan').forEach(function(b){ b.addEventListener('click', function(){ open(b.dataset.doc, +b.dataset.i); }); });
+  document.getElementById('akLbClose').onclick = close;
+  document.getElementById('akLbPrev').onclick = function(){ step(-1); };
+  document.getElementById('akLbNext').onclick = function(){ step(1); };
+  lb.addEventListener('click', function(e){ if (e.target === lb || e.target.classList.contains('ak-lb-stage')) close(); });
+  addEventListener('keydown', function(e){ if (!lb.classList.contains('open')) return; if (e.key === 'Escape') close(); else if (e.key === 'ArrowLeft') step(-1); else if (e.key === 'ArrowRight') step(1); });
+  /* highlight the act being read in the list */
+  var links = document.querySelectorAll('.ak-toc ol a');
+  if ('IntersectionObserver' in window) {
+    var ob = new IntersectionObserver(function(es){ es.forEach(function(e){ if (e.isIntersecting) links.forEach(function(a){ a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id); }); }); }, {rootMargin: '-30% 0px -60% 0px'});
+    document.querySelectorAll('.ak-doc').forEach(function(a){ ob.observe(a); });
+  }
+})();
+</script>
+</body>
+</html>

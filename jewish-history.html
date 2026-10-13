@@ -384,6 +384,20 @@
     letter-spacing: -0.025em;
 }
 .jh-section-title em { font-style: italic; color: var(--color-accent); }
+/* Акти XVII ст. */
+.jh-akty-section { padding: 5.5rem 0 4.5rem; background: var(--color-bg); }
+.jh-akty-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.2rem; }
+@media (max-width: 860px) { .jh-akty-grid { grid-template-columns: minmax(0, 1fr); } }
+.jh-akt { display: flex; flex-direction: column; gap: .6rem; padding: 1.6rem 1.5rem 1.4rem; border: 1px solid var(--color-border); border-radius: 14px; background: var(--color-bg-card); text-decoration: none; color: inherit; transition: border-color .2s, transform .2s; min-width: 0; }
+.jh-akt:hover { border-color: var(--color-accent); transform: translateY(-3px); }
+.jh-akt-date { font-family: 'Manrope', sans-serif; font-size: .64rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--color-accent); }
+.jh-akt-title { font-family: 'Cormorant Garamond', serif; font-size: 1.45rem; line-height: 1.15; color: var(--color-text); }
+.jh-akt-text { font-family: 'Manrope', sans-serif; font-size: .84rem; line-height: 1.65; color: var(--color-text-secondary); flex: 1; }
+.jh-akt-go { font-family: 'Manrope', sans-serif; font-size: .64rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--color-primary); }
+.jh-akty-more { text-align: center; margin: 2rem 0 0; }
+.jh-akty-more a { font-family: 'Manrope', sans-serif; font-size: .72rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--color-primary); text-decoration: none; }
+.jh-akty-more a:hover { text-decoration: underline; }
+
 .jh-section-sub {
     display: block;
     font-family: 'Cormorant Garamond', serif;
@@ -1785,6 +1799,7 @@ a, button, [role="button"], input, select, textarea,
                                 <div class="nav-docs">
                                     <a href="sumariusz-1642.html" class="nav-doc"><span class="nav-doc-year">1642</span><span class="nav-doc-name">Сумаріуш маєтку</span><span class="nav-doc-note">Доходи маєтку Дубровиця</span></a>
                                     <a href="zhaloba-1650.html" class="nav-doc"><span class="nav-doc-year">1650</span><span class="nav-doc-name">Жалоба про спустошення</span><span class="nav-doc-note">Гродські книги Пінські</span></a>
+                                    <a href="akty-ruina.html" class="nav-doc"><span class="nav-doc-year">1654</span><span class="nav-doc-name">Акти Руїни</span><span class="nav-doc-note">Дубровиця, Воробин, Кураш</span></a>
                                     <a href="rejestr-1665.html" class="nav-doc"><span class="nav-doc-year">1665</span><span class="nav-doc-name">Реєстр збитків</span><span class="nav-doc-note">Пінський гродський суд</span></a>
                                     <a href="inventar-1780.html" class="nav-doc"><span class="nav-doc-year">1780</span><span class="nav-doc-name">Інвентар маєтку</span><span class="nav-doc-note">Містечко, вулиці, мешканці</span></a>
                                     <a href="inventar-naselennia.html" class="nav-doc"><span class="nav-doc-year">1780</span><span class="nav-doc-name">Мешканці маєтку</span><span class="nav-doc-note">Місто й села поіменно</span></a>
@@ -1803,12 +1818,13 @@ a, button, [role="button"], input, select, textarea,
                                     <a href="prizvyshcha.html" class="nav-cat"><span>Прізвища й родини</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
                                 <a href="metrychni-knyhy.html#mkcalSection" class="nav-cat"><span>Метричні книги</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
                                 <a href="metrychni-knyhy.html#booksCatalog" class="nav-cat"><span>Книги про Дубровицю</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                                <a href="jewish-history.html" class="nav-cat is-current" aria-current="page"><span>Єврейська спадщина</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
                                 <a href="metrychni-knyhy.html" class="nav-menu-all">Усі архівні справи <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
                             </div>
                         </div>
                     </div>
                 </li>
-                <li class="nav-item" style="--i:5"><a href="jewish-history.html" class="nav-link active" aria-current="page">Єврейська спадщина</a></li>
+                <li class="nav-item" style="--i:5"><a href="atlas-1798.html" class="nav-link">Атлас 1798</a></li>
                 <li class="nav-item" style="--i:6"><a href="presa.html" class="nav-link">Преса</a></li>
                 <li class="nav-item" style="--i:7"><a href="doslidnyk.html" class="nav-link">Дослідник</a></li>
                 <li class="nav-item" style="--i:8"><a href="contacts.html" class="nav-link">Про проєкт</a></li>
@@ -2667,6 +2683,38 @@ a, button, [role="button"], input, select, textarea,
     </div>
 </section>
 
+<!-- ═══════════════ АКТИ XVII СТ. ═══════════════ -->
+<section class="jh-akty-section">
+    <div class="container">
+        <div class="jh-section-header">
+            <span class="jh-section-eyebrow">Пінські гродські книги · 1645–1646</span>
+            <h2 class="jh-section-title">Дубровицькі євреї <em>в судових актах</em></h2>
+            <span class="jh-section-sub">Три записи XVII століття: текст оригіналу, скани й покажчики</span>
+        </div>
+        <div class="jh-akty-grid">
+            <a class="jh-akt" href="akty-yevrei.html#1645-zelman-yakubovych">
+                <span class="jh-akt-date">12 червня 1645</span>
+                <span class="jh-akt-title">Зельман Якубович і дворик під Дубровицею</span>
+                <span class="jh-akt-text">Пінський кредитор відсудив борг і з дворика під Дубровицею, але зрікся претензій: дворик належав маєткові, а боржник лише тримав його на службі.</span>
+                <span class="jh-akt-go">Читати акт →</span>
+            </a>
+            <a class="jh-akt" href="akty-yevrei.html#1646-davyd-orendar-zolote">
+                <span class="jh-akt-date">6 липня 1646</span>
+                <span class="jh-akt-title">Скарга дубровицького орендаря Давида Яковича</span>
+                <span class="jh-akt-text">Орендар скаржиться на сусідів-орендарів Золотого, які забрали в нього прибутки з млинів, напоїв і навіть з копання глини.</span>
+                <span class="jh-akt-go">Читати акт →</span>
+            </a>
+            <a class="jh-akt" href="akty-yevrei.html#1646-pobyttia-davyda">
+                <span class="jh-akt-date">30 липня 1646</span>
+                <span class="jh-akt-title">Побиття орендаря Давида в Дубровиці</span>
+                <span class="jh-akt-text">У торговий день піддані пана з Воробина побили Давида й забрали оксамитову шапку із соболем. Пан на скаргу схопився за кайло.</span>
+                <span class="jh-akt-go">Читати акт →</span>
+            </a>
+        </div>
+        <p class="jh-akty-more"><a href="akty-yevrei.html">Усі три акти на одній сторінці →</a></p>
+    </div>
+</section>
+
 <!-- ═══════════════ TIMELINE ═══════════════ -->
 <section class="jh-timeline-section">
     <div class="container">
@@ -3182,6 +3230,7 @@ var newCemPhotos = [
                 <p class="ft-title">Архівні справи</p>
                 <a href="sumariusz-1642.html"><span class="ft-year">1642</span>Сумаріуш маєтку</a>
                 <a href="zhaloba-1650.html"><span class="ft-year">1650</span>Жалоба про спустошення</a>
+                <a href="akty-ruina.html"><span class="ft-year">1654</span>Акти Руїни</a>
                 <a href="rejestr-1665.html"><span class="ft-year">1665</span>Реєстр збитків</a>
                 <a href="inventar-1780.html"><span class="ft-year">1780</span>Інвентар маєтку</a>
                 <a href="inventar-naselennia.html"><span class="ft-year">1780</span>Мешканці маєтку</a>

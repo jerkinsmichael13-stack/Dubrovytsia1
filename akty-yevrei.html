@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="uk" data-theme="light">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WGBZ0BD23K"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-WGBZ0BD23K');
+</script>
+    <meta charset="UTF-8">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="manifest" href="site.webmanifest">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Три записи пінських гродських книг 1645–1646 років про євреїв Дубровиці й Пінська: орендар Давид Якович, Зельман Якубович і Випозлівський дворик. Оригінальний текст, скани, покажчики.">
+    <meta property="og:title" content="Євреї Дубровиці в судових актах">
+    <meta property="og:description" content="Три записи пінських гродських книг 1645–1646 років про євреїв Дубровиці й Пінська: орендар Давид Якович, Зельман Якубович і Випозлівський дворик. Оригінальний текст, скани, покажчики.">
+    <meta property="og:type" content="article">
+    <title>Євреї Дубровиці в актах 1645–1646 — Дубровиця · Цифровий архів</title>
+    <script>!function(){var t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t)}()</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="app.css?v=11">
+<style>
+/* layout: a sticky list of acts on the left, the acts themselves on the right; one column on phones */
+.ak { background: var(--color-bg); color: var(--color-text); padding: 4.5rem 0 5rem; }
+.ak-wrap { max-width: 1180px; margin: 0 auto; padding: 0 2rem; display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 3.5rem; }
+@media (max-width: 900px) { .ak-wrap { grid-template-columns: minmax(0, 1fr); gap: 2rem; padding: 0 1.1rem; } .ak { padding-top: 3rem; } }
+.ak-toc { position: sticky; top: 96px; align-self: start; }
+@media (max-width: 900px) { .ak-toc { position: static; } }
+.ak-toc-h { font-family: var(--font-body, 'Manrope', sans-serif); font-size: .62rem; letter-spacing: .26em; text-transform: uppercase; color: var(--color-primary); margin: 0 0 .9rem; }
+.ak-toc ol { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--color-border); }
+.ak-toc a { display: block; padding: .55rem 0 .55rem 1rem; margin-left: -1px; border-left: 2px solid transparent; text-decoration: none; color: var(--color-text-secondary); transition: color .2s, border-color .2s; }
+.ak-toc a:hover, .ak-toc a.on { color: var(--color-text); border-left-color: var(--color-accent); }
+.ak-toc b { display: block; font-family: 'Manrope', sans-serif; font-weight: 600; font-size: .66rem; letter-spacing: .08em; color: var(--color-primary); font-variant-numeric: tabular-nums; }
+.ak-toc span { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; line-height: 1.25; }
+.ak-toc .ak-also { margin-top: 1.4rem; font-family: 'Manrope', sans-serif; font-size: .74rem; line-height: 1.55; color: var(--color-text-light); }
+.ak-toc .ak-also a { display: inline; padding: 0; border: 0; color: var(--color-primary); }
+.ak-main { min-width: 0; }
+.ak-intro { max-width: 46rem; margin: 0 0 3rem; }
+.ak-intro p { font-family: 'Cormorant Garamond', serif; font-size: 1.22rem; line-height: 1.7; color: var(--color-text-secondary); margin: 0 0 1rem; }
+.ak-intro .ak-src { font-family: 'Manrope', sans-serif; font-size: .74rem; line-height: 1.6; color: var(--color-text-light); font-style: italic; }
+
+.ak-doc { padding: 3rem 0 3.2rem; border-top: 1px solid var(--color-border); scroll-margin-top: 90px; }
+.ak-head { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 1.4rem; align-items: start; }
+.ak-date { width: 5.2rem; padding: .7rem 0 .6rem; text-align: center; border: 1px solid var(--color-border); border-radius: 10px; background: var(--color-bg-card); line-height: 1; }
+.ak-date b { display: block; font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 2.3rem; color: var(--color-text); }
+.ak-date span { display: block; margin-top: .25rem; font-family: 'Manrope', sans-serif; font-size: .62rem; letter-spacing: .08em; color: var(--color-text-light); }
+.ak-date i { display: block; margin-top: .45rem; padding-top: .45rem; border-top: 1px solid var(--color-border); font-style: normal; font-family: 'Manrope', sans-serif; font-weight: 600; font-size: .78rem; letter-spacing: .06em; color: var(--color-primary); }
+.ak-kick { margin: .2rem 0 .4rem; font-family: 'Manrope', sans-serif; font-size: .62rem; letter-spacing: .22em; text-transform: uppercase; color: var(--color-primary); }
+.ak-h2 { margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: clamp(1.6rem, 3vw, 2.2rem); line-height: 1.12; color: var(--color-text); text-wrap: balance; }
+.ak-places { display: flex; flex-wrap: wrap; gap: .35rem; margin: .8rem 0 0; }
+.ak-places span { padding: .2rem .6rem; border-radius: 100px; border: 1px solid var(--color-border); font-family: 'Manrope', sans-serif; font-size: .68rem; color: var(--color-text-secondary); }
+.ak-sum { max-width: 46rem; margin: 1.4rem 0 1.6rem; font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; line-height: 1.65; color: var(--color-text-secondary); }
+
+.ak-scans { display: flex; gap: .6rem; overflow-x: auto; padding: .2rem .1rem .6rem; margin: 0 0 1.4rem; scrollbar-width: thin; }
+.ak-scan { position: relative; flex: none; width: 128px; height: 168px; padding: 0; border: 1px solid var(--color-border); border-radius: 6px; overflow: hidden; background: #f3eee2; cursor: zoom-in; transition: border-color .2s, transform .2s; }
+.ak-scan:hover { border-color: var(--color-accent); transform: translateY(-2px); }
+.ak-scan:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.ak-scan img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; filter: sepia(.12); }
+.ak-scan span { position: absolute; left: .4rem; bottom: .4rem; min-width: 1.4rem; padding: .1rem .35rem; border-radius: 4px; background: rgba(28,22,10,.78); color: #f4e9c8; font-family: 'Manrope', sans-serif; font-size: .64rem; font-weight: 600; text-align: center; }
+
+.ak-block { border: 1px solid var(--color-border); border-radius: 10px; background: var(--color-bg-card); margin: 0 0 .8rem; }
+.ak-block summary { list-style: none; cursor: pointer; padding: .85rem 1.1rem; font-family: 'Manrope', sans-serif; font-size: .7rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--color-text); display: flex; align-items: center; gap: .6rem; }
+.ak-block summary::-webkit-details-marker { display: none; }
+.ak-block summary::after { content: ''; margin-left: auto; width: .5rem; height: .5rem; border-right: 1.5px solid var(--color-primary); border-bottom: 1.5px solid var(--color-primary); transform: rotate(45deg); transition: transform .2s; }
+.ak-block[open] summary::after { transform: rotate(-135deg); }
+.ak-block summary small { font-weight: 500; letter-spacing: .04em; color: var(--color-text-light); text-transform: none; }
+.ak-block summary:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; border-radius: 10px; }
+.ak-block > div { padding: 0 1.2rem 1rem; font-family: 'Manrope', sans-serif; font-size: .84rem; line-height: 1.65; color: var(--color-text-secondary); }
+.ak-block ul, .ak-block ol { margin: 0; padding-left: 1.2rem; }
+.ak-block li { margin: 0 0 .35rem; }
+.ak-block li p { margin: 0; }
+.ak-block li ul { margin-top: .35rem; }
+.ak-block strong { color: var(--color-text); font-weight: 600; }
+
+.ak-text { margin: 1.4rem 0 1.4rem; padding: 1.6rem 1.8rem 1.4rem 2.6rem; border-radius: 10px; background: var(--color-bg-alt); border: 1px solid var(--color-border-light); position: relative; }
+@media (max-width: 560px) { .ak-text { padding: 1.2rem 1rem 1rem 1.9rem; } }
+.ak-label { margin: 0 0 1rem; font-family: 'Manrope', sans-serif; font-size: .62rem; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--color-primary); }
+.ak-label small { margin-left: .6rem; font-weight: 400; letter-spacing: .02em; text-transform: none; color: var(--color-text-light); }
+.ak-text-body { max-width: 44rem; font-family: 'Cormorant Garamond', serif; font-size: 1.14rem; line-height: 1.72; color: var(--color-text); overflow-wrap: anywhere; }
+.ak-text-body p { margin: 0 0 .9rem; }
+.ak-text-body .ak-no { font-family: 'Manrope', sans-serif; font-size: .74rem; font-weight: 600; letter-spacing: .08em; color: var(--color-text-light); margin-bottom: .3rem; }
+.ak-text-body .ak-ptitle { font-weight: 500; font-style: italic; color: var(--color-text-secondary); margin-bottom: 1.2rem; }
+.ak-pg { position: absolute; left: .7rem; margin-top: .2rem; width: 1.3rem; height: 1.3rem; border-radius: 50%; display: inline-grid; place-items: center; background: var(--color-bg-card); border: 1px solid var(--color-border); font-family: 'Manrope', sans-serif; font-size: .58rem; font-weight: 600; color: var(--color-primary); line-height: 1; }
+@media (max-width: 560px) { .ak-pg { left: .35rem; } }
+.ak-idx { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .8rem; align-items: start; }
+.ak-idx .ak-block { margin: 0; }
+@media (max-width: 760px) { .ak-idx { grid-template-columns: minmax(0, 1fr); } }
+
+/* lightbox */
+.ak-lb { position: fixed; inset: 0; z-index: 1000; display: none; background: rgba(12,10,6,.94); }
+.ak-lb.open { display: grid; grid-template-rows: auto minmax(0, 1fr); }
+.ak-lb-bar { display: flex; align-items: center; gap: 1rem; padding: calc(env(safe-area-inset-top, 0px) + .8rem) 1rem .8rem; color: #f4e9c8; font-family: 'Manrope', sans-serif; font-size: .8rem; }
+.ak-lb-bar b { font-weight: 500; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ak-lb button { border: 1px solid rgba(244,233,200,.25); background: rgba(244,233,200,.06); color: #f4e9c8; border-radius: 100px; height: 40px; min-width: 40px; padding: 0 .9rem; cursor: pointer; font: inherit; }
+.ak-lb button:hover { border-color: #d4b25a; }
+.ak-lb-stage { overflow: auto; display: grid; place-items: start center; padding: 0 1rem calc(env(safe-area-inset-bottom, 0px) + 1rem); }
+.ak-lb-stage img { max-width: min(100%, 900px); height: auto; background: #f3eee2; border-radius: 4px; }
+</style>
+<link rel="stylesheet" href="ds.css">
+</head>
+<body class="ak-page">
+
+<!-- Header -->
+<header class="header">
+    <div class="header-container">
+        <a href="index.html" class="logo" aria-label="Дубровиця — Цифровий архів, головна сторінка">
+            <img src="https://i.imgur.com/mXCrjjG.png" alt="" class="logo-img" width="40" height="40" decoding="async">
+            <span class="logo-text">
+                <span class="logo-city">Дубровиця</span>
+                <span class="logo-subtitle">Цифровий архів</span>
+            </span>
+        </a>
+
+        <nav class="nav" id="mainNav" aria-label="Головне меню">
+            <ul class="nav-list">
+                <li class="nav-item nav-item--home" style="--i:0"><a href="index.html" class="nav-link">Головна</a></li>
+                <li class="nav-item" style="--i:1"><a href="history.html" class="nav-link">Історія</a></li>
+                <li class="nav-item" style="--i:2"><a href="photo-archive.html" class="nav-link">Фотоархів</a></li>
+                <li class="nav-item" style="--i:3"><a href="architecture.html" class="nav-link">Пам'ятки</a></li>
+                <li class="nav-item has-menu" style="--i:4">
+                    <a href="metrychni-knyhy.html" class="nav-link">Архівні справи</a>
+                    <button type="button" class="nav-caret" aria-expanded="false" aria-controls="navArchive" aria-label="Показати документи архіву"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                    <div class="nav-menu" id="navArchive">
+                        <div class="nav-menu-inner">
+                            <div class="nav-menu-main">
+                                <p class="nav-menu-label">Документи за роками</p>
+                                <div class="nav-docs">
+                                    <a href="sumariusz-1642.html" class="nav-doc"><span class="nav-doc-year">1642</span><span class="nav-doc-name">Сумаріуш маєтку</span><span class="nav-doc-note">Доходи маєтку Дубровиця</span></a>
+                                    <a href="zhaloba-1650.html" class="nav-doc"><span class="nav-doc-year">1650</span><span class="nav-doc-name">Жалоба про спустошення</span><span class="nav-doc-note">Гродські книги Пінські</span></a>
+                                    <a href="akty-ruina.html" class="nav-doc"><span class="nav-doc-year">1654</span><span class="nav-doc-name">Акти Руїни</span><span class="nav-doc-note">Дубровиця, Воробин, Кураш</span></a>
+                                    <a href="rejestr-1665.html" class="nav-doc"><span class="nav-doc-year">1665</span><span class="nav-doc-name">Реєстр збитків</span><span class="nav-doc-note">Пінський гродський суд</span></a>
+                                    <a href="inventar-1780.html" class="nav-doc"><span class="nav-doc-year">1780</span><span class="nav-doc-name">Інвентар маєтку</span><span class="nav-doc-note">Містечко, вулиці, мешканці</span></a>
+                                    <a href="inventar-naselennia.html" class="nav-doc"><span class="nav-doc-year">1780</span><span class="nav-doc-name">Мешканці маєтку</span><span class="nav-doc-note">Місто й села поіменно</span></a>
+                                    <a href="atlas-1798.html" class="nav-doc"><span class="nav-doc-year">1798</span><span class="nav-doc-name">Атлас губернії</span><span class="nav-doc-note">Інтерактивна мапа сіл</span></a>
+                                    <a href="atlas-1798-analityka.html" class="nav-doc"><span class="nav-doc-year">1798</span><span class="nav-doc-name">Край у цифрах</span><span class="nav-doc-note">Аналітика атласу</span></a>
+                                    <a href="persha-svitova.html" class="nav-doc"><span class="nav-doc-year">1914</span><span class="nav-doc-name">Перша світова війна</span><span class="nav-doc-note">Мобілізовані мешканці</span></a>
+                                    <a href="vyborchi-1938.html" class="nav-doc"><span class="nav-doc-year">1938</span><span class="nav-doc-name">Список виборців</span><span class="nav-doc-note">8 619 записів</span></a>
+                                </div>
+                            </div>
+                            <div class="nav-menu-side">
+                                <p class="nav-menu-label">Постаті</p>
+                                <a href="plater.html" class="nav-person"><img src="nav-plater.jpg" alt="" width="40" height="40" loading="lazy" decoding="async"><span><span class="nav-person-name">Граф Юзеф Плятер</span><span class="nav-person-role">Власник Дубровиці</span></span></a>
+                                <a href="radzyvil.html" class="nav-person"><img src="nav-radzyvil.jpg" alt="" width="40" height="40" loading="lazy" decoding="async"><span><span class="nav-person-name">Князь Домінік Радзивілл</span><span class="nav-person-role">Власник сіл над Горинню</span></span></a>
+                                <p class="nav-menu-label nav-menu-label--gap">Каталоги</p>
+                                    <a href="poselennia.html" class="nav-cat"><span>Поселення Дубровиччини</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                                    <a href="prizvyshcha.html" class="nav-cat"><span>Прізвища й родини</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                                <a href="metrychni-knyhy.html#mkcalSection" class="nav-cat"><span>Метричні книги</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                                <a href="metrychni-knyhy.html#booksCatalog" class="nav-cat"><span>Книги про Дубровицю</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                                <a href="jewish-history.html" class="nav-cat is-current" aria-current="page"><span>Єврейська спадщина</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                                <a href="metrychni-knyhy.html" class="nav-menu-all">Усі архівні справи <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item" style="--i:5"><a href="atlas-1798.html" class="nav-link">Атлас 1798</a></li>
+                <li class="nav-item" style="--i:6"><a href="presa.html" class="nav-link">Преса</a></li>
+                <li class="nav-item" style="--i:7"><a href="doslidnyk.html" class="nav-link">Дослідник</a></li>
+                <li class="nav-item" style="--i:8"><a href="contacts.html" class="nav-link">Про проєкт</a></li>
+            </ul>
+            <p class="nav-foot">Цифровий архів історичної спадщини Дубровиці · <a href="contacts.html">Написати нам</a></p>
+        </nav>
+
+        <div class="header-actions">
+            <button type="button" class="theme-toggle" id="themeToggle" aria-label="Перемкнути тему">
+                <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg>
+                <svg class="theme-icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.3A8.5 8.5 0 0 1 9.7 3.5a8.5 8.5 0 1 0 10.8 10.8z"/></svg>
+            </button>
+            <button type="button" class="mobile-toggle" id="mobileToggle" aria-label="Відкрити меню" aria-expanded="false" aria-controls="mainNav">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<section class="cover" aria-label="Євреї Дубровиці в судових актах">
+    <img class="cover-img cover-img--paper" src="https://i.imgur.com/HFcvyiD.png" alt="" fetchpriority="high" decoding="async" style="--cover-pos:center 20%">
+    <div class="cover-shade"></div>
+    <div class="cover-inner">
+        <nav class="cover-crumbs" aria-label="Навігаційний ланцюжок"><a href="jewish-history.html">Єврейська спадщина</a><span>/</span>Акти 1645–1646</nav>
+        <p class="cover-kicker">Пінські гродські книги · 1645–1646</p>
+        <h1 class="cover-title cover-title--long">Євреї Дубровиці <em>в судових актах</em></h1>
+        <p class="cover-lede">Три записи пінського суду 1645–1646 років: дубровицький орендар Давид Якович, якого били й обкрадали, і пінський кредитор Зельман Якубович.</p>
+        <dl class="cover-facts">
+            <div><dt>акти</dt><dd>3</dd></div>
+            <div><dt>роки</dt><dd>1645–1646</dd></div>
+            <div><dt>сканів видання</dt><dd>14</dd></div>
+            <div><dt>осіб у покажчиках</dt><dd>28</dd></div>
+        </dl>
+        <p class="cover-credit"><b>На зображенні</b>Друкована сторінка видання 1901 року</p>
+    </div>
+</section>
+
+<main class="ak">
+  <div class="ak-wrap">
+    <nav class="ak-toc" aria-label="Акти на сторінці">
+      <p class="ak-toc-h">3 акти</p>
+      <ol><li><a href="#1645-zelman-yakubovych"><b>12 червня 1645</b><span>Зельман Якубович і дворик під Дубровицею</span></a></li><li><a href="#1646-davyd-orendar-zolote"><b>6 липня 1646</b><span>Скарга дубровицького орендаря Давида Яковича</span></a></li><li><a href="#1646-pobyttia-davyda"><b>30 липня 1646</b><span>Побиття орендаря Давида в Дубровиці</span></a></li></ol>
+      <p class="ak-also">Про війну 1654–1663 у тих самих книгах: <a href="akty-ruina.html">акти Руїни</a>.</p>
+    </nav>
+    <div class="ak-main">
+      <div class="ak-intro"><p>За сто років до того, як громада отримала самостійність, євреї вже тримали в Дубровиці оренду: шинки, млини, дрібні податки. Три записи пінського гродського суду 1645–1646 років показують, як жилося орендареві між панами, їхніми підданими й конкурентами.</p><p>Тексти подано за томом «Акты о евреяхъ» Віленської археографічної комісії (1901): польською з руськими судовими формулами. До кожного акта — короткий переказ, скани видання й покажчики осіб, місць і термінів.</p><p class="ak-src">Джерело: «Акты, издаваемые Виленскою коммиссіею для разбора древнихъ актовъ», т. XXVIII: «Акты о евреяхъ». Вильна, 1901.</p></div>
+      
+<article class="ak-doc" id="1645-zelman-yakubovych">
+  <header class="ak-head">
+    <div class="ak-date"><b>12</b><span>червня</span><i>1645</i></div>
+    <div class="ak-head-main">
+      <p class="ak-kick">№ 173 · Пінський гродський суд</p>
+      <h2 class="ak-h2">Зельман Якубович і дворик під Дубровицею</h2>
+      <p class="ak-places"><span>Пінськ</span><span>Дубровиця</span><span>Випозлівський дворик</span></p>
+    </div>
+  </header>
+  <p class="ak-sum">Пінський єврей Зельман Якубович Муравчик відсудив у Мелетія Калачинського борг: спершу 193 злотих, а з потрійними зарученнями — 3833 злотих, з правом стягнути їх і з дворика під Дубровицею, званого Випозлівським. Але дворик належав до Дубровицького маєтку, який перейшов від князя Яреми Вишневецького до старости люблінського, а Калачинський лише тримав його на службі. Тож Зельман зрікається будь-яких претензій до маєтку й передає всі судові папери слугам князя.</p>
+  <div class="ak-scans"><button type="button" class="ak-scan" data-doc="1645-zelman-yakubovych" data-i="0" aria-label="Скан 1 з 6"><img src="https://i.imgur.com/HFcvyiD.png" alt="" loading="lazy" decoding="async"><span>1</span></button><button type="button" class="ak-scan" data-doc="1645-zelman-yakubovych" data-i="1" aria-label="Скан 2 з 6"><img src="https://i.imgur.com/fhB8ftH.png" alt="" loading="lazy" decoding="async"><span>2</span></button><button type="button" class="ak-scan" data-doc="1645-zelman-yakubovych" data-i="2" aria-label="Скан 3 з 6"><img src="https://i.imgur.com/H8bhabp.png" alt="" loading="lazy" decoding="async"><span>3</span></button><button type="button" class="ak-scan" data-doc="1645-zelman-yakubovych" data-i="3" aria-label="Скан 4 з 6"><img src="https://i.imgur.com/bLueaYK.png" alt="" loading="lazy" decoding="async"><span>4</span></button><button type="button" class="ak-scan" data-doc="1645-zelman-yakubovych" data-i="4" aria-label="Скан 5 з 6"><img src="https://i.imgur.com/FfQg3Z2.png" alt="" loading="lazy" decoding="async"><span>5</span></button><button type="button" class="ak-scan" data-doc="1645-zelman-yakubovych" data-i="5" aria-label="Скан 6 з 6"><img src="https://i.imgur.com/swMyrNp.png" alt="" loading="lazy" decoding="async"><span>6</span></button></div>
+  <details class="ak-block ak-meta"><summary>Опис документа</summary><div class="ak-meta-body"><ul>
+<li><p><strong>Повна назва видання:</strong> «Акты издаваемые Виленскою коммиссіею для разбора древнихъ актовъ. Томъ XXVIII. Акты о евреяхъ».</p></li>
+<li><p><strong>Місце та рік видання:</strong> Вильна, Типографія «Русскій Починъ», уг. Преображенской и Семеновской ул., д. Мацкевича, 1901 г.</p></li>
+<li><p><strong>Номер документа:</strong> № 173.</p></li>
+<li><p><strong>Заголовок публікації:</strong> <em>Передаточная запись Пинскаго еврея Зельмана Якубовича Іереміи Вишневецкому на взысканіе долга съ Мелетія Калачинскаго</em>.</p></li>
+<li><p><strong>Дата заголовочна та внесення до ґродських книг:</strong> 12 червня 1645 року («тысеча шестьсотъ сорокъ пятого, мѣсяца Июня дванадцатого дня» / «1645 г. Іюня 12»).</p></li>
+<li><p><strong>Судова сесія:</strong> судові рочки ґродські пінські, що припали на 1 червня («На рочъкахъ кгродскихъ Пинскихъ мѣсяца Июня первого дня прыпалыхъ»).</p></li>
+<li><p><strong>Дата укладення передаточного (вливкового) листа:</strong> 10 червня 1645 року («Pisan w Pinsku dnia dziesiątego Juny, anno tysiąc sześćset czterdziestego piątego»).</p></li>
+<li><p><strong>Місце складання та внесення:</strong> місто Пінськ, замок Пінський.</p></li>
+<li><p><strong>Судові урядники:</strong> Андрій Терлецький (стольник і підстароста пінський), Ян Протасович (суддя ґродський пінський), Юрій Нелюбович-Тукальський (писар ґродський пінський), призначені від князя Альбрехта Станіслава Радзивілла.</p></li>
+<li><p><strong>Архівне посилання / шифр оригіналу:</strong> Изъ актовой книги Пинскаго гродскаго суда за 1645 г., № 12999, л. 124 (стр. 185).</p></li>
+<li><p><strong>Мова документа:</strong> змішана — староукраїнська / руська (судова преамбула, внесення та клаузули) та польська (текст вливкового запису / цесії боргу).</p></li>
+</ul></div></details>
+  <section class="ak-text" aria-label="Текст документа">
+    <p class="ak-label">Текст оригіналу <small>цифри на полях — сторінки видання</small></p>
+    <div class="ak-text-body"><p class="ak-no">№ 173.— 1645 г. Іюня 12.</p><p class="ak-ptitle">Передаточная запись Пинскаго еврея Зельмана Якубовича Іереміи Вишневецкому на взысканіе долга съ Мелетія Калачинскаго.</p>
+<p>Лета отъ нароженья Сына Божого тысеча шестьсотъ сорокъ пятого, мѣсяца Июня дванадцатого дня.</p>
+<p>На рочъкахъ кгродскихъ Пинскихъ мѣсяца Июня первого дня прыпалыхъ и въ замку Пинъскомъ судовне отправованыхъ, передъ нами Анъдреемъ Терлецъкимъ, стольникомъ и подстаростимъ, Яномъ Протасовичомъ судьею а Юрьемъ Нелюбовичомъ Тукальскимъ писаромъ— врадниками судовыми кгродскими повету</p><p><span class="ak-pg" aria-label="сторінка 2">2</span>Пинского, отъ ясне освецоного княжати его милости Альбрыхта Станислава Радивила, княжати на Олыце и Несвижу, канъцлера великого князства Литовского, старосты Пинъского, Кгневского и Тухольского установлеными, постановивъшысе очевисто Зельманъ Якубовичъ—жыдъ места Пинского, положивъшы листъ добровольный вливковый запись свой ясне освецоному княжати его милости Еремияшу Михалу Корыбуту Вишъневецкому на речь въ немъ описаную даный и належачый и просилъ, абы тотъ листъ до книгъ прынятъ и уписанъ былъ. Мы врадъ того листу огледавшы и чытаного выслухавшы, до книгъ уписать есмо велели, который уписуючи до книгъ слово въ слово такъ се въ собе маетъ:</p>
+<p>Ja Zelman Jakubowicz Murawczyk, żyd miasta Pinskiego, zeznawam tym moym wliwkowym listem dobrowolnym zapisem, donosząc to do wiadomosci kozdego, komu by o tym wiedzieć należało, iż co pan Meletii Kałaczynski zostali byli mnie winnemi na list oblig swoy pewną summe pieniędzy sto dziewięćdziesiąt y trzy złote polskich pożyczonych, na ktory oblig przerzeczony pan Meletii Kałaczynski y małżonka iego tych sta dziewiąciudziesiąt y trzech złotych mnie na roku nie oddali y nie zapłacili, o ktore nieoddanie tey summy pozwałem był przerzeczonego pana Kałaczynskiego, pokładaiąc pozew na dworku przy miescie Dąbrowicy będącym, w powiecie Pinskim leżącym, na własnym gruncie maiętnosci iasnie oswieconemu xiążęciu iegomosci Jeremiiaszowi Michałowi Korybutu Wyszniewieckiemu należącey, a teraz wielmożnemu iego mosci panu Zbigniewu na Dąbrowice Firleiowi, staroscie Lubelskiemu wiecznoscią puszczoney, nazwanym Wypołzlowski, za ktorym pozwem u sądu Głownego Trybunalnego w roku tysiąc sześćset czterdziestym czwartym, miesiąca Augusta trzynastego dnia otrzymałem dekret in contumaciam wskazu summy pieniędzy siedmiuset siedmiudziesiąt y siedm złotych polskich na przerzeczonym panu Kałaczyn-<span class="ak-pg" aria-label="сторінка 3">3</span>skim y małżonce iego, także y na tym dworku przy miescie Dąbrowicy będącym, nazwanym Wypołzłowskim, y na inszych dobrach iego, a potem na executiią tego dekretu y urząd zwiodszy, otrzymałem znowu dekret sądu Głownego Trybunalnego w Nowogrodku, w roku tysiąc sześćset czterdziestym czwartym, miesiąca Decembra siodmego dnia wskazu troiakich zarąk summy trzy tysiąca osmset trzydziescie y trzy złotych na przerzeczonym panu Kałaczynskim y małżonce iego, także y na tymże dworku Wypołzłowskim, po ktorych tych otrzymaniu dekretach gdym do executii one przywodzić chciał, bacząc to ia z sprawa, przed Jchmc pany sądowemi pokazanego, yż przerzeczony pan Kałaczynski żadnego prawa wieczystego na ten dworek przy miescie Dąbrowicy nie mieli, tylko do łaski xiążęcia iego mosci na służbie, iako y insze mają mieszkanie, pozwolono było, przeto ten grunt y dwor, w ktorym pan Kałaczynski mieszkanie swe z łaski panskiey miał y co kolwiek w maiętnosci Dąbrowicy trzymał, nie komu ynszemu, tylko xzciu iego mosci Wyszniewieckiemu należało, a pan Kałaczynski tylko do łaski panskiey y na służbie tam w maiętnosci Dąbrowicy mieszkał y tam do czasu trzymał, zaczym dobra xiążęcia iego mosci pod zapłacenie ciężaru cudzego przerzeczonego pana Kałaczynskiego nie podpadali, gdy też przerzeczony Kałaczynski, iako y ynsze, w Dąbrowice mieszkanie maiące, s tego dworku xiążęcia iego mosci służył, a yż też przerzeczony pan Kałaczynski dawno s tego dworku ustąpił y indziey na Ukraynie mieszkanie y dobra swe ma, a ten dwor iako przed tym, tak y teraz do zamku Dąbrowicy maiętnosci iego mosci panu staroscie Lubelskiemu od xięcia iego mosci przedaney należy, widząc to tedy, że ten dwor y żadna rzecz w maiętnosci Dąbrowicy panu Kałaczynskiemu nie należała, y ia za temi wskazami nie mogłem przyyść do executii, poniewaz xzęcia iego mosci przed tym byli te dobra, a teraz iego mosci panu staroscie Lubelskiemu przedane,<span class="ak-pg" aria-label="сторінка 4">4</span>s tych przyczyn nieprzywodząc siebie do dalszych szkod, poniewaz ten dworek y żadna rzecz w maiętnosci Dąbrowicy pod te pana Kałaczynskiego ciężary nie podpadaią, przeto te dobra y dworyk na gruncie Wypołzłowskim będący, grunty y cokolwiek pan Kałaczynski, iako sługa na służbie w tey maiętnosci Dąbrowickiey trzymał, z tych wskazow, dekretow, zyskow, przezyskow uwalniam y wiecznemi czasy żadnego przystępu o ten dług, przezyski, wskazy do tych dobr, na ktorych wskazy padli, ani do iegomosci pana starosty Lubelskiego nie zostawuie, ale iako przed tym, tak y teraz wiecznie do zamku Dąbrowicy maiętnosci iegomosci pana starosty Lubelskiego należeć maią, y iuż tego długu, przezysk y wskazu na tym dworku y maiętnosci Dąbrowicy y przynależnosci iego dochodzić, pozyskować y żadney turbacy zadawać nie mam y mocy mieć nie będę pod zapłaceniem zaruki trzechset piąciudziesiąt złotych, nagrodzeniem szkod, nakładow, słownie mianowanych. A yż ia Zelman Jakubowicz żyd tego długu y wskazu na przerzeczonym panu Kałaczynskim y małżące iego musiałbym aż na Ukrayne w woiewodstwie Kiiowskim dochodzić, co by z moim wielkim kosztem było, uprosiłem przez zacnych panow, że xiąże iego mosć Jeremiasz Michał Korybut Wyszniewiecki, nie z żadney powinnosci, tylko na prozbe moie, ponieważ xiążęciu iego mosci pan Kałaczynski służy, tedy za te summe tak samo yscizne, iako y za wskazaną summe wysz wyrażoną dał mi xiąże iego mosć trzysta pięćdziesiąt złotych, przy tym za wszystkie przezyski, dekreta, wskazy tak pierwszym dekretem y drugim dekretem troiakich zaruk wskazane dosic mnie uczynił. Za ktorym ia sobie dosić uczynieniem ten dług samą yscizne, przy tym te obiema dekretami Trybunalskimi wskazane summy, troiakie zaruky y wszystek postępek prawny, na panu Kołaczynskim otrzymany, na xiążęcia iego mosci Jeremiasza Wyszniewieckiego wlewam, list zapis na te sto dziewięćdziesiąt y trzy złote dany, przy tym pilność, za-<span class="ak-pg" aria-label="сторінка 5">5</span>pozwy, dekreta, poiazdy y wszystek proces prawny do ręku sług xiążęcia iego mosci oddałem y wrociłem, sam sie z onych zrzekam y żadnego przystępu o te sume, wskazy, dekreta do pana Kałaczynskiego, ani do tego dworku przy miescie Dąbrowicy będącym, także do maiętnosci Dąbrowicy y do żadney należnosci maiętnosci Dąbrowickiey sobie samemu y successorom moim nie zostawuie, gdyż ta maiętnosć poniewaź xiążęciu iego mosci należała, a teraz iego mosci panu staroscie Lubelskiemu przedana iest, a pan Kałaczynski w tey maiętnosci tego dworku y innych gruntow y przynależnosciey nie wiecznoscią, ale na służbie do łaski panskiey dzierżącym był, iakoż iuż xiąże iego mosć tego długu wskazow na panu Kałaczynskim y na dobrach iego ynszych iemu własnie należących dochodzić ma, a ia żadney należnosci maiętnosci Dąbrowicy y tego dworku namnieyszey rzeczy za ten dług y wskaz mieć wiecznie na potomne czasy iako xiąże iego mosć, tak y ia nie mam, gdyż prawa y słusznosci nie mam; wolno tedy xiążęciu iego mosci tey sumy, wskazow, dekretow, przezyskow na panu Kałaczynskim y dobrach iego własnych dochodzić, a doszedłszy kwitatii, a ia iuż żadney należnosci mieć nie mam pod zaręką wyszey opisaną y nagrodzeniem szkod, iednak y po zapłaceniu zaruki y szkod przecie ten list moy przy zupełney mocy zostawać ma, o ktore zarukę pozwalam siebie do iakiego sądu ziemskiego, grodzkiego, bądź zamkowego abo do sądu Głownego Trybunalnego, w termin y powiat, w iaki chcąc, a ia nie wymawiaiąc się żadnemi przyczynami prawnemi, pogotowiu nieprawnemi, z wymysłow ludzkich wynaydzione, nie zakładaiąc sie chorobą swą y umocowanego swego, nie zażywając żadnych dilatii, prolagatii, skutecznie nieodwłocznie usprawiedliwic sie mam y powinien będę, na co daie ten moy list wliwkowy zapis pod pieczęcią y s podpisem ręki mey po żydowsku, do ktorego to listu moiego ichmosc panowie obywatele powiatu Pinskiego, oso-<span class="ak-pg" aria-label="сторінка 6">6</span>by niżey na podpisach rąk mianowani, za ustną y oczewistą prozbą moią pieczęci swe przyłożyć y ręce swe podpisać raczyli. Pisan w Pinsku dnia dziesiątego Juny, anno tysiąc sześćset czterdziestego piątego.</p>
+<p>У того листу при печатехъ подписы рукъ тыми словы......</p>
+<p>Изъ актовой книги Пинскаго гродскаго суда за 1645 г., № 12999, л. 124 (стр. 185).</p></div>
+  </section>
+  <div class="ak-idx">
+    <details class="ak-block"><summary>Особи <small>9</small></summary><div><ol type="1">
+<li><p><strong>Вишневецький Ярема Михайло Корибут (Еремияш Михал Корыбут Вишневецкий / Jeremiasz Michał Korybut Wyszniewiecki)</strong> — князь на Вишнівці та Лубнах, магнат; колишній власник маєтності Дубровиця; цесіонар (особа, якій переуступлено права на борг).</p></li>
+<li><p><strong>Калачинський / Колачинський Мелетій (Мелетий Калачинский / Meletii Kałaczynski / Kołaczynski)</strong> — шляхтич, слуга князів Вишневецьких; первісний боржник єврея Зельмана Якубовича.</p></li>
+<li><p><strong>Калачинська (дружина Мелетія)</strong> — шляхтянка, співвідповідачка за боргами чоловіка.</p></li>
+<li><p><strong>Муравчик Зельман Якубович (Зельманъ Якубовичъ / Zelman Jakubowicz Murawczyk)</strong> — пінський єврей-купець/кредитор; автор вливкового листа (цедент).</p></li>
+<li><p><strong>Нелюбович-Тукальський Юрій (Юрьи Нелюбовичъ Тукальский / Jerzy Nielubowicz Tukalski)</strong> — писар ґродський пінський, судовий урядник.</p></li>
+<li><p><strong>Протасович Ян (Янъ Протасовичъ / Jan Protasowicz)</strong> — суддя ґродський пінський, судовий урядник.</p></li>
+<li><p><strong>Радзивілл Альбрехт Станіслав (Альбрыхт Станислав Радивил)</strong> — князь на Олиці та Несвіжі, великий канцлер ВКЛ, староста пінський, ґнєвський і тухольський.</p></li>
+<li><p><strong>Терлецький Андрій (Анъдрей Терлецъкий / Andrzej Terlecki)</strong> — стольник і підстароста пінський, судовий урядник.</p></li>
+<li><p><strong>Фірлей Збігнєв (Збигнев Фирлей / Zbigniew Firlej)</strong> — староста люблінський, дідич («na Dąbrowice»), покупець маєтності Дубровиця від Яреми Вишневецького.</p></li>
+</ol></div></details>
+    <details class="ak-block"><summary>Місця</summary><div><ul>
+<li><p><strong>Випоpattern / Виползовський дворик (dworek Wypołzlowski / grunt Wypołzlowski)</strong> — приміський шляхетський двір/маєтковий ґрунт біля містечка Дубровиця, тимчасово наданий М. Калачинському за службу.</p></li>
+<li><p><strong>ВКЛ (Велике князство Литовское)</strong> — держава.</p></li>
+<li><p><strong>Дубровиця (Dąbrowica)</strong> — місто / містечко («przy miescie Dąbrowicy»), замок і маєтність у Пінському повіті.</p></li>
+<li><p><strong>Київське воєводство (woiewodztwo Kiiowskie)</strong> — місце фактичного перебування майна й проживання М. Калачинського.</p></li>
+<li><p><strong>Новогородок / Новогрудок (Nowogrodek)</strong> — місто, місце сесій Головного Трибуналу ВКЛ.</p></li>
+<li><p><strong>Олика (Олыка)</strong> — резиденція Радзивіллів.</p></li>
+<li><p><strong>Несвіж (Несвиж)</strong> — резиденція Радзивіллів.</p></li>
+<li><p><strong>Пінськ (Пинск, Pinsk)</strong> — місто.</p></li>
+<li><p><strong>Пінський замок</strong> — місце ґродського суду.</p></li>
+<li><p><strong>Пінський повіт (поветъ Пинский, powiat Pinski)</strong>.</p></li>
+<li><p><strong>Україна (Ukrayna)</strong> — край («indziey na Ukraynie mieszkanie y dobra swe ma», «aż na Ukrayne»).</p></li>
+</ul></div></details>
+    <details class="ak-block"><summary>Терміни й теми</summary><div><ul>
+<li><p><strong>Фінансово-боргові інструменти та суми:</strong></p>
+<ul>
+<li><p><em>Істизна (ysćizna)</em> — основне тіло боргу: <strong>193 польських злотих</strong> («sto dziewięćdziesiąt y trzy złote polskich pożyczonych»);</p></li>
+<li><p><em>Обліг (oblig)</em> — боргова розписка/зобов'язання, видана М. Калачинським;</p></li>
+<li><p><em>Трибунальські присуди (wskazy / dekreta):</em></p>
+<ol type="1">
+<li><p>Рішення Головного Трибуналу ВКЛ від 13 серпня 1644 р. за неявку (<em>in contumaciam</em>) — присуджено до стягнення <strong>777 злотих</strong>;</p></li>
+<li><p>Рішення Трибуналу у Новогрудку від 7 грудня 1644 р. на виконання — присуджено потрійну заруку сумою <strong>3833 злотих</strong> («troiakich zarąk summy trzy tysiąca osmset trzydziescie y trzy złotych»);</p></li>
+</ol></li>
+<li><p><em>Компенсаційна виплата Яреми Вишневецького:</em> князь добровільно сплатив єврею Зельману <strong>350 злотих</strong>, повністю закривши всі претензії до маєтку Дубровиця;</p></li>
+<li><p><em>Штрафна зарука (zaręka):</em> санкція в <strong>350 злотих</strong> на випадок порушення Зельманом умов відмови від претензій на дворик у Дубровиці.</p></li>
+</ul></li>
+<li><p><strong>Юридичні та судово-процесуальні процедури:</strong></p>
+<ul>
+<li><p><em>Вливковий лист (лист вливковый / wliwkowy list, zapis wliwkowy)</em> — договір цесії, переуступки майнових/боргових прав іншій особі;</p></li>
+<li><p><em>Екзекуція (executio)</em> — судове звернення стягнення на нерухомість;</p></li>
+<li><p><em>Декрат in contumaciam</em> — заочне судове рішення проти сторони, що проігнорувала судовий виклик;</p></li>
+<li><p><em>Службове володіння:</em> статус тримання маєтку «не вічністю», а тимчасово, з панської ласки на час служби («do łaski xiążęcia iego mosci na służbie»);</p></li>
+<li><p><em>Зречення від прав:</em> зняття обтяжень з нового власника Дубровиці Збігнєва Фірлея та повернення документів («pilność, zapozwy, dekreta, poiazdy y wszystek proces prawny do ręku sług xiążęcia... oddałem y wrociłem»);</p></li>
+<li><p><em>Заборона процесуальних затягувань:</em> відмова від використання хвороб, відстрочок (<em>dilatii, prolagatii</em>) або вигаданих судових причин;</p></li>
+<li><p><em>Підпис єврейським письмом:</em> «pod pieczęcią y s podpisem ręki mey po żydowsku».</p></li>
+</ul></li>
+</ul></div></details>
+  </div>
+</article>
+<article class="ak-doc" id="1646-davyd-orendar-zolote">
+  <header class="ak-head">
+    <div class="ak-date"><b>6</b><span>липня</span><i>1646</i></div>
+    <div class="ak-head-main">
+      <p class="ak-kick">№ 228 · Пінський гродський суд</p>
+      <h2 class="ak-h2">Скарга дубровицького орендаря Давида Яковича</h2>
+      <p class="ak-places"><span>Дубровиця</span><span>Золоте</span><span>Кривиця</span></p>
+    </div>
+  </header>
+  <p class="ak-sum">Давид Якович, єврей і орендар дубровицький, скаржиться на пінських міщан Романа Плавушку та Івана Почуйковича, які тримали в оренді маєтність Золоте з половиною містечка Дубровиці, що належала Регіні Соломерецькій. Вони не давали йому користуватися прибутками, записаними в його оренду: від млинів, напоїв і навіть податку за копання глини. Через це за три роки оренди він утратить триста кіп литовських грошей.</p>
+  <div class="ak-scans"><button type="button" class="ak-scan" data-doc="1646-davyd-orendar-zolote" data-i="0" aria-label="Скан 1 з 4"><img src="https://i.imgur.com/dzQ8xnv.png" alt="" loading="lazy" decoding="async"><span>1</span></button><button type="button" class="ak-scan" data-doc="1646-davyd-orendar-zolote" data-i="1" aria-label="Скан 2 з 4"><img src="https://i.imgur.com/Os951sx.png" alt="" loading="lazy" decoding="async"><span>2</span></button><button type="button" class="ak-scan" data-doc="1646-davyd-orendar-zolote" data-i="2" aria-label="Скан 3 з 4"><img src="https://i.imgur.com/Zvww9qr.png" alt="" loading="lazy" decoding="async"><span>3</span></button><button type="button" class="ak-scan" data-doc="1646-davyd-orendar-zolote" data-i="3" aria-label="Скан 4 з 4"><img src="https://i.imgur.com/mlYTpVX.png" alt="" loading="lazy" decoding="async"><span>4</span></button></div>
+  <details class="ak-block ak-meta"><summary>Опис документа</summary><div class="ak-meta-body"><ul>
+<li><p><strong>Повна назва видання:</strong> «Акты издаваемые Виленскою коммиссіею для разбора древнихъ актовъ. Томъ XXVIII. Акты о евреяхъ». Вильна, 1901 г.</p></li>
+<li><p><strong>Номер документа:</strong> № 228.</p></li>
+<li><p><strong>Заголовок публікації:</strong> <em>Жалоба еврея—арендатора имѣнія Золото на притѣсненія со стороны помѣщика—владѣльца</em>.</p></li>
+<li><p><strong>Дата документа:</strong> 6 липня 1646 року («тисеча шестьсотъ сорокъ шостого, месеца Июля шостого дня» / «1646 г. Іюля 6»).</p></li>
+<li><p><strong>Термін оренди за договором:</strong> 3 роки поспіль — від 1644 до 1647 року («od roku tysiąc sześćset czterdziestego czwartego do roku tysiąc sześćset czterdziestego siodmego»).</p></li>
+<li><p><strong>Місце складання та внесення:</strong> місто Пінськ, ґродський уряд у замку господарському Пінському («На враде кгродскомъ въ замку господарскомъ Пинскомъ»).</p></li>
+<li><p><strong>Судовий урядник:</strong> Адам Брестський, стольник і підстароста пінський, встановлений від ясноосвіченого князя Альбрехта Станіслава Радзивілла.</p></li>
+<li><p><strong>Архівне посилання / шифр оригіналу:</strong> Изъ актовой книги Пинскаго гродскаго суда за 1646 г., № 13000, стр. 1917—1920.</p></li>
+<li><p><strong>Мова документа:</strong> змішана — староукраїнська / руська (канцелярська судова преамбула й кінцева формула внесення) та польська (письмова скарга-протестація орендаря).</p></li>
+</ul></div></details>
+  <section class="ak-text" aria-label="Текст документа">
+    <p class="ak-label">Текст оригіналу <small>цифри на полях — сторінки видання</small></p>
+    <div class="ak-text-body"><p class="ak-no">№ 228.— 1646 г. Іюля 6.</p><p class="ak-ptitle">Жалоба еврея—арендатора имѣнія Золото на притѣсненія со стороны помѣщика—владѣльца.</p>
+<p>Лета отъ нароженья Сына Божого тисеча шестьсотъ сорокъ шостого, месеца Июля шостого дня.</p>
+<p>На враде кгродскомъ въ замку господарскомъ Пинскомъ, передо мною Адамомъ Брестскимъ, стольникомъ и подстаростимъ Пинскимъ, отъ ясне освецоного княжати его милости Альбрихта Станислава Радивила, княжати на Олыце и Несвежу,<span class="ak-pg" aria-label="сторінка 2">2</span>канцлера великого князьства Литовского, старосты Пинского, Кгневского и Тухольского установленымъ, Давыдъ Якововичъ жидъ и арендаръ Дубровицкій оповеданье свое на письме ку записанью до книгъ кгродскихъ Пинскихъ подалъ въ тые слова: Mosci panie urzędzie grodski Pinsky! Ja Dawyd Jakowowicz, żyd y arendarz Dąbrowicky, wmsci w niemałey krzywdzie mey opowiadam y protestuię się na pana Romana Pławuszkę y pana Jwana Poczuykowicza—mieszczan Pinskych o to, yż wysz mienione osoby maiąc maiętność wielmożney ieymosci paniey Reginy na Hosczy Sołomereckiey, kasztelanowey Smolenskiey, nazwaną Złote y wsi do niey należące s połowicą miasteczka Dąbrowicy, w powiecie Pinskiem leżące, prawem arendownym od iegomosci pana Hektora Jasinskiego w posesy swoiey mnie Dawidowi Jakowowiczowi do wyscia arendy swey w teyże pomienioney maiętnosci karczmy z wolnym bez żadney przeszkody szynkiem wszelakiego napoiu, z młynami na rzece Horyniu, pod miastem Dąbrowickym y pode dworem Złotynskim będącemi, z wymiarem y wszelakimi pożytkami z napoiu y z młynow przychodzącemi, według dawnego zwyczaiu y arędy mey od przeszłych dzierżawcow tey maiętnosci u mnie w posesy będącey, nic pożytkow nie wymuiąc, na lat trzy po sobie ydące, od roku tysiąc sześćset czterdziestego czwartego do roku tysiąc sześćset czterdziestego siodmego, bez żadney mnie przeszkody za trzy tysiące złotych polskich arendowali y list arendowny mnie dali, lecz przerzeczeni pan Roman Pławuszka y pan Jwan Poczuyko, przepomniawszy listu arendownego, mnie danego, czyniąc na wielką zgubę y szkodę moią, naprzod wieś Krzywicę mnie do arędy należącą, w ktorey wsy, iako y w inszych kożdy chłop pod winą pewną żadnego napitku brać y w młynie inszym mleć nie mog, nie tylko żeby u mnie napitky brali, we młynach mleli, aleby namiey żadnego pożytku przez to iako powinny nie czyniąc, po rożnych młynach<span class="ak-pg" aria-label="сторінка 3">3</span>mieląc, napitky u nych panow arendarow we dworze Złocinskim biorąc, namnieyszego pożytku mnie nie uczynili, nawet co mi od kopania gliny podatek należał, tego nigdy nie oddawali y nie oddaią, ale ten pożytek mnie w arendę naznaczony za pewnym kontraktem przez iegomosci pana Jasinskiego iegomosci panu Prosczyckiemu pozwolonym oddaną, iakoż iegomość pan Prosczycky, mniemaiąc wolność w tey wsi Krzywicy nad poddanemi swemy, mnie wszelkich pożytkow pełnyć zakazał, zaczym ta wszytka wies żadnego pożytku mnie nie czyni, a oni panowie arędarze na iegomosci pana Jasinskiego proces o przeszkody przez pana Proszyckiego sobie mianuiąc uczyniwszy y actią do trybunału za zapisem wrosciwszy, nagrodę nie małą złotych kilka set wzięła, a mnie człowieku ubogiemu w tey przeszkodzie y po dziś dzień defelkacyi żadney nie czynią, ciż panowie arzędarze młyny naprawować będąc powinni nie naprawuią, o ktorych namnieyszey dbałosci nie czynią, że iuż te młyny y do spustoszenia y zepsowania przyszły, w czem także nie mała szkoda mnie sie dzieie. Młyn też przy dworze Złotynskim będący, od tego wodę na Rudnia w posesy swey maiącą, przemogszy sobie ku pożytkowi swemu czyniąc zepsowali, poddanym też tamecznym długow mnie winnych oddawać nie pozwalaiąc, zapozwy przed siebie sprawiedliwosci y odprawy nie czynią, a sobie zawsze na terminie naznaczonym odemnie, choć abym y duszę moią zastawić miał, rożnemi sposoby y grabieżami wymuszaiąc, nic na tę przeszkody y nie małe moie szkody respectu nie maiąc, pieniądze wymagaią, nagrody nie czynią, co naywiększa, wszelkę napitki y insze pożytki zabrawszy, gorzałkę y piwo, także y tobakę we dworze Złotem przez urzędnika swego Bogdana Pławuszkę szynkuią, chłopom we młyniech mleć zabraniają, a komu chcąc wziąwszy podarek bez czerki y miarki we młynach mnie arendowanych gwałtownie mleć roskazuią, żyta mego własnego kop dziesięć w snopach na polu urzędnikowi<span class="ak-pg" aria-label="сторінка 4">4</span>swemu temuż tego tysiąc sześćset czterdziestego szostego roku, czasy nie dawnemy w niewinnosci mey zagrabić roskazali, czyniąc wszytko na zgubę y szkodę mnie ubogiego arendarza, za ktorą takową ich pana Romana Pławuszki y pana Jwana Poczuyka mnie przeszkodą w arendzie y iawną nie życzliwoscią przez te trzy lata arendy mey trzysta kop groszy litewskich ponosić muszę. Postrzegaiąc ia tedy, abym za wytrzymaniem przez nich arendy na własnosci mey według zapisu ich nie szkodował, a chcąc o to wszystko, iako s prawa należeć będzie, postępować y tak znaczney krzywdy mey requirować, prosze, aby ta żałoba moia do xiąg wmsci urzędowych była przyięta y zapisana. Што есть записано.</p>
+<p>Изъ актовой книги Пинскаго гродскаго суда за 1646 г. № 13000, стр. 1917—1920.</p></div>
+  </section>
+  <div class="ak-idx">
+    <details class="ak-block"><summary>Особи <small>9</small></summary><div><ol type="1">
+<li><p><strong>Брестський Адам (Адамъ Брестскій / Adam Brestski)</strong> — стольник і підстароста пінський, судовий урядник, що прийняв скаргу.</p></li>
+<li><p><strong>Давид Якубович (Давыдъ Якововичъ / Dawyd Jakowowicz)</strong> — пінський єврей, орендар частини маєтності Дубровиця та Золоте; скаржник/протестуючий.</p></li>
+<li><p><strong>Плавinterface / Плавушка Богдан (Bogdan Pławuszka)</strong> — урядник шляхетського двору Золоте, виконавець грабежів та незаконного шинкування.</p></li>
+<li><p><strong>Плавушка Роман (Roman Pławuszka)</strong> — міщанин пінський, посесор/орендар маєтності Золоте (головний орендар); відповідач.</p></li>
+<li><p><strong>Почуйко / Почуйкович Іван (Jwan Poczuykowicz / Poczuyko)</strong> — міщанин пінський, посесор/орендар маєтності Золоте (головний орендар); відповідач.</p></li>
+<li><p><strong>Прощицький (Prosczycki / Proszycki)</strong> — пан, шляхтич, який за контрактом із Ясинським отримав володіння підданими в с. Кривиця та заборонив їм сплачувати доходи Давидові.</p></li>
+<li><p><strong>Радзивілл Альбрехт Станіслав (Альбрихт Станислав Радивил)</strong> — князь на Олиці та Несвіжі, великий канцлер ВКЛ, староста пінський, ґнєвський і тухольський.</p></li>
+<li><p><strong>Соломерецька Регіна (Regina na Hosczy Sołomerecka)</strong> — уроджена з Гощі, каште Nicely / каштелянова смоленська, законна дідичка (власниця) маєтності Золоте та половини містечка Дубровиця.</p></li>
+<li><p><strong>Ясинський Гектор (Hektor Jasinski)</strong> — пан, орендар/посесор маєтності Золоте від княгині Соломерецької, який передав її в оренду пінським міщанам.</p></li>
+</ol></div></details>
+    <details class="ak-block"><summary>Місця</summary><div><ul>
+<li><p><strong>Горинь (Horyń)</strong> — річка («na rzece Horyniu»), на якій діяли орендовані млини.</p></li>
+<li><p><strong>Гоща (Hoszcza)</strong> — родове гніздо каштелянової Регіни Соломерецької («na Hosczy»).</p></li>
+<li><p><strong>Ґнєв (Кгнев / Gniew)</strong> — староство князя А. С. Радзивілла.</p></li>
+<li><p><strong>Дубровиця (Dąbrowica / Дубровица)</strong> — містечко («miasteczko», «miasto Dąbrowickie»); орендувалася половина містечка («s połowicą miasteczka Dąbrowicy»).</p></li>
+<li><p><strong>Золоте / Злотин / Злоцин (Złote, Złotyn, Złocin)</strong> — панський маєток, шляхетський двір («dwor Złotynski», «we dworze Złocinskim / Złotem») у Пінському повіті.</p></li>
+<li><p><strong>Кривиця (Krzywica)</strong> — село маєтності, приписане до оренди.</p></li>
+<li><p><strong>Несвіж (Несвеж / Nieśwież)</strong> — володіння Радзивіллів.</p></li>
+<li><p><strong>Олика (Олыка / Ołyka)</strong> — володіння Радзивіллів.</p></li>
+<li><p><strong>Пінськ (Пинск, Pinsk)</strong> — місто, центр повіту.</p></li>
+<li><p><strong>Пінський замок (замокъ господарскій Пинскій)</strong> — місце розташування ґродського суду.</p></li>
+<li><p><strong>Пінський повіт (powiat Pinski)</strong>.</p></li>
+<li><p><strong>Рудня (Rudnia)</strong> — промисловий об'єкт / поселення з вододілом («od tego wodę na Rudnia w posesy swey maiącą»).</p></li>
+<li><p><strong>Смоленськ (Smolensk)</strong> — титулярне каштелянство Регіни Соломерецької («kasztelanowa Smolenska»).</p></li>
+<li><p><strong>Тухоля (Тухоль / Tuchola)</strong> — староство князя А. С. Радзивілла.</p></li>
+</ul></div></details>
+    <details class="ak-block"><summary>Терміни й теми</summary><div><ul>
+<li><p><strong>Орендні, комерційні та договірні відносини:</strong></p>
+<ul>
+<li><p><em>Суборенда (багаторівнева посесія):</em> власниця Соломерецька <span class="math inline">→</span> пан Г. Ясинський <span class="math inline">→</span> міщани Р. Плавушка та І. Почуйкович <span class="math inline">→</span> єврей Давид Якубович;</p></li>
+<li><p><em>Лист арендовний (list arendowny):</em> контракт на 3 роки (1644–1647 рр.) загальною вартістю <strong>3000 польських злотих</strong>;</p></li>
+<li><p><em>Об'єкти оренди:</em> корчми з монопольним правом пропонації («z wolnym bez żadney przeszkody szynkiem wszelakiego napoiu»), млини на Горині з правом помолу й мірки, мито на копання глини («od kopania gliny podatek»);</p></li>
+<li><p><em>Дефелькація (defelkacya):</em> зменшення/скидка орендної плати у зв'язку з недоотриманням обумовлених прибутків через перешкоди (відповідачі відмовляли в дефелькації).</p></li>
+</ul></li>
+<li><p><strong>Порушення контракту та збитки:</strong></p>
+<ul>
+<li><p><em>Порушення пропонаційного права:</em> самовільний продаж алкоголю (горілка, пиво) та тютюну («gorzałkę y piwo, także y tobakę») у дворі Золоте через урядника Богдана Плавушку;</p></li>
+<li><p><em>Зрив помолу:</em> заборона підданим молоти в орендованих млинах; примусовий безмитний помол без мірки і черки («bez czerki y miarki») для сторонніх;</p></li>
+<li><p><em>Руйнування гідротехнічних споруд:</em> доведення орендованих млинів до аварійного стану через відмову від ремонтів; відведення води на Рудню, що спричинило зупинку млина біля двору Золотинського;</p></li>
+<li><p><em>Прямий грабіж:</em> вилучення влітку 1646 року в полі <strong>10 кіп жита в снопах</strong>, що належали орендареві;</p></li>
+<li><p><em>Загальний обсяг претензій:</em> збитки оцінено в <strong>300 кіп литовських грошей</strong>.</p></li>
+</ul></li>
+<li><p><strong>Судово-процесуальні терміни:</strong></p>
+<ul>
+<li><p><em>Протестація (opowiadał y protestuię się / żałoba):</em> судова скарга про правопорушення, подана до ґродських книг для збереження прав на позов;</p></li>
+<li><p><em>Trybunał / actia do trybunału:</em> звернення до Головного Трибуналу ВКЛ за судовим захистом;</p></li>
+<li><p><em>Zapozwy:</em> судові повістки/виклики селян-боржників, які блокувалися відповідачами;</p></li>
+<li><p><em>Requirować:</em> вимагати судового відшкодування заподіяної шкоди.</p></li>
+</ul></li>
+</ul></div></details>
+  </div>
+</article>
+<article class="ak-doc" id="1646-pobyttia-davyda">
+  <header class="ak-head">
+    <div class="ak-date"><b>30</b><span>липня</span><i>1646</i></div>
+    <div class="ak-head-main">
+      <p class="ak-kick">№ 240 · Пінський гродський суд</p>
+      <h2 class="ak-h2">Побиття орендаря Давида в Дубровиці</h2>
+      <p class="ak-places"><span>Дубровиця</span><span>Воробин</span></p>
+    </div>
+  </header>
+  <p class="ak-sum">Возний Павло Лубковський оглянув у Дубровиці побитого орендаря Давида Яковича: синці під очима, зникла оксамитова шапка із соболем за п’ятнадцять злотих, порубано олов’яну кварту. Сталося це в торговий день, тож Давид утратив і виторг за горілку й мед. Били піддані Костянтина Гречини з Воробина. Коли возний приїхав до Гречини у Воробин по справедливість, той налаяв орендаря й схопився за кайло.</p>
+  <div class="ak-scans"><button type="button" class="ak-scan" data-doc="1646-pobyttia-davyda" data-i="0" aria-label="Скан 1 з 4"><img src="https://i.imgur.com/05tPLfx.png" alt="" loading="lazy" decoding="async"><span>1</span></button><button type="button" class="ak-scan" data-doc="1646-pobyttia-davyda" data-i="1" aria-label="Скан 2 з 4"><img src="https://i.imgur.com/7UFhicP.png" alt="" loading="lazy" decoding="async"><span>2</span></button><button type="button" class="ak-scan" data-doc="1646-pobyttia-davyda" data-i="2" aria-label="Скан 3 з 4"><img src="https://i.imgur.com/OhpKUZX.png" alt="" loading="lazy" decoding="async"><span>3</span></button><button type="button" class="ak-scan" data-doc="1646-pobyttia-davyda" data-i="3" aria-label="Скан 4 з 4"><img src="https://i.imgur.com/pt6LeOb.png" alt="" loading="lazy" decoding="async"><span>4</span></button></div>
+  <details class="ak-block ak-meta"><summary>Опис документа</summary><div class="ak-meta-body"><ul>
+<li><p><strong>Повна назва видання:</strong> «Акты издаваемые Виленскою коммиссіею для разбора древнихъ актовъ. Томъ XXVIII. Акты о евреяхъ». Вильна, 1901 г.</p></li>
+<li><p><strong>Номер документа:</strong> № 240.</p></li>
+<li><p><strong>Заголовок публікації:</strong> <em>Заявленіе вознаго о нанесеніи побоевъ еврею Давиду Яковлевичу и отнятіи у него разныхъ вещей крестьянами помѣщика Гречины</em>.</p></li>
+<li><p><strong>Дата документа (визнання реляції в суді):</strong> 30 липня 1646 року («тысеча шестьсотъ сорокъ шостого, месеца Июля тридцатого дня» / «1646 г. Іюля 30»).</p></li>
+<li><p><strong>Дати дійства возного:</strong></p>
+<ul>
+<li><p><strong>1 липня 1646 року</strong> — огляд побитого орендаря Давида в Дубровиці («roku teraznieyszego tysiąc sześćset czterdziestego szostego, miesiąca Juli pierwszego dnia»);</p></li>
+<li><p><strong>10 липня 1646 року</strong> — поїздка до пана Костянтина Гричини в село Воробин («Tegoż roku, miesiąca Juli dnia dziesiątego»).</p></li>
+</ul></li>
+<li><p><strong>Місце складання та внесення:</strong> місто Пінськ, ґродський уряд у замку господарському Пінському («На враде кгродскомъ въ замку господарскомъ Пинскомъ»).</p></li>
+<li><p><strong>Судовий урядник:</strong> Адам Брестський, стольник і підстароста пінський, встановлений від ясноосвіченого князя Альбрехта Станіслава Радзивілла.</p></li>
+<li><p><strong>Архівне посилання / шифр оригіналу:</strong> Изъ актовой книги Пинскаго гродскаго суда за 1646 годъ, № 13000, стр. 2097.</p></li>
+<li><p><strong>Мова документа:</strong> змішана — староукраїнська / руська (судова преамбула, підпис возного й формула запису) та польська (текст реляційного квиту возного).</p></li>
+</ul></div></details>
+  <section class="ak-text" aria-label="Текст документа">
+    <p class="ak-label">Текст оригіналу <small>цифри на полях — сторінки видання</small></p>
+    <div class="ak-text-body"><p class="ak-no">№ 240.— 1646 г. Іюля 30.</p><p class="ak-ptitle">Заявленіе вознаго о нанесеніи побоевъ еврею Давиду Яковлевичу и отнятіи у него разныхъ вещей крестьянами помѣщика Гречины.</p>
+<p>Лета отъ нароженья Сына Божого тисеча шестьсотъ сорокъ шостого, месеца Июля тридцатого дня.</p>
+<p>На враде кгродскомъ въ замку господарскомъ Пинскомъ, передо мною Адамомъ Брестскимъ, стольникомъ и подстаростимъ Пинскимъ, отъ ясне освецоного княжати его милости Альбрихта Станислава Радивила, княжати на Олыце и Несвежу, канцлера великого князьства Литовского, старосты Пинского, Кгневского и Тухольского установленымъ, ставши очевисто возный повету Пинского, Павелъ Лубковскій, квитъ свой на письме, подъ печатью и съ подписомъ руки свое и подъ печатьми стороны шляхты, до книгъ кгродскихъ Пинскихъ призналъ въ тые слова:</p>
+<p>Ja Paweł Lubkowski, wozny powiatu Pinskiego, zeznawam tym moim relacynym kwitem, iż ia roku teraznieyszego tysiąc sześćset czterdziestego szostego, miesiąca Juli pierwszego dnia przy stronie szlachcie panu Janu Gruszewskim, a panu Grzegorzu Sosnowskim byłem wzięty od arędarza Dąbrowickiego Dawida Jakowowicza, żyda w mieście Dąbrowicy, w powiecie Pinskim<span class="ak-pg" aria-label="сторінка 2">2</span>leżącego mieszkaiący, tamże w dworze tego Dawyda widziałem samego zbitego, pod oczyma sinie spuchłe krwią nabiegłe razy, przy ktorym zbiciu tenże arzędarz powiedział, że mu czapka oksamitnaia z sobolem, kuplenaia za złotych piętnascie zginieła, tamże kwarte cynowe posiekszy y z sobą wzieli, co się stało pod czas targowy, ludzie rozegnali s tey arzędy w czem szkoduie w nieszynkowaniu tego dnia tak gorzałki, iako y miodu złotych pięcdziesiąt. Kture to zbicie y zginienie szapki y posieczenie kwarty mianował wysz mianowany arzędarz od poddanych pana Konstantego Hryczyny z sioła Worobina Fedora Petucha y syna iego Fedorza Petuchowicza y boiarzyna z sioła Sieka Chodorowskiego y ynszych pomocnikow iego, co wszystko mną woznym oswiadczył. Tegoż roku, miesiąca Juli dnia dziesiątego, tenże żyd arzędarz używszy mię w tem, abym z nim iachał do sioła Worobina, w powiecie Pinskim leżącego do pana Konstantego Hreczyny, aby s tych wysz mianowanych poddanych y boiarzyna sprawiedliwość uczynił, gdzie przedemną woznym ten pan Hreczyna, nie czyniąc sprawiedliwosci, ale jeszcze słowami nieucciwemi położył, posromicił, odpowiadaiąc na tego arzędarza y do kilofa porwał sie. Co wszystko mną woznym y stroną szlachto oswiadczywszy, przecz odeszli. Ja tedy wozny, com widział y słyszał, to wszytko na kwit moy relacyny spisawszy, pod pieczęcią y s podpisem ręki mey, także pod pieczęciami strony szlachty przy mnie będącey ku zapisaniu do xiąg daie. Pisan roku, miesiąca y dnia wysz pisanego, Павелъ Лубковскій возный повету Пинского рукою. Который квитъ за признаньемъ возного до книгъ кгродскихъ Пинскихъ есть уписанъ.</p>
+<p>Изъ актовой книги Пинскаго гродскаго суда за 1646 годъ, № 13000, стр. 2097.</p></div>
+  </section>
+  <div class="ak-idx">
+    <details class="ak-block"><summary>Особи <small>10</small></summary><div><ol type="1">
+<li><p><strong>Брестський Адам (Адамъ Брестскій / Adam Brestski)</strong> — стольник і підстароста пінський, судовий урядник.</p></li>
+<li><p><strong>Гричина / Гречина Костянтин (Konstanty Hryczyna / Hreczyna / помѣщикъ Гречина)</strong> — поміщик, власник села Воробин; господар нападників, який відмовив у судовому задоволенні й вчинив насильницький опір.</p></li>
+<li><p><strong>Грушевський Ян (Jan Gruszewski)</strong> — шляхтич, асистент/свідок огляду возного («strona szlachta»).</p></li>
+<li><p><strong>Давид Якубович (Давыдъ Яковлевичъ / Dawyd Jakowowicz)</strong> — єврей, орендар дубровицький («arędarz Dąbrowicki»); потерпілий.</p></li>
+<li><p><strong>Лубковський Павло (Павелъ Лубковскій / Paweł Lubkowski)</strong> — возний повіту Пінського; укладач реляційного квиту.</p></li>
+<li><p><strong>Петух Федір (Fedor Petuch)</strong> — підданий селянин пана К. Гричини із села Воробин; нападник.</p></li>
+<li><p><strong>Петухович Федір (Fedorz Petuchowicz)</strong> — син Федора Петуха, підданий із с. Воробин; нападник.</p></li>
+<li><p><strong>Радзивілл Альбрехт Станіслав (Альбрихт Станислав Радивил)</strong> — князь на Олиці та Несвіжі, великий канцлер ВКЛ, староста пінський, ґнєвський і тухольський.</p></li>
+<li><p><strong>Сосновський Григорій (Grzegorz Sosnowski)</strong> — шляхтич, асистент/свідок огляду возного («strona szlachta»).</p></li>
+<li><p><strong>Ходоровський Сєк (Siek Chodorowski)</strong> — боярин із села [Воробина], учасник нападу та побиття орендаря.</p></li>
+</ol></div></details>
+    <details class="ak-block"><summary>Місця</summary><div><ul>
+<li><p><strong>Воробин (sioło Worobin)</strong> — село в Пінському повіті, маєток шляхтича Костянтина Гричини.</p></li>
+<li><p><strong>Ґнєв (Кгнев / Gniew)</strong> — староство князя А. С. Радзивілла.</p></li>
+<li><p><strong>Дубровиця (Dąbrowica)</strong> — місто / містечко («w mieście Dąbrowicy») в Пінському повіті, місце перебування орендованого двору Давида.</p></li>
+<li><p><strong>Несвіж (Несвеж)</strong> — володіння Радзивіллів.</p></li>
+<li><p><strong>Олика (Олыка)</strong> — володіння Радзивіллів.</p></li>
+<li><p><strong>Пінськ (Пинск)</strong> — місто, центр повіту.</p></li>
+<li><p><strong>Пінський замок (замокъ господарскій Пинскій)</strong> — місце функціонування ґродського суду.</p></li>
+<li><p><strong>Пінський повіт (поветъ Пинскій, powiat Pinski)</strong>.</p></li>
+<li><p><strong>Тухоля (Тухоль / Tuchola)</strong> — староство князя А. С. Радзивілла.</p></li>
+</ul></div></details>
+    <details class="ak-block"><summary>Терміни й теми</summary><div><ul>
+<li><p><strong>Судово-медичний та слідчий огляд (візуація ушкоджень):</strong></p>
+<ul>
+<li><p>Фіксація тілесних ушкоджень возним: «pod oczyma sinie spuchłe krwią nabiegłe razy» (під очима сині опухлі криваві синці/рани);</p></li>
+<li><p><em>Relacyny kwit (реляційний квит)</em> — офіційний акт огляду місця події, потерпілого та реєстрації відмови у правосудді поміщиком;</p></li>
+<li><p><em>Strona szlachta</em> — шляхетські поняті/свідки, чиї печатки обов'язково скріплювали дійсність свідчення возного.</p></li>
+</ul></li>
+<li><p><strong>Грабіж, матеріальні збитки та вартість речей:</strong></p>
+<ul>
+<li><p><em>Оксамитова шапка із соболем:</em> «czapka oksamitnaia z sobolem», придбана за <strong>15 злотих</strong> (викрадена нападниками);</p></li>
+<li><p><em>Циновий посуд:</em> «kwarte cynowe posiekszy y z sobą wzieli» (посікли та викрали олов'яну/цинову мірну кварту);</p></li>
+<li><p><em>Зрив ярмаркового торгу:</em> напад стався в базарний день («pod czas targowy»); людей розігнали з корчми, збитки від неможливості шинкувати горілку та мед оцінено у <strong>50 злотих</strong>.</p></li>
+</ul></li>
+<li><p><strong>Правопорушення проти правосуддя та шляхетське свавілля:</strong></p>
+<ul>
+<li><p><em>Звернення за досудовим задоволенням:</em> виїзд возного до поміщика з вимогою видати винних селян і боярина для покарання («sprawiedliwość uczynił»);</p></li>
+<li><p><em>Поведінка відповідача:</em> пан Гричина зганьбив і збезчестив позивача лайливими словами («słowami nieucciwemi położył, posromicił») та здійснив спробу збройного нападу;</p></li>
+<li><p><em>Зброя / знаряддя нападу:</em> «do kilofa porwał sie» (схопився за кілоф — кайло / різновид обуха/келепа).</p></li>
+</ul></li>
+</ul></div></details>
+  </div>
+</article>
+    </div>
+  </div>
+</main>
+
+<div class="ak-lb" id="akLb" role="dialog" aria-modal="true" aria-label="Скан сторінки">
+  <div class="ak-lb-bar"><b id="akLbCap"></b><button type="button" id="akLbPrev" aria-label="Попередній скан">←</button><button type="button" id="akLbNext" aria-label="Наступний скан">→</button><button type="button" id="akLbClose" aria-label="Закрити">✕</button></div>
+  <div class="ak-lb-stage"><img id="akLbImg" alt="Скан сторінки видання"></div>
+</div>
+
+<footer class="footer">
+    <div class="ft">
+        <div class="ft-top">
+            <div class="ft-brand">
+                <a href="index.html" class="ft-logo">
+                    <img src="https://i.imgur.com/mXCrjjG.png" alt="" width="44" height="44" loading="lazy" decoding="async">
+                    <span><span class="ft-logo-city">Дубровиця</span><span class="ft-logo-sub">Цифровий архів</span></span>
+                </a>
+                <p class="ft-about">Цифровий архів історичної спадщини міста Дубровиця — Сарненський район, Рівненська область, Україна.</p>
+                <a href="contacts.html" class="ft-cta"><span>Маєте старі фото чи документи?</span><strong>Напишіть нам <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></strong></a>
+            </div>
+            <nav class="ft-col" aria-label="Розділи сайту">
+                <p class="ft-title">Розділи</p>
+                <a href="history.html">Історія</a>
+                <a href="photo-archive.html">Фотоархів</a>
+                <a href="architecture.html">Пам'ятки</a>
+                <a href="jewish-history.html">Єврейська спадщина</a>
+                <a href="presa.html">Преса</a>
+                <a href="doslidnyk.html">Дослідник</a>
+                <a href="contacts.html">Про проєкт</a>
+            </nav>
+            <nav class="ft-col" aria-label="Архівні справи">
+                <p class="ft-title">Архівні справи</p>
+                <a href="sumariusz-1642.html"><span class="ft-year">1642</span>Сумаріуш маєтку</a>
+                <a href="zhaloba-1650.html"><span class="ft-year">1650</span>Жалоба про спустошення</a>
+                <a href="akty-ruina.html"><span class="ft-year">1654</span>Акти Руїни</a>
+                <a href="rejestr-1665.html"><span class="ft-year">1665</span>Реєстр збитків</a>
+                <a href="inventar-1780.html"><span class="ft-year">1780</span>Інвентар маєтку</a>
+                <a href="inventar-naselennia.html"><span class="ft-year">1780</span>Мешканці маєтку</a>
+                <a href="atlas-1798.html"><span class="ft-year">1798</span>Атлас губернії</a>
+                <a href="atlas-1798-analityka.html"><span class="ft-year">1798</span>Край у цифрах</a>
+                <a href="persha-svitova.html"><span class="ft-year">1914</span>Перша світова війна</a>
+                <a href="vyborchi-1938.html"><span class="ft-year">1938</span>Список виборців</a>
+            </nav>
+            <nav class="ft-col" aria-label="Постаті й каталоги">
+                <p class="ft-title">Постаті й каталоги</p>
+                <a href="plater.html">Граф Юзеф Плятер</a>
+                <a href="radzyvil.html">Князь Домінік Радзивілл</a>
+                <a href="metrychni-knyhy.html#mkcalSection">Метричні книги</a>
+                <a href="metrychni-knyhy.html#booksCatalog">Книги про Дубровицю</a>
+                <a href="metrychni-knyhy.html">Усі архівні справи</a>
+            </nav>
+        </div>
+        <div class="ft-bottom">
+            <p class="ft-copy">&copy; 2026 <a href="https://dubrovytsia.site">dubrovytsia.site</a> — Цифровий архів Дубровиці, Рівненська область, Україна. Сайт є некомерційним краєзнавчим проєктом, створеним з любові до міста та його історії.</p>
+            <p class="ft-notice">Публікуючи ці матеріали, ми прагнемо зберегти та популяризувати культурну й історичну спадщину міста Дубровиця для нинішніх і майбутніх поколінь. Усі фотографії, документи та архівні матеріали розміщено виключно в освітніх, краєзнавчих і науково-дослідних цілях. Відтворення, поширення або комерційне використання будь-яких матеріалів без письмового дозволу адміністрації сайту — заборонено. При цитуванні або використанні матеріалів у будь-якому форматі — обов'язкове активне посилання на <em>dubrovytsia.site</em>. Якщо ви є власником авторських прав на будь-які з опублікованих матеріалів і маєте заперечення щодо їх розміщення — будь ласка, <a href="contacts.html">зв'яжіться з нами</a> і ми негайно розглянемо ваш запит. Фотографії, завантажені з архіву, містять водяний знак сайту і не можуть публікуватись без нього.</p>
+        </div>
+    </div>
+</footer>
+
+<script src="app.js?v=11"></script>
+<script>
+(function(){
+  var SC = {"1645-zelman-yakubovych": {"t": "Зельман Якубович і дворик під Дубровицею", "s": ["https://i.imgur.com/HFcvyiD.png", "https://i.imgur.com/fhB8ftH.png", "https://i.imgur.com/H8bhabp.png", "https://i.imgur.com/bLueaYK.png", "https://i.imgur.com/FfQg3Z2.png", "https://i.imgur.com/swMyrNp.png"]}, "1646-davyd-orendar-zolote": {"t": "Скарга дубровицького орендаря Давида Яковича", "s": ["https://i.imgur.com/dzQ8xnv.png", "https://i.imgur.com/Os951sx.png", "https://i.imgur.com/Zvww9qr.png", "https://i.imgur.com/mlYTpVX.png"]}, "1646-pobyttia-davyda": {"t": "Побиття орендаря Давида в Дубровиці", "s": ["https://i.imgur.com/05tPLfx.png", "https://i.imgur.com/7UFhicP.png", "https://i.imgur.com/OhpKUZX.png", "https://i.imgur.com/pt6LeOb.png"]}};
+  var lb = document.getElementById('akLb'), img = document.getElementById('akLbImg'), cap = document.getElementById('akLbCap'), cur = null, k = 0, back = null;
+  function show(){ var L = SC[cur]; img.src = L.s[k]; cap.textContent = L.t + ' · скан ' + (k + 1) + ' з ' + L.s.length; }
+  function open(id, i){ cur = id; k = i; back = document.activeElement; show(); lb.classList.add('open'); document.body.style.overflow = 'hidden'; document.getElementById('akLbClose').focus(); }
+  function close(){ lb.classList.remove('open'); document.body.style.overflow = ''; img.removeAttribute('src'); if (back) back.focus(); }
+  function step(d){ var n = SC[cur].s.length; k = (k + d + n) % n; show(); }
+  document.querySelectorAll('.ak-scan').forEach(function(b){ b.addEventListener('click', function(){ open(b.dataset.doc, +b.dataset.i); }); });
+  document.getElementById('akLbClose').onclick = close;
+  document.getElementById('akLbPrev').onclick = function(){ step(-1); };
+  document.getElementById('akLbNext').onclick = function(){ step(1); };
+  lb.addEventListener('click', function(e){ if (e.target === lb || e.target.classList.contains('ak-lb-stage')) close(); });
+  addEventListener('keydown', function(e){ if (!lb.classList.contains('open')) return; if (e.key === 'Escape') close(); else if (e.key === 'ArrowLeft') step(-1); else if (e.key === 'ArrowRight') step(1); });
+  /* highlight the act being read in the list */
+  var links = document.querySelectorAll('.ak-toc ol a');
+  if ('IntersectionObserver' in window) {
+    var ob = new IntersectionObserver(function(es){ es.forEach(function(e){ if (e.isIntersecting) links.forEach(function(a){ a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id); }); }); }, {rootMargin: '-30% 0px -60% 0px'});
+    document.querySelectorAll('.ak-doc').forEach(function(a){ ob.observe(a); });
+  }
+})();
+</script>
+</body>
+</html>
