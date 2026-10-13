@@ -32,14 +32,14 @@ PAGES = {
         lede='Татари, козацькі залоги й московські полки на Горині: п’ять скарг і присяг, вписаних до пінських гродських книг, про Дубровицю, Воробин і Кураш.',
         intro=('<p>Після 1648 року Дубровиччина опинилася на шляху всіх армій: татар, козацьких залог над Горинню, московських полків, що йшли на Пінськ. '
                'Шляхта й міщани приходили до пінського гродського суду, щоб записати збитки: це звільняло від податків, які платити вже не було з чого.</p>'
-               '<p>Тексти подано так, як їх надрукувала Віленська археографічна комісія 1909 року: польською з руськими судовими формулами. '
-               'До кожного акта — короткий переказ, скани друкованого видання й покажчики осіб, місць і термінів.</p>'),
+               '<p>Оригінальні тексти подано так, як їх надрукувала Віленська археографічна комісія 1909 року: польською з руськими судовими формулами. '
+               'До кожного акта — короткий переказ, повний переклад українською, скани друкованого видання й покажчики осіб, місць і термінів.</p>'),
         credit='Друкована сторінка видання 1909 року',
         tag='Архівні справи'),
     'yevrei': dict(
         file='akty-yevrei.html', group='yevrei',
         title='Євреї Дубровиці в актах 1645–1646 — Дубровиця · Цифровий архів',
-        desc='Три записи пінських гродських книг 1645–1646 років про євреїв Дубровиці й Пінська: орендар Давид Якович, Зельман Якубович і Випозлівський дворик. Оригінальний текст, скани, покажчики.',
+        desc='Три записи пінських гродських книг 1645–1646 років про євреїв Дубровиці й Пінська: орендар Давид Якович, Зельман Якубович і Випозловський дворик. Оригінальний текст, скани, покажчики.',
         crumbs='<a href="jewish-history.html">Єврейська спадщина</a><span>/</span>Акти 1645–1646',
         kicker='Пінські гродські книги · 1645–1646',
         h1='Євреї Дубровиці <em>в судових актах</em>',
@@ -47,7 +47,7 @@ PAGES = {
         intro=('<p>За сто років до того, як громада отримала самостійність, євреї вже тримали в Дубровиці оренду: шинки, млини, дрібні податки. '
                'Три записи пінського гродського суду 1645–1646 років показують, як жилося орендареві між панами, їхніми підданими й конкурентами.</p>'
                '<p>Тексти подано за томом «Акты о евреяхъ» Віленської археографічної комісії (1901): польською з руськими судовими формулами. '
-               'До кожного акта — короткий переказ, скани видання й покажчики осіб, місць і термінів.</p>'),
+               'До кожного акта — короткий переказ, повний переклад українською, скани видання й покажчики осіб, місць і термінів.</p>'),
         credit='Друкована сторінка видання 1901 року',
         tag='Єврейська спадщина'),
 }
@@ -106,8 +106,12 @@ def article(d):
   {scans}
   <details class="ak-block ak-meta"><summary>Опис документа</summary><div class="ak-meta-body">{meta}</div></details>
   <section class="ak-text" aria-label="Текст документа">
-    <p class="ak-label">Текст оригіналу <small>цифри на полях — сторінки видання</small></p>
-    <div class="ak-text-body">{text}</div>
+    <div class="ak-switch" role="tablist" aria-label="Мова тексту">
+      <button type="button" role="tab" aria-selected="true" aria-controls="{id}-uk" id="{id}-tuk">Переклад українською</button>
+      <button type="button" role="tab" aria-selected="false" aria-controls="{id}-or" id="{id}-tor">Оригінал</button>
+    </div>
+    <div class="ak-text-body" role="tabpanel" id="{id}-uk" aria-labelledby="{id}-tuk">{tr}<p class="ak-trnote">Переклад зроблено для «Цифрового архіву Дубровиці». Імена подано за покажчиками, назви сіл — сучасні; у квадратних дужках — пояснення.</p></div>
+    <div class="ak-text-body" role="tabpanel" id="{id}-or" aria-labelledby="{id}-tor" hidden><p class="ak-label">Цифри на полях — сторінки видання</p>{text}</div>
   </section>
   <div class="ak-idx">
     <details class="ak-block"><summary>Особи <small>{np}</small></summary><div>{persons}</div></details>
@@ -116,7 +120,7 @@ def article(d):
   </div>
 </article>'''.format(id=d['id'], day=int(d['sort'][8:10]), mon=MON[int(d['sort'][5:7])], y=y, no=d['no'], title=esc(d['title']),
                      places=''.join('<span>%s</span>' % esc(p) for p in d['places']), summary=esc(d['summary']), scans=scans(d),
-                     meta=d['meta'], text=text_html(d), np=d['nPersons'], persons=d['persons'], placesIdx=d['placesIdx'], subjects=d['subjects'])
+                     meta=d['meta'], text=text_html(d), tr=d.get('translation', ''), np=d['nPersons'], persons=d['persons'], placesIdx=d['placesIdx'], subjects=d['subjects'])
 
 
 CSS = r'''
@@ -178,6 +182,12 @@ CSS = r'''
 .ak-label small { margin-left: .6rem; font-weight: 400; letter-spacing: .02em; text-transform: none; color: var(--color-text-light); }
 .ak-text-body { max-width: 44rem; font-family: 'Cormorant Garamond', serif; font-size: 1.14rem; line-height: 1.72; color: var(--color-text); overflow-wrap: anywhere; }
 .ak-text-body p { margin: 0 0 .9rem; }
+.ak-switch { display: inline-flex; gap: 2px; padding: 3px; margin: 0 0 1.3rem; border: 1px solid var(--color-border); border-radius: 100px; background: var(--color-bg-card); }
+.ak-switch button { border: 0; background: none; padding: .45rem .95rem; border-radius: 100px; font-family: 'Manrope', sans-serif; font-size: .7rem; font-weight: 600; letter-spacing: .04em; color: var(--color-text-light); cursor: pointer; transition: background .2s, color .2s; }
+.ak-switch button[aria-selected="true"] { background: var(--color-primary); color: var(--color-bg); }
+.ak-switch button:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.ak-text-body .ak-label { font-weight: 400; letter-spacing: .02em; text-transform: none; color: var(--color-text-light); font-size: .74rem; }
+.ak-trnote { font-family: 'Manrope', sans-serif; font-size: .72rem; line-height: 1.6; color: var(--color-text-light); font-style: italic; margin-top: 1.4rem !important; }
 .ak-text-body .ak-no { font-family: 'Manrope', sans-serif; font-size: .74rem; font-weight: 600; letter-spacing: .08em; color: var(--color-text-light); margin-bottom: .3rem; }
 .ak-text-body .ak-ptitle { font-weight: 500; font-style: italic; color: var(--color-text-secondary); margin-bottom: 1.2rem; }
 .ak-pg { position: absolute; left: .7rem; margin-top: .2rem; width: 1.3rem; height: 1.3rem; border-radius: 50%; display: inline-grid; place-items: center; background: var(--color-bg-card); border: 1px solid var(--color-border); font-family: 'Manrope', sans-serif; font-size: .58rem; font-weight: 600; color: var(--color-primary); line-height: 1; }
@@ -211,6 +221,10 @@ JS = r'''
   document.getElementById('akLbNext').onclick = function(){ step(1); };
   lb.addEventListener('click', function(e){ if (e.target === lb || e.target.classList.contains('ak-lb-stage')) close(); });
   addEventListener('keydown', function(e){ if (!lb.classList.contains('open')) return; if (e.key === 'Escape') close(); else if (e.key === 'ArrowLeft') step(-1); else if (e.key === 'ArrowRight') step(1); });
+  document.querySelectorAll('.ak-switch').forEach(function(sw){
+    var bs = sw.querySelectorAll('button');
+    bs.forEach(function(b){ b.addEventListener('click', function(){ bs.forEach(function(x){ var on = x === b; x.setAttribute('aria-selected', String(on)); document.getElementById(x.getAttribute('aria-controls')).hidden = !on; }); }); });
+  });
   /* highlight the act being read in the list */
   var links = document.querySelectorAll('.ak-toc ol a');
   if ('IntersectionObserver' in window) {
