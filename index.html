@@ -368,7 +368,7 @@ a, button, [role="button"], input, select, textarea,
                 </div>
             </div>
             <script>
-            /* на кожному відкритті обкладинки — випадково костел, церква або воробинська «Бібліотека» */
+            /* на кожному відкритті обкладинки — випадкова модель; воробинська «Бібліотека» випадає найчастіше (вага 40 з 100) */
             (function(){
               var M = {
                 kostel: {js: 'kostel-3d.js', g: 'Kostel3D', poster: 'kostel-3d-poster.webp', href: 'kostel-3d.html', title: 'Костел Іоанна Хрестителя',
@@ -379,9 +379,14 @@ a, button, [role="button"], input, select, textarea,
                          aria: '3D-модель церкви Різдва Богородиці. Потягніть убік, щоб обернути.', opts: {view: [-50, 14, 46], targetY: 13.2, fit: innerWidth < 980 ? 1.04 : 1.0}},
                 worobin: {js: 'worobin-3d.js', g: 'Worobin3D', poster: 'worobin-3d-poster.webp', href: 'worobin-3d.html', title: '«Бібліотека» у Воробині',
                          sub: 'павільйон Плятерів, якого вже немає · реконструкція за фото', alt: 'Павільйон «Бібліотека» у Воробині — 3D-реконструкція',
-                         aria: '3D-реконструкція павільйону «Бібліотека» у Воробині. Потягніть убік, щоб обернути.', opts: {view: [-46, 13, 40], targetY: 4.6, fit: innerWidth < 980 ? 1.04 : .98}}
+                         aria: '3D-реконструкція павільйону «Бібліотека» у Воробині. Потягніть убік, щоб обернути.', opts: {view: [-46, 13, 40], targetY: 4.6, fit: innerWidth < 980 ? 1.04 : .98}},
+                mykolai: {js: 'mykolai-3d.js', g: 'Mykolai3D', poster: 'mykolai-3d-poster.webp', href: 'mykolai-3d.html', title: 'Свято-Миколаївська церква',
+                         sub: "дерев'яна, збудована 1872 коштом парафіян", alt: 'Свято-Миколаївська церква в Дубровиці — 3D-модель',
+                         aria: '3D-модель Свято-Миколаївської церкви. Потягніть убік, щоб обернути.', opts: {view: [-38, 13, 44], targetY: 7.4, fit: innerWidth < 980 ? 1.0 : .92}}
               };
-              var keys = ['kostel', 'cerkva', 'worobin'], k = keys[Math.floor(Math.random()*keys.length)], m = M[k];
+              var W = {worobin: 40, kostel: 20, cerkva: 20, mykolai: 20}, roll = Math.random()*100, k = 'worobin';
+              for (var key in W){ if ((roll -= W[key]) < 0){ k = key; break; } }
+              var m = M[k];
               var st = document.getElementById('hxStage'), img = st.querySelector('.hx-poster');
               img.src = m.poster; img.alt = m.alt;
               document.getElementById('hx3d').setAttribute('aria-label', m.aria);
