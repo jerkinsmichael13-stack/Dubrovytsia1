@@ -157,6 +157,7 @@ h1{margin:0;font:400 clamp(1.8rem,3.4vw,2.8rem)/1 var(--display);letter-spacing:
     onFail: fail
   }).then(function(api){
     if (!api) return;
+    window.x3dApi = api; document.dispatchEvent(new CustomEvent('x3d:ready', {detail: api}));
     if (!api.autoRotate()) spin.setAttribute('aria-pressed', 'false');
     document.getElementById('zIn').onclick = api.zoomIn;
     document.getElementById('zOut').onclick = api.zoomOut;
@@ -180,5 +181,6 @@ h1{margin:0;font:400 clamp(1.8rem,3.4vw,2.8rem)/1 var(--display);letter-spacing:
 })();
 </script>
 <script src="ar-3d.js" data-model="kostel" data-name="Костел Іоанна Хрестителя" data-acc="костел" data-scale="1:65" defer></script>
+<script src="x3d-extras.js" data-model="kostel" defer></script>
 </body>
 </html>
