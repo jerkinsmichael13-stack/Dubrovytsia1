@@ -464,6 +464,12 @@ scene.environment = skyEnv(renderer);
 })(M.roof);
 
 /* ═══════════ PERFORMANCE · bake the static parts into a handful of meshes (one per material and pass) ═══════════ */
+/* ── AR export (o.ar): no stencil holes in a glTF/USDZ viewer, so the sunk window parts (glass, sashes, door leaves) are pressed
+   into a thin layer just in front of the wall face and the reveals are dropped ── */
+if (o.ar) (function(root){ var rm = []; root.traverse(function(ob){ if (!ob.isMesh) return; var m = ob.material;
+  if (m === holeStencil || m === holeDepth){ rm.push(ob); return; }
+  if (ob.renderOrder === 3){ if (m.side === THREE.BackSide){ rm.push(ob); return; } ob.position.z = .02 + ob.position.z*.03; ob.scale.z *= .03; } });
+  rm.forEach(function(ob){ ob.parent.remove(ob); }); })(house);
 (function mergeStatic(root){
   root.updateMatrixWorld(true);
   var groups = {}, order = [], gone = [];
@@ -665,7 +671,7 @@ if ('ResizeObserver' in window) new ResizeObserver(resize).observe(canvas); else
 resize(); sync();
 
 var api = {
-  renderer: renderer, camera: camera, controls: controls, scene: scene,
+  renderer: renderer, camera: camera, controls: controls, scene: scene, model: house,
   zoomIn: function(){ zoomBy(1/1.35); }, zoomOut: function(){ zoomBy(1.35); },
   reset: function(){ touched = false; moveTo(home()); },
   autoRotate: function(on){ if (on === undefined) return controls.autoRotate; controls.autoRotate = !!on; return controls.autoRotate; },

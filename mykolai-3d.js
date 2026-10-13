@@ -68,7 +68,7 @@ var M = {
   icon:  mat('#5b3a22', {roughness:.6}),
   plinth:mat('#6d6b67', {roughness:.95}),
   step:  mat('#a19f99', {roughness:.92}),
-  pave:  mat('#ffffff', {roughness:.95}),
+  pave:  mat('#ffffff', {roughness:.95}),  // its colour comes from the shader; userData.ar is what a glTF/USDZ copy gets
   pipeW: mat('#e6eaee', {roughness:.4, metalness:.3})
 };
 /* louvres in the belfry: green slats */
@@ -130,6 +130,7 @@ shaderHook(M.pave, 'pave', [
   'diffuseColor.rgb = mix(pc, vec3(0.16, 0.15, 0.14), joint);'
 ].join('\n'));
 var revealB = mat('#1a5fbd', {side: THREE.BackSide});
+M.pave.userData.ar = '#6f5c58';
 var house = new THREE.Group(); scene.add(house);
 function add(geo, m, x, y, z, parent){ var ob = new THREE.Mesh(geo, m); ob.position.set(x||0, y||0, z||0); ob.castShadow = ob.receiveShadow = true; (parent||house).add(ob); return ob; }
 function box(w, h, d, x, y, z, m, parent){ return add(new THREE.BoxGeometry(w, h, d), m, x, y + h/2, z, parent); }
@@ -609,6 +610,12 @@ scene.environment = skyEnv(renderer);
 })(M.roof);
 
 /* ═══════════ PERFORMANCE · bake the static parts into a handful of meshes (one per material and pass) ═══════════ */
+/* ── AR export (o.ar): no stencil holes in a glTF/USDZ viewer, so the sunk window parts (glass, sashes, door leaves) are pressed
+   into a thin layer just in front of the wall face and the reveals are dropped ── */
+if (o.ar) (function(root){ var rm = []; root.traverse(function(ob){ if (!ob.isMesh) return; var m = ob.material;
+  if (m === holeStencil || m === holeDepth){ rm.push(ob); return; }
+  if (ob.renderOrder === 3){ if (m.side === THREE.BackSide){ rm.push(ob); return; } ob.position.z = .02 + ob.position.z*.03; ob.scale.z *= .03; } });
+  rm.forEach(function(ob){ ob.parent.remove(ob); }); })(house);
 (function mergeStatic(root){
   root.updateMatrixWorld(true);
   var groups = {}, order = [], gone = [];
@@ -811,7 +818,7 @@ if ('ResizeObserver' in window) new ResizeObserver(resize).observe(canvas); else
 resize(); sync();
 
 var api = {
-  renderer: renderer, camera: camera, controls: controls, scene: scene,
+  renderer: renderer, camera: camera, controls: controls, scene: scene, model: house,
   zoomIn: function(){ zoomBy(1/1.35); }, zoomOut: function(){ zoomBy(1.35); },
   reset: function(){ touched = false; moveTo(home()); },
   autoRotate: function(on){ if (on === undefined) return controls.autoRotate; controls.autoRotate = !!on; return controls.autoRotate; },
