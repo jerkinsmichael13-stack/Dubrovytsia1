@@ -39,7 +39,11 @@ var SPOTS = {
     {p: [-3, 11.5, 0], v: [-.5, .7, .6], r: 26, y: '1917', t: 'Доля бібліотеки', d: '1917 року бібліотеку розграбовано, книжки звалено на купу й спалено. На фотографіях 1937 року павільйон уже покинутий, із забитими вікнами.'}
   ]}
 };
-var CFG = SPOTS[MODEL]; if (!CFG) return;
+/* ═══════════ ЕКСКУРСІЇ: розділи з камерою (s — номер точки або p/v/r), текстом і, наприкінці, посиланнями.
+   Озвучення — файли audio/tour/<модель>-<n>.mp3 (диктор синтезований з цих самих текстів) ═══════════ */
+var TOURS = {"kostel":[{"cam":{"p":[0,12,-14],"v":[0.8,0.35,0.9],"r":22},"t":"Найстаріша споруда міста","d":"Перед вами костел Іоанна Хрестителя — найстаріша збережена споруда Дубровиці й пам'ятка архітектури національного значення. За його мурами — понад три століття історії: школа, війни, грабунки й повернення."},{"cam":{"s":0},"t":"Фундація","y":"1681","d":"12 жовтня 1681 року Ян Кароль Дольський записав ордену піарів 35 тисяч злотих — з умовою, щоб при костелі завжди служили дванадцять ксьондзів. Піари, засновані в Римі 1617 року, навчали бідних, тож разом із костелом у Дубровиці з'явився колегіум — одна з небагатьох шкіл тогочасного Полісся."},{"cam":{"p":[0,8,-14],"v":[1,0.25,0.15],"r":20},"t":"Згорілий костел і цар","y":"1709","d":"Перший костел, дерев'яний, стояв недовго: 1709 року, після Полтавської битви, його спалили шведи. А навесні 1710-го в кляшторі піарів зупинився Петро I — і на прощання дав грамоту, що звільняла кляштор від постою російських військ."},{"cam":{"s":2},"t":"Мурована базиліка","y":"1740","d":"1722 року мурований костел лише починали: Вишневецький дозволив піарам брати глину для цегельні за Воробином. Звели його 1740 року, за ректора Казимира Пнєвського, освятили 1742-го. Це трьохнавна базиліка в стилі рококо з двома вежами на фасаді."},{"cam":{"s":1},"t":"Школа піарів","d":"Над входом — напис «Самому Богові честь і слава». А за стінами вирувало шкільне життя: школа піарів була другою на Волині після Межиріцької. 1688 року тут навчалося 30 учнів, згодом — до ста. Колегіум закрили 1832 року."},{"cam":{"s":4},"t":"Скарби інтер'єру","d":"Усередині — хрестові склепіння й різьблені вівтарі. Головний образ, святого Іоанна Хрестителя, написав Лукаш Губель — піар із Любешова, і цей образ дивом уцілів. А найціннішим скарбом був вітраж, виготовлений у Венеції, — єдиний такий на все Полісся. Від нього не лишилося ні фрагмента, ні світлини."},{"cam":{"s":3},"t":"Церква, що врятувала костел","d":"Після закриття кляштору костел мали передати під православну церкву. Щоб урятувати його, граф Ігнацій Плятер заснував у містечку муровану церкву такої самої величини — нинішню церкву Різдва Богородиці. І костел лишився костелом: обидві святині Дубровиці вціліли завдяки одному рішенню."},{"cam":{"p":[0,12,-14],"v":[-0.8,0.4,0.6],"r":22},"t":"Склад і повернення","y":"1945","d":"1945 року радянська влада зачинила костел. Дзвони вивезли, орган розібрали, срібло й ікони розграбували, а стіни перефарбували з білого в червоний і зробили тут склад. Так тривало понад сорок років — аж до 1992-го, коли костел знову освятили й повернули громаді.","links":[["Історія костелу й інтер'єр","architecture.html"],["Церква Різдва Богородиці в 3D","cerkva-3d.html"],["Плятери на Дубровиці","plater.html"]]}],"cerkva":[{"cam":{"p":[-3,10,0],"v":[-0.6,0.35,0.9],"r":20},"t":"Друга святиня Дубровиці","d":"Церква Різдва Пресвятої Богородиці — пам'ятка архітектури національного значення. Нинішній храм звели 1861 року, але на цьому місці, «вище міста», моляться вже майже п'ять століть."},{"cam":{"s":0},"t":"Князі Гольшанські","y":"1537","d":"1537 року князь Юрій Гольшанський-Дубровицький у заповіті назвав три дубровицькі церкви — соборну Спаса, Пречистої «вище міста» та Благовіщенську — і кожній записав по п'ять кіп грошей. Пречиста «вище міста» — попередниця нинішнього храму."},{"cam":{"p":[-3,7,8],"v":[0.1,0.2,1],"r":18},"t":"Дар княжни","y":"1576","d":"Його донька Марія 1576 року заповіла передати Пречистенській церкві мале Євангеліє в червоному оксамиті й золоченому сріблі, ще одне — в чорному оксамиті, та срібний визолочений хрест."},{"cam":{"p":[-12,6,7],"v":[-0.3,0.25,1],"r":16},"t":"Свята Юліанія","d":"Інша донька князя Юрія, Юліанія, померла на шістнадцятому році життя і стала святою: її мощі спочивають у Ближніх печерах Києво-Печерської лаври. 2005 року поруч із цією церквою освятили пам'ятник святій Юліанії."},{"cam":{"s":2},"t":"Храм від графа Плятера","y":"1861","d":"Муровану церкву звели 1861 року коштом графа Ігнатія Броель-Плятера. І звів він її не лише для православних: костел тоді мали віддати під церкву, а новий храм такої самої величини врятував його. Тож обидві головні святині Дубровиці вціліли завдяки одному рішенню."},{"cam":{"s":1},"t":"Три бані на одній осі","d":"Бані стоять у ряд — над дзвіницею, над восьмигранним барабаном і над вівтарем. Так будували дерев'яні церкви Полісся, а дзвіниця на західному фасаді — риса російської традиції. Восьмерик дзвіниці прикрашають щипці."},{"cam":{"s":3},"t":"Найбільша парафія","y":"1892","d":"1892 року парафія сягнула 4 439 вірян — найбільше за всю історію. При церкві діяло однокласне народне училище, до неї були приписані навколишні села."},{"cam":{"s":4},"t":"Врятована від вибуху","y":"1962","d":"1962 року радянська влада закрила храм і зробила з нього склад солі. Будівлю вирішили підірвати: з Луцька вже приїхали мінери з вибухівкою. В останню мить начальник райвідділу міліції Дмитро Башинський скасував наказ — і храм уцілів. 25 вересня 1992 року громаду зареєстрували знову, а церкву відреставрували.","links":[["Історія церкви","architecture.html#cerkva"],["Костел у 3D","kostel-3d.html"],["Плятери на Дубровиці","plater.html"]]}],"worobin":[{"cam":{"p":[-2,6,0],"v":[-0.8,0.4,0.7],"r":18},"t":"Резиденція Плятерів","d":"Цієї будівлі давно немає. Перед вами реконструкція павільйону «Бібліотека» з Воробина — резиденції графів Плятерів за три кілометри від Дубровиці. Чотири покоління, тисячі книжок, картини старих майстрів — і трагічний кінець 1918 року."},{"cam":{"s":0},"t":"Маєток за борги","y":"1775","d":"Дубровиця дісталася Плятерам не купівлею. 1775 року через борги Бжостовських сейм призначив розподіл їхнього майна, і литовський Трибунал присудив Дубровицю Юзефу Антонію Плятеру — графу, мальтійському командору, згодом послу Великого сейму. Маєтки охоплювали близько 60 тисяч гектарів, половину з них — болота."},{"cam":{"s":1},"t":"Палац, якого не збудували","d":"Старий дубровицький замок над Горинню давно лежав у руїнах, тож Плятери осіли у фільварку Воробин. Старий дерев'яний двір розібрали під новий палац — але палац так і не постав. До 1918 року родина жила в офіцинах, а цей павільйон звели на схилі над лугами Горині як частину майбутнього ансамблю — спершу лише для книжок."},{"cam":{"s":2},"t":"Бібліотека й скарби","y":"1914","d":"1914 року бібліотека мала близько 8 000 томів, а родинний архів — понад 200 томів листів і паперів. У галереї висіли голландські полотна й образ Богоматері Скорботної, який уважали оригіналом Доменікіно; були порцеляна з Корця й Баранівки, старе срібло, слуцькі пояси."},{"cam":{"s":3},"t":"Парк над Горинню","d":"Будинки потопали в пейзажному парку на двох рівнях: угорі — офіцини й «Бібліотека», внизу — мальовничі ставки. Росли білі тополі, липи, високі ялини, ясени й каштани. 1887 року павільйон перебудували під житло, поділивши великі зали на кімнати."},{"cam":{"p":[-2,6,0],"v":[0.8,0.45,0.6],"r":18},"t":"Господарі","d":"Нащадки примножували маєток. Віктор Плятер, випускник Сен-Сіра, одним із перших у краї запровадив раціональне лісове господарство й осушував болота під луки. Його брат Влодзімеж, історик і бібліофіл, перевозив бібліотеку до Вишнівця, а 1876 року повернув її до Дубровиці."},{"cam":{"s":4},"t":"Кінець Воробина","y":"1918","d":"1917 року резиденцію розграбували, а книжки, які збирали від 1775 року, склали на купу й спалили. 22 листопада 1918 року маєток обложили повстанці. Коли будинок підпалили, оборонці склали зброю, — але 22 чоловіків, серед них братів Ігнація та Антонія Плятерів, розстріляли на дорозі до Дубровиці."},{"cam":{"p":[-2,6,0],"v":[-0.8,0.4,0.7],"r":18},"t":"Що лишилося","d":"Між війнами павільйон лише накрили новим дахом, щоб він не руйнувався далі; на фото 1937 року він уже покинутий, із забитими вікнами. А церква Різдва Богородиці, збудована коштом Ігнатія Плятера, досі стоїть у центрі Дубровиці.","links":[["Плятери й Воробин","plater.html"],["Церква Різдва Богородиці в 3D","cerkva-3d.html"],["Костел у 3D","kostel-3d.html"]]}],"mykolai":[{"cam":{"p":[7.7,6,0],"v":[-0.6,0.35,0.9],"r":14},"t":"Церква на передмісті","y":"1872","d":"Свято-Миколаївська церква — дерев'яний храм на передмісті Дубровиці. Її збудували 1872 року коштом самих парафіян."},{"cam":{"s":3},"t":"Як її описали 1888 року","d":"«Дерев'яна, на кам'яному фундаменті, крита жерстю, всередині й зовні пофарбована; іконостас новий», — писали «Волинські єпархіальні відомості» 1888 року. Метричні книги парафії тоді зберігалися ще від 1790 року."},{"cam":{"s":1},"t":"Дзвіниця","d":"1888 року при церкві стояла дерев'яна дзвіниця. Нині дзвіниця височіє над західним входом: з кожного боку — арковий проріз із зеленими жалюзі над білою балюстрадою, вище — гострий чотирисхилий шпиль."},{"cam":{"s":5},"t":"Спадщина монастиря","d":"Місце давнє. 1913 року церкву й цвинтар при ній називали спадщиною давнього Миколаївського монастиря, де трудилися ченці."},{"cam":{"s":4},"t":"Мощі святої Іуліанії","y":"1913","d":"23 червня 1913 року сюди принесли раку з мощами святої Іуліанії. Прочани сходилися ще з 22 червня, і до прибуття святині в Дубровиці зібралося понад 6 000 людей. Назустріч виходили майже до села Бережки, а храм і подвір'я всю ніч були повні."},{"cam":{"p":[7.7,6,0],"v":[0.7,0.4,0.8],"r":14},"t":"Нове вбрання","d":"Сьогодні церква — у синьому вбранні: темно-сині й зелені пілястри, білі наличники над вікнами, фриз із білих філенок і срібляста баня. Обійдіть її довкола — або поставте собі на стіл кнопкою «Переглянути у себе»."}]};
+var CFG = SPOTS[MODEL]; if (!CFG) return; CFG.tour = TOURS[MODEL] || [];
+var AUDIO = new URL('audio/tour/', me.src).href;
 
 var ICON = {
   spots: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 17.5s5.5-5 5.5-9.3a5.5 5.5 0 0 0-11 0c0 4.3 5.5 9.3 5.5 9.3z"/><circle cx="10" cy="8.2" r="1.9"/></svg>',
@@ -79,13 +83,20 @@ var CSS = [
   '  background:linear-gradient(180deg,rgba(46,37,23,.94),rgba(23,18,11,.94));backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);color:var(--text);box-shadow:0 18px 50px rgba(0,0,0,.45);',
   '  transform:translate(-50%,10px);opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s,transform .35s cubic-bezier(.16,1,.3,1)}',
   '.xc.open{opacity:1;visibility:visible;transform:translate(-50%,0)}',
-  '.xc-h{display:flex;align-items:baseline;gap:.6rem;margin:0 2rem .35rem 0}.xc-h b{font:400 1.35rem/1.1 var(--display)}.xc-h span{font:400 1.05rem var(--display);color:var(--gold)}',
+  '.xc-h{display:flex;align-items:baseline;gap:.6rem;margin:0 4.5rem .35rem 0}.xc.tour .xc-h{margin-right:0}.xc-h b{font:400 1.35rem/1.1 var(--display)}.xc-h span{font:400 1.05rem var(--display);color:var(--gold)}',
   '.xc p{margin:0;font:400 .84rem/1.55 var(--body);color:rgba(244,233,200,.84)}',
   '.xc-f{display:flex;align-items:center;justify-content:space-between;gap:.6rem;margin-top:.8rem}',
   '.xc-n{font:500 .7rem var(--body);letter-spacing:.08em;color:var(--muted)}',
   '.xc-b{display:flex;gap:.35rem}.xc-b button{display:inline-flex;align-items:center;gap:.35rem;padding:.4rem .8rem;border-radius:999px;border:1px solid var(--faint);background:none;color:var(--text);font:500 .74rem var(--body);cursor:pointer}',
   '.xc-b button:hover{border-color:var(--gold)}.xc-b button.pri{border-color:rgba(212,178,90,.55);background:rgba(212,178,90,.16)}',
-  '.xc-x{position:absolute;right:.55rem;top:.55rem;width:32px;height:32px;border:0;border-radius:50%;background:none;color:var(--muted);font-size:1.2rem;cursor:pointer}.xc-x:hover{color:var(--text);background:rgba(244,233,200,.08)}',
+  '.xc-tools{position:absolute;right:.5rem;top:.5rem;display:flex;gap:2px}',
+  '.xc-x,.xc-v{display:grid;place-items:center;width:32px;height:32px;border:0;border-radius:50%;background:none;color:var(--muted);font-size:1.2rem;cursor:pointer}.xc-x:hover,.xc-v:hover{color:var(--text);background:rgba(244,233,200,.08)}',
+  '.xc-v{display:none}.xc.tour .xc-v{display:grid}.xc-v svg{width:18px;height:18px}.xc-v[aria-pressed="false"] .w1,.xc-v[aria-pressed="false"] .w2{display:none}.xc-v[aria-pressed="true"] .mx{display:none}.xc-v[aria-pressed="true"]{color:var(--gold)}',
+  '.xc-k{margin:0 4.5rem .3rem 0;font:600 .6rem var(--body);letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}.xc-k:empty{display:none}',
+  '.xc-d{max-height:42vh;overflow:auto;overscroll-behavior:contain}',
+  '.xc-l{display:none;flex-direction:column;gap:.35rem;margin-top:.8rem;padding-top:.75rem;border-top:1px solid rgba(212,178,90,.22)}.xc.has-l .xc-l{display:flex}',
+  '.xc-l a{font:600 .8rem var(--body);color:var(--gold);text-decoration:none}.xc-l a:hover{text-decoration:underline}',
+  '.xc-pp{display:none!important;width:34px;justify-content:center;padding:0!important}.xc.tour .xc-pp{display:inline-flex!important}.xc-pp svg{width:11px;height:11px}.xc-pp .pl{display:none}.xc.paused .xc-pp .pl{display:block}.xc.paused .xc-pp .pz{display:none}',
   '.xc-p{position:absolute;left:1.2rem;right:1.2rem;bottom:0;height:2px;border-radius:2px;background:rgba(244,233,200,.1);overflow:hidden}.xc-p i{display:block;height:100%;width:0;background:var(--gold)}',
   '.xo{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:0;transition:opacity 1.2s,background 1.2s}',
   '#view{z-index:1}',
@@ -94,7 +105,8 @@ var CSS = [
   '  .xw{right:64px;bottom:auto;top:31%;z-index:5;transform:translateX(6px)}.xw.open{transform:none}',
   '  .xc{left:12px;right:12px;width:auto;bottom:calc(env(safe-area-inset-bottom,0px) + 86px);padding:.85rem .95rem .8rem;transform:translateY(10px)}.xc.open{transform:none}',
   '  body.xc-on .top,body.xc-on .xr~.arb{opacity:0;pointer-events:none}.top{transition:opacity .4s}',
-  '  .xc-h b{font-size:1.15rem}.xc p{font-size:.78rem;line-height:1.5}.xc-f{margin-top:.55rem}}',
+  '  body.xc-on .xr{top:calc(env(safe-area-inset-top,0px) + 12px);flex-direction:row}body.xc-on .xw{top:calc(env(safe-area-inset-top,0px) + 70px);right:10px}',
+  '  .xc-h b{font-size:1.15rem}.xc p{font-size:.78rem;line-height:1.5}.xc-f{margin-top:.55rem}.xc-d{max-height:24vh}}',
   '@media(prefers-reduced-motion:reduce){.xp i::after{animation:none}.xc,.xw,.xo{transition:none}}'
 ].join('\n');
 
@@ -148,40 +160,54 @@ function init(api){
   bSpots.addEventListener('click', function(){ spotsOn = !spotsOn; bSpots.setAttribute('aria-pressed', String(spotsOn)); layer.classList.toggle('off', !spotsOn); if (!spotsOn) closeCard(); });
 
   /* ── card ── */
+  var SPK = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 7.6h2.8L10 4.5v11L6.3 12.4H3.5z"/><path class="w1" d="M13 7.4a3.6 3.6 0 0 1 0 5.2"/><path class="w2" d="M15.2 5.3a6.6 6.6 0 0 1 0 9.4"/><path class="mx" d="M13.2 7.8l4 4.4M17.2 7.8l-4 4.4"/></svg>';
   var card = el('section', 'xc'); card.setAttribute('aria-live', 'polite');
-  card.innerHTML = '<button type="button" class="xc-x" aria-label="Закрити">×</button><div class="xc-h"><b></b><span></span></div><p></p>' +
-    '<div class="xc-f"><span class="xc-n"></span><div class="xc-b"><button type="button" data-a="prev" aria-label="Попередня">←</button><button type="button" data-a="next" class="pri">Далі →</button></div></div><div class="xc-p"><i></i></div>';
+  card.innerHTML = '<div class="xc-tools"><button type="button" class="xc-v" data-a="voice" aria-pressed="true" aria-label="Озвучення" title="Озвучення">' + SPK + '</button><button type="button" class="xc-x" aria-label="Закрити">×</button></div>' +
+    '<p class="xc-k"></p><div class="xc-h"><b></b><span></span></div><p class="xc-d"></p><div class="xc-l"></div>' +
+    '<div class="xc-f"><span class="xc-n"></span><div class="xc-b"><button type="button" data-a="prev" aria-label="Назад">←</button>' +
+    '<button type="button" data-a="pause" class="xc-pp" aria-label="Пауза"><svg viewBox="0 0 14 14" fill="currentColor"><path class="pz" d="M3 2h3v10H3zM8 2h3v10H8z"/><path class="pl" d="M3.5 1.8v10.4L12 7z"/></svg></button>' +
+    '<button type="button" data-a="next" class="pri">Далі →</button></div></div><div class="xc-p"><i></i></div>';
   document.body.appendChild(card);
-  var cur = -1;
-  function show(i, fromTour){
-    cur = (i + spots.length) % spots.length; var s = spots[cur].s;
-    card.querySelector('.xc-h b').textContent = s.t; card.querySelector('.xc-h span').textContent = s.y || '';
-    card.querySelector('p').textContent = s.d; card.querySelector('.xc-n').textContent = (cur + 1) + ' / ' + spots.length;
-    card.classList.add('open'); document.body.classList.add('xc-on'); spots.forEach(function(o, k){ o.b.classList.toggle('on', k === cur); });
-    if (!fromTour) fly(cur, 1400);
+  var cur = -1, $k = card.querySelector('.xc-k'), $t = card.querySelector('.xc-h b'), $y = card.querySelector('.xc-h span'), $d = card.querySelector('.xc-d'), $l = card.querySelector('.xc-l'), $n = card.querySelector('.xc-n'), $next = card.querySelector('[data-a="next"]');
+  function fill(o, kicker, count){
+    $k.textContent = kicker || ''; $t.textContent = o.t; $y.textContent = o.y || ''; $d.textContent = o.d; $n.textContent = count;
+    $l.innerHTML = ''; (o.links || []).forEach(function(L){ var a = el('a', null); a.href = L[1]; a.textContent = L[0] + ' →'; $l.appendChild(a); });
+    card.classList.toggle('has-l', !!(o.links && o.links.length)); card.querySelector('.xc-d').scrollTop = 0;
+    card.classList.add('open'); document.body.classList.add('xc-on');
   }
-  function closeCard(){ card.classList.remove('open'); document.body.classList.remove('xc-on'); spots.forEach(function(o){ o.b.classList.remove('on'); }); cur = -1; }
+  function show(i, fromTour){
+    cur = (i + spots.length) % spots.length;
+    fill(spots[cur].s, '', (cur + 1) + ' / ' + spots.length); card.classList.remove('tour');
+    spots.forEach(function(o, k){ o.b.classList.toggle('on', k === cur); });
+    if (!fromTour) fly(spotCam(cur), 1400);
+  }
+  function closeCard(){ card.classList.remove('open', 'tour'); document.body.classList.remove('xc-on'); spots.forEach(function(o){ o.b.classList.remove('on'); }); cur = -1; }
   card.querySelector('.xc-x').addEventListener('click', function(){ stopTour(); closeCard(); });
-  card.addEventListener('click', function(e){ var a = e.target.closest('[data-a]'); if (!a) return;
-    if (touring){ tourStep(a.dataset.a === 'next' ? 1 : -1); return; }
-    show(cur + (a.dataset.a === 'next' ? 1 : -1)); });
+  card.addEventListener('click', function(e){ var a = e.target.closest('[data-a]'); if (!a) return; var k = a.dataset.a;
+    if (k === 'voice'){ voiceOn = !voiceOn; a.setAttribute('aria-pressed', String(voiceOn)); if (touring){ if (voiceOn) narrate(tIdx, true); else hush(); retime(); } return; }
+    if (k === 'pause'){ if (touring){ if (paused) resumeTour(); else pauseTour(); } return; }
+    if (touring){ tourStep(k === 'next' ? 1 : -1); return; }
+    show(cur + (k === 'next' ? 1 : -1)); });
 
   /* ── camera flights ── */
   var box = new T.Box3().setFromObject(api.model), centre = box.getCenter(new T.Vector3()), size = box.getSize(new T.Vector3());
   var flight = null;
-  function viewFor(i){
-    var s = spots[i].s, p = spots[i].v, d;
-    if (s.v) d = new T.Vector3(s.v[0], s.v[1], s.v[2]);
+  function spotCam(i){ var s = spots[i].s; return {pt: spots[i].v, v: s.v, r: s.r}; }
+  function chapterCam(c){ if (c.s != null) return spotCam(c.s); return {pt: new T.Vector3(c.p[0], c.p[1], c.p[2]), v: c.v, r: c.r, wide: true}; }
+  function viewFor(c){
+    var p = c.pt, d;
+    if (c.v) d = new T.Vector3(c.v[0], c.v[1], c.v[2]);
     else { d = new T.Vector3(p.x - centre.x, 0, p.z - centre.z); if (d.lengthSq() < .01) d.copy(cam.position).sub(p).setY(0); d.normalize().setY(.3); }
     d.normalize();
-    var r = (s.r || Math.max(size.x, size.z)*.6)*Math.max(1.9, size.y/13)*(innerWidth < 700 ? 1.75 : 1);
-    var t = p.clone().lerp(new T.Vector3(centre.x, Math.min(p.y, centre.y), centre.z), .35);   // keep the building in frame
+    var r = (c.r || Math.max(size.x, size.z)*.6)*Math.max(1.9, size.y/13)*(innerWidth < 700 ? 1.75 : 1);
+    var t = c.wide ? p.clone() : p.clone().lerp(new T.Vector3(centre.x, Math.min(p.y, centre.y), centre.z), .35);   // keep the building in frame
     var pos = t.clone().addScaledVector(d, r); pos.y = Math.max(pos.y, 1.2);
     if (innerWidth < 700){ var dy = r*.085; t.y -= dy; pos.y -= dy; }   // the card covers the lower half on a phone: keep the subject above it
+    else if (innerWidth >= 900){ var side = new T.Vector3().crossVectors(new T.Vector3(0, 1, 0), d).normalize(); var sh = r*.16; t.addScaledVector(side, sh); pos.addScaledVector(side, sh); }   // the card sits on the left: shift the subject right
     return {t: t, p: pos};
   }
-  function fly(i, ms){
-    api.autoRotate(false); var v = viewFor(i);
+  function fly(c, ms){
+    api.autoRotate(false); var v = viewFor(c);
     flight = {t0: performance.now(), ms: reduced ? 1 : ms, a: {t: ctl.target.clone(), p: cam.position.clone()}, b: v};
   }
   function stepFlight(now){
@@ -197,26 +223,57 @@ function init(api){
     cam.lookAt(ctl.target);
     if (k >= 1) flight = null;
   }
-  ctl.addEventListener('start', function(){ flight = null; if (touring) pauseTour(); });
+  ctl.addEventListener('start', function(){ flight = null; if (touring && !paused) pauseTour(); });
 
-  /* ── tour ── */
-  var touring = false, paused = false, tStart = 0, tDur = 0, tIdx = 0, prog = card.querySelector('.xc-p i');
-  function readTime(i){ return Math.max(5200, spots[i].s.d.length*55); }
+  /* ── tour: chapters with narration ── */
+  var CH = CFG.tour, touring = false, paused = false, tStart = 0, tDur = 0, tLeft = 0, tIdx = 0, prog = card.querySelector('.xc-p i');
+  var voiceOn = true, vo = new Audio(), voOk = {}, synth = window.speechSynthesis, ukVoice = null;
+  vo.preload = 'auto';
+  function pickVoice(){ if (!synth) return; var vs = synth.getVoices(); ukVoice = vs.filter(function(v){ return /^uk/i.test(v.lang); })[0] || null; }
+  if (synth){ pickVoice(); if (synth.addEventListener) synth.addEventListener('voiceschanged', pickVoice); }
+  function readTime(i){ return Math.max(6000, CH[i].d.length*62); }
+  function hush(){ try { vo.pause(); } catch(e){} if (synth) synth.cancel(); }
+  function narrate(i, now){
+    hush(); if (!voiceOn) return;
+    var src = AUDIO + MODEL + '-' + i + '.mp3', delay = now ? 0 : 900;
+    if (voOk[src] === false){ speak(i, delay); return; }
+    vo.src = src; vo.currentTime = 0;
+    vo.onloadedmetadata = function(){ voOk[src] = true; if (touring && tIdx === i) retime(); };
+    vo.onerror = function(){ voOk[src] = false; if (touring && tIdx === i) speak(i, 0); };
+    var p = vo.play(); if (p && p.catch) p.catch(function(){});        // started inside the click: the browser lets later chapters play too
+    if (delay){ vo.pause(); setTimeout(function(){ if (touring && tIdx === i && !paused && voiceOn) { var q = vo.play(); if (q && q.catch) q.catch(function(){}); } }, delay); }
+  }
+  function speak(i, delay){
+    if (!synth || !ukVoice) return;                                     // no Ukrainian voice here: the chapter just runs on its timer
+    setTimeout(function(){ if (!touring || tIdx !== i || paused || !voiceOn) return; var u = new SpeechSynthesisUtterance(CH[i].s || CH[i].d); u.voice = ukVoice; u.lang = ukVoice.lang; u.rate = .98; synth.speak(u); }, delay);
+  }
+  function retime(){
+    var audio = voiceOn && vo.src && voOk[vo.src] && isFinite(vo.duration) && vo.duration > 0;
+    tDur = audio ? (vo.duration + 1.6)*1000 + 900 : readTime(tIdx);
+  }
   function tourStep(dir){
     tIdx += dir;
-    if (tIdx >= spots.length){ stopTour(); closeCard(); api.reset(); return; }
+    if (tIdx >= CH.length){ stopTour(); closeCard(); api.reset(); return; }
     if (tIdx < 0) tIdx = 0;
-    fly(tIdx, 2300); show(tIdx, true); paused = false; tStart = performance.now() + 2300; tDur = readTime(tIdx);
-    card.querySelector('[data-a="next"]').textContent = tIdx === spots.length - 1 ? 'Завершити' : 'Далі →';
+    var c = CH[tIdx];
+    fly(chapterCam(c.cam), tIdx === 0 && dir > 0 ? 2600 : 2200);
+    fill(c, 'Екскурсія · розділ ' + (tIdx + 1), (tIdx + 1) + ' / ' + CH.length); card.classList.add('tour');
+    var si = c.cam && c.cam.s != null ? c.cam.s : -1; spots.forEach(function(o, k){ o.b.classList.toggle('on', k === si); });
+    paused = false; card.classList.remove('paused'); tStart = performance.now(); retime(); narrate(tIdx);
+    $next.textContent = tIdx === CH.length - 1 ? 'Завершити' : 'Далі →';
+    Snd.duck(true);
   }
-  function startTour(){ touring = true; bTour.setAttribute('aria-pressed', 'true'); if (!spotsOn) bSpots.click(); tIdx = -1; tourStep(1); }
-  function pauseTour(){ paused = true; prog.style.width = '0'; }
-  function stopTour(){ if (!touring) return; touring = false; paused = false; bTour.removeAttribute('aria-pressed'); prog.style.width = '0'; card.querySelector('[data-a="next"]').textContent = 'Далі →'; }
+  function startTour(){ touring = true; bTour.setAttribute('aria-pressed', 'true'); tIdx = -1; tourStep(1); }
+  function pauseTour(){ paused = true; card.classList.add('paused'); tLeft = Math.max(0, tDur - (performance.now() - tStart)); try { vo.pause(); } catch(e){} if (synth) synth.pause(); }
+  function resumeTour(){ paused = false; card.classList.remove('paused'); tStart = performance.now() - (tDur - tLeft);
+    if (voiceOn && voOk[vo.src]){ var p = vo.play(); if (p && p.catch) p.catch(function(){}); } else if (synth) synth.resume(); }
+  function stopTour(){ if (!touring) return; touring = false; paused = false; hush(); card.classList.remove('paused', 'tour'); bTour.removeAttribute('aria-pressed'); prog.style.width = '0'; $next.textContent = 'Далі →'; Snd.duck(false); }
   bTour.addEventListener('click', function(){ if (touring){ stopTour(); closeCard(); } else startTour(); });
   function stepTour(now){
     if (!touring || paused) return;
     var k = (now - tStart)/tDur; prog.style.width = Math.max(0, Math.min(1, k))*100 + '%';
-    if (k >= 1) tourStep(1);
+    if (k >= 1 && tIdx < CH.length - 1) tourStep(1);
+    else if (k >= 1){ prog.style.width = '100%'; }                       // the last chapter waits on its links
   }
 
   /* ═══════════ WEATHER ═══════════ */
@@ -228,22 +285,129 @@ function init(api){
   addEventListener('keydown', function(e){ if (e.key === 'Escape'){ wPanel.classList.remove('open'); bWeather.setAttribute('aria-pressed', String(weather !== 'clear')); } });
   var overlay = el('div', 'xo'); api.renderer.domElement.insertAdjacentElement('afterend', overlay);
 
+  /* ═══════════ SCENERY · trees and bushes in free ground round the building; foliage turns with the season;
+     a tree that stands between the camera and the building fades so it never hides it ═══════════ */
+  var trees = [], FOL = [];
+  (function(){
+    var groundM = null; scene.traverse(function(o){ if (!o.isMesh || !o.geometry || groundM || api.model.getObjectById(o.id)) return; var P = o.geometry.parameters || {};
+      if ((o.geometry.type === 'PlaneGeometry' && P.width > 20) || (o.geometry.type === 'CircleGeometry' && P.radius > 10)) groundM = o; });
+    if (!groundM) return;
+    var GP = groundM.geometry.parameters, GR = GP.radius || GP.width/2, gc = new T.Vector3(groundM.position.x, 0, groundM.position.z);
+    var rnd = (function(seed){ return function(){ seed = (seed*16807) % 2147483647; return (seed - 1)/2147483646; }; })(MODEL.length*7919 + 17);
+    var dn = new T.Vector3(0, -1, 0), rc = new T.Raycaster(), targets = [api.model, groundM];
+    function probe(x, z){ rc.set(new T.Vector3(x, 80, z), dn); rc.far = 120; var h = rc.intersectObjects(targets, true).filter(function(q){ return q.object.material && q.object.material.colorWrite !== false && q.object.visible; });
+      if (!h.length) return null; var gy = null, occ = false; h.forEach(function(q){ if (q.object === groundM){ if (gy === null) gy = q.point.y; } else occ = true; }); return occ ? false : gy; }
+    function free(x, z, r){ var y = probe(x, z); if (y == null || y === false) return null;
+      for (var k = 0; k < 6; k++){ var a = k*Math.PI/3, q = probe(x + Math.cos(a)*r, z + Math.sin(a)*r); if (q === false || q == null) return null; } return y; }
+    var bb = box.clone().expandByScalar(0), placed = [];
+    function farFromOthers(x, z, d){ return placed.every(function(p){ return (p[0] - x)*(p[0] - x) + (p[1] - z)*(p[1] - z) > d*d; }); }
+    function jitter(g, amt){ var a = g.attributes.position; for (var i = 0; i < a.count; i++){ var v = new T.Vector3().fromBufferAttribute(a, i), n = 1 + (Math.sin(v.x*3.1 + v.y*1.7) + Math.cos(v.z*2.3 - v.y*2.9))*amt; a.setXYZ(i, v.x*n, v.y*n, v.z*n); } g.computeVertexNormals(); return g; }
+    var trunkM = new T.MeshStandardMaterial({color: '#4a3826', roughness: 1});
+    var leafC = ['#4f6f33', '#5b7a38', '#46652e', '#62803c'], autumnC = ['#b8742a', '#c99a35', '#a5532a', '#d0a640'], conC = '#2e4a2f';
+    function shade(g, lo, hi){ var a = g.attributes.position, c = new Float32Array(a.count*3); for (var i = 0; i < a.count; i++){ var y = a.getY(i), k = lo + (hi - lo)*Math.min(1, Math.max(0, (y + 1)/2)); k *= .92 + .16*Math.abs(Math.sin(a.getX(i)*7.3 + a.getZ(i)*5.1)); c[i*3] = c[i*3 + 1] = c[i*3 + 2] = k; } g.setAttribute('color', new T.BufferAttribute(c, 3)); return g; }
+    var crownG = [shade(jitter(new T.IcosahedronGeometry(1, 2), .07), .55, 1.12), shade(jitter(new T.IcosahedronGeometry(1, 2), .1), .5, 1.1)];
+    var coneG = shade(jitter(new T.ConeGeometry(1, 1, 12, 2), .05), .55, 1.1), trunkG = new T.CylinderGeometry(.14, .24, 1, 8);
+    var home = cam.position.clone().sub(gc).setY(0).normalize();
+    function tree(x, y, z, kind, s){
+      var g = new T.Group(); g.position.set(x, y, z); g.rotation.y = rnd()*6.28; var mats = [];
+      var trunkH = kind === 'con' ? 1.4*s : 2.4*s, tr = new T.Mesh(trunkG, trunkM); tr.scale.set(s, trunkH, s); tr.position.y = trunkH/2; g.add(tr);
+      if (kind === 'con'){
+        var cm = new T.MeshStandardMaterial({color: conC, roughness: .95, vertexColors: true}); mats.push(cm);
+        for (var k = 0; k < 4; k++){ var c = new T.Mesh(coneG, cm), w = (2.1 - k*.42)*s; c.scale.set(w, 2.6*s, w); c.position.y = trunkH + k*1.45*s + 1.1*s; g.add(c); }
+      } else {
+        var li = (rnd()*leafC.length) | 0, lm = new T.MeshStandardMaterial({color: leafC[li], roughness: .9, vertexColors: true}); lm.userData.leaf = li; mats.push(lm); FOL.push(lm);
+        var n = kind === 'bush' ? 4 : 9, top = kind === 'bush' ? .5*s : trunkH + 1.2*s;
+        for (var k2 = 0; k2 < n; k2++){
+          var b = new T.Mesh(crownG[k2 % 2], lm), r = (kind === 'bush' ? .5 : 1.05)*s*(.75 + rnd()*.5), a = rnd()*6.28, o = (kind === 'bush' ? .45 : 1.25)*s*(k2 ? .55 + rnd()*.6 : 0);
+          var yy = top + (k2 ? (rnd()*2 - .6)*(kind === 'bush' ? .25 : 1.0)*s : .5*s);
+          b.scale.set(r, r*.88, r); b.position.set(Math.cos(a)*o, yy, Math.sin(a)*o); b.rotation.set(rnd()*3, rnd()*3, 0); g.add(b); }
+        if (kind === 'bush') tr.visible = false;
+      }
+      mats.push(trunkM);
+      g.traverse(function(m){ if (m.isMesh){ m.castShadow = true; m.receiveShadow = true; } });
+      scene.add(g); trees.push({g: g, mats: mats.filter(function(m){ return m !== trunkM; }), kind: kind, x: x, z: z, fade: 0});
+      placed.push([x, z]);
+    }
+    // outer grove beyond the engraved ring, leaving the home view open
+    for (var i = 0, n = 0; i < 160 && n < 15; i++){
+      var a = rnd()*Math.PI*2, dir = new T.Vector3(Math.cos(a), 0, Math.sin(a)); if (dir.dot(home) > .55) continue;
+      var r = GR*(.87 + rnd()*.1), x = gc.x + dir.x*r, z = gc.z + dir.z*r;
+      if (!farFromOthers(x, z, 5.5)) continue; var y = free(x, z, 2); if (y == null) continue;
+      tree(x, y, z, rnd() < .35 ? 'con' : 'dec', .85 + rnd()*.45); n++;
+    }
+    // a few trees and bushes in free ground near the building
+    var rIn = GR*.6;
+    for (i = 0, n = 0; i < 400 && n < 7; i++){
+      var x2 = gc.x + (rnd()*2 - 1)*rIn, z2 = gc.z + (rnd()*2 - 1)*rIn; if (Math.hypot(x2 - gc.x, z2 - gc.z) > rIn) continue;
+      var dx = Math.max(bb.min.x - x2, 0, x2 - bb.max.x), dz = Math.max(bb.min.z - z2, 0, z2 - bb.max.z), d = Math.hypot(dx, dz);
+      if (d < 2.5 || !farFromOthers(x2, z2, 4.5)) continue; var y2 = free(x2, z2, 2.2); if (y2 == null) continue;
+      tree(x2, y2, z2, 'bush', .8 + rnd()*.5); n++;
+    }
+    for (i = 0, n = 0; i < 500 && n < 16; i++){
+      var side = rnd()*4 | 0, t = rnd(), off = .9 + rnd()*1.6, x3, z3;
+      if (side === 0){ x3 = bb.min.x + t*(bb.max.x - bb.min.x); z3 = bb.max.z + off; } else if (side === 1){ x3 = bb.min.x + t*(bb.max.x - bb.min.x); z3 = bb.min.z - off; }
+      else if (side === 2){ z3 = bb.min.z + t*(bb.max.z - bb.min.z); x3 = bb.max.x + off; } else { z3 = bb.min.z + t*(bb.max.z - bb.min.z); x3 = bb.min.x - off; }
+      if (!farFromOthers(x3, z3, 2.6)) continue; var y3 = free(x3, z3, .9); if (y3 == null) continue;
+      tree(x3, y3, z3, 'bush', .55 + rnd()*.35); n++;
+    }
+  })();
+  function seasonTrees(w){ FOL.forEach(function(m){ m.color.set(w === 'autumn' ? autumnLeaf(m.userData.leaf) : ['#4f6f33', '#5b7a38', '#46652e', '#62803c'][m.userData.leaf]); }); }
+  function autumnLeaf(i){ return ['#b8742a', '#c99a35', '#a5532a', '#d0a640'][i]; }
+  var tv = new T.Vector3();
+  function stepTrees(){
+    if (!trees.length) return;
+    tv.copy(cam.position).sub(centre).setY(0); var cd = tv.length(); tv.normalize();
+    trees.forEach(function(o){
+      var dx = o.x - centre.x, dz = o.z - centre.z, dd = Math.hypot(dx, dz), dot = (dx*tv.x + dz*tv.z)/(dd || 1);
+      var block = o.kind !== 'bush' && dot > .5 && dd < cd ? Math.min(1, (dot - .5)*4) : 0;
+      if (Math.abs(block - o.fade) < .01) return; o.fade += (block - o.fade)*.15;
+      o.mats.forEach(function(m){ var on = o.fade > .02; if (m.transparent !== on){ m.transparent = on; m.depthWrite = !on; m.needsUpdate = true; } m.opacity = 1 - o.fade*.82; });
+    });
+  }
+
+  /* ═══════════ WINDOWS · a room behind every pane ("interior mapping"): the view ray is traced into a box of plastered walls,
+     floor and ceiling behind the glass, so the windows have depth instead of a flat dark fill ═══════════ */
+  var ROOM = {kostel: ['vec3(0.86,0.78,0.62)', 'vec3(0.34,0.27,0.2)', 'vec3(1.0,0.78,0.42)', 0], cerkva: ['vec3(0.62,0.74,0.86)', 'vec3(0.32,0.26,0.2)', 'vec3(1.0,0.8,0.42)', 0],
+    mykolai: ['vec3(0.5,0.62,0.82)', 'vec3(0.36,0.27,0.18)', 'vec3(1.0,0.78,0.4)', 0], worobin: ['vec3(0.82,0.74,0.6)', 'vec3(0.33,0.22,0.14)', 'vec3(1.0,0.86,0.6)', 1]}[MODEL];
+  var UR = {uRoom: {value: .4}};
+  function interior(sh){
+    sh.uniforms.uRoom = UR.uRoom;
+    sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 xWP;').replace('#include <project_vertex>', '#include <project_vertex>\nxWP = (modelMatrix * vec4(transformed, 1.0)).xyz;');
+    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying vec3 xWP; uniform float uRoom;')
+      .replace('#include <emissivemap_fragment>', ['#include <emissivemap_fragment>',
+        '{ vec3 D = normalize(xWP - cameraPosition), N = normalize((vec4(normal, 0.0)*viewMatrix).xyz); if (dot(N, D) > 0.0) N = -N;',
+        '  vec3 Tg = cross(vec3(0.0, 1.0, 0.0), N); Tg = length(Tg) < .1 ? vec3(1.0, 0.0, 0.0) : normalize(Tg); vec3 Bg = cross(N, Tg);',
+        '  vec3 rp = vec3(fract(dot(xWP, Tg)/4.2), fract((xWP.y + 0.6)/3.6), 0.0), rd = vec3(dot(D, Tg)/4.2, dot(D, Bg)/3.6, -dot(D, N)/5.0);',
+        '  vec3 ex = (step(0.0, rd) - rp)/rd; float tz = (1.0 - rp.z)/rd.z, t = min(min(ex.x, ex.y), tz); vec3 h = rp + rd*t;',
+        '  vec3 wall = ' + ROOM[0] + ', floorC = ' + ROOM[1] + ', glow = ' + ROOM[2] + ', c;',
+        '  if (t == tz){ c = wall*(0.78 + 0.22*h.y);',
+        (ROOM[3] ? '    float sh = fract(h.y*5.0), bk = fract(sin(floor(h.x*34.0) + floor(h.y*5.0)*7.1)*43758.5); vec3 spine = mix(vec3(0.42,0.16,0.1), vec3(0.18,0.26,0.16), step(.5, bk))*(0.7 + 0.5*fract(bk*7.3));' +
+                     ' c = mix(c, spine, step(0.12, sh)*step(h.y, 0.86)*step(0.08, h.y)); c = mix(c, vec3(0.3,0.2,0.12), (1.0 - step(0.12, sh))*step(h.y, 0.9)); }' :
+                     '    c += glow*0.55*exp(-pow((h.x - 0.5)*3.2, 2.0) - pow((h.y - 0.25)*3.0, 2.0)); c *= 0.9 + 0.1*step(0.5, fract(h.x*4.0)); }'),
+        '  else if (t == ex.y) c = rd.y < 0.0 ? floorC*(0.8 + 0.2*step(0.5, fract(h.x*6.0 + floor(h.z*6.0)*0.5))) : wall*0.42;',
+        '  else c = wall*0.62;',
+        '  c *= mix(1.0, 0.42, h.z);',
+        '  totalEmissiveRadiance += c*uRoom*(1.0 - 0.6*pow(1.0 - abs(dot(D, N)), 3.0)); }'].join('\n'));
+  }
+
   /* snow on every upward-facing surface: one uniform shared by all the model's materials */
   var U = {uSnow: {value: 0}, uUpV: {value: new T.Vector3(0, 1, 0)}}, patched = [];
   scene.traverse(function(o){
     if (!o.isMesh) return; var m = o.material;
     if (!m || !m.isMeshStandardMaterial || patched.indexOf(m) >= 0) return; patched.push(m);
     var prev = m.onBeforeCompile, prevKey = m.customProgramCacheKey;
+    var glass = !m.map && ((m.color.r < .05 && m.color.g < .05 && m.color.b < .07 && m.roughness <= .2) || (m.color.r < .012 && m.color.g < .012 && m.color.b < .012));
     m.onBeforeCompile = function(sh, r){
       if (prev) prev.call(this, sh, r);
       sh.uniforms.uSnow = U.uSnow; sh.uniforms.uUpV = U.uUpV;
+      if (glass) interior(sh);
       sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nuniform float uSnow; uniform vec3 uUpV;')
         .replace('#include <normal_fragment_maps>', '#include <normal_fragment_maps>\n' +
           'float xsn = uSnow*smoothstep(0.42, 0.78, dot(normal, uUpV));\n' +
           'diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.93, 0.95, 0.99), xsn);\n' +
           'roughnessFactor = mix(roughnessFactor, 0.85, xsn); metalnessFactor *= 1.0 - xsn;');
     };
-    m.customProgramCacheKey = function(){ return (prevKey ? prevKey.call(this) : '') + '|xsnow'; };
+    m.customProgramCacheKey = function(){ return (prevKey ? prevKey.call(this) : '') + '|xsnow' + (glass ? '|xroom' : ''); };
     m.needsUpdate = true;
   });
 
@@ -286,7 +450,7 @@ function init(api){
     snowTarget = w === 'snow' ? 1 : 0;
     scene.fog = w === 'fog' ? new T.FogExp2('#77766f', .028) : w === 'rain' ? new T.FogExp2('#3c4450', .012) : fog0;
     overlay.style.background = OVER[w] || 'none'; overlay.style.opacity = w === 'clear' ? 0 : 1;
-    Snd.weather(w);
+    Snd.weather(w); seasonTrees(w);
   }
   var lastT = 0;
   function stepFx(now){
@@ -308,7 +472,7 @@ function init(api){
 
   /* ═══════════ SOUND (Web Audio, all synthesised) ═══════════ */
   var Snd = (function(){
-    var ctx = null, master, verb, on = false, timers = [], amb = {}, kind = CFG.sound;
+    var ctx = null, master, verb, on = false, ducked = false, timers = [], amb = {}, kind = CFG.sound;
     function mk(){
       if (ctx) return; var AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
       ctx = new AC(); master = ctx.createGain(); master.gain.value = 0; master.connect(ctx.destination);
@@ -341,7 +505,7 @@ function init(api){
     function toll(n){ var t = ctx.currentTime + .05; for (var i = 0; i < n; i++) bell(kind === 'organ' ? 147 : 98, t + i*2.2, .45, 6); }
     /* organ: pipe ranks as stacked harmonics, slow chords in D major */
     function organ(){
-      var CH = [[50, 57, 62, 66], [55, 59, 62, 67], [57, 61, 64, 69], [59, 62, 66, 71], [55, 59, 62, 67], [57, 61, 64, 69], [50, 57, 62, 66]], dur = 4.2;
+      var CH = [[50, 57, 62, 65], [55, 58, 62, 67], [57, 61, 64, 69], [50, 57, 62, 65], [46, 58, 62, 65], [55, 58, 62, 67], [57, 61, 64, 69], [50, 57, 62, 65]], dur = 4.2;
       var lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 2400; var g = ctx.createGain(); g.gain.value = .085; lp.connect(g); out(g, .9);
       function chord(i, t){ CH[i % CH.length].forEach(function(m){ var f = 440*Math.pow(2, (m - 69)/12);
         [[1, 1], [2, .5], [3, .22], [4, .16], [6, .07], [8, .05]].forEach(function(h){ var o = ctx.createOscillator(), a = ctx.createGain(); o.type = h[0] === 1 ? 'triangle' : 'sine'; o.frequency.value = f*h[0];
@@ -349,6 +513,37 @@ function init(api){
           o.connect(a); a.connect(lp); o.start(t); o.stop(t + dur + 1); }); }); }
       var i = 0, next = ctx.currentTime + .1;
       (function loop(){ if (!on) return; while (next < ctx.currentTime + 1.5){ chord(i++, next); next += dur; } timers.push(setTimeout(loop, 600)); })();
+    }
+    /* the organ, full: principals 16'–8'–4'–2' and a mixture, as stacked harmonics, through a long church reverb */
+    var hall = null;
+    function hallVerb(){
+      if (hall) return hall; hall = ctx.createConvolver(); var L = ctx.sampleRate*5.5, ir = ctx.createBuffer(2, L, ctx.sampleRate);
+      for (var c = 0; c < 2; c++){ var d = ir.getChannelData(c); for (var i = 0; i < L; i++) d[i] = (Math.random()*2 - 1)*Math.pow(1 - i/L, 2.6)*(i < 400 ? i/400 : 1); }
+      hall.buffer = ir; var g = ctx.createGain(); g.gain.value = .9; hall.connect(g); g.connect(master); return hall;
+    }
+    function pipe(m, t, dur, vol, bus){
+      var f = 440*Math.pow(2, (m - 69)/12), H = m < 45 ? [[.5, .5], [1, 1], [2, .5], [3, .25], [4, .16]] : [[.5, .22], [1, 1], [2, .62], [3, .3], [4, .3], [6, .14], [8, .12], [12, .06]];
+      H.forEach(function(h){ if (f*h[0] > 9000) return; var o = ctx.createOscillator(), a = ctx.createGain(); o.type = 'sine'; o.frequency.value = f*h[0]*(1 + (Math.random() - .5)*.0016);
+        a.gain.setValueAtTime(0, t); a.gain.linearRampToValueAtTime(h[1]*vol, t + .025); a.gain.setValueAtTime(h[1]*vol, t + dur); a.gain.linearRampToValueAtTime(0, t + dur + .14);
+        o.connect(a); a.connect(bus); o.start(t); o.stop(t + dur + .2); });
+    }
+    /* Й. С. Бах, Токата ре мінор, BWV 565 — вступ (твір у суспільному надбанні; звучання синтезоване тут же) */
+    function toccata(t0){
+      var bus = ctx.createGain(); bus.gain.value = .5; var lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 6500; bus.connect(lp);
+      var dry = ctx.createGain(); dry.gain.value = .55; lp.connect(dry); dry.connect(master); var wet = ctx.createGain(); wet.gain.value = .75; lp.connect(wet); wet.connect(hallVerb());
+      var t = t0, V = .05;
+      function N(ms, dur, gap, oct){ ms.forEach(function(m){ pipe(m, t, dur, V, bus); if (oct) pipe(m - 12, t, dur, V*.8, bus); }); t += dur + (gap || 0); }
+      [0, -12, -24].forEach(function(sh, k){
+        var hold = 1.3 + k*.35;
+        N([69 + sh], .11, 0, true); N([67 + sh], .11, 0, true); N([69 + sh], hold, .45, true);
+        N([67 + sh], .12, 0, true); N([65 + sh], .12, 0, true); N([64 + sh], .12, 0, true); N([62 + sh], .12, 0, true);
+        N([61 + sh], .75, 0, true); N([62 + sh], 1.5 + k*.4, .55, true);
+      });
+      var pedal = t; pipe(38, pedal, 7.6, V*1.3, bus); pipe(26, pedal, 7.6, V*1.1, bus);
+      [49, 52, 55, 58, 61, 64, 67, 70].forEach(function(m, i){ pipe(m, t + i*.085, 2.8 - i*.085, V*.85, bus); });
+      t += 2.9;
+      [50, 53, 57, 62, 65, 69, 74].forEach(function(m, i){ pipe(m, t + i*.03, 4.6, V*.85, bus); });
+      return t + 4.9 - ctx.currentTime;
     }
     function chirp(){
       if (!on) return; var t = ctx.currentTime + .02, base = 2600 + Math.random()*1800, n = 2 + (Math.random()*4 | 0), pan = ctx.createStereoPanner ? ctx.createStereoPanner() : null, g = ctx.createGain(); g.gain.value = .05 + Math.random()*.04;
@@ -378,16 +573,17 @@ function init(api){
         mk(); if (!ctx) return false; on = !on;
         if (ctx.state === 'suspended') ctx.resume();
         master.gain.cancelScheduledValues(ctx.currentTime); master.gain.setValueAtTime(master.gain.value, ctx.currentTime);
-        master.gain.linearRampToValueAtTime(on ? .8 : 0, ctx.currentTime + (on ? .6 : .8));
+        master.gain.linearRampToValueAtTime(on ? (ducked ? .3 : .8) : 0, ctx.currentTime + (on ? .6 : .8));
         if (on){
           if (kind === 'bells') peal(ctx.currentTime + .2, 5);
-          if (kind === 'organ'){ toll(3); timers.push(setTimeout(organ, 6500)); }
-          if (w !== 'rain' && w !== 'snow') timers.push(setTimeout(chirp, kind === 'nature' ? 300 : 9000));
+          if (kind === 'organ'){ toll(2); var len = toccata(ctx.currentTime + 4.6); timers.push(setTimeout(organ, (len + 1.5)*1000)); }
+          if (w !== 'rain' && w !== 'snow' && kind !== 'organ') timers.push(setTimeout(chirp, kind === 'nature' ? 300 : 9000));
           weatherSnd();
         } else { timers.forEach(clearTimeout); timers = []; Object.keys(amb).forEach(function(k){ if (amb[k].s) stopNoise(k); }); }
         return on;
       },
       weather: function(x){ w = x; if (ctx && on) weatherSnd(); },
+      duck: function(d){ ducked = d; if (!ctx || !on) return; master.gain.cancelScheduledValues(ctx.currentTime); master.gain.setValueAtTime(master.gain.value, ctx.currentTime); master.gain.linearRampToValueAtTime(d ? .3 : .8, ctx.currentTime + .8); },
       hour: function(h){ if (!on || kind === 'nature') return; toll(h % 12 === 0 ? 3 : 1); },
       on: function(){ return on; }
     };
@@ -400,7 +596,7 @@ function init(api){
       if (lastH !== null && h !== lastH && performance.now() - lastToll > 1500){ lastToll = performance.now(); Snd.hour(h); } lastH = h; }).observe(sunOut, {childList: true, characterData: true, subtree: true}); }, 500);
 
   /* ── frame loop ── */
-  (function frame(now){ stepFlight(now); stepTour(now); stepFx(now); if (spotsOn || cur >= 0) place(now); requestAnimationFrame(frame); })(0);
+  (function frame(now){ stepFlight(now); stepTour(now); stepFx(now); stepTrees(); if (spotsOn || cur >= 0) place(now); requestAnimationFrame(frame); })(0);
   window.x3dExtras = {show: show, tour: startTour, weather: setWeather, sound: function(){ bSound.click(); }, spots: spots};
 }
 if (window.x3dApi) init(window.x3dApi);
