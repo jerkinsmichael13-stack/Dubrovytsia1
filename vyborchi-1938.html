@@ -108,6 +108,13 @@ html,body{touch-action:manipulation;}
 .vbs-osad-ti{font-family:'Cormorant Garamond',serif;font-size:.95rem;font-weight:500;color:#c9a227;margin-bottom:.4rem;}
 .vbs-osad-tx{font-family:'Manrope',sans-serif;font-size:.72rem;line-height:1.65;color:rgba(232,219,181,.45);}
 .vbs-osad-tx em{color:rgba(201,162,39,.7);font-style:normal;}
+.vbs-brow[hidden]{display:none!important;}
+.vbs-more{display:inline-flex;align-items:center;gap:.4rem;margin-top:.9rem;padding:.5rem 1rem;border-radius:100px;border:1px solid rgba(201,162,39,.35);background:transparent;color:#c9a227;font-family:'Manrope',sans-serif;font-size:.66rem;font-weight:600;letter-spacing:.06em;cursor:pointer;transition:background .2s,border-color .2s;}
+.vbs-more:hover{background:rgba(201,162,39,.08);border-color:#c9a227;}
+.vbs-more:focus-visible{outline:2px solid #c9a227;outline-offset:2px;}
+[data-theme="light"] .vbs-more{color:#8a6516;border-color:rgba(138,101,22,.35);}
+.vbg-more-wrap{grid-column:1/-1;display:flex;justify-content:center;}
+.vbg-more{font-size:.72rem;padding:.7rem 1.4rem;}
 .arr-dec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin-bottom:1.5rem;}
 @media(max-width:540px){.arr-dec-grid{grid-template-columns:repeat(2,1fr);}}
 .arr-dec-cell{background:rgba(255,255,255,.03);border:1px solid rgba(201,162,39,.1);border-radius:12px;padding:1rem;text-align:center;}
@@ -547,7 +554,7 @@ html,body{touch-action:manipulation;}
         <dl class="cover-facts">
             <div><dt>записів</dt><dd>8 619</dd></div>
             <div><dt>місцевих</dt><dd>89,1%</dd></div>
-            <div><dt>переселенців</dt><dd>922</dd></div>
+            <div><dt>прибулих</dt><dd>922</dd></div>
             <div><dt>населених пунктів</dt><dd>25</dd></div>
         </dl>
     </div>
@@ -567,7 +574,7 @@ html,body{touch-action:manipulation;}
 <section class="vbc">
   <div class="vbc-in">
     <div class="vbc-card"><div class="vbc-ico">🗺️</div><div><div class="vbc-ttl">Польський період</div><div class="vbc-txt">У 1938 р. Дубровиця входила до Польської Республіки. Список складався для парламентських виборів і фіксував дорослих мешканців з правом голосу.</div></div></div>
-    <div class="vbc-card"><div class="vbc-ico">📋</div><div><div class="vbc-ttl">Що містить список</div><div class="vbc-txt">Прізвище та ім'я, дата народження, <em>рід занять</em>, адреса та дата поселення. Понад <em>65+ різних професій</em> зафіксовано в реєстрі.</div></div></div>
+    <div class="vbc-card"><div class="vbc-ico">📋</div><div><div class="vbc-ttl">Що містить список</div><div class="vbc-txt">Прізвище та ім'я, дата народження, <em>рід занять</em>, адреса та дата поселення. Понад <em>65 різних професій</em> зафіксовано в реєстрі.</div></div></div>
     <div class="vbc-card"><div class="vbc-ico">🔍</div><div><div class="vbc-ttl">Для генеалогічних досліджень</div><div class="vbc-txt">Унікальне першоджерело для пошуку предків 1930-х. Пошук за прізвищем або ім'ям, фільтр за пунктом або родом занять.</div></div></div>
     <div class="vbc-card"><div class="vbc-ico">📂</div><div><div class="vbc-ttl">Архівне джерело</div><div class="vbc-txt"><em>Фонд 263 ДАРО</em> — Державний архів Рівненської обл. П'ять описів: місто Домбровіца, гміна Домбровіца та навколишні села: Соломіївка, Орв'яниця, Селець, Ясинець, Воробин та інші.</div></div></div>
   </div>
@@ -581,22 +588,22 @@ html,body{touch-action:manipulation;}
     </div>
     <div class="vbs-strip">
       <div class="vbs-sn"><span class="vbs-sn-n">8 619</span><span class="vbs-sn-l">Всього осіб</span></div>
-      <div class="vbs-sn"><span class="vbs-sn-n">48.9%</span><span class="vbs-sn-l">Рільники</span></div>
-      <div class="vbs-sn"><span class="vbs-sn-n">18.3%</span><span class="vbs-sn-l">Дом. господарство</span></div>
-      <div class="vbs-sn"><span class="vbs-sn-n">89.1%</span><span class="vbs-sn-l">Місцеві від народж.</span></div>
+      <div class="vbs-sn"><span class="vbs-sn-n">48,9%</span><span class="vbs-sn-l">Рільники</span></div>
+      <div class="vbs-sn"><span class="vbs-sn-n">18,3%</span><span class="vbs-sn-l">Дом. господарство</span></div>
+      <div class="vbs-sn"><span class="vbs-sn-n">89,1%</span><span class="vbs-sn-l">Місцеві від народж.</span></div>
     </div>
     <div class="vbs-grid">
       <div class="vbs-card"><div class="vbs-chd">Розподіл по населених пунктах</div><div class="vbs-brows" id="vbsVil"></div></div>
       <div class="vbs-card"><div class="vbs-chd">Рід занять · топ-20</div><div class="vbs-brows" id="vbsProf"></div></div>
       <div class="vbs-card"><div class="vbs-chd">Найпоширеніші прізвища</div><div class="vbs-srows" id="vbsSurn"></div></div>
       <div class="vbs-card">
-        <div class="vbs-chd">Хвиля переселення · 922 осіб</div>
+        <div class="vbs-chd">Прибулі · 922 особи</div>
         <div class="vbs-osad">
-          <div class="vbs-osad-ti">Осадництво (1919–1938)</div>
-          <div class="vbs-osad-tx">Польська <em>політика осадництва</em> — виділення земель ветеранам і колоністам на «Кресах». Переселенці — <em>10.7%</em> реєстру.</div>
+          <div class="vbs-osad-ti">Прибулі — не те саме, що осадники</div>
+          <div class="vbs-osad-tx">У списку записано, з якого року людина мешкає в гміні. «Прибулі» — це всі, хто оселився тут не від народження: <em>10,7%</em> реєстру. Осадниками, тобто переселенцями, яким польська держава після 1919 року виділяла землю на «Кресах», була лише частина з них. Тут і ті, хто приїхав ще до 1919 року (<em>220 осіб</em>), і жінки, які переїхали до чоловіків після шлюбу (близько <em>половини</em> прибулих — жінки), і вчителі, урядовці, залізничники, поліцейські, лікарі (<em>понад 60</em>), і робітники, торговці та люди з інших міст. Власне осадницька колонія в реєстрі — <em>Осада Адольфув</em> (104 мешканці, майже всі прибули після 1919 року й записані рільниками).</div>
         </div>
         <div class="arr-dec-grid" id="arrDecGrid"></div>
-        <div class="arr-top-hd">Найактивніші роки переселення <span style="font-size:.62rem;color:rgba(255,255,255,.25);letter-spacing:0;text-transform:none;font-weight:400;">(629 з 642 мають конкретний рік)</span></div>
+        <div class="arr-top-hd">Роки, коли прибуло найбільше <span style="font-size:.62rem;opacity:.6;letter-spacing:0;text-transform:none;font-weight:400;">(рік, відколи людина мешкає в гміні)</span></div>
         <div class="arr-top-rows" id="arrTopRows"></div>
       </div>
     </div>
@@ -661,11 +668,11 @@ html,body{touch-action:manipulation;}
         </div>
         <!-- Chart 3: Local vs arrivals -->
         <div class="vbs-donut-card">
-          <div class="vbs-chd">Корінні та переселенці</div>
+          <div class="vbs-chd">Місцеві та прибулі</div>
           <div class="donut-wrap">
             <div class="donut-svg-wrap">
               <svg class="donut-svg" id="donut3" viewBox="0 0 36 36"></svg>
-              <div class="donut-center"><span class="donut-center-n">89.1%</span><span class="donut-center-l">місцевих</span></div>
+              <div class="donut-center"><span class="donut-center-n">89,1%</span><span class="donut-center-l">місцевих</span></div>
             </div>
             <div class="donut-legend" id="legend3"></div>
           </div>
@@ -682,7 +689,7 @@ html,body{touch-action:manipulation;}
       <div class="vbr-hd-row">
         <div><h2 class="vbr-hd-ti">Реєстр <em>виборців</em></h2>
         <p class="vbr-hd-sub">Пошук за прізвищем або ім'ям, фільтр за населеним пунктом або родом занять</p></div>
-        <div class="vbr-bdg">8,619 записів</div>
+        <div class="vbr-bdg">8 619 записів</div>
       </div>
     </div>
 
@@ -695,9 +702,9 @@ html,body{touch-action:manipulation;}
           Населений пункт
         </div>
         <div class="vbr-fp" id="tVil">
-          <button class="fp on" data-village="all">📍 Усі населені пункти<span class="fp-ct">8,619</span></button>
-<button class="fp" data-village="Дубровиця"><span class="fp-ic">🏙️</span>Дубровиця<span class="fp-ct">2,630</span></button>
-<button class="fp" data-village="Бережниця"><span class="fp-ic">🌿</span>Бережниця<span class="fp-ct">1,177</span></button>
+          <button class="fp on" data-village="all">📍 Усі населені пункти<span class="fp-ct">8 619</span></button>
+<button class="fp" data-village="Дубровиця"><span class="fp-ic">🏙️</span>Дубровиця<span class="fp-ct">2 630</span></button>
+<button class="fp" data-village="Бережниця"><span class="fp-ic">🌿</span>Бережниця<span class="fp-ct">1 177</span></button>
 <button class="fp" data-village="Селець"><span class="fp-ic">🌾</span>Селець<span class="fp-ct">907</span></button>
 <button class="fp" data-village="Берестя"><span class="fp-ic">🌿</span>Берестя<span class="fp-ct">831</span></button>
 <button class="fp" data-village="Орв'яниця"><span class="fp-ic">🌾</span>Орв'яниця<span class="fp-ct">771</span></button>
@@ -731,10 +738,10 @@ html,body{touch-action:manipulation;}
           Рід занять
         </div>
         <div class="vbr-fp" id="tProf">
-          <button class="fp on" data-prof="all">✦ Усі заняття<span class="fp-ct">8,619</span></button>
-<button class="fp" data-prof="__empty__">— Не вказано<span class="fp-ct">1,721</span></button>
-<button class="fp" data-prof="рільник">🌾 Рільник<span class="fp-ct">4,217</span></button>
-<button class="fp" data-prof="домашнє господарство">🏠 Домашнє господарство<span class="fp-ct">1,586</span></button>
+          <button class="fp on" data-prof="all">✦ Усі заняття<span class="fp-ct">8 619</span></button>
+<button class="fp" data-prof="__empty__">— Не вказано<span class="fp-ct">1 721</span></button>
+<button class="fp" data-prof="рільник">🌾 Рільник<span class="fp-ct">4 217</span></button>
+<button class="fp" data-prof="домашнє господарство">🏠 Домашнє господарство<span class="fp-ct">1 586</span></button>
 <button class="fp" data-prof="торгівля">🛒 Торгівля<span class="fp-ct">377</span></button>
 <button class="fp" data-prof="робітник">⚒️ Робітник<span class="fp-ct">244</span></button>
 <button class="fp" data-prof="швець">👟 Швець<span class="fp-ct">54</span></button>
@@ -1012,7 +1019,17 @@ function normProf(p) {
       return '<div class="vbs-brow"><div class="vbs-bl"><div class="vbs-bname'+(big?' big':'')+'">'+displayName+'</div><div class="vbs-btrk" style="height:'+(h||5)+'px"><div class="vbs-bfil" data-w="'+p+'" style="height:'+(h||5)+'px;background:'+c+'"></div></div></div><div class="vbs-bnum">'+kv[1]+'</div></div>';
     }).join('');
   }
-  document.getElementById('vbsVil').innerHTML=brows(STATS.villages,VC,true,7);
+  var vilBox=document.getElementById('vbsVil');
+  vilBox.innerHTML=brows(STATS.villages,VC,true,7);
+  var vRows=vilBox.querySelectorAll('.vbs-brow');
+  if(vRows.length>12){
+    vRows.forEach(function(r,i){ if(i>=12) r.hidden=true; });
+    var vb=document.createElement('button'); vb.type='button'; vb.className='vbs-more';
+    vb.textContent='Показати всі '+vRows.length+' населених пунктів';
+    vb.onclick=function(){ var open=vb.getAttribute('aria-expanded')==='true'; vRows.forEach(function(r,i){ if(i>=12) r.hidden=open; if(!open&&i>=12) r.querySelectorAll('[data-w]').forEach(function(el){el.style.width=el.getAttribute('data-w')+'%';}); });
+      vb.setAttribute('aria-expanded',String(!open)); vb.textContent=open?'Показати всі '+vRows.length+' населених пунктів':'Згорнути'; };
+    vb.setAttribute('aria-expanded','false'); vilBox.appendChild(vb);
+  }
   // Aggregate directly from VOTERS using the shared normProf (catches all Polish variants)
   var aggPf={};
   VOTERS.forEach(function(r){
@@ -1077,6 +1094,7 @@ function normProf(p) {
     }
   }
 
+  var showAll=false;
   function render(){
     var grid=document.getElementById('vbgGrid');
     var entries=Object.entries(PROFS).filter(function(kv){
@@ -1087,8 +1105,9 @@ function normProf(p) {
       grid.innerHTML='<div class="vbg-empty-msg">Немає записів у цій категорії</div>';
       return;
     }
-    var h='';
-    entries.forEach(function(kv){
+    var h='', LIM=12, cut=activeCat==='all'&&!showAll&&entries.length>LIM+3;
+    entries.forEach(function(kv,ix){
+      if(cut&&ix>=LIM) return;
       var p=kv[1];
       var profKey=kv[0];
       var filterKey=GLOSS_TO_FILTER[profKey]||profKey;
@@ -1111,7 +1130,9 @@ function normProf(p) {
         +(isClickable?'<div class="vbg-filter-hint">🔍 Показати у реєстрі ↑</div>':'')
         +'</div>';
     });
+    if(cut) h+='<div class="vbg-more-wrap"><button type="button" class="vbs-more vbg-more">Показати всі '+entries.length+' професій</button></div>';
     grid.innerHTML=h;
+    var mb=grid.querySelector('.vbg-more'); if(mb) mb.onclick=function(){ showAll=true; render(); };
 
     grid.querySelectorAll('.vbg-card-click').forEach(function(card){
       card.addEventListener('click',function(){
@@ -1152,7 +1173,7 @@ function normProf(p) {
     svg.innerHTML=svgH;
     var legH='';
     segments.forEach(function(seg){
-      var pct=(seg.v/total*100).toFixed(1);
+      var pct=(seg.v/total*100).toFixed(1).replace('.',',');
       legH+='<div class="donut-leg-row"><span class="donut-leg-dot" style="background:'+seg.color+'"></span><span class="donut-leg-label">'+seg.label+'</span><span class="donut-leg-pct">'+pct+'%</span></div>';
     });
     leg.innerHTML=legH;
@@ -1183,7 +1204,7 @@ function normProf(p) {
   // Chart 3 — Local vs arrivals
   var migSegs=[
     {label:"Від народження",v:7677,color:"#c9a227"},
-    {label:"Переселенці (з роком)",v:922,color:"#5a7abf"},
+    {label:"Прибулі (з роком поселення)",v:922,color:"#5a7abf"},
     {label:"Невідомо",v:20,color:"#c0b8b0"},
   ];
   drawDonut('donut3','legend3',migSegs);
@@ -1288,7 +1309,7 @@ function render(){
     });
   }
   tb.innerHTML=h;
-  var fmt=tot.toString().replace(/\B(?=(\d{3})+(?!\d))/g,'\u00a0');
+  var fmt=tot.toString().replace(/\B(?=(\d{3})+(?!\d))/g,'\u202f');
   document.getElementById('vbrCnt').innerHTML='Знайдено: <strong>'+fmt+'</strong> '+(tot===1?'запис':tot<5?'записи':'записів');
   document.getElementById('vbrPi').textContent='Сторінка '+cur+' з '+pages;
   rP(pages);
