@@ -366,7 +366,7 @@ a, button, [role="button"], input, select, textarea,
                 </div>
             </div>
             <script>
-            /* на кожному відкритті обкладинки — випадково костел або церква */
+            /* на кожному відкритті обкладинки — випадково костел, церква або воробинська «Бібліотека» */
             (function(){
               var M = {
                 kostel: {js: 'kostel-3d.js', g: 'Kostel3D', poster: 'kostel-3d-poster.webp', href: 'kostel-3d.html', title: 'Костел Іоанна Хрестителя',
@@ -374,9 +374,12 @@ a, button, [role="button"], input, select, textarea,
                          aria: '3D-модель костелу Іоанна Хрестителя. Потягніть убік, щоб обернути.', opts: {view: [46, 14, 52], targetY: 16.5, fit: innerWidth < 980 ? 1.1 : 1.07}},
                 cerkva: {js: 'cerkva-3d.js', g: 'Cerkva3D', poster: 'cerkva-3d-poster.webp', href: 'cerkva-3d.html', title: 'Церква Різдва Богородиці',
                          sub: "збудована 1861 · пам'ятка національного значення", alt: 'Церква Різдва Пресвятої Богородиці в Дубровиці — 3D-модель',
-                         aria: '3D-модель церкви Різдва Богородиці. Потягніть убік, щоб обернути.', opts: {view: [-50, 14, 46], targetY: 13.2, fit: innerWidth < 980 ? 1.04 : 1.0}}
+                         aria: '3D-модель церкви Різдва Богородиці. Потягніть убік, щоб обернути.', opts: {view: [-50, 14, 46], targetY: 13.2, fit: innerWidth < 980 ? 1.04 : 1.0}},
+                worobin: {js: 'worobin-3d.js', g: 'Worobin3D', poster: 'worobin-3d-poster.webp', href: 'worobin-3d.html', title: '«Бібліотека» у Воробині',
+                         sub: 'павільйон Плятерів, якого вже немає · реконструкція за фото', alt: 'Павільйон «Бібліотека» у Воробині — 3D-реконструкція',
+                         aria: '3D-реконструкція павільйону «Бібліотека» у Воробині. Потягніть убік, щоб обернути.', opts: {view: [-46, 13, 40], targetY: 4.6, fit: innerWidth < 980 ? 1.04 : .98}}
               };
-              var k = Math.random() < .5 ? 'kostel' : 'cerkva', m = M[k];
+              var keys = ['kostel', 'cerkva', 'worobin'], k = keys[Math.floor(Math.random()*keys.length)], m = M[k];
               var st = document.getElementById('hxStage'), img = st.querySelector('.hx-poster');
               img.src = m.poster; img.alt = m.alt;
               document.getElementById('hx3d').setAttribute('aria-label', m.aria);
@@ -5223,6 +5226,9 @@ a, button, [role="button"], input, select, textarea,
     .POI{font-size:2rem;margin-bottom:1.1rem;display:block;}
     .POT{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:500;color:#1c1917;margin-bottom:.7rem;line-height:1.2;}
     [data-theme="dark"] .POT{color:#e8c890;}
+    .POL{display:inline-block;margin-top:.9rem;font-family:'Manrope',sans-serif;font-size:.66rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#a9822f;text-decoration:none;}
+    .POL:hover{text-decoration:underline;}
+    [data-theme="dark"] .POL{color:#d4b25a;}
     .POD{font-size:.85rem;font-family:'Manrope',sans-serif;font-weight:300;line-height:1.8;color:rgba(44,40,36,.65);}
     [data-theme="dark"] .POD{color:rgba(240,230,200,.45);}
 
@@ -5294,46 +5300,59 @@ a, button, [role="button"], input, select, textarea,
 
       <div class="POBS">
         <div class="POB">
-          <span class="POI">🏰</span>
-          <p class="POT">Маєток Плятерів у Воробині</p>
-          <p class="POD">Розкішний маєтковий комплекс графів Плятерів з палацом, парком, ставками та господарськими будівлями. Один з найвизначніших шляхетських маєтків Волинського Полісся.</p>
+          <span class="POI">🏡</span>
+          <p class="POT">Резиденція у Воробині</p>
+          <p class="POD">Плятери оселилися не в самій Дубровиці, а у фільварку Воробин. Тут стояв старий дерев'яний двір під високим ламаним дахом, а обабіч нього Антоній Плятер звів дві муровані офіцини. На місці двору мав постати палац, але його так і не збудували: до 1918 року власники жили в офіцинах.</p>
+        </div>
+        <div class="POB">
+          <span class="POI">🏛️</span>
+          <p class="POT">Павільйон «Бібліотека»</p>
+          <p class="POD">Найцікавіша будівля Воробина стояла на високому цоколі над лугами Горині, з дорицьким портиком і колонадою. Саме її довго вважали палацом. Спершу павільйон слугував лише для книжкових зібрань, а 1887 року його перебудували під житло.</p>
+          <a class="POL" href="worobin-3d.html">Обійти в 3D →</a>
         </div>
         <div class="POB">
           <span class="POI">⚔️</span>
           <p class="POT">Пограбування та занепад</p>
-          <p class="POD">Після революції 1917 р. маєток був пограбований. У 1920–1930-х рр. будівлі стояли порожніми і руйнувалися. Фотографії тих років фіксують вже розграбований, але ще існуючий палац.</p>
-        </div>
-        <div class="POB">
-          <span class="POI">💥</span>
-          <p class="POT">Знищений під час війни</p>
-          <p class="POD">На аерофотознімку Люфтваффе 1944 р. від маєтку не лишилося майже нічого — лише контури фундаментів і залишки парку. До 1944 р. палацу вже не існувало.</p>
+          <p class="POD">З початком Першої світової цінніші картини й архів вивезли до Києва, звідки вони не повернулися. Решта обстановки загинула разом із будинками. Між війнами офіцини відбудували, а «Бібліотеку» лише вберегли від руйнування новим дахом.</p>
         </div>
         <div class="POB">
           <span class="POI">🏥</span>
           <p class="POT">Сьогодні — Воробинська лікарня</p>
-          <p class="POD">На місці колишнього маєтку тепер розташована центральна міська лікарня Дубровиці — в народі «Воробинська». Від розкішного палацу не лишилося жодного сліду.</p>
+          <p class="POD">На аерофотознімку Люфтваффе 1944 року від резиденції лишилися хіба контури й залишки парку. Тепер на цьому місці центральна лікарня Дубровиці — в народі «Воробинська».</p>
         </div>
       </div>
 
       <!-- Photo Gallery -->
       <div class="PGL">
-        <p class="PGLH">Архівні фотографії маєтку</p>
+        <p class="PGLH">Воробин на старих світлинах</p>
         <div style="display:inline-flex;align-items:center;gap:.5rem;padding:.4rem .85rem;background:rgba(201,162,39,.08);border:1px solid rgba(201,162,39,.22);border-radius:100px;margin-bottom:1rem;font-family:'Manrope',sans-serif;font-size:.65rem;color:var(--color-text-secondary);letter-spacing:.04em;">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:13px;height:13px;flex-shrink:0;color:#c9a227;"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
           Деякі фотографії колоризовані за допомогою ШІ
         </div>
         <div class="PGRID">
           <div class="PGITEM" onclick="openPLB(this)">
-            <img src="https://i.imgur.com/jpyssNA.jpeg" alt="Палац Плятерів 1925" loading="lazy" style="object-position:top;">
-            <div class="PGCAP">Палац в 1925 році</div>
+            <img src="https://i.imgur.com/jpyssNA.jpeg" alt="Павільйон «Бібліотека» у Воробині, 1925" loading="lazy" style="object-position:top;">
+            <div class="PGCAP">Павільйон «Бібліотека» · 1925</div>
           </div>
           <div class="PGITEM" onclick="openPLB(this)">
-            <img src="https://i.imgur.com/CT4rMSK.jpeg" alt="Пограбований маєток 1920-1930" loading="lazy">
-            <div class="PGCAP">Пограбований маєток · 1920–1930 рр.</div>
+            <img src="https://i.imgur.com/CT4rMSK.jpeg" alt="Пограбований павільйон «Бібліотека», 1920–1930-ті" loading="lazy">
+            <div class="PGCAP">«Бібліотека» після пограбування · 1920–1930-ті</div>
           </div>
           <div class="PGITEM" onclick="openPLB(this)">
-            <img src="https://i.imgur.com/5SOfOuh.jpeg" alt="Пограбований маєток 1920-1930" loading="lazy">
-            <div class="PGCAP">Пограбований маєток · 1920–1930 рр.</div>
+            <img src="https://i.imgur.com/5SOfOuh.jpeg" alt="Пограбований павільйон «Бібліотека», 1920–1930-ті" loading="lazy">
+            <div class="PGCAP">«Бібліотека» після пограбування · 1920–1930-ті</div>
+          </div>
+          <div class="PGITEM" onclick="openPLB(this)">
+            <img src="worobin-orda-1870.jpg" alt="Воробин, рисунок Н. Орди 1870 року: офіцина і старий дерев'яний двір серед тополь" loading="lazy">
+            <div class="PGCAP">Загальний вигляд двору · рисунок Н. Орди, 1870</div>
+          </div>
+          <div class="PGITEM" onclick="openPLB(this)">
+            <img src="worobin-oficyna-1938.jpg" alt="Ліва офіцина у Воробині, 1938" loading="lazy">
+            <div class="PGCAP">Ліва офіцина · 1938</div>
+          </div>
+          <div class="PGITEM" onclick="openPLB(this)">
+            <img src="worobin-biblioteka-stav.jpg" alt="«Бібліотека» від ставу й Горині, до 1917" loading="lazy">
+            <div class="PGCAP">«Бібліотека» від ставу й Горині · до 1917</div>
           </div>
         </div>
       </div>
