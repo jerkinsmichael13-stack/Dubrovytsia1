@@ -309,26 +309,250 @@ function init(api){
     var crownG = [shade(jitter(new T.IcosahedronGeometry(1, 2), .07), .55, 1.12), shade(jitter(new T.IcosahedronGeometry(1, 2), .1), .5, 1.1)];
     var coneG = shade(jitter(new T.ConeGeometry(1, 1, 12, 2), .05), .55, 1.1), trunkG = new T.CylinderGeometry(.14, .24, 1, 8);
     var home = cam.position.clone().sub(gc).setY(0).normalize();
+    /* broadleaf species of a Polissia manor park: trunk height, crown blobs, blob size, spread, crown centre, vertical spread, squash, leaf colour */
+    var SP = {
+      dec:      {tr: 2.4, n: 9,  r: 1.05, o: 1.25, cy: 1.2, ys: 1.0, sy: .88},
+      linden:   {tr: 2.6, n: 11, r: 1.15, o: 1.2,  cy: 1.7, ys: 1.25, sy: 1.0, c: 0},
+      chestnut: {tr: 2.1, n: 12, r: 1.3,  o: 1.75, cy: 1.4, ys: .9,  sy: .82, c: 2},
+      ash:      {tr: 3.0, n: 8,  r: .95,  o: 1.6,  cy: 1.5, ys: 1.1, sy: .8,  c: 3},
+      poplar:   {tr: 1.8, n: 9,  r: .95,  o: .55,  cy: 3.0, ys: 2.6, sy: 1.25, c: 4},
+      bush:     {tr: 0,   n: 4,  r: .5,   o: .45,  cy: .5,  ys: .25, sy: .88},
+      shrub:    {tr: 0,   n: 3,  r: .55,  o: .25,  cy: .55, ys: .12, sy: .9, c: 1}
+    };
+    leafC.push('#7f9168'); autumnC.push('#d8c27a');                                   // white poplar: silvery leaves
     function tree(x, y, z, kind, s){
       var g = new T.Group(); g.position.set(x, y, z); g.rotation.y = rnd()*6.28; var mats = [];
-      var trunkH = kind === 'con' ? 1.4*s : 2.4*s, tr = new T.Mesh(trunkG, trunkM); tr.scale.set(s, trunkH, s); tr.position.y = trunkH/2; g.add(tr);
+      var sp = SP[kind] || SP.dec, trunkH = kind === 'con' ? 1.4*s : sp.tr*s, tr = new T.Mesh(trunkG, trunkM); tr.scale.set(s*(kind === 'chestnut' ? 1.3 : 1), Math.max(.01, trunkH), s*(kind === 'chestnut' ? 1.3 : 1)); tr.position.y = trunkH/2; g.add(tr);
+      g.userData.ph = rnd()*6.28;
       if (kind === 'con'){
         var cm = new T.MeshStandardMaterial({color: conC, roughness: .95, vertexColors: true}); mats.push(cm);
         for (var k = 0; k < 4; k++){ var c = new T.Mesh(coneG, cm), w = (2.1 - k*.42)*s; c.scale.set(w, 2.6*s, w); c.position.y = trunkH + k*1.45*s + 1.1*s; g.add(c); }
       } else {
-        var li = (rnd()*leafC.length) | 0, lm = new T.MeshStandardMaterial({color: leafC[li], roughness: .9, vertexColors: true}); lm.userData.leaf = li; mats.push(lm); FOL.push(lm);
-        var n = kind === 'bush' ? 4 : 9, top = kind === 'bush' ? .5*s : trunkH + 1.2*s;
-        for (var k2 = 0; k2 < n; k2++){
-          var b = new T.Mesh(crownG[k2 % 2], lm), r = (kind === 'bush' ? .5 : 1.05)*s*(.75 + rnd()*.5), a = rnd()*6.28, o = (kind === 'bush' ? .45 : 1.25)*s*(k2 ? .55 + rnd()*.6 : 0);
-          var yy = top + (k2 ? (rnd()*2 - .6)*(kind === 'bush' ? .25 : 1.0)*s : .5*s);
-          b.scale.set(r, r*.88, r); b.position.set(Math.cos(a)*o, yy, Math.sin(a)*o); b.rotation.set(rnd()*3, rnd()*3, 0); g.add(b); }
-        if (kind === 'bush') tr.visible = false;
+        var li = sp.c != null ? sp.c : (rnd()*4) | 0, lm = new T.MeshStandardMaterial({color: leafC[li], roughness: .9, vertexColors: true}); lm.userData.leaf = li; lm.userData.c0 = leafC[li]; lm.userData.c1 = autumnC[li]; mats.push(lm); FOL.push(lm);
+        var top = sp.tr ? trunkH + sp.cy*s : sp.cy*s, crown = new T.Group(); crown.position.y = trunkH; g.add(crown); g.userData.crown = crown;
+        for (var k2 = 0; k2 < sp.n; k2++){
+          var b = new T.Mesh(crownG[k2 % 2], lm), r = sp.r*s*(.75 + rnd()*.5), a = rnd()*6.28, o = sp.o*s*(k2 ? .55 + rnd()*.6 : 0);
+          var yy = top + (k2 ? (rnd()*2 - 1)*sp.ys*s*.8 : 0);
+          b.scale.set(r, r*sp.sy, r); b.position.set(Math.cos(a)*o, yy - trunkH, Math.sin(a)*o); b.rotation.set(rnd()*3, rnd()*3, 0); crown.add(b); }
+        if (!sp.tr) tr.visible = false;
       }
       mats.push(trunkM);
       g.traverse(function(m){ if (m.isMesh){ m.castShadow = true; m.receiveShadow = true; } });
-      scene.add(g); trees.push({g: g, mats: mats.filter(function(m){ return m !== trunkM; }), kind: kind, x: x, z: z, fade: 0});
+      scene.add(g); trees.push({g: g, mats: mats.filter(function(m){ return m !== trunkM; }), kind: kind, x: x, z: z, fade: 0, low: !sp.tr && kind !== 'con'});
       placed.push([x, z]);
     }
+    /* ── GROUNDS: each building gets its own setting, painted onto a skin over the turntable and planted deliberately:
+       lawns, a dirt road and forecourt at the manor, cobbles round the churches, the baroque churchyard wall at the kostel ── */
+    var RING = {kostel: 28.6, cerkva: 22.4, worobin: 18.5, mykolai: 18.5}[MODEL] || GR*.66;
+    var CW = 2048, cvs = document.createElement('canvas'); cvs.width = cvs.height = CW;
+    var K = cvs.getContext('2d'), PXM = CW/(2*GR);
+    function X(x){ return (x - gc.x)*PXM + CW/2; } function Z(z){ return (z - gc.z)*PXM + CW/2; } function M(m){ return m*PXM; }
+    function noise(col, n, rmin, rmax, a){ K.save(); K.fillStyle = col; for (var i = 0; i < n; i++){ K.globalAlpha = a*(.4 + rnd()*.6); K.beginPath(); K.arc(rnd()*CW, rnd()*CW, rmin + rnd()*(rmax - rmin), 0, 6.283); K.fill(); } K.restore(); }
+    function lawn(){ K.fillStyle = '#56633a'; K.fillRect(0, 0, CW, CW); noise('#64723f', 900, 6, 30, .35); noise('#4b5733', 900, 6, 26, .35); noise('#77804a', 2500, 1, 3, .5); }
+    function rrect(x0, z0, x1, z1, r){ var p = new Path2D(), a = X(x0), b = Z(z0), c = X(x1), d = Z(z1), rr = M(r); p.moveTo(a + rr, b); p.arcTo(c, b, c, d, rr); p.arcTo(c, d, a, d, rr); p.arcTo(a, d, a, b, rr); p.arcTo(a, b, c, b, rr); p.closePath(); return p; }
+    function ell(x, z, rx, rz){ var p = new Path2D(); p.ellipse(X(x), Z(z), M(rx), M(rz), 0, 0, 6.283); return p; }
+    function dirt(shape, base){                                                        // packed earth: a soft edge, ruts and pebbles
+      K.save(); K.lineWidth = M(.8); K.strokeStyle = 'rgba(110,92,62,.45)'; K.stroke(shape); K.fillStyle = base || '#8b7553'; K.fill(shape); K.clip(shape);
+      noise('#9b8562', 1600, 2, 9, .4); noise('#6f5c40', 1400, 2, 8, .35); noise('#b19c76', 2600, .8, 2, .6);
+      K.restore();
+    }
+    function cobbles(shape){                                                           // field stones in rows, each a little different
+      K.save(); K.fillStyle = '#3d3830'; K.fill(shape); K.clip(shape);
+      var st = M(.19), h = M(.16), row = 0;
+      for (var y = 0; y < CW; y += h, row++){
+        for (var x = (row % 2)*st*.5 - st; x < CW; x += st*(.85 + rnd()*.3)){
+          var g = 112 + rnd()*40 | 0, w = st*(.72 + rnd()*.2), hh = h*(.7 + rnd()*.18);
+          K.fillStyle = 'rgb(' + (g + 8) + ',' + (g + 2) + ',' + (g - 10) + ')';
+          K.beginPath(); K.ellipse(x + st/2, y + h/2, w/2, hh/2, (rnd() - .5)*.4, 0, 6.283); K.fill();
+        }
+      }
+      noise('#2f2b25', 500, 3, 12, .18);
+      K.restore();
+    }
+    function edgeLine(shape, col, w){ K.save(); K.strokeStyle = col; K.lineWidth = M(w); K.stroke(shape); K.restore(); }
+    function hedgeBed(x0, z0, x1, z1){                                                 // a flower bed edged with clipped box
+      var p = rrect(x0, z0, x1, z1, .3); K.save(); K.fillStyle = '#5a4430'; K.fill(p); K.clip(p);
+      ['#c9563f', '#e3c26a', '#efe6d4', '#b8506e', '#8a5fb0'].forEach(function(c){ K.fillStyle = c; for (var i = 0; i < 60; i++){ K.globalAlpha = .8; K.beginPath(); K.arc(X(x0 + .4 + rnd()*(x1 - x0 - .8)), Z(z0 + .4 + rnd()*(z1 - z0 - .8)), M(.07 + rnd()*.06), 0, 6.283); K.fill(); } });
+      K.restore(); edgeLine(p, '#3f5a2c', .32);
+    }
+    /* the building's footprint: where a ray from above meets the model more than half a metre up (pavings and steps don't count) */
+    var bx = (function(){ var b = new T.Box3(), r2 = new T.Raycaster(), v = new T.Vector3(), lim = GR*.8;
+      for (var x = -lim; x <= lim; x += .5) for (var z = -lim; z <= lim; z += .5){
+        r2.set(v.set(gc.x + x, 80, gc.z + z), dn); r2.far = 120;
+        var h = r2.intersectObject(api.model, true).filter(function(q){ return q.object.material && q.object.material.colorWrite !== false; })[0];
+        if (h && h.point.y > .6) b.expandByPoint(new T.Vector3(gc.x + x, 0, gc.z + z));
+      }
+      return b.isEmpty() ? box.clone() : b; })();
+    var plantAt = [];                                                                   // [x, z, kind, scale]
+    function plant(x, z, kind, sc){ plantAt.push([x, z, kind, sc]); }
+
+    var LAY = {
+      worobin: function(){
+        lawn();
+        /* the slope down to the Horyn: a meadow, longer and yellower grass */
+        var mg = K.createLinearGradient(X(6), 0, X(16), 0); mg.addColorStop(0, 'rgba(120,124,70,0)'); mg.addColorStop(1, 'rgba(128,128,72,.55)'); K.fillStyle = mg; K.fillRect(X(6), 0, CW, CW);
+        noise('#8a8a52', 1200, 1, 3, .45);
+        /* the drive from the west, a forecourt before the steps, and the path the count takes south into the park */
+        var road = new Path2D(); road.moveTo(X(-30), Z(-1.7)); road.lineTo(X(-19), Z(-1.9)); road.lineTo(X(-19), Z(1.9)); road.lineTo(X(-30), Z(1.7)); road.closePath();
+        var court = ell(-18.2, 0, 3.0, 5.4);
+        [road, court].forEach(function(p){ dirt(p); });
+        var walk = new Path2D(); [[-17.2, 3], [-17.6, 5.5], [-17.9, 9], [-17.6, 14], [-17, 19]].forEach(function(q, i){ i ? walk.lineTo(X(q[0]), Z(q[1])) : walk.moveTo(X(q[0]), Z(q[1])); });
+        K.save(); K.lineCap = K.lineJoin = 'round'; K.strokeStyle = 'rgba(110,92,62,.45)'; K.lineWidth = M(1.8); K.stroke(walk); K.strokeStyle = '#8b7553'; K.lineWidth = M(1.2); K.stroke(walk); K.restore();
+        /* a path round the north side to the tower door, and down the slope east */
+        var north = new Path2D(); [[-16, -3.5], [-12, -8], [-6, -14.5], [2, -15.2], [9, -12], [13, -6], [16, -2]].forEach(function(q, i){ i ? north.lineTo(X(q[0]), Z(q[1])) : north.moveTo(X(q[0]), Z(q[1])); });
+        K.save(); K.lineCap = K.lineJoin = 'round'; K.strokeStyle = 'rgba(110,92,62,.4)'; K.lineWidth = M(1.5); K.stroke(north); K.strokeStyle = '#8f7a58'; K.lineWidth = M(1.0); K.stroke(north); K.restore();
+        /* a parterre before the south colonnade: two box-edged beds either side of a gravel walk */
+        var walkS = rrect(-1, 12.4, 1, 16.6, .2); K.fillStyle = '#a5946f'; K.fill(walkS); noise('#c2b38e', 0, 1, 1, 0);
+        hedgeBed(-7, 13.2, -1.6, 16.2); hedgeBed(1.6, 13.2, 7, 16.2);
+        /* trees: lindens framing the forecourt, white poplars and spruces behind the tower, chestnuts and ash on the slope */
+        plant(-20.5, -6.8, 'linden', 1.05); plant(-20.5, 6.8, 'linden', 1.0); plant(-15.2, -8.2, 'linden', .95);
+        plant(-1.5, -16.2, 'con', 1.05); plant(-5.5, -15.8, 'con', .9); plant(-9.5, -13.6, 'con', 1.0);
+        plant(5, -15.5, 'poplar', 1.1); plant(8.5, -14, 'poplar', 1.0); plant(11.5, -11.8, 'poplar', 1.15);
+        plant(14.5, 4, 'ash', 1.0); plant(13, 10.5, 'chestnut', 1.0); plant(9.5, 14.2, 'chestnut', .9); plant(-11.5, 14.5, 'linden', .95);
+        [[-9, 13.6], [9, 13.6], [-9, -10.2]].forEach(function(q){ plant(q[0], q[1], 'shrub', .8); });
+        /* beyond the ring: the edge of the forest */
+        return {outer: 12, outerKinds: ['con', 'linden', 'poplar', 'ash', 'con']};
+      },
+      kostel: function(){
+        lawn();
+        var fz = bx.max.z + 4.8, bz = bx.min.z - 3.6, fx = Math.max(-bx.min.x, bx.max.x) + 4.4;   // the churchyard wall
+        FENCE = {front: fz, back: bz, half: fx};
+        /* cobbled square before the gate, a stone walk to the door, gravel round the church */
+        cobbles(rrect(-30, fz, 30, fz + 30, 0));
+        var round = rrect(bx.min.x - 1.6, bx.min.z - 1.6, bx.max.x + 1.6, bx.max.z + 1.6, 1.2);
+        K.fillStyle = '#a2967c'; K.fill(round); K.save(); K.clip(round); noise('#b8ad94', 3000, .8, 2, .6); noise('#857a63', 2000, .8, 2, .5); K.restore();
+        cobbles(rrect(-1.6, bx.max.z - .5, 1.6, fz, .1));
+        K.fillStyle = 'rgba(40,36,28,.35)'; K.fillRect(X(-fx - .5), Z(fz - .15), M(2*fx + 1), M(.5));
+        /* old chestnuts inside the wall */
+        var tx = fx - 2.4;
+        [[-tx, fz - 3.2], [tx, fz - 3.6], [-tx, fz - 13], [tx, fz - 14.5], [-tx, bz + 9], [tx, bz + 7.5], [-6, bz + 2.2], [6.5, bz + 2.3]].forEach(function(q, i){ plant(q[0], q[1], i % 3 === 2 ? 'linden' : 'chestnut', 1.75 + (i % 2)*.25); });
+        return {outer: 10, outerKinds: ['linden', 'chestnut', 'con', 'ash']};
+      },
+      cerkva: function(){
+        lawn();
+        var pave = rrect(bx.min.x - 3.2, bx.min.z - 3.2, bx.max.x + 3.2, bx.max.z + 3.2, 2.2);
+        cobbles(pave);
+        cobbles(rrect(-40, -1.6, bx.min.x - 2, 1.6, 0));                                // the way in from the west
+        cobbles(rrect((bx.min.x + bx.max.x)/2 - 1.4, bx.max.z, (bx.min.x + bx.max.x)/2 + 1.4, 40, 0));   // and from the street to the south door
+        edgeLine(pave, '#cfc6b2', .18);
+        var cx = (bx.min.x + bx.max.x)/2;
+        [[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(function(q){ plant(cx + q[0]*(size.x/2 + 7.5), q[1]*(size.z/2 + 6.5), 'linden', 1.0 + rnd()*.15); });
+        plant(cx - size.x/2 - 4, -size.z/2 - 8, 'con', .95); plant(cx + size.x/2 + 2, size.z/2 + 9.5, 'chestnut', 1.05); plant(cx + size.x/2 + 9, 0, 'linden', 1.1);
+        [[-1, 1], [1, 1], [-1, -1], [1, -1]].forEach(function(q){ plant(cx + q[0]*(size.x/2 - 1), q[1]*(size.z/2 + 3.9), 'shrub', .7); });
+        return {outer: 10, outerKinds: ['linden', 'con', 'chestnut', 'ash']};
+      },
+      mykolai: function(){
+        lawn();
+        var apron = rrect(bx.min.x - 1.4, bx.min.z - 1.4, bx.max.x + 1.4, bx.max.z + 1.4, 1.0);
+        cobbles(apron); edgeLine(apron, '#cfc6b2', .16);
+        cobbles(rrect(-40, -1.5, bx.min.x - 1, 1.5, 0));
+        var cx = (bx.min.x + bx.max.x)/2;
+        plant(cx - 4, -size.z/2 - 7, 'linden', 1.0); plant(cx + 6, -size.z/2 - 6.5, 'chestnut', .95); plant(cx + size.x/2 + 5, 3, 'linden', 1.05);
+        plant(cx + 3, size.z/2 + 7, 'con', .9); plant(cx - 7, size.z/2 + 6.5, 'linden', .95);
+        [[-1, -1], [1, -1], [1, 1]].forEach(function(q){ plant(cx + q[0]*(size.x/2 - 2), q[1]*(size.z/2 + 3.2), 'shrub', .65); });
+        return {outer: 10, outerKinds: ['linden', 'con', 'ash', 'chestnut']};
+      }
+    };
+    var FENCE = null, lay = LAY[MODEL] ? LAY[MODEL]() : null;
+    if (lay){
+      /* fade the painted grounds out just inside the engraved ring */
+      K.globalCompositeOperation = 'destination-in';
+      var rg = K.createRadialGradient(CW/2, CW/2, M(RING - 3.2), CW/2, CW/2, M(RING - .4)); rg.addColorStop(0, 'rgba(0,0,0,1)'); rg.addColorStop(1, 'rgba(0,0,0,0)');
+      K.fillStyle = rg; K.fillRect(0, 0, CW, CW); K.globalCompositeOperation = 'source-over';
+      var gt = new T.CanvasTexture(cvs); gt.encoding = T.sRGBEncoding; gt.anisotropy = 8;
+      var gg = groundM.geometry.clone(); groundM.updateMatrixWorld(); gg.applyMatrix4(groundM.matrixWorld);
+      var gp = gg.attributes.position, uv = new Float32Array(gp.count*2);
+      for (var q = 0; q < gp.count; q++){ uv[q*2] = (gp.getX(q) - gc.x)/(2*GR) + .5; uv[q*2 + 1] = .5 - (gp.getZ(q) - gc.z)/(2*GR); gp.setY(q, gp.getY(q) + .012); }
+      gg.setAttribute('uv', new T.BufferAttribute(uv, 2));
+      var gmat = new T.MeshStandardMaterial({map: gt, transparent: true, depthWrite: false, roughness: 1, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2});
+      var skin = new T.Mesh(gg, gmat); skin.receiveShadow = true; skin.renderOrder = (groundM.renderOrder || 0) + 1; scene.add(skin);
+      plantAt.forEach(function(t){ var y = probe(t[0], t[1]); if (y == null || y === false) return; tree(t[0], y, t[1], t[2], t[3]); });
+      if (FENCE) churchyard(FENCE, probe);
+      /* the forest beyond the ring, leaving the home view open */
+      for (var i = 0, n = 0; i < 260 && n < lay.outer; i++){
+        var a = rnd()*Math.PI*2, dir = new T.Vector3(Math.cos(a), 0, Math.sin(a)); if (dir.dot(home) > .5) continue;
+        var r = GR*(.86 + rnd()*.1), x = gc.x + dir.x*r, z = gc.z + dir.z*r;
+        if (!farFromOthers(x, z, 5)) continue; var y = free(x, z, 1.6); if (y == null) continue;
+        tree(x, y, z, lay.outerKinds[n % lay.outerKinds.length], .95 + rnd()*.4); n++;
+      }
+    }
+
+    /* the kostel's churchyard wall, after the photographs: plastered piers with little pediments and tiled caps, wooden pickets
+       on a low plinth between them; on the axis a baroque arched gate with a curved gable, flanked by two wicket gates */
+    function churchyard(F, probe){
+      var plaster = new T.MeshStandardMaterial({color: '#e8e1d1', roughness: .92}), tile = new T.MeshStandardMaterial({color: '#6a4535', roughness: .85}),
+          wood = new T.MeshStandardMaterial({color: '#5d4c3b', roughness: .9}), plinthM = new T.MeshStandardMaterial({color: '#cfc5b1', roughness: .95});
+      var Gf = new T.Group(); scene.add(Gf);
+      function bxm(w, h, d, x, y, z, m, par){ var o = new T.Mesh(new T.BoxGeometry(w, h, d), m); o.position.set(x, y + h/2, z); o.castShadow = o.receiveShadow = true; (par || Gf).add(o); return o; }
+      function gable(w, h, d, x, y, z, rotY, m, par){                                     // a little pediment: triangular prism, face to the front
+        var sh = new T.Shape([new T.Vector2(-w/2, 0), new T.Vector2(w/2, 0), new T.Vector2(0, h)]);
+        var g = new T.ExtrudeGeometry(sh, {depth: d, bevelEnabled: false}); g.translate(0, 0, -d/2);
+        var o = new T.Mesh(g, m); o.position.set(x, y, z); o.rotation.y = rotY || 0; o.castShadow = o.receiveShadow = true; (par || Gf).add(o); return o;
+      }
+      function pier(x, z, rotY, big){
+        var g = new T.Group(); g.position.set(x, 0, z); g.rotation.y = rotY; Gf.add(g);
+        var w = big ? .92 : .74, h = big ? 3.0 : 2.55;
+        bxm(w + .14, .34, w + .14, 0, 0, 0, plaster, g); bxm(w, h - .34, w, 0, .34, 0, plaster, g);
+        bxm(w + .04, .18, w + .04, 0, h - .55, 0, plaster, g);                              // a moulding under the cap
+        bxm(w + .2, .14, w + .2, 0, h, 0, plaster, g);                                     // cornice
+        gable(w + .2, .46, w + .26, 0, h + .14, 0, 0, plaster, g);                          // pediment facing front and back
+        gable(w + .36, .5, w + .16, 0, h + .2, 0, 0, tile, g);                             // the tiled roof behind it, overhanging at the sides
+        return g;
+      }
+      function pickets(x0, z0, x1, z1){                                                  // a panel of pointed pickets on a plinth between two piers
+        var dx = x1 - x0, dz = z1 - z0, L = Math.hypot(dx, dz), a = Math.atan2(-dz, dx), cx = (x0 + x1)/2, cz = (z0 + z1)/2;
+        var g = new T.Group(); g.position.set(cx, 0, cz); g.rotation.y = a; Gf.add(g);
+        bxm(L, .55, .36, 0, 0, 0, plinthM, g); bxm(L, .06, .42, 0, .55, 0, plaster, g);
+        bxm(L, .07, .05, 0, .95, 0, wood, g); bxm(L, .07, .05, 0, 1.85, 0, wood, g);
+        var n = Math.floor(L/.15), pg = new T.BoxGeometry(.065, 1.62, .035); pg.translate(0, .81, 0);
+        var tip = new T.ConeGeometry(.046, .14, 4); tip.rotateY(Math.PI/4); tip.translate(0, 1.69, 0);
+        var im = new T.InstancedMesh(pg, wood, n), it = new T.InstancedMesh(tip, wood, n), m4 = new T.Matrix4();
+        for (var i = 0; i < n; i++){ m4.makeTranslation(-L/2 + (i + .5)*L/n, .61, .03); im.setMatrixAt(i, m4); it.setMatrixAt(i, m4); }
+        im.castShadow = it.castShadow = true; g.add(im); g.add(it);
+      }
+      var fz = F.front, bz = F.back, hx = F.half;
+      /* the gate group on the axis */
+      var GG = new T.Group(); GG.position.set(0, 0, fz); Gf.add(GG);
+      [-1, 1].forEach(function(s){ pier(s*1.95, fz, 0, true); pier(s*4.75, fz, 0, false); });
+      (function(){                                                                        // the arch and its curved gable
+        var w = 2.98, h = 3.75, sh = new T.Shape();
+        sh.moveTo(-w/2, 0); sh.lineTo(w/2, 0); sh.lineTo(w/2, h);
+        sh.bezierCurveTo(w/2 - .05, h + .55, .55, h + .55, .38, h + 1.15); sh.lineTo(-.38, h + 1.15); sh.bezierCurveTo(-.55, h + .55, -w/2 + .05, h + .55, -w/2, h); sh.lineTo(-w/2, 0);
+        var hole = new T.Path(); hole.moveTo(-1.12, 0); hole.lineTo(1.12, 0); hole.lineTo(1.12, 2.3); hole.absarc(0, 2.3, 1.12, 0, Math.PI, false); hole.lineTo(-1.12, 0); sh.holes.push(hole);
+        var g = new T.ExtrudeGeometry(sh, {depth: .62, bevelEnabled: false, curveSegments: 18}); g.translate(0, 0, -.31);
+        var o = new T.Mesh(g, plaster); o.castShadow = o.receiveShadow = true; GG.add(o);
+        var rib = new T.Shape(); rib.absarc(0, 2.3, 1.32, 0, Math.PI, false); rib.lineTo(-1.12, 2.3); rib.absarc(0, 2.3, 1.12, Math.PI, 0, true); rib.lineTo(1.32, 2.3);
+        var rg2 = new T.ExtrudeGeometry(rib, {depth: .7, bevelEnabled: false, curveSegments: 18}); rg2.translate(0, 0, -.35); var ro = new T.Mesh(rg2, plaster); GG.add(ro);  // the archivolt
+        bxm(.98, .14, .78, 0, h + 1.15, 0, plaster, GG); gable(1.0, .5, .84, 0, h + 1.29, 0, 0, plaster, GG); gable(1.16, .54, .74, 0, h + 1.35, 0, 0, tile, GG);
+        [-1, 1].forEach(function(s){                                                     // the gate leaves: boards below, open pickets above
+          var lf = new T.Group(); lf.position.set(s*1.1, 0, 0); GG.add(lf);
+          bxm(1.08, 1.05, .06, -s*.54, .05, 0, wood, lf);
+          for (var i = 0; i < 7; i++) bxm(.06, 1.35, .05, -s*(.08 + i*.155), 1.1, 0, wood, lf);
+          bxm(1.08, .07, .07, -s*.54, 2.36, 0, wood, lf);
+        });
+      })();
+      [-1, 1].forEach(function(s){                                                       // the wicket bays: a plastered wall with a small door
+        var g = new T.Group(); g.position.set(s*3.35, 0, fz); Gf.add(g);
+        var sh = new T.Shape(); sh.moveTo(-1.0, 0); sh.lineTo(1.0, 0); sh.lineTo(1.0, 2.35); sh.quadraticCurveTo(0, 2.0, -1.0, 2.35); sh.lineTo(-1.0, 0);
+        var hl = new T.Path(); hl.moveTo(-.46, 0); hl.lineTo(.46, 0); hl.lineTo(.46, 1.85); hl.lineTo(-.46, 1.85); hl.lineTo(-.46, 0); sh.holes.push(hl);
+        var eg = new T.ExtrudeGeometry(sh, {depth: .5, bevelEnabled: false}); eg.translate(0, 0, -.25); var w = new T.Mesh(eg, plaster); w.castShadow = w.receiveShadow = true; g.add(w);
+        bxm(.9, .9, .05, 0, .02, -.06, wood, g); for (var i = 0; i < 5; i++) bxm(.05, .9, .04, -.36 + i*.18, .92, -.06, wood, g); bxm(.9, .06, .06, 0, 1.78, -.06, wood, g);
+      });
+      /* pickets and piers round the rest of the yard */
+      function run(x0, z0, x1, z1, step){
+        var L = Math.hypot(x1 - x0, z1 - z0), n = Math.max(1, Math.round(L/step)), rot = Math.atan2(-(z1 - z0), x1 - x0);
+        for (var i = 0; i < n; i++){ var a0 = i/n, a1 = (i + 1)/n;
+          pickets(x0 + (x1 - x0)*a0, z0 + (z1 - z0)*a0, x0 + (x1 - x0)*a1, z0 + (z1 - z0)*a1);
+          pier(x0 + (x1 - x0)*a1, z0 + (z1 - z0)*a1, rot, false); }
+      }
+      [-1, 1].forEach(function(s){ run(s*5.12, fz, s*hx, fz, 3.6); run(s*hx, fz, s*hx, bz, 3.8); });
+      run(-hx, bz, hx, bz, 4);
+      /* the piers stand on the ground, which is level here */
+      var y0 = probe(0, fz + 2); if (y0 != null && y0 !== false) Gf.position.y = y0;
+      Gf.traverse(function(o){ if (o.isMesh){ o.userData.fence = true; } });
+      api.fence = Gf;
+    }
+    if (!lay){
     // outer grove beyond the engraved ring, leaving the home view open
     for (var i = 0, n = 0; i < 160 && n < 15; i++){
       var a = rnd()*Math.PI*2, dir = new T.Vector3(Math.cos(a), 0, Math.sin(a)); if (dir.dot(home) > .55) continue;
@@ -351,16 +575,18 @@ function init(api){
       if (!farFromOthers(x3, z3, 2.6)) continue; var y3 = free(x3, z3, .9); if (y3 == null) continue;
       tree(x3, y3, z3, 'bush', .55 + rnd()*.35); n++;
     }
+    }
   })();
-  function seasonTrees(w){ FOL.forEach(function(m){ m.color.set(w === 'autumn' ? autumnLeaf(m.userData.leaf) : ['#4f6f33', '#5b7a38', '#46652e', '#62803c'][m.userData.leaf]); }); }
-  function autumnLeaf(i){ return ['#b8742a', '#c99a35', '#a5532a', '#d0a640'][i]; }
+  function seasonTrees(w){ FOL.forEach(function(m){ m.color.set(w === 'autumn' ? m.userData.c1 : m.userData.c0); }); }
   var tv = new T.Vector3();
   function stepTrees(){
     if (!trees.length) return;
+    var tt = performance.now()/1000;
+    if (!reduced) trees.forEach(function(o){ var c = o.g.userData.crown; if (!c) return; var p = o.g.userData.ph; c.rotation.z = Math.sin(tt*.9 + p)*.018 + Math.sin(tt*2.3 + p*2)*.006; c.rotation.x = Math.cos(tt*.7 + p)*.012; });
     tv.copy(cam.position).sub(centre).setY(0); var cd = tv.length(); tv.normalize();
     trees.forEach(function(o){
       var dx = o.x - centre.x, dz = o.z - centre.z, dd = Math.hypot(dx, dz), dot = (dx*tv.x + dz*tv.z)/(dd || 1);
-      var block = o.kind !== 'bush' && dot > .5 && dd < cd ? Math.min(1, (dot - .5)*4) : 0;
+      var block = !o.low && dot > .5 && dd < cd ? Math.min(1, (dot - .5)*4) : 0;
       if (Math.abs(block - o.fade) < .01) return; o.fade += (block - o.fade)*.15;
       o.mats.forEach(function(m){ var on = o.fade > .02; if (m.transparent !== on){ m.transparent = on; m.depthWrite = !on; m.needsUpdate = true; } m.opacity = 1 - o.fade*.82; });
     });
@@ -404,8 +630,9 @@ function init(api){
     function mesh(g, m, x, y, z, par){ var o = new T.Mesh(g, m); o.position.set(x || 0, y || 0, z || 0); o.castShadow = true; o.renderOrder = 4; par.add(o); return o; }
     function grp(par, x, y, z){ var g = new T.Group(); g.position.set(x || 0, y || 0, z || 0); par.add(g); return g; }
     function taper(r0, r1, len, seg){ var g = new T.CylinderGeometry(r1, r0, len, seg || 10); g.translate(0, -len/2, 0); return g; }   // hangs down from its pivot
+    /* rig: man (ground point, heading) → pelvis (height, sway, twist) → legs; torso on the pelvis, twisting against it */
     var man = new T.Group(); man.visible = false; scene.add(man);
-    var body = grp(man, 0, 0, 0);
+    var pelvis = grp(man, 0, .95, 0), body = grp(pelvis, 0, -.95, 0);
     /* frock coat: fitted at the waist, skirts to the knee */
     var prof = [[0, .5], [.25, .5], [.215, .7], [.18, .92], [.158, 1.04], [.17, 1.2], [.2, 1.36], [.205, 1.42], [.16, 1.5], [.075, 1.54], [0, 1.54]].map(function(q){ return new T.Vector2(q[0], q[1]); });
     var torso = mesh(new T.LatheGeometry(prof, 18), coat, 0, 0, 0, body); torso.scale.z = .72;
@@ -419,14 +646,16 @@ function init(api){
     mesh(new T.CylinderGeometry(.16, .16, .012, 22), hatM, 0, 0, 0, hat).scale.z = .86;
     mesh(new T.CylinderGeometry(.098, .088, .2, 18), hatM, 0, .105, 0, hat).scale.z = .88;
     mesh(new T.CylinderGeometry(.09, .09, .028, 18), M2('#3b2a1c'), 0, .02, 0, hat).scale.z = .89;     // hat band
-    /* legs: hip → knee → foot */
+    /* legs: hip → knee → ankle → boot */
+    var L1 = .47, L2 = .43, SOLE = .065;
     var legs = [-1, 1].map(function(s){
-      var hip = grp(man, s*.095, .94, 0);
-      mesh(taper(.078, .066, .47), trou, 0, 0, 0, hip);
-      var knee = grp(hip, 0, -.47, 0);
-      mesh(taper(.062, .05, .43), trou, 0, 0, 0, knee);
-      mesh(new T.BoxGeometry(.09, .07, .24), boot, 0, -.44, .05, knee);
-      return {hip: hip, knee: knee};
+      var hip = grp(pelvis, s*.095, 0, 0);
+      mesh(taper(.078, .066, L1), trou, 0, 0, 0, hip);
+      var knee = grp(hip, 0, -L1, 0);
+      mesh(taper(.062, .05, L2), trou, 0, 0, 0, knee);
+      var ank = grp(knee, 0, -L2, 0);
+      mesh(new T.BoxGeometry(.09, .07, .25), boot, 0, -.035, .055, ank);
+      return {hip: hip, knee: knee, ank: ank};
     });
     /* arms: shoulder → elbow → gloved hand; the right one carries a cane */
     var arms = [-1, 1].map(function(s){
@@ -437,58 +666,108 @@ function init(api){
       mesh(new T.SphereGeometry(.046, 10, 8), glove, 0, -.3, .005, el);
       return {sh: sh, el: el};
     });
-    var cane = grp(arms[1].el, 0, -.3, .01);
-    mesh(new T.CylinderGeometry(.012, .012, .92, 6), caneM, 0, -.44, 0, cane);
+    var cane = grp(arms[1].el, 0, -.3, .01); cane.rotation.x = -.5;                    // carried, tip forward, clear of the ground
+    mesh(new T.CylinderGeometry(.012, .011, .76, 6), caneM, 0, -.36, 0, cane);
     mesh(new T.SphereGeometry(.026, 10, 8), gold, 0, .02, 0, cane);
 
-    /* the walk: from the hall, out between the middle columns, down the nine steps, then off along the park path */
+    /* gait: joint angles over one stride (0 = heel strike), after the normal human walking curves, in degrees.
+       hip + = thigh forward, knee + = bent, ankle + = toes up */
+    function curve(K){                                                                // periodic Catmull–Rom through [phase 0…1, value] knots
+      return function(u){
+        u -= Math.floor(u); var n = K.length, i = 0; while (i < n - 1 && K[i + 1][0] <= u) i++;
+        function at(k){ var m = ((k % n) + n) % n, wrap = Math.floor(k/n); return [K[m][0] + wrap, K[m][1]]; }
+        var p0 = at(i - 1), p1 = at(i), p2 = at(i + 1), p3 = at(i + 2), t = (u - p1[0])/(p2[0] - p1[0]);
+        var t2 = t*t, t3 = t2*t;
+        return .5*((2*p1[1]) + (-p0[1] + p2[1])*t + (2*p0[1] - 5*p1[1] + 4*p2[1] - p3[1])*t2 + (-p0[1] + 3*p1[1] - 3*p2[1] + p3[1])*t3);
+      };
+    }
+    var HIP = curve([[0, 26], [.12, 22], [.3, 6], [.5, -11], [.62, -6], [.75, 14], [.88, 27]]);
+    var KNEE = curve([[0, 4], [.14, 16], [.38, 5], [.58, 34], [.72, 58], [.86, 26], [.96, 4]]);
+    var ANK = curve([[0, 0], [.08, -6], [.42, 9], [.6, -16], [.7, -4], [.86, 2]]);
+    var DEG = Math.PI/180;
+    function gait(ph, w){                                                             // ph: strides walked; w: 0 standing … 1 full stroll
+      var drop = 0, lean = 0;
+      legs.forEach(function(L, k){
+        var u = ph + k*.5, h = HIP(u)*w*.85*DEG, kn = (KNEE(u)*w*.85 + 3)*DEG, a = ANK(u)*w*.8*DEG;
+        L.hip.rotation.x = -h; L.knee.rotation.x = kn;
+        var y = L1*Math.cos(h) + L2*Math.cos(h - kn);                                 // how far below the hip this ankle hangs
+        drop = Math.max(drop, y);
+        L.ank.rotation.x = (h - kn) - a;                                              // foot pitch relative to the shin: level sole, then the ankle curve
+      });
+      /* arms swing against the legs, the right one (with the cane) less; elbows bend as the arm comes forward */
+      var sw = Math.sin((ph + .02)*Math.PI*2)*w;
+      arms[0].sh.rotation.x = -.34*sw; arms[0].el.rotation.x = -.18 - .22*Math.max(0, sw)*w;
+      arms[1].sh.rotation.x = .2*sw - .1*w; arms[1].el.rotation.x = -.3 - .12*Math.max(0, -sw)*w;
+      /* pelvis: carried by the stance leg — a small rise and fall twice a stride, a sway over the stance foot, a twist */
+      var c2 = Math.PI*2*ph;
+      pelvis.position.y = drop + SOLE;
+      pelvis.position.x = .022*w*Math.sin(c2 + .4);
+      pelvis.rotation.y = .07*w*Math.sin(c2); pelvis.rotation.z = .025*w*Math.sin(c2 + Math.PI/2);
+      body.rotation.y = -.1*w*Math.sin(c2); body.rotation.x = .04*w;                    // the chest turns against the hips, a slight forward lean
+      head.rotation.y = .05*w*Math.sin(c2);                                            // the head keeps looking ahead
+      head.rotation.z = -.025*w*Math.sin(c2 + Math.PI/2);
+    }
+
+    /* the route: out of the hall to the edge of the portico (a pause to greet), then a smooth path down the steps and into the park */
     var PX0 = -12.45, TR = .34, P = 1.5;
     function floorY(x){ if (x > -8.5) return D.floor; if (x >= PX0) return P + .1; if (x >= PX0 - 8*TR) return P*(9 - Math.ceil((PX0 - x)/TR))/9; return 0; }
-    var start = D.pos(-D.depth + .7), W = [[start.x, start.z], [-11.25, 0], [-11.25, 0], [-15.9, 0], [-17.4, 2.0], [-17.9, 8], [-17.6, 14]];
-    var seg = [], L = 0;
-    for (var i = 1; i < W.length; i++){ var dx = W[i][0] - W[i - 1][0], dz = W[i][1] - W[i - 1][1], l = Math.hypot(dx, dz); seg.push({a: W[i - 1], dx: dx, dz: dz, l: l, s0: L}); L += l; }
-    var SPEED = 1.15, STRIDE = 1.3, T_OPEN = 1.4, T_OUT = .6, PAUSE = 2.4;
-    var dOut = seg[0].l;                                                              // distance to the edge of the portico
-    function at(d){ for (var i = 0; i < seg.length; i++){ var g = seg[i]; if (d <= g.s0 + g.l || i === seg.length - 1){ var k = g.l ? Math.min(1, (d - g.s0)/g.l) : 0; return {x: g.a[0] + g.dx*k, z: g.a[1] + g.dz*k, h: Math.atan2(g.dx, g.dz), g: g}; } } }
-    var run = null, by = 0, yaw = 0;
+    function groundAt(x){ var s = 0; for (var k = -3; k <= 3; k++) s += floorY(x + k*.07); return s/7; }   // the stair edges, softened over a foot's length
+    var V3 = function(x, z){ return new T.Vector3(x, 0, z); }, st = D.pos(-D.depth + .7);
+    var PA = new T.LineCurve3(V3(st.x, st.z), V3(-11.25, 0));
+    var PB = new T.CatmullRomCurve3([V3(-11.25, 0), V3(-13.2, 0), V3(-15.6, .05), V3(-17, 1.2), V3(-17.8, 4.5), V3(-17.9, 9), V3(-17.5, 14)], false, 'centripetal');
+    var LA = PA.getLength(), LB = PB.getLength();
+    var V = 1.05, ACC = .7, STRIDE = 1.32, T_OPEN = 1.5, T_OUT = .7, PAUSE = 2.8;
+    /* distance along a stretch of length len after t seconds: ease into the walk, stroll, ease to a halt */
+    function trav(t, len, stop){
+      var ta = ACC, da = V*ta/2;
+      if (t <= 0) return 0;
+      if (t < ta) return V*t*t/(2*ta);
+      var cruise = stop ? len - 2*da : 1e9, tc = cruise/V;
+      if (t < ta + tc) return da + V*(t - ta);
+      if (!stop) return da + V*(t - ta);
+      var td = t - ta - tc; if (td >= ta) return len;
+      return da + cruise + V*td - V*td*td/(2*ta);
+    }
+    var tA = LA/V + ACC;                                                              // time to walk out (with easing at both ends)
+    var run = null, yaw = 0, lastT = 0, ph = 0, lastD = 0;
     function ease(k){ k = Math.max(0, Math.min(1, k)); return k*k*(3 - 2*k); }
-    function pose(phase, amp){
-      var s = Math.sin(phase), c = Math.cos(phase);
-      legs[0].hip.rotation.x = -.42*amp*s; legs[1].hip.rotation.x = .42*amp*s;
-      legs[0].knee.rotation.x = .75*amp*Math.max(0, c); legs[1].knee.rotation.x = .75*amp*Math.max(0, -c);
-      arms[0].sh.rotation.x = .32*amp*s; arms[1].sh.rotation.x = -.16*amp*s - .12*amp;
-      return .028*amp*Math.abs(c);
-    }
     function lift(k){                                                                  // raising the hat: left hand up to the brim and back
-      var a = Math.sin(Math.PI*Math.max(0, Math.min(1, k)));
-      arms[0].sh.rotation.x = -2.55*a; arms[0].sh.rotation.z = -.08 - .35*a; arms[0].el.rotation.x = -.15 - 1.1*a;
-      hat.position.y = .17 + .09*Math.max(0, Math.sin(Math.PI*Math.max(0, Math.min(1, (k - .2)/.6))));
-      hat.rotation.x = -.06 - .35*Math.max(0, Math.sin(Math.PI*Math.max(0, Math.min(1, (k - .2)/.6))));
-      head.rotation.x = .12*a;
+      var a = ease(Math.min(1, Math.max(0, k)/.35))*(1 - ease((Math.max(0, k) - .62)/.38));
+      var h = ease((k - .22)/.2)*(1 - ease((k - .5)/.22));
+      arms[0].sh.rotation.x = -2.5*a; arms[0].sh.rotation.z = -.08 - .3*a; arms[0].el.rotation.x = -.18 - 1.15*a;
+      hat.position.y = .17 + .08*h; hat.position.z = -.005 + .05*h; hat.rotation.x = -.06 - .4*h;
+      head.rotation.x = .14*h;                                                         // a little bow as the hat comes off
+      body.rotation.x = .07*h;
     }
-    function reset(){ run = null; man.visible = false; D.set(0); mats.forEach(function(m){ m.opacity = 1; }); lift(0); pose(0, 0); }
+    function reset(){ run = null; man.visible = false; D.set(0); mats.forEach(function(m){ m.opacity = 1; }); gait(0, 0); lift(0); ph = 0; lastD = 0; lastT = 0; }
     function play(delay){ reset(); run = {t0: performance.now() + (delay || 0)}; }
     function step(now){
       if (!run) return;
       var t = (now - run.t0)/1000; if (t < 0) return;
+      var dt = Math.max(0, Math.min(.1, t - lastT)); lastT = t;
       /* the door: open, then shut behind him once he is out on the portico */
-      var tShut = T_OUT + dOut/SPEED + .4;
-      D.set(t < tShut ? ease(t/T_OPEN) : 1 - ease((t - tShut)/1.6));
+      var tShut = T_OUT + tA - .3;
+      D.set(t < tShut ? ease(t/T_OPEN) : 1 - ease((t - tShut)/1.8));
       var tw = t - T_OUT; if (tw < 0) return;
       man.visible = true;
-      var d, walking = true, tl = 0;
-      if (tw*SPEED < dOut) d = tw*SPEED;
-      else if (tw < dOut/SPEED + PAUSE){ d = dOut; walking = false; tl = (tw - dOut/SPEED)/PAUSE; }
-      else d = dOut + (tw - dOut/SPEED - PAUSE)*SPEED;
-      if (d >= L){ reset(); return; }
-      var p = at(d), amp = walking ? Math.min(1, d/.5, (L - d)/.4 + .2) : 0;
-      /* during the pause he turns towards the viewer */
-      var hTo = p.h; if (!walking){ var tc = Math.atan2(cam.position.x - p.x, cam.position.z - p.z), dh = tc - p.h; dh = Math.atan2(Math.sin(dh), Math.cos(dh)); hTo = p.h + dh*.75*Math.sin(Math.PI*Math.min(1, tl*1.15)); }
-      var dy = Math.atan2(Math.sin(hTo - yaw), Math.cos(hTo - yaw)); yaw += dy*Math.min(1, .16);
-      var gy = floorY(p.x); by += (gy - by)*(Math.abs(gy - by) > .6 ? 1 : .25);
-      man.position.set(p.x, by + pose(d/STRIDE*Math.PI*2, amp), p.z); man.rotation.y = yaw;
-      if (walking){ lift(0); arms[0].sh.rotation.z = -.08; } else { pose(0, 0); lift((tl - .18)/.7); }
-      var fade = Math.min(1, (L - d)/2.2); mats.forEach(function(m){ m.opacity = fade; });
+      var p, head0, d, greet = -1;
+      if (tw < tA){ d = trav(tw, LA, true); p = PA.getPointAt(Math.min(1, d/LA)); head0 = Math.atan2(-1, 0); }
+      else if (tw < tA + PAUSE){ d = LA; p = PA.getPointAt(1); head0 = Math.atan2(-1, 0); greet = (tw - tA)/PAUSE; }
+      else {
+        var db = trav(tw - tA - PAUSE, LB, false); if (db >= LB){ reset(); return; }
+        d = LA + db; var u = db/LB; p = PB.getPointAt(u); var tg = PB.getTangentAt(Math.min(.999, u)); head0 = Math.atan2(tg.x, tg.z);
+      }
+      var spd = dt > 0 ? (d - lastD)/dt : 0, w = Math.min(1, spd/V); lastD = d;
+      ph += (d - (run.d || 0))/STRIDE; run.d = d;
+      /* heading: he turns towards the viewer while he greets, otherwise follows the path; a smooth, frame-rate-free turn */
+      var hTo = head0;
+      if (greet >= 0){ var tc = Math.atan2(cam.position.x - p.x, cam.position.z - p.z), dh = Math.atan2(Math.sin(tc - head0), Math.cos(tc - head0)); hTo = head0 + dh*.7*ease(greet/.2)*(1 - ease((greet - .8)/.2)); }
+      yaw += Math.atan2(Math.sin(hTo - yaw), Math.cos(hTo - yaw))*(1 - Math.exp(-dt*6));
+      if (!run.seen){ run.seen = true; yaw = hTo; }
+      gait(ph, w);
+      lift(greet >= 0 ? (greet - .15)/.7 : 0);
+      man.position.set(p.x, groundAt(p.x), p.z); man.rotation.y = yaw;
+      var fade = Math.min(1, (LA + LB - d)/2.4); mats.forEach(function(m){ m.opacity = fade; });
     }
     SCENES.count = {play: play, step: step, reset: reset, busy: function(){ return !!run; }};
   })();

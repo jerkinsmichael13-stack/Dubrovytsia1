@@ -208,6 +208,19 @@ a, button, [role="button"], input, select, textarea,
 .hx-3d:active{cursor:grabbing}
 .hx-poster{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;pointer-events:none;opacity:.92;transition:opacity 1.2s var(--ds-ease)}
 .hx-stage.live .hx-3d{opacity:1}.hx-stage.live .hx-poster{opacity:0}
+/* «Бібліотека» серед краєвиду: полотно на всю обкладинку, будинок праворуч, текст ліворуч на затіненому небі */
+@media(min-width:981px){
+.hx-land .ds-wrap{position:static}
+.hx-land .hx-stage{position:absolute;inset:0;margin:0;height:auto;min-height:0;z-index:0}
+.hx-land .hx-stage::before,.hx-land .hx-stage::after{display:none}
+.hx-land .hx-3d,.hx-land .hx-poster{-webkit-mask-image:linear-gradient(180deg,#000 78%,transparent 100%);mask-image:linear-gradient(180deg,#000 78%,transparent 100%)}
+.hx-land .hx-poster{object-fit:cover;opacity:1}
+.hx-land::after{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(90deg,rgba(21,17,10,.9) 0%,rgba(21,17,10,.74) 30%,rgba(21,17,10,.28) 50%,rgba(21,17,10,0) 62%),linear-gradient(180deg,rgba(21,17,10,.55) 0,rgba(21,17,10,0) 24%)}
+.hx-land .hx-copy{position:relative;z-index:2}
+.hx-land .hx-new{left:auto;right:max(2rem,calc((100vw - 1240px)/2));top:calc(var(--ds-hdr,72px) + 1.6rem);z-index:2}
+.hx-land .hx-hint{right:max(2rem,calc((100vw - 1240px)/2));top:calc(var(--ds-hdr,72px) + 4.6rem);z-index:2}
+.hx-land .hx-cap{left:auto;right:max(2rem,calc((100vw - 1240px)/2));bottom:2.2rem;width:min(560px,42vw);z-index:2;text-shadow:0 1px 12px rgba(10,8,4,.7)}
+}
 .hx-new{position:absolute;left:3%;top:3%;display:inline-flex;align-items:center;gap:.55rem;padding:.45rem .85rem .45rem .7rem;border-radius:999px;background:rgba(23,18,11,.55);border:1px solid rgba(212,178,90,.38);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);font:600 .66rem var(--ds-body);letter-spacing:.16em;text-transform:uppercase;color:#f4e9c8;pointer-events:none}
 .hx-new i{width:7px;height:7px;border-radius:50%;background:var(--ds-gold-hi);box-shadow:0 0 0 0 rgba(212,178,90,.6);animation:hxPing 2.2s infinite}
 @keyframes hxPing{0%{box-shadow:0 0 0 0 rgba(212,178,90,.55)}70%{box-shadow:0 0 0 9px rgba(212,178,90,0)}100%{box-shadow:0 0 0 0 rgba(212,178,90,0)}}
@@ -379,7 +392,8 @@ a, button, [role="button"], input, select, textarea,
                          aria: '3D-модель церкви Різдва Богородиці. Потягніть убік, щоб обернути.', opts: {view: [-50, 14, 46], targetY: 13.2, fit: innerWidth < 980 ? 1.04 : 1.0}},
                 worobin: {js: 'worobin-3d.js', g: 'Worobin3D', poster: 'worobin-3d-poster.webp', href: 'worobin-3d.html', title: '«Бібліотека» у Воробині',
                          sub: 'павільйон Плятерів, якого вже немає · реконструкція за фото', alt: 'Павільйон «Бібліотека» у Воробині — 3D-реконструкція',
-                         aria: '3D-реконструкція павільйону «Бібліотека» у Воробині. Потягніть убік, щоб обернути.', opts: {view: [-46, 13, 40], targetY: 4.6, fit: innerWidth < 980 ? 1.04 : .98}},
+                         aria: '3D-реконструкція павільйону «Бібліотека» у Воробині серед краєвиду над Горинню. Потягніть убік, щоб обернути.', land: 'hero-worobin.js', landPoster: 'worobin-land-poster.webp',
+                         opts: {view: [-46, 8, 22], targetY: 6.5, fit: innerWidth < 980 ? 1.3 : 1.85, turntable: false}},
                 mykolai: {js: 'mykolai-3d.js', g: 'Mykolai3D', poster: 'mykolai-3d-poster.webp', href: 'mykolai-3d.html', title: 'Свято-Миколаївська церква',
                          sub: "дерев'яна, збудована 1872 коштом парафіян", alt: 'Свято-Миколаївська церква в Дубровиці — 3D-модель',
                          aria: '3D-модель Свято-Миколаївської церкви. Потягніть убік, щоб обернути.', opts: {view: [-38, 13, 44], targetY: 7.4, fit: innerWidth < 980 ? 1.0 : .92}}
@@ -394,6 +408,7 @@ a, button, [role="button"], input, select, textarea,
               document.getElementById('hxSub').textContent = m.sub;
               document.getElementById('hxFull').href = m.href;
               st.dataset.model = k; window.__hx3d = m;
+              if (m.land){ st.closest('.hx-cover').classList.add('hx-land'); if (innerWidth > 980 && m.landPoster){ img.src = m.landPoster; } }
             })();
             </script>
         </div>
@@ -6970,10 +6985,19 @@ g.ULB={open:open,close:close,nav:nav,
     sc.onerror = function(){ st.classList.add('nogl'); };
     sc.onload = function(){
       var G = window[m.g]; if (!G){ st.classList.add('nogl'); return; }
-      G.mount(cv, Object.assign({ zoom: false, touch: 'pan-y', pixelRatio: 1.75, shadow: innerWidth < 700 ? 1024 : 2048, motes: true, autoRotateSpeed: .55,
+      var land = m.land ? new Promise(function(res){ var ls = document.createElement('script'); ls.src = m.land; ls.async = true; ls.onload = res; ls.onerror = function(){ res(); }; document.head.appendChild(ls); }) : Promise.resolve();
+      var wide = function(){ return innerWidth > 980; };
+      G.mount(cv, Object.assign({ zoom: false, touch: 'pan-y', pixelRatio: m.land ? (wide() ? 1.35 : 1.6) : 1.75, shadow: innerWidth < 700 ? 1024 : 2048, motes: true, autoRotateSpeed: m.land ? .35 : .55,
         onStart: function(){ st.classList.add('touched'); },
-        onReady: function(){ st.classList.add('live'); },
-        onFail: function(){ st.classList.add('nogl'); } }, m.opts));
+        onReady: function(){ if (!m.land) st.classList.add('live'); },
+        onFail: function(){ st.classList.add('nogl'); } }, m.opts)).then(function(api){
+          if (!api || !m.land) return;
+          land.then(function(){
+            if (window.HeroLand) { HeroLand.attach(api, {lite: innerWidth < 700 || (navigator.hardwareConcurrency || 8) < 5, shift: wide() ? .17 : 0});
+              addEventListener('resize', function(){ if (api.setShift) api.setShift(wide() ? .17 : 0); }); }
+            requestAnimationFrame(function(){ requestAnimationFrame(function(){ st.classList.add('live'); }); });
+          });
+        });
     };
     document.head.appendChild(sc);
   }
