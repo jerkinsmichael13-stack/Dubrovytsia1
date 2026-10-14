@@ -18,55 +18,70 @@ function attach(api, o){
     var a = hash(ix, iz), b = hash(ix + 1, iz), c = hash(ix, iz + 1), d = hash(ix + 1, iz + 1); return a + (b - a)*fx + (c - a)*fz + (a - b - c + d)*fx*fz; }
   function fbm(x, z){ return vnoise(x, z)*.5 + vnoise(x*2.03 + 5.2, z*2.03 + 1.3)*.25 + vnoise(x*4.1 + 2.7, z*4.1 + 8.1)*.125; }
 
-  /* ── the land ── */
+  /* ── the land, after the aerial photographs of 1944: the park is a large rectangle of old trees with the pavilion near its
+     eastern edge; the Horyn runs close below it, and beyond lies open water-meadow with old river bends — no forest there;
+     fields lie north, south and west of the park ── */
   var GX = -3.4, GZ = -.4;                                                          // centre of the model's turntable
   function near(x){ return -1.75*ss(-5, 9, x) - 2.2*ss(9.5, 22, x); }               // the same slope the model stands on
-  function riverX(z){ return 46 + 10*Math.sin(z/41 + .6) + 4.5*Math.sin(z/17.5 + 2.1); }
+  function riverX(z){ return 42 + 4.5*Math.sin(z/57 + .4) + 2.5*Math.sin(z/23 + 2.1); }
   var WATER = -5.0;
+  var PARK = {x0: -360, x1: 26, z0: -310, z1: 290};
+  /* old river bends out on the meadow: centre, radius, start and end angle */
+  var OXBOWS = [[118, -70, 34, .4, 3.6], [170, 60, 26, 2.6, 5.9], [104, 150, 22, -.6, 2.4], [230, -170, 30, 2.0, 5.2]];
+  function oxDist(x, z){ var m = 1e9; OXBOWS.forEach(function(o){ var dx = x - o[0], dz = z - o[1], a = Math.atan2(dz, dx); if (a < o[3]) a += 6.283; if (a > o[3] && a < o[4] || a - 6.283 > o[3] && a - 6.283 < o[4]){ m = Math.min(m, Math.abs(Math.hypot(dx, dz) - o[2])); } }); return m; }
+  function chan(x, z){ return Math.abs(Math.sin(x*.021 + Math.sin(z*.017)*2.2) *60 - (z*.08 % 60)); }
   function H(x, z){
     var h = near(x);
     var rx = riverX(z), d = Math.abs(x - rx);
     h -= 1.55*(1 - ss(4.5, 9.5, d));                                                // the river bed and its banks
-    h += 1.1*ss(0, 1, (x - rx - 22)/60) + 1.2*ss(0, 1, (x - rx - 70)/90);              // the far bank rises to a wooded terrace
-    h += .9*ss(-30, -140, x) + .5*ss(70, 200, Math.abs(z));                           // gentle rise westwards and far off
+    h += .25*ss(0, 1, (x - rx - 30)/200);                                            // the meadow beyond: flat, barely rising
+    h += .9*ss(-30, -200, x) + .5*ss(120, 320, Math.abs(z));                          // the land rises gently away from the river
     var r = Math.hypot(x - GX, z - GZ), wild = ss(26, 70, r);
-    h += (fbm(x*.018, z*.018) - .5)*2.4*wild*ss(10, 30, d);
+    h += (fbm(x*.018, z*.018) - .5)*(x > rx ? .7 : 2.2)*wild*ss(10, 30, d);
+    var od = oxDist(x, z); if (od < 9) h -= 1.1*(1 - ss(2.5, 8, od));
     PONDS.forEach(function(p){ var q = Math.hypot((x - p[0])/p[2], (z - p[1])/p[3]); if (q < 1.6) h = Math.min(h, h - .9*(1 - ss(.75, 1.6, q))); });
     return h;
   }
-  var PONDS = [[24.5, 17, 6.5, 4.2], [27, -21, 5.4, 3.6]];                          // the two ponds on the lower level
+  var PONDS = [[22.5, 36, 6.5, 4.2], [21, -40, 5.4, 3.6]];                          // the two ponds on the lower level of the park
   function pondLevel(p){ return near(p[0]) - .55; }
+  function inPark(x, z){ return x > PARK.x0 && x < PARK.x1 && z > PARK.z0 && z < PARK.z1; }
 
-  /* forest: belts along the horizon and the far bank, a copse north of the park; none on the fields and meadows */
+  /* trees: the old park (but a lawn kept open before the west and south fronts, where the eye goes), hedgerows on the fields,
+     willows along the water, a far line of woods on the horizon; none on the water-meadow */
   function forest(x, z){
     var rx = riverX(z), f = 0;
-    f = Math.max(f, ss(0, 1, (x - rx - 24)/20));                                     // beyond the river
-    f = Math.max(f, ss(-58, -90, z)*(1 - ss(70, 90, x - rx + 70)));                   // north
-    f = Math.max(f, ss(64, 96, z));                                                   // south
-    f = Math.max(f, ss(-120, -150, x));                                               // far west, beyond the fields
-    if (Math.hypot(x + 22, z + 44) < 18) f = Math.max(f, 1 - ss(10, 18, Math.hypot(x + 22, z + 44)));   // a copse north-west of the park
-    f *= .55 + .9*fbm(x*.03 + 3, z*.03 + 9);
-    if (Math.hypot(x - GX, z - GZ) < 36) f = 0;
-    if (Math.abs(x - rx) < 12) f = 0;
+    if (inPark(x, z)){
+      f = .78;
+      var dx = x - GX, dz = z - GZ, r = Math.hypot(dx, dz), az = Math.atan2(dz, dx);   // the lawn: a wide sector west and south of the house
+      if (r < 44) f = 0;
+      else if (dx < 0 && dz > -30 && r < 150) f = Math.min(f, .06 + .3*ss(110, 150, r));
+      else if (dz > 0 && r < 120) f = Math.min(f, .1);
+      f *= .7 + .6*fbm(x*.04 + 3, z*.04 + 9);
+      if (Math.abs(z) < 7 && x < -20) f = 0;                                          // the drive
+    } else if (x < rx){
+      var hedge = (Math.abs(((z + 1000) % 90) - 45) > 43.5) || (Math.abs(((x + 1000) % 150) - 75) > 73.5);
+      f = hedge ? .55 : 0;
+    }
+    if (Math.hypot(x - GX, z - GZ) > 380) f = Math.max(f, .7*ss(380, 430, Math.hypot(x - GX, z - GZ)));   // the far woods
+    if (Math.abs(x - rx) < 9) f = 0;
     return Math.min(1, f);
   }
 
   /* ── terrain mesh with painted zones ── */
-  var SIZE = 640, SEG = lite ? 150 : 220, CX = 30;
+  var SIZE = 960, SEG = lite ? 140 : 250, CX = 20;
   var tg = new T.PlaneGeometry(SIZE, SIZE, SEG, SEG); tg.rotateX(-Math.PI/2); tg.translate(CX, 0, 0);
   var tp = tg.attributes.position, col = new Float32Array(tp.count*3), C = new T.Color();
   var cLawn = lin('#6a7a42'), cMead = lin('#82904a'), cMeadY = lin('#a09a58'), cMud = lin('#6b5f43'), cFloor = lin('#465230'),
-      cField = [lin('#a3954f'), lin('#7c8b42'), lin('#b8a462'), lin('#919049'), lin('#6e7d3d')], cRoad = lin('#8a7652');
+      cField = [lin('#a3954f'), lin('#7c8b42'), lin('#b8a462'), lin('#919049'), lin('#6e7d3d')], cRoad = lin('#8a7652'), cWet = lin('#4f5a35');
   for (var i = 0; i < tp.count; i++){
     var x = tp.getX(i), z = tp.getZ(i), h = H(x, z); tp.setY(i, h);
     var rx = riverX(z), d = Math.abs(x - rx), n = fbm(x*.08, z*.08);
-    if (x < -44){ var strip = Math.floor((z + 1000)/15), k = Math.floor(hash(strip, Math.floor((x + 1000)/90))*5); C.copy(cField[k]); }
-    else if (x > 12) C.copy(cMead).lerp(cMeadY, ss(.45, .8, n));
-    else C.copy(cLawn);
-    if (x > -44 && x < -40) C.lerp(cLawn, .5);
-    var fr = forest(x, z); C.lerp(cFloor, ss(.15, .5, fr));
+    if (inPark(x, z) || x > 12){ C.copy(x > 12 && !inPark(x, z) ? cMead : cLawn); if (x > rx) C.lerp(cMeadY, ss(.45, .8, n)); }
+    else { var strip = Math.floor((z + 1000)/15), k = Math.floor(hash(strip, Math.floor((x + 1000)/90))*5); C.copy(cField[k]); }
+    var fr = forest(x, z); C.lerp(cFloor, ss(.15, .5, fr)*.8);
     C.lerp(cMud, 1 - ss(5.5, 8.5, d));
-    if (Math.abs(x + 58 + Math.sin(z/60)*3) < 2.4) C.copy(cRoad);                     // the road north–south, west of the estate
+    var od = oxDist(x, z); if (x > rx) C.lerp(cWet, (1 - ss(3, 14, od))*.8 + .35*ss(.55, .75, fbm(x*.03 + 11, z*.03)));    // wet hollows and reeds on the meadow
+    if (Math.abs(x - PARK.x0 + 55) < 2.6 || (Math.abs(z - PARK.z0 + 22) < 2.2 && x < PARK.x1)) C.copy(cRoad);    // roads round the park
     C.multiplyScalar(.86 + .28*n);
     col[i*3] = C.r; col[i*3 + 1] = C.g; col[i*3 + 2] = C.b;
   }
@@ -83,7 +98,8 @@ function attach(api, o){
         'diffuseColor.rgb *= 1.0 + tuft;',
         'diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb*vec3(1.12, 1.05, .78), smoothstep(.62, .82, g3)*.5);',      // drier, yellower patches
         'float fur = abs(sin(vTW.z*.9 + tn(vTW.xz*.05)*4.0));',
-        'diffuseColor.rgb *= mix(1.0, .9 + .14*fur, step(vTW.x, -44.0)*fd);'].join('\n'));      // furrows in the fields
+        'float field = 1.0 - step(-360.0, vTW.x)*step(vTW.x, 26.0)*step(-310.0, vTW.z)*step(vTW.z, 290.0);',
+        'diffuseColor.rgb *= mix(1.0, .9 + .14*fur, field*step(vTW.x, 30.0)*fd);'].join('\n'));      // furrows in the fields
   };
   var terrain = new T.Mesh(tg, terrM); terrain.receiveShadow = true; scene.add(terrain);
 
@@ -160,6 +176,41 @@ function attach(api, o){
     });
   })();
 
+  /* old bends of the river: still water in long crescents out on the meadow */
+  (function(){
+    var pm = waterM.clone(); pm.uniforms = Object.assign({}, waterM.uniforms, {uFlow: {value: .05}});
+    OXBOWS.forEach(function(o){
+      var segs = 60, W = 7, pos = [], uv = [], idx = [], a0 = o[3], a1 = o[4];
+      for (var i = 0; i <= segs; i++){ var a = a0 + (a1 - a0)*i/segs, cx = o[0] + Math.cos(a)*o[2], cz = o[1] + Math.sin(a)*o[2], nx = Math.cos(a), nz = Math.sin(a), w = W*(.35 + .65*Math.sin(Math.PI*i/segs));
+        var y = H(cx, cz) + .45; pos.push(cx - nx*w/2, y, cz - nz*w/2, cx + nx*w/2, y, cz + nz*w/2); uv.push(0, i/segs, 1, i/segs); if (i) idx.push(2*i - 2, 2*i - 1, 2*i, 2*i - 1, 2*i + 1, 2*i); }
+      var g = new T.BufferGeometry(); g.setAttribute('position', new T.Float32BufferAttribute(pos, 3)); g.setAttribute('uv', new T.Float32BufferAttribute(uv, 2)); g.setIndex(idx);
+      var m = new T.Mesh(g, pm); m.renderOrder = 2; scene.add(m);
+    });
+  })();
+
+  /* ── the other buildings of the estate, where the aerial photograph shows their walls: plain plastered houses under hipped
+     roofs (their looks are not recorded, so they stay simple and quiet) ── */
+  (function(){
+    var wallM = new T.MeshStandardMaterial({color: '#ddd5c3', roughness: .92}), roofM = new T.MeshStandardMaterial({color: '#7a5240', roughness: .8});
+    var c = document.createElement('canvas'); c.width = 256; c.height = 64; var k = c.getContext('2d'); k.fillStyle = '#ddd5c3'; k.fillRect(0, 0, 256, 64);
+    for (var i = 0; i < 8; i++){ k.fillStyle = '#efe9dc'; k.fillRect(8 + i*32, 16, 16, 30); k.fillStyle = '#2b3036'; k.fillRect(10 + i*32, 18, 12, 26); }
+    var wt = new T.CanvasTexture(c); wt.encoding = T.sRGBEncoding; wt.wrapS = T.RepeatWrapping;
+    function hip(w, d, h){ var g = new T.ConeGeometry(Math.SQRT1_2, 1, 4, 1); g.rotateY(Math.PI/4); g.scale(w*1.06, h, d*1.06); g.translate(0, h/2, 0); return g; }
+    function house(x, z, w, d, rot, wallH){
+      var y = H(x, z), g = new T.Group(); g.position.set(x, y, z); g.rotation.y = rot || 0; scene.add(g);
+      var t = wt.clone(); t.needsUpdate = true; t.repeat.set(Math.max(1, Math.round(w/8)), 1);
+      var b = new T.Mesh(new T.BoxGeometry(w, wallH, d), [new T.MeshStandardMaterial({map: t, roughness: .92}), new T.MeshStandardMaterial({map: t, roughness: .92}), wallM, wallM, new T.MeshStandardMaterial({map: t, roughness: .92}), new T.MeshStandardMaterial({map: t, roughness: .92})]);
+      b.position.y = wallH/2 - .2; b.castShadow = b.receiveShadow = true; g.add(b);
+      var r = new T.Mesh(hip(w, d, Math.min(w, d)*.42), roofM); r.position.y = wallH - .2; r.castShadow = true; g.add(r);
+      return g;
+    }
+    house(-285, -165, 44, 13, Math.PI/2, 5.2); house(-262, -128, 22, 12, 0, 5.2);          // the L-shaped officina
+    house(-235, -62, 30, 13, 0, 5.4);
+    house(-168, -255, 34, 12, Math.PI/2, 5);
+    house(2, -186, 15, 11, 0, 4.6);
+    house(-90, -335, 26, 11, 0, 4.6);
+  })();
+
   /* ── trees: instanced crowns, a breath of wind in the vertex shader ── */
   function blobCrown(){                                                              // three lumps of foliage, merged
     var parts = [[0, 0, 0, 1], [.55, -.25, .2, .72], [-.45, -.2, -.35, .7], [.05, .45, -.1, .62]], P = [], N = [];
@@ -188,11 +239,14 @@ function attach(api, o){
   var list = {blob: [], cone: [], pop: []};
   function add(kind, x, z, s){ list[kind].push([x, H(x, z), z, s]); }
   /* the forest */
-  var step = lite ? 7.5 : 5.2, rnd = (function(seed){ return function(){ seed = (seed*16807) % 2147483647; return (seed - 1)/2147483646; }; })(1918);
+  var step = lite ? 9 : 6, rnd = (function(seed){ return function(){ seed = (seed*16807) % 2147483647; return (seed - 1)/2147483646; }; })(1918);
   for (var fx = CX - SIZE/2 + 4; fx < CX + SIZE/2 - 4; fx += step) for (var fz = -SIZE/2 + 4; fz < SIZE/2 - 4; fz += step){
+    var rr = Math.hypot(fx - GX, fz - GZ), thin = rr < 140 ? 1 : rr < 260 ? .4 : .18;   // farther off, fewer but bigger trees
+    if (rnd() > thin) continue;
     var x2 = fx + (rnd() - .5)*step*.9, z2 = fz + (rnd() - .5)*step*.9, f = forest(x2, z2);
     if (rnd() > f) continue;
-    add(rnd() < .38 ? 'cone' : 'blob', x2, z2, 1.6 + rnd()*1.4);
+    var big = 1/Math.sqrt(thin);
+    add(rnd() < (inPark(x2, z2) ? .18 : .3) ? 'cone' : 'blob', x2, z2, (1.7 + rnd()*1.2)*Math.min(1.8, .75 + .25*big));
   }
   /* hedgerows and lone trees on the fields and meadows */
   for (var k2 = 0; k2 < (lite ? 40 : 80); k2++){ var lx = -40 - rnd()*90, lz = Math.floor((rnd()*360 - 180)/15)*15; if (forest(lx, lz) > .2) continue; add('blob', lx, lz, 1.2 + rnd()*.8); }
@@ -257,7 +311,7 @@ function attach(api, o){
       'uniform vec3 uSun, uZen, uHor, uSunH, uAnti, uGlow, uCLit, uCSh, uMoon; uniform float uTime, uGlowI, uDisk, uCov, uStars; varying vec3 vD;',
       'float h(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7)))*43758.5453); }',
       'float n(vec2 p){ vec2 i = floor(p), f = fract(p); f = f*f*(3.0 - 2.0*f); return mix(mix(h(i), h(i + vec2(1, 0)), f.x), mix(h(i + vec2(0, 1)), h(i + vec2(1, 1)), f.x), f.y); }',
-      'float fbm(vec2 p){ float a = .5, s = 0.0; for (int i = 0; i < 5; i++){ s += a*n(p); p = p*2.07 + vec2(1.7, 9.2); a *= .5; } return s; }',
+      'float fbm(vec2 p){ float a = .5, s = 0.0; for (int i = 0; i < ' + (lite ? 3 : 5) + '; i++){ s += a*n(p); p = p*2.07 + vec2(1.7, 9.2); a *= .5; } return s; }',
       'void main(){',
       '  vec3 d = normalize(vD); float y = d.y;',
       '  vec3 sh = normalize(vec3(uSun.x, 0.0, uSun.z) + 1e-5), dh = normalize(vec3(d.x, 0.0, d.z) + 1e-5);',
@@ -397,6 +451,7 @@ function attach(api, o){
   frame(); requestAnimationFrame(frame);
   if ('ResizeObserver' in window) new ResizeObserver(function(){ requestAnimationFrame(frame); }).observe(renderer.domElement);
   api.setShift = function(s){ shift = s; frame(); };
+  window.__heroApi = api;
 
   /* ── a view, not a turntable: the camera may swing only between the west front (portico and tower) and the south colonnade,
      and when left alone it drifts slowly back and forth between them ── */

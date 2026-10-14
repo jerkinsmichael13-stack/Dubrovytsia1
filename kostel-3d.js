@@ -8,6 +8,7 @@ var loading = null;
 function load(){
   if (window.THREE && THREE.OrbitControls) return Promise.resolve();
   if (loading) return loading;
+  if (window.X3DLoad && X3DLoad.three) return (loading = X3DLoad.three(BASE + 'three-r147.js').then(function(){ if (!(window.THREE && THREE.OrbitControls)) throw new Error('three'); }, function(e){ loading = null; throw e; }));
   loading = new Promise(function(res, rej){
     var s = document.createElement('script'); s.src = BASE + 'three-r147.js'; s.async = true;
     s.onload = function(){ window.THREE && THREE.OrbitControls ? res() : rej(new Error('three')); };
@@ -22,7 +23,7 @@ function fonts(){
   return Promise.race([Promise.all([document.fonts.load('500 64px "Cormorant Garamond"'), document.fonts.load('600 40px "Manrope"')]).catch(function(){}), new Promise(function(r){ setTimeout(r, 1500); })]);
 }
 function mount(canvas, o){
-  o = Object.assign({autoRotate:true, autoRotateSpeed:.45, zoom:true, touch:'none', view:[46, 9, 52], fit:1, pixelRatio:2, shadow:2048,
+  o = Object.assign({autoRotate:true, autoRotateSpeed:.45, zoom:true, touch:'none', view:[46, 9, 52], fit:1, pixelRatio:(Math.min(screen.width, screen.height) < 700 ? 1.5 : 2), shadow:(Math.min(screen.width, screen.height) < 700 ? 1024 : 2048),
                      turntable:true, motes:false, onReady:null, onFail:null, onStart:null}, o || {});
   if (!supported()){ if (o.onFail) o.onFail('webgl'); return Promise.resolve(null); }
   return Promise.all([load(), fonts()]).then(function(){ return build(canvas, o); }, function(){ if (o.onFail) o.onFail('load'); return null; });
