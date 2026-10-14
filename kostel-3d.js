@@ -26,7 +26,32 @@ function mount(canvas, o){
   o = Object.assign({autoRotate:true, autoRotateSpeed:.45, zoom:true, touch:'none', view:[46, 9, 52], fit:1, pixelRatio:(Math.min(screen.width, screen.height) < 700 ? 1.5 : 2), shadow:(Math.min(screen.width, screen.height) < 700 ? 1024 : 2048),
                      turntable:true, motes:false, onReady:null, onFail:null, onStart:null}, o || {});
   if (!supported()){ if (o.onFail) o.onFail('webgl'); return Promise.resolve(null); }
-  return Promise.all([load(), fonts()]).then(function(){ return build(canvas, o); }, function(){ if (o.onFail) o.onFail('load'); return null; });
+  /* o.glb: the church baked in Blender (real openings, ambient occlusion, weathered plaster and tiles in the textures);
+     it downloads alongside three.js, and the caller gets the model only once it stands in place of the drawn one */
+  var glb = o.glb ? fetch(BASE + o.glb).then(function(r){ if (!r.ok) throw new Error('glb'); return r.arrayBuffer(); }) : null;
+  if (glb) glb.catch(function(){});
+  return Promise.all([load(), fonts()]).then(function(){
+    var api = build(canvas, o);
+    if (!api || !glb) return api;
+    return Promise.all([glb, loadGLTF()]).then(function(r){ return parseGLB(r[0]); }).then(api.useGLB).then(function(){ return api; }, function(){ return api; });
+  }, function(){ if (o.onFail) o.onFail('load'); return null; });
+}
+var gltfLoading = null;
+function loadGLTF(){
+  if (THREE.GLTFLoader && THREE.DRACOLoader) return Promise.resolve();
+  return gltfLoading || (gltfLoading = new Promise(function(res, rej){
+    var s = document.createElement('script'); s.src = BASE + 'gltf-r147.js'; s.async = true;
+    s.onload = function(){ THREE.GLTFLoader ? res() : rej(new Error('gltf')); };
+    s.onerror = function(){ gltfLoading = null; rej(new Error('gltf')); };
+    document.head.appendChild(s);
+  }));
+}
+function parseGLB(buf){
+  return new Promise(function(res, rej){
+    var draco = new THREE.DRACOLoader(); draco.setDecoderPath(BASE + 'draco/'); draco.setWorkerLimit(2);
+    var gl = new THREE.GLTFLoader(); gl.setDRACOLoader(draco);
+    gl.parse(buf, BASE, function(g){ draco.dispose(); res(g); }, function(e){ draco.dispose(); rej(e); });
+  });
 }
 window.Kostel3D = {mount: mount, load: load, supported: supported};
 
@@ -820,7 +845,9 @@ var L0 = {sp: sun.position.clone(), sc: sun.color.clone(), si: sun.intensity, fp
           hs: hemi.color.clone(), hg: hemi.groundColor.clone(), hi: hemi.intensity, ex: renderer.toneMappingExposure, box: sc.right, far: sc.far};
 function shadowBox(r, far){ sc.left = -r; sc.right = r; sc.top = r; sc.bottom = -r; sc.far = far; sc.updateProjectionMatrix(); }
 var envMats = null;
+var envK = 1;
 function envScale(k){
+  envK = k;
   if (!envMats){ envMats = []; scene.traverse(function(ob){ if (!ob.material) return; (Array.isArray(ob.material) ? ob.material : [ob.material]).forEach(function(m){ if (m.envMapIntensity !== undefined && envMats.indexOf(m) < 0){ m.userData.env0 = m.envMapIntensity; envMats.push(m); } }); }); }
   envMats.forEach(function(m){ m.envMapIntensity = m.userData.env0*k; });
 }
@@ -916,8 +943,30 @@ document.addEventListener('visibilitychange', sync);
 if ('ResizeObserver' in window) new ResizeObserver(resize).observe(canvas); else window.addEventListener('resize', resize);
 resize(); sync();
 
+/* ── swap the drawn church for the baked one (o.glb): plain parts take the site's own materials, so the windows still glow at night ── */
+function useGLB(gltf){
+  var meshes = []; gltf.scene.updateMatrixWorld(true); gltf.scene.traverse(function(ob){ if (ob.isMesh) meshes.push(ob); });
+  if (meshes.length < 3) throw new Error('glb empty');
+  church.children.slice().forEach(function(c){ church.remove(c); c.traverse(function(x){ if (x.geometry) x.geometry.dispose(); }); });
+  meshes.forEach(function(ob){
+    var mt = ob.material, nm = mt.name || '', k = nm.replace(/^KX_/, '');
+    if (nm !== k && M[k] && !M[k].map){ ob.material = M[k]; mt.dispose(); }
+    else if (nm === 'KE_masonry'){ mt.roughness = .93; mt.metalness = 0; }
+    else if (nm === 'KE_roof'){ mt.roughness = .84; mt.metalness = 0; }
+    else if (nm === 'KE_dome'){ mt.roughness = .5; mt.metalness = .35; }
+    else { mt.roughness = Math.max(mt.roughness, .6); mt.metalness = 0; }
+    if (ob.material.map) ob.material.map.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
+    ob.geometry.applyMatrix4(ob.matrixWorld); ob.position.set(0, 0, 0); ob.rotation.set(0, 0, 0); ob.scale.set(1, 1, 1);
+    ob.castShadow = ob.receiveShadow = true; church.add(ob);
+  });
+  church.userData.baked = true;
+  if (envMats){ envMats = null; envScale(envK); }
+  if (api.onModelSwap) api.onModelSwap();
+  wake();
+}
+
 var api = {
-  renderer: renderer, camera: camera, controls: controls, scene: scene, model: church,
+  renderer: renderer, useGLB: useGLB, camera: camera, controls: controls, scene: scene, model: church,
   zoomIn: function(){ zoomBy(1/1.35); }, zoomOut: function(){ zoomBy(1.35); },
   reset: function(){ touched = false; moveTo(home()); },
   autoRotate: function(on){ if (on === undefined) return controls.autoRotate; controls.autoRotate = !!on; return controls.autoRotate; },
