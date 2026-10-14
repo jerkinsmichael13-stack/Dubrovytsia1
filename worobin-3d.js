@@ -286,11 +286,41 @@ AX.forEach(function(x){ win(SF, x, W1.y, WW, W1.h, {bars: 3}); blind(SF, x, PNL.
 /* west front: windows in the outer axes; under the portico the door, a window over it, and panels imitating windows */
 [-6.4, 6.4].forEach(function(x){ win(WF, x, W1.y, WW, W1.h, {bars: 3}); blind(WF, x, PNL.y, PNL.w, PNL.h); win(WF, x, W2.y, WW, W2.h, {bars: 3}); });
 [-3.2, 3.2].forEach(function(x){ blind(WF, x, W1.y, 1.1, 2.0); blind(WF, x, PNL.y, PNL.w, PNL.h); blind(WF, x, P + 5.55, 1.1, .9); });
-(function(){                                                                        // the door: two panelled leaves
-  var w = 1.2, h = 2.8, y = P + .1;
-  win(WF, 0, y, w, h, {glass: M.door, depth: .3, sill: false});
-  [-1, 1].forEach(function(s){ [[.25, 1.0], [1.45, 1.1]].forEach(function(p){ sunk(box(.4, p[1], .05, s*.29, y + p[0], -.27, M.doorP, WF), 3); }); });
-  sunk(box(.04, h, .06, 0, y, -.26, M.doorP, WF), 3);
+var door = null;
+(function(){                                                                        // the door: two panelled leaves on hinges, a lit hall behind
+  var w = 1.2, h = 2.8, y = P + .1, D = 3.4;
+  if (o.ar){                                                                        // AR: the old flat door, shut
+    win(WF, 0, y, w, h, {glass: M.door, depth: .3, sill: false});
+    [-1, 1].forEach(function(s){ [[.25, 1.0], [1.45, 1.1]].forEach(function(p){ sunk(box(.4, p[1], .05, s*.29, y + p[0], -.27, M.doorP, WF), 3); }); });
+    sunk(box(.04, h, .06, 0, y, -.26, M.doorP, WF), 3);
+  } else {
+    /* the entrance hall: warm plaster lit from inside, a parquet floor, a portrait in a gilt frame and a lamp */
+    var glow = new THREE.Color('#6b4520'), hallR = mat('#d9c29a', {side: THREE.BackSide, emissive: glow, emissiveIntensity: .7});
+    var hallB = mat('#cdb184', {emissive: glow, emissiveIntensity: .75});
+    hallR.userData.indoor = hallB.userData.indoor = true;
+    cut(WF, 0, function(){ return rectS(w, y, y + h); }, D, hallB, hallR);
+    var parq = mat('#6d4a2c', {roughness: .5, emissive: new THREE.Color('#2a170a'), emissiveIntensity: .8}); parq.userData.indoor = true;
+    sunk(add(new THREE.PlaneGeometry(w, D), parq, 0, y + .012, -D/2, WF), 3).rotation.x = -Math.PI/2;
+    var gilt = mat('#c9a24e', {roughness: .35, metalness: .6, emissive: new THREE.Color('#3a2808'), emissiveIntensity: .6});
+    sunk(box(.62, .8, .04, 0, y + 1.25, -D + .05, gilt, WF), 3);
+    sunk(box(.5, .66, .02, 0, y + 1.32, -D + .08, mat('#3b2a1c', {emissive: new THREE.Color('#1d120a'), emissiveIntensity: .8}), WF), 3);
+    sunk(add(new THREE.SphereGeometry(.13, 16, 10), new THREE.MeshBasicMaterial({color: '#ffd89a'}), 0, y + h - .35, -D*.55, WF), 3);
+    /* the leaves, hinged at the jambs: they swing inwards, into the hall */
+    var leafM = M.door, pan = M.doorP, piv = [];
+    [-1, 1].forEach(function(s){
+      var g = new THREE.Group(); g.position.set(s*w/2, 0, -.27); WF.add(g); piv.push(g);
+      var lf = sunk(box(w/2 - .01, h - .02, .06, -s*(w/4), y + .01, 0, leafM, g), 3); lf.userData.live = true;
+      [[.25, 1.0], [1.45, 1.1]].forEach(function(p){ var pn = sunk(box(.4, p[1], .03, -s*(w/4), y + p[0], .04, pan, g), 3); pn.userData.live = true; });
+      if (s > 0){ var bead = sunk(box(.04, h - .02, .03, -(w/2 - .02), y + .01, .04, pan, g), 3); bead.userData.live = true; }
+    });
+    var lamp = new THREE.PointLight('#ffc27a', 0, 9, 1.6); lamp.position.set(0, y + 2.2, .4); WF.add(lamp);
+    door = {
+      /* k: 0 shut … 1 wide open */
+      set: function(k){ k = Math.max(0, Math.min(1, k)); var a = k*1.48; piv[0].rotation.y = a; piv[1].rotation.y = -a; lamp.intensity = k*2.2; },
+      pos: function(z){ return WF.localToWorld(new THREE.Vector3(0, y, z || 0)); },   // a point on the door axis, z metres out of (+) or into (−) the wall
+      floor: y, depth: D
+    };
+  }
   blind(WF, 0, PNL.y, PNL.w, PNL.h);
   win(WF, 0, W2.y, 1.1, W2.h, {bars: 3});
 })();
@@ -474,7 +504,7 @@ if (o.ar) (function(root){ var rm = []; root.traverse(function(ob){ if (!ob.isMe
   root.updateMatrixWorld(true);
   var groups = {}, order = [], gone = [];
   root.traverse(function(ob){
-    if (!ob.isMesh || Array.isArray(ob.material)) return;
+    if (!ob.isMesh || Array.isArray(ob.material) || ob.userData.live) return;
     var key = ob.material.uuid + '|' + ob.renderOrder + '|' + ob.castShadow + '|' + ob.receiveShadow + '|' + ob.frustumCulled;
     if (!groups[key]){ groups[key] = {o: ob, list: []}; order.push(key); }
     groups[key].list.push(ob);
@@ -679,6 +709,7 @@ var api = {
   view: function(side){ var D = {west: [-1, .22, 0], south: [0, .22, 1], east: [1, .22, 0], north: [0, .22, -1], sw: [-1, .3, .85], ne: [1, .3, -.85]}; viewFrom(D[side] || D.sw); },
   /* model-space directions of geographic east and north (x, z): the portico faces west, the colonnade south */
   compass: {east: [1, 0], north: [0, -1]},
+  door: door,                                                                     // the west door: set(0…1), pos(z)
   light: setLight
 };
 return api;
