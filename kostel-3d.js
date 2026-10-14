@@ -677,7 +677,7 @@ function liftK(y){ return y <= Z1 ? 1 : y <= Z2 ? K2 : y <= Z3 ? K3 : 1; }
 /* ═══════════ GROUND · a turntable engraved with the church's name ═══════════ */
 var GC = -15;                                         // centre of the church on the long axis
 (function(){
-  var R = 42, W = 2048;                              // wide enough for the churchyard wall inside the engraved ring
+  var R = 62, W = 2048;                              // wide enough for the whole churchyard inside the engraved ring
   var tex = canvasTex(W, W, function(k){
     var c = W/2, px = c/R;
     var g = k.createRadialGradient(c, c, 0, c, c, c);
@@ -685,14 +685,14 @@ var GC = -15;                                         // centre of the church on
     k.fillStyle = g; k.fillRect(0, 0, W, W);
     if (!o.turntable) return;
     var gold = 'rgba(222,190,112,', ring = function(r, lw, a){ k.strokeStyle = gold + a + ')'; k.lineWidth = lw; k.beginPath(); k.arc(c, c, r*px, 0, Math.PI*2); k.stroke(); };
-    ring(28.6, 4, .55); ring(29.1, 1.6, .45); ring(34.2, 1.6, .38); ring(34.65, 4, .5);
+    ring(46.0, 4, .55); ring(46.5, 1.6, .45); ring(54.6, 1.6, .38); ring(55.05, 4, .5);
     for (var i = 0; i < 360; i += 2){
-      var a = i*Math.PI/180, r1 = i % 30 === 0 ? 30.6 : i % 10 === 0 ? 30.0 : 29.6;
+      var a = i*Math.PI/180, r1 = i % 30 === 0 ? 48.6 : i % 10 === 0 ? 47.8 : 47.2;
       k.strokeStyle = gold + (i % 30 === 0 ? .6 : .38) + ')'; k.lineWidth = i % 30 === 0 ? 3 : 1.6;
-      k.beginPath(); k.moveTo(c + Math.sin(a)*29.1*px, c - Math.cos(a)*29.1*px); k.lineTo(c + Math.sin(a)*r1*px, c - Math.cos(a)*r1*px); k.stroke();
+      k.beginPath(); k.moveTo(c + Math.sin(a)*46.5*px, c - Math.cos(a)*46.5*px); k.lineTo(c + Math.sin(a)*r1*px, c - Math.cos(a)*r1*px); k.stroke();
     }
     /* inscriptions: the upper arc reads outward, the lower one reads from the front */
-    var rt = 32.0*px, fs = Math.round(1.7*px);
+    var rt = 51.2*px, fs = Math.round(2.4*px);
     k.fillStyle = gold + '.72)'; k.textAlign = 'center'; k.textBaseline = 'middle';
     k.font = '500 ' + fs + 'px "Cormorant Garamond", Georgia, serif';
     function arc(text, centre, lower, track){

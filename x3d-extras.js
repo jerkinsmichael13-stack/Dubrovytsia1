@@ -343,7 +343,7 @@ function init(api){
     }
     /* ── GROUNDS: each building gets its own setting, painted onto a skin over the turntable and planted deliberately:
        lawns, a dirt road and forecourt at the manor, cobbles round the churches, the baroque churchyard wall at the kostel ── */
-    var RING = {kostel: 28.6, cerkva: 22.4, worobin: 18.5, mykolai: 18.5}[MODEL] || GR*.66;
+    var RING = {kostel: 46, cerkva: 22.4, worobin: 18.5, mykolai: 18.5}[MODEL] || GR*.66;
     var CW = 2048, cvs = document.createElement('canvas'); cvs.width = cvs.height = CW;
     var K = cvs.getContext('2d'), PXM = CW/(2*GR);
     function X(x){ return (x - gc.x)*PXM + CW/2; } function Z(z){ return (z - gc.z)*PXM + CW/2; } function M(m){ return m*PXM; }
@@ -376,7 +376,7 @@ function init(api){
       K.restore(); edgeLine(p, '#3f5a2c', .32);
     }
     /* the building's footprint: where a ray from above meets the model more than half a metre up (pavings and steps don't count) */
-    var bx = (function(){ var b = new T.Box3(), r2 = new T.Raycaster(), v = new T.Vector3(), lim = GR*.8;
+    var bx = (function(){ var b = new T.Box3(), r2 = new T.Raycaster(), v = new T.Vector3(), lim = Math.min(GR*.8, 30);
       for (var x = -lim; x <= lim; x += .5) for (var z = -lim; z <= lim; z += .5){
         r2.set(v.set(gc.x + x, 80, gc.z + z), dn); r2.far = 120;
         var h = r2.intersectObject(api.model, true).filter(function(q){ return q.object.material && q.object.material.colorWrite !== false; })[0];
@@ -415,45 +415,55 @@ function init(api){
       },
       kostel: function(){
         lawn();
-        var fz = bx.max.z + 4.8, bz = bx.min.z - 3.6, fx = Math.max(-bx.min.x, bx.max.x) + 4.4;   // the churchyard wall
-        FENCE = {front: fz, back: bz, half: fx};
-        /* cobbled square before the gate, a stone walk to the door, gravel round the church */
-        cobbles(rrect(-30, fz, 30, fz + 30, 0));
+        /* the churchyard as the old photographs show it: the wall runs well in front of the church, a few metres off its right
+           side and far out to its left, where the yard held the old trees; the gate on the axis */
+        var fz = bx.max.z + 7.5, bz = bx.min.z - 6, xl = bx.min.x - 22, xr = bx.max.x + 5.5;
+        FENCE = {front: fz, back: bz, left: xl, right: xr};
+        cobbles(rrect(-60, fz, 60, fz + 40, 0));                                         // the market square before the gate
         var round = rrect(bx.min.x - 1.6, bx.min.z - 1.6, bx.max.x + 1.6, bx.max.z + 1.6, 1.2);
         K.fillStyle = '#a2967c'; K.fill(round); K.save(); K.clip(round); noise('#b8ad94', 3000, .8, 2, .6); noise('#857a63', 2000, .8, 2, .5); K.restore();
-        cobbles(rrect(-1.6, bx.max.z - .5, 1.6, fz, .1));
-        K.fillStyle = 'rgba(40,36,28,.35)'; K.fillRect(X(-fx - .5), Z(fz - .15), M(2*fx + 1), M(.5));
-        /* old chestnuts inside the wall */
-        var tx = fx - 2.4;
-        [[-tx, fz - 3.2], [tx, fz - 3.6], [-tx, fz - 13], [tx, fz - 14.5], [-tx, bz + 9], [tx, bz + 7.5], [-6, bz + 2.2], [6.5, bz + 2.3]].forEach(function(q, i){ plant(q[0], q[1], i % 3 === 2 ? 'linden' : 'chestnut', 1.75 + (i % 2)*.25); });
-        return {outer: 10, outerKinds: ['linden', 'chestnut', 'con', 'ash']};
+        cobbles(rrect(-1.6, bx.max.z - .5, 1.6, fz, .1));                                // flagged walk from the gate to the door
+        var side = new Path2D(); [[-2, fz - 2.5], [xl + 6, fz - 3.5], [xl + 7, bz + 6]].forEach(function(q, i){ i ? side.lineTo(X(q[0]), Z(q[1])) : side.moveTo(X(q[0]), Z(q[1])); });
+        K.save(); K.lineCap = K.lineJoin = 'round'; K.strokeStyle = 'rgba(110,92,62,.4)'; K.lineWidth = M(1.6); K.stroke(side); K.strokeStyle = '#9a8a68'; K.lineWidth = M(1.1); K.stroke(side); K.restore();
+        /* old chestnuts and limes: a grove in the wide left part of the yard, a row along the right wall */
+        for (var gx = xl + 3.5; gx < bx.min.x - 4; gx += 6.2) for (var gz = fz - 5; gz > bz + 3; gz -= 7.4){ if (rnd() < .22) continue; plant(gx + (rnd() - .5)*2, gz + (rnd() - .5)*2, rnd() < .65 ? 'chestnut' : 'linden', 1.6 + rnd()*.5); }
+        [fz - 4, fz - 15, bz + 8].forEach(function(z){ plant(xr - 2.6, z, 'chestnut', 1.7); });
+        plant(bx.min.x + 4, bz + 2.6, 'linden', 1.6); plant(bx.max.x - 3, bz + 2.6, 'chestnut', 1.6);
+        return {outer: 12, outerKinds: ['linden', 'chestnut', 'con', 'ash']};
       },
       cerkva: function(){
         lawn();
-        var pave = rrect(bx.min.x - 3.2, bx.min.z - 3.2, bx.max.x + 3.2, bx.max.z + 3.2, 2.2);
-        cobbles(pave);
-        cobbles(rrect(-40, -1.6, bx.min.x - 2, 1.6, 0));                                // the way in from the west
-        cobbles(rrect((bx.min.x + bx.max.x)/2 - 1.4, bx.max.z, (bx.min.x + bx.max.x)/2 + 1.4, 40, 0));   // and from the street to the south door
-        edgeLine(pave, '#cfc6b2', .18);
+        /* as it is today: a wide paved square on the west and round the church, the lawn to the south with a few trees,
+           a low railing along the street */
         var cx = (bx.min.x + bx.max.x)/2;
-        [[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(function(q){ plant(cx + q[0]*(size.x/2 + 7.5), q[1]*(size.z/2 + 6.5), 'linden', 1.0 + rnd()*.15); });
-        plant(cx - size.x/2 - 4, -size.z/2 - 8, 'con', .95); plant(cx + size.x/2 + 2, size.z/2 + 9.5, 'chestnut', 1.05); plant(cx + size.x/2 + 9, 0, 'linden', 1.1);
-        [[-1, 1], [1, 1], [-1, -1], [1, -1]].forEach(function(q){ plant(cx + q[0]*(size.x/2 - 1), q[1]*(size.z/2 + 3.9), 'shrub', .7); });
+        var sq = new Path2D(); [[bx.min.x - 15, bx.min.z - 7], [bx.max.x + 5, bx.min.z - 7], [bx.max.x + 5, bx.max.z + 3.5], [bx.min.x + 4, bx.max.z + 3.5], [bx.min.x - 5, bx.max.z + 9.5], [bx.min.x - 15, bx.max.z + 9.5]]
+          .forEach(function(q, i){ i ? sq.lineTo(X(q[0]), Z(q[1])) : sq.moveTo(X(q[0]), Z(q[1])); }); sq.closePath();
+        cobbles(sq); edgeLine(sq, '#cfc6b2', .2);
+        cobbles(rrect(bx.min.x - 40, -1.8, bx.min.x - 15, 1.8, 0));                       // the way in from the street
+        var rx = bx.min.x - 15.6, rz = bx.max.z + 15;
+        [[rx + 3.5, rz - 3], [rx + 10, rz - 2.8], [bx.max.x + 4, rz - 3.5], [bx.max.x + 7, bx.min.z - 9], [cx, bx.min.z - 10.5]].forEach(function(q, i){ plant(q[0], q[1], i === 4 ? 'con' : 'linden', 1.05 + rnd()*.25); });
+        [[bx.min.x + 6, bx.max.z + 6.5], [cx + 4, bx.max.z + 7.5]].forEach(function(q){ plant(q[0], q[1], 'shrub', .8); });
         return {outer: 10, outerKinds: ['linden', 'con', 'chestnut', 'ash']};
       },
       mykolai: function(){
         lawn();
-        var apron = rrect(bx.min.x - 1.4, bx.min.z - 1.4, bx.max.x + 1.4, bx.max.z + 1.4, 1.0);
+        /* as it is today: a lawn crossed by paved paths from the church to the corners of the yard, big trees all round */
+        var cx = (bx.min.x + bx.max.x)/2, cz = (bx.min.z + bx.max.z)/2, w = bx.max.x - bx.min.x, d = bx.max.z - bx.min.z;
+        var apron = rrect(bx.min.x - 1.6, bx.min.z - 1.6, bx.max.x + 1.6, bx.max.z + 1.6, 1.0);
         cobbles(apron); edgeLine(apron, '#cfc6b2', .16);
-        cobbles(rrect(-40, -1.5, bx.min.x - 1, 1.5, 0));
-        var cx = (bx.min.x + bx.max.x)/2;
-        plant(cx - 4, -size.z/2 - 7, 'linden', 1.0); plant(cx + 6, -size.z/2 - 6.5, 'chestnut', .95); plant(cx + size.x/2 + 5, 3, 'linden', 1.05);
-        plant(cx + 3, size.z/2 + 7, 'con', .9); plant(cx - 7, size.z/2 + 6.5, 'linden', .95);
-        [[-1, -1], [1, -1], [1, 1]].forEach(function(q){ plant(cx + q[0]*(size.x/2 - 2), q[1]*(size.z/2 + 3.2), 'shrub', .65); });
-        return {outer: 10, outerKinds: ['linden', 'con', 'ash', 'chestnut']};
+        function walk(x0, z0, x1, z1, wd){ var a = Math.atan2(z1 - z0, x1 - x0), L = Math.hypot(x1 - x0, z1 - z0); K.save(); K.translate(X(x0), Z(z0)); K.rotate(a);
+          var p = new Path2D(); p.rect(0, -M(wd/2), M(L), M(wd)); cobbles(p); edgeLine(p, '#cfc6b2', .12); K.restore(); }
+        var ex = w/2 + 13, ez = d/2 + 12;
+        [[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(function(q){ walk(cx + q[0]*(w/2 - 1.5), cz + q[1]*(d/2 - 1.5), cx + q[0]*ex, cz + q[1]*ez, 2.2); });
+        walk(bx.min.x - 1, cz, bx.min.x - 30, cz, 2.6);                                 // the main way in, to the west door
+        for (var a = 0; a < Math.PI*2; a += Math.PI/8){ var rr = Math.max(w, d)/2 + 12.5 + rnd()*2.5, tx = cx + Math.cos(a)*rr, tz = cz + Math.sin(a)*rr*.92;
+          if (Math.abs(Math.sin(a)) < .2 && Math.cos(a) < 0) continue;                    // keep the way in open
+          if (Math.cos(a)*home.x + Math.sin(a)*home.z > .62) continue;                   // and the view from the front
+          plant(tx, tz, rnd() < .25 ? 'con' : (rnd() < .5 ? 'chestnut' : 'linden'), 1.1 + rnd()*.25); }
+        return {outer: 12, outerKinds: ['linden', 'con', 'chestnut', 'ash']};
       }
     };
-    var FENCE = null, lay = LAY[MODEL] ? LAY[MODEL]() : null;
+    var FENCE = null, RAIL = null, lay = LAY[MODEL] ? LAY[MODEL]() : null;
     if (lay){
       /* fade the painted grounds out just inside the engraved ring */
       K.globalCompositeOperation = 'destination-in';
@@ -468,6 +478,7 @@ function init(api){
       var skin = new T.Mesh(gg, gmat); skin.receiveShadow = true; skin.renderOrder = (groundM.renderOrder || 0) + 1; scene.add(skin);
       plantAt.forEach(function(t){ var y = probe(t[0], t[1]); if (y == null || y === false) return; tree(t[0], y, t[1], t[2], t[3]); });
       if (FENCE) churchyard(FENCE, probe);
+      if (RAIL) railing(RAIL, probe);
       /* the forest beyond the ring, leaving the home view open */
       for (var i = 0, n = 0; i < 260 && n < lay.outer; i++){
         var a = rnd()*Math.PI*2, dir = new T.Vector3(Math.cos(a), 0, Math.sin(a)); if (dir.dot(home) > .5) continue;
@@ -475,6 +486,31 @@ function init(api){
         if (!farFromOthers(x, z, 5)) continue; var y = free(x, z, 1.6); if (y == null) continue;
         tree(x, y, z, lay.outerKinds[n % lay.outerKinds.length], .95 + rnd()*.4); n++;
       }
+    }
+
+    /* a low iron railing on a stone kerb: posts every couple of metres, two rails, plain bars */
+    function railing(lines, probe){
+      var iron = new T.MeshStandardMaterial({color: '#23262a', roughness: .5, metalness: .6}), kerb = new T.MeshStandardMaterial({color: '#bdb6a6', roughness: .95});
+      var bars = [], posts = [], G = new T.Group(); scene.add(G);
+      lines = lines.map(function(l){                                                     // keep it inside the engraved ring
+        var R = RING - 1.2, ax = l[0] - gc.x, az = l[1] - gc.z, dx = l[2] - l[0], dz = l[3] - l[1];
+        var A = dx*dx + dz*dz, B = 2*(ax*dx + az*dz), C = ax*ax + az*az - R*R, D = B*B - 4*A*C; if (D <= 0) return null;
+        var t0 = Math.max(0, (-B - Math.sqrt(D))/(2*A)), t1 = Math.min(1, (-B + Math.sqrt(D))/(2*A)); if (t1 - t0 < .05) return null;
+        return [l[0] + dx*t0, l[1] + dz*t0, l[0] + dx*t1, l[1] + dz*t1]; }).filter(Boolean);
+      lines.forEach(function(l){
+        var dx = l[2] - l[0], dz = l[3] - l[1], L = Math.hypot(dx, dz), a = Math.atan2(-dz, dx), cx = (l[0] + l[2])/2, cz = (l[1] + l[3])/2, y = probe(cx, cz); if (y == null || y === false) y = 0;
+        var g = new T.Group(); g.position.set(cx, y, cz); g.rotation.y = a; G.add(g);
+        var kb = new T.Mesh(new T.BoxGeometry(L, .3, .32), kerb); kb.position.y = .15; kb.castShadow = kb.receiveShadow = true; g.add(kb);
+        [.75, 1.45].forEach(function(h){ var r = new T.Mesh(new T.BoxGeometry(L, .04, .04), iron); r.position.y = h; g.add(r); });
+        for (var t = -L/2; t <= L/2 + .01; t += .13) bars.push([g, t, .02]);
+        for (t = -L/2; t <= L/2 + .01; t += 2.4) posts.push([g, t]);
+      });
+      var bg = new T.BoxGeometry(.022, 1.25, .022); bg.translate(0, .3 + .625, 0); var ib = new T.InstancedMesh(bg, iron, bars.length), m4 = new T.Matrix4(), w4 = new T.Matrix4();
+      G.updateMatrixWorld(true);
+      bars.forEach(function(b, i){ w4.makeTranslation(b[1], 0, 0); m4.multiplyMatrices(b[0].matrixWorld, w4); ib.setMatrixAt(i, m4); });
+      ib.castShadow = true; scene.add(ib);
+      posts.forEach(function(p){ var o = new T.Mesh(new T.BoxGeometry(.09, 1.65, .09), iron); o.position.set(p[1], .3 + .82, 0); o.castShadow = true; p[0].add(o);
+        var c = new T.Mesh(new T.SphereGeometry(.07, 8, 6), iron); c.position.set(p[1], 1.98, 0); p[0].add(c); });
     }
 
     /* the kostel's churchyard wall, after the photographs: plastered piers with little pediments and tiled caps, wooden pickets
@@ -510,7 +546,7 @@ function init(api){
         for (var i = 0; i < n; i++){ m4.makeTranslation(-L/2 + (i + .5)*L/n, .61, .03); im.setMatrixAt(i, m4); it.setMatrixAt(i, m4); }
         im.castShadow = it.castShadow = true; g.add(im); g.add(it);
       }
-      var fz = F.front, bz = F.back, hx = F.half;
+      var fz = F.front, bz = F.back;
       /* the gate group on the axis */
       var GG = new T.Group(); GG.position.set(0, 0, fz); Gf.add(GG);
       [-1, 1].forEach(function(s){ pier(s*1.95, fz, 0, true); pier(s*4.75, fz, 0, false); });
@@ -545,8 +581,9 @@ function init(api){
           pickets(x0 + (x1 - x0)*a0, z0 + (z1 - z0)*a0, x0 + (x1 - x0)*a1, z0 + (z1 - z0)*a1);
           pier(x0 + (x1 - x0)*a1, z0 + (z1 - z0)*a1, rot, false); }
       }
-      [-1, 1].forEach(function(s){ run(s*5.12, fz, s*hx, fz, 3.6); run(s*hx, fz, s*hx, bz, 3.8); });
-      run(-hx, bz, hx, bz, 4);
+      run(5.12, fz, F.right, fz, 3.6); run(F.right, fz, F.right, bz, 3.8);
+      run(-5.12, fz, F.left, fz, 3.8); run(F.left, fz, F.left, bz, 3.8);
+      run(F.left, bz, F.right, bz, 4);
       /* the piers stand on the ground, which is level here */
       var y0 = probe(0, fz + 2); if (y0 != null && y0 !== false) Gf.position.y = y0;
       Gf.traverse(function(o){ if (o.isMesh){ o.userData.fence = true; } });
