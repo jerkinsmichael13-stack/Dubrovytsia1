@@ -18,97 +18,131 @@ function attach(api, o){
     var a = hash(ix, iz), b = hash(ix + 1, iz), c = hash(ix, iz + 1), d = hash(ix + 1, iz + 1); return a + (b - a)*fx + (c - a)*fz + (a - b - c + d)*fx*fz; }
   function fbm(x, z){ return vnoise(x, z)*.5 + vnoise(x*2.03 + 5.2, z*2.03 + 1.3)*.25 + vnoise(x*4.1 + 2.7, z*4.1 + 8.1)*.125; }
 
-  /* ── the land, after the aerial photograph: the church stands on the edge of the town's hill. Behind it and to the south the
-     ground breaks and falls to the flood-plain of the Horyn — a broad river with sandbanks, wet meadows, reeds and old bends,
-     and beyond it a long field, a small winding stream, and woods far off. In front: the little square and the street;
-     to the north (left) the plebania and the town. Distances in metres, the church's middle at (0, −15). ── */
-  var GX = 0, GZ = -15;
-  var VX = .45, VZ = -.893, TX = .893, TZ = .45;                                     // s: from the town down toward the river; t: along the valley
-  function sOf(x, z){ return (x - GX)*VX + (z - GZ)*VZ; }
-  function tOf(x, z){ return (x - GX)*TX + (z - GZ)*TZ; }
-  function at(s, t){ return [GX + s*VX + t*TX, GZ + s*VZ + t*TZ]; }
-  function scarp(t){ return 40 + 6*Math.sin(t/47 + 1) + 4*Math.sin(t/23 + .3); }    // where the hill breaks: close behind the churchyard
-  function riverS(t){ return 186 + 30*Math.sin(t/170 + .6) + 10*Math.sin(t/61 + 2); }
-  function brookS(t){ return riverS(t) + 260 + 30*Math.sin(t/41 + 1.3) + 12*Math.sin(t/17); }
-  var RW = 86, PLAIN = -21, WATER = -22.3;                                          // the bank is a good twenty metres high
-  var OXB = [[-170, 100, 16, .4, 3.7], [240, 300, 28, 2.3, 5.7], [-420, 320, 24, -.4, 2.6]];   // old bends: t, s of the centre, radius, arc
-  function oxDist(s, t){ var m = 1e9; OXB.forEach(function(o){ var dt = t - o[0], ds = s - o[1], a = Math.atan2(ds, dt); if (a < o[3]) a += 6.283;
-    if (a > o[3] && a < o[4] || a - 6.283 > o[3] && a - 6.283 < o[4]) m = Math.min(m, Math.abs(Math.hypot(dt, ds) - o[2])); }); return m; }
+  /* ── the land, traced from the plan of the town (drawn over the aerial photographs) and checked against them: the church on the
+     town's hill, its yard and the small square before the front, the big church plot of gardens and orchards behind it; south-east,
+     past the gardens, the ground goes down gently and then a little more steeply to the Horyn, some forty metres wide, with trees
+     along both banks; beyond it the flat green flood-plain with old channels, hay meadows and fields, and woods on the horizon.
+     Distances in metres; the church's front at (0, 0), its middle at (0, −15). Plan pixels → metres by MP(). ── */
+  var GX = 0, GZ = -15, MS = 2.5;
+  function MP(mx, my){ var dx = mx - 145.4, dy = my - 258; return [(-.167*dx + .986*dy)/MS, -(.986*dx + .167*dy)/MS]; }
+  function PM(x, z){ return [145.4 - .167*MS*x - .986*MS*z, 258 + .986*MS*x - .167*MS*z]; }        // back to the plan
+  function inPlan(x, z){ var p = PM(x, z); return p[0] > 0 && p[0] < 1338 && p[1] > 0 && p[1] < 613; }
+  function poly(list){ return list.map(function(p){ return MP(p[0], p[1]); }); }
+  function inPoly(P, x, z){ var c = false; for (var i = 0, j = P.length - 1; i < P.length; j = i++){ var a = P[i], b = P[j];
+    if ((a[1] > z) !== (b[1] > z) && x < (b[0] - a[0])*(z - a[1])/(b[1] - a[1]) + a[0]) c = !c; } return c; }
+  /* the Horyn: its middle line from the plan, carried on beyond it both ways */
+  var RIV = (function(){
+    var raw = [[-560, 1080], [-330, 1000], [-120, 900], [60, 790], [200, 712], [330, 650], [420, 600], [470, 558], [518.7, 522], [572, 494.6], [625, 466.5], [678.8, 439.4], [733, 413],
+      [787, 386.8], [841, 360], [895, 333], [946.6, 302.7], [997.7, 271], [1048, 239], [1090, 218], [1140, 196], [1180, 172], [1215, 118], [1250, 66], [1300, 22],
+      [1370, -30], [1460, -70], [1570, -90], [1700, -140], [1830, -230], [1960, -300], [2120, -330]];
+    var P = raw.map(function(p){ return MP(p[0], p[1]); });
+    var c = new T.CatmullRomCurve3(P.map(function(p){ return new T.Vector3(p[0], 0, p[1]); }), false, 'centripetal');
+    return c.getSpacedPoints(260).map(function(v){ return [v.x, v.z]; });
+  })();
+  var RW = 40, PL = -13, WATER = -14.2;
+  function rivNear(x, z){                                                            // distance to the river's middle, which side, and where along it
+    var best = 1e9, side = 1, at = 0, bi = 1, q;
+    for (q = 0; q < RIV.length; q += 8){ var ddx = x - RIV[q][0], ddz = z - RIV[q][1], dd = ddx*ddx + ddz*ddz; if (dd < best){ best = dd; bi = q; } }   // rough, then fine
+    best = 1e9;
+    for (var i = Math.max(1, bi - 14); i < Math.min(RIV.length, bi + 15); i++){ var a = RIV[i - 1], b = RIV[i], dx = b[0] - a[0], dz = b[1] - a[1], L = dx*dx + dz*dz,
+      k = Math.max(0, Math.min(1, ((x - a[0])*dx + (z - a[1])*dz)/L)), ex = x - a[0] - dx*k, ez = z - a[1] - dz*k, d = ex*ex + ez*ez;
+      if (d < best){ best = d; side = dx*ez - dz*ex > 0 ? 1 : -1; at = i - 1 + k; } }
+    return {d: Math.sqrt(best), side: side, at: at};
+  }
+  var TOWN = rivNear(GX, GZ).side;                                                   // which side of the river the town is on
+  /* old channels and ponds on the far side, a side arm round an island (as on the plan, north-east) */
+  var OXB = [[MP(1300, 300), 34, 2.2, 5.0], [MP(900, 760), 30, 3.4, 6.1], [MP(1500, 420), 26, .2, 3.3], [MP(600, 900), 28, 2.6, 5.6]];
+  function oxDist(x, z){ var m = 1e9; OXB.forEach(function(o){ var dx = x - o[0][0], dz = z - o[0][1], a = Math.atan2(dz, dx); if (a < o[2]) a += 6.283;
+    if (a > o[2] && a < o[3] || a - 6.283 > o[2] && a - 6.283 < o[3]) m = Math.min(m, Math.abs(Math.hypot(dx, dz) - o[1])); }); return m; }
   function H(x, z){
-    var s = sOf(x, z), t = tOf(x, z), r = Math.hypot(x - GX, z - GZ), sc = scarp(t);
-    var h = (fbm(x*.016, z*.016) - .5)*1.8*ss(42, 95, r)*(1 - ss(sc - 25, sc, s));   // the town's ground: gently uneven, level round the church
-    h += PLAIN*ss(sc - 4, sc + 22, s);                                                // the bank down to the flood-plain
-    var pl = ss(sc + 18, sc + 34, s);
-    h += pl*(fbm(x*.022 + 7, z*.022 + 3) - .5)*.9;                                    // hummocks on the meadow
-    h -= pl*.7*ss(.58, .78, fbm(x*.008 + 20, z*.008 + 4));                             // wet hollows
-    var d = Math.abs(s - riverS(t)); h -= 2.6*(1 - ss(RW/2 - 9, RW/2 + 2, d))*pl;
-    var d2 = Math.abs(s - brookS(t)); h -= 1.9*(1 - ss(6, 15, d2))*pl;
-    var od = oxDist(s, t); if (od < 12) h -= 1.8*(1 - ss(3, 10, od))*pl;
-    h += 7*ss(600, 950, s);                                                            // far off the land rises to the woods
+    var R = rivNear(x, z), e = R.d - RW/2, r = Math.hypot(x - GX, z - GZ), h;
+    if (R.side === TOWN){
+      var bank = .45*ss(0, 30, e) + .55*ss(22, 150, e);                              // a short steeper bank, then the long gentle rise to the town
+      h = PL*(1 - bank) + (fbm(x*.017, z*.017) - .5)*1.6*ss(45, 110, r)*ss(10, 40, e);
+    } else {
+      h = PL + .35 + (fbm(x*.02 + 7, z*.02 + 3) - .5)*.8 - .6*ss(.6, .78, fbm(x*.008 + 20, z*.008 + 4)) + 6*ss(650, 1100, e);
+      var od = oxDist(x, z); if (od < 12) h -= 1.9*(1 - ss(3, 10, od));
+    }
+    if (R.d < RW/2 + 2) h = Math.min(h, PL - 2.8*(1 - ss(RW/2 - 9, RW/2 + 1, R.d)));  // the river bed
     return h;
   }
-  /* roads: the street before the square, the lane past the plebania, a few town streets, and the track down the bank to the ferry */
-  var ROADS = [[[-560, 66], [150, 66]], [[-48, 66], [-48, -110]], [[-48, -100], [-430, -100]], [[-140, 66], [-140, -150]], [[-260, 160], [-260, -100]], [[-48, -45], [-430, -45]], [[-95, 66], [-95, -100]], [[-200, 160], [-200, -100]], [[-430, 112], [60, 112]], [[-330, 160], [-330, -100]],
-    [[80, 66], [104, 30], [126, -10], [150, -50], [178, -88], [202, -150]]];
-  var STAIR = [at(30, -6), at(76, -6)];                                             // steps down the bank behind the church, to the lower town
-  ROADS.push([[0, -43], STAIR[0]], STAIR);
-  ROADS.push((function(){ var R = []; for (var t = -560; t <= 420; t += 40){ var q = at(scarp(t) + 34, t); R.push(q); } return R; })());   // the street along the foot of the bank
+  /* the plan's zones: the church plot (gardens and orchard), the yard, the small square, the streets */
+  var PLOT = poly([[125, 0], [73, 307], [245, 345], [541, 366], [660, 367], [738, 332], [696, 0]]);
+  var YARD = {x0: -25, x1: 23, z0: -48, z1: 22};
+  var SQ = poly([[33, 200], [18, 279], [73, 288], [85, 207]]);
+  var ROADS = [poly([[64, 0], [54, 50], [44.5, 100], [35, 150], [24.5, 200], [14.5, 250], [6, 300], [1, 350], [-6, 420], [-14, 520]]),
+    poly([[-60, 378], [0, 381], [45, 388], [90, 383], [150, 379], [210, 379], [255, 383.5], [285, 393.5], [315, 419], [345, 448.5], [375, 480], [405, 513], [420, 540]]),
+    poly([[60, 394.5], [105, 404], [150, 417.5], [195, 434], [240, 453], [262, 463]]),
+    poly([[64, 0], [80, -120], [96, -300]]), poly([[24.5, 200], [-120, 180], [-300, 160]]), poly([[-6, 420], [-180, 470], [-360, 520]])];
   function roadD(x, z){ var m = 1e9; ROADS.forEach(function(R){ for (var i = 1; i < R.length; i++){ var a = R[i - 1], b = R[i], dx = b[0] - a[0], dz = b[1] - a[1], L = dx*dx + dz*dz,
-    k = Math.max(0, Math.min(1, ((x - a[0])*dx + (z - a[1])*dz)/L)), ex = a[0] + dx*k - x, ez = a[1] + dz*k - z; m = Math.min(m, Math.hypot(ex, ez)); } }); return m; }
-  function roadDir(x, z){ var m = 1e9, ang = 0; ROADS.forEach(function(R){ for (var i = 1; i < R.length; i++){ var a = R[i - 1], b = R[i], dx = b[0] - a[0], dz = b[1] - a[1], L = dx*dx + dz*dz,
-    k = Math.max(0, Math.min(1, ((x - a[0])*dx + (z - a[1])*dz)/L)), d = Math.hypot(a[0] + dx*k - x, a[1] + dz*k - z); if (d < m){ m = d; ang = Math.atan2(dz, dx); } } }); return ang; }
-  var YARD = {x0: -20, x1: 20, z0: -41, z1: 11};                                     // the churchyard fence
-  var SQ = {x0: -44, x1: 56, z0: 11, z1: 62};                                         // the market square before it
-  var PLEB = {x: -33, z: -6, len: 14, wid: 10.5};                                    // the plebania: beside the front of the church, its long side parallel to it, gable to the square
-  function plateau(x, z){ return sOf(x, z) < scarp(tOf(x, z)) - 14; }
+    k = Math.max(0, Math.min(1, ((x - a[0])*dx + (z - a[1])*dz)/L)); m = Math.min(m, Math.hypot(a[0] + dx*k - x, a[1] + dz*k - z)); } }); return m; }
+  var PLEB = {x: -36, z: -15, len: 18, wid: 9};                                       // beside the church on the north, its long side parallel to it
   function keepClear(x, z, m){ m = m || 0;
-    return (x > YARD.x0 - 6 - m && x < YARD.x1 + 6 + m && z > YARD.z0 - 8 - m && z < 26 + m) || (x > SQ.x0 - 3 - m && x < SQ.x1 + 3 + m && z > SQ.z0 - 2 - m && z < SQ.z1 + 7 + m) ||
-      (x > -44 - m && x < -21 + m && z > -20 - m && z < 6 + m); }
+    return (x > YARD.x0 - 5 - m && x < YARD.x1 + 5 + m && z > YARD.z0 - 6 - m && z < YARD.z1 + 4 + m) || inPoly(SQ, x, z) ||
+      (x > PLEB.x - PLEB.wid/2 - 6 - m && x < PLEB.x + PLEB.wid/2 + 5 + m && z > PLEB.z - PLEB.len/2 - 5 - m && z < PLEB.z + PLEB.len/2 + 7 + m); }
 
-  /* the town: wooden and plastered houses along the streets, each with its yard and a few fruit trees */
+  /* houses: every building drawn on the plan, where it stood; beyond the plan the town goes on in the same manner */
   var HOUSES = [], rndH = (function(seed){ return function(){ seed = (seed*16807) % 2147483647; return (seed - 1)/2147483646; }; })(1742);
-  for (var hx = -470; hx < 260; hx += 19) for (var hz = -330; hz < 200; hz += 19){
-    var px = hx + (rndH() - .5)*9, pz = hz + (rndH() - .5)*9, rd = roadD(px, pz);
-    var sp2 = sOf(px, pz), tp2 = tOf(px, pz), low = sp2 > scarp(tp2) + 24 && sp2 < riverS(tp2) - RW/2 - 12;   // the lower town along the river
-    if (rndH() > .74 || rd < 8 || rd > 22 || !(plateau(px, pz) || low) || keepClear(px, pz, 4)) continue;
-    HOUSES.push({x: px, z: pz, a: roadDir(px, pz) + (rndH() < .5 ? 0 : Math.PI), w: 8 + rndH()*4, d: 6 + rndH()*2, h: 2.9 + rndH()*.7, k: rndH()});
+  [[279.3, 516.3, 73.8, 29.2, -70.0], [223.5, 491.3, 73.9, 29.3, -66.8], [406.0, 461.2, 28.6, 12.0, -36.9], [291.6, 451.3, 15.2, 20.1, -63.4], [176.5, 477.4, 83.1, 25.2, -65.2],
+   [452.8, 444.0, 12.2, 47.0, -59.0], [155.9, 451.7, 53.2, 19.2, -63.4], [465.3, 426.8, 8.9, 21.8, -71.6], [368.6, 433.6, 42.3, 11.7, -38.7],
+   [227.1, 425.8, 17.4, 9.8, -63.4], [495.9, 419.1, 12.6, 47.1, -73.7], [351.7, 419.1, 39.9, 13.7, -40.6], [161.3, 408.6, 13.6, 23.7, -71.6], [285.1, 410.9, 11.7, 25.8, -51.8],
+   [328.7, 406.8, 24.8, 10.8, -40.6], [259.7, 401.2, 16.9, 9.7, -68.2], [433.4, 393.0, 63.1, 13.6, -1.6], [188.5, 391.0, 10.0, 31.0, -90.0], [559.5, 388.4, 10.3, 32.7, -87.1],
+   [499.0, 387.0, 12.6, 49.5, -76.0], [201.8, 366.4, 9.6, 21.2, -85.2], [158.5, 366.0, 12.0, 19.0, -90.0], [42.2, 301.1, 22.3, 36.2, -80.0], [67.7, 184.8, 19.6, 31.6, -82.2],
+   [63.2, 142.9, 12.4, 19.8, -81.9], [142.3, 106.3, 43.8, 15.6, -79.9], [170.3, 81.6, 12.8, 29.1, -80.5], [5.0, 71.5, 15.0, 10.0, -90.0], [19.7, 35.6, 9.9, 9.0, -76.0], [9.0, 10.9, 16.7, 22.8, -76.0]]
+  .forEach(function(b){
+    var c = MP(b[0], b[1]), th = b[4]*Math.PI/180, d1 = MP(b[0] + Math.cos(th), b[1] + Math.sin(th)), ux = d1[0] - c[0], uz = d1[1] - c[1];
+    var w = b[2]/MS, d = b[3]/MS, a = Math.atan2(uz, ux);
+    if (w < d){ var t = w; w = d; d = t; a += Math.PI/2; }                            // the long side along local x
+    HOUSES.push({x: c[0], z: c[1], a: a, w: Math.max(5.5, Math.min(w*.62, 11)), d: Math.max(4.5, Math.min(d*.62, 6.5)), h: 2.6 + rndH()*.5, k: rndH(), plan: true});   // the plan draws them generously
+  });
+  for (var hx = -560; hx < 620; hx += 21) for (var hz = -620; hz < 420; hz += 21){
+    var px = hx + (rndH() - .5)*10, pz = hz + (rndH() - .5)*10;
+    if (rndH() > .22 || inPlan(px, pz) || inPoly(PLOT, px, pz) || keepClear(px, pz, 6)) continue;
+    var Rr = rivNear(px, pz); if (Rr.side !== TOWN || Rr.d < RW/2 + 26 || Math.hypot(px - GX, pz - GZ) > 400) continue;
+    HOUSES.push({x: px, z: pz, a: (rndH() < .5 ? 0 : Math.PI/2) + .17 + (rndH() - .5)*.2, w: 7 + rndH()*3, d: 5 + rndH()*1.5, h: 2.6 + rndH()*.5, k: rndH()});
   }
-  function nearHouse(x, z, r){ for (var i = 0; i < HOUSES.length; i++){ var q = HOUSES[i]; if (Math.abs(q.x - x) < r && Math.abs(q.z - z) < r) return true; } return false; }
 
-  /* trees and woods: none on the open meadow but here and there; willows along the river; woods far off */
+  /* trees: the town is full of them, thickest along the banks; an orchard in rows on the church plot; willows on the far bank,
+     clumps and hedges on the flood-plain, woods on the horizon */
   function forest(x, z){
-    var s = sOf(x, z), t = tOf(x, z), sc = scarp(t), f = 0, r = Math.hypot(x - GX, z - GZ);
-    if (s > sc - 14 && s < sc + 30) f = .5*ss(.4, .7, fbm(x*.02 + 4, z*.02 + 9));        // clumps on the bank
-    if (s < sc - 14 && r > 420) f = .75;                                               // woods behind the town
-    if (s > 620) f = .8*ss(620, 680, s);                                               // the far woods
-    var wet = ss(.6, .75, fbm(x*.008 + 20, z*.008 + 4)); if (s > sc + 40 && s < 600) f = Math.max(f, .35*wet);   // alders in the wet hollows
-    if (Math.abs(s - riverS(t)) < RW/2 + 4 || Math.abs(s - brookS(t)) < 6 || oxDist(s, t) < 7) f = 0;
-    if (roadD(x, z) < 6 || keepClear(x, z, 6)) f = 0;
+    var R = rivNear(x, z), e = R.d - RW/2, f = 0, r = Math.hypot(x - GX, z - GZ);
+    if (e < 2) return 0;
+    if (R.side === TOWN){
+      f = .55*ss(.45, .7, fbm(x*.022 + 3, z*.022 + 8));                               // groups of trees round the yards, open ground between
+      if (e < 22) f = .85;                                                             // the belt along the bank
+      if (inPoly(PLOT, x, z)) f = 0;                                                   // the orchard is planted in rows
+      if (r > 650) f = .7;
+    } else {
+      f = e < 14 ? .8 : .95*ss(.5, .6, fbm(x*.011 + 2, z*.011 + 7));             // groves of willow and alder on the meadows, open hay between
+      var wet = ss(.66, .76, fbm(x*.008 + 20, z*.008 + 4)); f = Math.max(f, .5*wet);
+      if (oxDist(x, z) < 12) f = Math.max(f, .6);
+      if (e > 640) f = Math.max(f, .85*ss(640, 720, e));                              // the woods on the horizon
+    }
+    if (roadD(x, z) < 5 || keepClear(x, z, 3)) f = 0;
     return Math.min(1, f);
   }
 
   /* ── terrain mesh with painted zones ── */
-  var SIZE = 1700, SEG = lite ? 150 : 250, CX = 120, CZ = -250;
+  var SIZE = 2400, SEG = lite ? 160 : 260, CX = 100, CZ = -200;
   var tg = new T.PlaneGeometry(SIZE, SIZE, SEG, SEG); tg.rotateX(-Math.PI/2); tg.translate(CX, 0, CZ);
   var tp = tg.attributes.position, col = new Float32Array(tp.count*3), C = new T.Color();
-  var cTown = lin('#6b7a40'), cGard = lin('#7d6c48'), cBank = lin('#647a3c'), cMead = lin('#7f9446'), cMeadY = lin('#a39c58'), cMud = lin('#6b5f43'), cFloor = lin('#465230'),
-      cField = [lin('#a3954f'), lin('#7c8b42'), lin('#b8a462'), lin('#919049'), lin('#6e7d3d'), lin('#8a7a4a')], cRoad = lin('#8a7652'), cWet = lin('#4f5a35'),
-      cReed = lin('#8b8650'), cSand = lin('#cdbb8c');
+  var cTown = lin('#62763a'), cGard = lin('#7a6b47'), cOrch = lin('#6c8040'), cMead = lin('#6f8c3c'), cMeadY = lin('#94983f'), cMud = lin('#6b5f43'), cFloor = lin('#465230'),
+      cField = [lin('#a3954f'), lin('#7c8b42'), lin('#b8a462'), lin('#86904a'), lin('#6e7d3d')], cRoad = lin('#8a7652'), cWet = lin('#4a5c33'), cReed = lin('#7f8a4a'), cSand = lin('#c9b78a');
   for (var i = 0; i < tp.count; i++){
     var x = tp.getX(i), z = tp.getZ(i), h = H(x, z); tp.setY(i, h);
-    var s = sOf(x, z), t = tOf(x, z), sc = scarp(t), n = fbm(x*.08, z*.08), rs = riverS(t), d = Math.abs(s - rs);
-    if (s < sc - 10){ C.copy(cTown); var plot = hash(Math.floor((x + 2000)/26), Math.floor((z + 2000)/34)); if (plot > .55 && Math.hypot(x - GX, z - GZ) > 60) C.lerp(cGard, .4); }
-    else if (s < sc + 30) C.copy(cBank).lerp(cMeadY, ss(.5, .8, n)*.4);
-    else if (s > rs + RW/2 + 30 && s < 600 && Math.abs(s - brookS(t)) > 22){ var k = Math.floor(hash(Math.floor((s + 2000)/24), Math.floor((t + 3000)/150))*6); C.copy(cField[k]); }
-    else { C.copy(cMead).lerp(cMeadY, ss(.45, .8, n)*.6); C.lerp(cWet, ss(.55, .75, fbm(x*.008 + 20, z*.008 + 4))*.8); }
-    if (s > sc + 30 && s < 600){                                                       // reeds round still water, sand on the river's edges
-      var od = oxDist(s, t); C.lerp(cReed, (1 - ss(4, 16, od))*.8);
-      C.lerp(cReed, (1 - ss(4, 12, Math.abs(s - brookS(t))))*.6);
-      if (d > RW/2 - 7 && d < RW/2 + 6) C.lerp(cSand, ss(.42, .62, fbm(t*.02 + 3, s*.05))*(1 - ss(RW/2 + 2, RW/2 + 6, d)));
-      C.lerp(cMud, (1 - ss(RW/2 - 6, RW/2 - 2, d))*.9);
+    var R = rivNear(x, z), e = R.d - RW/2, n = fbm(x*.08, z*.08);
+    if (R.side === TOWN){
+      C.copy(cTown);
+      if (inPoly(PLOT, x, z)) C.copy(cOrch).lerp(cGard, .2*ss(.5, .7, fbm(x*.03, z*.03)));
+      else if (hash(Math.floor((x + 2000)/24), Math.floor((z + 2000)/30)) > .6 && Math.hypot(x - GX, z - GZ) > 60) C.lerp(cGard, .35);
+    } else {
+      C.copy(cMead).lerp(cMeadY, ss(.45, .8, n)*.5); C.lerp(cWet, ss(.55, .75, fbm(x*.008 + 20, z*.008 + 4))*.8);
+      if (e > 60 && e < 650 && fbm(x*.004 + 9, z*.004 + 1) > .52){ var k = Math.floor(hash(Math.floor((x + 3000)/26), Math.floor((z + 3000)/120))*5); C.lerp(cField[k], .85); }
+      C.lerp(cReed, (1 - ss(4, 16, oxDist(x, z)))*.7);
     }
-    var fr = forest(x, z); C.lerp(cFloor, ss(.15, .5, fr)*.8);
-    if (roadD(x, z) < 3.2) C.copy(cRoad).multiplyScalar(.92 + .16*n);
+    if (e < 6 && e > -4) C.lerp(R.side === TOWN ? cMud : cSand, .7*(1 - ss(2, 6, e)));
+    var fr = forest(x, z); C.lerp(cFloor, ss(.45, .8, fr)*.6);
+    if (roadD(x, z) < 3.4) C.copy(cRoad).multiplyScalar(.92 + .16*n);
     C.multiplyScalar(.86 + .28*n);
     col[i*3] = C.r; col[i*3 + 1] = C.g; col[i*3 + 2] = C.b;
   }
@@ -126,9 +160,9 @@ function attach(api, o){
         'float tuft = (g1*.6 + g2*.4 - .5)*.34*fd + (g3 - .5)*.22;',
         'diffuseColor.rgb *= 1.0 + tuft;',
         'diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb*vec3(1.12, 1.05, .78), smoothstep(.62, .82, g3)*.5);',      // drier, yellower patches
-        'float sv = dot(vTW.xz - vec2(0.0, -15.0), vec2(.45, -.893));',
+        'float sv = dot(vTW.xz - vec2(0.0, -15.0), vec2(.62, -.785));',
         'float fur = abs(sin(sv*.9 + tn(vTW.xz*.05)*4.0));',
-        'float field = step(335.0, sv)*step(sv, 600.0);',
+        'float field = step(260.0, sv)*step(sv, 800.0);',
         'diffuseColor.rgb *= mix(1.0, .9 + .14*fur, field*(1.0 - smoothstep(250.0, 700.0, dd)));',      // furrows in the fields
         /* autumn: the grass goes to straw and rust; winter: snow lies everywhere but thins in the furrows and under the trees */
         'diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb*vec3(1.42, 1.0, .5) + vec3(.014, .004, 0.0), uAut*(.68 + .32*g3));',
@@ -140,38 +174,44 @@ function attach(api, o){
   /* the model's own ground disc gives way to the land */
   scene.children.forEach(function(c){ if (c.isMesh && c.geometry && c.geometry.type === 'CircleGeometry' && c.geometry.parameters.radius > 40) c.visible = false; });
 
-  /* ── the churchyard and the square, painted onto a skin that follows the ground: grass inside the fence, a stone path from the
-     gate to the portal, gravel round the church, the trodden square with cart ruts, the street and the lane ── */
+  /* ── round the church, painted onto a skin that follows the ground: the yard's grass, the stone path from the gate to the portal and
+     gravel round the church, the small trodden square, the streets, the plebania's yard, and the beds and orchard grass of the plot ── */
   (function(){
-    var S = 180, N = lite ? 110 : 170, CW = 2048, cv = document.createElement('canvas'); cv.width = cv.height = CW;
-    var K = cv.getContext('2d'), px = CW/S, ox = -4, oz = 4;
+    var S = 210, N = lite ? 120 : 190, CW = 2048, cv = document.createElement('canvas'); cv.width = cv.height = CW;
+    var K = cv.getContext('2d'), px = CW/S, ox = -22, oz = -34;
     function X(x){ return (x - ox)*px + CW/2; } function Z(z){ return (z - oz)*px + CW/2; }
     function rect(x0, z0, x1, z1, c){ K.fillStyle = c; K.fillRect(X(x0), Z(z0), (x1 - x0)*px, (z1 - z0)*px); }
-    function speck(x0, z0, x1, z1, cols, n, r){ for (var i = 0; i < n; i++){ K.fillStyle = cols[i % cols.length]; K.globalAlpha = .35 + Math.random()*.4;
-      K.beginPath(); K.ellipse(X(x0 + Math.random()*(x1 - x0)), Z(z0 + Math.random()*(z1 - z0)), r*px*(.6 + Math.random()), r*px*(.4 + Math.random()*.6), Math.random()*3, 0, 6.283); K.fill(); } K.globalAlpha = 1; }
-    /* the street and the lane */
-    rect(-94, 63.2, 86, 68.8, 'rgba(140,118,82,.9)'); rect(-50.8, -86, -45.2, 63.2, 'rgba(140,118,82,.9)');
-    speck(-94, 63.2, 86, 68.8, ['#7a6648', '#9c8a66', '#6c5a40'], 1400, .25); speck(-50.8, -86, -45.2, 63.2, ['#7a6648', '#9c8a66'], 700, .25);
-    /* the market square: trodden earth, cobbles near the gate, wheel ruts, grass creeping in at the edges */
-    rect(SQ.x0, SQ.z0 + .4, SQ.x1, SQ.z1 + 1.2, '#a08d6c'); speck(SQ.x0, SQ.z0, SQ.x1, SQ.z1, ['#8c7a5a', '#b5a283', '#7b6a4e', '#c2b190'], 9000, .24);
-    rect(-8, 11.4, 8, 20, 'rgba(150,140,118,.6)'); speck(-8, 11.4, 8, 20, ['#b9ae98', '#958a76'], 1600, .2);
-    K.strokeStyle = 'rgba(92,76,52,.4)'; K.lineWidth = .35*px;
-    for (var r2 = 0; r2 < 9; r2++){ var z0 = 18 + r2*4.6 + Math.random()*2; K.beginPath(); K.moveTo(X(SQ.x0), Z(z0)); K.bezierCurveTo(X(-10), Z(z0 - 3 + Math.random()*6), X(20), Z(z0 - 3 + Math.random()*6), X(SQ.x1), Z(z0 + Math.random()*4 - 2)); K.stroke(); }
-    [[SQ.x0, SQ.z0, SQ.x0 + 4, SQ.z1], [SQ.x1 - 5, SQ.z0, SQ.x1, SQ.z1], [SQ.x0, SQ.z1 - 3, SQ.x1, SQ.z1 + 1]].forEach(function(b){ speck(b[0], b[1], b[2], b[3], ['#6d7a40', '#7e8a4a', '#5f6e38'], 1200, .5); });
+    function shape(P, c){ K.fillStyle = c; K.beginPath(); P.forEach(function(p, i){ i ? K.lineTo(X(p[0]), Z(p[1])) : K.moveTo(X(p[0]), Z(p[1])); }); K.closePath(); K.fill(); }
+    function speck(x0, z0, x1, z1, cols, n, r, test){ for (var i = 0; i < n; i++){ var x = x0 + Math.random()*(x1 - x0), z = z0 + Math.random()*(z1 - z0); if (test && !test(x, z)) continue;
+      K.fillStyle = cols[i % cols.length]; K.globalAlpha = .35 + Math.random()*.4;
+      K.beginPath(); K.ellipse(X(x), Z(z), r*px*(.6 + Math.random()), r*px*(.4 + Math.random()*.6), Math.random()*3, 0, 6.283); K.fill(); } K.globalAlpha = 1; }
+    /* vegetable beds on the church plot, in a few blocks near the buildings */
+    [[-60, -40, 16, 22], [-48, -66, 20, 14], [-30, -70, 14, 18]].forEach(function(b){
+      for (var k = 0; k < b[2]; k += 1.4) rect(b[0] + k, b[1], b[0] + k + .8, b[1] + b[3], k % 2.8 < 1.4 ? 'rgba(122,104,70,.85)' : 'rgba(104,92,60,.75)'); });
+    /* streets */
+    K.lineCap = K.lineJoin = 'round';
+    ROADS.forEach(function(R){ K.strokeStyle = 'rgba(120,100,70,.5)'; K.lineWidth = 7.4*px; K.beginPath(); R.forEach(function(p, i){ i ? K.lineTo(X(p[0]), Z(p[1])) : K.moveTo(X(p[0]), Z(p[1])); }); K.stroke();
+      K.strokeStyle = '#8f7b58'; K.lineWidth = 6*px; K.stroke(); });
+    /* the small square before the gate: trodden earth, cobbles by the gate, wheel ruts */
+    shape(SQ, '#a08d6c'); speck(-18, 22, 19, 50, ['#8c7a5a', '#b5a283', '#7b6a4e', '#c2b190'], 4200, .22, function(x, z){ return inPoly(SQ, x, z); });
+    rect(-7, YARD.z1, 7, YARD.z1 + 6, '#a39985'); speck(-7, YARD.z1, 7, YARD.z1 + 6, ['#b9ae98', '#958a76'], 900, .18);
+    K.strokeStyle = 'rgba(92,76,52,.4)'; K.lineWidth = .32*px;
+    for (var r2 = 0; r2 < 5; r2++){ var zr = 31 + r2*3.6; K.beginPath(); K.moveTo(X(-17), Z(zr + 6)); K.bezierCurveTo(X(-6), Z(zr + 2), X(6), Z(zr - 1), X(18), Z(zr - 4)); K.stroke(); }
     /* the churchyard: grass, a stone path to the portal, gravel round the church */
     rect(YARD.x0, YARD.z0, YARD.x1, YARD.z1, '#5d7136');
-    for (var i = 0; i < 26; i++) rect(YARD.x0 + i*(YARD.x1 - YARD.x0)/26, YARD.z0, YARD.x0 + (i + .5)*(YARD.x1 - YARD.x0)/26, YARD.z1, 'rgba(255,255,220,.035)');
-    speck(YARD.x0, YARD.z0, YARD.x1, YARD.z1, ['#4f6430', '#6c8040', '#7a8a48'], 2400, .3);
-    K.fillStyle = '#b3a68c'; K.beginPath(); K.roundRect ? K.roundRect(X(-13.4), Z(-32.9), 26.8*px, 35.2*px, 1.2*px) : K.rect(X(-13.4), Z(-32.9), 26.8*px, 35.2*px); K.fill();
+    for (var i = 0; i < 26; i++) rect(YARD.x0 + i*(YARD.x1 - YARD.x0)/26, YARD.z0, YARD.x0 + (i + .5)*(YARD.x1 - YARD.x0)/26, YARD.z1, 'rgba(255,255,220,.03)');
+    speck(YARD.x0, YARD.z0, YARD.x1, YARD.z1, ['#4f6430', '#6c8040', '#7a8a48'], 2600, .3);
+    K.fillStyle = '#b3a68c'; K.beginPath(); K.rect(X(-13.4), Z(-32.9), 26.8*px, 35.2*px); K.fill();
     speck(-13.4, -32.9, 13.4, 2.3, ['#9c907a', '#c6baa0', '#8a7f6a'], 2200, .12);
     rect(-1.7, 1.5, 1.7, YARD.z1 + .4, '#a39985');
     for (var zz = 1.6; zz < YARD.z1 + .3; zz += .55) for (var xx = -1.6 + (Math.round(zz/.55) % 2)*.27; xx < 1.6; xx += .55){ K.fillStyle = Math.random() < .5 ? '#b9ae98' : '#958a76'; K.fillRect(X(xx) + 1, Z(zz) + 1, .5*px - 2, .5*px - 2); }
-    /* the plebania's yard and the path to its door */
-    rect(-44.5, -20, -21, 1, 'rgba(104,120,62,.7)'); speck(-44.5, -20, -21, 1, ['#5f7038', '#7d8a4a'], 900, .3); rect(-30.6, 1, -28.4, SQ.z0 + 1, '#9a8a6c');
+    /* the plebania's yard and the path to its porch */
+    rect(PLEB.x - 9, PLEB.z - 14, PLEB.x + 8, PLEB.z + 14, 'rgba(104,120,62,.6)');
+    rect(PLEB.x + 1.6, PLEB.z + PLEB.len/2, PLEB.x + 3.8, YARD.z1 + 6, '#9a8a6c');
     K.save(); K.globalCompositeOperation = 'destination-in';                          // soft outer edge
-    var rg = K.createRadialGradient(CW/2, CW/2, CW*.38, CW/2, CW/2, CW*.5); rg.addColorStop(0, '#000'); rg.addColorStop(1, 'rgba(0,0,0,0)'); K.fillStyle = rg; K.fillRect(0, 0, CW, CW); K.restore();
+    var rg = K.createRadialGradient(CW/2, CW/2, CW*.4, CW/2, CW/2, CW*.5); rg.addColorStop(0, '#000'); rg.addColorStop(1, 'rgba(0,0,0,0)'); K.fillStyle = rg; K.fillRect(0, 0, CW, CW); K.restore();
     var g = new T.PlaneGeometry(S, S, N, N); g.rotateX(-Math.PI/2); g.translate(ox, 0, oz);
-    var p = g.attributes.position; for (var j = 0; j < p.count; j++) p.setY(j, H(p.getX(j), p.getZ(j)) + .04);
+    var p = g.attributes.position; for (var j = 0; j < p.count; j++) p.setY(j, H(p.getX(j), p.getZ(j)) + .05);
     g.computeVertexNormals();
     var tx = new T.CanvasTexture(cv); tx.encoding = T.sRGBEncoding; tx.anisotropy = 8;
     var m = new T.Mesh(g, new T.MeshStandardMaterial({map: tx, transparent: true, depthWrite: false, roughness: 1, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2}));
@@ -206,31 +246,24 @@ function attach(api, o){
       '  #include <encodings_fragment>',
       '}'].join('\n')
   });
-  /* the Horyn: a broad ribbon following its bends; the small stream beyond; still water in the old bends */
-  function ribbon(fn, W, y, flow, t0, t1, segs){
-    var pos = [], uv = [], idx = [];
-    for (var i = 0; i <= segs; i++){
-      var t = t0 + (t1 - t0)*i/segs, s = fn(t), ds = (fn(t + .5) - fn(t - .5));
-      var nl = Math.hypot(1, ds), ns = 1/nl, nt = -ds/nl;                             // the normal across the ribbon, in (s, t)
-      var a = at(s - ns*W/2, t - nt*W/2), b = at(s + ns*W/2, t + nt*W/2);
-      pos.push(a[0], y, a[1], b[0], y, b[1]); uv.push(0, i/segs, 1, i/segs);
+  /* the Horyn: a ribbon along its middle line; still water in the old channels on the far side */
+  (function(){
+    var pos = [], uv = [], idx = [], n = RIV.length, W = RW + 6;
+    for (var i = 0; i < n; i++){
+      var a = RIV[Math.max(0, i - 1)], b = RIV[Math.min(n - 1, i + 1)], dx = b[0] - a[0], dz = b[1] - a[1], L = Math.hypot(dx, dz), nx = -dz/L, nz = dx/L, p = RIV[i];
+      pos.push(p[0] - nx*W/2, WATER, p[1] - nz*W/2, p[0] + nx*W/2, WATER, p[1] + nz*W/2); uv.push(0, i/(n - 1), 1, i/(n - 1));
       if (i) idx.push(2*i - 2, 2*i - 1, 2*i, 2*i - 1, 2*i + 1, 2*i);
     }
     var g = new T.BufferGeometry(); g.setAttribute('position', new T.Float32BufferAttribute(pos, 3)); g.setAttribute('uv', new T.Float32BufferAttribute(uv, 2)); g.setIndex(idx);
-    var m = waterM; if (flow !== 1){ m = waterM.clone(); m.uniforms = Object.assign({}, waterM.uniforms, {uFlow: {value: flow}}); }
-    var me = new T.Mesh(g, m); me.renderOrder = 2; scene.add(me); return me;
-  }
-  ribbon(riverS, RW + 4, WATER, 1, -1000, 1000, lite ? 300 : 520);
-  ribbon(brookS, 22, WATER + .45, .35, -1000, 1000, lite ? 360 : 600);
-  (function(){
+    var m = new T.Mesh(g, waterM); m.renderOrder = 2; scene.add(m);
     var pm = waterM.clone(); pm.uniforms = Object.assign({}, waterM.uniforms, {uFlow: {value: .05}});
     OXB.forEach(function(o){
-      var segs = 60, W = 12, pos = [], uv = [], idx = [], a0 = o[3], a1 = o[4];
-      for (var i = 0; i <= segs; i++){ var a = a0 + (a1 - a0)*i/segs, w = W*(.35 + .65*Math.sin(Math.PI*i/segs)), ca = Math.cos(a), sa = Math.sin(a);
-        var p = at(o[1] + sa*(o[2] - w/2), o[0] + ca*(o[2] - w/2)), q = at(o[1] + sa*(o[2] + w/2), o[0] + ca*(o[2] + w/2));
-        pos.push(p[0], WATER + .5, p[1], q[0], WATER + .5, q[1]); uv.push(0, i/segs, 1, i/segs); if (i) idx.push(2*i - 2, 2*i - 1, 2*i, 2*i - 1, 2*i + 1, 2*i); }
-      var g = new T.BufferGeometry(); g.setAttribute('position', new T.Float32BufferAttribute(pos, 3)); g.setAttribute('uv', new T.Float32BufferAttribute(uv, 2)); g.setIndex(idx);
-      var m = new T.Mesh(g, pm); m.renderOrder = 2; scene.add(m);
+      var segs = 64, W2 = 13, P = [], U = [], I = [];
+      for (var k = 0; k <= segs; k++){ var an = o[2] + (o[3] - o[2])*k/segs, w = W2*(.35 + .65*Math.sin(Math.PI*k/segs)), ca = Math.cos(an), sa = Math.sin(an);
+        P.push(o[0][0] + ca*(o[1] - w/2), WATER + .55, o[0][1] + sa*(o[1] - w/2), o[0][0] + ca*(o[1] + w/2), WATER + .55, o[0][1] + sa*(o[1] + w/2)); U.push(0, k/segs, 1, k/segs);
+        if (k) I.push(2*k - 2, 2*k - 1, 2*k, 2*k - 1, 2*k + 1, 2*k); }
+      var g2 = new T.BufferGeometry(); g2.setAttribute('position', new T.Float32BufferAttribute(P, 3)); g2.setAttribute('uv', new T.Float32BufferAttribute(U, 2)); g2.setIndex(I);
+      var m2 = new T.Mesh(g2, pm); m2.renderOrder = 2; scene.add(m2);
     });
   })();
 
@@ -253,61 +286,69 @@ function attach(api, o){
   function gableGeo(){ var s = new T.Shape([new T.Vector2(-.5, 0), new T.Vector2(.5, 0), new T.Vector2(0, 1)]); var g = new T.ExtrudeGeometry(s, {depth: 1, bevelEnabled: false}); g.translate(0, 0, -.5); return g; }
   var HIP = hipGeo(), GAB = gableGeo();
 
-  /* ── the town: small houses of logs or whitewashed plaster under shingle, thatch or tile ── */
+  var M4 = new T.Matrix4(), Q = new T.Quaternion(), E = new T.Euler(), V1 = new T.Vector3(), V2 = new T.Vector3();
+  function mtx(x, y, z, ry, sx, sy, sz){ return new T.Matrix4().compose(V1.set(x, y, z), Q.setFromEuler(E.set(0, ry || 0, 0)), V2.set(sx || 1, sy || 1, sz || 1)); }
+  function mtxE(x, y, z, rx, ry, rz, sx, sy, sz){ return new T.Matrix4().compose(V1.set(x, y, z), Q.setFromEuler(E.set(rx, ry, rz, 'YXZ')), V2.set(sx || 1, sy || 1, sz || 1)); }
+  var BOX = new T.BoxGeometry(1, 1, 1);
+  function hipGeo(){ var g = new T.ConeGeometry(Math.SQRT1_2, 1, 4, 1); g.rotateY(Math.PI/4); g.translate(0, .5, 0); return g; }
+  function gableGeo(){ var s = new T.Shape([new T.Vector2(-.5, 0), new T.Vector2(.5, 0), new T.Vector2(0, 1)]); var g = new T.ExtrudeGeometry(s, {depth: 1, bevelEnabled: false}); g.translate(0, 0, -.5); return g; }
+  var HIP = hipGeo(), GAB = gableGeo();
+
+  /* ── the town: whitewashed or log houses under shingle, thatch or tile, mostly hidden in their gardens ── */
   (function(){
     var walls = new Batch(), roofs = new Batch(), WALL = ['#e8e1d0', '#ddd2bb', '#a88a64', '#c7b394', '#efe9dc', '#9c7d58'].map(lin), ROOF = ['#5b524a', '#7a6646', '#8d5a40', '#4f4b47', '#6e5a44'].map(lin);
     var dark = lin('#2a2622'), trimC = lin('#f0ebe0');
     HOUSES.forEach(function(q){
       var y = H(q.x, q.z), wc = WALL[Math.floor(q.k*WALL.length)], rc = ROOF[Math.floor(hash(q.x, q.z)*ROOF.length)];
-      walls.add(BOX, mtx(q.x, y + q.h/2 - .3, q.z, -q.a, q.w, q.h + .6, q.d), wc);
+      walls.add(BOX, mtx(q.x, y + q.h/2 - .4, q.z, -q.a, q.w, q.h + .8, q.d), wc);
       var gable = q.k > .45, rh = q.d*(gable ? .62 : .5);
-      if (gable) roofs.add(GAB, mtx(q.x, y + q.h - .3, q.z, -q.a + Math.PI/2, q.d*1.12, rh, q.w*1.06), rc);
-      else roofs.add(HIP, mtx(q.x, y + q.h - .3, q.z, -q.a, q.w*1.1, rh, q.d*1.14), rc);
-      var ca = Math.cos(-q.a), sa = Math.sin(-q.a);                                    // windows on the long sides
-      [-1, 1].forEach(function(side){ for (var k = -1; k <= 1; k++){ var lx = k*q.w*.3, lz = side*(q.d/2 + .02);
-        walls.add(BOX, mtx(q.x + lx*ca + lz*sa, y + q.h*.55, q.z - lx*sa + lz*ca, -q.a, .95, 1.05, .08), trimC);
-        walls.add(BOX, mtx(q.x + lx*ca + (lz + side*.03)*sa, y + q.h*.55, q.z - lx*sa + (lz + side*.03)*ca, -q.a, .7, .8, .06), dark); } });
+      if (gable) roofs.add(GAB, mtx(q.x, y + q.h - .4, q.z, -q.a + Math.PI/2, q.d*1.16, rh, q.w*1.08), rc);
+      else roofs.add(HIP, mtx(q.x, y + q.h - .4, q.z, -q.a, q.w*1.12, rh, q.d*1.18), rc);
+      var ca = Math.cos(-q.a), sa = Math.sin(-q.a), nwin = Math.max(1, Math.round(q.w/4) - 1);
+      [-1, 1].forEach(function(side){ for (var k = 0; k < nwin; k++){ var lx = (k - (nwin - 1)/2)*q.w/(nwin + .6), lz = side*(q.d/2 + .02);
+        walls.add(BOX, mtx(q.x + lx*ca + lz*sa, y + q.h*.5, q.z - lx*sa + lz*ca, -q.a, .95, 1.05, .08), trimC);
+        walls.add(BOX, mtx(q.x + lx*ca + (lz + side*.03)*sa, y + q.h*.5, q.z - lx*sa + (lz + side*.03)*ca, -q.a, .7, .8, .06), dark); } });
       if (q.k > .3) walls.add(BOX, mtx(q.x + q.w*.2*ca, y + q.h + rh*.6, q.z - q.w*.2*sa, -q.a, .55, 1.6, .55), lin('#8a7a6a'));   // chimney
     });
     var m1 = new T.MeshStandardMaterial({vertexColors: true, roughness: .92}), m2 = new T.MeshStandardMaterial({vertexColors: true, roughness: .85, flatShading: true});
     walls.mesh(m1); roofs.mesh(m2);
   })();
 
-  /* the steps down the bank behind the church: stone treads on the slope with a low kerb either side */
+  /* ── a few peasant carts by the gate, as on the photograph of the square: a four-wheeled cart with ladder sides on spoked wheels,
+     the horse in the shafts under its wooden arch ── */
   (function(){
-    var a = STAIR[0], b = STAIR[1], len = Math.hypot(b[0] - a[0], b[1] - a[1]), ang = Math.atan2(b[0] - a[0], b[1] - a[1]), st = new Batch(), c1 = lin('#b9b2a2'), c2 = lin('#9a9384');
-    for (var d = 0; d < len; d += .55){ var x = a[0] + (b[0] - a[0])*d/len, z = a[1] + (b[1] - a[1])*d/len, yy = H(x, z);
-      st.add(BOX, mtx(x, yy + .05, z, ang, 2.6, .3, .62), c1);
-      [-1, 1].forEach(function(sd){ st.add(BOX, mtx(x + Math.cos(ang)*sd*1.5, yy + .2, z - Math.sin(ang)*sd*1.5, ang, .3, .45, .62), c2); }); }
-    st.mesh(new T.MeshStandardMaterial({vertexColors: true, roughness: .95}));
-  })();
-
-  /* market day on the square: peasant carts with their horses unharnessed or standing in the shafts, a few stalls under canvas */
-  (function(){
-    var wb = new Batch(), wood = lin('#6b5236'), dark = lin('#3e3024'), cloth = [lin('#e7e0cf'), lin('#c9b48a'), lin('#d8cbb0')], HC = [lin('#5a3a26'), lin('#3b2a1e'), lin('#8a6a48'), lin('#2a221c')];
-    var wheel = new T.TorusGeometry(.42, .06, 5, 12), rr = function(){ return Math.random(); };
-    function cart(x, z, a, horse){
-      var yy = H(x, z), ca = Math.cos(a), sa = Math.sin(a);
-      function P(lx, ly, lz){ return [x + lx*ca + lz*sa, yy + ly, z - lx*sa + lz*ca]; }
-      var q = P(0, .95, 0); wb.add(BOX, mtx(q[0], q[1], q[2], a, 1.25, .12, 2.8), wood);              // the bed
-      [-1, 1].forEach(function(sd){ q = P(sd*.62, 1.22, 0); wb.add(BOX, mtx(q[0], q[1], q[2], a, .06, .5, 2.8), wood);   // ladder sides
-        [-1.0, 1.0].forEach(function(lz){ q = P(sd*.7, .45, lz); wb.add(wheel, mtx(q[0], q[1], q[2], a + Math.PI/2), dark); }); });
-      [-1, 1].forEach(function(sd){ q = P(sd*.32, .85, 2.4); wb.add(BOX, mtx(q[0], q[1], q[2], a, .07, .07, 2.2), wood); });   // shafts
-      if (rr() < .6){ q = P(0, 1.35, -.3); wb.add(BOX, mtx(q[0], q[1], q[2], a, 1.0, .5, 1.6), cloth[Math.floor(rr()*3)]); }  // a load under a sheet
+    var wb = new Batch(), wood = lin('#6e5638'), wood2 = lin('#57442c'), iron = lin('#2c2824'), cloth = [lin('#e7e0cf'), lin('#c9b48a')], HC = [lin('#5a3a26'), lin('#3b2a1e'), lin('#8a6a48'), lin('#6b5a4a')];
+    var rim = new T.TorusGeometry(1, .07, 5, 18), CAP = function(r, l){ return new T.CapsuleGeometry(r, l, 3, 8); };
+    var legG = CAP(.07, .78), bodyG = CAP(.36, .95), neckG = CAP(.17, .62), headG = CAP(.12, .42), tailG = CAP(.06, .5);
+    function cart(x, z, a, horse, load){
+      var y0 = H(x, z), ca = Math.cos(a), sa = Math.sin(a);
+      function P(lx, ly, lz){ return [x + lx*ca + lz*sa, y0 + ly, z - lx*sa + lz*ca]; }
+      function put(geo, lx, ly, lz, rx, ry, rz, sx, sy, sz, c){ var q = P(lx, ly, lz); wb.add(geo, mtxE(q[0], q[1], q[2], rx || 0, a + (ry || 0), rz || 0, sx, sy, sz), c); }
+      put(BOX, 0, .92, 0, 0, 0, 0, .9, .1, 2.9, wood);                                  // the floor
+      [-1, 1].forEach(function(sd){                                                     // ladder sides leaning outward
+        put(BOX, sd*.62, 1.32, 0, 0, 0, -sd*.35, .07, .07, 3.2, wood2);
+        for (var k = -5; k <= 5; k++) put(BOX, sd*.54, 1.12, k*.28, 0, 0, -sd*.35, .04, .46, .04, wood);
+      });
+      [[-1.05, .36], [1.0, .45]].forEach(function(w){ [-1, 1].forEach(function(sd){             // wheels: rim, spokes, hub
+        put(rim, sd*.72, w[1], w[0], 0, Math.PI/2, 0, w[1], w[1], 1, iron);
+        for (var s = 0; s < 6; s++) put(BOX, sd*.72, w[1], w[0], s*Math.PI/6, 0, 0, .04, w[1]*1.9, .04, wood2);
+        put(BOX, sd*.72, w[1], w[0], 0, 0, 0, .16, .16, .16, iron); }); put(BOX, 0, w[1], w[0], 0, 0, 0, 1.5, .08, .08, wood2); });
+      if (load) put(BOX, 0, 1.3, -.2, 0, 0, 0, .95, .55, 1.9, cloth[load - 1]);         // a load under a sheet
+      [-1, 1].forEach(function(sd){ put(BOX, sd*.36, .95, 2.45, -.05, 0, 0, .06, .06, 2.4, wood2); });   // the shafts
       if (!horse) return;
-      var hc = HC[Math.floor(rr()*HC.length)], hz = 3.3;
-      q = P(0, 1.25, hz); wb.add(BOX, mtx(q[0], q[1], q[2], a, .55, .62, 1.55), hc);
-      q = P(0, 1.68, hz + .9); var nk = new T.Matrix4().compose(V1.set(q[0], q[1], q[2]), Q.setFromEuler(E.set(-.7, a, 0, 'YXZ')), V2.set(.32, .38, .8)); wb.add(BOX, nk, hc);
-      q = P(0, 1.95, hz + 1.3); wb.add(BOX, mtx(q[0], q[1], q[2], a, .26, .3, .62), hc);
-      [[-.18, .6], [.18, .6], [-.18, -.6], [.18, -.6]].forEach(function(l){ q = P(l[0], .48, hz + l[1]); wb.add(BOX, mtx(q[0], q[1], q[2], a, .13, .96, .13), hc); });
+      var hc = HC[Math.floor(hash(x, z)*HC.length)], hz = 3.0;
+      put(bodyG, 0, 1.28, hz, Math.PI/2, 0, 0, 1, 1, 1, hc);
+      put(neckG, 0, 1.72, hz + .82, .75, 0, 0, 1, 1, 1, hc);
+      put(headG, 0, 1.92, hz + 1.34, 2.3, 0, 0, 1, 1, 1, hc);
+      [[-.07, 2.16, hz + 1.16], [.07, 2.16, hz + 1.16]].forEach(function(e){ put(BOX, e[0], e[1], e[2], 0, 0, 0, .05, .14, .05, hc); });
+      put(BOX, 0, 1.84, hz + .74, .75, 0, 0, .06, .7, .16, lin('#1e1712'));             // the mane
+      [[-.17, .52], [.17, .52], [-.17, -.5], [.17, -.5]].forEach(function(l){ put(legG, l[0], .5, hz + l[1], 0, 0, 0, 1, 1, 1, hc); });
+      put(tailG, 0, 1.08, hz - .86, .5, 0, 0, 1, 1, 1, lin('#1e1712'));
+      var arc = new T.TorusGeometry(.48, .045, 5, 12, Math.PI); put(arc, 0, 1.5, hz + .58, 0, 0, 0, 1, 1, 1, wood);   // the arch over the collar
+      put(new T.TorusGeometry(.22, .06, 5, 10), 0, 1.58, hz + .64, -.82, 0, 0, 1, 1, 1, lin('#2a1e14'));                    // the collar
     }
-    var spots = [[14, 30, .4], [22, 36, 1.9], [30, 27, -.6], [-6, 44, 2.6], [8, 49, .2], [38, 46, 1.2], [-18, 52, -1.0], [44, 22, 2.2], [-30, 22, .9], [26, 55, -2.4]];
-    spots.forEach(function(q, k){ cart(q[0], q[1], q[2], k % 3 !== 2); });
-    [[-34, 44], [-36, 30], [48, 33]].forEach(function(q){ var yy = H(q[0], q[1]);                  // stalls
-      wb.add(BOX, mtx(q[0], yy + .45, q[1], .2, 3.2, .9, 1.4), wood);
-      [[-1.5, -.6], [1.5, -.6], [-1.5, .6], [1.5, .6]].forEach(function(o){ wb.add(BOX, mtx(q[0] + o[0], yy + 1.2, q[1] + o[1], .2, .08, 2.4, .08), dark); });
-      wb.add(GAB, mtx(q[0], yy + 2.35, q[1], .2 + Math.PI/2, 1.9, .7, 3.5), cloth[0]); });
-    wb.mesh(new T.MeshStandardMaterial({vertexColors: true, roughness: .9}));
+    cart(5, 35, .35, true, 1); cart(-6, 43, 1.75, true, 0); cart(13, 29, -.5, false, 2);
+    wb.mesh(new T.MeshStandardMaterial({vertexColors: true, roughness: .85}));
   })();
 
   /* ── the plebania: a stone house under a tiled roof beside the front of the church, its long side parallel to the church and its
@@ -398,11 +439,11 @@ function attach(api, o){
     rb.mesh(new T.MeshStandardMaterial({vertexColors: true, roughness: .95}));
     /* the front: masonry posts with stepped caps, a low wall with iron railings, a solid wall on the left, the arched gate */
     var fz = YARD.z1, yF = y(0, fz), mas = new Batch(), iron = new Batch(), wC = lin('#f1ede4'), iC = lin('#22201d');
-    var FP = [-20, -13.5, -7.2, 7.2, 13.5, 20];
+    var FP = [YARD.x0, -17, -9.5, 9.5, 16, YARD.x1];
     FP.forEach(function(x){ mas.add(BOX, mtx(x, yF + 1.3, fz, 0, .78, 2.6, .78), wC); mas.add(BOX, mtx(x, yF + 2.68, fz, 0, .98, .16, .98), wC);
       mas.add(BOX, mtx(x, yF + 2.85, fz, 0, .62, .2, .62), wC); mas.add(HIP, mtx(x, yF + 2.95, fz, 0, .6, .55, .6), wC); });
-    mas.add(BOX, mtx(-16.75, yF + 1.05, fz, 0, 5.7, 2.1, .45), wC); mas.add(BOX, mtx(-16.75, yF + 2.14, fz, 0, 5.9, .12, .55), wC);   // the solid stretch
-    [[-13.5, -7.2], [-7.2, -3.3], [3.3, 7.2], [7.2, 13.5], [13.5, 20]].forEach(function(b){
+    mas.add(BOX, mtx(-21, yF + 1.05, fz, 0, 7.3, 2.1, .45), wC); mas.add(BOX, mtx(-21, yF + 2.14, fz, 0, 7.5, .12, .55), wC);   // the solid stretch
+    [[-17, -9.5], [-9.5, -3.3], [3.3, 9.5], [9.5, 16], [16, YARD.x1]].forEach(function(b){
       var a = b[0] + .4, c = b[1] - .4, mid = (a + c)/2, w = c - a;
       mas.add(BOX, mtx(mid, yF + .28, fz, 0, w + .1, .56, .42), wC); mas.add(BOX, mtx(mid, yF + .6, fz, 0, w + .2, .08, .5), wC);
       iron.add(BOX, mtx(mid, yF + 1.95, fz, 0, w, .06, .05), iC); iron.add(BOX, mtx(mid, yF + .82, fz, 0, w, .06, .05), iC);
@@ -427,7 +468,7 @@ function attach(api, o){
     mas.mesh(new T.MeshStandardMaterial({vertexColors: true, roughness: .9}));
     iron.mesh(new T.MeshStandardMaterial({vertexColors: true, roughness: .5, metalness: .4}));
     /* a wooden cross on the square, as stood by many churches */
-    var cx = -24, cz = 34, yc = y(cx, cz);
+    var cx = -11, cz = 41, yc = y(cx, cz);
     var c1 = new T.Mesh(new T.BoxGeometry(.24, 5.2, .24), woodM); c1.position.set(cx, yc + 2.6, cz); c1.castShadow = true; scene.add(c1);
     var c2 = new T.Mesh(new T.BoxGeometry(1.9, .22, .22), woodM); c2.position.set(cx, yc + 4.1, cz); c2.castShadow = true; scene.add(c2);
     var c3 = new T.Mesh(new T.BoxGeometry(2.0, .5, 2.0), postM); c3.position.set(cx, yc + .25, cz); scene.add(c3);
@@ -455,41 +496,38 @@ function attach(api, o){
         .replace('#include <color_fragment>', '#include <color_fragment>\n float ao = smoothstep(-1.1, 1.0, vLY); diffuseColor.rgb *= .55 + .6*ao;\n diffuseColor.rgb *= 1.0 + .18*smoothstep(.3, 1.0, vLN.y);\n diffuseColor.rgb *= .9 + .2*fract(sin(dot(floor(vLN*7.0), vec3(12.9, 78.2, 37.7)))*43758.5);');
     };
   }
-  var LEAF = ['#4f6f33', '#5b7a38', '#46652e', '#62803c', '#557334', '#6a8640'].map(lin), CON = ['#2e4a2f', '#33503a', '#2a4430'].map(lin), POP = lin('#7f9168');
+  var LEAF = ['#4f6f33', '#5b7a38', '#5f8a3a', '#6e9442', '#557334', '#7a9a48', '#4a6a30'].map(lin), CON = ['#2e4a2f', '#33503a', '#2a4430'].map(lin), POP = lin('#7f9168');
   var crownM = new T.MeshStandardMaterial({roughness: .9, flatShading: true}); windy(crownM, .05, true);
   var conM = new T.MeshStandardMaterial({roughness: .95, flatShading: true}); windy(conM, .025);
   var trunkM = new T.MeshStandardMaterial({color: '#4a3826', roughness: 1});
   var list = {blob: [], cone: [], pop: []};
-  function add(kind, x, z, s){ list[kind].push([x, H(x, z), z, s]); }
-  /* the woods, the clumps on the bank and the alders in the wet hollows */
-  var step = lite ? 13 : 9, rnd = (function(seed){ return function(){ seed = (seed*16807) % 2147483647; return (seed - 1)/2147483646; }; })(1740);
+  function add(kind, x, z, s){ list[kind].push([x, H(x, z), z, s*1.22]); }            // fuller crowns: in this view the trees stand in masses
+  /* the town's trees, the belts along the banks, clumps on the flood-plain and the far woods */
+  var step = lite ? 12 : 8, rnd = (function(seed){ return function(){ seed = (seed*16807) % 2147483647; return (seed - 1)/2147483646; }; })(1740);
   for (var fx = CX - SIZE/2 + 4; fx < CX + SIZE/2 - 4; fx += step) for (var fz = CZ - SIZE/2 + 4; fz < CZ + SIZE/2 - 4; fz += step){
-    var rr = Math.hypot(fx - GX, fz - GZ), thin = rr < 260 ? 1 : rr < 500 ? .45 : .2;   // farther off, fewer but bigger trees
+    var rr = Math.hypot(fx - GX, fz - GZ), thin = rr < 300 ? 1 : rr < 650 ? .4 : .16;
+    if (rr > 1150) continue;   // farther off, fewer but bigger trees
     if (rnd() > thin) continue;
     var x2 = fx + (rnd() - .5)*step*.9, z2 = fz + (rnd() - .5)*step*.9, f = forest(x2, z2);
     if (rnd() > f) continue;
-    var big = 1/Math.sqrt(thin);
-    add(rnd() < .28 ? 'cone' : 'blob', x2, z2, (2.0 + rnd()*1.3)*Math.min(1.9, .75 + .25*big));
+    var big = 1/Math.sqrt(thin), Rn = rivNear(x2, z2), bankT = Rn.d - RW/2 < 18;
+    add(bankT && rnd() < .35 ? 'pop' : rnd() < .16 ? 'cone' : 'blob', x2, z2, (1.9 + rnd()*1.3)*Math.min(1.9, .75 + .25*big));
   }
-  /* willows and poplars along the Horyn and the stream, a few lone oaks on the meadow */
-  for (var tt = -900; tt < 900; tt += lite ? 16 : 11){
-    [-1, 1].forEach(function(sd){ if (rnd() < .45){ var p = at(riverS(tt) + sd*(RW/2 + 5 + rnd()*9), tt); if (!keepClear(p[0], p[1])) add(rnd() < .3 ? 'pop' : 'blob', p[0], p[1], 1.5 + rnd()*.8); } });
-    if (rnd() < .5){ var q2 = at(brookS(tt) + (rnd() < .5 ? -1 : 1)*(7 + rnd()*4), tt); add('blob', q2[0], q2[1], 1.1 + rnd()*.5); }
+  /* the church plot: fruit trees in loose groups among the beds */
+  for (var k3 = 0; k3 < (lite ? 500 : 1100); k3++){
+    var x3 = -140 + rnd()*200, z3 = -240 + rnd()*300;
+    if (!inPoly(PLOT, x3, z3) || keepClear(x3, z3, 3) || fbm(x3*.03 + 5, z3*.03 + 1) < .44) continue;
+    add('blob', x3, z3, 1.0 + rnd()*.45);
   }
-  for (var k2 = 0; k2 < (lite ? 30 : 60); k2++){ var ls = 110 + rnd()*480, lt = rnd()*1400 - 700, lp = at(ls, lt);
-    if (Math.abs(ls - riverS(lt)) < RW/2 + 10 || Math.abs(ls - brookS(lt)) < 10 || oxDist(ls, lt) < 10) continue; add('blob', lp[0], lp[1], 1.6 + rnd()*1.0); }
-  /* the town's yards: a few fruit trees behind every house */
-  HOUSES.forEach(function(q){ var n = 1 + Math.floor(rnd()*3), ca = Math.cos(-q.a), sa = Math.sin(-q.a);
-    for (var i = 0; i < n; i++){ var lx = (rnd() - .5)*q.w*1.4, lz = (q.d/2 + 4 + rnd()*7)*(q.k > .5 ? 1 : -1), x = q.x + lx*ca + lz*sa, z = q.z - lx*sa + lz*ca;
-      if (roadD(x, z) > 5 && !keepClear(x, z)) add('blob', x, z, 1.1 + rnd()*.5); } });
-  /* the churchyard: limes and a few firs along the long sides (none along the front), an old lime by the corner of the facade
-     as in the photograph; outside, a row of trees behind the back fence and a few round the square */
-  [[15.8, -3.5, 2.5], [-15.8, -5, 2.0], [-16, -33, 1.8], [16.2, -34.5, 1.7]].forEach(function(q){ add('blob', q[0], q[1], q[2]); });
-  [[16.4, -17, 1.25], [16.6, -24.5, 1.1], [-16.5, -19, 1.2], [-16.3, -26, 1.05]].forEach(function(q){ add('cone', q[0], q[1], q[2]); });
-  for (var bx2 = -19; bx2 <= 19; bx2 += 7.6) add('blob', bx2 + (rnd() - .5)*2, YARD.z0 - 6 - rnd()*3, 1.9 + rnd()*.5);
-  [[YARD.x1 + 6, -8], [YARD.x1 + 7, -24], [YARD.x1 + 6, -38]].forEach(function(q){ add('blob', q[0], q[1], 1.8 + rnd()*.6); });
-  [[-40, -16], [-25, -18], [-41, 3]].forEach(function(q){ add('blob', q[0], q[1], 1.5); });   // the plebania's garden
-  [[SQ.x1 + 4, 20], [SQ.x1 + 5, 40], [SQ.x1 + 3, 58], [-38, 60], [30, 64.5 + 6], [-10, 71]].forEach(function(q){ add('blob', q[0], q[1], 1.7 + rnd()*.6); });
+  /* yards: a fruit tree or two beside every house */
+  HOUSES.forEach(function(q){ var n = 1 + Math.floor(rnd()*2), ca = Math.cos(-q.a), sa = Math.sin(-q.a);
+    for (var i = 0; i < n; i++){ var lx = (rnd() - .5)*q.w*1.4, lz = (q.d/2 + 4 + rnd()*6)*(q.k > .5 ? 1 : -1), x = q.x + lx*ca + lz*sa, z = q.z - lx*sa + lz*ca;
+      if (roadD(x, z) > 5 && !keepClear(x, z)) add('blob', x, z, 1.2 + rnd()*.5); } });
+  /* the churchyard: limes and a few firs along the long sides, none before the front; trees outside behind the back fence */
+  [[YARD.x1 - 4.5, -6, 2.4], [YARD.x0 + 4.5, -8, 2.1], [YARD.x0 + 4.5, -36, 1.9], [YARD.x1 - 4.5, -38, 1.9]].forEach(function(q){ add('blob', q[0], q[1], q[2]); });
+  [[YARD.x1 - 4, -18, 1.25], [YARD.x1 - 3.8, -27, 1.1], [YARD.x0 + 4, -20, 1.2], [YARD.x0 + 4, -28, 1.05]].forEach(function(q){ add('cone', q[0], q[1], q[2]); });
+  for (var bx2 = YARD.x0 + 3; bx2 <= YARD.x1 - 3; bx2 += 8) add('blob', bx2 + (rnd() - .5)*2, YARD.z0 - 5 - rnd()*3, 2.0 + rnd()*.5);
+  [[PLEB.x - 8, PLEB.z - 6], [PLEB.x - 7, PLEB.z + 6], [YARD.x1 + 7, 4], [YARD.x1 + 8, -20], [-21, 49], [21, 47]].forEach(function(q){ add('blob', q[0], q[1], 1.8 + rnd()*.5); });
   function instance(kind, geo, mat, colors, trunkH, crownY, cast){
     var L = list[kind]; if (!L.length) return;
     var im = new T.InstancedMesh(geo, mat, L.length), tr = new T.InstancedMesh(new T.CylinderGeometry(.12, .2, 1, 6), trunkM, L.length), m4 = new T.Matrix4(), q = new T.Quaternion(), sv = new T.Vector3(), pv = new T.Vector3(), e = new T.Euler();
@@ -503,13 +541,13 @@ function attach(api, o){
     if (kind !== 'cone') CROWNS.push({im: im, base: im.instanceColor.array.slice(), L: L});
   }
   var CROWNS = [];
-  instance('blob', blobCrown(), crownM, LEAF, 1.7, .9, true);
+  instance('blob', blobCrown(), crownM, LEAF, 1.15, .8, true);
   instance('cone', coneCrown(), conM, CON, .9, 1.0, true);
   instance('pop', poplarCrown(), crownM, [POP, lin('#71865c')], 1.2, 1.0, true);
 
   /* ── lanterns by the gate, round the square and along the street: posts by day, warm pools of light at dusk and night ── */
   var lampsK = 0, lanterns = (function(){
-    var P = [[-4.2, 13], [4.2, 13], [-24, 24], [24, 24], [-42, 42], [52, 42], [-30, 61.5], [0, 61.5], [30, 61.5], [-44.5, -24], [-44.5, -60]];
+    var P = [[-4.4, YARD.z1 + 1.2], [4.4, YARD.z1 + 1.2], [-15.5, 31], [17, 30], [-15.5, 47], [17, 47.5], [36, 44], [-34, 50]];
     var n = P.length, post = new T.InstancedMesh(new T.CylinderGeometry(.05, .07, 2.6, 6), new T.MeshStandardMaterial({color: '#1d1c1a', roughness: .6, metalness: .4}), n);
     var headM = new T.MeshStandardMaterial({color: '#2a2622', emissive: new T.Color('#ffc070'), emissiveIntensity: 0, roughness: .5});
     var head = new T.InstancedMesh(new T.CylinderGeometry(.16, .11, .36, 6), headM, n), m4 = new T.Matrix4();
@@ -675,7 +713,7 @@ function attach(api, o){
     var wg = new T.BufferGeometry(); wg.setAttribute('position', new T.Float32BufferAttribute([0, 0, -.12, 0, 0, .14, .62, 0, 0], 3));
     for (var i = 0; i < (lite ? 5 : 9); i++){
       var b = new T.Group(), l = new T.Mesh(wg, bm), r = new T.Mesh(wg, bm); r.scale.x = -1; b.add(l); b.add(r);
-      b.userData = {l: l, r: r, ph: i*.7, rad: 40 + (i % 3)*12, h: 34 + (i % 4)*3, sp: .07 + (i % 3)*.012, cx: 120 + (i % 2)*20, cz: -150 + (i % 3)*16};
+      b.userData = {l: l, r: r, ph: i*.7, rad: 40 + (i % 3)*12, h: 34 + (i % 4)*3, sp: .07 + (i % 3)*.012, cx: 60 + (i % 2)*20, cz: -220 + (i % 3)*16};
       b.scale.setScalar(2.4); scene.add(b); birds.push(b);
     }
   })();
