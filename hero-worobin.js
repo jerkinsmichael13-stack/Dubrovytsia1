@@ -10,7 +10,7 @@ function attach(api, o){
   o = o || {};
   var T = THREE, scene = api.scene, cam = api.camera, renderer = api.renderer, model = api.model;
   var lite = !!o.lite, reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var U = {uTime: {value: 0}, uFogC: {value: new T.Color()}, uFogD: {value: .005}, uSunDir: {value: new T.Vector3(0, 1, 0)}, uHor: {value: new T.Color()}, uGlowW: {value: new T.Color()}, uDeep: {value: new T.Color()}, uGlint: {value: 1}, uNightG: {value: 0}};
+  var U = {uTime: {value: 0}, uFogC: {value: new T.Color()}, uFogD: {value: .005}, uSunDir: {value: new T.Vector3(0, 1, 0)}, uHor: {value: new T.Color()}, uGlowW: {value: new T.Color()}, uDeep: {value: new T.Color()}, uGlint: {value: 1}, uNightG: {value: 0}, uIce: {value: 0}, uWSnow: {value: 0}, uAut: {value: 0}};
   function ss(a, b, x){ var t = Math.max(0, Math.min(1, (x - a)/(b - a))); return t*t*(3 - 2*t); }
   function lin(c){ return new T.Color(c).convertSRGBToLinear(); }
   function hash(x, z){ var s = Math.sin(x*127.1 + z*311.7)*43758.5453; return s - Math.floor(s); }
@@ -88,9 +88,11 @@ function attach(api, o){
   tg.setAttribute('color', new T.BufferAttribute(col, 3)); tg.computeVertexNormals();
   var terrM = new T.MeshStandardMaterial({vertexColors: true, roughness: 1});
   /* surface detail: grass tussocks, bare patches and furrows drawn from world position, fading with distance */
+  terrM.userData.noSnow = true;
   terrM.onBeforeCompile = function(sh){
+    sh.uniforms.uWSnow = U.uWSnow; sh.uniforms.uAut = U.uAut;
     sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vTW;').replace('#include <worldpos_vertex>', '#include <worldpos_vertex>\nvTW = (modelMatrix*vec4(transformed, 1.0)).xyz;');
-    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying vec3 vTW;\nfloat th(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7)))*43758.5453); }\nfloat tn(vec2 p){ vec2 i = floor(p), f = fract(p); f = f*f*(3.0 - 2.0*f); return mix(mix(th(i), th(i + vec2(1, 0)), f.x), mix(th(i + vec2(0, 1)), th(i + vec2(1, 1)), f.x), f.y); }')
+    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying vec3 vTW;\nuniform float uWSnow, uAut;\nfloat th(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7)))*43758.5453); }\nfloat tn(vec2 p){ vec2 i = floor(p), f = fract(p); f = f*f*(3.0 - 2.0*f); return mix(mix(th(i), th(i + vec2(1, 0)), f.x), mix(th(i + vec2(0, 1)), th(i + vec2(1, 1)), f.x), f.y); }')
       .replace('#include <color_fragment>', ['#include <color_fragment>',
         'float dd = length(vTW - cameraPosition), fd = 1.0 - smoothstep(60.0, 260.0, dd);',
         'float g1 = tn(vTW.xz*1.7), g2 = tn(vTW.xz*6.3 + 3.1), g3 = tn(vTW.xz*.33 + 7.7);',
@@ -99,7 +101,11 @@ function attach(api, o){
         'diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb*vec3(1.12, 1.05, .78), smoothstep(.62, .82, g3)*.5);',      // drier, yellower patches
         'float fur = abs(sin(vTW.z*.9 + tn(vTW.xz*.05)*4.0));',
         'float field = 1.0 - step(-360.0, vTW.x)*step(vTW.x, 26.0)*step(-310.0, vTW.z)*step(vTW.z, 290.0);',
-        'diffuseColor.rgb *= mix(1.0, .9 + .14*fur, field*step(vTW.x, 30.0)*fd);'].join('\n'));      // furrows in the fields
+        'diffuseColor.rgb *= mix(1.0, .9 + .14*fur, field*step(vTW.x, 30.0)*fd);',      // furrows in the fields
+        /* autumn: the grass goes to straw and rust; winter: snow lies everywhere but thins in the furrows and under the trees */
+        'diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb*vec3(1.42, 1.0, .5) + vec3(.014, .004, 0.0), uAut*(.68 + .32*g3));',
+        'float snw = uWSnow*smoothstep(.12, .42, g1*.45 + g3*.55 + .12 - field*fur*.12);',
+        'diffuseColor.rgb = mix(diffuseColor.rgb, vec3(.80, .83, .88)*(.93 + .1*g2), snw);'].join('\n'));
   };
   var terrain = new T.Mesh(tg, terrM); terrain.receiveShadow = true; scene.add(terrain);
 
@@ -136,10 +142,10 @@ function attach(api, o){
   /* ── water: the Horyn and the ponds; ripples drift downstream (north), the sky glints off them ── */
   var waterM = new T.ShaderMaterial({
     transparent: true, depthWrite: false, side: T.DoubleSide,
-    uniforms: {uTime: U.uTime, uFlow: {value: 1}, uFogC: U.uFogC, uFogD: U.uFogD, uSun: U.uSunDir, uSkyW: U.uHor, uWarmW: U.uGlowW, uDeep: U.uDeep, uGlint: U.uGlint},
+    uniforms: {uTime: U.uTime, uFlow: {value: 1}, uFogC: U.uFogC, uFogD: U.uFogD, uSun: U.uSunDir, uSkyW: U.uHor, uWarmW: U.uGlowW, uDeep: U.uDeep, uGlint: U.uGlint, uIce: U.uIce},
     vertexShader: 'varying vec2 vUv; varying vec3 vW; varying float vD; void main(){ vUv = uv; vec4 w = modelMatrix*vec4(position, 1.0); vW = w.xyz; vec4 mv = viewMatrix*w; vD = -mv.z; gl_Position = projectionMatrix*mv; }',
     fragmentShader: [
-      'uniform float uTime, uFlow, uFogD, uGlint; uniform vec3 uFogC, uSun, uSkyW, uWarmW, uDeep; varying vec2 vUv; varying vec3 vW; varying float vD;',
+      'uniform float uTime, uFlow, uFogD, uGlint, uIce; uniform vec3 uFogC, uSun, uSkyW, uWarmW, uDeep; varying vec2 vUv; varying vec3 vW; varying float vD;',
       'float h(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7)))*43758.5453); }',
       'float n(vec2 p){ vec2 i = floor(p), f = fract(p); f = f*f*(3.0 - 2.0*f); return mix(mix(h(i), h(i + vec2(1, 0)), f.x), mix(h(i + vec2(0, 1)), h(i + vec2(1, 1)), f.x), f.y); }',
       'void main(){',
@@ -152,10 +158,12 @@ function attach(api, o){
       '  c = mix(c, warm, rip*(.25 + .5*fr));',                                     // ripples catch the evening sky
       '  c *= .85 + .3*n(vW.xz*.05 + vec2(0.0, uTime*.05));',
       '  vec3 Rf = reflect(-V, normalize(vec3((r - .9)*.25, 1.0, (n(q*1.7) - .5)*.25))); float g = pow(max(dot(Rf, uSun), 0.0), 60.0);',
-      '  c += warm*g*1.6*uGlint;',
+      '  c += warm*g*1.6*uGlint*(1.0 - uIce*.7);',
+      '  vec3 ice = mix(vec3(.46, .54, .6), sky, .35)*(.82 + .3*n(vW.xz*.4)) + vec3(.1)*smoothstep(.55, .9, n(vW.xz*.9));',     // winter: grey-blue ice, dusted with snow
+      '  c = mix(c, ice, uIce);',
       '  float edge = smoothstep(0.0, .14, vUv.x)*smoothstep(1.0, .86, vUv.x);',
       '  float fogf = 1.0 - exp(-uFogD*uFogD*vD*vD);',
-      '  gl_FragColor = vec4(mix(c, uFogC, fogf), (.78 + .2*fr)*edge);',
+      '  gl_FragColor = vec4(mix(c, uFogC, fogf), mix((.78 + .2*fr)*edge, edge, uIce));',
       '  #include <encodings_fragment>',
       '}'].join('\n')
   });
@@ -221,11 +229,12 @@ function attach(api, o){
   function poplarCrown(){ var P = [], N = []; [[0, 0, .55, 1.0], [0, 1.1, .5, 1.0], [0, 2.1, .38, .9]].forEach(function(q){ var g = new T.IcosahedronGeometry(q[2], 1); g.scale(1, 1.7, 1); g.translate(0, q[1], 0); P.push(g.attributes.position.array); N.push(g.attributes.normal.array); }); return merge(P, N); }
   function merge(P, N){ var len = 0; P.forEach(function(a){ len += a.length; }); var p = new Float32Array(len), n = new Float32Array(len), at = 0;
     P.forEach(function(a, i){ p.set(a, at); n.set(N[i], at); at += a.length; }); var g = new T.BufferGeometry(); g.setAttribute('position', new T.BufferAttribute(p, 3)); g.setAttribute('normal', new T.BufferAttribute(n, 3)); return g; }
-  function windy(m, amt){
+  function windy(m, amt, bare){                                                      // bare: the crown thins in winter (uWSnow)
+    m.customProgramCacheKey = function(){ return 'windy' + amt + (bare ? 'b' : ''); };   // each variant its own program
     m.onBeforeCompile = function(sh){
-      sh.uniforms.uTime = U.uTime;
-      sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nuniform float uTime;')
-        .replace('#include <begin_vertex>', '#include <begin_vertex>\n#ifdef USE_INSTANCING\n vec3 ip = instanceMatrix[3].xyz;\n#else\n vec3 ip = vec3(0.0);\n#endif\n' +
+      sh.uniforms.uTime = U.uTime; sh.uniforms.uWSnow = U.uWSnow;
+      sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nuniform float uTime, uWSnow;')
+        .replace('#include <begin_vertex>', '#include <begin_vertex>\n' + (bare ? 'transformed *= 1.0 - .3*uWSnow;\n' : '') + '#ifdef USE_INSTANCING\n vec3 ip = instanceMatrix[3].xyz;\n#else\n vec3 ip = vec3(0.0);\n#endif\n' +
           ' float k = max(0.0, position.y + 1.0);\n transformed.x += (sin(uTime*1.1 + ip.x*.13 + ip.z*.07) + .35*sin(uTime*2.7 + ip.z*.3))*' + amt.toFixed(3) + '*k;\n transformed.z += cos(uTime*.9 + ip.z*.11)*' + (amt*.6).toFixed(3) + '*k;\n vLY = position.y; vLN = normal;')
         .replace('#include <common>', '#include <common>\nvarying float vLY; varying vec3 vLN;');
       sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying float vLY; varying vec3 vLN;')
@@ -233,7 +242,7 @@ function attach(api, o){
     };
   }
   var LEAF = ['#4f6f33', '#5b7a38', '#46652e', '#62803c', '#557334', '#6a8640'].map(lin), CON = ['#2e4a2f', '#33503a', '#2a4430'].map(lin), POP = lin('#7f9168');
-  var crownM = new T.MeshStandardMaterial({roughness: .9, flatShading: true}); windy(crownM, .05);
+  var crownM = new T.MeshStandardMaterial({roughness: .9, flatShading: true}); windy(crownM, .05, true);
   var conM = new T.MeshStandardMaterial({roughness: .95, flatShading: true}); windy(conM, .025);
   var trunkM = new T.MeshStandardMaterial({color: '#4a3826', roughness: 1});
   var list = {blob: [], cone: [], pop: []};
@@ -266,7 +275,9 @@ function attach(api, o){
       m4.compose(pv.set(t[0], t[1] + trunkH*s/2, t[2]), q, sv.set(s, trunkH*s + .2, s)); tr.setMatrixAt(i, m4);
     });
     im.castShadow = tr.castShadow = cast; im.receiveShadow = true; scene.add(im); scene.add(tr);
+    if (kind !== 'cone') CROWNS.push({im: im, base: im.instanceColor.array.slice(), L: L});
   }
+  var CROWNS = [];
   instance('blob', blobCrown(), crownM, LEAF, 1.7, .9, true);
   instance('cone', coneCrown(), conM, CON, .9, 1.0, true);
   instance('pop', poplarCrown(), crownM, [POP, lin('#71865c')], 1.2, 1.0, true);
@@ -384,15 +395,20 @@ function attach(api, o){
   function dirOf(p){ var E = api.compass.east, N = api.compass.north, h = p.alt*RAD, A = p.az*RAD, ce = Math.cos(h)*Math.sin(A), cn = Math.cos(h)*Math.cos(A);
     return new T.Vector3(E[0]*ce + N[0]*cn, Math.sin(h), E[1]*ce + N[1]*cn).normalize(); }
   var override = (function(){ var m = /[?&#]hero-time=(\d{1,2})[:.](\d{2})/.exec(location.href); return m ? +m[1]*60 + +m[2] : null; })();
-  function when(){                                                                   // now, or a set time of day for a preview (?hero-time=19:40)
+  function kyivOff(){                                                                // minutes Kyiv is ahead of UTC today (summer or winter time)
+    try { var n = new Date(), p = n.toLocaleString('en-GB', {timeZone: 'Europe/Kyiv', hour: '2-digit', minute: '2-digit', hour12: false}).split(':'),
+      o = (+p[0] % 24)*60 + +p[1] - (n.getUTCHours()*60 + n.getUTCMinutes()); return o > 720 ? o - 1440 : o < -720 ? o + 1440 : o; } catch (e){ return 180; }
+  }
+  function kyivNow(){ var n = new Date(); return ((n.getUTCHours()*60 + n.getUTCMinutes() + kyivOff()) % 1440 + 1440) % 1440; }
+  function when(){                                                                   // now, or a time of day picked by hand (the hero's slider, or ?hero-time=19:40)
     var n = new Date(); if (override == null) return n;
     var k = new Date(n.getTime()); k.setUTCHours(0, 0, 0, 0);
-    var kyiv = 180;                                                                  // close enough for a preview: Kyiv summer time
-    return new Date(k.getTime() + (override - kyiv)*6e4);
+    return new Date(k.getTime() + (override - kyivOff())*6e4);
   }
   function setSky(){
     var date = when(), s = sunPos(date), mo = moonPos(date), alt = s.alt;
     var P = palAt(alt), sd = dirOf(s);
+    if (SW > .001) P.forEach(function(c, i){ if (i > 3 && i < 5) return; var l = c.r*.3 + c.g*.59 + c.b*.11; c.lerp(new T.Color(l*.94, l, l*1.1), (i > 4 ? .3 : .45)*SW); });   // winter: a paler, overcast sky
     /* below the horizon the sun still lights the sky from where it is: keep its direction, but the light itself goes */
     U.uSunDir.value.copy(sd);
     SKYU.uZen.value.copy(P[0]); U.uHor.value.copy(P[1]); SKYU.uSunH.value.copy(P[2]); SKYU.uAnti.value.copy(P[3]); SKYU.uGlow.value.copy(P[4]);
@@ -401,11 +417,13 @@ function attach(api, o){
     var night = 1 - ss2(-12, -4, alt);
     SKYU.uStars.value = night*(mo.alt > -2 ? .85 : 1);
     SKYU.uMoon.value.copy(mo.alt > -4 ? dirOf(mo) : new T.Vector3(.2, -1, .1));
-    SKYU.uCov.value = .5;
+    SKYU.uCov.value = .5 + .32*SW + .1*SA;
     /* haze: morning mist, clear day, a warm evening, a deep blue night */
     var fogCol = P[1].clone().lerp(P[3], .3); var lum = fogCol.r*.3 + fogCol.g*.59 + fogCol.b*.11; fogCol.lerp(new T.Color(lum, lum, lum), .42).multiplyScalar(.8);
+    fogCol.lerp(new T.Color(lum*1.02, lum*1.08, lum*1.2), .6*SW).lerp(new T.Color(lum*1.22, lum*.98, lum*.68), .45*SA);
     scene.fog.color.copy(fogCol); U.uFogC.value.copy(fogCol);
     var dens = .0032 + .0018*(1 - ss2(-2, 14, alt)) + .0008*ss2(-6, 3, alt)*(1 - ss2(3, 12, alt));
+    dens *= 1 + .9*SW + .4*SA;
     scene.fog.density = dens; U.uFogD.value = dens;
     U.uGlowW.value.copy(P[4]).lerp(P[5], .3); U.uDeep.value.copy(P[0]).multiplyScalar(.18).add(new T.Color(.012, .03, .032));
     U.uGlint.value = ss2(-1, 3, alt);
@@ -415,11 +433,12 @@ function attach(api, o){
     var moonLit = night*(mo.alt > 3 ? 1 : .6), md = mo.alt > 3 ? dirOf(mo) : new T.Vector3(-.35, .8, .45).normalize();
     var useMoon = moonLit > .05 && alt < -4;
     var sunC = alt < 8 ? new T.Color('#ff7a3a').lerp(new T.Color('#ffd09a'), ss2(-1, 8, alt)) : new T.Color('#ffe2b8').lerp(new T.Color('#fff6e8'), high);
+    sunC.lerp(new T.Color('#ffc480'), .35*SA*high).lerp(new T.Color('#e8eef8'), .5*SW*high);
     api.light({dir: useMoon ? [md.x, md.y, md.z] : [sd.x, Math.max(sd.y, .02), sd.z], sunColor: useMoon ? '#9fb2e2' : '#' + sunC.getHexString(),
-      sunI: useMoon ? .42*moonLit : 1.9*ss2(-.8, 4, alt)*(.78 + .22*high),
+      sunI: (useMoon ? .42*moonLit : 1.9*ss2(-.8, 4, alt)*(.78 + .22*high))*(1 - .38*SW),
       fillColor: hex(P[0].clone().lerp(new T.Color('#d3dcff'), day*.5)), fillI: .06 + .22*day + .05*night,
       sky: hex(P[0].clone().lerp(P[1], .5)), ground: alt > 0 ? '#3d3020' : '#121522', hemiI: .14 + .3*day + .06*night,
-      exposure: .62 + .16*twi + .3*day, env: .08 + .12*twi + .3*day, lamps: 1 - ss2(-5, 1.5, alt)});
+      exposure: (.62 + .16*twi + .3*day)*(1 - .1*SW), env: .08 + .12*twi + .3*day, lamps: 1 - ss2(-5, 1.5, alt)});
     hemi2.color.copy(P[1]).lerp(new T.Color('#6a7cb0'), night*.6); hemi2.groundColor.set(alt > 0 ? '#3a3420' : '#141826'); hemi2.intensity = .12 + .24*day + .16*(1 - day)*twi + .3*night;
     birds.forEach(function(b){ b.visible = alt > -6; });
     lampsK = 1 - ss2(-5, 1.5, alt); lanterns.set(lampsK);
@@ -437,6 +456,122 @@ function attach(api, o){
       b.scale.setScalar(1.6); scene.add(b); birds.push(b);
     }
   })();
+
+
+  /* ── seasons, picked by hand in the hero (summer by default): autumn turns the park to gold and rust and sends leaves
+     drifting down; winter strips the broadleaves, lays snow on the land, the roofs and the crowns, and freezes the water ── */
+  var SEASON = 'summer', SW = 0, SA = 0, ctT = 1;
+  var AUTC = ['#c8862e', '#e0a93a', '#b4542a', '#e8c04a', '#9c3c22', '#d07a28', '#c9a23a', '#8f8a38'].map(lin), BARE = [lin('#a0968a'), lin('#928879'), lin('#aaa196')];
+  function crownTarget(c, k){
+    var a = c.base.slice(), L = c.L, col = new T.Color();
+    if (k === 'summer') return a;
+    for (var i = 0; i < L.length; i++){ var h = hash(L[i][0]*1.7, L[i][2]*2.3);
+      if (k === 'autumn'){ col.copy(AUTC[Math.floor(h*AUTC.length)]); if (hash(L[i][2], L[i][0]*3.1) < .16) col.lerp(new T.Color(a[i*3], a[i*3 + 1], a[i*3 + 2]), .65); }   // a few still green
+      else col.copy(BARE[Math.floor(h*BARE.length)]);
+      a[i*3] = col.r; a[i*3 + 1] = col.g; a[i*3 + 2] = col.b; }
+    return a;
+  }
+  /* snow on whatever faces the sky: one small patch for every lit material in the scene, added the first time winter is chosen */
+  function patchSnow(){
+    if (patchSnow.done) return; patchSnow.done = true;
+    scene.traverse(function(ob){ if (!ob.isMesh || ob === sky) return;
+      (Array.isArray(ob.material) ? ob.material : [ob.material]).forEach(function(m){
+        if (!m || !m.isMeshStandardMaterial || m.userData.noSnow || m.userData.snowP) return; m.userData.snowP = true;
+        var prev = m.onBeforeCompile, key = m.customProgramCacheKey();
+        m.onBeforeCompile = function(sh, r){ if (prev) prev.call(this, sh, r); sh.uniforms.uWSnow = U.uWSnow;
+          sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nuniform float uWSnow;')
+            .replace('#include <normal_fragment_maps>', '#include <normal_fragment_maps>\n{ float up = dot(normal, normalize((viewMatrix*vec4(0.0, 1.0, 0.0, 0.0)).xyz)); float sn = uWSnow*smoothstep(.12, .62, up);\n  diffuseColor.rgb = mix(diffuseColor.rgb, vec3(.82, .85, .9), sn); roughnessFactor = mix(roughnessFactor, .8, sn); }'); };
+        m.customProgramCacheKey = function(){ return key + '|snow'; }; m.needsUpdate = true; }); });
+  }
+  /* falling snow and leaves round the house: the fall itself runs in the vertex shader */
+  function sprite(draw){ var c = document.createElement('canvas'); c.width = c.height = 64; draw(c.getContext('2d')); var t = new T.CanvasTexture(c); t.encoding = T.sRGBEncoding; return t; }
+  function fall(n, o2){
+    var g = new T.BufferGeometry(), p = new Float32Array(n*3), c = new Float32Array(n*3), R0 = 58;
+    for (var i = 0; i < n; i++){ p[i*3] = GX + 6 + (Math.random()*2 - 1)*R0; p[i*3 + 1] = Math.random()*o2.h; p[i*3 + 2] = GZ + (Math.random()*2 - 1)*R0;
+      var q = o2.cols[i % o2.cols.length]; c[i*3] = q.r; c[i*3 + 1] = q.g; c[i*3 + 2] = q.b; }
+    g.setAttribute('position', new T.BufferAttribute(p, 3)); g.setAttribute('color', new T.BufferAttribute(c, 3));
+    var m = new T.PointsMaterial({size: o2.size, map: o2.map, transparent: true, depthWrite: false, opacity: 0, vertexColors: true, alphaTest: o2.at || 0});
+    m.onBeforeCompile = function(sh){ sh.uniforms.uTime = U.uTime;
+      sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nuniform float uTime;')
+        .replace('#include <begin_vertex>', 'vec3 transformed = position; float rr = fract(position.x*.173 + position.z*.311);\n' +
+          'transformed.y = mod(position.y - uTime*' + o2.v.toFixed(2) + '*(.7 + .6*rr), ' + o2.h.toFixed(1) + ') - 6.0;\n' +
+          'transformed.x += sin(uTime*.7 + rr*40.0)*' + o2.sw.toFixed(2) + ' + sin(uTime*.23 + rr*9.0)*' + (o2.sw*2).toFixed(2) + ';\n transformed.z += cos(uTime*.55 + rr*30.0)*' + o2.sw.toFixed(2) + ';'); };
+    var pts = new T.Points(g, m); pts.frustumCulled = false; pts.renderOrder = 5; pts.visible = false; scene.add(pts); return pts;
+  }
+  var snowFx = null, leafFx = null;
+  function makeSnow(){ return snowFx || (snowFx = fall(lite ? 1400 : 3200, {h: 36, v: 1.5, sw: .45, size: .55, cols: [new T.Color(1, 1, 1)],
+    map: sprite(function(k){ var g = k.createRadialGradient(32, 32, 0, 32, 32, 30); g.addColorStop(0, 'rgba(255,255,255,1)'); g.addColorStop(.45, 'rgba(255,255,255,.7)'); g.addColorStop(1, 'rgba(255,255,255,0)'); k.fillStyle = g; k.fillRect(0, 0, 64, 64); })})); }
+  function makeLeaves(){ return leafFx || (leafFx = fall(lite ? 160 : 320, {h: 30, v: .9, sw: 1.4, size: .95, at: .35, cols: AUTC.slice(0, 6), map: sprite(function(k){
+    k.translate(32, 32); k.rotate(.6); k.fillStyle = '#fff'; k.beginPath(); k.moveTo(0, -26); k.quadraticCurveTo(17, -6, 0, 26); k.quadraticCurveTo(-17, -6, 0, -26); k.fill(); })})); }
+  function setSeason(k, at){
+    if (k === SEASON) return; SEASON = k;
+    if (k === 'winter'){ patchSnow(); makeSnow(); } if (k === 'autumn') makeLeaves();
+    CROWNS.forEach(function(c){ c.from = c.im.instanceColor.array.slice(); c.to = crownTarget(c, k); }); ctT = 0;
+    if (at){ ctT = .999; SW = k === 'winter' ? .999 : 0; SA = k === 'autumn' ? .999 : 0; }                    // at once (for stills)
+  }
+  var skyTick = 0;
+  function stepSeason(dt){
+    var w = SEASON === 'winter' ? 1 : 0, a = SEASON === 'autumn' ? 1 : 0, moving = Math.abs(w - SW) > .002 || Math.abs(a - SA) > .002;
+    if (!moving && SW === w && SA === a && ctT >= 1) return;
+    var kk = Math.min(1, dt*1.3); SW = moving ? SW + (w - SW)*kk : w; SA = moving ? SA + (a - SA)*kk : a;
+    U.uWSnow.value = SW; U.uIce.value = SW; U.uAut.value = SA;
+    if (snowFx){ snowFx.visible = SW > .02; snowFx.material.opacity = .9*SW; }
+    if (leafFx){ leafFx.visible = SA > .02; leafFx.material.opacity = SA; }
+    if (ctT < 1){ ctT = Math.min(1, ctT + dt/1.8); var e = ctT*ctT*(3 - 2*ctT);
+      CROWNS.forEach(function(c){ var A = c.im.instanceColor.array; for (var i = 0; i < A.length; i++) A[i] = c.from[i] + (c.to[i] - c.from[i])*e; c.im.instanceColor.needsUpdate = true; }); }
+    if (!moving || ++skyTick % 3 === 0) setSky();
+  }
+
+  /* ── a quiet control in the corner of the hero: the hour and the season, for whoever wants to turn them ── */
+  (function(){
+    var host = renderer.domElement.closest('.hx-cover') || renderer.domElement.parentNode; if (!host || o.noUi) return;
+    var css = document.createElement('style'); css.textContent = [
+      '.hxw{position:absolute;right:max(2rem,calc((100vw - 1240px)/2));bottom:.8rem;z-index:4;display:flex;flex-direction:column;align-items:flex-end;gap:.55rem;font-family:Manrope,system-ui,sans-serif}',
+      '.hxw-b{width:30px;height:30px;padding:0;border-radius:50%;border:1px solid rgba(212,178,90,.2);background:rgba(18,14,8,.22);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);color:#f4e9c8;display:grid;place-items:center;cursor:pointer;opacity:.42;transition:opacity .3s,border-color .3s,background .3s}',
+      '.hxw-b:hover,.hxw-b:focus-visible,.hxw.open .hxw-b{opacity:1;border-color:rgba(212,178,90,.5);background:rgba(18,14,8,.5)}',
+      '.hxw-b svg{width:15px;height:15px}',
+      '.hxw-p{width:250px;padding:.85rem .95rem .8rem;border-radius:14px;background:rgba(16,12,7,.66);border:1px solid rgba(212,178,90,.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);backdrop-filter:blur(14px) saturate(1.2);box-shadow:0 18px 40px rgba(0,0,0,.35);color:#f4e9c8;',
+      'opacity:0;transform:translateY(6px) scale(.98);transform-origin:100% 100%;pointer-events:none;visibility:hidden;transition:opacity .28s,transform .28s,visibility 0s .28s}',
+      '.hxw.open .hxw-p{opacity:1;transform:none;pointer-events:auto;visibility:visible;transition:opacity .28s,transform .28s}',
+      '.hxw-h{display:flex;align-items:baseline;justify-content:space-between;gap:.6rem;margin-bottom:.45rem}',
+      '.hxw-k{font-size:.56rem;letter-spacing:.26em;text-transform:uppercase;color:rgba(212,178,90,.75)}',
+      '.hxw-t{font-family:"Cormorant Garamond",Georgia,serif;font-style:italic;font-size:1.15rem;line-height:1;color:#f4e9c8;margin-left:auto}',
+      '.hxw-now{padding:0;border:0;background:none;color:rgba(244,233,200,.55);font:inherit;font-size:.62rem;letter-spacing:.06em;cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(212,178,90,.4)}',
+      '.hxw-now[hidden]{display:none}.hxw-now:hover{color:#f4e9c8}',
+      '.hxw-r{-webkit-appearance:none;appearance:none;width:100%;height:18px;margin:0 0 .7rem;background:transparent;cursor:pointer;display:block}',
+      '.hxw-r::-webkit-slider-runnable-track{height:3px;border-radius:3px;background:linear-gradient(90deg,#16203c 0%,#16203c 17%,#c9788a 24%,#e9b07a 28%,#8fb8de 38%,#a9cbe6 55%,#e8b56c 72%,#d9764a 78%,#2a2f52 85%,#16203c 100%)}',
+      '.hxw-r::-moz-range-track{height:3px;border-radius:3px;background:linear-gradient(90deg,#16203c 0%,#16203c 17%,#c9788a 24%,#e9b07a 28%,#8fb8de 38%,#a9cbe6 55%,#e8b56c 72%,#d9764a 78%,#2a2f52 85%,#16203c 100%)}',
+      '.hxw-r::-webkit-slider-thumb{-webkit-appearance:none;width:13px;height:13px;margin-top:-5px;border-radius:50%;background:#f4e9c8;border:2px solid #d4b25a;box-shadow:0 0 0 4px rgba(212,178,90,.15)}',
+      '.hxw-r::-moz-range-thumb{width:10px;height:10px;border-radius:50%;background:#f4e9c8;border:2px solid #d4b25a;box-shadow:0 0 0 4px rgba(212,178,90,.15)}',
+      '.hxw-s{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;padding:2px;border-radius:9px;background:rgba(255,255,255,.05);border:1px solid rgba(212,178,90,.12)}',
+      '.hxw-s button{padding:.36rem 0;border:0;border-radius:7px;background:none;color:rgba(244,233,200,.6);font:inherit;font-size:.68rem;letter-spacing:.04em;cursor:pointer;transition:background .25s,color .25s}',
+      '.hxw-s button:hover{color:#f4e9c8}.hxw-s button[aria-pressed="true"]{background:rgba(212,178,90,.2);color:#f4e9c8}',
+      '@media(max-width:980px){.hxw{right:.9rem;bottom:.7rem}.hxw-p{width:min(250px,calc(100vw - 2rem))}}'].join('');
+    document.head.appendChild(css);
+    var box = document.createElement('div'); box.className = 'hxw';
+    box.innerHTML = '<div class="hxw-p" id="hxwP" role="group" aria-label="Пора доби й року">' +
+      '<div class="hxw-h"><span class="hxw-k">Пора доби</span><span class="hxw-t"></span><button type="button" class="hxw-now" hidden>зараз</button></div>' +
+      '<input class="hxw-r" type="range" min="0" max="1439" step="5" aria-label="Час доби">' +
+      '<div class="hxw-h" style="margin-bottom:.4rem"><span class="hxw-k">Пора року</span></div>' +
+      '<div class="hxw-s"><button type="button" data-s="summer" aria-pressed="true">Літо</button><button type="button" data-s="autumn" aria-pressed="false">Осінь</button><button type="button" data-s="winter" aria-pressed="false">Зима</button></div></div>' +
+      '<button type="button" class="hxw-b" aria-label="Змінити пору доби й року" aria-expanded="false" aria-controls="hxwP"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M4.5 13.5a5.5 5.5 0 0 1 11 0"/><path d="M2 13.5h16M10 3.2v1.6M4.2 5.6l1.1 1.1M15.8 5.6l-1.1 1.1M6 16.5h8"/></svg></button>';
+    host.appendChild(box);
+    var btn = box.querySelector('.hxw-b'), rng = box.querySelector('.hxw-r'), lab = box.querySelector('.hxw-t'), now = box.querySelector('.hxw-now');
+    function fmt(m){ m = Math.round(m) % 1440; return ('0' + Math.floor(m/60)).slice(-2) + ':' + ('0' + m % 60).slice(-2); }
+    function show(){ var m = override == null ? kyivNow() : override; rng.value = m; lab.textContent = fmt(m); now.hidden = override == null; }
+    var raf = 0;
+    rng.addEventListener('input', function(){ override = +rng.value; lab.textContent = fmt(override); now.hidden = false; if (!raf) raf = requestAnimationFrame(function(){ raf = 0; setSky(); }); });
+    now.addEventListener('click', function(){ override = null; show(); setSky(); });
+    box.querySelectorAll('[data-s]').forEach(function(b){ b.addEventListener('click', function(){
+      box.querySelectorAll('[data-s]').forEach(function(x){ x.setAttribute('aria-pressed', String(x === b)); }); setSeason(b.dataset.s); }); });
+    function open(v){ box.classList.toggle('open', v); btn.setAttribute('aria-expanded', String(v)); if (v) show(); }
+    btn.addEventListener('click', function(e){ e.stopPropagation(); open(!box.classList.contains('open')); });
+    document.addEventListener('pointerdown', function(e){ if (box.classList.contains('open') && !box.contains(e.target)) open(false); });
+    document.addEventListener('keydown', function(e){ if (e.key === 'Escape') open(false); });
+    setInterval(function(){ if (override == null && box.classList.contains('open')) show(); }, 30000);
+    show();
+  })();
+  api.heroSeason = setSeason; api.heroTime = function(m){ override = m; setSky(); };
 
   var smoke = null;
   setSky(); setInterval(setSky, 60000);
@@ -476,7 +611,7 @@ function attach(api, o){
   var lastNow = t0;
   (function tick(now){
     var t = (now - t0)/1000; U.uTime.value = reduced ? 0 : t;
-    sway(now, Math.min(.1, (now - lastNow)/1000)); lastNow = now;
+    var dtt = Math.min(.1, (now - lastNow)/1000); sway(now, dtt); stepSeason(dtt); lastNow = now;
     birds.forEach(function(b){ var d = b.userData, a = t*d.sp + d.ph; b.position.set(d.cx + Math.cos(a)*d.rad, d.h + Math.sin(t*.4 + d.ph)*1.2, d.cz + Math.sin(a)*d.rad);
       b.rotation.y = -a; var f = Math.sin(t*7 + d.ph*5)*.55; d.l.rotation.z = f; d.r.rotation.z = -f; });
     if (smoke){ var P = smoke.geometry.attributes.position, s = smoke.userData;

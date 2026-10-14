@@ -259,6 +259,7 @@ function init(api){
     var own = c.scene && SCENES[c.scene] && SCENES[c.scene].ownCam, ms = tIdx === 0 && dir > 0 ? 2600 : 2200;
     var prevS = tPrev != null && CH[tPrev] && CH[tPrev].scene ? SCENES[CH[tPrev].scene] : null;
     var go = function(){ if (!own) fly(chapterCam(c.cam), ms); else if (SCENES[c.scene]) SCENES[c.scene].play(0); };
+    for (var sk in SCENES) if (SCENES[sk] !== SCENES[c.scene] && !(SCENES[sk] === prevS && prevS.exit)) SCENES[sk].reset();   // whatever belonged to other chapters leaves the stage
     if (prevS && prevS.exit && prevS !== SCENES[c.scene]) prevS.exit(go); else go();
     tPrev = tIdx;
     fill(c, 'Екскурсія · розділ ' + (tIdx + 1), (tIdx + 1) + ' / ' + CH.length); card.classList.add('tour');
@@ -486,7 +487,7 @@ function init(api){
       for (var q = 0; q < gp.count; q++){ uv[q*2] = (gp.getX(q) - gc.x)/(2*GR) + .5; uv[q*2 + 1] = .5 - (gp.getZ(q) - gc.z)/(2*GR); gp.setY(q, gp.getY(q) + .012); }
       gg.setAttribute('uv', new T.BufferAttribute(uv, 2));
       var gmat = new T.MeshStandardMaterial({map: gt, transparent: true, depthWrite: false, roughness: 1, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2});
-      var skin = new T.Mesh(gg, gmat); skin.receiveShadow = true; skin.renderOrder = (groundM.renderOrder || 0) + 1; scene.add(skin);
+      var skin = new T.Mesh(gg, gmat); skin.receiveShadow = true; skin.renderOrder = (groundM.renderOrder || 0) + 1; scene.add(skin); window.__xSkin = skin;
       plantAt.forEach(function(t){ var y = probe(t[0], t[1]); if (y == null || y === false) return; tree(t[0], y, t[1], t[2], t[3]); });
       if (FENCE) churchyard(FENCE, probe);
       if (RAIL) railing(RAIL, probe);
@@ -625,7 +626,15 @@ function init(api){
     }
     }
   })();
-  function seasonTrees(w){ FOL.forEach(function(m){ m.color.set(w === 'autumn' ? m.userData.c1 : m.userData.c0); }); }
+  var AUT = ['#d4862e', '#e8b440', '#b8452a', '#f0c855', '#c26a24', '#8d9a3c', '#9c3422', '#e39a35', '#c9a23a', '#a85a28'];
+  function seasonTrees(w){ FOL.forEach(function(m, i){ m.userData.ca = AUT[(i*7 + 3) % AUT.length]; m.color.set(w === 'autumn' ? m.userData.ca : m.userData.c0); }); }
+  var bare = '#6e6050', tmpC = new T.Color();
+  function winterTrees(k){                                                            // broadleaves drop their leaves: the crowns thin and turn to bare grey twigs
+    if (k < .002 && !winterTrees.on) return; winterTrees.on = k > .002;
+    trees.forEach(function(o){ var c = o.g.userData.crown; if (!c || o.kind === 'con') return;
+      c.scale.setScalar(1 - .42*k);
+      o.mats.forEach(function(m){ if (!m.userData.c0) return; m.color.set(weather === 'autumn' && m.userData.ca ? m.userData.ca : m.userData.c0).lerp(tmpC.set(bare), k); }); });
+  }
   var tv = new T.Vector3();
   function stepTrees(){
     if (!trees.length) return;
@@ -1105,16 +1114,54 @@ function init(api){
     return o;
   }
   var weather = 'clear', snowTarget = 0, fog0 = scene.fog;
-  var OVER = {clear: '', snow: 'radial-gradient(90% 70% at 50% 40%,rgba(200,214,236,.16),rgba(40,52,74,.42))', rain: 'radial-gradient(90% 70% at 50% 40%,rgba(30,40,56,.3),rgba(8,12,20,.6))',
-    autumn: 'radial-gradient(80% 60% at 50% 60%,rgba(210,120,40,.18),rgba(40,22,8,.35))', fog: 'radial-gradient(90% 70% at 50% 45%,rgba(160,160,150,.42),rgba(70,70,66,.6))'};
+  /* a backdrop behind the canvas that takes the weather's colour, so fog and snow-light melt into the page instead of
+     greying the model against a dark ground */
+  var back = el('div', 'xbk'); back.style.cssText = 'position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0;transition:opacity 1.6s,background 1.6s';
+  document.body.insertBefore(back, document.body.firstChild);
+  var BACK = {fog: 'radial-gradient(90% 70% at 50% 42%,#a7aaa8 0%,#868a89 45%,#5d605f 100%)', snow: 'radial-gradient(90% 70% at 50% 38%,#7a8496 0%,#4a5263 50%,#262b36 100%)',
+    autumn: 'radial-gradient(60% 50% at 28% 18%,rgba(255,214,140,.55) 0%,rgba(255,214,140,0) 70%),radial-gradient(95% 75% at 50% 38%,#c99a5e 0%,#94683a 48%,#4a3018 100%)', rain: 'radial-gradient(90% 70% at 50% 40%,#3c4450 0%,#22272f 60%,#111419 100%)'};
+  var FOGC = {fog: '#a9adab', snow: '#56607a', rain: '#3c4450', autumn: '#b88c58'};
+  /* drifting banks of mist: soft sprites low over the ground */
+  var mist = null;
+  function makeMist(){
+    if (mist) return mist;
+    var c = document.createElement('canvas'); c.width = c.height = 128; var k = c.getContext('2d'), g = k.createRadialGradient(64, 64, 0, 64, 64, 62);
+    g.addColorStop(0, 'rgba(235,238,236,.9)'); g.addColorStop(.5, 'rgba(235,238,236,.35)'); g.addColorStop(1, 'rgba(235,238,236,0)'); k.fillStyle = g; k.fillRect(0, 0, 128, 128);
+    var tex = new T.CanvasTexture(c), G = new T.Group(); G.userData.list = [];
+    for (var i = 0; i < (innerWidth < 700 ? 16 : 30); i++){
+      var m = new T.SpriteMaterial({map: tex, transparent: true, depthWrite: false, opacity: 0, color: '#e6e9e7', fog: false});
+      var sp = new T.Sprite(m), a = Math.random()*Math.PI*2, r = R*(.55 + Math.random()*.6), sc = 12 + Math.random()*16;
+      sp.position.set(centre.x + Math.cos(a)*r, .4 + Math.random()*2.2, centre.z + Math.sin(a)*r); sp.scale.set(sc*1.8, sc*.55, 1); sp.renderOrder = 8;
+      sp.userData = {a: a, r: r, v: (.004 + Math.random()*.006)*(Math.random() < .5 ? -1 : 1), o: .16 + Math.random()*.16, y: sp.position.y};
+      G.add(sp); G.userData.list.push(sp);
+    }
+    G.visible = false; scene.add(G); mist = G; return G;
+  }
+  /* autumn: a carpet of fallen leaves on the lawns; winter: bare, snow-laden crowns */
+  var litter = null;
+  function makeLitter(){
+    if (litter || !window.__xSkin) return litter;
+    var c = document.createElement('canvas'); c.width = c.height = 1024; var k = c.getContext('2d'), P = ['#b8742a', '#c99a35', '#a5532a', '#d0a640', '#8a4a20', '#e0b050'];
+    for (var i = 0; i < 9000; i++){ k.save(); k.translate(Math.random()*1024, Math.random()*1024); k.rotate(Math.random()*6.28); k.fillStyle = P[(Math.random()*P.length) | 0]; k.globalAlpha = .55 + Math.random()*.4;
+      k.beginPath(); k.ellipse(0, 0, 3 + Math.random()*3, 1.6 + Math.random()*1.6, 0, 0, 6.283); k.fill(); k.restore(); }
+    var t = new T.CanvasTexture(c); t.encoding = T.sRGBEncoding; t.wrapS = t.wrapT = T.RepeatWrapping; t.repeat.set(5, 5);
+    var m = new T.MeshStandardMaterial({map: t, transparent: true, opacity: 0, depthWrite: false, roughness: 1, polygonOffset: true, polygonOffsetFactor: -3, polygonOffsetUnits: -3});
+    m.alphaMap = window.__xSkin.material.map;                                         // only where the painted grounds are
+    litter = new T.Mesh(window.__xSkin.geometry, m); litter.renderOrder = 2; litter.receiveShadow = true; litter.visible = false; scene.add(litter); return litter;
+  }
+  var wxK = {autumn: 0, snow: 0, fog: 0};
+  var OVER = {clear: '', snow: 'radial-gradient(90% 70% at 50% 40%,rgba(210,224,246,.06),rgba(30,40,64,.3))', rain: 'radial-gradient(90% 70% at 50% 40%,rgba(30,40,56,.3),rgba(8,12,20,.6))',
+    autumn: 'radial-gradient(55% 45% at 26% 14%,rgba(255,200,120,.22),rgba(255,200,120,0) 70%),radial-gradient(90% 70% at 50% 50%,rgba(0,0,0,0) 55%,rgba(60,30,8,.3))', fog: 'radial-gradient(90% 70% at 50% 45%,rgba(220,224,222,.1),rgba(90,94,92,.28))'};
   function setWeather(w){
     weather = w;
     wPanel.querySelectorAll('[data-w]').forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.w === w)); });
     bWeather.setAttribute('aria-pressed', String(w !== 'clear' || wPanel.classList.contains('open')));
     ['snow', 'rain', 'autumn'].forEach(function(k){ var f = w === k ? makeFx(k) : FX[k]; if (f) f.visible = w === k; });
     snowTarget = w === 'snow' ? 1 : 0;
-    scene.fog = w === 'fog' ? new T.FogExp2('#77766f', .028) : w === 'rain' ? new T.FogExp2('#3c4450', .012) : fog0;
+    scene.fog = FOGC[w] ? new T.FogExp2(FOGC[w], w === 'fog' ? .013 : w === 'snow' ? .009 : w === 'rain' ? .012 : .0065) : fog0;
+    back.style.background = BACK[w] || 'none'; back.style.opacity = BACK[w] ? 1 : 0;
     overlay.style.background = OVER[w] || 'none'; overlay.style.opacity = w === 'clear' ? 0 : 1;
+    if (w === 'fog') makeMist(); if (w === 'autumn') makeLitter();
     Snd.weather(w); seasonTrees(w);
   }
   var lastT = 0;
@@ -1122,6 +1169,11 @@ function init(api){
     var dt = Math.min(.05, lastT ? (now - lastT)/1000 : 0); lastT = now;
     U.uSnow.value += (snowTarget - U.uSnow.value)*Math.min(1, dt*1.2);
     UR.uFT.value = now/1000;
+    ['autumn', 'snow', 'fog'].forEach(function(k){ wxK[k] += ((weather === k ? 1 : 0) - wxK[k])*Math.min(1, dt*1.1); });
+    if (mist){ mist.visible = wxK.fog > .01; if (mist.visible) mist.userData.list.forEach(function(sp){ var d = sp.userData; d.a += d.v*dt*6; sp.position.x = centre.x + Math.cos(d.a)*d.r; sp.position.z = centre.z + Math.sin(d.a)*d.r;
+      sp.position.y = d.y + Math.sin(now/4000 + d.r)*.3; sp.material.opacity = d.o*wxK.fog; }); }
+    if (litter){ litter.visible = wxK.autumn > .01; litter.material.opacity = .85*wxK.autumn; }
+    winterTrees(wxK.snow);
     U.uUpV.value.set(0, 1, 0).transformDirection(cam.matrixWorldInverse);
     var t = now/1000;
     if (FX.snow && FX.snow.visible){ var a = FX.snow.geometry.attributes.position, sp = FX.snow.geometry.userData.sp, A = a.array;
