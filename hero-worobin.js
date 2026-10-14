@@ -522,15 +522,19 @@ function attach(api, o){
     if (!moving || ++skyTick % 3 === 0) setSky();
   }
 
+  var NOWS = (function(){ var m; try { m = +new Date().toLocaleString('en-GB', {timeZone: 'Europe/Kyiv', month: 'numeric'}); } catch (e){ m = new Date().getMonth() + 1; }
+    var q = /[?&#]hero-season=(summer|autumn|winter)/.exec(location.href); return q ? q[1] : m === 12 || m <= 2 ? 'winter' : m >= 9 ? 'autumn' : 'summer'; })();
+  setSeason(NOWS, true);
+
   /* ── a quiet control in the corner of the hero: the hour and the season, for whoever wants to turn them ── */
   (function(){
     var host = renderer.domElement.closest('.hx-cover') || renderer.domElement.parentNode; if (!host || o.noUi) return;
     var css = document.createElement('style'); css.textContent = [
-      '.hxw{position:absolute;right:max(2rem,calc((100vw - 1240px)/2));bottom:.8rem;z-index:4;display:flex;flex-direction:column;align-items:flex-end;gap:.55rem;font-family:Manrope,system-ui,sans-serif}',
-      '.hxw-b{width:30px;height:30px;padding:0;border-radius:50%;border:1px solid rgba(212,178,90,.2);background:rgba(18,14,8,.22);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);color:#f4e9c8;display:grid;place-items:center;cursor:pointer;opacity:.42;transition:opacity .3s,border-color .3s,background .3s}',
+      '.hxw{position:absolute;right:max(2rem,calc((100vw - 1240px)/2));bottom:.8rem;z-index:4;width:30px;height:30px;pointer-events:none;font-family:Manrope,system-ui,sans-serif}',
+      '.hxw-b{width:30px;height:30px;padding:0;border-radius:50%;border:1px solid rgba(212,178,90,.2);background:rgba(18,14,8,.22);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);color:#f4e9c8;display:grid;place-items:center;cursor:pointer;opacity:.42;pointer-events:auto;transition:opacity .3s,border-color .3s,background .3s}',
       '.hxw-b:hover,.hxw-b:focus-visible,.hxw.open .hxw-b{opacity:1;border-color:rgba(212,178,90,.5);background:rgba(18,14,8,.5)}',
       '.hxw-b svg{width:15px;height:15px}',
-      '.hxw-p{width:250px;padding:.85rem .95rem .8rem;border-radius:14px;background:rgba(16,12,7,.66);border:1px solid rgba(212,178,90,.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);backdrop-filter:blur(14px) saturate(1.2);box-shadow:0 18px 40px rgba(0,0,0,.35);color:#f4e9c8;',
+      '.hxw-p{position:absolute;right:0;bottom:calc(100% + .55rem);width:250px;padding:.85rem .95rem .8rem;border-radius:14px;background:rgba(16,12,7,.66);border:1px solid rgba(212,178,90,.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);backdrop-filter:blur(14px) saturate(1.2);box-shadow:0 18px 40px rgba(0,0,0,.35);color:#f4e9c8;',
       'opacity:0;transform:translateY(6px) scale(.98);transform-origin:100% 100%;pointer-events:none;visibility:hidden;transition:opacity .28s,transform .28s,visibility 0s .28s}',
       '.hxw.open .hxw-p{opacity:1;transform:none;pointer-events:auto;visibility:visible;transition:opacity .28s,transform .28s}',
       '.hxw-h{display:flex;align-items:baseline;justify-content:space-between;gap:.6rem;margin-bottom:.45rem}',
@@ -545,6 +549,7 @@ function attach(api, o){
       '.hxw-r::-moz-range-thumb{width:10px;height:10px;border-radius:50%;background:#f4e9c8;border:2px solid #d4b25a;box-shadow:0 0 0 4px rgba(212,178,90,.15)}',
       '.hxw-s{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;padding:2px;border-radius:9px;background:rgba(255,255,255,.05);border:1px solid rgba(212,178,90,.12)}',
       '.hxw-s button{padding:.36rem 0;border:0;border-radius:7px;background:none;color:rgba(244,233,200,.6);font:inherit;font-size:.68rem;letter-spacing:.04em;cursor:pointer;transition:background .25s,color .25s}',
+      '.hxw-s button{position:relative}.hxw-s button.is-now::after{content:"";position:absolute;left:50%;bottom:3px;width:3px;height:3px;margin-left:-1.5px;border-radius:50%;background:rgba(212,178,90,.8)}',
       '.hxw-s button:hover{color:#f4e9c8}.hxw-s button[aria-pressed="true"]{background:rgba(212,178,90,.2);color:#f4e9c8}',
       '@media(max-width:980px){.hxw{right:.9rem;bottom:.7rem}.hxw-p{width:min(250px,calc(100vw - 2rem))}}'].join('');
     document.head.appendChild(css);
@@ -553,7 +558,7 @@ function attach(api, o){
       '<div class="hxw-h"><span class="hxw-k">Пора доби</span><span class="hxw-t"></span><button type="button" class="hxw-now" hidden>зараз</button></div>' +
       '<input class="hxw-r" type="range" min="0" max="1439" step="5" aria-label="Час доби">' +
       '<div class="hxw-h" style="margin-bottom:.4rem"><span class="hxw-k">Пора року</span></div>' +
-      '<div class="hxw-s"><button type="button" data-s="summer" aria-pressed="true">Літо</button><button type="button" data-s="autumn" aria-pressed="false">Осінь</button><button type="button" data-s="winter" aria-pressed="false">Зима</button></div></div>' +
+      '<div class="hxw-s">' + [['summer', 'Літо'], ['autumn', 'Осінь'], ['winter', 'Зима']].map(function(q){ return '<button type="button" data-s="' + q[0] + '" aria-pressed="' + (q[0] === SEASON) + '"' + (q[0] === NOWS ? ' class="is-now" title="Пора року зараз"' : '') + '>' + q[1] + '</button>'; }).join('') + '</div></div>' +
       '<button type="button" class="hxw-b" aria-label="Змінити пору доби й року" aria-expanded="false" aria-controls="hxwP"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M4.5 13.5a5.5 5.5 0 0 1 11 0"/><path d="M2 13.5h16M10 3.2v1.6M4.2 5.6l1.1 1.1M15.8 5.6l-1.1 1.1M6 16.5h8"/></svg></button>';
     host.appendChild(box);
     var btn = box.querySelector('.hxw-b'), rng = box.querySelector('.hxw-r'), lab = box.querySelector('.hxw-t'), now = box.querySelector('.hxw-now');
