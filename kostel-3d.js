@@ -126,6 +126,7 @@ M.leaded.map = canvasTex(128, 128, function(k){
 M.leaded.map.wrapS = M.leaded.map.wrapT = THREE.RepeatWrapping; M.leaded.map.repeat.set(1/.48, 1/.48);
 M.sash = mat(HIST ? '#2c2a27' : '#f7f5f0', {roughness:.6});
 M.pipe = mat('#4e342b', {roughness:.45, metalness:.35});
+for (var mk in M) M[mk].name = mk; holeStencil.name = 'cutter'; holeDepth.name = 'cutterDepth'; revealMat.name = 'reveal'; revealWall.name = 'revealWall';   // names, for exports
 function sunk(o, order){ o.renderOrder = order; o.castShadow = false; o.receiveShadow = false; return o; }
 /* bars: number of rows, or a list of transom heights as fractions of the opening's straight part */
 /* opt: {frame: surround material or null, sill: material or null, reveal: material, seg: rise of a segmental top} */
