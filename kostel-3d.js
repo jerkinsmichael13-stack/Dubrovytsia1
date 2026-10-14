@@ -62,6 +62,22 @@ var M = {
   cross: mat('#8b7a50', {roughness:.35, metalness:.75}),
   ground:mat('#3a3023', {roughness:1})
 };
+M.domeT = mat('#43473d', {roughness:.55, metalness:.25, flatShading:true});        // the small onions on the lanterns
+M.spire = mat('#3f4239', {roughness:.62, metalness:.22});                           // the spires and their balls
+/* o.historic: the church as the photographs of 1916 and the 1930s show it — white all over, a roof of clay tiles over the nave
+   and the presbytery (sheet metal on the low aisle roofs), wooden shingles on the big domes, tin-bright lanterns and spires,
+   dark iron window frames, dark plates in the frieze and on the towers instead of the clock */
+var HIST = !!o.historic, WALLC = HIST ? '#f1ede4' : '#eebf30';
+if (HIST){
+  M.wall.color.set(WALLC); M.trim.color.set('#fbf9f3'); M.field.color.set('#f6f3ec');
+  M.roof.color.set('#a4583a'); M.roof.roughness = .82; M.roof.metalness = 0;
+  M.domeF.color.set('#5a5148'); M.domeF.roughness = .9; M.domeF.metalness = 0;
+  M.dome.color.set('#34312d'); M.dome.metalness = .2;
+  M.domeT.color.set('#dfe2e4'); M.domeT.roughness = .22; M.domeT.metalness = .95;
+  M.spire.color.set('#e4e6e8'); M.spire.roughness = .2; M.spire.metalness = .95;
+  M.cross.color.set('#c9ccce'); M.cross.metalness = .9; M.cross.roughness = .25;
+  M.glass.color.set('#1f2428');
+}
 
 /* louvres in the tower openings: horizontal slats */
 M.louv.map = canvasTex(16, 64, function(k){ k.fillStyle = '#1c1a17'; k.fillRect(0, 0, 16, 64); var g = k.createLinearGradient(0, 0, 0, 64); g.addColorStop(0, '#5a524a'); g.addColorStop(.6, '#3a352f'); g.addColorStop(1, '#1c1a17'); k.fillStyle = g; k.fillRect(0, 6, 16, 50); });
@@ -95,9 +111,9 @@ var holeDepth = new THREE.ShaderMaterial({
   stencilWrite: true, stencilRef: 1, stencilFunc: THREE.EqualStencilFunc, stencilZPass: THREE.KeepStencilOp
 });
 var revealMat = mat('#f1ede4', {side: THREE.BackSide});
-var revealWall = mat('#e6b62c', {side: THREE.BackSide});
+var revealWall = mat(HIST ? '#e9e4d9' : '#e6b62c', {side: THREE.BackSide});
 M.void = mat('#16130f', {roughness:1});
-M.frameG = mat('#8e8a82', {roughness:.8});
+M.frameG = mat(HIST ? '#e9e5dc' : '#8e8a82', {roughness:.8});
 /* leaded glass of the centre window: small panes with a lozenge at every crossing */
 M.leaded = mat('#ffffff', {roughness:.25, metalness:.1});
 M.leaded.map = canvasTex(128, 128, function(k){
@@ -108,7 +124,7 @@ M.leaded.map = canvasTex(128, 128, function(k){
   [[0,0],[128,0],[0,128],[128,128]].forEach(function(c){ k.beginPath(); k.moveTo(c[0], c[1] + (c[1] ? -22 : 22)); k.lineTo(c[0] + (c[0] ? -22 : 22), c[1]); k.stroke(); });
 });
 M.leaded.map.wrapS = M.leaded.map.wrapT = THREE.RepeatWrapping; M.leaded.map.repeat.set(1/.48, 1/.48);
-M.sash = mat('#f7f5f0', {roughness:.6});
+M.sash = mat(HIST ? '#2c2a27' : '#f7f5f0', {roughness:.6});
 M.pipe = mat('#4e342b', {roughness:.45, metalness:.35});
 function sunk(o, order){ o.renderOrder = order; o.castShadow = false; o.receiveShadow = false; return o; }
 /* bars: number of rows, or a list of transom heights as fractions of the opening's straight part */
@@ -284,9 +300,10 @@ win(FF, 0, 12.0, 1.85, 2.75, false, .2, [.64], M.leaded, .35, {frame: M.frameG, 
 (function(){
   function label(text, w, x){
     var t = canvasTex(1024, 180, function(k){
-      k.fillStyle = '#eebf30'; k.fillRect(0, 0, 1024, 180);
+      k.fillStyle = HIST ? '#2a2724' : '#eebf30'; k.fillRect(0, 0, 1024, 180);
       k.font = 'bold 150px "Times New Roman", Georgia, serif'; k.textAlign = 'center'; k.textBaseline = 'middle';
       try { k.letterSpacing = '10px'; } catch(e){}
+      if (HIST){ k.fillStyle = 'rgba(214,206,190,.55)'; k.fillText(text, 512, 98, 1000); return; }
       /* bronze letters with a gilded edge, as on the facade */
       k.lineJoin = 'round'; k.strokeStyle = '#b8924a'; k.lineWidth = 9; k.strokeText(text, 512, 98, 1000);
       k.fillStyle = '#5a3a26'; k.fillText(text, 512, 98, 1000);
@@ -310,7 +327,7 @@ var clockTex = canvasTex(256, 256, function(k){
   k.lineWidth = 5; k.beginPath(); k.moveTo(128, 128); k.lineTo(128 + Math.cos(-.75)*68, 128 + Math.sin(-.75)*68); k.stroke();
   k.fillStyle = '#e8dfc8'; k.beginPath(); k.arc(128, 128, 7, 0, Math.PI*2); k.fill();
 });
-var clockMat = new THREE.MeshStandardMaterial({map:clockTex, roughness:.6});
+var clockMat = HIST ? new THREE.MeshStandardMaterial({color:'#2a2724', roughness:.7}) : new THREE.MeshStandardMaterial({map:clockTex, roughness:.6});
 function smooth(list, n){ var c = new THREE.CatmullRomCurve3(list.map(function(p){ return new THREE.Vector3(p[0], p[1], 0); }), false, 'centripetal'); return c.getPoints(n).map(function(v){ return V(Math.max(0, v.x), v.y); }); }
 function tower(cx){
   var cz = -TS/2, h = TS/2;
@@ -351,10 +368,10 @@ function tower(cx){
   add(new THREE.CylinderGeometry(1.1, 1.1, .16, 28), M.dome, cx, y + .08, cz);
   y += .16;
   var sm = smooth([[0,0],[1.04,0],[1.18,.28],[1.18,.62],[.95,1.0],[.5,1.33],[.2,1.55],[0,1.6]], 18);
-  add(new THREE.LatheGeometry(sm, 8, Math.PI/8), M.domeF, cx, y, cz);
+  add(new THREE.LatheGeometry(sm, HIST ? 24 : 8, Math.PI/8), M.domeT, cx, y, cz);
   y += 1.5;
-  add(new THREE.CylinderGeometry(.06, .15, 2.5, 12), M.dome, cx, y + 1.25, cz);
-  add(new THREE.SphereGeometry(.22, 16, 12), M.dome, cx, y + .55, cz);
+  add(new THREE.CylinderGeometry(.06, .15, 2.5, 12), M.spire, cx, y + 1.25, cz);
+  add(new THREE.SphereGeometry(.22, 16, 12), M.spire, cx, y + .55, cz);
   crossAt(cx, y + 2.45, cz, 1.6, 0);                                  // facing the square, like the gable cross
 }
 tower(-8.2); tower(8.2);
@@ -584,7 +601,55 @@ function skyEnv(renderer){
 scene.environment = skyEnv(renderer);
 /* the roofs as on the building: brown sheet metal laid in standing seams running down the slopes (seams every 0.6 m,
    each a thin ridge with a highlight on one side and a shadow on the other), with a faint unevenness between sheets */
-(function(m){
+if (HIST) (function(m){
+  /* clay tiles on the steep roofs: courses 0.26 m apart, staggered, each tile a little rounded and its own shade of clay;
+     sheet metal with standing seams where the roof is low (the aisles, the flashings, the tower bases) */
+  m.onBeforeCompile = function(sh){
+    sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vWPos;')
+      .replace('#include <begin_vertex>', '#include <begin_vertex>\nvWPos = (modelMatrix * vec4(transformed, 1.0)).xyz;');
+    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying vec3 vWPos;\nfloat rHash(vec2 n){ return fract(sin(dot(n, vec2(12.9898, 78.233)))*43758.5453); }')
+      .replace('#include <map_fragment>', [
+        '#include <map_fragment>',
+        'vec3 wn = normalize(cross(dFdx(vWPos), dFdy(vWPos))); if (wn.y < 0.0) wn = -wn;',
+        'float along = abs(wn.x) > abs(wn.z) ? vWPos.z : vWPos.x;',
+        'if (wn.y < .955){',                                                  /* the nave, the presbytery and the low aisle roofs alike */
+        '  float c = vWPos.y/(.3*sqrt(max(1.0 - wn.y*wn.y, .04))), row = floor(c), v = fract(c);',
+        '  float u = along/.24 + .5*mod(row, 2.0), col = floor(u), f = fract(u);',
+        '  float h = rHash(vec2(col, row));',
+        '  vec3 clay = mix(vec3(.62, .25, .14), vec3(.5, .2, .12), h); clay = mix(clay, vec3(.42, .3, .24), step(.86, rHash(vec2(row, col*1.7)))*.5);',
+        '  float body = .72 + .28*sin(f*3.14159);',
+        '  float lap = smoothstep(.0, .16, v)*.6 + .4;',
+        '  diffuseColor.rgb = clay*body*lap*(.9 + .2*rHash(vec2(col*.37, row*.11)));',
+        '} else {',
+        '  float s2 = fract(along/.6); float seam = smoothstep(0.0, .04, s2)*(1.0 - smoothstep(.93, 1.0, s2));',
+        '  diffuseColor.rgb = vec3(.5, .52, .51)*(.8 + .2*seam);',
+        '}'
+      ].join('\n'));
+  };
+  m.extensions = {derivatives: true};
+  m.customProgramCacheKey = function(){ return 'roofTiles'; };
+  m.needsUpdate = true;
+})(M.roof);
+if (HIST) (function(m){
+  /* the big domes: rows of wooden shingles, weathered silver-brown */
+  m.onBeforeCompile = function(sh){
+    sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vWPos;')
+      .replace('#include <begin_vertex>', '#include <begin_vertex>\nvWPos = (modelMatrix * vec4(transformed, 1.0)).xyz;');
+    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying vec3 vWPos;\nfloat rHash(vec2 n){ return fract(sin(dot(n, vec2(12.9898, 78.233)))*43758.5453); }')
+      .replace('#include <map_fragment>', [
+        '#include <map_fragment>',
+        'float cx = vWPos.x > 0.0 ? 8.2 : -8.2; float a = atan(vWPos.z + 2.8, vWPos.x - cx);',
+        'float c = vWPos.y/.22, row = floor(c), v = fract(c);',
+        'float u = a*15.0/3.14159 + .5*mod(row, 2.0), col = floor(u), f = fract(u);',
+        'float h = rHash(vec2(col, row));',
+        'float edge = smoothstep(.0, .09, f)*(1.0 - smoothstep(.91, 1.0, f));',
+        'diffuseColor.rgb *= (.78 + .3*h)*(.65 + .35*smoothstep(.0, .2, v))*(.82 + .18*edge);'
+      ].join('\n'));
+  };
+  m.customProgramCacheKey = function(){ return 'domeShingles'; };
+  m.needsUpdate = true;
+})(M.domeF);
+if (!HIST) (function(m){
   m.onBeforeCompile = function(sh){
     sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vWPos;')
       .replace('#include <begin_vertex>', '#include <begin_vertex>\nvWPos = (modelMatrix * vec4(transformed, 1.0)).xyz;');
