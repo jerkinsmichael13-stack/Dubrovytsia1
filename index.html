@@ -371,13 +371,13 @@ a, button, [role="button"], input, select, textarea,
                 </dl>
             </div>
             <div class="hx-stage" id="hxStage">
-                <img class="hx-poster" src="kostel-3d-poster.webp" alt="Костел Іоанна Хрестителя в Дубровиці — 3D-модель" width="1100" height="1100" fetchpriority="high">
-                <canvas class="hx-3d" id="hx3d" tabindex="-1" aria-label="3D-модель костелу Іоанна Хрестителя. Потягніть убік, щоб обернути."></canvas>
+                <img class="hx-poster" src="worobin-3d-poster.webp" alt="Павільйон «Бібліотека» у Воробині — 3D-реконструкція" width="1100" height="1100" fetchpriority="high">
+                <canvas class="hx-3d" id="hx3d" tabindex="-1" aria-label="3D-реконструкція павільйону «Бібліотека» у Воробині. Потягніть убік, щоб обернути."></canvas>
                 <span class="hx-new"><i></i>Новинка · 3D-модель</span>
                 <p class="hx-hint" id="hxHint"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10c0-2 3-3.5 7-3.5s7 1.5 7 3.5-3 3.5-7 3.5"/><path d="M12 11.4 10 13.5l2 2.1"/></svg>Потягніть, щоб обернути</p>
                 <div class="hx-cap">
-                    <div><b id="hxTitle">Костел Іоанна Хрестителя</b><small id="hxSub">мурований 1740 · освячений 1742 · пам'ятка національного значення</small></div>
-                    <a class="hx-full" id="hxFull" href="kostel-3d.html">Розглянути зблизька <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 6V2.5H6M13.5 6V2.5H10M2.5 10v3.5H6M13.5 10v3.5H10"/></svg></a>
+                    <div><b id="hxTitle">«Бібліотека» у Воробині</b><small id="hxSub">павільйон Плятерів, якого вже немає · реконструкція за фото</small></div>
+                    <a class="hx-full" id="hxFull" href="worobin-3d.html">Розглянути зблизька <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 6V2.5H6M13.5 6V2.5H10M2.5 10v3.5H6M13.5 10v3.5H10"/></svg></a>
                 </div>
             </div>
             <script src="x3d-loader.js" defer></script>
@@ -388,19 +388,19 @@ a, button, [role="button"], input, select, textarea,
                 kostel: {js: 'kostel-3d.js', g: 'Kostel3D', poster: 'kostel-3d-poster.webp', href: 'kostel-3d.html', title: 'Костел Іоанна Хрестителя',
                          sub: "мурований 1740 · освячений 1742 · пам'ятка національного значення", alt: 'Костел Іоанна Хрестителя в Дубровиці — 3D-модель',
                          aria: '3D-модель костелу Іоанна Хрестителя таким, яким він був у 1930-х, на пагорбі над Горинню. Потягніть убік, щоб обернути.', land: 'hero-kostel.js', landPoster: (function(){ var h = +new Date().toLocaleString('en-GB', {timeZone: 'Europe/Kyiv', hour: '2-digit', hour12: false}); return 'kostel-land-' + (h < 6 || h >= 20 ? 'night' : h < 8 || h >= 17 ? 'eve' : 'day') + '.webp'; })(),
-                         opts: {historic: true, glb: innerWidth < 980 || (navigator.deviceMemory || 8) < 4 ? 'kostel-hist-1k.glb' : 'kostel-hist-2k.glb', view: [-52, 18, 60], targetY: 24, fit: innerWidth < 980 ? 1.05 : 1.25, turntable: false}},
+                         opts: {historic: true, glb: innerWidth < 980 || (navigator.deviceMemory || 8) < 4 ? 'kostel-hist-1k.glb?v=20261019c' : 'kostel-hist-2k.glb?v=20261019c', view: [-52, 18, 60], targetY: 24, fit: innerWidth < 980 ? 1.05 : 1.25, turntable: false}},
                 cerkva: {js: 'cerkva-3d.js', g: 'Cerkva3D', poster: 'cerkva-3d-poster.webp', href: 'cerkva-3d.html', title: 'Церква Різдва Богородиці',
                          sub: "збудована 1861 · пам'ятка національного значення", alt: 'Церква Різдва Пресвятої Богородиці в Дубровиці — 3D-модель',
                          aria: '3D-модель церкви Різдва Богородиці. Потягніть убік, щоб обернути.', opts: {view: [-50, 14, 46], targetY: 13.2, fit: innerWidth < 980 ? 1.04 : 1.0}},
                 worobin: {js: 'worobin-3d.js', g: 'Worobin3D', poster: 'worobin-3d-poster.webp', href: 'worobin-3d.html', title: '«Бібліотека» у Воробині',
                          sub: 'павільйон Плятерів, якого вже немає · реконструкція за фото', alt: 'Павільйон «Бібліотека» у Воробині — 3D-реконструкція',
                          aria: '3D-реконструкція павільйону «Бібліотека» у Воробині серед краєвиду над Горинню. Потягніть убік, щоб обернути.', land: 'hero-worobin.js', landPoster: (function(){ var h = +new Date().toLocaleString('en-GB', {timeZone: 'Europe/Kyiv', hour: '2-digit', hour12: false}); return 'worobin-land-' + (h < 6 || h >= 20 ? 'night' : h < 8 || h >= 17 ? 'eve' : 'day') + '.webp'; })(),
-                         opts: {glb: innerWidth < 980 || (navigator.deviceMemory || 8) < 4 ? 'worobin-1k.glb' : 'worobin-2k.glb', view: [-46, 8, 22], targetY: 6.5, fit: innerWidth < 980 ? 1.3 : 1.85, turntable: false, floodK: .6}},
+                         opts: {glb: innerWidth < 980 || (navigator.deviceMemory || 8) < 4 ? 'worobin-1k.glb?v=20261019c' : 'worobin-2k.glb?v=20261019c', view: [-46, 8, 22], targetY: 6.5, fit: innerWidth < 980 ? 1.3 : 1.85, turntable: false, floodK: .6}},
                 mykolai: {js: 'mykolai-3d.js', g: 'Mykolai3D', poster: 'mykolai-3d-poster.webp', href: 'mykolai-3d.html', title: 'Свято-Миколаївська церква',
                          sub: "дерев'яна, збудована 1872 коштом парафіян", alt: 'Свято-Миколаївська церква в Дубровиці — 3D-модель',
                          aria: '3D-модель Свято-Миколаївської церкви. Потягніть убік, щоб обернути.', opts: {view: [-38, 13, 44], targetY: 7.4, fit: innerWidth < 980 ? 1.0 : .92}}
               };
-              var W = {worobin: 40, kostel: 20, cerkva: 20, mykolai: 20}, roll = Math.random()*100, k = 'worobin';
+              var W = {worobin: 100}, roll = Math.random()*100, k = 'worobin';
               for (var key in W){ if ((roll -= W[key]) < 0){ k = key; break; } }
               var m = M[k];
               var st = document.getElementById('hxStage'), img = st.querySelector('.hx-poster');
@@ -6983,11 +6983,11 @@ g.ULB={open:open,close:close,nav:nav,
   function idle(f){ (window.requestIdleCallback || function(g){ setTimeout(g, 250); })(f, { timeout: 1200 }); }
   function mount3d(){
     var m = window.__hx3d; if (!m){ st.classList.add('nogl'); return; }
-    var sc = document.createElement('script'); sc.src = m.js; sc.async = true;
+    var sc = document.createElement('script'); sc.src = m.js + '?v=20261019c'; sc.async = true;
     sc.onerror = function(){ st.classList.add('nogl'); };
     sc.onload = function(){
       var G = window[m.g]; if (!G){ st.classList.add('nogl'); return; }
-      var land = m.land ? new Promise(function(res){ var ls = document.createElement('script'); ls.src = m.land; ls.async = true; ls.onload = res; ls.onerror = function(){ res(); }; document.head.appendChild(ls); }) : Promise.resolve();
+      var land = m.land ? new Promise(function(res){ var ls = document.createElement('script'); ls.src = m.land + '?v=20261019c'; ls.async = true; ls.onload = res; ls.onerror = function(){ res(); }; document.head.appendChild(ls); }) : Promise.resolve();
       var wide = function(){ return innerWidth > 980; };
       G.mount(cv, Object.assign({ zoom: false, touch: 'pan-y', pixelRatio: m.land ? (wide() ? 1.35 : 1.6) : 1.75, shadow: innerWidth < 700 ? 1024 : 2048, motes: !m.land, autoRotateSpeed: m.land ? .35 : .55,
         onStart: function(){ st.classList.add('touched'); },

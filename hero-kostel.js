@@ -531,13 +531,23 @@ function attach(api, o){
   })();
 
   /* ── trees: instanced crowns, a breath of wind in the vertex shader ── */
-  function blobCrown(){                                                              // three lumps of foliage, merged
-    var parts = [[0, 0, 0, 1], [.55, -.25, .2, .72], [-.45, -.2, -.35, .7], [.05, .45, -.1, .62]], P = [], N = [];
-    parts.forEach(function(q){ var g = new T.IcosahedronGeometry(q[3], 1); g.translate(q[0], q[1], q[2]); P.push(g.attributes.position.array); N.push(g.attributes.normal.array); });
+  /* broadleaf crowns: seven or eight lumps of foliage of different sizes, their surfaces knocked about by noise so the outline is
+     never a ball; the normals lean out from the crown's centre, so the whole crown shades softly like real foliage */
+  function lumpy(parts, seed, rough){
+    var P = [], N = [], r = function(i){ var v = Math.sin(seed*91.7 + i*12.989)*43758.5453; return v - Math.floor(v); };
+    parts.forEach(function(q, j){ var g = new T.IcosahedronGeometry(q[3], 1).toNonIndexed(), pa = g.attributes.position, na = g.attributes.normal, v = new T.Vector3(), c = new T.Vector3(0, 0, 0);
+      for (var i = 0; i < pa.count; i++){ v.fromBufferAttribute(pa, i);
+        var d = 1 + rough*(Math.sin(v.x*5.1 + j*1.7 + seed)*Math.sin(v.y*4.3 + j)*Math.sin(v.z*5.7 + seed*.3)) + rough*.5*(r(i*3 + j*101 + Math.round(v.x*9 + v.y*13 + v.z*7)) - .5);
+        v.multiplyScalar(d); v.x += q[0]; v.y += q[1]; v.z += q[2]; pa.setXYZ(i, v.x, v.y, v.z);
+        var rn = v.clone().sub(c).normalize(), ln = new T.Vector3().fromBufferAttribute(na, i); ln.lerp(rn, .7).normalize(); na.setXYZ(i, ln.x, ln.y, ln.z); }
+      P.push(pa.array); N.push(na.array); });
     return merge(P, N);
   }
+  function blobCrown(){
+    return lumpy([[0, .05, 0, .95], [.62, -.2, .18, .66], [-.5, -.18, -.38, .64], [.08, .5, -.12, .6], [-.3, .25, .55, .55], [.42, .32, -.5, .5], [-.62, .12, .2, .5], [.25, -.42, -.42, .48]], 3.1, .16);
+  }
   function coneCrown(){ var P = [], N = []; [[0, 0, 1, 1.6], [0, 1.0, .74, 1.3], [0, 1.85, .48, 1.0]].forEach(function(q){ var g = new T.ConeGeometry(q[2], q[3], 9).toNonIndexed(); g.translate(0, q[1], 0); P.push(g.attributes.position.array); N.push(g.attributes.normal.array); }); return merge(P, N); }
-  function poplarCrown(){ var P = [], N = []; [[0, 0, .55, 1.0], [0, 1.1, .5, 1.0], [0, 2.1, .38, .9]].forEach(function(q){ var g = new T.IcosahedronGeometry(q[2], 1); g.scale(1, 1.7, 1); g.translate(0, q[1], 0); P.push(g.attributes.position.array); N.push(g.attributes.normal.array); }); return merge(P, N); }
+  function poplarCrown(){ var g = lumpy([[0, 0, 0, .55], [.12, .9, .05, .5], [-.08, 1.8, -.05, .42], [0, 2.6, 0, .3], [.2, .45, -.15, .4], [-.2, 1.35, .15, .4]], 7.7, .14); g.scale(1, 1.25, 1); return g; }
   function merge(P, N){ var len = 0; P.forEach(function(a){ len += a.length; }); var p = new Float32Array(len), n = new Float32Array(len), at = 0;
     P.forEach(function(a, i){ p.set(a, at); n.set(N[i], at); at += a.length; }); var g = new T.BufferGeometry(); g.setAttribute('position', new T.BufferAttribute(p, 3)); g.setAttribute('normal', new T.BufferAttribute(n, 3)); return g; }
   function windy(m, amt, bare){                                                      // bare: the crown thins in winter (uWSnow)
@@ -546,14 +556,14 @@ function attach(api, o){
       sh.uniforms.uTime = U.uTime; sh.uniforms.uWSnow = U.uWSnow;
       sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nuniform float uTime, uWSnow;')
         .replace('#include <begin_vertex>', '#include <begin_vertex>\n' + (bare ? 'transformed *= 1.0 - .3*uWSnow;\n' : '') + '#ifdef USE_INSTANCING\n vec3 ip = instanceMatrix[3].xyz;\n#else\n vec3 ip = vec3(0.0);\n#endif\n' +
-          ' float k = max(0.0, position.y + 1.0);\n transformed.x += (sin(uTime*1.1 + ip.x*.13 + ip.z*.07) + .35*sin(uTime*2.7 + ip.z*.3))*' + amt.toFixed(3) + '*k;\n transformed.z += cos(uTime*.9 + ip.z*.11)*' + (amt*.6).toFixed(3) + '*k;\n vLY = position.y; vLN = normal;')
-        .replace('#include <common>', '#include <common>\nvarying float vLY; varying vec3 vLN;');
-      sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying float vLY; varying vec3 vLN;')
-        .replace('#include <color_fragment>', '#include <color_fragment>\n float ao = smoothstep(-1.1, 1.0, vLY); diffuseColor.rgb *= .55 + .6*ao;\n diffuseColor.rgb *= 1.0 + .18*smoothstep(.3, 1.0, vLN.y);\n diffuseColor.rgb *= .9 + .2*fract(sin(dot(floor(vLN*7.0), vec3(12.9, 78.2, 37.7)))*43758.5);');
+          ' float k = max(0.0, position.y + 1.0);\n transformed.x += (sin(uTime*1.1 + ip.x*.13 + ip.z*.07) + .35*sin(uTime*2.7 + ip.z*.3))*' + amt.toFixed(3) + '*k;\n transformed.z += cos(uTime*.9 + ip.z*.11)*' + (amt*.6).toFixed(3) + '*k;\n vLY = position.y; vLN = normal; vLP = position;')
+        .replace('#include <common>', '#include <common>\nvarying float vLY; varying vec3 vLN, vLP;');
+      sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying float vLY; varying vec3 vLN, vLP;')
+        .replace('#include <color_fragment>', '#include <color_fragment>\n float ao = smoothstep(-1.1, 1.0, vLY); diffuseColor.rgb *= .55 + .6*ao;\n float lf = .5 + .5*sin(vLP.x*11.0 + sin(vLP.y*9.0)*2.2)*sin(vLP.z*10.0 + sin(vLP.x*8.0)*2.0)*sin(vLP.y*12.0 + vLP.z*3.0); diffuseColor.rgb *= .78 + .38*lf;\n diffuseColor.rgb *= 1.0 + .18*smoothstep(.3, 1.0, vLN.y);\n diffuseColor.rgb *= .9 + .2*fract(sin(dot(floor(vLN*7.0), vec3(12.9, 78.2, 37.7)))*43758.5);');
     };
   }
   var LEAF = ['#4f6f33', '#5b7a38', '#5f8a3a', '#6e9442', '#557334', '#7a9a48', '#4a6a30'].map(lin), CON = ['#2e4a2f', '#33503a', '#2a4430'].map(lin), POP = lin('#7f9168');
-  var crownM = new T.MeshStandardMaterial({roughness: .9, flatShading: true}); windy(crownM, .05, true);
+  var crownM = new T.MeshStandardMaterial({roughness: .9}); windy(crownM, .05, true);
   var conM = new T.MeshStandardMaterial({roughness: .95, flatShading: true}); windy(conM, .025);
   var trunkM = new T.MeshStandardMaterial({color: '#4a3826', roughness: 1});
   var list = {blob: [], cone: [], pop: [], bush: []};
@@ -661,20 +671,49 @@ function attach(api, o){
       '  c += vec3(.9, .92, 1.0)*star*uStars*smoothstep(.02, .2, y)*2.2*(.4 + .6*fract(sh2*91.0));',
       '  float md = dot(d, uMoon);',
       '  c += vec3(.95, .92, .82)*smoothstep(.99925, .9995, md)*uStars*1.4 + vec3(.25, .3, .4)*pow(max(md, 0.0), 40.0)*uStars*.25;',
-      /* clouds: a layer drifting with the wind, lit from the sun's side, burning orange at sunset */
+      /* clouds: heaps of cumulus whose shapes are folded by a second noise (no streaks), darker and thicker in their cores, lit from
+         the sun's side and burning orange at sunset; a thin veil of cirrus above them; both dissolve into the haze at the horizon */
+      '  float hzn = 1.0 - smoothstep(0.0, .09, y);',
+      '  c = mix(c, mix(hor, vec3(1.0), .12), hzn*.35*(1.0 - uStars));',                     // the pale band of air along the horizon
       '  if (y > 0.0){',
-      '    vec2 cp = d.xz/(y + .12)*1.6 + vec2(uTime*.006, uTime*.0025);',
-      '    float f = fbm(cp), f2 = fbm(cp*2.3 + 4.1);',
-      '    float cl = smoothstep(1.0 - uCov, 1.0 - uCov + .28, f*.8 + f2*.3)*smoothstep(0.0, .12, y);',
-      '    float lit = clamp(.3 + .7*pow(sd, 1.5) + (f - fbm(cp + uSun.xz*.08))*2.2, 0.0, 1.3);',
+      '    vec2 cp = d.xz/(y + .1)*1.35 + vec2(uTime*.006, uTime*.0025);',
+      '    vec2 wq = vec2(fbm(cp*.55 + 3.1), fbm(cp*.55 + 7.3)); vec2 q = cp + (wq - .5)*1.7;',
+      '    float f = fbm(q), f2 = fbm(q*2.9 + 4.1), dens = f*.82 + f2*.32;',
+      '    float cl = smoothstep(1.0 - uCov, 1.0 - uCov + .2, dens)*smoothstep(0.0, .1, y);',
+      '    float toward = fbm(q + uSun.xz*.14)*.82 + f2*.32;',
+      '    float lit = clamp(.42 + .5*pow(sd, 1.6) + (dens - toward)*3.2, 0.0, 1.35);',
       '    vec3 cc = mix(uCSh, uCLit, lit);',
-      '    cc += uGlow*pow(sd, 10.0)*.6*uGlowI*(1.0 - cl*.5);',                          // a silver lining near the sun
-      '    c = mix(c, cc, cl*.92);',
+      '    cc = mix(cc, uCSh*.86, smoothstep(1.0 - uCov + .12, 1.0 - uCov + .45, dens)*.38);',   // thick cores go grey
+      '    cc += uGlow*pow(sd, 10.0)*.7*uGlowI*(1.0 - cl*.4);',                               // a silver lining near the sun
+      '    c = mix(c, cc, cl*.94*(1.0 - .6*hzn));',
+      '    vec2 cq = d.xz/(y + .04)*.45 + vec2(uTime*.011, uTime*.003);',
+      '    float ci = fbm(vec2(cq.x*3.4 + cq.y*.8, cq.y*.7)), veil = smoothstep(.52, .8, ci)*smoothstep(.04, .3, y)*(1.0 - cl);',
+      '    c = mix(c, mix(uCLit, uGlow, .25*pow(sd, 4.0)), veil*.32*(.5 + .5*uCov));',
       '  }',
       '  gl_FragColor = vec4(c, 1.0);',
       '  #include <encodings_fragment>',
       '}'].join('\n')}));
   sky.renderOrder = -10; sky.frustumCulled = false; scene.add(sky);
+
+  /* ── the far woods as one continuous belt along the horizon: crowns running into each other, with clearings, blued by the air ── */
+  (function(){
+    var NS = lite ? 1000 : 2200;
+    [[455, 1, 0], [535, .85, 2.3]].forEach(function(r){
+      var R = r[0], pos = [], col = [], idx = [], c1 = lin('#26321f'), c2 = lin('#3c4f2f'), c3 = lin('#4a5a36');
+      for (var i = 0; i <= NS; i++){
+        var a = i/NS*Math.PI*2, x = GX + Math.cos(a)*R, z = GZ + Math.sin(a)*R, g = H(x, z) - 2, s = a*R;
+        var lump = Math.sqrt(Math.abs(Math.sin(s*.45 + r[2] + 2.0*Math.sin(s*.061)))) + .4*Math.sqrt(Math.abs(Math.sin(s*1.07 + 1.3*r[2])));   // rounded crowns, V-shaped gaps
+        var clear = .35 + .65*Math.min(1, Math.max(0, (fbm(x*.006 + r[2], z*.006) - .3)*3));
+        var top = g + (8 + 6*fbm(x*.012, z*.012) + 2.2*lump)*clear;
+        var cc = c2.clone().lerp(c3, hash(i*.37, r[2]));
+        pos.push(x, g - 8, z, x, top, z); col.push(c1.r, c1.g, c1.b, cc.r, cc.g, cc.b);
+        if (i) idx.push(2*i - 2, 2*i - 1, 2*i, 2*i - 1, 2*i + 1, 2*i);
+      }
+      var g2 = new T.BufferGeometry(); g2.setAttribute('position', new T.Float32BufferAttribute(pos, 3)); g2.setAttribute('color', new T.Float32BufferAttribute(col, 3)); g2.setIndex(idx); g2.computeVertexNormals();
+      var m2 = new T.MeshLambertMaterial({vertexColors: true, side: T.DoubleSide, fog: true}); m2.userData.noLamp = true;
+      var belt = new T.Mesh(g2, m2); belt.frustumCulled = false; scene.add(belt);
+    });
+  })();
   cam.far = 1200; cam.updateProjectionMatrix();
 
   /* palette by the sun's height (degrees): zenith, horizon, horizon toward the sun, horizon away from it, sun glow, lit and shaded cloud */

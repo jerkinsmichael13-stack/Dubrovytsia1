@@ -276,6 +276,7 @@ function attach(api, o){
   var step = lite ? 9 : 6, rnd = (function(seed){ return function(){ seed = (seed*16807) % 2147483647; return (seed - 1)/2147483646; }; })(1918);
   for (var fx = CX - SIZE/2 + 4; fx < CX + SIZE/2 - 4; fx += step) for (var fz = -SIZE/2 + 4; fz < SIZE/2 - 4; fz += step){
     var rr = Math.hypot(fx - GX, fz - GZ), thin = rr < 140 ? 1 : rr < 260 ? .4 : .18;   // farther off, fewer but bigger trees
+    if (rr > 300) continue;                                                        // beyond, the woods are one belt on the horizon
     if (rnd() > thin) continue;
     var x2 = fx + (rnd() - .5)*step*.9, z2 = fz + (rnd() - .5)*step*.9, f = forest(x2, z2);
     if (rnd() > f) continue;
@@ -404,20 +405,50 @@ function attach(api, o){
       '  c += vec3(.9, .92, 1.0)*star*uStars*smoothstep(.02, .2, y)*2.2*(.4 + .6*fract(sh2*91.0));',
       '  float md = dot(d, uMoon);',
       '  c += vec3(.95, .92, .82)*smoothstep(.99925, .9995, md)*uStars*1.4 + vec3(.25, .3, .4)*pow(max(md, 0.0), 40.0)*uStars*.25;',
-      /* clouds: a layer drifting with the wind, lit from the sun's side, burning orange at sunset */
+      /* clouds: heaps of cumulus whose shapes are folded by a second noise (no streaks), darker and thicker in their cores, lit from
+         the sun's side and burning orange at sunset; a thin veil of cirrus above them; both dissolve into the haze at the horizon */
+      '  float hzn = 1.0 - smoothstep(0.0, .09, y);',
+      '  c = mix(c, mix(hor, vec3(1.0), .12), hzn*.35*(1.0 - uStars));',                     // the pale band of air along the horizon
       '  if (y > 0.0){',
-      '    vec2 cp = d.xz/(y + .12)*1.6 + vec2(uTime*.006, uTime*.0025);',
-      '    float f = fbm(cp), f2 = fbm(cp*2.3 + 4.1);',
-      '    float cl = smoothstep(1.0 - uCov, 1.0 - uCov + .28, f*.8 + f2*.3)*smoothstep(0.0, .12, y);',
-      '    float lit = clamp(.3 + .7*pow(sd, 1.5) + (f - fbm(cp + uSun.xz*.08))*2.2, 0.0, 1.3);',
+      '    vec2 cp = d.xz/(y + .2)*1.9 + vec2(uTime*.006, uTime*.0025);',
+      '    vec2 wq = vec2(fbm(cp*.55 + 3.1), fbm(cp*.55 + 7.3)); vec2 q = cp + (wq - .5)*1.7;',
+      '    float f = fbm(q), f2 = fbm(q*2.9 + 4.1), dens = f*.82 + f2*.32;',
+      '    float cl = smoothstep(1.0 - uCov, 1.0 - uCov + .2, dens)*smoothstep(0.0, .1, y);',
+      '    float toward = fbm(q + uSun.xz*.14)*.82 + f2*.32;',
+      '    float lit = clamp(.42 + .5*pow(sd, 1.6) + (dens - toward)*3.2, 0.0, 1.35);',
       '    vec3 cc = mix(uCSh, uCLit, lit);',
-      '    cc += uGlow*pow(sd, 10.0)*.6*uGlowI*(1.0 - cl*.5);',                          // a silver lining near the sun
-      '    c = mix(c, cc, cl*.92);',
+      '    cc = mix(cc, uCSh*.86, smoothstep(1.0 - uCov + .12, 1.0 - uCov + .45, dens)*.38);',   // thick cores go grey
+      '    cc += uGlow*pow(sd, 10.0)*.7*uGlowI*(1.0 - cl*.4);',                               // a silver lining near the sun
+      '    c = mix(c, cc, cl*.94*(1.0 - .6*hzn));',
+      '    vec2 cq = d.xz/(y + .04)*.45 + vec2(uTime*.011, uTime*.003);',
+      '    float ci = fbm(vec2(cq.x*3.4 + cq.y*.8, cq.y*.7)), veil = smoothstep(.52, .8, ci)*smoothstep(.04, .3, y)*(1.0 - cl);',
+      '    c = mix(c, mix(uCLit, uGlow, .25*pow(sd, 4.0)), veil*.32*(.5 + .5*uCov));',
       '  }',
       '  gl_FragColor = vec4(c, 1.0);',
       '  #include <encodings_fragment>',
       '}'].join('\n')}));
   sky.renderOrder = -10; sky.frustumCulled = false; scene.add(sky);
+
+  /* ── the far woods as one continuous belt along the horizon: crowns running into each other, with clearings, blued by the air ── */
+  (function(){
+    var NS = lite ? 1000 : 2200;
+    [[320, 1, 0], [410, 1, 2.3], [500, 1, 4.1]].forEach(function(r){
+      var R = r[0], pos = [], col = [], idx = [], c1 = lin('#1c2618'), c2 = lin('#2f4026'), c3 = lin('#3d4f2e');
+      for (var i = 0; i <= NS; i++){
+        var a = i/NS*Math.PI*2, x = GX + Math.cos(a)*R, z = GZ + Math.sin(a)*R, g = H(x, z) - 2, s = a*R;
+        var lump = Math.sqrt(Math.abs(Math.sin(s*.45 + r[2] + 2.0*Math.sin(s*.061)))) + .4*Math.sqrt(Math.abs(Math.sin(s*1.07 + 1.3*r[2])));   // rounded crowns, V-shaped gaps
+        var clear = .35 + .65*Math.min(1, Math.max(0, (fbm(x*.006 + r[2], z*.006) - .3)*3));
+        if (R < 400) clear *= 1 - .85*ss(50, 150, x - riverX(z));                       // the open water-meadow beyond the Horyn
+        var top = g + (8 + 6*fbm(x*.012, z*.012) + 2.2*lump)*clear;
+        var cc = c2.clone().lerp(c3, hash(i*.37, r[2]));
+        pos.push(x, g - 8, z, x, top, z); col.push(c1.r, c1.g, c1.b, cc.r, cc.g, cc.b);
+        if (i) idx.push(2*i - 2, 2*i - 1, 2*i, 2*i - 1, 2*i + 1, 2*i);
+      }
+      var g2 = new T.BufferGeometry(); g2.setAttribute('position', new T.Float32BufferAttribute(pos, 3)); g2.setAttribute('color', new T.Float32BufferAttribute(col, 3)); g2.setIndex(idx); g2.computeVertexNormals();
+      var m2 = new T.MeshLambertMaterial({vertexColors: true, side: T.DoubleSide, fog: true}); m2.userData.noLamp = true;
+      var belt = new T.Mesh(g2, m2); belt.frustumCulled = false; scene.add(belt);
+    });
+  })();
   cam.far = 1200; cam.updateProjectionMatrix();
 
   /* palette by the sun's height (degrees): zenith, horizon, horizon toward the sun, horizon away from it, sun glow, lit and shaded cloud */

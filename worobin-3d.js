@@ -844,8 +844,16 @@ resize(); sync();
 function useGLB(gltf){
   var meshes = []; gltf.scene.updateMatrixWorld(true); gltf.scene.traverse(function(ob){ if (ob.isMesh) meshes.push(ob); });
   if (meshes.length < 3) throw new Error('glb empty');
-  var old = []; house.traverse(function(ob){ if (ob.isMesh) old.push(ob); });
+  /* the hall inside and the leaves of the west door stay as drawn: the tour opens the door and walks in, and lights the hall */
+  function kept(ob){ for (var p = ob; p; p = p.parent) if (p.userData && p.userData.live) return true; return !!(ob.material && ob.material.userData && ob.material.userData.indoor); }
+  var IB = inside && inside.box;
+  function inHall(ob){ if (!IB) return false; var b = new THREE.Box3().setFromObject(ob); return b.min.x > IB[0] - .4 && b.max.x < IB[1] + .4 && b.min.y > IB[2] - .4 && b.max.y < IB[3] + .4 && b.min.z > IB[4] - .4 && b.max.z < IB[5] + .4; }
+  var old = []; house.traverse(function(ob){ if (ob.isMesh && !kept(ob)) old.push(ob); });
   old.forEach(function(ob){ ob.parent.remove(ob); if (ob.geometry) ob.geometry.dispose(); });
+  meshes = meshes.filter(function(ob){ var nm = ob.material.name || '';
+    if (/^Material_/.test(nm) && inHall(ob)) return false;                                  // the drawn hall stays
+    if (/^KX_door/.test(nm)){ var c = new THREE.Box3().setFromObject(ob).getCenter(new THREE.Vector3()); if (c.x < -7.5 && Math.abs(c.z) < 1.2) return false; }   // and the live west door
+    return true; });
   /* the invisible stand-ins (a door mask drawn with colour writes off) come back from the export as plain white unlit faces */
   meshes = meshes.filter(function(ob){ var m = ob.material; var c = m.color; return !(/^Material_/.test(m.name || '') && !m.map && c.r > .96 && c.g > .96 && c.b > .96); });
   meshes.forEach(function(ob){

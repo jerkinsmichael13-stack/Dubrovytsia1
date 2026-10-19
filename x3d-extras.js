@@ -312,7 +312,12 @@ function init(api){
     var trunkM = new T.MeshStandardMaterial({color: '#4a3826', roughness: 1});
     var leafC = ['#4f6f33', '#5b7a38', '#46652e', '#62803c'], autumnC = ['#b8742a', '#c99a35', '#a5532a', '#d0a640'], conC = '#2e4a2f';
     function shade(g, lo, hi){ var a = g.attributes.position, c = new Float32Array(a.count*3); for (var i = 0; i < a.count; i++){ var y = a.getY(i), k = lo + (hi - lo)*Math.min(1, Math.max(0, (y + 1)/2)); k *= .92 + .16*Math.abs(Math.sin(a.getX(i)*7.3 + a.getZ(i)*5.1)); c[i*3] = c[i*3 + 1] = c[i*3 + 2] = k; } g.setAttribute('color', new T.BufferAttribute(c, 3)); return g; }
-    var crownG = [shade(jitter(new T.IcosahedronGeometry(1, 2), .07), .55, 1.12), shade(jitter(new T.IcosahedronGeometry(1, 2), .1), .5, 1.1)];
+    /* foliage shades softly, as a mass of leaves does: normals lean out from the lump's centre, and a leafy break-up rides on the colour */
+    function soft(g){ var a = g.attributes.position, n = g.attributes.normal, v = new T.Vector3(), w = new T.Vector3();
+      for (var i = 0; i < a.count; i++){ v.fromBufferAttribute(a, i).normalize(); w.fromBufferAttribute(n, i).lerp(v, .75).normalize(); n.setXYZ(i, w.x, w.y, w.z);
+        if (g.attributes.color){ var c = g.attributes.color, lf = .82 + .3*(.5 + .5*Math.sin(a.getX(i)*9.0 + Math.sin(a.getY(i)*7.0)*2.0)*Math.sin(a.getZ(i)*8.0 + a.getX(i)*3.0)); c.setXYZ(i, c.getX(i)*lf, c.getY(i)*lf, c.getZ(i)*lf); } }
+      n.needsUpdate = true; return g; }
+    var crownG = [soft(shade(jitter(new T.IcosahedronGeometry(1, 2), .09), .5, 1.1)), soft(shade(jitter(new T.IcosahedronGeometry(1, 2), .12), .46, 1.08))];
     var coneG = shade(jitter(new T.ConeGeometry(1, 1, 12, 2), .05), .55, 1.1), trunkG = new T.CylinderGeometry(.14, .24, 1, 8);
     var home = cam.position.clone().sub(gc).setY(0).normalize();
     /* broadleaf species of a Polissia manor park: trunk height, crown blobs, blob size, spread, crown centre, vertical spread, squash, leaf colour */

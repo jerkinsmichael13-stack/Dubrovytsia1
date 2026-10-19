@@ -104,8 +104,8 @@ h1{margin:0;font:400 clamp(1.8rem,3.4vw,2.8rem)/1 var(--display);letter-spacing:
   <div>
     <a class="back" href="index.html"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M13 8H3M7 4 3 8l4 4"/></svg>Цифровий архів Дубровиці</a>
     <h1>Костел Іоанна Хрестителя</h1>
-    <p class="sub">3D-модель за фотографіями та обмірним кресленням · вигляд сьогодні</p>
-    <a class="other" href="cerkva-3d.html"><img src="cerkva-3d-poster.webp" alt="" width="26" height="26">Також у 3D: церква Різдва Богородиці →</a>
+    <p class="sub">3D-модель за фотографіями та обмірним кресленням · вигляд 1930-х років</p>
+    <a class="other" href="worobin-3d.html"><img src="worobin-3d-poster.webp" alt="" width="26" height="26">Також у 3D: «Бібліотека» у Воробині →</a>
   </div>
   <button type="button" class="chip" id="infoBtn" aria-expanded="false" aria-controls="info"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="8" cy="8" r="6.5"/><path d="M8 7.2V11M8 5v.01"/></svg>Про пам'ятку</button>
 </header>
@@ -139,7 +139,7 @@ h1{margin:0;font:400 clamp(1.8rem,3.4vw,2.8rem)/1 var(--display);letter-spacing:
 </div>
 
 <script src="x3d-loader.js"></script>
-<script src="kostel-3d.js"></script>
+<script src="kostel-3d.js?v=20261019c"></script>
 <script src="sun-3d.js"></script>
 <script>
 (function(){
@@ -152,7 +152,7 @@ h1{margin:0;font:400 clamp(1.8rem,3.4vw,2.8rem)/1 var(--display);letter-spacing:
   }
   if (!window.Kostel3D){ fail('load'); return; }
   var narrow = matchMedia('(max-width:640px)').matches;
-  Kostel3D.mount(cv, {motes: true, view: [46, 11, 52], targetY: 16.4, fit: narrow ? 1.08 : 1.14,
+  Kostel3D.mount(cv, {motes: true, historic: true, glb: narrow || (navigator.deviceMemory || 8) < 4 ? 'kostel-hist-1k.glb?v=20261019c' : 'kostel-hist-2k.glb?v=20261019c', view: [46, 11, 52], targetY: 16.4, fit: narrow ? 1.08 : 1.14,
     onStart: function(){ hint.style.opacity = 0; spin.setAttribute('aria-pressed', 'false'); },
     onReady: function(){ cv.classList.add('on'); poster.classList.add('off'); load.classList.add('off'); },
     onFail: fail
@@ -182,6 +182,6 @@ h1{margin:0;font:400 clamp(1.8rem,3.4vw,2.8rem)/1 var(--display);letter-spacing:
 })();
 </script>
 <script src="ar-3d.js" data-model="kostel" data-name="Костел Іоанна Хрестителя" data-acc="костел" data-scale="1:65" defer></script>
-<script src="x3d-extras.js" data-model="kostel" defer></script>
+<script src="x3d-extras.js?v=20261019c" data-model="kostel" defer></script>
 </body>
 </html>
