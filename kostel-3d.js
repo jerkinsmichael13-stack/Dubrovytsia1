@@ -371,10 +371,17 @@ function tower(cx){
   boxX(cx - h - .04, cx + h + .04, TB - .12, TB, cz - h - .04, cz + h + .04, M.trim);
   cornice(cx - h, cx + h, cz - h, cz + h, TC, [[.2,.1],[.3,.3],[.25,.45],[.25,.52]]);   // → 26.3
   /* openings on all four faces; clocks on the front faces */
+  /* historic: a string course runs right round the tower at the impost, as on the photographs of the 1930s */
+  if (HIST) boxX(cx - h - .12, cx + h + .12, 20.95, 21.2, cz - h - .12, cz + h + .12, M.trim);
   [[cx, cz + h, FRONT],[cx, cz - h, BACK],[cx + h, cz, RIGHT],[cx - h, cz, LEFT]].forEach(function(f, i){
     var g = face(f[0], f[1], f[2]);
-    win(g, 0, 19.1, .9, 1.65, true, .16, 0, M.void, .55, {frame: null, sill: M.wall, reveal: revealWall});
+    /* historic: the sides and the back have only the louvred belfry opening; the front keeps all three */
+    if (!HIST || i === 0) win(g, 0, 19.1, .9, 1.65, true, .16, 0, M.void, .55, {frame: null, sill: M.wall, reveal: revealWall});
     win(g, 0, 23.35, .85, 2.0, true, .18, 0, M.void, .55, {frame: null, sill: M.wall, reveal: revealWall});
+    if (HIST) for (var lv = 0; lv < 9; lv++){                         // louvre boards in the belfry opening
+      var sl = box(.84, .045, .2, 0, 23.5 + lv*.17, -.3, M.louv, g); sl.rotation.x = -.6; sunk(sl, 3);
+    }
+    if (HIST && i > 0) return;
     if (i === 0){                                                   // black clock face in a white square frame
       box(1.55, 1.55, .1, 0, 21.5, .05, M.trim, g);
       add(new THREE.PlaneGeometry(1.31, 1.31), clockMat, 0, 22.275, .102, g).castShadow = false;
@@ -605,7 +612,7 @@ function shapeOf2(loop, hole){ var s = new THREE.Shape(loop); if (hole) s.holes.
   PIERS.forEach(function(z){ boxX(s*HW, s*(HW + .12), .6, AE, z - .68, z + .68, M.trim); });
   boxX(s*HW, s*(HW + .12), .6, AE, -23.1, -21.7, M.trim);
   boxX(s*(HW - .5), s*(HW + .12), .6, AE, PZ1 - .12, PZ1 + .7, M.trim);
-  BAYS.forEach(function(z){ win(face(s*HW, z, s*RIGHT), 0, AE - 4.25, 1.2, 2.25, true, .18, 2); });
+  BAYS.forEach(function(z){ if (HIST) win(face(s*HW, z, s*RIGHT), 0, AE - 4.5, 1.2, 2.4, false, .18, 3, null, null, {seg: .22}); else win(face(s*HW, z, s*RIGHT), 0, AE - 4.25, 1.2, 2.25, true, .18, 2); });
   var lb = face(s*HW, LBAY, s*RIGHT);
   win(lb, 0, AE - 3.3, 1.1, 2.05, false, .18, 2);
   win(lb, 0, 2.2, 1.1, 1.8, false, .18, 2);
