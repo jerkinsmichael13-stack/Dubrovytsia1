@@ -675,7 +675,7 @@ opacity: 0;
         <nav class="cover-crumbs" aria-label="Навігаційний ланцюжок"><a href="metrychni-knyhy.html">Архівні справи</a><span>/</span>Перша світова війна</nav>
         <p class="cover-kicker">Іменний архівний реєстр · 1914 — 1918</p>
         <h1 class="cover-title">Перша світова <em>війна</em></h1>
-        <p class="cover-lede">Архівні записи про мешканців Дубровиці, Висоцька, Бережниці та навколишніх сіл Волинської губернії, мобілізованих до російської армії. Збереглися в госпітальних журналах, списках втрат і документах полону.</p>
+        <p class="cover-lede">Архівні записи про мешканців Дубровиці, Висоцька, Бережниці та навколишніх сіл Волинської губернії, мобілізованих до російської армії. Збереглися в госпітальних журналах, списках втрат і документах полону. Імена й назви частин подано мовою документів.</p>
         <dl class="cover-facts">
             <div><dt>архівних записів</dt><dd><span id="ww1HeroTotal">—</span></dd></div>
             <div><dt>з фото документа</dt><dd><span id="ww1HeroPhoto">—</span></dd></div>
@@ -819,7 +819,7 @@ opacity: 0;
         <img id="ww1MapLbImg" src="https://i.imgur.com/gJrraYh.png" alt="Карта Волині 1917">
     </div>
     <button id="ww1MapLbClose" onclick="ww1CloseMap()" aria-label="Закрити">✕</button>
-    <div id="ww1MapLbHint">Pinch / scroll — зум &nbsp;·&nbsp; drag — переміщення</div>
+    <div id="ww1MapLbHint">Два пальці або коліщатко — масштаб &nbsp;·&nbsp; перетягування — зсув</div>
 </div>
 <script>
 (function(){
@@ -1060,12 +1060,12 @@ opacity: 0;
         </div>
         <div class="ft-bottom">
             <p class="ft-copy">&copy; 2026 <a href="https://dubrovytsia.site">dubrovytsia.site</a> — Цифровий архів Дубровиці, Рівненська область, Україна. Сайт є некомерційним краєзнавчим проєктом, створеним з любові до міста та його історії.</p>
-            <p class="ft-notice">Публікуючи ці матеріали, ми прагнемо зберегти та популяризувати культурну й історичну спадщину міста Дубровиця для нинішніх і майбутніх поколінь. Усі фотографії, документи та архівні матеріали розміщено виключно в освітніх, краєзнавчих і науково-дослідних цілях. Відтворення, поширення або комерційне використання будь-яких матеріалів без письмового дозволу адміністрації сайту — заборонено. При цитуванні або використанні матеріалів у будь-якому форматі — обов'язкове активне посилання на <em>dubrovytsia.site</em>. Якщо ви є власником авторських прав на будь-які з опублікованих матеріалів і маєте заперечення щодо їх розміщення — будь ласка, <a href="contacts.html">зв'яжіться з нами</a> і ми негайно розглянемо ваш запит. Фотографії, завантажені з архіву, містять водяний знак сайту і не можуть публікуватись без нього.</p>
+            <p class="ft-notice">Публікуючи ці матеріали, ми прагнемо зберегти та популяризувати культурну й історичну спадщину міста Дубровиця для нинішніх і майбутніх поколінь. Усі фотографії, документи та архівні матеріали розміщено виключно в освітніх, краєзнавчих і науково-дослідних цілях. Відтворення, поширення або комерційне використання будь-яких матеріалів без письмового дозволу адміністрації сайту — заборонено. При цитуванні або використанні матеріалів у будь-якому форматі — обов'язкове активне посилання на <em>dubrovytsia.site</em>. Якщо ви є власником авторських прав на будь-які з опублікованих матеріалів і маєте заперечення щодо їх розміщення — будь ласка, <a href="contacts.html">зв'яжіться з нами</a>, і ми негайно розглянемо ваш запит. Фотографії, завантажені з архіву, містять водяний знак сайту і не можуть публікуватись без нього.</p>
         </div>
     </div>
 </footer>
 
-<script src="app.js?v=11"></script>
+<script src="app.js?v=12"></script>
 <script>
 (function(){
 'use strict';
@@ -1074,7 +1074,11 @@ var PER=50;
 
 function fullUrl(u){return u?u.replace('/upload/','/upload/w_1600,q_auto/'):'';}
 
-var ALL=[],shown=[],pg=1;
+var ALL=[],shown=[],pg=1,NM=null;
+/* зведені написання прізвищ: пошук «Красько» знаходить і «Краско», а помилку писаря видно поруч із правильним написанням */
+if(window.dxName) window.dxName.load().then(function(m){NM=m; if(ALL.length){ if(q) applyFilters(); else renderTable(); }});
+function fixName(r){ return window.dxName&&NM ? window.dxName.fix(r.last_name,NM) : null; }
+function nameOf(r){ var f=fixName(r); return [f||r.last_name,r.first_name,r.middle_name].filter(Boolean).join(' '); }
 var fLoc='',fType='',fCause='',q='';
 
 function $(id){return document.getElementById(id);}
@@ -1110,7 +1114,7 @@ function renderTable(){
 
     for(var i=0;i<slice.length;i++){
         var r=slice[i];
-        var name=[r.last_name,r.first_name,r.middle_name].filter(Boolean).join(' ');
+        var name=nameOf(r), fx=fixName(r);
         var cc=causeClass(r.cause);
         var loc=r.location_ua||'';
         var locD=loc?'<div class="ww1-td-loc">'+locSvg+he(loc)+'</div>':'—';
@@ -1118,7 +1122,7 @@ function renderTable(){
 
         // Desktop row
         tbl+='<tr onclick="ww1Open(\''+r.id+'\')">';
-        tbl+='<td><div class="ww1-td-name">'+he(name||'—')+'</div><div class="ww1-td-sub">'+he(r.doc_type||'')+'</div></td>';
+        tbl+='<td><div class="ww1-td-name">'+he(name||'—')+'</div><div class="ww1-td-sub">'+he(r.doc_type||'')+(fx?' · у документі: '+he(r.last_name):'')+'</div></td>';
         tbl+='<td>'+locD+'</td>';
         tbl+='<td>'+he(r.military_unit||'—')+'</td>';
         tbl+='<td>'+he(r.rank||'—')+'</td>';
@@ -1180,8 +1184,9 @@ function applyFilters(){
         if(fType&&r.entity!==fType)return false;
         if(fCause){var rc=r.cause||'';if(fCause==='загинув'&&/помер/.test(rc)){/* include */}else if(rc!==fCause)return false;}
         if(qq){
-            var hay=[r.last_name,r.first_name,r.middle_name].join(' ').toLowerCase();
-            if(hay.indexOf(qq)===-1)return false;
+            var hay=[r.last_name,fixName(r)||'',r.first_name,r.middle_name].join(' ').toLowerCase().replace(/ё/g,'е');
+            var q1=qq.replace(/[іi]/g,'и').replace(/ї/g,'и').replace(/є/g,'е'), hay1=hay.replace(/і/g,'и');
+            if(hay.indexOf(qq)===-1&&hay1.indexOf(q1)===-1&&!(window.dxName&&window.dxName.match(qq.split(/\s+/)[0],r.last_name,NM)))return false;
         }
         return true;
     });
@@ -1358,7 +1363,7 @@ window.ww1Open=function(id){
     var r=null;
     for(var i=0;i<ALL.length;i++){if(ALL[i].id===id){r=ALL[i];break;}}
     if(!r)return;
-    var name=[r.last_name,r.first_name,r.middle_name].filter(Boolean).join(' ');
+    var name=nameOf(r), fx=fixName(r);
     var imgCol=$('ww1ProfImg');
     var info=$('ww1ProfInfo');
 
@@ -1367,7 +1372,7 @@ window.ww1Open=function(id){
             '<button class="ww1-prof-close" onclick="ww1Close()">\u2715</button>'+
             '<div class="ww1-prof-img-wrap" id="ww1ImgWrap">'+
             '<img class="ww1-prof-img" id="ww1Img" src="'+he(fullUrl(r.image_url))+'" alt="'+he(name)+'" loading="lazy">'+
-            '<div class="ww1-zoom-hint">Scroll/pinch — зум &nbsp;·&nbsp; Drag — переміщення &nbsp;·&nbsp; 2×click — скинути</div>'+
+            '<div class="ww1-zoom-hint">Коліщатко або два пальці — масштаб &nbsp;·&nbsp; перетягування — зсув &nbsp;·&nbsp; подвійний клік — скинути</div>'+
             '</div>'+
             '<div class="ww1-zoom-controls">'+
             '<button class="ww1-zoom-btn" onclick="ww1ZoomIn()" title="Збільшити">+</button>'+
@@ -1388,7 +1393,7 @@ window.ww1Open=function(id){
     }
 
     var fields=[
-        ['Прізвище', r.last_name],
+        ['Прізвище', fx?fx+' (у документі: '+r.last_name+')':r.last_name],
         ['Ім\u2019я', [r.first_name,r.middle_name].filter(Boolean).join(' ')],
         ['Населений пункт', r.location_ua],
         ['Повна адреса', r.birth_place],

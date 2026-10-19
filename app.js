@@ -1237,12 +1237,61 @@ document.addEventListener('DOMContentLoaded', () => {
 window.addEventListener('error', e => console.error('❌', e.message));
 
 // ================================================
+// КЛЮЧ ПРІЗВИЩА — те саме, що surnames.py: зводить українське, російське й польське написання
+// (Красько = Краско = Kraśko), щоб пошук знаходив людину в будь-якому списку
+// ================================================
+(function () {
+    if (window.dxName) return;
+    var UA = {'а':'a','б':'b','в':'v','г':'h','ґ':'g','д':'d','е':'e','є':'ie','ж':'zh','з':'z','и':'y','і':'i','ї':'i','й':'i','к':'k','л':'l','м':'m','н':'n','о':'o','п':'p','р':'r','с':'s','т':'t','у':'u','ф':'f','х':'kh','ц':'ts','ч':'ch','ш':'sh','щ':'shch','ь':'','ю':'iu','я':'ia','ы':'y','э':'e','ъ':'','ё':'io',"'":'','’':'','ʼ':''};
+    var PL = [['szcz','shch'],['sz','sh'],['cz','ch'],['rz','zh'],['ch','kh'],['ż','zh'],['ź','z'],['ł','l'],['w','v'],['ó','o'],['ą','o'],['ę','e'],['ś','s'],['ć','ts'],['ń','n'],['c','ts'],['j','i'],['x','ks']];
+    var SUF = [['skaia','ski'],['tskaia','tski'],['ska','ski'],['tska','tski'],['owna','ov'],['ovna','ov'],['evna','ev'],['ova','ov'],['eva','ev'],['ina','in'],['aia','i']];
+    function key(name) {
+        var s = String(name || '').replace(/\(.*?\)/g, '').trim().toLowerCase(), w = s.split(/\s+/); s = w[0] || s;
+        if (/[а-яіїєґё]/.test(s)) s = s.split('').map(function (ch) { return UA.hasOwnProperty(ch) ? UA[ch] : ch; }).join('');
+        else { var out = '', i = 0; while (i < s.length) { var hit = false; for (var j = 0; j < PL.length; j++) if (s.substr(i, PL[j][0].length) === PL[j][0]) { out += PL[j][1]; i += PL[j][0].length; hit = true; break; } if (!hit) { out += s[i]; i++; } } s = out; }
+        s = s.replace(/g/g, 'h').replace(/([bcdfhklmnprstvz])i(?=[aeou])/g, '$1').replace(/y/g, 'i').replace(/ii/g, 'i').replace(/([a-z])\1/g, '$1');
+        for (var k = 0; k < SUF.length; k++) { var a = SUF[k][0]; if (s.length > a.length + 2 && s.slice(-a.length) === a) { s = s.slice(0, -a.length) + SUF[k][1]; break; } }
+        return s.replace(/[^a-z\-]/g, '');
+    }
+    var meta = null;
+    /* alias: варіант → основний ключ; names: ключ → основне написання */
+    function load() {
+        return meta || (meta = Promise.all([fetch('surnames-alias.json').then(function (r) { return r.ok ? r.json() : {}; }).catch(function () { return {}; }),
+            fetch('surnames-index.json').then(function (r) { return r.ok ? r.json() : []; }).catch(function () { return []; })]).then(function (a) {
+            var names = {}; a[1].forEach(function (x) { names[x[0]] = x[1]; }); return { alias: a[0], names: names };
+        }));
+    }
+    function canon(k, m) { return m && m.alias[k] ? m.alias[k] : k; }
+    /* чи збігається прізвище з запитом: за ключем (будь-яка мова), за зведеним варіантом або за початком слова */
+    function match(q, surname, m) {
+        var qk = key(q); if (qk.length < 2) return false;
+        var sk = key(surname); if (sk.indexOf(qk) === 0) return true;
+        if (!m) return false;
+        var qc = canon(qk, m), sc = canon(sk, m);
+        return qk.length >= 4 && (sc === qc || sc.indexOf(qc) === 0);
+    }
+    /* чи записав писар прізвище з помилкою: інший ключ (Красоко) або інше написання тих самих звуків (Краско, Кряско замість Красько);
+       російська й польська форма того самого прізвища (Пинчук, Красовский, Kraśko) помилкою не вважається */
+    function lite(s) { return String(s || '').toLowerCase().replace(/[іїi]/g, 'и').replace(/[єё]/g, 'е').replace(/ъ/g, '').replace(/ы/g, 'и').replace(/['’ʼ]/g, '').replace(/тск/g, 'цк').replace(/(с|ц)ьк(?=(ий|ій|а|е|и|ого)$)/, '$1к').replace(/ой$/, 'ий').replace(/ць/g, 'ц').replace(/рь$/, 'р'); }
+    function wrong(orig, right) {
+        if (!orig || !right) return false;
+        var cy = /[а-яіїєґё]/i, both = cy.test(orig) && cy.test(right), a = lite(orig), b = lite(right);
+        if (both && a === b) return false;
+        if (key(orig) !== key(right)) return true;
+        if (!both) return false;
+        return a !== b && a.replace(/ь/g, '').replace(/я/g, 'а') === b.replace(/ь/g, '').replace(/я/g, 'а');
+    }
+    function fix(orig, m) { if (!m || !orig) return null; var c = canon(key(orig), m), n = m.names[c]; return n && wrong(orig, n) ? n : null; }
+    window.dxName = { key: key, load: load, canon: canon, match: match, wrong: wrong, fix: fix };
+})();
+
+// ================================================
 // ПОШУК НА ВЕСЬ САЙТ · Ctrl+K / ⌘K
 // ================================================
 (function () {
     'use strict';
     if (window.__dxPalette) return; window.__dxPalette = true;
-    var IDX = null, loading = null, open = false, sel = 0, flat = [];
+    var IDX = null, loading = null, open = false, sel = 0, flat = [], FT = null, ftLoading = null, NM = null;
     var TYPES = {
         place:   ['Поселення', '<path d="M12 21s-6-5.3-6-10a6 6 0 1 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/>'],
         press:   ['Преса', '<path d="M5 5h11v14H6a1 1 0 0 1-1-1V5z"/><path d="M16 8h3v10a1 1 0 0 1-1 1h-2"/><path d="M8 9h5M8 12h5M8 15h3"/>'],
@@ -1250,9 +1299,13 @@ window.addEventListener('error', e => console.error('❌', e.message));
         surname: ['Прізвища й родини', '<path d="M6 4h9l3 3v13H6z"/><path d="M9 10h6M9 13h6M9 16h4"/>'],
         photo:   ['Фото', '<rect x="4" y="6" width="16" height="12" rx="1.5"/><circle cx="12" cy="12" r="3"/><path d="M9 6l1-2h4l1 2"/>'],
         doc:     ['Документи', '<path d="M7 4h7l4 4v12H7z"/><path d="M14 4v4h4"/>'],
-        page:    ['Розділи сайту', '<path d="M4 6h16M4 12h16M4 18h10"/>']
+        page:    ['Розділи сайту', '<path d="M4 6h16M4 12h16M4 18h10"/>'],
+        text:    ['Згадки в текстах', '<path d="M5 4h10l4 4v12H5z"/><path d="M8 11h8M8 14h8M8 17h5"/><circle cx="17.5" cy="17.5" r="2.5"/>']
     };
-    var ORDER = ['place', 'person', 'surname', 'press', 'photo', 'doc', 'page'];
+    var ORDER = ['place', 'surname', 'person', 'doc', 'press', 'photo', 'page', 'text'];
+    /* слова, які в джерелах пишуть по-різному */
+    var SYN = { 'бурштин': ['янтар', 'bursztyn'], 'янтар': ['бурштин'], 'жид': ['євре'], 'євре': ['жид', 'żyd'], 'костел': ['костьол', 'kości'], 'плятер': ['plater', 'платер'], 'радзивіл': ['radziwi', 'радивил'] };
+    function syn(w) { for (var k in SYN) if (w.indexOf(k) === 0 || k.indexOf(w) === 0 && w.length >= 4) return [w].concat(SYN[k]); return [w]; }
     function norm(s) { return String(s || '').toLowerCase().replace(/[’'ʼ`]/g, '').replace(/ї/g, 'і').replace(/є/g, 'е').replace(/ґ/g, 'г'); }
     function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
     var css = '.dxk-btn{display:inline-flex;align-items:center;gap:.45rem;height:38px;padding:0 .75rem;margin-right:.5rem;border-radius:999px;border:1px solid var(--color-border,rgba(90,74,46,.25));background:transparent;color:var(--color-text-secondary,#5a4a2e);font:500 .78rem var(--font-body,sans-serif);cursor:pointer;transition:border-color .2s,color .2s}' +
@@ -1302,9 +1355,15 @@ window.addEventListener('error', e => console.error('❌', e.message));
     }
     function load() {
         if (IDX) return Promise.resolve(IDX);
-        if (!loading) loading = fetch('search-index.json').then(function (r) { return r.json(); }).then(function (d) { IDX = d; d.forEach(function (x) { x._n = norm(x.n); x._s = norm(x.s); }); return d; });
+        if (!loading) loading = fetch('search-index.json').then(function (r) { return r.json(); }).then(function (d) { IDX = d; d.forEach(function (x) { x._n = norm(x.n); x._s = norm(x.s); }); loadMore(); return d; });
         return loading;
     }
+    /* повний текст статей і документів та зведені написання прізвищ — підвантажуються слідом, не затримуючи першого результату */
+    function loadMore() {
+        if (window.dxName && !NM) window.dxName.load().then(function (m) { NM = m; rerender(); });
+        if (!ftLoading) ftLoading = fetch('search-text.json').then(function (r) { return r.ok ? r.json() : []; }).then(function (d) { FT = d.map(function (x) { return { t: 'text', n: x[0], s: x[1], u: x[2], kind: x[3], w: ' ' + x[4] }; }); rerender(); }).catch(function () { FT = []; });
+    }
+    function rerender() { var inp = document.getElementById('dxkQ'); if (open && inp && inp.value.trim()) render(inp.value); }
     function show() {
         if (open) return; open = true; ov.classList.add('on'); document.body.style.overflow = 'hidden';
         var inp = document.getElementById('dxkQ'); inp.value = ''; setTimeout(function () { inp.focus(); }, 30);
@@ -1323,15 +1382,40 @@ window.addEventListener('error', e => console.error('❌', e.message));
         return out + esc(s.slice(p));
     }
     function score(x, words, q) {
-        var sc = 0;
+        var sc = 0, ns = 0;
         for (var i = 0; i < words.length; i++) {
             var w = words[i], inN = x._n.indexOf(w);
             if (inN === 0) sc += 30; else if (inN > 0 && /[\s«(\-]/.test(x._n[inN - 1])) sc += 20; else if (inN > 0) sc += 10;
-            else if (x._s.indexOf(w) >= 0) sc += 5; else if (x.k && x.k.indexOf(w) >= 0) sc += 3; else return 0;
+            else if (x._s.indexOf(w) >= 0) sc += 5;
+            else if (x.sk && words.length <= 2 && (ns = nameScore(w, x.sk))) sc += ns;
+            else if (x.k && x.k.indexOf(w) >= 0) sc += 3;
+            else return 0;
+            if (x.sk && inN !== 0 && words.length <= 2) { var ns2 = nameScore(w, x.sk); if (ns2 > 14) sc += ns2; }
         }
         if (x._n === q) sc += 50;
         if (x.t === 'place') sc += 8;
         return sc;
+    }
+    /* прізвище за ключем: «Красько» знаходить Kraśko, Краско й Красоко */
+    function nameScore(w, sk) {
+        if (!window.dxName || w.length < 3) return 0;
+        var qk = window.dxName.key(w); if (qk.length < 3) return 0;
+        if (sk === qk) return 40;
+        if (NM && qk.length >= 4 && window.dxName.canon(qk, NM) === sk) return 36;
+        if (sk.indexOf(qk) === 0) return 14;
+        return 0;
+    }
+    function ftHits(words, seen) {
+        if (!FT) return [];
+        var qs = words.filter(function (w) { return w.length >= 3; }).map(function (w) { return syn(w.slice(0, 8)); });
+        if (!qs.length) return [];
+        var out = [];
+        FT.forEach(function (x) {
+            if (seen[x.u]) return;
+            for (var i = 0; i < qs.length; i++) { var ok = false; for (var j = 0; j < qs[i].length; j++) if (x.w.indexOf(' ' + qs[i][j]) >= 0) { ok = true; break; } if (!ok) return; }
+            out.push([x.kind === 'page' ? 2 : x.kind === 'doc' ? 3 : 1, x]);
+        });
+        return out;
     }
     var SUGGEST = [['place', ['poselennia.html', 'Усі поселення Дубровиччини', 'Атлас 1798, інвентар, преса, фото']], ['page', ['presa.html', 'Преса', '163 статті 1823–1991']], ['page', ['inventar-naselennia.html', 'Люди Домбровиці', 'Поіменно за інвентарем Плятера']], ['page', ['atlas-1798.html', 'Атлас 1798', 'Інтерактивна мапа']], ['page', ['doslidnyk.html', 'Дослідник', 'Хронологія й постаті']]];
     function render(q) {
@@ -1344,21 +1428,25 @@ window.addEventListener('error', e => console.error('❌', e.message));
         }
         var words = q.split(/\s+/).filter(Boolean), groups = {};
         IDX.forEach(function (x) { var s = score(x, words, q); if (s) (groups[x.t] = groups[x.t] || []).push([s, x]); });
+        var seen = {}; Object.keys(groups).forEach(function (t) { groups[t].forEach(function (e) { seen[e[1].u] = 1; }); });
+        var th = ftHits(words, seen); if (th.length) groups.text = th;
         var html = '', total = 0;
         ORDER.forEach(function (t) {
             var g = groups[t]; if (!g) return;
             g.sort(function (a, b) { return b[0] - a[0] || a[1].n.localeCompare(b[1].n, 'uk'); });
-            var lim = t === 'place' || t === 'person' ? 5 : 4;
+            var lim = t === 'place' || t === 'person' || t === 'surname' ? 5 : t === 'text' ? 6 : 4;
             html += '<div class="dxk-g">' + TYPES[t][0] + (g.length > lim ? ' · ' + g.length : '') + '</div>';
             g.slice(0, lim).forEach(function (e) { html += item(words, e[1]); flat.push(e[1]); });
             total += g.length;
         });
+        if (!FT && ftLoading) html += '<div class="dxk-empty" style="padding:.9rem">Шукаємо ще й у текстах статей і документів…</div>';
         res.innerHTML = html || '<div class="dxk-empty">Нічого не знайдено. Спробуйте іншу форму слова або лише початок прізвища.</div>';
         res.querySelectorAll('.dxk-i').forEach(function (a, i) { a.dataset.i = i; });
         if (sel >= flat.length) sel = 0; mark();
     }
     function item(words, x) {
-        return '<a class="dxk-i" href="' + esc(x.u) + '"' + (/^https?:/.test(x.u) ? ' target="_blank" rel="noopener"' : '') + '><svg viewBox="0 0 24 24">' + TYPES[x.t][1] + '</svg><span><b>' + hl(x.n, words) + '</b><small>' + hl(x.s, words) + '</small></span></a>';
+        var sub = x.t === 'text' ? x.s + ' · слово є в тексті' : x.s;
+        return '<a class="dxk-i" href="' + esc(x.u) + '"' + (/^https?:/.test(x.u) ? ' target="_blank" rel="noopener"' : '') + '><svg viewBox="0 0 24 24">' + TYPES[x.t][1] + '</svg><span><b>' + hl(x.n, words) + '</b><small>' + hl(sub, words) + '</small></span></a>';
     }
     function mark() {
         var els = document.querySelectorAll('#dxkRes .dxk-i');

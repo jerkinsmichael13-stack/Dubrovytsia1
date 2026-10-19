@@ -164,7 +164,7 @@ for extra in [('Інвентар маєтку графа Плятера', 'Ск�
               ('Граф Плятер', 'Власник Дубровиці 1775–1832', 'plater.html'), ('Князь Радзивілл', 'Власник маєтку 1798', 'radzyvil.html'),
               ('Костел Іоанна Хрестителя · 3D-модель', 'Обертайте й наближайте пам\'ятку', 'kostel-3d.html'),
               ('Церква Різдва Богородиці · 3D-модель', 'Обертайте й наближайте пам\'ятку', 'cerkva-3d.html'),
-              ('«Бібліотека» у Воробині · 3D-модель', 'Павільйон Плятерів, реконструкція за фото', 'worobin-3d.html'),
+              ('«Бібліотека» Плятерів у Воробині · 3D-модель', 'Павільйон, що не зберігся, — реконструкція за світлинами', 'worobin-3d.html'),
               ('Свято-Миколаївська церква · 3D-модель', 'Дерев\'яна церква 1872 року, модель за фото', 'mykolai-3d.html')]:
     add('page', extra[0], extra[1], extra[2])
 for sec in SITE:
@@ -181,12 +181,15 @@ from surnames import key as skey
 VOT = J('voters.json')['voters']; WW = J('ww1.json')
 SR = {}
 def bucket(k, disp, script):
-    b = SR.setdefault(k, {'k': k, 'forms': {}, 'inv': [], 'ww': [], 'vot': [], 'press': [], 'met': []})
+    b = SR.setdefault(k, {'k': k, 'forms': {}, 'inv': [], 'ww': [], 'vot': [], 'press': [], 'met': [], 'akt': []})
     b['forms'][disp] = b['forms'].get(disp, 0) + (10 if script == 'ua' else 1)
     return b
 VILL = {r['mapName']: k for k, r in SELA.items()}
 for k, p in PLACES.items(): VILL.setdefault(p['name'], k)
 VILL.update({'Орв\'яниця': 'orvianytsia', 'Працуки': 'pratsiuky', 'Ясинець': 'yasenets', 'Заріччя (ст. Дубровиця)': 'dombrovytsia', 'Домбровиця': 'dombrovytsia'})
+VKEY0 = {}
+for _k, _p in PLACES.items():
+    for _n in [_p['name']] + [a for a in _p['alt'] if a]: VKEY0.setdefault(skey(_n), _k)
 for ik, d in INV.items():
     vname = d['name']; pk = next((x for x, y in inv_for.items() if y == ik), ik)
     for st in d['streets']:
@@ -207,14 +210,58 @@ for w in WW:
     b = bucket(k, lu, 'ru')
     b['ww'].append([w.get('first_name', ''), w.get('middle_name', ''), w.get('place_ua') or w.get('birth_place') or '', w.get('cause', ''), w.get('doc_type', ''), w.get('rank', ''),
                     ' '.join(x for x in [w.get('archive', ''), w.get('fond', '') and 'ф. ' + w['fond'], w.get('opis', '') and 'оп. ' + w['opis'], w.get('delo', '') and 'спр. ' + w['delo']] if x), w.get('image_url', ''),
-                    VILL.get(w.get('place_ua') or '', 'dombrovytsia' if (w.get('place_ua') or '') in ('Домбровиця', 'Дубровиця') else '')])
+                    VILL.get(w.get('place_ua') or '', 'dombrovytsia' if (w.get('place_ua') or '') in ('Домбровиця', 'Дубровиця') else ''), ln])
 for v in VOT:
     ln = (v.get('surname') or '').strip()
     if not ln: continue
     k = skey(ln)
     if len(k) < 3: continue
     b = bucket(k, ln, 'pl')
-    b['vot'].append([v.get('first', ''), v.get('born', ''), v.get('village', ''), VILL.get(v.get('village', ''), ''), v.get('addr', ''), v.get('prof', '')])
+    b['vot'].append([v.get('first', ''), v.get('born', ''), v.get('village', ''), VILL.get(v.get('village', ''), ''), v.get('addr', ''), v.get('prof', ''), ln])
+# ── XVII століття: особи з актів пінських гродських книг і реєстру збитків 1665 р. ──
+import html as _html
+def _txt(x): return re.sub(r'\s+', ' ', _html.unescape(re.sub(r'<[^>]+>', ' ', x or ''))).strip()
+AKT_N = 0
+NOT_SURNAME = {'Андрян', 'Давид', 'Филипча', 'Радзивіллова', 'Остап', 'Данило', 'Васько', 'Яцько', 'Гаврило', 'Тимко', 'Овдишка', 'Гарник', 'Цешко', 'Лимха',
+               'Шмойло', 'Фалько', 'Правосуд', 'Паламар', 'Рудник', 'Леховіки', 'Лаврів', 'Дрозд', 'Війтова', 'Війт', 'Гуриновича'}
+def akt_add(sur, shown, orig, year, title, url, vname, vslug, role):
+    global AKT_N
+    sur = sur.strip(' ,.')
+    if not sur or sur in NOT_SURNAME or len(sur) < 3 or not re.match(r'^[А-ЯІЇЄҐ]', sur): return
+    k = skey(sur)
+    if len(k) < 3: return
+    b = bucket(k, re.sub(r'(с|ц)ька$', r'\1ький', sur), 'ua')
+    b['akt'].append([shown, orig, year, title, url, vname, vslug, role[:140]]); AKT_N += 1
+AKTY = J('akty-data.json')
+for a in AKTY:
+    yr = (a.get('sort') or '')[:4]; url = ('akty-yevrei.html' if a.get('group') == 'yevrei' else 'akty-ruina.html') + '#' + a['id']
+    for nm, role in re.findall(r'<li><p><strong>(.*?)</strong>\s*(.*?)</p>', a.get('persons') or '', flags=re.S):
+        nm = _txt(nm); role = _txt(role).lstrip('— ').strip()
+        m = re.match(r'^(.*?)\s*\((.*)\)\s*$', nm); shown, orig = (m.group(1), m.group(2)) if m else (nm, '')
+        shown = re.sub(r'«.*?»', '', shown).split(',')[0].strip()
+        if ' і ' in shown or re.search(r'(ські|цькі|ові)$', shown.split(' ')[0]): continue      # родини й групи
+        parts = [x.strip() for x in shown.split(' ') if x.strip() and x != '/']
+        if not parts: continue
+        sur = parts[0]
+        alt = re.match(r'^(\S+)\s*/\s*(\S+)\s+(.*)$', shown)
+        if alt: sur = alt.group(1); shown = alt.group(1) + ' ' + alt.group(3) + ' (' + alt.group(2) + ')'
+        if len(parts) >= 2 and parts[0] in NOT_SURNAME: continue
+        akt_add(sur, shown, orig.split(' / ')[-1] if orig else '', yr, a.get('title', ''), url, '', '', role)
+RJ = open(os.path.join(ROOT, 'rejestr-1665.html'), encoding='utf-8').read()
+RJV = {'дубровиця': 'Дубровиця', 'велюнь': 'Велюнь', 'біле': 'Біла', 'людинь': 'Людинь', 'берестя': 'Берестя', "орв'яниця": "Орв'яниця", 'стрільськ': 'Стрільськ',
+       'карпилівка': 'Карпилівка', 'нивецьк': 'Нивецьк', 'залішани': 'Залішани', 'мочулища': 'Мочулище', 'позні': 'Позні', 'кунцівці': 'Кунцівці', 'шахи': 'Шахи', 'бровки': 'Бровки'}
+RJ_SKIP = ('Вдова', 'Громада', 'Стрільці', 'Брат ', 'Микола з', 'Мельник ', 'Замок', 'Пан Борко', 'Лаворовичі', 'Тишківці', 'Павло та', 'Волониця', 'Давид Старий', 'Шевеля Різник', 'Дмитр Пухар', 'Лешко Мельник', 'Мисько (')
+for vil, nm, orig, role in re.findall(r'<div class="rj-person-card" data-village="([^"]*)">\s*<div class="rj-person-name">(.*?)</div>\s*(?:<div class="rj-person-orig">(.*?)</div>)?\s*(?:<div class="rj-person-role">(.*?)</div>)?', RJ, flags=re.S):
+    nm = _txt(nm); orig = _txt(orig); role = _txt(role)
+    if nm.startswith(RJ_SKIP) or re.search(r'івна$', nm): continue
+    vname = RJV.get(vil, ''); vslug = VILL.get(vname, '') or VKEY0.get(skey(vname), '') if vname else ''
+    base = re.sub(r'\s*\(.*?\)', '', nm).replace('Пан ', '').replace('Священник ', '').strip()
+    if ' та ' in base:                                   # «Селевонович та Гара Симович»
+        for piece in base.split(' та '): akt_add(piece.split(' ')[-1], piece, orig, '1665', 'Реєстр збитків 1665 року', 'rejestr-1665.html#panel-people', vname, vslug, role)
+        continue
+    ws = base.split(' ')
+    sur = ws[0] if nm.startswith('Курил ') else (ws[0] if len(ws) > 1 and ws[-1] in ('Старий',) else ws[-1])
+    akt_add(sur, base, orig, '1665', 'Реєстр збитків 1665 року', 'rejestr-1665.html#panel-people', vname, vslug, role)
 # метричні книги: розшифровки додаються у metrics-records.csv (див. шаблон metrics-records-template.csv)
 import csv
 MBOOKS = {str(b['id']): b for b in J('metrychni-knyhy.json')}
@@ -263,7 +310,7 @@ def diff_soft(a, b):
     i = 0
     while i < len(sh) and sh[i] == l[i]: i += 1
     return l[i] in VOW
-def size(b): return len(b['inv']) + len(b['ww']) + len(b['vot']) + len(b['press']) + len(b['met'])
+def size(b): return len(b['inv']) + len(b['ww']) + len(b['vot']) + len(b['press']) + len(b['met']) + len(b['akt'])
 keys = sorted(SR, key=lambda k: -size(SR[k]))
 ALIAS = {}
 by3 = {}
@@ -272,27 +319,41 @@ for k in keys:
     if k in ALIAS or len(k) < 6: continue
     for o in by3.get(k[:3], []):
         if o == k or o in ALIAS or len(o) < 6 or o[-2:] != k[-2:]: continue
-        so = [f for f in ('inv', 'met', 'ww', 'vot') if SR[o][f]]; sk = [f for f in ('inv', 'met', 'ww', 'vot') if SR[k][f]]
+        so = [f for f in ('akt', 'inv', 'met', 'ww', 'vot') if SR[o][f]]; sk = [f for f in ('akt', 'inv', 'met', 'ww', 'vot') if SR[k][f]]
         cross = len(so) == 1 and so[0] not in sk          # варіант трапляється лише в одному джерелі, і не в тому, де основне написання
         ins_i = len(k) != len(o) and len(set(k) ^ set(o)) <= 1 and ('i' in (set(k) ^ set(o)) or 'e' in (set(k) ^ set(o)))
         ao = len(k) == len(o) and any(i < 4 and {x, y} == {'a', 'o'} for i, (x, y) in enumerate(zip(k, o)) if x != y)
         iko = (k.endswith('ko') and o == k[:-2] + 'iko') or (o.endswith('ko') and k == o[:-2] + 'iko')   # Приходько / Приходико
         if iko or (lev1(k, o) and diff_soft(k, o) and cross and not ao and (len(k) == len(o) or ins_i) and size(SR[o]) <= size(SR[k])):
             t = SR[k]; f = SR.pop(o)
-            for fld in ('inv', 'ww', 'vot', 'press', 'met'): t[fld] += f[fld]
+            for fld in ('inv', 'ww', 'vot', 'press', 'met', 'akt'): t[fld] += f[fld]
             for fm, c in f['forms'].items(): t['forms'][fm] = t['forms'].get(fm, 0) + c
             ALIAS[o] = k
 by3 = None
+# ── ручне зведення написань (surnames-fix.json): помилки писарів і переписувачів ──
+FIX = {a: b for a, b in J('surnames-fix.json').items() if a != '_'}
+def _res(k, seen=()):
+    while k in FIX and k not in seen: seen = seen + (k,); k = FIX[k]
+    return ALIAS.get(k, k)
+for o in list(FIX):
+    k = _res(o)
+    if o == k or o not in SR or k not in SR: continue
+    t = SR[k]; f = SR.pop(o)
+    for fld in ('inv', 'ww', 'vot', 'press', 'met', 'akt'): t[fld] += f[fld]
+    for fm, c in f['forms'].items(): t['forms'][fm] = t['forms'].get(fm, 0) + c
+    ALIAS[o] = k
+for a in list(ALIAS):
+    ALIAS[a] = _res(ALIAS[a])
 def disp(b):
     cyr = [f for f in b['forms'] if re.search(r'[А-Яа-яІіЇїЄєҐґ]', f)]
-    pool = cyr or list(b['forms'])
+    own = [f for f in cyr if skey(f) == b['k']]                     # основне написання — те, що відповідає ключу родини
+    pool = own or cyr or list(b['forms'])
     return sorted(pool, key=lambda f: (-b['forms'][f], len(f)))[0]
 SUM, CH = [], {}
 for k, b in SR.items():
     b['name'] = disp(b); b['variants'] = sorted(b['forms'], key=lambda f: -b['forms'][f])
     del b['forms']
-    tot = len(b['inv']) + len(b['ww']) + len(b['vot']) + len(b['press'])
-    SUM.append([k, b['name'], len(b['inv']), len(b['ww']), len(b['vot']), len(b['press']), len(b['met'])])
+    SUM.append([k, b['name'], len(b['inv']), len(b['ww']), len(b['vot']), len(b['press']), len(b['met']), len(b['akt'])])
     CH.setdefault(k[0], {})[k] = b
 for c, part in CH.items():
     json.dump(part, open(os.path.join(ROOT, 'surnames-' + c + '.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
@@ -301,14 +362,58 @@ json.dump(ALIAS, open(os.path.join(ROOT, 'surnames-alias.json'), 'w', encoding='
 json.dump(SUM, open(os.path.join(ROOT, 'surnames-index.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
 # у пошуку: прізвища ведуть на сторінку прізвища
 S[:] = [x for x in S if x['t'] != 'surname']
-for k, nm, a, w, v, pr, mt in SUM:
+for k, nm, a, w, v, pr, mt, ak in SUM:
     parts = []
+    if ak: parts.append('XVII ст.: %d' % ak)
     if a: parts.append('бл. 1800: %d %s' % (a, 'двір' if a == 1 else 'двори' if a < 5 else 'дворів'))
     if mt: parts.append('XIX ст.: %d' % mt)
     if w: parts.append('1914–1917: %d' % w)
     if v: parts.append('1938: %d' % v)
     if pr: parts.append('преса: %d' % pr)
-    if a + w + v + pr + mt < 1: continue
-    S.append({'t': 'surname', 'n': nm, 's': ' · '.join(parts), 'u': 'prizvyshcha.html?s=' + k, 'k': norm(' '.join(SR[k]['variants']))[:200]})
+    if a + w + v + pr + mt + ak < 1: continue
+    S.append({'t': 'surname', 'n': nm, 's': ' · '.join(parts), 'u': 'prizvyshcha.html?s=' + k, 'k': norm(' '.join(SR[k]['variants']))[:200], 'sk': k})
 json.dump(S, open(os.path.join(ROOT, 'search-index.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
-print('metric records:', MET_N, '| merged variants:', len(ALIAS), '| surnames:', len(SUM), '| multi-source:', sum(1 for x in SUM if sum(1 for y in x[2:] if y) >= 2), '| search items:', len(S))
+print('akt persons:', AKT_N, '| metric records:', MET_N, '| merged variants:', len(ALIAS), '| surnames:', len(SUM), '| multi-source:', sum(1 for x in SUM if sum(1 for y in x[2:] if y) >= 2), '| search items:', len(S))
+
+# ═════════ ПОВНОТЕКСТОВИЙ ПОКАЖЧИК (search-text.json): слова з текстів статей, актів, реєстрів і сторінок ═════════
+# Для кожного тексту — набір основ слів (перші 8 літер), щоб пошук знаходив «бурштин» у «бурштину», «бурштиновий».
+def words_of(t):
+    t = norm(_txt(t))
+    return {w[:8] for w in re.findall(r'[a-zа-яіё0-9]+', t.replace('ы', 'и')) if len(w) >= 3 and not w.isdigit() or (w.isdigit() and len(w) == 4)}
+STOP = set(norm(x)[:8] for x in 'що як від для або але при про під над між без цей цього цієї того тому також який яка яке які його її їх вони воно він вона було були буде бути має мали році року роки років через після перед після дуже тільки ще вже так все всі всіх '.split())
+FT = []
+def ft(title, sub, url, kind, *texts):
+    ws = set()
+    for x in texts: ws |= words_of(x)
+    ws -= STOP
+    if ws: FT.append([title, sub, url, kind, ' '.join(sorted(ws))])
+for d in PRESS:
+    ft(d['headline'], '%s · %s' % (d['year'] or 'без дати', d['source']), 'presa.html?id=' + d['id'], 'press',
+       d.get('headline'), d.get('subheadline'), d.get('translation'), d.get('historicalNote'), ' '.join(d.get('tags') or []), ' '.join(d.get('themes') or []))
+for a in AKTY:
+    url = ('akty-yevrei.html' if a.get('group') == 'yevrei' else 'akty-ruina.html') + '#' + a['id']
+    ft(a.get('title', ''), (a.get('date') or '') + ' · акти пінських гродських книг', url, 'doc', a.get('title'), a.get('summary'), a.get('translation'), a.get('persons'), a.get('placesIdx'), a.get('subjects'))
+PAGES = [('rejestr-1665.html', 'Реєстр збитків 1665 року', '1665 · Пінський гродський суд'), ('zhaloba-1650.html', 'Жалоба про спустошення маєтку 1650', 'реляція, маніфестація й атестація 1650 р.'),
+         ('sumariusz-1642.html', 'Сумаріуш маєтку Дубровиця 1642', 'доходи маєтку'), ('inventar-1780.html', 'Інвентар маєтку графа Плятера', 'бл. 1780–1820'),
+         ('history.html', 'Історія Дубровиці', 'розділ сайту'), ('plater.html', 'Граф Юзеф Плятер', 'постать'), ('radzyvil.html', 'Князь Домінік Радзивілл', 'постать'),
+         ('architecture.html', "Пам'ятки Дубровиці", 'розділ сайту'), ('jewish-history.html', 'Єврейська спадщина Дубровиці', 'розділ сайту'),
+         ('atlas-1798.html', 'Атлас Волинської губернії 1798', 'розділ сайту'), ('atlas-1798-analityka.html', 'Аналітика атласу 1798', 'розділ сайту'),
+         ('metrychni-knyhy.html', 'Метричні книги', 'каталог'), ('worobin-3d.html', '«Бібліотека» Плятерів у Воробині', '3D-реконструкція'), ('kostel-3d.html', 'Костел Іоанна Хрестителя', '3D-модель')]
+for f, title, sub in PAGES:
+    pth = os.path.join(ROOT, f)
+    if not os.path.exists(pth): continue
+    h = open(pth, encoding='utf-8').read()
+    h = re.sub(r'<script.*?</script>|<style.*?</style>|<header.*?</header>|<footer.*?</footer>|<nav.*?</nav>', ' ', h, flags=re.S)
+    ft(title, sub, f, 'page', h)
+json.dump(FT, open(os.path.join(ROOT, 'search-text.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
+print('full-text docs:', len(FT), '| bytes:', os.path.getsize(os.path.join(ROOT, 'search-text.json')))
+# архівні справи — окремими пунктами в пошуку (скарги, реляції, маніфестації, присяги)
+for a in AKTY:
+    url = ('akty-yevrei.html' if a.get('group') == 'yevrei' else 'akty-ruina.html') + '#' + a['id']
+    S.append({'t': 'doc', 'n': a.get('title', ''), 's': (a.get('date') or '') + ' · акти пінських гродських книг', 'u': url,
+              'k': norm(_txt(a.get('summary')) + ' ' + ' '.join(a.get('places') or []))[:300]})
+for n, s2, u, k in [('Реляція возного 1650 року', '5–13 квітня 1650 · спустошені села маєтку', 'zhaloba-1650.html', 'реляція возний сахновський пусті доми села'),
+                    ('Маніфестація 1650 року', '22 вересня 1650 · скарга про татар і голод', 'zhaloba-1650.html', 'маніфестація скарга татари голод березецький'),
+                    ('Атестація 1650 року: перепис димів', '14 квітня 1650 · присяга війтів', 'zhaloba-1650.html', 'атестація перепис дими присяга війти касіушич ранонович лукянович')]:
+    S.append({'t': 'doc', 'n': n, 's': s2, 'u': u, 'k': k})
+json.dump(S, open(os.path.join(ROOT, 'search-index.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))

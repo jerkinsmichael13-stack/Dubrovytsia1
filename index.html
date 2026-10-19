@@ -356,7 +356,7 @@ a, button, [role="button"], input, select, textarea,
             <div class="hx-copy">
                 <p class="ds-kick">Цифровий архів · Рівненщина · Полісся</p>
                 <h1 class="ds-title hx-title">Дубровиця</h1>
-                <p class="ds-lede">Найдавніше місто Рівненщини, вперше згадане 1005 року. Тисяча років у документах, мапах, газетах і світлинах, і кожне село, кожне прізвище веде в усі джерела одразу.</p>
+                <p class="ds-lede">Найдавніше місто Рівненщини, вперше згадане 1005 року. Тут зібрано тисячу років його історії: документи, мапи, газети й світлини. Знайдіть своє прізвище чи село — і побачите всі джерела, де вони згадуються.</p>
                 <form class="hx-search" id="hxSearch" role="search" autocomplete="off">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
                     <input type="search" id="hxQ" placeholder="Прізвище, село чи подія…" aria-label="Пошук в архіві">
@@ -376,7 +376,7 @@ a, button, [role="button"], input, select, textarea,
                 <span class="hx-new"><i></i>Новинка · 3D-модель</span>
                 <p class="hx-hint" id="hxHint"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10c0-2 3-3.5 7-3.5s7 1.5 7 3.5-3 3.5-7 3.5"/><path d="M12 11.4 10 13.5l2 2.1"/></svg>Потягніть, щоб обернути</p>
                 <div class="hx-cap">
-                    <div><b id="hxTitle">«Бібліотека» у Воробині</b><small id="hxSub">павільйон Плятерів, якого вже немає · реконструкція за фото</small></div>
+                    <div><b id="hxTitle">«Бібліотека» Плятерів у Воробині</b><small id="hxSub">павільйон, що не зберігся · 3D за світлинами 1914 і 1937 років</small></div>
                     <a class="hx-full" id="hxFull" href="worobin-3d.html">Розглянути зблизька <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 6V2.5H6M13.5 6V2.5H10M2.5 10v3.5H6M13.5 10v3.5H10"/></svg></a>
                 </div>
             </div>
@@ -392,8 +392,8 @@ a, button, [role="button"], input, select, textarea,
                 cerkva: {js: 'cerkva-3d.js', g: 'Cerkva3D', poster: 'cerkva-3d-poster.webp', href: 'cerkva-3d.html', title: 'Церква Різдва Богородиці',
                          sub: "збудована 1861 · пам'ятка національного значення", alt: 'Церква Різдва Пресвятої Богородиці в Дубровиці — 3D-модель',
                          aria: '3D-модель церкви Різдва Богородиці. Потягніть убік, щоб обернути.', opts: {view: [-50, 14, 46], targetY: 13.2, fit: innerWidth < 980 ? 1.04 : 1.0}},
-                worobin: {js: 'worobin-3d.js', g: 'Worobin3D', poster: 'worobin-3d-poster.webp', href: 'worobin-3d.html', title: '«Бібліотека» у Воробині',
-                         sub: 'павільйон Плятерів, якого вже немає · реконструкція за фото', alt: 'Павільйон «Бібліотека» у Воробині — 3D-реконструкція',
+                worobin: {js: 'worobin-3d.js', g: 'Worobin3D', poster: 'worobin-3d-poster.webp', href: 'worobin-3d.html', title: '«Бібліотека» Плятерів у Воробині',
+                         sub: 'павільйон, що не зберігся · 3D за світлинами 1914 і 1937 років', alt: 'Павільйон «Бібліотека» у Воробині — 3D-реконструкція',
                          aria: '3D-реконструкція павільйону «Бібліотека» у Воробині серед краєвиду над Горинню. Потягніть убік, щоб обернути.', land: 'hero-worobin.js', landPoster: (function(){ var h = +new Date().toLocaleString('en-GB', {timeZone: 'Europe/Kyiv', hour: '2-digit', hour12: false}); return 'worobin-land-' + (h < 6 || h >= 20 ? 'night' : h < 8 || h >= 17 ? 'eve' : 'day') + '.webp'; })(),
                          opts: {glb: innerWidth < 980 || (navigator.deviceMemory || 8) < 4 ? 'worobin-1k.glb?v=20261019c' : 'worobin-2k.glb?v=20261019c', view: [-46, 8, 22], targetY: 6.5, fit: innerWidth < 980 ? 1.3 : 1.85, turntable: false, floodK: .6}},
                 mykolai: {js: 'mykolai-3d.js', g: 'Mykolai3D', poster: 'mykolai-3d-poster.webp', href: 'mykolai-3d.html', title: 'Свято-Миколаївська церква',
@@ -556,8 +556,8 @@ a, button, [role="button"], input, select, textarea,
                 </a>
                 <div class="hx-door hx-door--person ds-reveal">
                     <span class="hx-dk">Людина</span>
-                    <span class="hx-dt">3&#8239;063 прізвища</span>
-                    <span class="hx-dd">Інвентар графа Плятера близько 1800 року, документи Першої світової й список виборців 1938 року — три століття однієї родини.</span>
+                    <span class="hx-dt">2&#8239;864 прізвища</span>
+                    <span class="hx-dd">Акти XVII століття, інвентар графа Плятера близько 1800 року, документи Першої світової й список виборців 1938 року — чотири століття однієї родини.</span>
                     <form class="hx-mini" action="prizvyshcha.html" role="search"><input type="search" name="q" placeholder="Ваше прізвище" aria-label="Прізвище"><button type="submit">→</button></form>
                     <a class="hx-go" href="prizvyshcha.html">Усі прізвища →</a>
                 </div>
@@ -597,7 +597,7 @@ a, button, [role="button"], input, select, textarea,
                 <div class="stat-item fade-in-up delay-2">
                     <div class="stat-number" data-target="2">0</div>
                     <span class="stat-number-accent"></span>
-                    <div class="stat-label">Пам'ятки нац. значення</div>
+                    <div class="stat-label">Пам'яток нац. значення</div>
                 </div>
                 <div class="stat-item fade-in-up delay-3">
                     <div class="stat-number" data-target="20">0</div>
@@ -1036,8 +1036,8 @@ a, button, [role="button"], input, select, textarea,
     (function() {
         // ── THIS DAY IN HISTORY DATA ──
         var FACTS = [
-            { month: 1,  day: 1,  year: 1005, title: 'Перша писемна згадка',          text: 'Дубровиця — найдавніше місто Рівненської області. Перша писемна згадка датується 1005 роком у літописі, де місто фігурує під назвою «Домбровиця» як центр удільного князівства на Поліссі.', source: 'Іпатіївський літопис' },
-            { month: 12, day: 1,  year: 1642, title: 'Сумаріуш маєтку: замок на Горині', text: 'Документ «Anno 1642 Decemb.» фіксує дубровицький замок над річкою Горинню. «Замок порядно збудований, з будуванням в ньому, в Інвентарю описаний. До того замку фольварків з дворним, гуменним та обірним будуванням, з огородами, сіножатями та орними полями — №9.» Це єдина відома писемна згадка про замок.', source: 'Сумаріуш маєтку Дубровиця, грудень 1642 р.' },
+            { month: 1,  day: 1,  year: 1005, title: 'Перша писемна згадка',          text: 'Дубровиця — найдавніше місто Рівненської області. Перша писемна згадка датується 1005 роком: Дубровицю названо серед міст новоствореної Турівської єпархії. Згодом місто стало центром удільного князівства на Поліссі.', source: 'Іпатіївський літопис' },
+            { month: 12, day: 1,  year: 1642, title: 'Сумаріуш маєтку: замок на Горині', text: 'Документ «Anno 1642 Decemb.» фіксує дубровицький замок над річкою Горинню. «Замок порядно збудований, з будуванням в ньому, в Інвентарю описаний. До того замку фільварків з дворним, гуменним та обірним будуванням, з огородами, сіножатями та орними полями — №9.» Це єдина відома писемна згадка про замок.', source: 'Сумаріуш маєтку Дубровиця, грудень 1642 р.' },
             { month: 10, day: 12, year: 1681, title: 'Фундація піарів у Дубровиці', text: 'Ян Кароль Дольський із дружиною Єлизаветою з Остророгів актом, складеним в Ополі, заснували в Дубровиці колегіум і школи піарів, записавши 35 000 злотих з умовою, щоб при костелі завжди було 12 ксьондзів.', source: 'Т. Є. Стецький, «Z boru i stepu», 1898' },
             { month: 6,  day: 21, year: 1684, title: 'Піари вступили у володіння', text: 'Піари отримали інтромісію — вступили у володіння своїми плацами й фундушами в Дубровиці, зобов\'язавшись не перешкоджати укріпленню міста палісадами на своїх землях.', source: 'Т. Є. Стецький, «Z boru i stepu», 1898' },
             { month: 10, day: 6,  year: 1585, title: 'Заповіт Марії Гольшанської', text: 'У Луцьку Марія Юріївна Гольшанська, колишня дружина Андрія Курбського, склала заповіт: замок і місто Дубровицю з Воробином, Сельцями й монастирем Св. Миколая отримала її донька Барбара Фірлеєва.', source: 'Т. Є. Стецький, «Z boru i stepu», 1898' },
@@ -1047,7 +1047,7 @@ a, button, [role="button"], input, select, textarea,
             { month: 1,  day: 1,  year: 1753, title: 'Заснування єврейської громади',  text: 'Власник маєтку Міхал Бжостовський видав наказ про заснування незалежної єврейської громади Дубровиці: власний суд, синагога, лазня, будинок рабина, цвинтар та право торгівлі. До цього громада належала до Пінська. Права підтвердив 1774 р. Антоній Плятер.', source: 'Сефер Домбровіца (Меморіальна книга Дубровиці)' },
             { month: 6,  day: 4,  year: 1742, title: 'Освячення костелу',               text: 'Єпископ Франциск Кобельський урочисто консекрував костел Іоанна Хрестителя в Дубровиці. Будівництво обійшлося понад 83 000 злотих. Особливою прикрасою став вітраж, замовлений у Венеції — єдиний у регіоні.', source: 'Літопис ордену піарів' },
             { month: 6,  day: 12, year: 1917, title: 'Аерофотознімки Дубровиці',        text: '12 червня 1917 року баварський польовий авіаційний загін Fliegerabteilung 47 провів аерофотозйомку Дубровиці з борту літака. Знімки є унікальним документом про місто часів Першої світової війни — детальним планом вулиць, церков та забудови тогочасного міста.', source: 'Bayr. Fliegerabteilung 47 · Архів, 12 червня 1917' },
-            { month: 5,  day: 21, year: 1861, title: 'Мурована церква Різдва Богородиці', text: 'Завершено будівництво мурованої церкви Різдва Пресвятої Богородиці коштом графа Ігнатія Броель-Плятера. Трьохкупольна базиліка у стилі пізнього бароко стала прикрасою міста та збереглася до наших днів.', source: 'Рівненський єпархіальний архів' },
+            { month: 5,  day: 21, year: 1861, title: 'Мурована церква Різдва Богородиці', text: 'Завершено будівництво мурованої церкви Різдва Пресвятої Богородиці коштом графа Ігнатія Броель-Плятера. Трикупольна базиліка у стилі пізнього бароко стала прикрасою міста та збереглася до наших днів.', source: 'Рівненський єпархіальний архів' },
             { month: 8,  day: 26, year: 1942, title: 'Ліквідація єврейського гетто',    text: '26–28 серпня 1942 року нацисти ліквідували гетто Дубровиці. Близько 4 000 євреїв міста були депортовані до Сарн, де їх стратили. Так була назавжди знищена громада, яка існувала в місті понад 300 років.', source: 'Яд Вашем · Меморіальна книга Дубровиці' },
             { month: 9,  day: 25, year: 1992, title: 'Повернення костелу громаді',      text: 'Костел Іоанна Хрестителя офіційно повернено католицькій громаді після 47 років радянського зберігання. Єпископ Маркіян Трофим\'як здійснив повторне освячення храму.', source: 'Архів Луцько-Житомирської єпархії' },
             { month: 9,  day: 21, year: 2005, title: 'Відкриття пам\'ятника Юліанії',   text: 'У Дубровиці відкрито та освячено пам\'ятник святій Юліанії Гольшанській — праведній діві XV–XVI ст., дочці місцевого князя. Пам\'ятник встановлено біля церкви Різдва Богородиці.', source: 'Архів міської ради Дубровиці' },
@@ -1114,7 +1114,7 @@ a, button, [role="button"], input, select, textarea,
                 tag:  'Актова книга, 1576'
             },
             {
-                text: '«В тей Маєтності над Річкою Горинею ЗАМОК порядно збудований, з будуванням в ньому, в Інвентарю описаний. До того Замку Фольварків збудуванням Дворним... з Сіножатями сполми Ораними до них №9.»',
+                text: '«В тей Маєтності над Річкою Горинею ЗАМОК порядно збудований, з будуванням в ньому, в Інвентарю описаний. До того Замку Фільварків збудуванням Дворним... з Сіножатями сполми Ораними до них №9.»',
                 meta: 'Сумаріуш маєтку Дубровиця · Anno 1642 Decemb.',
                 tag:  'Архівний документ, 1642'
             },
@@ -1126,7 +1126,7 @@ a, button, [role="button"], input, select, textarea,
             {
                 photo: 'https://i.imgur.com/Da5KGQS.jpeg',
                 text: 'Аерофотознімок Дубровиці, зроблений 12 червня 1917 р. баварським авіаційним загоном Fliegerabteilung 47. На знімку видно церкву Різдва Богородиці, ринкову площу та вулиці міста. Унікальний документ часів Першої світової.',
-                meta: 'Bayr. Fliegerabteilung 47 · 12 Jun 1917',
+                meta: 'Bayr. Fliegerabteilung 47 · 12 червня 1917',
                 tag:  '★ Аерофото, 1917',
                 link: 'index.html#AER'
             },
@@ -1163,7 +1163,7 @@ a, button, [role="button"], input, select, textarea,
                 tag:  'Костел Піарів'
             },
             {
-                text: '«Згідно з переписом 1897 р., Дубровиця нараховувала 2 868 євреїв із загальної кількості 6 007 душ. Напередодні Першої світової війни у місті було близько 10 000 душ, з них близько 4 000 євреїв.»',
+                text: '«Згідно з переписом 1897 р., Дубровиця налічувала 2 868 євреїв із загальної кількості 6 007 душ. Напередодні Першої світової війни у місті було близько 10 000 душ, з них близько 4 000 євреїв.»',
                 meta: 'Сефер Домбровіца · Розділ про населення',
                 tag:  'Єврейська спадщина'
             },
@@ -1639,7 +1639,7 @@ a, button, [role="button"], input, select, textarea,
             <span class="AH-TL-L">Супутник</span>
           </div>
         </div>
-        <p class="AS">Унікальні знімки міста з повітря · Клацніть маркер для деталей · Scroll — збільшення</p>
+        <p class="AS">Унікальні знімки міста з повітря · Клацніть маркер, щоб дізнатися більше · коліщатко миші — масштаб</p>
       </div>
 
       <!-- ══ UNIQUE FIND ANNOUNCEMENT BANNER ══ -->
@@ -1746,8 +1746,8 @@ a, button, [role="button"], input, select, textarea,
             <p class="AER-FIND-DESC">
               Два знімки, виконані <strong>47-м баварським польовим авіаційним загоном</strong> 
               (<em lang="de">Bayerische Feldflieger-Abteilung 47</em>) під час Першої світової війни. 
-              Це <strong>найдавніші відомі аерофотознімки Дубровиці</strong> — унікальне свідчення того, яким місто виглядало понад 100 років тому: 
-              з усіма п'ятьма синагогами, ботанічним садом ордену Піарів, єврейським кварталом у центрі та 
+              Це <strong>найдавніші відомі аерофотознімки Дубровиці</strong> — унікальне свідчення того, яким було місто понад 100 років тому: 
+              з усіма п'ятьма синагогами, ботанічним садом ордену піарів, єврейським кварталом у центрі та 
               збереженою забудовою, яку знищить Друга світова.
             </p>
             <div class="AER-FIND-TAGS">
@@ -1796,7 +1796,7 @@ a, button, [role="button"], input, select, textarea,
                   <button class="FSB" id="fs17a" title="Повний екран">&#x26F6;</button>
                   <div class="BADGE" style="border-color:rgba(232,184,75,.28);">
                     <span class="bl">Аерофотознімок</span>
-                    <span class="bd" style="color:#e8b84b;">12 Jun 1917</span>
+                    <span class="bd" style="color:#e8b84b;">12 червня 1917</span>
                   </div>
                   <div class="MTTIP" id="TIP17a">
                     <button class="TTX" data-mid="17a">&#x2715;</button>
@@ -1811,7 +1811,7 @@ a, button, [role="button"], input, select, textarea,
                 <ul class="LEGL" id="L17a">
                   <li style="font-size:.71rem;color:rgba(160,150,130,.35);font-family:'Manrope',sans-serif;padding:.4rem .25rem">Завантаження...</li>
                 </ul>
-                <p class="LEGHINT">Натисніть маркер або пункт · Scroll для збільшення</p>
+                <p class="LEGHINT">Натисніть маркер або пункт · коліщатко миші — масштаб</p>
               </div>
             </div>
           </div>
@@ -1826,7 +1826,7 @@ a, button, [role="button"], input, select, textarea,
                 <div class="wm-layer"></div>
                 <div class="BADGE" style="border-color:rgba(232,184,75,.28);">
                   <span class="bl">Аерофотознімок</span>
-                  <span class="bd" style="color:#e8b84b;">12 Jun 1917</span>
+                  <span class="bd" style="color:#e8b84b;">12 червня 1917</span>
                 </div>
                 <div class="MBOX17B-HINT">↔ Натисніть для перегляду</div>
               </div>
@@ -1877,7 +1877,7 @@ a, button, [role="button"], input, select, textarea,
                 <button class="ZB" id="z44r" style="font-size:.78rem">&#8962;</button>
               </div>
               <button class="FSB" id="fs44" title="Повний екран">&#x26F6;</button>
-              <div class="BADGE"><span class="bl">Аерофотознімок</span><span class="bd">24 Jan 1944</span></div>
+              <div class="BADGE"><span class="bl">Аерофотознімок</span><span class="bd">24 січня 1944</span></div>
               <div class="MTTIP" id="TIP44">
                 <button class="TTX" data-mid="44">&#x2715;</button>
                 <div class="TTR"><span class="TTN" id="TN44"></span><span class="TTT" id="TT44"></span></div>
@@ -1889,7 +1889,7 @@ a, button, [role="button"], input, select, textarea,
           <div class="LEG">
             <p class="LEGH">Позначення</p>
             <ul class="LEGL" id="L44"></ul>
-            <p class="LEGHINT">Натисніть маркер або пункт у списку · Scroll для збільшення</p>
+            <p class="LEGHINT">Натисніть маркер або пункт у списку · коліщатко миші — масштаб</p>
           </div>
         </div>
       </div>
@@ -2422,7 +2422,7 @@ a, button, [role="button"], input, select, textarea,
           </div>
           <div class="BJ44-SB-ITEM">
             <span class="BJ44-SB-N">8</span>
-            <span class="BJ44-SB-L">втрат (6 ранено, 2 вбито)</span>
+            <span class="BJ44-SB-L">втрат (6 поранених, 2 загиблі)</span>
           </div>
         </div>
 
@@ -2468,7 +2468,7 @@ a, button, [role="button"], input, select, textarea,
             <div class="BJ44-JTHUMB">
               <img src="https://i.imgur.com/FScm3Eq.jpeg" alt="Бойове донесення 24.01.1944" loading="lazy">
               <div class="BJ44-JTHUMB-GRAD"></div>
-              <span class="BJ44-JTHUMB-DATE">24.01.1944 — дата знімку</span>
+              <span class="BJ44-JTHUMB-DATE">24.01.1944 — дата знімка</span>
             </div>
             <div class="BJ44-JBODY">
               <div class="BJ44-JLABEL">Бойове донесення · день знімку</div>
@@ -2489,7 +2489,7 @@ a, button, [role="button"], input, select, textarea,
             <div class="BJ44-ANALYSIS-EYE">🔍 Пояснення до аерофотознімку</div>
             <h4 class="BJ44-ANALYSIS-T">Масштаб руйнувань на знімку — <em>задокументований результат бомбардувань</em></h4>
             <p class="BJ44-ANALYSIS-D">
-              Численні вирви від бомб та значні руйнування, чітко видимі на аерофотознімку від 24 січня 1944 року, є безпосереднім наслідком цих задокументованих бойовими журналами ударів. Лише за три дні — <strong>22, 23 та 24 січня</strong> — противник скинув на місто та його найближчі околиці щонайменше <strong>~150 бомб</strong>: до 100 на саму Домбровицю і до 50 — у районі залізничного мосту на північ від міста. Паралельно літаки Fw-189 <strong>«Рама»</strong> щодня вели безперервну розвідку, фіксуючи позиції радянських частин, — і саме ці польоти, ймовірно, передували виконанню аерофотознімку від 24 січня.
+              Численні вирви від бомб та значні руйнування, чітко видимі на аерофотознімку від 24 січня 1944 року, є безпосереднім наслідком цих задокументованих бойовими журналами ударів. Лише за три дні — <strong>22, 23 та 24 січня</strong> — противник скинув на місто та його найближчі околиці щонайменше <strong>150 бомб</strong>: до 100 на саму Домбровицю і до 50 — у районі залізничного мосту на північ від міста. Паралельно літаки Fw-189 <strong>«Рама»</strong> щодня вели безперервну розвідку, фіксуючи позиції радянських частин, — і саме ці польоти, ймовірно, передували зйомці 24 січня.
             </p>
           </div>
         </div>
@@ -2580,7 +2580,7 @@ a, button, [role="button"], input, select, textarea,
             <p class="BJ44-UNIT-D">
               <strong>Jagdgeschwader 51 «Mölders» (JG 51)</strong> — одне з найвідоміших винищувальних з'єднань Люфтваффе. На початку 1944 року III група ескадри базувалася <strong>на захід від Пінська</strong> і діяла на ділянці Пінськ–Ковель. З огляду на показання полоненого льотчика, можна стверджувати, що <strong>більшість розвідувальних польотів та бомбардувань</strong> над Домбровицею у цей період здійснювалась саме підрозділами JG 51 — хоча й інші авіаційні формування, безумовно, діяли в цьому районі.
               <br><br>
-              Збиття льотчика Йоганна Клуппа 5 травня 1944 р. підтверджує тривалу присутність ескадри над районом. Детальна інформація: <a href="https://uk.wikipedia.org/wiki/Jagdgeschwader_51" target="_blank" rel="noopener">Wikipedia — Jagdgeschwader 51</a>.
+              Те, що 5 травня 1944 р. збили літак Йоганна Клуппа, підтверджує тривалу присутність ескадри над районом. Детальна інформація: <a href="https://uk.wikipedia.org/wiki/Jagdgeschwader_51" target="_blank" rel="noopener">Wikipedia — Jagdgeschwader 51</a>.
             </p>
           </div>
         </div>
@@ -2599,7 +2599,7 @@ a, button, [role="button"], input, select, textarea,
             <div class="ABLK-TAGS">
               <span class="ABLK-TAG">Люфтваффе · Рейх</span>
               <span class="ABLK-TAG">Окупаційний період</span>
-              <span class="ABLK-TAG">Пан. знімання</span>
+              <span class="ABLK-TAG">Панорамне знімання</span>
             </div>
           </div>
         </div>
@@ -2616,7 +2616,7 @@ a, button, [role="button"], input, select, textarea,
                 <button class="ZB" id="z43r" style="font-size:.78rem">&#8962;</button>
               </div>
               <button class="FSB" id="fs43" title="Повний екран">&#x26F6;</button>
-              <div class="BADGE"><span class="bl">Аерофотознімок</span><span class="bd">Oct 1943</span></div>
+              <div class="BADGE"><span class="bl">Аерофотознімок</span><span class="bd">жовтень 1943</span></div>
               <div class="MTTIP" id="TIP43">
                 <button class="TTX" data-mid="43">&#x2715;</button>
                 <div class="TTR"><span class="TTN" id="TN43"></span><span class="TTT" id="TT43"></span></div>
@@ -2645,7 +2645,7 @@ a, button, [role="button"], input, select, textarea,
             <h3 class="ABT">Супутниковий знімок Дубровиці · 1971 рік</h3>
             <div class="ABLK-TAGS">
               <span class="ABLK-TAG sat">🛰 Супутниковий</span>
-              <span class="ABLK-TAG sat">Радянський союз</span>
+              <span class="ABLK-TAG sat">Радянський Союз</span>
               <span class="ABLK-TAG sat">Епоха холодної війни</span>
             </div>
           </div>
@@ -3019,7 +3019,7 @@ a, button, [role="button"], input, select, textarea,
         var img = document.getElementById('MFS-IMG');
         var label = document.getElementById('MFS-LABEL');
         img.src = FS_IMG[mid] || getImg(mid).src;
-        label.textContent = mid === '17a' ? 'Аерофотознімок Дубровиці · 12 червня 1917 р.' : mid === '44' ? 'Аерофотознімок 24 січня 1944 року' : mid === '43' ? 'Аерофотознімок жовтень 1943 року' : 'Супутниковий знімок Дубровиці · 1971 рік';
+        label.textContent = mid === '17a' ? 'Аерофотознімок Дубровиці · 12 червня 1917 р.' : mid === '44' ? 'Аерофотознімок 24 січня 1944 року' : mid === '43' ? 'Аерофотознімок, жовтень 1943 року' : 'Супутниковий знімок Дубровиці · 1971 рік';
         var leg = document.getElementById('MFS-LEG');
         leg.innerHTML = '';
         (DATA[mid] || []).forEach(function(p) {
@@ -3498,7 +3498,7 @@ a, button, [role="button"], input, select, textarea,
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg>
           </button>
           <div class="TPBADGE"><span class="bl">Топографічний план</span><span class="bd">Дубровиця · 1855 р.</span></div>
-          <div class="TPHINT" id="TPHINT">Тягніть для переміщення · Scroll для збільшення</div>
+          <div class="TPHINT" id="TPHINT">Тягніть для переміщення · коліщатко миші — масштаб</div>
         </div>
 
         <!-- SIDEBAR -->
@@ -3512,7 +3512,7 @@ a, button, [role="button"], input, select, textarea,
             <ul class="TPLEGLIST" id="TPLEGLIST">
               <li style="font-size:.72rem;color:#a09080;font-family:'Manrope',sans-serif;padding:.4rem .25rem">Завантаження...</li>
             </ul>
-            <p class="TPLEGMT">Натисніть маркер або пункт · Scroll для збільшення</p>
+            <p class="TPLEGMT">Натисніть маркер або пункт · коліщатко миші — масштаб</p>
           </div>
 
           <!-- Map info card -->
@@ -3522,7 +3522,7 @@ a, button, [role="button"], input, select, textarea,
               Про карту
             </h4>
             <p style="font-family:'Manrope',sans-serif;font-size:.75rem;line-height:1.75;margin:0 0 .6rem;" class="tpcard-p">
-              Рукописна топографічна карта міста Дубровиці 1855 року, складена в часи Волинської губернії Російської імперії. Масштаб — 30 саженів у дюймі (близько 1:2 500). Власник міста на той час — граф Ф. Платер.
+              Рукописна топографічна карта міста Дубровиці 1855 року, складена в часи Волинської губернії Російської імперії. Масштаб — 30 сажнів у дюймі (близько 1:2 500). Власник міста на той час — граф Ф. Плятер.
             </p>
             <p style="font-family:'Manrope',sans-serif;font-size:.75rem;line-height:1.75;margin:0 0 .7rem;" class="tpcard-p">
               На плані позначено вулиці, церкви, єврейські будинки, поміщицькі та казенні будівлі, річку Горинь і її притоки.
@@ -3554,12 +3554,12 @@ a, button, [role="button"], input, select, textarea,
         <div class="TPBITEM">
           <div class="TPBICO"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
           <div class="TPBTH">Історичний контекст</div>
-          <div class="TPBTD">У 1855 році Дубровиця входила до складу Волинської губернії Російської імперії. Місто належало графу Ф. Платеру. На плані видно річку Горинь та головні вулиці.</div>
+          <div class="TPBTD">У 1855 році Дубровиця входила до складу Волинської губернії Російської імперії. Місто належало графу Ф. Плятеру. На плані видно річку Горинь та головні вулиці.</div>
         </div>
         <div class="TPBITEM">
           <div class="TPBICO"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0112 2a8 8 0 018 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg></div>
           <div class="TPBTH">Топографічна точність</div>
-          <div class="TPBTD">Масштаб — 30 саженів в одному дюймі (бл. 1:2 500). Карта складена за традиціями Російського Генерального штабу і відображає планування міста середини XIX ст.</div>
+          <div class="TPBTD">Масштаб — 30 сажнів в одному дюймі (бл. 1:2 500). Карта складена за традиціями Російського Генерального штабу і відображає планування міста середини XIX ст.</div>
         </div>
       </div>
     </div>
@@ -3576,13 +3576,13 @@ a, button, [role="button"], input, select, textarea,
           <button class="TPFSZB" id="tpfszm">&#8722;</button>
           <button class="TPFSZB" id="tpfszr" style="font-size:.75rem">&#8962;</button>
         </div>
-        <div id="TPFSHINT">Тягніть · Scroll для збільшення</div>
+        <div id="TPFSHINT">Тягніть · коліщатко миші — масштаб</div>
       </div>
       <div id="TPFSMETA">
         <div class="TPFSMT"><span class="label">Рік</span><span class="val">1855</span></div>
-        <div class="TPFSMT"><span class="label">Масштаб</span><span class="val">30 саженів / дюйм</span></div>
+        <div class="TPFSMT"><span class="label">Масштаб</span><span class="val">30 сажнів / дюйм</span></div>
         <div class="TPFSMT"><span class="label">Губернія</span><span class="val">Волинська</span></div>
-        <div class="TPFSMT"><span class="label">Власник</span><span class="val">Граф Ф. Платер</span></div>
+        <div class="TPFSMT"><span class="label">Власник</span><span class="val">Граф Ф. Плятер</span></div>
       </div>
     </div>
 
@@ -4107,7 +4107,7 @@ a, button, [role="button"], input, select, textarea,
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg>
         </button>
         <div class="P62BADGE"><span class="bl">Межовий план</span><span class="bd">Маєток · 1862 р.</span></div>
-        <div class="P62HINT" id="P62HINT">Тягніть для переміщення · Scroll для збільшення</div>
+        <div class="P62HINT" id="P62HINT">Тягніть для переміщення · коліщатко миші — масштаб</div>
       </div>
 
       <!-- HQ NOTICE -->
@@ -4124,7 +4124,7 @@ a, button, [role="button"], input, select, textarea,
 
       <!-- ── ANALYSIS: INFO CARDS ── -->
       <div class="P62LEGHEAD" style="margin-top:2.5rem;">
-        <h3 class="P62LEGHT">Аналіз документу</h3>
+        <h3 class="P62LEGHT">Аналіз документа</h3>
         <div class="P62LEGLINE"></div>
       </div>
       <div class="P62GRID">
@@ -4198,7 +4198,7 @@ a, button, [role="button"], input, select, textarea,
             <div class="P62LEGROW">
               <div class="P62LEGSWATCH" style="background:#d9534f;"></div>
               <div>
-                <span class="P62LEGNAME">Садиби фольваркові</span>
+                <span class="P62LEGNAME">Садиби фільваркові</span>
                 <span class="P62LEGDESC">Червоний контур із зображенням будівель — адміністративні центри управління маєтком графа Плятера.</span>
               </div>
             </div>
@@ -4212,7 +4212,7 @@ a, button, [role="button"], input, select, textarea,
             <div class="P62LEGROW">
               <div class="P62LEGSWATCH" style="background:#f0b8b8;"></div>
               <div>
-                <span class="P62LEGNAME">Рілля фольваркова</span>
+                <span class="P62LEGNAME">Рілля фільваркова</span>
                 <span class="P62LEGDESC">Рожевий/світло-червоний — найкращі орні землі, що залишилися у власності графа після реформи.</span>
               </div>
             </div>
@@ -4226,7 +4226,7 @@ a, button, [role="button"], input, select, textarea,
             <div class="P62LEGROW">
               <div class="P62LEGSWATCH" style="background:#2d7a3a;"></div>
               <div>
-                <span class="P62LEGNAME">Сіножаті фольваркові</span>
+                <span class="P62LEGNAME">Сіножаті фільваркові</span>
                 <span class="P62LEGDESC">Темно-зелений — прибуткові луки маєтку, з яких заготовлялося сіно для власного господарства.</span>
               </div>
             </div>
@@ -4344,7 +4344,7 @@ a, button, [role="button"], input, select, textarea,
           <div class="P62LEGLINE"></div>
         </div>
         <p style="font-family:'Manrope',sans-serif;font-size:.72rem;color:rgba(180,155,100,.65);margin:-.4rem 0 1.2rem;line-height:1.6;">
-          <em>Назви подано в оригінальному написанні з документа (старопольська мова, XVIII ст.) — поруч із сучасними українськими відповідниками.</em>
+          <em>Назви подано в оригінальному написанні з документа (російською мовою, 1862 р.) — поруч із сучасними українськими відповідниками.</em>
         </p>
         <div class="P62GEOINNER">
           <div class="P62GEOBLOCK">
@@ -4359,14 +4359,14 @@ a, button, [role="button"], input, select, textarea,
               <li><strong>Д. Сохи</strong><span> — село Сохи</span></li>
               <li><strong>Д. Оранцы</strong><span> — село Оранці</span></li>
               <li><strong>Д. Грицкы</strong><span> — село Грицьки</span></li>
-              <li><strong>Д. Бересть</strong><span> — село Бересть</span></li>
-              <li><strong>Д. Орвяница</strong><span> — Орвяниця</span></li>
+              <li><strong>Д. Бересть</strong><span> — село Берестя</span></li>
+              <li><strong>Д. Орвяница</strong><span> — Орв'яниця</span></li>
               <li><strong>Д. Нивецк</strong><span> — Нивецьк</span></li>
               <li><strong>Д. Залешаны</strong><span> — Залішани</span></li>
               <li><strong>Д. Шахи</strong><span> — Шахи</span></li>
               <li><strong>Д. Лютинск</strong><span> — Лютинськ</span></li>
               <li><strong>Д. Ясенец</strong><span> — Ясинець</span></li>
-              <li><strong>Ф. Антонинъ</strong><span> — Фольварок Антонін, найімовірніше названий на честь когось із родини Плятерів</span></li>
+              <li><strong>Ф. Антонинъ</strong><span> — Фільварок Антонін, найімовірніше названий на честь когось із родини Плятерів</span></li>
               <li><strong>С. Злоте</strong><span> — село Золоте</span></li>
             </ul>
           </div>
@@ -4479,7 +4479,7 @@ a, button, [role="button"], input, select, textarea,
         </div>
 
         <p class="P62BRKLEAD">
-          Ця карта — <em>знімок</em> Дубровиці за один рік до того, як старий світ (кріпосний) остаточно почав трансформуватися в капіталістичний. Це не був «вимикач», який клацнули — і настав новий лад. Це була болісна й масштабна «перепрошивка» всієї системи.
+          Ця карта — <em>знімок</em> Дубровиці через рік після того, як старий кріпосний світ почав перетворюватися на капіталістичний. Перехід не стався в один день: це була тривала й болісна перебудова всієї системи.
         </p>
 
         <div class="P62BRKWRAP">
@@ -4494,7 +4494,7 @@ a, button, [role="button"], input, select, textarea,
             </div>
 
             <div class="P62TLITEM highlight">
-              <span class="P62TLYEAR">Березень 1862 · Ваша карта</span>
+              <span class="P62TLYEAR">Березень 1862 · ця карта</span>
               <div class="P62TLTT">Епоха Уставних грамот</div>
               <div class="P62TLINBOX">
                 <p class="P62TLINBOX-NOTE">Протягом двох років (1861–1863) поміщики та селяни складали «Уставні грамоти» — договори, де фіксували: яку землю забирає селянин, яку залишає граф, які повинності виконуються до повного викупу. <strong>Ця карта — графічне доповнення до такої грамоти.</strong> Без детального плану Плятер не міг би юридично розділити маєток. Саме тому тут так ретельно відділено «Селянську ріллю» від «Фольварочної».</p>
@@ -4505,7 +4505,7 @@ a, button, [role="button"], input, select, textarea,
               <span class="P62TLYEAR">1860-ті – 1880-ті</span>
               <div class="P62TLTT">Капіталізм у дії</div>
               <div class="P62TLINBOX">
-                <p class="P62TLTB">Держава виплатила Плятеру 80% вартості землі облігаціями — <strong>живий капітал</strong>, який пішов у розвиток. Колишні кріпаки стали «тимчасовозобов'язаними»: граф мав або платити за їхню працю, або здавати землю в оренду. Фольварки на карті — майбутні центри лісопилень, ґуралень і скляних заводів.</p>
+                <p class="P62TLTB">Держава виплатила Плятеру 80% вартості землі облігаціями — <strong>живий капітал</strong>, який пішов у розвиток. Колишні кріпаки стали «тимчасовозобов'язаними»: граф мав або платити за їхню працю, або здавати землю в оренду. Фільварки на карті — майбутні центри лісопилень, ґуралень і скляних заводів.</p>
               </div>
             </div>
 
@@ -4536,7 +4536,7 @@ a, button, [role="button"], input, select, textarea,
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
                 </div>
                 <div class="P62CARD-H">Земля як товар</div>
-                <div class="P62CARD-B">Викупні операції перетворили землю на товар зі ринковою вартістю. Селяни ставали боржниками держави на 49 років. Ця карта — момент, коли «я так хочу» поміщика перетворювалося на «згідно з планом і законом».</div>
+                <div class="P62CARD-B">Викупні операції перетворили землю на товар з ринковою вартістю. Селяни ставали боржниками держави на 49 років. Ця карта — момент, коли «я так хочу» поміщика перетворювалося на «згідно з планом і законом».</div>
               </div>
 
               <div class="P62CARD" style="padding:1.2rem 1.3rem;">
@@ -4544,7 +4544,7 @@ a, button, [role="button"], input, select, textarea,
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3h18v18H3zM3 9h18M3 15h18M9 3v18"/></svg>
                 </div>
                 <div class="P62CARD-H">Бухгалтерія замість влади</div>
-                <div class="P62CARD-B">Ретельний поділ кольорів на карті — «рожева» фольваркова рілля проти «жовтої» селянської — це не естетика. Це юридичний аргумент. Кожен сажень на цьому плані — це гроші, зобов'язання, суперечки і суди на роки вперед.</div>
+                <div class="P62CARD-B">Ретельний поділ кольорів на карті — «рожева» фільваркова рілля проти «жовтої» селянської — це не естетика. Це юридичний аргумент. Кожен сажень на цьому плані — це гроші, зобов'язання, суперечки і суди на роки вперед.</div>
               </div>
 
             </div>
@@ -4569,7 +4569,7 @@ a, button, [role="button"], input, select, textarea,
         <img id="P62FSIMG" src="" alt="Межовий план маєтку Домбровиці 1862 р." style="position:absolute;top:0;left:0;max-width:none;max-height:none;display:block;transform-origin:0 0;will-change:transform;user-select:none;-webkit-user-drag:none;pointer-events:none;">
         <div class="wm-layer-fs"></div>
         <div id="P62FSLOADER"></div>
-        <div class="P62FSHINT">Тягніть · Scroll для збільшення · Подвійний клік — скинути</div>
+        <div class="P62FSHINT">Тягніть · коліщатко миші — масштаб · Подвійний клік — скинути</div>
         <div id="P62FSZW">
           <button class="P62FSZB" id="p62fszp">+</button>
           <button class="P62FSZB" id="p62fszm">&#8722;</button>
@@ -5096,7 +5096,7 @@ a, button, [role="button"], input, select, textarea,
         <div class="COB">
           <span class="COI">✡️</span>
           <p class="COT">Єврейська забудова</p>
-          <p class="COD">До 1942 р. євреї складали значну частину населення Дубровиці. На знімку 1944 р. видно будівлі єврейської громади — більшість з них зникла після Голокосту та Другої світової.</p>
+          <p class="COD">До 1942 р. євреї становили значну частину населення Дубровиці. На знімку 1944 р. видно будівлі єврейської громади — більшість з них зникла після Голокосту та Другої світової.</p>
         </div>
         <div class="COB">
           <span class="COI">🏟️</span>
@@ -5292,7 +5292,7 @@ a, button, [role="button"], input, select, textarea,
         <div class="PYB">
           <span class="py">1944</span>
           <span class="pl">Аерофото Люфтваффе</span>
-          <span class="pd">Маєток вже знищений</span>
+          <span class="pd">Маєток уже знищено</span>
         </div>
         <div class="PYD">↔</div>
         <div class="PYB pr">
@@ -5579,7 +5579,7 @@ a, button, [role="button"], input, select, textarea,
         <div class="WOB">
           <span class="WOI">🏘️</span>
           <p class="WOT">Крупове, Острівці, Мочулище</p>
-          <p class="WOD">Три сусідні села видно на обох знімках. Порівняйте, як змінилася їх забудова і розміри за 78 років — деякі виросли, інші майже не змінилися.</p>
+          <p class="WOD">Три сусідні села видно на обох знімках. Порівняйте, як змінилася їхня забудова і розміри за 78 років — деякі виросли, інші майже не змінилися.</p>
         </div>
         <div class="WOB">
           <span class="WOI">🌲</span>
@@ -5588,7 +5588,7 @@ a, button, [role="button"], input, select, textarea,
         </div>
         <div class="WOB">
           <span class="WOI">📈</span>
-          <p class="WOT">Ріст міста</p>
+          <p class="WOT">Зростання міста</p>
           <p class="WOD">Порівняння чітко показує, як Дубровиця розширилася за 78 років — нові квартали, вулиці та інфраструктура, яких не існувало у воєнні роки.</p>
         </div>
       </div>
@@ -6295,8 +6295,8 @@ a, button, [role="button"], input, select, textarea,
         <div class="HTL-LINE-DOWN"></div>
         <div class="HTL-TEXT">
           <span class="HTL-YEAR">1944</span>
-          <p class="HTL-ETITLE">Вхід Червоної армії</p>
-          <p class="HTL-EDESC">10 січня — вхід радянських військ. 15 серпня — місто отримує сучасну назву Дубровиця</p>
+          <p class="HTL-ETITLE">Прихід Червоної армії</p>
+          <p class="HTL-EDESC">10 січня до міста вступили радянські війська. 15 серпня місто отримало сучасну назву Дубровиця</p>
         </div>
       </div>
     </div>
@@ -6485,7 +6485,7 @@ a, button, [role="button"], input, select, textarea,
   <button id="ULB-CLOSE" onclick="ULB.close()" aria-label="Закрити">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
   </button>
-  <div id="ULB-HINT">Scroll — зум &nbsp;·&nbsp; Drag — пан &nbsp;·&nbsp; 2×клік — скинути</div>
+  <div id="ULB-HINT">Коліщатко — масштаб · перетягування — зсув · подвійний клік — скинути</div>
   <button class="ulb-nav" id="ULB-PREV" onclick="ULB.nav(-1)" aria-label="Попереднє">&#8249;</button>
   <button class="ulb-nav" id="ULB-NEXT" onclick="ULB.nav(1)" aria-label="Наступне">&#8250;</button>
   <div id="ULB-VP">
@@ -6548,12 +6548,12 @@ a, button, [role="button"], input, select, textarea,
             </div>
             <div class="ft-bottom">
                 <p class="ft-copy">&copy; 2026 <a href="https://dubrovytsia.site">dubrovytsia.site</a> — Цифровий архів Дубровиці, Рівненська область, Україна. Сайт є некомерційним краєзнавчим проєктом, створеним з любові до міста та його історії.</p>
-                <p class="ft-notice">Публікуючи ці матеріали, ми прагнемо зберегти та популяризувати культурну й історичну спадщину міста Дубровиця для нинішніх і майбутніх поколінь. Усі фотографії, документи та архівні матеріали розміщено виключно в освітніх, краєзнавчих і науково-дослідних цілях. Відтворення, поширення або комерційне використання будь-яких матеріалів без письмового дозволу адміністрації сайту — заборонено. При цитуванні або використанні матеріалів у будь-якому форматі — обов'язкове активне посилання на <em>dubrovytsia.site</em>. Якщо ви є власником авторських прав на будь-які з опублікованих матеріалів і маєте заперечення щодо їх розміщення — будь ласка, <a href="contacts.html">зв'яжіться з нами</a> і ми негайно розглянемо ваш запит. Фотографії, завантажені з архіву, містять водяний знак сайту і не можуть публікуватись без нього.</p>
+                <p class="ft-notice">Публікуючи ці матеріали, ми прагнемо зберегти та популяризувати культурну й історичну спадщину міста Дубровиця для нинішніх і майбутніх поколінь. Усі фотографії, документи та архівні матеріали розміщено виключно в освітніх, краєзнавчих і науково-дослідних цілях. Відтворення, поширення або комерційне використання будь-яких матеріалів без письмового дозволу адміністрації сайту — заборонено. При цитуванні або використанні матеріалів у будь-якому форматі — обов'язкове активне посилання на <em>dubrovytsia.site</em>. Якщо ви є власником авторських прав на будь-які з опублікованих матеріалів і маєте заперечення щодо їх розміщення — будь ласка, <a href="contacts.html">зв'яжіться з нами</a>, і ми негайно розглянемо ваш запит. Фотографії, завантажені з архіву, містять водяний знак сайту і не можуть публікуватись без нього.</p>
             </div>
         </div>
     </footer>
 
-    <script src="app.js?v=11"></script>
+    <script src="app.js?v=12"></script>
 
     <!-- FULLSCREEN SLIDER OVERLAY -->
     <div id="SFS-OVERLAY">

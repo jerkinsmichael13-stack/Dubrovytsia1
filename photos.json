@@ -71,7 +71,7 @@
     },
     {
         "imageUrl": "https://i.imgur.com/kTbphjO.jpeg",
-        "title": "Аеорофотознімок м. Сарни",
+        "title": "Аерофотознімок м. Сарни",
         "period": "1900-1939",
         "category": "aerial",
         "date": "12.06.1917"
@@ -106,7 +106,7 @@
     },
     {
         "imageUrl": "https://i.imgur.com/y4MaW4i.jpeg",
-        "title": "Аерофотознімок Північної частини міста та маєтку Воробин 14.04.1944",
+        "title": "Аерофотознімок північної частини міста та маєтку Воробин 14.04.1944",
         "period": "1939-1945",
         "category": "aerial",
         "date": "14.04.1944"
@@ -155,7 +155,7 @@
     },
     {
         "imageUrl": "https://i.imgur.com/FW0aEIK.png",
-        "title": "Синагога та Бейт-Мідраш, приміщення де читали і вчили Тору, Талмуд.",
+        "title": "Синагога та бейт-мідраш, де читали й вивчали Тору й Талмуд",
         "period": "1945-1991",
         "category": "churches",
         "date": "1970"
@@ -197,14 +197,14 @@
     },
     {
         "imageUrl": "https://i.imgur.com/xUe22Gn.jpeg",
-        "title": "Портрет Ks. Konstanty Jakucewicz, написаний в костелі міста",
+        "title": "Портрет ксьондза Костянтина Якуцевича з міського костелу",
         "period": "before-1900",
         "category": "drawings",
         "date": "2026"
     },
     {
         "imageUrl": "https://i.imgur.com/DRaB4CW.jpeg",
-        "title": "Портрет Ks. Maciej Kupść, написаний в костелі міста",
+        "title": "Портрет ксьондза Мацея Купща з міського костелу",
         "period": "before-1900",
         "category": "drawings",
         "date": "2026"
@@ -225,7 +225,7 @@
     },
     {
         "imageUrl": "https://i.imgur.com/YxFni3M.png",
-        "title": "1 світова війна, солдати біля міста Дубровиця",
+        "title": "Перша світова війна, солдати біля Дубровиці",
         "period": "1900-1939",
         "category": "people",
         "date": "1914-1916"
@@ -246,7 +246,7 @@
     },
     {
         "imageUrl": "https://i.imgur.com/0FTy7QQ.jpeg",
-        "title": "Стадіон \"Горинь\"",
+        "title": "Стадіон «Горинь»",
         "period": "1945-1991",
         "category": "streets",
         "date": "1970"
@@ -274,7 +274,7 @@
     },
     {
         "imageUrl": "https://i.imgur.com/E5qlHAs.jpeg",
-        "title": "Вознесення мощей Іулянії Гольшанської",
+        "title": "Перенесення мощей Іуліанії Гольшанської",
         "period": "1900-1939",
         "category": "churches",
         "date": "2026"
@@ -316,7 +316,7 @@
     },
     {
         "imageUrl": "https://i.imgur.com/t5zySGY.jpeg",
-        "title": "Будинок побуту \"Полісся\"",
+        "title": "Будинок побуту «Полісся»",
         "period": "1945-1991",
         "category": "architecture",
         "date": "2026"
@@ -407,7 +407,7 @@
     },
     {
         "imageUrl": "https://i.imgur.com/MtGj18L.jpeg",
-        "title": "Ресторан \"Горинь\"",
+        "title": "Ресторан «Горинь»",
         "period": "1945-1991",
         "category": "streets",
         "date": "2026"
@@ -456,7 +456,7 @@
     },
     {
         "imageUrl": "https://i.imgur.com/V4FfjVc.jpeg",
-        "title": "Ресторан \"Горинь\"",
+        "title": "Ресторан «Горинь»",
         "period": "1945-1991",
         "category": "streets",
         "date": "2026"
@@ -645,14 +645,14 @@
     },
     {
         "imageUrl": "https://i.imgur.com/swUEVWE.png",
-        "title": "рацівники Комітету Всеросійського земського союзу Південно-Західного фронту в містечку Домбровиці",
+        "title": "Працівники Комітету Всеросійського земського союзу Південно-Західного фронту в містечку Домбровиці",
         "period": "1900-1939",
         "category": "people",
         "date": "1916"
     },
     {
         "imageUrl": "https://i.imgur.com/LXL6sb2.png",
-        "title": "Приміщення бактеріологічної лабораторії головного евакуаційного пункту № 17 Комітету Всеросійського земського союзу П-Західного фронту в містечку Домбровиці",
+        "title": "Приміщення бактеріологічної лабораторії головного евакуаційного пункту № 17 Комітету Всеросійського земського союзу Південно-Західного фронту в містечку Домбровиці",
         "period": "1900-1939",
         "category": "people",
         "date": "1916"
@@ -666,7 +666,7 @@
     },
     {
         "imageUrl": "https://i.imgur.com/n74FSvK.jpeg",
-        "title": "Костел Іоана Хрестителя",
+        "title": "Костел Іоанна Хрестителя",
         "period": "1900-1939",
         "category": "churches",
         "date": "1929"
@@ -694,84 +694,84 @@
     },
     {
         "imageUrl": "https://i.imgur.com/trildJW.jpeg",
-        "title": "Костел Іоана Хрестителя, вхідна брама",
+        "title": "Костел Іоанна Хрестителя, вхідна брама",
         "period": "1900-1939",
         "category": "churches",
         "date": "1929"
     },
     {
         "imageUrl": "https://i.imgur.com/3bLmxz5.jpeg",
-        "title": "Костел Іоана Хрестителя, фото зсередини",
+        "title": "Костел Іоанна Хрестителя, фото зсередини",
         "period": "1900-1939",
         "category": "churches",
         "date": "1929"
     },
     {
         "imageUrl": "https://i.imgur.com/zbKrwKN.jpeg",
-        "title": "Костел Іоана Хрестителя, фото зсередини",
+        "title": "Костел Іоанна Хрестителя, фото зсередини",
         "period": "1900-1939",
         "category": "churches",
         "date": "1929"
     },
     {
         "imageUrl": "https://i.imgur.com/0igOEVC.jpeg",
-        "title": "Костел Іоана Хрестителя, фото зсередини",
+        "title": "Костел Іоанна Хрестителя, фото зсередини",
         "period": "1900-1939",
         "category": "churches",
         "date": "1929"
     },
     {
         "imageUrl": "https://i.imgur.com/gnTjNCA.jpeg",
-        "title": "Костел Іоана Хрестителя, фото зсередини",
+        "title": "Костел Іоанна Хрестителя, фото зсередини",
         "period": "1900-1939",
         "category": "churches",
         "date": "1929"
     },
     {
         "imageUrl": "https://i.imgur.com/q3SmLO9.jpeg",
-        "title": "Костел Іоана Хрестителя, фото зсередини",
+        "title": "Костел Іоанна Хрестителя, фото зсередини",
         "period": "1900-1939",
         "category": "churches",
         "date": "1929"
     },
     {
         "imageUrl": "https://i.imgur.com/tOUTvDh.jpeg",
-        "title": "Костел Іоана Хрестителя, фото зсередини",
+        "title": "Костел Іоанна Хрестителя, фото зсередини",
         "period": "1900-1939",
         "category": "churches",
         "date": "1929"
     },
     {
         "imageUrl": "https://i.imgur.com/LbvFW0Z.jpeg",
-        "title": "Костел Іоана Хрестителя, фото зсередини",
+        "title": "Костел Іоанна Хрестителя, фото зсередини",
         "period": "1900-1939",
         "category": "churches",
         "date": "1929"
     },
     {
         "imageUrl": "https://i.imgur.com/3SPjwUS.jpeg",
-        "title": "Костел Іоана Хрестителя, фото зсередини",
+        "title": "Костел Іоанна Хрестителя, фото зсередини",
         "period": "1939-1945",
         "category": "churches",
         "date": "1929"
     },
     {
         "imageUrl": "https://i.imgur.com/ssqiAZi.jpeg",
-        "title": "Костел Іоана Хрестителя",
+        "title": "Костел Іоанна Хрестителя",
         "period": "1900-1939",
         "category": "churches",
         "date": "1929"
     },
     {
         "imageUrl": "https://i.imgur.com/DQGw0QT.jpeg",
-        "title": "Костел Іоана Хрестителя",
+        "title": "Костел Іоанна Хрестителя",
         "period": "1900-1939",
         "category": "churches",
         "date": "1929"
     },
     {
         "imageUrl": "https://i.imgur.com/r24PUh2.jpeg",
-        "title": "Костел Іоана Хрестителя, фото зсередини",
+        "title": "Костел Іоанна Хрестителя, фото зсередини",
         "period": "1900-1939",
         "category": "churches",
         "date": "1929"
@@ -809,7 +809,7 @@
     },
     {
         "imageUrl": "https://i.imgur.com/ZKkcU77.jpeg",
-        "title": "Костел Іоана Хрестителя",
+        "title": "Костел Іоанна Хрестителя",
         "period": "1900-1939",
         "category": "streets",
         "date": "1920"
@@ -837,7 +837,7 @@
     },
     {
         "imageUrl": "https://i.imgur.com/3aWJiOy.jpeg",
-        "title": "Площа перед Костелом",
+        "title": "Площа перед костелом",
         "period": "1900-1939",
         "category": "streets",
         "date": "1925-1930"
@@ -893,7 +893,7 @@
     },
     {
         "imageUrl": "https://i.imgur.com/nLCM0i2.jpeg",
-        "title": "Лісопилка Горація Геллера — провідний єврейський підприємець",
+        "title": "Лісопилка Горація Геллера, провідного єврейського підприємця",
         "period": "1900-1939",
         "category": "architecture",
         "date": "1920-1939"
