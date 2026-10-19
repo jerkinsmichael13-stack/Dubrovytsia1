@@ -832,7 +832,7 @@ function attach(api, o){
       '.hxw-snd svg{width:17px;height:17px}.hxw-snd .w{opacity:0;transition:opacity .3s}.hxw-snd[aria-pressed="true"] .w{opacity:1;animation:hxwW 1.8s ease-in-out infinite}.hxw-snd[aria-pressed="true"] .x{opacity:0}',
       '@keyframes hxwW{50%{opacity:.35}}',
       '.hxw-live{width:100%;display:flex;align-items:center;gap:.5rem;margin:0 0 .45rem;padding:.42rem .6rem;border-radius:9px;border:1px solid rgba(212,178,90,.12);background:rgba(255,255,255,.05);color:rgba(244,233,200,.65);font:inherit;font-size:.68rem;text-align:left;cursor:pointer;transition:background .25s,color .25s}',
-      '.hxw-live[aria-pressed="true"]{background:rgba(212,178,90,.2);color:#f4e9c8}.hxw-live b{font-weight:600;color:#f4e9c8}.hxw-live span{margin-left:auto;opacity:.7}',
+      '.hxw-live[aria-pressed="true"]{background:rgba(212,178,90,.2);color:#f4e9c8}.hxw-live .hxw-ln{font:600 .7rem/1.2 Manrope,system-ui,sans-serif;color:#f4e9c8;white-space:nowrap}.hxw-live .hxw-lv{margin-left:auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;opacity:.75;font-size:.68rem}',
       '.hxw-dot{width:6px;height:6px;border-radius:50%;background:#7fc48a;box-shadow:0 0 0 0 rgba(127,196,138,.6);animation:hxwP 2.4s infinite;flex:0 0 auto}.hxw-dot.off{background:rgba(244,233,200,.3);animation:none}',
       '@keyframes hxwP{0%{box-shadow:0 0 0 0 rgba(127,196,138,.55)}70%{box-shadow:0 0 0 6px rgba(127,196,138,0)}100%{box-shadow:0 0 0 0 rgba(127,196,138,0)}}',
       '.hxw-wx{margin-bottom:.75rem}.hx-wx{display:flex!important;align-items:center;gap:.45rem;margin-top:.45rem!important;color:rgba(244,233,200,.78)!important;letter-spacing:.01em}.hx-wx[hidden]{display:none!important}',
@@ -841,7 +841,7 @@ function attach(api, o){
     var box = document.createElement('div'); box.className = 'hxw';
     box.innerHTML = '<div class="hxw-p" id="hxwP" role="group" aria-label="Погода, пора доби й року">' +
       '<div class="hxw-h" style="margin-bottom:.4rem"><span class="hxw-k">Погода</span></div>' +
-      '<div class="hxw-wx"><button type="button" class="hxw-live" data-w="live"><i class="hxw-dot off"></i><b>Як зараз у Дубровиці</b><span class="hxw-lv">…</span></button>' +
+      '<div class="hxw-wx"><button type="button" class="hxw-live" data-w="live"><i class="hxw-dot off"></i><span class="hxw-ln">Наживо</span><span class="hxw-lv">…</span></button>' +
       '<div class="hxw-s">' + [['clear', 'Ясно'], ['cloudy', 'Хмарно'], ['rain', 'Дощ'], ['fog', 'Туман'], ['snow', 'Сніг'], ['storm', 'Гроза']].map(function(q){ return '<button type="button" data-w="' + q[0] + '">' + q[1] + '</button>'; }).join('') + '</div></div>' +
       '<div class="hxw-h"><span class="hxw-k">Пора доби</span><span class="hxw-t"></span><button type="button" class="hxw-now" hidden>зараз</button></div>' +
       '<input class="hxw-r" type="range" min="0" max="1439" step="5" aria-label="Час доби">' +
