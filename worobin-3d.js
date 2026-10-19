@@ -27,7 +27,32 @@ function mount(canvas, o){
   o = Object.assign({autoRotate:true, autoRotateSpeed:.45, zoom:true, touch:'none', view:[-46, 13, 40], fit:1, pixelRatio:(Math.min(screen.width, screen.height) < 700 ? 1.5 : 2), shadow:(Math.min(screen.width, screen.height) < 700 ? 1024 : 2048),
                      turntable:true, onReady:null, onFail:null, onStart:null}, o || {});
   if (!supported()){ if (o.onFail) o.onFail('webgl'); return Promise.resolve(null); }
-  return Promise.all([load(), fonts()]).then(function(){ return build(canvas, o); }, function(){ if (o.onFail) o.onFail('load'); return null; });
+  /* o.glb: the house baked in Blender (real openings, ambient occlusion, weathered plaster, sheet-metal roofs and brick in the textures);
+     it downloads alongside three.js, and the caller gets the model only once it stands in place of the drawn one */
+  var glb = o.glb ? fetch(BASE + o.glb).then(function(r){ if (!r.ok) throw new Error('glb'); return r.arrayBuffer(); }) : null;
+  if (glb) glb.catch(function(){});
+  return Promise.all([load(), fonts()]).then(function(){
+    var api = build(canvas, o);
+    if (!api || !glb) return api;
+    return Promise.all([glb, loadGLTF()]).then(function(r){ return parseGLB(r[0]); }).then(api.useGLB).then(function(){ return api; }, function(){ return api; });
+  }, function(){ if (o.onFail) o.onFail('load'); return null; });
+}
+var gltfLoading = null;
+function loadGLTF(){
+  if (THREE.GLTFLoader && THREE.DRACOLoader) return Promise.resolve();
+  return gltfLoading || (gltfLoading = new Promise(function(res, rej){
+    var s = document.createElement('script'); s.src = BASE + 'gltf-r147.js'; s.async = true;
+    s.onload = function(){ THREE.GLTFLoader ? res() : rej(new Error('gltf')); };
+    s.onerror = function(){ gltfLoading = null; rej(new Error('gltf')); };
+    document.head.appendChild(s);
+  }));
+}
+function parseGLB(buf){
+  return new Promise(function(res, rej){
+    var draco = new THREE.DRACOLoader(); draco.setDecoderPath(BASE + 'draco/'); draco.setWorkerLimit(2);
+    var gl = new THREE.GLTFLoader(); gl.setDRACOLoader(draco);
+    gl.parse(buf, BASE, function(g){ draco.dispose(); res(g); }, function(e){ draco.dispose(); rej(e); });
+  });
 }
 window.Worobin3D = {mount: mount, load: load, supported: supported};
 
@@ -168,6 +193,7 @@ var holeDepth = new THREE.ShaderMaterial({
   stencilWrite: true, stencilRef: 1, stencilFunc: THREE.EqualStencilFunc, stencilZPass: THREE.KeepStencilOp
 });
 var revealMat = mat('#efe9dc', {side: THREE.BackSide}), revealMat2 = mat('#efe9dc');
+for (var mk in M) M[mk].name = mk; holeStencil.name = 'cutter'; holeDepth.name = 'cutterDepth'; revealMat.name = 'reveal'; revealMat2.name = 'reveal2';   // names, for exports
 function sunk(ob, order){ ob.renderOrder = order; ob.castShadow = false; ob.receiveShadow = false; return ob; }
 function cut(g, x, shapeFn, depth, back, reveal){
   var hg = new THREE.ShapeGeometry(shapeFn(), 32);
@@ -712,17 +738,18 @@ flood([-2, -1, 31], [0, 5.5, 11.5], .62, 3.4); flood([24, ground(24) + .3, 0], [
 var portLamp = new THREE.PointLight('#ffc27a', 0, 12, 2); portLamp.position.set(-10.2, C0 - .5, 0); portLamp.userData.i = 2.2; scene.add(portLamp); NL.points.push(portLamp);
 M.glass.emissive = new THREE.Color('#ffb15a'); M.glass.emissiveIntensity = 0;
 function setLamps(n){
-  NL.spots.forEach(function(sp){ sp.intensity = n*sp.userData.i; });
+  NL.spots.forEach(function(sp){ sp.intensity = n*sp.userData.i*(o.floodK == null ? 1 : o.floodK); });
   NL.points.forEach(function(pt){ pt.intensity = n*pt.userData.i; });
-  M.glass.emissiveIntensity = n*.9;
+  M.glass.emissiveIntensity = n*1.5;
 }
 
 /* ── daylight for the sun slider (sun-3d.js): s = null restores the studio light ── */
 var L0 = {sp: sun.position.clone(), sc: sun.color.clone(), si: sun.intensity, fp: fill.position.clone(), fc: fill.color.clone(), fi: fill.intensity,
           hs: hemi.color.clone(), hg: hemi.groundColor.clone(), hi: hemi.intensity, ex: renderer.toneMappingExposure, box: sc.right, far: sc.far};
 function shadowBox(r, far){ sc.left = -r; sc.right = r; sc.top = r; sc.bottom = -r; sc.far = far; sc.updateProjectionMatrix(); }
-var envMats = null;
+var envMats = null, envK = 1;
 function envScale(k){
+  envK = k;
   if (!envMats){ envMats = []; scene.traverse(function(ob){ if (!ob.material) return; (Array.isArray(ob.material) ? ob.material : [ob.material]).forEach(function(m){ if (m.envMapIntensity !== undefined && envMats.indexOf(m) < 0){ m.userData.env0 = m.envMapIntensity; envMats.push(m); } }); }); }
   envMats.forEach(function(m){ m.envMapIntensity = m.userData.env0*k; });
 }
@@ -812,8 +839,33 @@ document.addEventListener('visibilitychange', sync);
 if ('ResizeObserver' in window) new ResizeObserver(resize).observe(canvas); else window.addEventListener('resize', resize);
 resize(); sync();
 
+/* ── swap the drawn house for the baked one (o.glb): plain parts take the site's own materials, so the windows still glow at night;
+   the lights that hang in the house (the porch lamp, the hall, the fire) stay where they are ── */
+function useGLB(gltf){
+  var meshes = []; gltf.scene.updateMatrixWorld(true); gltf.scene.traverse(function(ob){ if (ob.isMesh) meshes.push(ob); });
+  if (meshes.length < 3) throw new Error('glb empty');
+  var old = []; house.traverse(function(ob){ if (ob.isMesh) old.push(ob); });
+  old.forEach(function(ob){ ob.parent.remove(ob); if (ob.geometry) ob.geometry.dispose(); });
+  /* the invisible stand-ins (a door mask drawn with colour writes off) come back from the export as plain white unlit faces */
+  meshes = meshes.filter(function(ob){ var m = ob.material; var c = m.color; return !(/^Material_/.test(m.name || '') && !m.map && c.r > .96 && c.g > .96 && c.b > .96); });
+  meshes.forEach(function(ob){
+    var mt = ob.material, nm = mt.name || '', k = nm.replace(/^KX_/, '').replace(/\.\d+$/, '');
+    if (nm !== k && M[k] && !M[k].map){ ob.material = M[k]; mt.dispose(); }
+    else if (nm === 'WE_masonry'){ mt.roughness = .93; mt.metalness = 0; }
+    else if (nm === 'WE_roof'){ mt.roughness = .5; mt.metalness = .35; }
+    else if (nm === 'WE_brick'){ mt.roughness = .92; mt.metalness = 0; }
+    else { mt.roughness = Math.max(mt.roughness, .5); }
+    if (ob.material.map) ob.material.map.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
+    ob.geometry.applyMatrix4(ob.matrixWorld); ob.position.set(0, 0, 0); ob.rotation.set(0, 0, 0); ob.scale.set(1, 1, 1);
+    ob.castShadow = ob.receiveShadow = true; house.add(ob);
+  });
+  house.userData.baked = true;
+  if (envMats){ envMats = null; envScale(envK); }
+  wake();
+}
+
 var api = {
-  renderer: renderer, camera: camera, controls: controls, scene: scene, model: house,
+  renderer: renderer, useGLB: useGLB, camera: camera, controls: controls, scene: scene, model: house,
   zoomIn: function(){ zoomBy(1/1.35); }, zoomOut: function(){ zoomBy(1.35); },
   reset: function(){ touched = false; moveTo(home()); },
   autoRotate: function(on){ if (on === undefined) return controls.autoRotate; controls.autoRotate = !!on; return controls.autoRotate; },

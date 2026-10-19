@@ -93,11 +93,13 @@ function attach(api, o){
     sh.uniforms.uWSnow = U.uWSnow; sh.uniforms.uAut = U.uAut;
     sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vTW;').replace('#include <worldpos_vertex>', '#include <worldpos_vertex>\nvTW = (modelMatrix*vec4(transformed, 1.0)).xyz;');
     sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying vec3 vTW;\nuniform float uWSnow, uAut;\nfloat th(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7)))*43758.5453); }\nfloat tn(vec2 p){ vec2 i = floor(p), f = fract(p); f = f*f*(3.0 - 2.0*f); return mix(mix(th(i), th(i + vec2(1, 0)), f.x), mix(th(i + vec2(0, 1)), th(i + vec2(1, 1)), f.x), f.y); }')
+      .replace('#include <normal_fragment_maps>', '#include <normal_fragment_maps>\n{ float dn = length(vTW - cameraPosition); float kk = (1.0 - smoothstep(12.0, 70.0, dn))*.12; vec2 q = vTW.xz*2.4; float a0 = tn(q), ax = tn(q + vec2(.15, 0.0)), az = tn(q + vec2(0.0, .15)); normal = normalize(normal + (viewMatrix*vec4((a0 - ax)*kk*6.0, 0.0, (a0 - az)*kk*6.0, 0.0)).xyz); }')
       .replace('#include <color_fragment>', ['#include <color_fragment>',
         'float dd = length(vTW - cameraPosition), fd = 1.0 - smoothstep(60.0, 260.0, dd);',
         'float g1 = tn(vTW.xz*1.7), g2 = tn(vTW.xz*6.3 + 3.1), g3 = tn(vTW.xz*.33 + 7.7);',
         'float tuft = (g1*.6 + g2*.4 - .5)*.34*fd + (g3 - .5)*.22;',
-        'diffuseColor.rgb *= 1.0 + tuft;',
+        'float g4 = tn(vTW.xz*23.0 + 1.3), near = 1.0 - smoothstep(10.0, 55.0, dd);',
+        'diffuseColor.rgb *= 1.0 + tuft + (g4 - .5)*.22*near;',
         'diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb*vec3(1.12, 1.05, .78), smoothstep(.62, .82, g3)*.5);',      // drier, yellower patches
         'float fur = abs(sin(vTW.z*.9 + tn(vTW.xz*.05)*4.0));',
         'float field = 1.0 - step(-360.0, vTW.x)*step(vTW.x, 26.0)*step(-310.0, vTW.z)*step(vTW.z, 290.0);',
@@ -117,14 +119,27 @@ function attach(api, o){
     var S = 130, N = lite ? 110 : 170, CW = 2048, cv = document.createElement('canvas'); cv.width = cv.height = CW;
     var K = cv.getContext('2d'), px = CW/S, ox = -8, oz = 0;
     function X(x){ return (x - ox)*px + CW/2; } function Z(z){ return (z - oz)*px + CW/2; }
-    function line(pts, w, colr){ K.save(); K.lineCap = K.lineJoin = 'round'; K.strokeStyle = colr; K.lineWidth = w*px; K.beginPath(); pts.forEach(function(q, i){ i ? K.lineTo(X(q[0]), Z(q[1])) : K.moveTo(X(q[0]), Z(q[1])); }); K.stroke(); K.restore(); }
-    function path(pts, w){ line(pts, w + .9, 'rgba(105,88,60,.35)'); line(pts, w, '#8b7553'); }
-    path([[-72, 0], [-19, 0]], 4.2);                                                  // the drive from the road
-    K.fillStyle = 'rgba(105,88,60,.35)'; K.beginPath(); K.ellipse(X(-18.4), Z(0), 3.6*px, 6*px, 0, 0, 6.283); K.fill();
-    K.fillStyle = '#8b7553'; K.beginPath(); K.ellipse(X(-18.4), Z(0), 3.1*px, 5.5*px, 0, 0, 6.283); K.fill();
-    path([[-17.2, 3], [-17.8, 7], [-17.9, 12], [-16, 20], [-8, 25], [4, 24], [14, 19], [20, 12]], 1.3);   // the park walk round the south
-    path([[-16, -3.5], [-12, -9], [-5, -15], [3, -16], [11, -12], [17, -4], [20, 6]], 1.1);               // and round the north
-    path([[20, 12], [23.5, 13]], 1.0); path([[17, -4], [22, -14], [26, -18]], 1.0);    // down to the ponds
+    /* walks are drawn as smooth curves through their points, with ragged, grass-bitten edges and a worn, gravelly surface */
+    function curve(pts, n){ if (pts.length < 3) return pts; var c = new T.CatmullRomCurve3(pts.map(function(q){ return new T.Vector3(q[0], 0, q[1]); }), false, 'centripetal');
+      return c.getPoints(n || pts.length*16).map(function(v){ return [v.x, v.z]; }); }
+    function line(pts, w, colr, jit){ K.save(); K.lineCap = K.lineJoin = 'round'; K.strokeStyle = colr; K.lineWidth = w*px; K.beginPath();
+      pts.forEach(function(q, i){ var jx = jit ? (hash(q[0]*3.1, q[1]*1.7) - .5)*jit : 0, jz = jit ? (hash(q[1]*2.3, q[0]*4.1) - .5)*jit : 0; i ? K.lineTo(X(q[0] + jx), Z(q[1] + jz)) : K.moveTo(X(q[0] + jx), Z(q[1] + jz)); }); K.stroke(); K.restore(); }
+    function path(pts, w, ruts){ var c = curve(pts);
+      line(c, w + 1.3, 'rgba(92,80,52,.16)', .5); line(c, w + .6, 'rgba(110,92,62,.4)', .35); line(c, w, '#8d7856', .2); line(c, w*.55, 'rgba(160,140,106,.35)');
+      if (ruts) [-1, 1].forEach(function(sd){ line(c.map(function(q){ return [q[0], q[1] + sd*w*.22]; }), .32, 'rgba(84,68,46,.45)', .15); }); }
+    path([[-72, 0], [-45.5, 0], [-19, 0]], 4.2, true);                                            // the drive from the road, between the limes
+    K.fillStyle = 'rgba(105,88,60,.35)'; K.beginPath(); K.ellipse(X(-18.4), Z(0), 4.1*px, 6.5*px, 0, 0, 6.283); K.fill();
+    K.fillStyle = '#8d7856'; K.beginPath(); K.ellipse(X(-18.4), Z(0), 3.4*px, 5.8*px, 0, 0, 6.283); K.fill();
+    [-1, 1].forEach(function(sd){ K.fillStyle = '#8d7856'; K.beginPath(); K.moveTo(X(-24), Z(sd*2.1)); K.quadraticCurveTo(X(-21.4), Z(sd*2.2), X(-20.6), Z(sd*4.6)); K.lineTo(X(-19), Z(0)); K.closePath(); K.fill(); });   // the drive opens into the forecourt
+    path([[-17.4, 3.4], [-18.2, 7.5], [-17.6, 12.5], [-14.8, 19], [-8.5, 23.6], [-1, 25], [6, 23.8], [12.6, 20], [17.6, 14.2], [20, 9.5]], 1.4);   // the park walk round the south
+    path([[-16.2, -3.6], [-13.2, -8.6], [-8.4, -13.6], [-1.6, -16.4], [5.6, -15.6], [11.6, -11.6], [16.4, -5.8], [19, .5], [20, 9.5]], 1.2);       // and round the north
+    path([[20, 9.5], [21.4, 11.6], [23.6, 13.2]], 1.0); path([[16.4, -5.8], [19.6, -10.4], [22.6, -15.2], [26, -18]], 1.0);   // down to the ponds
+    /* gravel: speckles and darker patches, only where something has been painted (the walks and the beds) */
+    K.save(); K.globalCompositeOperation = 'source-atop';
+    for (var gi = 0; gi < 26000; gi++){ var gx = Math.random()*CW, gz = Math.random()*CW, gl = Math.random(); K.fillStyle = gl < .5 ? 'rgba(70,58,40,.35)' : gl < .85 ? 'rgba(190,172,138,.35)' : 'rgba(120,128,92,.3)'; K.fillRect(gx, gz, 1 + Math.random()*1.6, 1 + Math.random()*1.6); }
+    for (gi = 0; gi < 160; gi++){ var px2 = Math.random()*CW, pz2 = Math.random()*CW, pr = (.4 + Math.random()*1.4)*px, rg2 = K.createRadialGradient(px2, pz2, 0, px2, pz2, pr);
+      rg2.addColorStop(0, Math.random() < .5 ? 'rgba(80,90,50,.28)' : 'rgba(70,56,38,.22)'); rg2.addColorStop(1, 'rgba(0,0,0,0)'); K.fillStyle = rg2; K.fillRect(px2 - pr, pz2 - pr, pr*2, pr*2); }
+    K.restore();
     function bed(x0, z0, x1, z1){ K.fillStyle = '#5a4430'; K.fillRect(X(x0), Z(z0), (x1 - x0)*px, (z1 - z0)*px);
       ['#c9563f', '#e3c26a', '#efe6d4', '#b8506e'].forEach(function(c){ K.fillStyle = c; for (var i = 0; i < 70; i++){ K.beginPath(); K.arc(X(x0 + .3 + Math.random()*(x1 - x0 - .6)), Z(z0 + .3 + Math.random()*(z1 - z0 - .6)), (.06 + Math.random()*.06)*px, 0, 6.283); K.fill(); } });
       K.strokeStyle = '#3f5a2c'; K.lineWidth = .32*px; K.strokeRect(X(x0), Z(z0), (x1 - x0)*px, (z1 - z0)*px); }
@@ -220,13 +235,23 @@ function attach(api, o){
   })();
 
   /* ── trees: instanced crowns, a breath of wind in the vertex shader ── */
-  function blobCrown(){                                                              // three lumps of foliage, merged
-    var parts = [[0, 0, 0, 1], [.55, -.25, .2, .72], [-.45, -.2, -.35, .7], [.05, .45, -.1, .62]], P = [], N = [];
-    parts.forEach(function(q){ var g = new T.IcosahedronGeometry(q[3], 1); g.translate(q[0], q[1], q[2]); P.push(g.attributes.position.array); N.push(g.attributes.normal.array); });
+  /* broadleaf crowns: seven or eight lumps of foliage of different sizes, their surfaces knocked about by noise so the outline is
+     never a ball; the normals lean out from the crown's centre, so the whole crown shades softly like real foliage */
+  function lumpy(parts, seed, rough){
+    var P = [], N = [], r = function(i){ var v = Math.sin(seed*91.7 + i*12.989)*43758.5453; return v - Math.floor(v); };
+    parts.forEach(function(q, j){ var g = new T.IcosahedronGeometry(q[3], 1).toNonIndexed(), pa = g.attributes.position, na = g.attributes.normal, v = new T.Vector3(), c = new T.Vector3(0, 0, 0);
+      for (var i = 0; i < pa.count; i++){ v.fromBufferAttribute(pa, i);
+        var d = 1 + rough*(Math.sin(v.x*5.1 + j*1.7 + seed)*Math.sin(v.y*4.3 + j)*Math.sin(v.z*5.7 + seed*.3)) + rough*.5*(r(i*3 + j*101 + Math.round(v.x*9 + v.y*13 + v.z*7)) - .5);
+        v.multiplyScalar(d); v.x += q[0]; v.y += q[1]; v.z += q[2]; pa.setXYZ(i, v.x, v.y, v.z);
+        var rn = v.clone().sub(c).normalize(), ln = new T.Vector3().fromBufferAttribute(na, i); ln.lerp(rn, .7).normalize(); na.setXYZ(i, ln.x, ln.y, ln.z); }
+      P.push(pa.array); N.push(na.array); });
     return merge(P, N);
   }
+  function blobCrown(){
+    return lumpy([[0, .05, 0, .95], [.62, -.2, .18, .66], [-.5, -.18, -.38, .64], [.08, .5, -.12, .6], [-.3, .25, .55, .55], [.42, .32, -.5, .5], [-.62, .12, .2, .5], [.25, -.42, -.42, .48]], 3.1, .16);
+  }
   function coneCrown(){ var P = [], N = []; [[0, 0, 1, 1.6], [0, 1.0, .74, 1.3], [0, 1.85, .48, 1.0]].forEach(function(q){ var g = new T.ConeGeometry(q[2], q[3], 9).toNonIndexed(); g.translate(0, q[1], 0); P.push(g.attributes.position.array); N.push(g.attributes.normal.array); }); return merge(P, N); }
-  function poplarCrown(){ var P = [], N = []; [[0, 0, .55, 1.0], [0, 1.1, .5, 1.0], [0, 2.1, .38, .9]].forEach(function(q){ var g = new T.IcosahedronGeometry(q[2], 1); g.scale(1, 1.7, 1); g.translate(0, q[1], 0); P.push(g.attributes.position.array); N.push(g.attributes.normal.array); }); return merge(P, N); }
+  function poplarCrown(){ var g = lumpy([[0, 0, 0, .55], [.12, .9, .05, .5], [-.08, 1.8, -.05, .42], [0, 2.6, 0, .3], [.2, .45, -.15, .4], [-.2, 1.35, .15, .4]], 7.7, .14); g.scale(1, 1.25, 1); return g; }
   function merge(P, N){ var len = 0; P.forEach(function(a){ len += a.length; }); var p = new Float32Array(len), n = new Float32Array(len), at = 0;
     P.forEach(function(a, i){ p.set(a, at); n.set(N[i], at); at += a.length; }); var g = new T.BufferGeometry(); g.setAttribute('position', new T.BufferAttribute(p, 3)); g.setAttribute('normal', new T.BufferAttribute(n, 3)); return g; }
   function windy(m, amt, bare){                                                      // bare: the crown thins in winter (uWSnow)
@@ -235,14 +260,14 @@ function attach(api, o){
       sh.uniforms.uTime = U.uTime; sh.uniforms.uWSnow = U.uWSnow;
       sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nuniform float uTime, uWSnow;')
         .replace('#include <begin_vertex>', '#include <begin_vertex>\n' + (bare ? 'transformed *= 1.0 - .3*uWSnow;\n' : '') + '#ifdef USE_INSTANCING\n vec3 ip = instanceMatrix[3].xyz;\n#else\n vec3 ip = vec3(0.0);\n#endif\n' +
-          ' float k = max(0.0, position.y + 1.0);\n transformed.x += (sin(uTime*1.1 + ip.x*.13 + ip.z*.07) + .35*sin(uTime*2.7 + ip.z*.3))*' + amt.toFixed(3) + '*k;\n transformed.z += cos(uTime*.9 + ip.z*.11)*' + (amt*.6).toFixed(3) + '*k;\n vLY = position.y; vLN = normal;')
-        .replace('#include <common>', '#include <common>\nvarying float vLY; varying vec3 vLN;');
-      sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying float vLY; varying vec3 vLN;')
-        .replace('#include <color_fragment>', '#include <color_fragment>\n float ao = smoothstep(-1.1, 1.0, vLY); diffuseColor.rgb *= .55 + .6*ao;\n diffuseColor.rgb *= 1.0 + .18*smoothstep(.3, 1.0, vLN.y);\n diffuseColor.rgb *= .9 + .2*fract(sin(dot(floor(vLN*7.0), vec3(12.9, 78.2, 37.7)))*43758.5);');
+          ' float k = max(0.0, position.y + 1.0);\n transformed.x += (sin(uTime*1.1 + ip.x*.13 + ip.z*.07) + .35*sin(uTime*2.7 + ip.z*.3))*' + amt.toFixed(3) + '*k;\n transformed.z += cos(uTime*.9 + ip.z*.11)*' + (amt*.6).toFixed(3) + '*k;\n vLY = position.y; vLN = normal; vLP = position;')
+        .replace('#include <common>', '#include <common>\nvarying float vLY; varying vec3 vLN, vLP;');
+      sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying float vLY; varying vec3 vLN, vLP;')
+        .replace('#include <color_fragment>', '#include <color_fragment>\n float ao = smoothstep(-1.1, 1.0, vLY); diffuseColor.rgb *= .55 + .6*ao;\n float lf = .5 + .5*sin(vLP.x*11.0 + sin(vLP.y*9.0)*2.2)*sin(vLP.z*10.0 + sin(vLP.x*8.0)*2.0)*sin(vLP.y*12.0 + vLP.z*3.0); diffuseColor.rgb *= .78 + .38*lf;\n diffuseColor.rgb *= 1.0 + .18*smoothstep(.3, 1.0, vLN.y);\n diffuseColor.rgb *= .9 + .2*fract(sin(dot(floor(vLN*7.0), vec3(12.9, 78.2, 37.7)))*43758.5);');
     };
   }
   var LEAF = ['#4f6f33', '#5b7a38', '#46652e', '#62803c', '#557334', '#6a8640'].map(lin), CON = ['#2e4a2f', '#33503a', '#2a4430'].map(lin), POP = lin('#7f9168');
-  var crownM = new T.MeshStandardMaterial({roughness: .9, flatShading: true}); windy(crownM, .05, true);
+  var crownM = new T.MeshStandardMaterial({roughness: .9}); windy(crownM, .05, true);
   var conM = new T.MeshStandardMaterial({roughness: .95, flatShading: true}); windy(conM, .025);
   var trunkM = new T.MeshStandardMaterial({color: '#4a3826', roughness: 1});
   var list = {blob: [], cone: [], pop: []};
@@ -282,32 +307,72 @@ function attach(api, o){
   instance('cone', coneCrown(), conM, CON, .9, 1.0, true);
   instance('pop', poplarCrown(), crownM, [POP, lin('#71865c')], 1.2, 1.0, true);
 
-  /* ── lanterns along the drive and round the forecourt: posts by day, warm pools of light at dusk and night ── */
-  var lampsK = 0, lanterns = (function(){
+  /* ── lanterns along the drive and round the forecourt: cast-iron posts with glazed lantern heads. At night every lantern,
+     and every lit window of the house, really lights what is round it: a small light loop in the shaders of the ground, the trees,
+     the paths and the house adds a warm, quickly fading light from each of them (no shadow maps, so it stays cheap) ── */
+  var LAMPC = {value: lin('#ffd09a')}, LAMPK = {value: 0}, LAMPP = [], lampsK = 0;
+  var lanterns = (function(){
     var P = [];
     for (var lx = -26; lx >= -64; lx -= 9.5){ P.push([lx, -3.3]); P.push([lx - 4.75, 3.3]); }
     [[-21.6, -4.4], [-21.6, 4.4], [-15.2, -6.2], [-15.2, 6.2], [-16.6, 11], [-12, 18.5], [2, 19], [12.5, 15.5], [-12.5, -11.5], [2, -17.6]].forEach(function(q){ P.push(q); });
-    var n = P.length, post = new T.InstancedMesh(new T.CylinderGeometry(.05, .07, 2.6, 6), new T.MeshStandardMaterial({color: '#1d1c1a', roughness: .6, metalness: .4}), n);
-    var headM = new T.MeshStandardMaterial({color: '#2a2622', emissive: new T.Color('#ffc070'), emissiveIntensity: 0, roughness: .5});
-    var head = new T.InstancedMesh(new T.CylinderGeometry(.16, .11, .36, 6), headM, n), m4 = new T.Matrix4();
-    var c = document.createElement('canvas'); c.width = c.height = 128; var k = c.getContext('2d'), g = k.createRadialGradient(64, 64, 0, 64, 64, 62);
-    g.addColorStop(0, 'rgba(255,214,150,1)'); g.addColorStop(.25, 'rgba(255,190,110,.55)'); g.addColorStop(1, 'rgba(255,170,80,0)'); k.fillStyle = g; k.fillRect(0, 0, 128, 128);
-    var tex = new T.CanvasTexture(c); tex.encoding = T.sRGBEncoding;
-    var poolM = new T.MeshBasicMaterial({map: tex, transparent: true, depthWrite: false, blending: T.AdditiveBlending, opacity: 0, fog: true});
-    var pg = new T.PlaneGeometry(7, 7); pg.rotateX(-Math.PI/2);
-    var pool = new T.InstancedMesh(pg, poolM, n);
+    var n = P.length, m4 = new T.Matrix4();
+    var iron = new T.MeshStandardMaterial({color: '#191817', roughness: .45, metalness: .6});
+    var glassM = new T.MeshStandardMaterial({color: '#3a342a', emissive: new T.Color('#ffc274'), emissiveIntensity: 0, roughness: .2, metalness: 0, transparent: true, opacity: .92});
+    glassM.userData.noLamp = true;
+    function merge(list){ var P2 = [], N2 = []; list.forEach(function(g){ g = g.index ? g.toNonIndexed() : g; P2.push.apply(P2, g.attributes.position.array); N2.push.apply(N2, g.attributes.normal.array); });
+      var g2 = new T.BufferGeometry(); g2.setAttribute('position', new T.Float32BufferAttribute(P2, 3)); g2.setAttribute('normal', new T.Float32BufferAttribute(N2, 3)); return g2; }
+    function at(g, x, y, z, ry){ g = g.clone(); if (ry) g.rotateY(ry); g.translate(x, y, z); return g; }
+    /* the post: a fluted foot, a slender shaft, a collar and the four-sided lantern with a pyramid cap and a finial */
+    var postG = merge([at(new T.CylinderGeometry(.13, .17, .5, 8), 0, .25, 0), at(new T.CylinderGeometry(.2, .2, .08, 8), 0, .04, 0),
+      at(new T.CylinderGeometry(.045, .065, 2.0, 8), 0, 1.5, 0), at(new T.CylinderGeometry(.09, .06, .12, 8), 0, 2.52, 0),
+      at(new T.BoxGeometry(.34, .04, .34), 0, 2.6, 0), at(new T.ConeGeometry(.3, .26, 4), 0, 3.15, 0, Math.PI/4),
+      at(new T.CylinderGeometry(.012, .03, .2, 6), 0, 3.38, 0), at(new T.SphereGeometry(.035, 8, 6), 0, 3.49, 0)]
+      .concat([[-1, -1], [-1, 1], [1, -1], [1, 1]].map(function(c){ return at(new T.BoxGeometry(.025, .42, .025), c[0]*.14, 2.83, c[1]*.14); })));
+    var post = new T.InstancedMesh(postG, iron, n), head = new T.InstancedMesh(new T.BoxGeometry(.26, .4, .26), glassM, n);
     var gp = new Float32Array(n*3);
     P.forEach(function(q, i){ var y = H(q[0], q[1]);
-      m4.makeTranslation(q[0], y + 1.3, q[1]); post.setMatrixAt(i, m4);
-      m4.makeTranslation(q[0], y + 2.75, q[1]); head.setMatrixAt(i, m4);
-      m4.makeTranslation(q[0], y + .06, q[1]); pool.setMatrixAt(i, m4);
-      gp.set([q[0], y + 2.78, q[1]], i*3); });
-    post.castShadow = true; scene.add(post); scene.add(head); pool.renderOrder = 3; scene.add(pool);
+      m4.makeTranslation(q[0], y, q[1]); post.setMatrixAt(i, m4);
+      m4.makeTranslation(q[0], y + 2.83, q[1]); head.setMatrixAt(i, m4);
+      gp.set([q[0], y + 2.85, q[1]], i*3); LAMPP.push(new T.Vector4(q[0], y + 2.85, q[1], 1)); });
+    post.castShadow = true; scene.add(post); scene.add(head);
+    /* halos: a small bright core and a wide soft bloom, both in the fog */
+    function halo(stops){ var c = document.createElement('canvas'); c.width = c.height = 128; var k = c.getContext('2d'), g = k.createRadialGradient(64, 64, 0, 64, 64, 63);
+      stops.forEach(function(s2){ g.addColorStop(s2[0], s2[1]); }); k.fillStyle = g; k.fillRect(0, 0, 128, 128); var t = new T.CanvasTexture(c); t.encoding = T.sRGBEncoding; return t; }
     var gg = new T.BufferGeometry(); gg.setAttribute('position', new T.BufferAttribute(gp, 3));
-    var glowM = new T.PointsMaterial({map: tex, size: 3.2, transparent: true, depthWrite: false, blending: T.AdditiveBlending, opacity: 0, sizeAttenuation: true});
-    var glow = new T.Points(gg, glowM); glow.renderOrder = 4; scene.add(glow);
-    return {set: function(v){ headM.emissiveIntensity = 2.4*v; poolM.opacity = .55*v; glowM.opacity = .9*v; pool.visible = glow.visible = v > .01; }};
+    var coreM = new T.PointsMaterial({map: halo([[0, 'rgba(255,240,210,1)'], [.3, 'rgba(255,210,140,.7)'], [1, 'rgba(255,180,90,0)']]), size: .9, transparent: true, depthWrite: false, blending: T.AdditiveBlending, opacity: 0, sizeAttenuation: true});
+    var bloomM = new T.PointsMaterial({map: halo([[0, 'rgba(255,200,120,.55)'], [.35, 'rgba(255,170,90,.18)'], [1, 'rgba(255,150,70,0)']]), size: 5.5, transparent: true, depthWrite: false, blending: T.AdditiveBlending, opacity: 0, sizeAttenuation: true});
+    var core = new T.Points(gg, coreM), bloom = new T.Points(gg, bloomM); core.renderOrder = 5; bloom.renderOrder = 4; scene.add(bloom); scene.add(core);
+    return {set: function(v){ glassM.emissiveIntensity = 3.2*v; coreM.opacity = v; bloomM.opacity = .8*v; core.visible = bloom.visible = v > .01; }};
   })();
+  /* the lit windows of the house throw a little light out onto the portico, the steps and the lawn */
+  (function(){
+    var cells = {}; model.updateMatrixWorld(true);
+    model.traverse(function(ob){ if (!ob.isMesh || !ob.material || ob.material.name !== 'glass') return;
+      var pa = ob.geometry.attributes.position, v = new T.Vector3();
+      for (var i = 0; i < pa.count; i++){ v.fromBufferAttribute(pa, i).applyMatrix4(ob.matrixWorld); var k = Math.round(v.x/1.6) + ',' + Math.round(v.y/1.6) + ',' + Math.round(v.z/1.6);
+        var c = cells[k] || (cells[k] = [0, 0, 0, 0]); c[0] += v.x; c[1] += v.y; c[2] += v.z; c[3]++; } });
+    var bb = new T.Box3().setFromObject(model), mid = bb.getCenter(new T.Vector3()), list = [];
+    Object.keys(cells).forEach(function(k){ var c = cells[k]; if (c[3] < 4) return; var p = new T.Vector3(c[0]/c[3], c[1]/c[3], c[2]/c[3]);
+      var d = new T.Vector3(p.x - mid.x, 0, p.z - mid.z); if (Math.abs(d.x/(bb.max.x - bb.min.x)) > Math.abs(d.z/(bb.max.z - bb.min.z))) d.set(Math.sign(d.x), 0, 0); else d.set(0, 0, Math.sign(d.z));
+      p.addScaledVector(d, 1.1); list.push(p); });
+    list.sort(function(a, b){ return a.y - b.y; });
+    var seen = []; list.forEach(function(p){ if (seen.length >= (lite ? 6 : 14)) return; if (seen.some(function(q){ return q.distanceTo(p) < 2.2; })) return; seen.push(p); LAMPP.push(new T.Vector4(p.x, p.y, p.z, .45)); });
+  })();
+  var NLAMP = Math.max(1, LAMPP.length), LAMPU = {value: LAMPP}; api.__lamps = {P: LAMPU, K: LAMPK, C: LAMPC};
+  function patchLamps(){
+    scene.traverse(function(ob){ if (!ob.isMesh || ob === sky) return;
+      (Array.isArray(ob.material) ? ob.material : [ob.material]).forEach(function(m){
+        if (!m || !m.isMeshStandardMaterial || m.userData.noLamp || m.userData.lampP) return; m.userData.lampP = true;
+        var prev = m.onBeforeCompile, key = m.customProgramCacheKey();
+        m.onBeforeCompile = function(sh, r){ if (prev) prev.call(this, sh, r); sh.uniforms.uLampP = LAMPU; sh.uniforms.uLampC = LAMPC; sh.uniforms.uLampK = LAMPK;
+          sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nuniform vec4 uLampP[' + NLAMP + '];\nuniform vec3 uLampC;\nuniform float uLampK;')
+            .replace('#include <lights_fragment_end>', ['#include <lights_fragment_end>',
+              'if (uLampK > 0.001){ vec3 vp = -vViewPosition; float acc = 0.0;',
+              '  for (int i = 0; i < ' + NLAMP + '; i++){ vec3 Lv = (viewMatrix*vec4(uLampP[i].xyz, 1.0)).xyz - vp; float d2 = dot(Lv, Lv); if (d2 > 64.0) continue;',
+              '    float nd = max(dot(normal, Lv*inversesqrt(d2)), 0.0)*.85 + .15; acc += uLampP[i].w*nd/(d2 + .6)*(1.0 - smoothstep(14.0, 64.0, d2)); }',
+              '  reflectedLight.directDiffuse += uLampC*(uLampK*8.0*acc)*material.diffuseColor; }'].join('\n')); };
+        m.customProgramCacheKey = function(){ return key + '|lamp'; }; m.needsUpdate = true; }); });
+  }
 
   /* ── SKY · the real hour over Dubrovytsia: the sun where it stands now, a sky to match — dawn, a bright day with clouds,
      golden hour, the afterglow, a starry night with the moon and the house floodlit ── */
@@ -357,7 +422,7 @@ function attach(api, o){
 
   /* palette by the sun's height (degrees): zenith, horizon, horizon toward the sun, horizon away from it, sun glow, lit and shaded cloud */
   var PAL = [
-    [-18, '#070c1c', '#17213c', '#19233a', '#131b32', '#000000', '#2a3450', '#0e1322'],
+    [-18, '#0b1530', '#22305a', '#24325a', '#1a2546', '#000000', '#344064', '#141b30'],
     [-9,  '#101b3e', '#36426c', '#6c4c68', '#2c355a', '#4a2a2a', '#5c4c6a', '#1c2238'],
     [-4,  '#22346a', '#9c7c92', '#f08c5c', '#6c6c94', '#ff8c4c', '#ffaa82', '#4c3c5c'],
     [1,   '#33528e', '#e8b28c', '#ffad60', '#a69eb8', '#ffba62', '#ffc892', '#7c6070'],
@@ -435,13 +500,13 @@ function attach(api, o){
     var sunC = alt < 8 ? new T.Color('#ff7a3a').lerp(new T.Color('#ffd09a'), ss2(-1, 8, alt)) : new T.Color('#ffe2b8').lerp(new T.Color('#fff6e8'), high);
     sunC.lerp(new T.Color('#ffc480'), .35*SA*high).lerp(new T.Color('#e8eef8'), .5*SW*high);
     api.light({dir: useMoon ? [md.x, md.y, md.z] : [sd.x, Math.max(sd.y, .02), sd.z], sunColor: useMoon ? '#9fb2e2' : '#' + sunC.getHexString(),
-      sunI: (useMoon ? .42*moonLit : 1.9*ss2(-.8, 4, alt)*(.78 + .22*high))*(1 - .38*SW),
+      sunI: (useMoon ? .62*moonLit : 1.9*ss2(-.8, 4, alt)*(.78 + .22*high))*(1 - .38*SW),
       fillColor: hex(P[0].clone().lerp(new T.Color('#d3dcff'), day*.5)), fillI: .06 + .22*day + .05*night,
       sky: hex(P[0].clone().lerp(P[1], .5)), ground: alt > 0 ? '#3d3020' : '#121522', hemiI: .14 + .3*day + .06*night,
-      exposure: (.62 + .16*twi + .3*day)*(1 - .1*SW), env: .08 + .12*twi + .3*day, lamps: 1 - ss2(-5, 1.5, alt)});
-    hemi2.color.copy(P[1]).lerp(new T.Color('#6a7cb0'), night*.6); hemi2.groundColor.set(alt > 0 ? '#3a3420' : '#141826'); hemi2.intensity = .12 + .24*day + .16*(1 - day)*twi + .3*night;
+      exposure: (.62 + .16*twi + .3*day + .22*night)*(1 - .1*SW), env: .08 + .12*twi + .3*day, lamps: 1 - ss2(-5, 1.5, alt)});
+    hemi2.color.copy(P[1]).lerp(new T.Color('#6a7cb0'), night*.6); hemi2.groundColor.set(alt > 0 ? '#3a3420' : '#141826'); hemi2.intensity = .12 + .24*day + .16*(1 - day)*twi + .42*night;
     birds.forEach(function(b){ b.visible = alt > -6; });
-    lampsK = 1 - ss2(-5, 1.5, alt); lanterns.set(lampsK);
+    lampsK = 1 - ss2(-5, 1.5, alt); lanterns.set(lampsK); LAMPK.value = lampsK;
     api.heroSun = s;
   }
 
@@ -505,7 +570,7 @@ function attach(api, o){
     k.translate(32, 32); k.rotate(.6); k.fillStyle = '#fff'; k.beginPath(); k.moveTo(0, -26); k.quadraticCurveTo(17, -6, 0, 26); k.quadraticCurveTo(-17, -6, 0, -26); k.fill(); })})); }
   function setSeason(k, at){
     if (k === SEASON) return; SEASON = k;
-    if (k === 'winter'){ patchSnow(); makeSnow(); } if (k === 'autumn') makeLeaves();
+    if (k === 'winter'){ patchSnow(); makeSnow(); } if (k === 'autumn') makeLeaves(); patchLamps();
     CROWNS.forEach(function(c){ c.from = c.im.instanceColor.array.slice(); c.to = crownTarget(c, k); }); ctT = 0;
     if (at){ ctT = .999; SW = k === 'winter' ? .999 : 0; SA = k === 'autumn' ? .999 : 0; }                    // at once (for stills)
   }
@@ -585,7 +650,7 @@ function attach(api, o){
   api.heroSeason = setSeason; api.heroTime = function(m){ override = m; setSky(); };
 
   var smoke = null;
-  setSky(); setInterval(setSky, 60000);
+  setSky(); setInterval(setSky, 60000); patchLamps();
 
   /* ── frame the house on the right, so the copy on the left has open sky and land behind it ── */
   var shift = o.shift || 0;
