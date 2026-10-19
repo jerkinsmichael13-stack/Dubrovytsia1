@@ -6983,11 +6983,11 @@ g.ULB={open:open,close:close,nav:nav,
   function idle(f){ (window.requestIdleCallback || function(g){ setTimeout(g, 250); })(f, { timeout: 1200 }); }
   function mount3d(){
     var m = window.__hx3d; if (!m){ st.classList.add('nogl'); return; }
-    var sc = document.createElement('script'); sc.src = m.js + '?v=20261019c'; sc.async = true;
+    var sc = document.createElement('script'); sc.src = m.js + '?v=20261019d'; sc.async = true;
     sc.onerror = function(){ st.classList.add('nogl'); };
     sc.onload = function(){
       var G = window[m.g]; if (!G){ st.classList.add('nogl'); return; }
-      var land = m.land ? new Promise(function(res){ var ls = document.createElement('script'); ls.src = m.land + '?v=20261019c'; ls.async = true; ls.onload = res; ls.onerror = function(){ res(); }; document.head.appendChild(ls); }) : Promise.resolve();
+      var land = m.land ? new Promise(function(res){ var ls = document.createElement('script'); ls.src = m.land + '?v=20261019d'; ls.async = true; ls.onload = res; ls.onerror = function(){ res(); }; document.head.appendChild(ls); }) : Promise.resolve();
       var wide = function(){ return innerWidth > 980; };
       G.mount(cv, Object.assign({ zoom: false, touch: 'pan-y', pixelRatio: m.land ? (wide() ? 1.35 : 1.6) : 1.75, shadow: innerWidth < 700 ? 1024 : 2048, motes: !m.land, autoRotateSpeed: m.land ? .35 : .55,
         onStart: function(){ st.classList.add('touched'); },

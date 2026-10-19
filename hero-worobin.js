@@ -10,7 +10,7 @@ function attach(api, o){
   o = o || {};
   var T = THREE, scene = api.scene, cam = api.camera, renderer = api.renderer, model = api.model;
   var lite = !!o.lite, reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var U = {uTime: {value: 0}, uFogC: {value: new T.Color()}, uFogD: {value: .005}, uSunDir: {value: new T.Vector3(0, 1, 0)}, uHor: {value: new T.Color()}, uGlowW: {value: new T.Color()}, uDeep: {value: new T.Color()}, uGlint: {value: 1}, uNightG: {value: 0}, uIce: {value: 0}, uWSnow: {value: 0}, uAut: {value: 0}};
+  var U = {uTime: {value: 0}, uFogC: {value: new T.Color()}, uFogD: {value: .005}, uSunDir: {value: new T.Vector3(0, 1, 0)}, uHor: {value: new T.Color()}, uGlowW: {value: new T.Color()}, uDeep: {value: new T.Color()}, uGlint: {value: 1}, uNightG: {value: 0}, uIce: {value: 0}, uWSnow: {value: 0}, uAut: {value: 0}, uWind: {value: 1}, uWet: {value: 0}};
   function ss(a, b, x){ var t = Math.max(0, Math.min(1, (x - a)/(b - a))); return t*t*(3 - 2*t); }
   function lin(c){ return new T.Color(c).convertSRGBToLinear(); }
   function hash(x, z){ var s = Math.sin(x*127.1 + z*311.7)*43758.5453; return s - Math.floor(s); }
@@ -257,10 +257,10 @@ function attach(api, o){
   function windy(m, amt, bare){                                                      // bare: the crown thins in winter (uWSnow)
     m.customProgramCacheKey = function(){ return 'windy' + amt + (bare ? 'b' : ''); };   // each variant its own program
     m.onBeforeCompile = function(sh){
-      sh.uniforms.uTime = U.uTime; sh.uniforms.uWSnow = U.uWSnow;
-      sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nuniform float uTime, uWSnow;')
+      sh.uniforms.uTime = U.uTime; sh.uniforms.uWSnow = U.uWSnow; sh.uniforms.uWind = U.uWind;
+      sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nuniform float uTime, uWSnow, uWind;')
         .replace('#include <begin_vertex>', '#include <begin_vertex>\n' + (bare ? 'transformed *= 1.0 - .3*uWSnow;\n' : '') + '#ifdef USE_INSTANCING\n vec3 ip = instanceMatrix[3].xyz;\n#else\n vec3 ip = vec3(0.0);\n#endif\n' +
-          ' float k = max(0.0, position.y + 1.0);\n transformed.x += (sin(uTime*1.1 + ip.x*.13 + ip.z*.07) + .35*sin(uTime*2.7 + ip.z*.3))*' + amt.toFixed(3) + '*k;\n transformed.z += cos(uTime*.9 + ip.z*.11)*' + (amt*.6).toFixed(3) + '*k;\n vLY = position.y; vLN = normal; vLP = position;')
+          ' float k = max(0.0, position.y + 1.0)*uWind*(1.0 + .3*max(0.0, uWind - 1.0)*sin(uTime*.41 + ip.x*.02));\n transformed.x += (sin(uTime*1.1 + ip.x*.13 + ip.z*.07) + .35*sin(uTime*2.7 + ip.z*.3))*' + amt.toFixed(3) + '*k;\n transformed.z += cos(uTime*.9 + ip.z*.11)*' + (amt*.6).toFixed(3) + '*k;\n vLY = position.y; vLN = normal; vLP = position;')
         .replace('#include <common>', '#include <common>\nvarying float vLY; varying vec3 vLN, vLP;');
       sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying float vLY; varying vec3 vLN, vLP;')
         .replace('#include <color_fragment>', '#include <color_fragment>\n float ao = smoothstep(-1.1, 1.0, vLY); diffuseColor.rgb *= .55 + .6*ao;\n float lf = .5 + .5*sin(vLP.x*11.0 + sin(vLP.y*9.0)*2.2)*sin(vLP.z*10.0 + sin(vLP.x*8.0)*2.0)*sin(vLP.y*12.0 + vLP.z*3.0); diffuseColor.rgb *= .78 + .38*lf;\n diffuseColor.rgb *= 1.0 + .18*smoothstep(.3, 1.0, vLN.y);\n diffuseColor.rgb *= .9 + .2*fract(sin(dot(floor(vLN*7.0), vec3(12.9, 78.2, 37.7)))*43758.5);');
@@ -365,8 +365,9 @@ function attach(api, o){
       (Array.isArray(ob.material) ? ob.material : [ob.material]).forEach(function(m){
         if (!m || !m.isMeshStandardMaterial || m.userData.noLamp || m.userData.lampP) return; m.userData.lampP = true;
         var prev = m.onBeforeCompile, key = m.customProgramCacheKey();
-        m.onBeforeCompile = function(sh, r){ if (prev) prev.call(this, sh, r); sh.uniforms.uLampP = LAMPU; sh.uniforms.uLampC = LAMPC; sh.uniforms.uLampK = LAMPK;
-          sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nuniform vec4 uLampP[' + NLAMP + '];\nuniform vec3 uLampC;\nuniform float uLampK;')
+        m.onBeforeCompile = function(sh, r){ if (prev) prev.call(this, sh, r); sh.uniforms.uLampP = LAMPU; sh.uniforms.uLampC = LAMPC; sh.uniforms.uLampK = LAMPK; sh.uniforms.uWet = U.uWet;
+          sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nuniform vec4 uLampP[' + NLAMP + '];\nuniform vec3 uLampC;\nuniform float uLampK, uWet;')
+            .replace('#include <normal_fragment_maps>', '#include <normal_fragment_maps>\nif (uWet > 0.001){ float upw = clamp(dot(normal, normalize((viewMatrix*vec4(0.0, 1.0, 0.0, 0.0)).xyz)), 0.0, 1.0); float wt = uWet*smoothstep(.25, .9, upw); diffuseColor.rgb *= 1.0 - .3*wt; roughnessFactor = mix(roughnessFactor, .16, wt*.8); }')
             .replace('#include <lights_fragment_end>', ['#include <lights_fragment_end>',
               'if (uLampK > 0.001){ vec3 vp = -vViewPosition; float acc = 0.0;',
               '  for (int i = 0; i < ' + NLAMP + '; i++){ vec3 Lv = (viewMatrix*vec4(uLampP[i].xyz, 1.0)).xyz - vp; float d2 = dot(Lv, Lv); if (d2 > 64.0) continue;',
@@ -496,6 +497,177 @@ function attach(api, o){
       o = (+p[0] % 24)*60 + +p[1] - (n.getUTCHours()*60 + n.getUTCMinutes()); return o > 720 ? o - 1440 : o < -720 ? o + 1440 : o; } catch (e){ return 180; }
   }
   function kyivNow(){ var n = new Date(); return ((n.getUTCHours()*60 + n.getUTCMinutes() + kyivOff()) % 1440 + 1440) % 1440; }
+  /* ── «Живий Воробин»: the hero wears the weather that is over Dubrovytsia right now (Open-Meteo, no key), smoothed in so a change
+     rolls in rather than snapping; the visitor may also pick a weather by hand ── */
+  var WX = {cover: .3, rain: 0, snow: 0, fog: 0, wind: 2.5, storm: 0}, WXc = {cover: .3, rain: 0, snow: 0, fog: 0, wind: 2.5, storm: 0, wet: 0, live: false, day: 1, night: 0};
+  var wxLive = null, wxPick = (/[?&#]hero-weather=(\w+)/.exec(location.href) || [])[1] || 'live', baseExp = 1, wxListeners = [];
+  var WXPRE = {clear: {cover: .06, wind: 2}, cloudy: {cover: .96, wind: 4}, rain: {cover: 1, rain: .85, wind: 6}, fog: {cover: .85, fog: 1, wind: .8},
+    snow: {cover: 1, snow: .9, wind: 3}, storm: {cover: 1, rain: 1, storm: 1, wind: 11}};
+  function wxOvercast(){ return Math.min(1, Math.max(ss2(.55, 1, WXc.cover)*.72, WXc.rain*.95, WXc.snow*.8, WXc.fog*.85, WXc.storm)); }
+  function wxLabel(c, t, isDay){
+    var L = {0: isDay === 0 ? 'ясна ніч' : 'ясно', 1: 'переважно ясно', 2: 'мінлива хмарність', 3: 'хмарно', 45: 'туман', 48: 'туман і паморозь', 51: 'мряка', 53: 'мряка', 55: 'густа мряка',
+      56: 'крижана мряка', 57: 'крижана мряка', 61: 'невеликий дощ', 63: 'дощ', 65: 'злива', 66: 'крижаний дощ', 67: 'крижаний дощ', 71: 'невеликий сніг', 73: 'сніг', 75: 'сильний снігопад',
+      77: 'снігова крупа', 80: 'короткочасний дощ', 81: 'зливи', 82: 'сильна злива', 85: 'снігопад', 86: 'сильний снігопад', 95: 'гроза', 96: 'гроза з градом', 99: 'гроза з градом'};
+    return L[c] || '';
+  }
+  function wxFrom(c){
+    var code = c.weather_code | 0, t = c.temperature_2m, vis = c.visibility, w = {cover: c.cloud_cover == null ? .5 : c.cloud_cover/100, rain: 0, snow: 0, fog: 0, storm: 0,
+      wind: Math.max(c.wind_speed_10m || 0, .6*(c.wind_gusts_10m || 0))};
+    var lvl = {51: .3, 53: .42, 55: .55, 56: .4, 57: .55, 61: .55, 63: .78, 65: 1, 66: .6, 67: .9, 80: .6, 81: .85, 82: 1, 95: .9, 96: 1, 99: 1}[code];
+    var sl = {71: .45, 73: .7, 75: 1, 77: .35, 85: .6, 86: .95}[code];
+    if (lvl && t != null && t < -1.5){ sl = lvl; lvl = 0; } if (sl && t != null && t > 2.5){ lvl = sl; sl = 0; }   // the code says one thing, the thermometer another
+    if (!lvl && !sl && (c.precipitation || 0) > .05){ if (t != null && t < 0) sl = .4; else lvl = .4; }
+    w.rain = lvl || 0; w.snow = sl || 0; if (code >= 95) w.storm = 1;
+    if (code === 45 || code === 48) w.fog = 1;
+    if (vis != null && vis < 4000) w.fog = Math.max(w.fog, Math.min(1, (4000 - vis)/3200));
+    if (w.rain || w.snow || w.fog > .5) w.cover = Math.max(w.cover, .9); else if (code === 3) w.cover = Math.max(w.cover, .85); else if (code <= 1) w.cover = Math.min(w.cover, .35);
+    return {w: w, t: t, label: wxLabel(code, t, c.is_day), code: code, at: Date.now()};
+  }
+  function wxApply(){
+    var src = wxPick === 'live' ? (wxLive ? wxLive.w : null) : WXPRE[wxPick];
+    var base = {cover: .3, rain: 0, snow: 0, fog: 0, wind: 2.5, storm: 0}; for (var k in base) WX[k] = src && src[k] != null ? src[k] : base[k];
+    WXc.live = wxPick !== 'live' || !!wxLive;
+    if (WX.snow > .05) makeSnow();
+    if (WX.rain > .05){ makeRain(); if (!reduced) makeVeil(); }
+    if (WX.rain > .05 || WX.snow > .05 || WX.fog > .05 || WX.cover > .6) patchLamps();
+    wxListeners.forEach(function(f){ f(); });
+  }
+  var wxSnapped = false;
+  function wxSnap(){                                                                 // the first reading lands at once: whoever opens the page sees the weather straight away
+    if (wxSnapped || wxPick !== 'live') return; wxSnapped = true;
+    for (var q in WX) WXc[q] = WX[q]; WXc.wet = WX.rain > .05 ? 1 : 0; setSky();
+  }
+  var WXURL = 'https://api.open-meteo.com/v1/forecast?latitude=51.573&longitude=26.567&current=temperature_2m,precipitation,snowfall,weather_code,cloud_cover,wind_speed_10m,wind_gusts_10m,visibility,is_day&wind_speed_unit=ms&timezone=Europe%2FKyiv';
+  function wxFetch(force){
+    if (o.noWeather) return;
+    try { var c = JSON.parse(sessionStorage.getItem('dbWx2') || 'null'); if (!force && c && Date.now() - c.t < 9e5){ wxLive = wxFrom(c.d); wxApply(); wxSnap(); return; } } catch (e){}
+    fetch(WXURL, {cache: 'no-store'}).then(function(r){ return r.ok ? r.json() : Promise.reject(r.status); }).then(function(j){
+      if (!j || !j.current) return; try { sessionStorage.setItem('dbWx2', JSON.stringify({t: Date.now(), d: j.current})); } catch (e){}
+      wxLive = wxFrom(j.current); wxApply(); wxSnap();
+    }).catch(function(){ /* no network, no weather: the hero stays as it was */ });
+  }
+  /* rain: long thin streaks, falling fast */
+  var rainFx = null;
+  function makeRain(){ return rainFx || (rainFx = fall(lite ? 1500 : 3600, {h: 34, v: 17, sw: .04, size: 3.2, cols: [new T.Color(.82, .86, .92)],
+    map: sprite(function(k){ var g = k.createLinearGradient(0, 0, 0, 64); g.addColorStop(0, 'rgba(255,255,255,0)'); g.addColorStop(.55, 'rgba(255,255,255,.85)'); g.addColorStop(1, 'rgba(255,255,255,0)'); k.fillStyle = g; k.fillRect(30, 2, 4, 60); })})); }
+  /* and a veil of streaks right in front of the lens, three layers deep, slanting with the wind */
+  var rainVeil = null, RVU = {uTime: U.uTime, uRain: {value: 0}, uLit: {value: 1}, uSlant: {value: .06}, uAsp: {value: 1.6}};
+  function makeVeil(){
+    if (rainVeil) return rainVeil;
+    var m = new T.ShaderMaterial({uniforms: RVU, transparent: true, depthTest: false, depthWrite: false,
+      vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }',
+      fragmentShader: ['uniform float uTime, uRain, uLit, uSlant, uAsp; varying vec2 vUv;',
+        'float h(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7)))*43758.5453); }',
+        'float lay(vec2 uv, float sc, float v, float len, float th, float seed){',
+        '  uv.x += uv.y*uSlant; vec2 g = vec2(uv.x*uAsp*sc, (uv.y + uTime*v)*sc*.16);',
+        '  float col = floor(g.x), r = h(vec2(col, seed)); g.y += r*13.0; float cell = floor(g.y), f = fract(g.y), r2 = h(vec2(col + seed, cell));',
+        '  float on = step(1.0 - .75*uRain, r2); float x = fract(g.x) - .5 + (r2 - .5)*.7;',
+        '  return on*smoothstep(th, 0.0, abs(x))*smoothstep(0.0, .08, f)*(1.0 - smoothstep(len*.4, len, f)); }',
+        'void main(){ vec2 uv = vUv; float a = .30*lay(uv, 55.0, 1.9, .75, .07, 1.0) + .22*lay(uv, 105.0, 1.5, .7, .09, 7.0) + .14*lay(uv, 190.0, 1.1, .6, .12, 13.0);',
+        '  a *= uRain*(.55 + .45*smoothstep(0.0, .9, uv.y)); gl_FragColor = vec4(vec3(.78, .83, .9)*uLit, a); }'].join('\n')});
+    rainVeil = new T.Mesh(new T.PlaneGeometry(2, 2), m); rainVeil.frustumCulled = false; rainVeil.renderOrder = 999; rainVeil.visible = false; scene.add(rainVeil); return rainVeil; }
+  /* lightning: the whole scene flashes, thunder follows a few seconds later */
+  var flash = 0, nextFlash = 4, thunderQ = [];
+  var wxSky = 0;
+  function stepWeather(dt){
+    var kk = Math.min(1, dt*.45), moved = 0;
+    for (var k in WX){ var d = WX[k] - WXc[k]; if (Math.abs(d) > .002){ WXc[k] += d*kk; moved = Math.max(moved, Math.abs(d)); } else WXc[k] = WX[k]; }
+    var wetT = Math.max(WXc.rain > .05 ? 1 : 0, WXc.snow > .3 && SW < .5 ? .5 : 0);
+    WXc.wet += (wetT - WXc.wet)*Math.min(1, dt*(wetT > WXc.wet ? .25 : .03));        // dries slowly
+    U.uWet.value = WXc.wet*(1 - SW); U.uWind.value = Math.max(.45, Math.min(3, .55 + WXc.wind/5));
+    var lit = .28 + .72*WXc.day;
+    if (rainFx){ rainFx.visible = WXc.rain > .02; rainFx.material.opacity = Math.min(.75, .25 + .55*WXc.rain)*Math.min(1, WXc.rain*6); rainFx.material.color.setScalar(lit); }
+    if (rainVeil){ rainVeil.visible = WXc.rain > .02; RVU.uRain.value = WXc.rain; RVU.uLit.value = (.35 + .65*WXc.day)*(1 + 1.5*flash); RVU.uSlant.value = Math.min(.35, .02 + WXc.wind*.022);
+      var cv = renderer.domElement; RVU.uAsp.value = (cv.clientWidth || 16)/(cv.clientHeight || 10); }
+    if (snowFx){ var sv = Math.max(.9*SW, WXc.snow); snowFx.visible = sv > .02; snowFx.material.opacity = sv; snowFx.material.color.setScalar(.45 + .55*WXc.day); }
+    if (WXc.storm > .4 && !reduced){
+      nextFlash -= dt; if (nextFlash <= 0){ flash = 1; nextFlash = 5 + Math.random()*14; thunderQ.push(1.2 + Math.random()*3.5); if (Math.random() < .4) setTimeout(function(){ flash = Math.max(flash, .7); }, 140); }
+    }
+    if (flash > 0){ flash = Math.max(0, flash - dt*3.2); renderer.toneMappingExposure = baseExp*(1 + 2.2*flash*flash*(.6 + .4*Math.random())); if (!flash) renderer.toneMappingExposure = baseExp; }
+    for (var i = thunderQ.length - 1; i >= 0; i--){ thunderQ[i] -= dt; if (thunderQ[i] <= 0){ thunderQ.splice(i, 1); if (AU) AU.thunder(); } }
+    if (moved > .003 && ++wxSky % 4 === 0) setSky();
+  }
+  /* ── the sound of the place, made on the spot (no recordings to download): rain on leaves, wind in the crowns, birds by day,
+     crickets on a warm night, thunder after the flash. Browsers allow sound only after a click, so it waits for the button. ── */
+  var AU = null;
+  function makeAudio(){
+    var AC = window.AudioContext || window.webkitAudioContext; if (!AC) return null;
+    var C = new AC(), out = C.createGain(), master = C.createGain(); out.gain.value = .9; master.gain.value = 0; master.connect(out);
+    var comp = C.createDynamicsCompressor(); comp.threshold.value = -14; comp.ratio.value = 3; out.connect(comp); comp.connect(C.destination);
+    function noise(brown, sec){ var n = Math.floor(C.sampleRate*sec), b = C.createBuffer(1, n, C.sampleRate), d = b.getChannelData(0), l = 0;
+      for (var i = 0; i < n; i++){ var w = Math.random()*2 - 1; if (brown){ l = (l + .02*w)/1.02; d[i] = l*3.5; } else d[i] = w; }
+      var f = Math.min(2000, n >> 3); for (var j = 0; j < f; j++){ var a = j/f; d[j] = d[j]*a + d[n - f + j]*(1 - a); }   // seamless loop
+      return b; }
+    var WN = noise(false, 3), BN = noise(true, 4);
+    function loop(buf, off){ var s = C.createBufferSource(); s.buffer = buf; s.loop = true; s.start(0, off || 0); return s; }
+    function filt(type, f, q){ var b = C.createBiquadFilter(); b.type = type; b.frequency.value = f; if (q != null) b.Q.value = q; return b; }
+    function chain(){ for (var i = 0; i < arguments.length - 1; i++) arguments[i].connect(arguments[i + 1]); return arguments[arguments.length - 1]; }
+    function gain(v){ var g = C.createGain(); g.gain.value = v; return g; }
+    /* rain: a hiss on the leaves and a soft roar under it, with single drops pattering */
+    var rainG = gain(0); chain(loop(WN), filt('highpass', 900), filt('lowpass', 6500), gain(.55), rainG);
+    chain(loop(BN, 1.3), filt('lowpass', 700), gain(.9), rainG); rainG.connect(master);
+    var dropG = gain(0); dropG.connect(master);
+    /* wind: brown noise through a band that wanders, swelling in gusts */
+    var windG = gain(0), wbp = filt('bandpass', 380, .6), gust = gain(.5);
+    chain(loop(BN, 2.1), wbp, gust, windG); windG.connect(master);
+    var lfo = C.createOscillator(), lfoG = gain(220); lfo.frequency.value = .07; chain(lfo, lfoG, wbp.frequency); lfo.start();
+    var lfo2 = C.createOscillator(), lfo2G = gain(.35); lfo2.frequency.value = .11; chain(lfo2, lfo2G, gust.gain); lfo2.start();
+    var leafG = gain(0); chain(loop(WN, .7), filt('bandpass', 2600, .5), leafG); leafG.connect(master);   // leaves rustling with the wind
+    /* birds */
+    var birdBus = gain(1.05); birdBus.connect(master);
+    function pan(p){ if (C.createStereoPanner){ var s = C.createStereoPanner(); s.pan.value = p; s.connect(birdBus); return s; } return birdBus; }
+    function note(t, f0, f1, dur, vol, p, fm){
+      var os = C.createOscillator(), g = C.createGain(); os.type = 'sine';
+      os.frequency.setValueAtTime(f0, t); os.frequency.exponentialRampToValueAtTime(f1, t + dur);
+      if (fm){ var m = C.createOscillator(), mg = C.createGain(); m.frequency.value = fm[0]; mg.gain.value = fm[1]; m.connect(mg); mg.connect(os.frequency); m.start(t); m.stop(t + dur + .05); }
+      g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol, t + Math.min(.02, dur*.25)); g.gain.setValueAtTime(vol, t + dur*.6); g.gain.exponentialRampToValueAtTime(.0005, t + dur);
+      os.connect(g); g.connect(p); os.start(t); os.stop(t + dur + .02);
+    }
+    var SONGS = [
+      function(t, p, v){ var n = 3 + (Math.random()*4 | 0), f = 4200 + Math.random()*1400; for (var i = 0; i < n; i++) note(t + i*.13, f, f*.72, .075, v, p); },          // tsee-tsee-tsee
+      function(t, p, v){ note(t, 3100 + Math.random()*600, 3600, .55 + Math.random()*.4, v*.8, p, [34 + Math.random()*14, 650]); },                                     // a trill
+      function(t, p, v){ var f = 1900 + Math.random()*500; note(t, f, f*1.32, .2, v, p); note(t + .26, f*1.32, f*1.05, .28, v, p); note(t + .62, f*1.1, f*1.5, .16, v*.8, p); },   // a fluting whistle
+      function(t, p, v){ for (var i = 0; i < 2; i++){ note(t + i*.32, 5200, 3000, .1, v*.9, p); note(t + i*.32 + .12, 3400, 4400, .09, v*.7, p); } },                       // teacher-teacher
+      function(t, p, v){ var f = 2600 + Math.random()*900; for (var i = 0; i < 7; i++) note(t + i*.06, f + (i % 2)*700, f + (i % 2)*700 + 300, .045, v*.7, p); }          // a quick chatter
+    ];
+    var nextBird = 0, nextDrop = 0;
+    /* crickets: a steady high tone, gated into chirps of three or four pulses */
+    var crick = [4300, 4520, 4150].map(function(f, i){ var os = C.createOscillator(), g = gain(0), pg = pan([-.6, .45, .1][i]); os.frequency.value = f; os.connect(g); g.connect(pg); os.start(); return {g: g, next: 0, rate: .55 + i*.13}; });
+    var crickG = 0;
+    /* thunder: a crack, then a long low roll */
+    function thunder(){ if (!on) return; var t = C.currentTime, s = loop(BN, Math.random()*3), lp = filt('lowpass', 260 + Math.random()*180), g = gain(0);
+      chain(s, lp, g, master); var v = .9*Math.min(1, .5 + WXc.storm*.5);
+      g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(v, t + .08); g.gain.exponentialRampToValueAtTime(v*.35, t + .9);
+      g.gain.linearRampToValueAtTime(v*.55, t + 1.6); g.gain.exponentialRampToValueAtTime(.001, t + 5 + Math.random()*2.5);
+      lp.frequency.setValueAtTime(lp.frequency.value*1.8, t); lp.frequency.exponentialRampToValueAtTime(110, t + 4.5); s.stop(t + 8); }
+    var on = false, visible = true;
+    function level(){ return on && visible && !document.hidden ? 1 : 0; }
+    function tickA(){
+      var t = C.currentTime, L = level(); master.gain.setTargetAtTime(L*.95, t, .6);
+      if (!L) return;
+      var r = WXc.rain, day = WXc.day, night = WXc.night, wind = WXc.wind;
+      rainG.gain.setTargetAtTime(Math.min(1, r*1.1)*.36, t, 1.2);
+      windG.gain.setTargetAtTime(Math.min(.55, .04 + wind/22), t, 1.5);
+      leafG.gain.setTargetAtTime((SW > .5 ? .2 : 1)*Math.min(.07, wind/160), t, 1.5);
+      if (r > .05 && t > nextDrop){ nextDrop = t + .03 + Math.random()*.25/(.3 + r); var d = C.createBufferSource(), df = filt('bandpass', 1800 + Math.random()*3200, 6), dg = gain(0);
+        d.buffer = WN; chain(d, df, dg, master); dg.gain.setValueAtTime(.0, t); dg.gain.linearRampToValueAtTime(.35*Math.random(), t + .004); dg.gain.exponentialRampToValueAtTime(.001, t + .07); d.start(t, Math.random()*2); d.stop(t + .1); }
+      var birdy = day*(1 - Math.min(1, r*1.4))*(1 - WXc.snow*.6)*(1 - WXc.storm)*(SW > .5 ? .35 : SA > .5 ? .6 : 1);
+      if (birdy > .05 && t > nextBird){ var gap = (1.2 + Math.random()*4.5)/birdy; nextBird = t + gap;
+        SONGS[Math.random()*SONGS.length | 0](t + .05, pan(Math.random()*1.6 - .8), (.035 + Math.random()*.05)*(.5 + .5*birdy));
+        if (Math.random() < .3) SONGS[Math.random()*SONGS.length | 0](t + .4 + Math.random()*.6, pan(Math.random()*1.6 - .8), .03); }
+      var warm = !(wxPick === 'live' && wxLive && wxLive.t != null && wxLive.t < 6);
+      crickG = night*(1 - Math.min(1, r*2))*(1 - WXc.snow)*(SW > .5 ? 0 : 1)*(warm ? 1 : .55);
+      crick.forEach(function(c){ if (crickG < .05){ c.g.gain.setTargetAtTime(0, t, .1); return; }
+        while (c.next < t + .35){ if (c.next < t) c.next = t + .02; var n = 3 + (Math.random() < .3 ? 1 : 0), v = .05*crickG;
+          for (var i = 0; i < n; i++){ var a = c.next + i*.034; c.g.gain.setValueAtTime(0, a); c.g.gain.linearRampToValueAtTime(v, a + .006); c.g.gain.linearRampToValueAtTime(0, a + .022); }
+          c.next += c.rate + Math.random()*.25; } });
+    }
+    var iv = setInterval(tickA, 120);
+    document.addEventListener('visibilitychange', tickA);
+    if ('IntersectionObserver' in window) new IntersectionObserver(function(es){ visible = es[0].isIntersecting; tickA(); }, {threshold: .05}).observe(renderer.domElement);
+    return {set: function(v){ on = v; if (v && C.state !== 'running') C.resume(); tickA(); }, thunder: thunder, ctx: C};
+  }
+
   function when(){                                                                   // now, or a time of day picked by hand (the hero's slider, or ?hero-time=19:40)
     var n = new Date(); if (override == null) return n;
     var k = new Date(n.getTime()); k.setUTCHours(0, 0, 0, 0);
@@ -505,21 +677,25 @@ function attach(api, o){
     var date = when(), s = sunPos(date), mo = moonPos(date), alt = s.alt;
     var P = palAt(alt), sd = dirOf(s);
     if (SW > .001) P.forEach(function(c, i){ if (i > 3 && i < 5) return; var l = c.r*.3 + c.g*.59 + c.b*.11; c.lerp(new T.Color(l*.94, l, l*1.1), (i > 4 ? .3 : .45)*SW); });   // winter: a paler, overcast sky
+    var OC = wxOvercast();                                                          // live weather: a grey, low sky
+    if (OC > .001) P.forEach(function(c, i){ var l = c.r*.3 + c.g*.59 + c.b*.11; c.lerp(new T.Color(l*.97, l, l*1.04), (i === 4 ? .85 : .82)*OC); if (i < 4 || i > 4) c.multiplyScalar(1 - .22*OC); });
     /* below the horizon the sun still lights the sky from where it is: keep its direction, but the light itself goes */
     U.uSunDir.value.copy(sd);
     SKYU.uZen.value.copy(P[0]); U.uHor.value.copy(P[1]); SKYU.uSunH.value.copy(P[2]); SKYU.uAnti.value.copy(P[3]); SKYU.uGlow.value.copy(P[4]);
     SKYU.uCLit.value.copy(P[5]); SKYU.uCSh.value.copy(P[6]);
-    SKYU.uDisk.value = ss2(-1.2, .4, alt); SKYU.uGlowI.value = .35 + .9*ss2(-10, -1, alt)*(1 - .55*ss2(15, 40, alt));
+    SKYU.uDisk.value = ss2(-1.2, .4, alt)*(1 - OC); SKYU.uGlowI.value = (.35 + .9*ss2(-10, -1, alt)*(1 - .55*ss2(15, 40, alt)))*(1 - .75*OC);
     var night = 1 - ss2(-12, -4, alt);
-    SKYU.uStars.value = night*(mo.alt > -2 ? .85 : 1);
-    SKYU.uMoon.value.copy(mo.alt > -4 ? dirOf(mo) : new T.Vector3(.2, -1, .1));
-    SKYU.uCov.value = .5 + .32*SW + .1*SA;
+    SKYU.uStars.value = night*(mo.alt > -2 ? .85 : 1)*(1 - ss2(.15, .7, OC));
+    SKYU.uMoon.value.copy(mo.alt > -4 && OC < .55 ? dirOf(mo) : new T.Vector3(.2, -1, .1));
+    SKYU.uCov.value = WXc.live ? Math.max(.12, Math.min(1, .28 + .68*WXc.cover + .3*SW)) : .5 + .32*SW + .1*SA;
     /* haze: morning mist, clear day, a warm evening, a deep blue night */
     var fogCol = P[1].clone().lerp(P[3], .3); var lum = fogCol.r*.3 + fogCol.g*.59 + fogCol.b*.11; fogCol.lerp(new T.Color(lum, lum, lum), .42).multiplyScalar(.8);
     fogCol.lerp(new T.Color(lum*1.02, lum*1.08, lum*1.2), .6*SW).lerp(new T.Color(lum*1.22, lum*.98, lum*.68), .45*SA);
+    if (WXc.fog > .01) fogCol.lerp(new T.Color(lum*1.15, lum*1.17, lum*1.2), .55*WXc.fog);
+    fogCol.multiplyScalar(1 - .2*Math.max(WXc.rain, WXc.storm));
     scene.fog.color.copy(fogCol); U.uFogC.value.copy(fogCol);
     var dens = .0032 + .0018*(1 - ss2(-2, 14, alt)) + .0008*ss2(-6, 3, alt)*(1 - ss2(3, 12, alt));
-    dens *= 1 + .9*SW + .4*SA;
+    dens *= 1 + .9*SW + .4*SA + 2.6*WXc.fog + .55*WXc.rain + 1.3*WXc.snow;
     scene.fog.density = dens; U.uFogD.value = dens;
     U.uGlowW.value.copy(P[4]).lerp(P[5], .3); U.uDeep.value.copy(P[0]).multiplyScalar(.18).add(new T.Color(.012, .03, .032));
     U.uGlint.value = ss2(-1, 3, alt);
@@ -531,13 +707,14 @@ function attach(api, o){
     var sunC = alt < 8 ? new T.Color('#ff7a3a').lerp(new T.Color('#ffd09a'), ss2(-1, 8, alt)) : new T.Color('#ffe2b8').lerp(new T.Color('#fff6e8'), high);
     sunC.lerp(new T.Color('#ffc480'), .35*SA*high).lerp(new T.Color('#e8eef8'), .5*SW*high);
     api.light({dir: useMoon ? [md.x, md.y, md.z] : [sd.x, Math.max(sd.y, .02), sd.z], sunColor: useMoon ? '#9fb2e2' : '#' + sunC.getHexString(),
-      sunI: (useMoon ? .62*moonLit : 1.9*ss2(-.8, 4, alt)*(.78 + .22*high))*(1 - .38*SW),
+      sunI: (useMoon ? .62*moonLit : 1.9*ss2(-.8, 4, alt)*(.78 + .22*high))*(1 - .38*SW)*(1 - .82*OC),
       fillColor: hex(P[0].clone().lerp(new T.Color('#d3dcff'), day*.5)), fillI: .06 + .22*day + .05*night,
-      sky: hex(P[0].clone().lerp(P[1], .5)), ground: alt > 0 ? '#3d3020' : '#121522', hemiI: .14 + .3*day + .06*night,
-      exposure: (.62 + .16*twi + .3*day + .22*night)*(1 - .1*SW), env: .08 + .12*twi + .3*day, lamps: 1 - ss2(-5, 1.5, alt)});
+      sky: hex(P[0].clone().lerp(P[1], .5)), ground: alt > 0 ? '#3d3020' : '#121522', hemiI: (.14 + .3*day + .06*night)*(1 + .45*OC*day),
+      exposure: (.62 + .16*twi + .3*day + .22*night)*(1 - .1*SW)*(1 - .16*OC - .08*WXc.rain), env: .08 + .12*twi + .3*day, lamps: 1 - ss2(-5, 1.5, alt)});
     hemi2.color.copy(P[1]).lerp(new T.Color('#6a7cb0'), night*.6); hemi2.groundColor.set(alt > 0 ? '#3a3420' : '#141826'); hemi2.intensity = .12 + .24*day + .16*(1 - day)*twi + .42*night;
-    birds.forEach(function(b){ b.visible = alt > -6; });
-    lampsK = 1 - ss2(-5, 1.5, alt); lanterns.set(lampsK); LAMPK.value = lampsK;
+    birds.forEach(function(b){ b.visible = alt > -6 && WXc.rain < .35 && WXc.fog < .6 && WXc.storm < .3; });
+    lampsK = Math.max(1 - ss2(-5, 1.5, alt), .85*OC*(1 - ss2(4, 14, alt))); lanterns.set(lampsK); LAMPK.value = lampsK;
+    baseExp = renderer.toneMappingExposure; WXc.day = day; WXc.night = night;
     api.heroSun = s;
   }
 
@@ -595,7 +772,7 @@ function attach(api, o){
     var pts = new T.Points(g, m); pts.frustumCulled = false; pts.renderOrder = 5; pts.visible = false; scene.add(pts); return pts;
   }
   var snowFx = null, leafFx = null;
-  function makeSnow(){ return snowFx || (snowFx = fall(lite ? 1400 : 3200, {h: 36, v: 1.5, sw: .45, size: .55, cols: [new T.Color(1, 1, 1)],
+  function makeSnow(){ return snowFx || (snowFx = fall(lite ? 1400 : 3200, {h: 36, v: 1.5, sw: .45, size: .7, cols: [new T.Color(1, 1, 1)],
     map: sprite(function(k){ var g = k.createRadialGradient(32, 32, 0, 32, 32, 30); g.addColorStop(0, 'rgba(255,255,255,1)'); g.addColorStop(.45, 'rgba(255,255,255,.7)'); g.addColorStop(1, 'rgba(255,255,255,0)'); k.fillStyle = g; k.fillRect(0, 0, 64, 64); })})); }
   function makeLeaves(){ return leafFx || (leafFx = fall(lite ? 160 : 320, {h: 30, v: .9, sw: 1.4, size: .95, at: .35, cols: AUTC.slice(0, 6), map: sprite(function(k){
     k.translate(32, 32); k.rotate(.6); k.fillStyle = '#fff'; k.beginPath(); k.moveTo(0, -26); k.quadraticCurveTo(17, -6, 0, 26); k.quadraticCurveTo(-17, -6, 0, -26); k.fill(); })})); }
@@ -611,7 +788,6 @@ function attach(api, o){
     if (!moving && SW === w && SA === a && ctT >= 1) return;
     var kk = Math.min(1, dt*1.3); SW = moving ? SW + (w - SW)*kk : w; SA = moving ? SA + (a - SA)*kk : a;
     U.uWSnow.value = SW; U.uIce.value = SW; U.uAut.value = SA;
-    if (snowFx){ snowFx.visible = SW > .02; snowFx.material.opacity = .9*SW; }
     if (leafFx){ leafFx.visible = SA > .02; leafFx.material.opacity = SA; }
     if (ctT < 1){ ctT = Math.min(1, ctT + dt/1.8); var e = ctT*ctT*(3 - 2*ctT);
       CROWNS.forEach(function(c){ var A = c.im.instanceColor.array; for (var i = 0; i < A.length; i++) A[i] = c.from[i] + (c.to[i] - c.from[i])*e; c.im.instanceColor.needsUpdate = true; }); }
@@ -651,18 +827,47 @@ function attach(api, o){
       '.hxw-s button{padding:.36rem 0;border:0;border-radius:7px;background:none;color:rgba(244,233,200,.6);font:inherit;font-size:.68rem;letter-spacing:.04em;cursor:pointer;transition:background .25s,color .25s}',
       '.hxw-s button{position:relative}.hxw-s button.is-now::after{content:"";position:absolute;left:50%;bottom:3px;width:3px;height:3px;margin-left:-1.5px;border-radius:50%;background:rgba(212,178,90,.8)}',
       '.hxw-s button:hover{color:#f4e9c8}.hxw-s button[aria-pressed="true"]{background:rgba(212,178,90,.2);color:#f4e9c8}',
+      '.hxw-snd{width:38px;height:38px;padding:0;border-radius:50%;border:1px solid rgba(244,233,200,.24);background:rgba(23,18,11,.55);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);color:#f4e9c8;display:grid;place-items:center;cursor:pointer;opacity:.6;flex:0 0 auto;transition:opacity .3s,border-color .3s,background .3s}',
+      '.hxw-snd:hover,.hxw-snd:focus-visible{opacity:1;border-color:rgba(212,178,90,.5)}.hxw-snd[aria-pressed="true"]{opacity:1;border-color:rgba(212,178,90,.55);background:rgba(40,30,14,.6)}',
+      '.hxw-snd svg{width:17px;height:17px}.hxw-snd .w{opacity:0;transition:opacity .3s}.hxw-snd[aria-pressed="true"] .w{opacity:1;animation:hxwW 1.8s ease-in-out infinite}.hxw-snd[aria-pressed="true"] .x{opacity:0}',
+      '@keyframes hxwW{50%{opacity:.35}}',
+      '.hxw-live{width:100%;display:flex;align-items:center;gap:.5rem;margin:0 0 .45rem;padding:.42rem .6rem;border-radius:9px;border:1px solid rgba(212,178,90,.12);background:rgba(255,255,255,.05);color:rgba(244,233,200,.65);font:inherit;font-size:.68rem;text-align:left;cursor:pointer;transition:background .25s,color .25s}',
+      '.hxw-live[aria-pressed="true"]{background:rgba(212,178,90,.2);color:#f4e9c8}.hxw-live b{font-weight:600;color:#f4e9c8}.hxw-live span{margin-left:auto;opacity:.7}',
+      '.hxw-dot{width:6px;height:6px;border-radius:50%;background:#7fc48a;box-shadow:0 0 0 0 rgba(127,196,138,.6);animation:hxwP 2.4s infinite;flex:0 0 auto}.hxw-dot.off{background:rgba(244,233,200,.3);animation:none}',
+      '@keyframes hxwP{0%{box-shadow:0 0 0 0 rgba(127,196,138,.55)}70%{box-shadow:0 0 0 6px rgba(127,196,138,0)}100%{box-shadow:0 0 0 0 rgba(127,196,138,0)}}',
+      '.hxw-wx{margin-bottom:.75rem}.hx-wx{display:flex!important;align-items:center;gap:.45rem;margin-top:.45rem!important;color:rgba(244,233,200,.78)!important;letter-spacing:.01em}.hx-wx[hidden]{display:none!important}',
       '@media(max-width:980px){.hxw{right:.9rem;bottom:.7rem}.hxw-p{width:min(250px,calc(100vw - 2rem))}.hxw-row{align-self:stretch;justify-content:space-between}}'].join('');
     document.head.appendChild(css);
     var box = document.createElement('div'); box.className = 'hxw';
-    box.innerHTML = '<div class="hxw-p" id="hxwP" role="group" aria-label="Пора доби й року">' +
+    box.innerHTML = '<div class="hxw-p" id="hxwP" role="group" aria-label="Погода, пора доби й року">' +
+      '<div class="hxw-h" style="margin-bottom:.4rem"><span class="hxw-k">Погода</span></div>' +
+      '<div class="hxw-wx"><button type="button" class="hxw-live" data-w="live"><i class="hxw-dot off"></i><b>Як зараз у Дубровиці</b><span class="hxw-lv">…</span></button>' +
+      '<div class="hxw-s">' + [['clear', 'Ясно'], ['cloudy', 'Хмарно'], ['rain', 'Дощ'], ['fog', 'Туман'], ['snow', 'Сніг'], ['storm', 'Гроза']].map(function(q){ return '<button type="button" data-w="' + q[0] + '">' + q[1] + '</button>'; }).join('') + '</div></div>' +
       '<div class="hxw-h"><span class="hxw-k">Пора доби</span><span class="hxw-t"></span><button type="button" class="hxw-now" hidden>зараз</button></div>' +
       '<input class="hxw-r" type="range" min="0" max="1439" step="5" aria-label="Час доби">' +
       '<div class="hxw-h" style="margin-bottom:.4rem"><span class="hxw-k">Пора року</span></div>' +
       '<div class="hxw-s">' + [['summer', 'Літо'], ['autumn', 'Осінь'], ['winter', 'Зима']].map(function(q){ return '<button type="button" data-s="' + q[0] + '" aria-pressed="' + (q[0] === SEASON) + '"' + (q[0] === NOWS ? ' class="is-now" title="Пора року зараз"' : '') + '>' + q[1] + '</button>'; }).join('') + '</div></div>' +
       '<button type="button" class="hxw-b" aria-label="Змінити пору доби й року" aria-expanded="false" aria-controls="hxwP"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M4.5 13.5a5.5 5.5 0 0 1 11 0"/><path d="M2 13.5h16M10 3.2v1.6M4.2 5.6l1.1 1.1M15.8 5.6l-1.1 1.1M6 16.5h8"/></svg></button>';
     var full = document.getElementById('hxFull');                                   // sits in line with «Розглянути зблизька», same height
-    if (full && full.parentNode){ var row = document.createElement('div'); row.className = 'hxw-row'; full.parentNode.insertBefore(row, full); row.appendChild(full); row.appendChild(box); }
-    else host.appendChild(box);
+    var snd = document.createElement('button'); snd.type = 'button'; snd.className = 'hxw-snd'; snd.setAttribute('aria-pressed', 'false'); snd.setAttribute('aria-label', 'Звуки Воробина: птахи, вітер, дощ'); snd.title = 'Увімкнути звук';
+    snd.innerHTML = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5h3l4-3.5v12l-4-3.5H3z"/><path class="w" d="M13 7.2a4 4 0 0 1 0 5.6M15.2 5a7 7 0 0 1 0 10"/><path class="x" d="M13.5 8l4 4M17.5 8l-4 4"/></svg>';
+    if (full && full.parentNode){ var row = document.createElement('div'); row.className = 'hxw-row'; full.parentNode.insertBefore(row, full); row.appendChild(full); row.appendChild(snd); row.appendChild(box); }
+    else { host.appendChild(box); snd.style.cssText = 'position:absolute;right:3.6rem;bottom:.8rem;z-index:4'; host.appendChild(snd); }
+    snd.addEventListener('click', function(){ var v = snd.getAttribute('aria-pressed') !== 'true';
+      if (!AU) AU = makeAudio(); if (!AU) return; AU.set(v); snd.setAttribute('aria-pressed', String(v)); snd.title = v ? 'Вимкнути звук' : 'Увімкнути звук'; });
+    /* a live line under the caption: the weather in Dubrovytsia right now */
+    var sub = document.getElementById('hxSub'), cap = null;
+    if (sub && sub.parentNode){ cap = document.createElement('small'); cap.className = 'hx-wx'; cap.hidden = true; sub.parentNode.appendChild(cap); }
+    var lv = box.querySelector('.hxw-lv'), dot = box.querySelector('.hxw-dot');
+    function deg(t){ t = Math.round(t); return (t > 0 ? '+' : t < 0 ? '−' : '') + Math.abs(t) + '°'; }
+    function wxShow(){
+      var L = wxLive; lv.textContent = L ? deg(L.t) + (L.label ? ', ' + L.label : '') : 'немає даних'; dot.classList.toggle('off', !L);
+      box.querySelectorAll('[data-w]').forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.w === wxPick)); });
+      if (cap){ cap.hidden = !L; if (L) cap.innerHTML = '<i class="hxw-dot"></i>Зараз у Дубровиці: ' + deg(L.t) + (L.label ? ', ' + L.label : '') + (wxPick !== 'live' ? ' · на сцені обрано вручну' : ''); }
+    }
+    wxListeners.push(wxShow);
+    box.querySelectorAll('[data-w]').forEach(function(b){ b.addEventListener('click', function(){ wxPick = b.dataset.w; wxApply(); }); });
+    wxShow();
     var btn = box.querySelector('.hxw-b'), rng = box.querySelector('.hxw-r'), lab = box.querySelector('.hxw-t'), now = box.querySelector('.hxw-now');
     function fmt(m){ m = Math.round(m) % 1440; return ('0' + Math.floor(m/60)).slice(-2) + ':' + ('0' + m % 60).slice(-2); }
     function show(){ var m = override == null ? kyivNow() : override; rng.value = m; lab.textContent = fmt(m); now.hidden = override == null; }
@@ -682,6 +887,8 @@ function attach(api, o){
 
   var smoke = null;
   setSky(); setInterval(setSky, 60000); patchLamps();
+  wxApply(); wxFetch(); setInterval(function(){ wxFetch(true); }, 15*60000);
+  api.heroWeather = function(k){ wxPick = k; wxApply(); for (var q in WX) WXc[q] = WX[q]; WXc.wet = WX.rain > .05 ? 1 : 0; setSky(); }; api.__wx = function(){ return {WX: WX, WXc: WXc, live: wxLive}; };
 
   /* ── frame the house on the right, so the copy on the left has open sky and land behind it ── */
   var shift = o.shift || 0;
@@ -718,7 +925,7 @@ function attach(api, o){
   var lastNow = t0;
   (function tick(now){
     var t = (now - t0)/1000; U.uTime.value = reduced ? 0 : t;
-    var dtt = Math.min(.1, (now - lastNow)/1000); sway(now, dtt); stepSeason(dtt); lastNow = now;
+    var dtt = Math.min(.1, (now - lastNow)/1000); sway(now, dtt); stepSeason(dtt); stepWeather(dtt); lastNow = now;
     birds.forEach(function(b){ var d = b.userData, a = t*d.sp + d.ph; b.position.set(d.cx + Math.cos(a)*d.rad, d.h + Math.sin(t*.4 + d.ph)*1.2, d.cz + Math.sin(a)*d.rad);
       b.rotation.y = -a; var f = Math.sin(t*7 + d.ph*5)*.55; d.l.rotation.z = f; d.r.rotation.z = -f; });
     if (smoke){ var P = smoke.geometry.attributes.position, s = smoke.userData;
