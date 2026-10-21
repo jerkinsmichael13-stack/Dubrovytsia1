@@ -115,6 +115,7 @@
                                     <a href="atlas-1798.html" class="nav-doc"><span class="nav-doc-year">1798</span><span class="nav-doc-name">Атлас губернії</span><span class="nav-doc-note">Інтерактивна мапа сіл</span></a>
                                     <a href="atlas-1798-analityka.html" class="nav-doc"><span class="nav-doc-year">1798</span><span class="nav-doc-name">Край у цифрах</span><span class="nav-doc-note">Аналітика атласу</span></a>
                                     <a href="persha-svitova.html" class="nav-doc"><span class="nav-doc-year">1914</span><span class="nav-doc-name">Перша світова війна</span><span class="nav-doc-note">Мобілізовані мешканці</span></a>
+                                    <a href="worobin-1918.html" class="nav-doc"><span class="nav-doc-year">1918</span><span class="nav-doc-name">Загибель Воробина</span><span class="nav-doc-note">Справа Луцького суду</span></a>
                                     <a href="vyborchi-1938.html" class="nav-doc"><span class="nav-doc-year">1938</span><span class="nav-doc-name">Список виборців</span><span class="nav-doc-note">8 619 записів</span></a>
                                 </div>
                             </div>
@@ -189,6 +190,7 @@
                 <a href="atlas-1798.html"><span class="ft-year">1798</span>Атлас губернії</a>
                 <a href="atlas-1798-analityka.html"><span class="ft-year">1798</span>Край у цифрах</a>
                 <a href="persha-svitova.html"><span class="ft-year">1914</span>Перша світова війна</a>
+                <a href="worobin-1918.html"><span class="ft-year">1918</span>Загибель Воробина</a>
                 <a href="vyborchi-1938.html"><span class="ft-year">1938</span>Список виборців</a>
             </nav>
             <nav class="ft-col" aria-label="Постаті й каталоги">
@@ -221,7 +223,8 @@ if (K) fetch('surnames-alias.json').then(function(r){ return r.ok ? r.json() : {
 else catalog();
 
 function page(b){
-  b.met = b.met || []; b.akt = b.akt || []; var n = b.name, eras = [['XVII ст.', 'акти й реєстри', b.akt.length], ['бл. 1800', 'інвентар Плятера', b.inv.length], ['XIX ст.', 'метричні книги', b.met.length], ['1914–1917', 'Перша світова', b.ww.length], ['1938', 'список виборців', b.vot.length], ['1823–1991', 'преса', b.press.length]];
+  b.met = b.met || []; b.akt = b.akt || []; var a17 = b.akt.filter(function(x){ return +x[2] < 1800; }), a20 = b.akt.filter(function(x){ return +x[2] >= 1800; });
+  var n = b.name, eras = [['XVII ст.', 'акти й реєстри', a17.length], ['бл. 1800', 'інвентар Плятера', b.inv.length], ['XIX ст.', 'метричні книги', b.met.length], ['1914–1917', 'Перша світова', b.ww.length]].concat(a20.length ? [['1918–1923', 'справа про Воробин', a20.length]] : []).concat([['1938', 'список виборців', b.vot.length], ['1823–1991', 'преса', b.press.length]]);
   var mx = Math.max.apply(null, eras.map(function(e){ return e[2]; }).concat([1]));
   var total = b.akt.length + b.inv.length + b.met.length + b.ww.length + b.vot.length + b.press.length;
   /* прізвище так, як воно стоїть у записі; якщо писар помилився (Краско замість Красько) — правильне написання, а запис — у примітці */
@@ -252,12 +255,12 @@ function page(b){
       wk.map(function(w){ return where[w].s ? '<a class="ds-chip" href="poselennia.html?p=' + where[w].s + '">' + esc(w) + '<sup>' + where[w].n + '</sup></a>' : '<span class="ds-chip">' + esc(w) + '<sup>' + where[w].n + '</sup></span>'; }).join('') + '</div></section>';
   }
   function more(id, total, lim){ return total > lim ? '<button type="button" class="ds-btn sp-more" data-more="' + id + '">Показати всі ' + total + '</button>' : ''; }
-  if (b.akt.length) {
-    h += '<section class="ds-sec"><div class="ds-sh"><b>§ ' + (++sec) + '</b><h2>XVII століття · акти й реєстри</h2><span>' + b.akt.length + ' ' + plural(b.akt.length, 'згадка', 'згадки', 'згадок') + '</span></div>' +
+  if (a17.length) {
+    h += '<section class="ds-sec"><div class="ds-sh"><b>§ ' + (++sec) + '</b><h2>XVII століття · акти й реєстри</h2><span>' + a17.length + ' ' + plural(a17.length, 'згадка', 'згадки', 'згадок') + '</span></div>' +
       '<p class="ds-note">Люди, названі в записах пінських гродських книг 1645–1665 років і в реєстрі збитків 1665 року: скарги, протестації, присяги, свідки й потерпілі. Найдавніші згадки прізвища в архіві.</p>' +
       '<div class="sp-scroll"><table class="sp-tbl" id="tAkt"><thead><tr><th>Особа</th><th>Рік · документ</th><th>Поселення</th><th>Хто в документі</th></tr></thead><tbody>' +
-      b.akt.map(function(x, i){ return '<tr' + (i >= 30 ? ' hidden' : '') + '><td>' + esc(x[0]) + (x[1] ? '<span class="sp-fam">' + esc(x[1]) + '</span>' : '') + '</td><td>' + esc(x[2]) + ' · <a href="' + esc(x[4]) + '">' + esc(x[3]) + '</a></td><td>' + (x[6] ? '<a href="poselennia.html?p=' + x[6] + '">' + esc(x[5]) + '</a>' : esc(x[5] || '—')) + '</td><td>' + esc(x[7] || '—') + '</td></tr>'; }).join('') +
-      '</tbody></table></div>' + more('tAkt', b.akt.length, 30) + '</section>';
+      a17.map(function(x, i){ return '<tr' + (i >= 30 ? ' hidden' : '') + '><td>' + esc(x[0]) + (x[1] ? '<span class="sp-fam">' + esc(x[1]) + '</span>' : '') + '</td><td>' + esc(x[2]) + ' · <a href="' + esc(x[4]) + '">' + esc(x[3]) + '</a></td><td>' + (x[6] ? '<a href="poselennia.html?p=' + x[6] + '">' + esc(x[5]) + '</a>' : esc(x[5] || '—')) + '</td><td>' + esc(x[7] || '—') + '</td></tr>'; }).join('') +
+      '</tbody></table></div>' + more('tAkt', a17.length, 30) + '</section>';
   }
   if (b.inv.length) {
     h += '<section class="ds-sec"><div class="ds-sh"><b>§ ' + (++sec) + '</b><h2>Близько 1800 року · інвентар Плятера</h2><span>' + b.inv.length + ' ' + plural(b.inv.length, 'двір', 'двори', 'дворів') + '</span></div>' +
@@ -284,6 +287,13 @@ function page(b){
       b.ww.map(function(x, i){ return '<tr' + (i >= LIM.ww ? ' hidden' : '') + '><td>' + who(x[9], [x[0], x[1]].filter(Boolean).join(' ')) + (x[5] ? '<span class="sp-fam">' + esc(x[5]) + '</span>' : '') + '</td><td>' + esc(x[2] || '—') + '</td><td>' + esc(x[3] || '—') + '</td><td>' + esc(x[4]) + (x[6] ? '<span class="sp-fam">' + esc(x[6]) + '</span>' : '') + (x[7] ? '<span class="sp-fam"><a href="' + esc(x[7]) + '" target="_blank" rel="noopener">скан ↗</a></span>' : '') + '</td></tr>'; }).join('') +
       '</tbody></table></div>' + more('tWw', b.ww.length, LIM.ww) + '<p class="ds-note" style="margin-top:1rem"><a href="persha-svitova.html">Увесь список мешканців у розділі «Перша світова» →</a></p></section>';
   }
+  if (a20.length) {
+    h += '<section class="ds-sec"><div class="ds-sh"><b>§ ' + (++sec) + '</b><h2>1918–1923 · справа про напад на Воробин</h2><span>' + a20.length + ' ' + plural(a20.length, 'згадка', 'згадки', 'згадок') + '</span></div>' +
+      '<p class="ds-note">Підсудні, загиблі, свідки й розшукувані у справі Луцького окружного суду № 67/22 про напад на маєток Плятерів 21–22 листопада 1918 року.</p>' +
+      '<div class="sp-scroll"><table class="sp-tbl"><thead><tr><th>Особа</th><th>Документ</th><th>Поселення</th><th>Хто в справі</th></tr></thead><tbody>' +
+      a20.map(function(x){ return '<tr><td>' + esc(x[0]) + (x[1] ? '<span class="sp-fam">' + esc(x[1]) + '</span>' : '') + '</td><td><a href="' + esc(x[4]) + '">' + esc(x[3]) + '</a></td><td>' + (x[6] ? '<a href="poselennia.html?p=' + x[6] + '">' + esc(x[5]) + '</a>' : esc(x[5] || '—')) + '</td><td>' + esc(x[7] || '—') + '</td></tr>'; }).join('') +
+      '</tbody></table></div></section>';
+  }
   if (b.vot.length) {
     h += '<section class="ds-sec"><div class="ds-sh"><b>§ ' + (++sec) + '</b><h2>1938 · список виборців</h2><span>' + b.vot.length + ' ' + plural(b.vot.length, 'особа', 'особи', 'осіб') + '</span></div>' +
       '<p class="ds-note">Списки виборців Дубровицької гміни 1938 року велися польською, тож імена подано мовою оригіналу.</p>' +
@@ -308,7 +318,7 @@ function catalog(){
     var tot = L.reduce(function(s, x){ return s + x[2] + x[3] + x[4] + (x[7] || 0); }, 0);
     var top = L.filter(function(x){ return [x[2], x[3], x[4]].filter(Boolean).length >= 2; }).sort(function(a, b){ return (b[2] + b[3] + b[4] + b[5]) - (a[2] + a[3] + a[4] + a[5]); }).slice(0, 12);
     var h = '<section class="ds-desk"><div class="ds-wrap"><p class="ds-crumbs"><a href="index.html">Головна</a> / Прізвища</p><p class="ds-kick">Пошук предків</p>' +
-      '<h1 class="ds-title">Прізвища <em>Дубровиччини</em></h1><p class="ds-lede">Чотири джерела, майже три століття: акти пінських гродських книг і реєстр збитків 1645–1665 років, інвентар графа Плятера близько 1800 року, документи Першої світової війни й список виборців 1938 року. Українське, російське й польське написання, а також помилки писарів зведено в одне прізвище.</p>' +
+      '<h1 class="ds-title">Прізвища <em>Дубровиччини</em></h1><p class="ds-lede">П\'ять джерел, майже три століття: акти пінських гродських книг і реєстр збитків 1645–1665 років, інвентар графа Плятера близько 1800 року, документи Першої світової війни, справа про напад на Воробин 1918 року й список виборців 1938 року. Українське, російське й польське написання, а також помилки писарів зведено в одне прізвище.</p>' +
       '<dl class="ds-facts"><div><dd>' + fmt(L.length) + '</dd><dt>прізвищ</dt></div><div><dd>' + fmt(tot) + '</dd><dt>іменних записів</dt></div><div><dd>XVII–XX</dd><dt>століття</dt></div></dl>' +
       '<div class="sc-tools"><input type="search" id="scQ" placeholder="Ваше прізвище — наприклад, Кулик або Kulik" autocomplete="off" aria-label="Знайти прізвище"></div></div></section>' +
       '<div class="ds-wrap"><section class="ds-sec" id="scTopSec"><div class="ds-sh"><b>§ 1</b><h2>Родини, що пройшли крізь століття</h2><span>є щонайменше у двох джерелах</span></div><div class="sc-top">' +
