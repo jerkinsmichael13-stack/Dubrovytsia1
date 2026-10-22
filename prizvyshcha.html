@@ -224,7 +224,7 @@ else catalog();
 
 function page(b){
   b.met = b.met || []; b.akt = b.akt || []; var a17 = b.akt.filter(function(x){ return +x[2] < 1800; }), a20 = b.akt.filter(function(x){ return +x[2] >= 1800; });
-  var n = b.name, eras = [['XVII ст.', 'акти й реєстри', a17.length], ['бл. 1800', 'інвентар Плятера', b.inv.length], ['XIX ст.', 'метричні книги', b.met.length], ['1914–1917', 'Перша світова', b.ww.length]].concat(a20.length ? [['1918–1923', 'справа про Воробин', a20.length]] : []).concat([['1938', 'список виборців', b.vot.length], ['1823–1991', 'преса', b.press.length]]);
+  var n = b.name, eras = [['XVII ст.', 'акти й реєстри', a17.length], ['бл. 1800', 'інвентар Плятера', b.inv.length], ['XIX ст.', 'метричні книги', b.met.length], ['1914–1917', 'Перша світова', b.ww.length]].concat(a20.length ? [['1918–1925', 'справа про Воробин', a20.length]] : []).concat([['1938', 'список виборців', b.vot.length], ['1823–1991', 'преса', b.press.length]]);
   var mx = Math.max.apply(null, eras.map(function(e){ return e[2]; }).concat([1]));
   var total = b.akt.length + b.inv.length + b.met.length + b.ww.length + b.vot.length + b.press.length;
   /* прізвище так, як воно стоїть у записі; якщо писар помилився (Краско замість Красько) — правильне написання, а запис — у примітці */
@@ -288,7 +288,7 @@ function page(b){
       '</tbody></table></div>' + more('tWw', b.ww.length, LIM.ww) + '<p class="ds-note" style="margin-top:1rem"><a href="persha-svitova.html">Увесь список мешканців у розділі «Перша світова» →</a></p></section>';
   }
   if (a20.length) {
-    h += '<section class="ds-sec"><div class="ds-sh"><b>§ ' + (++sec) + '</b><h2>1918–1923 · справа про напад на Воробин</h2><span>' + a20.length + ' ' + plural(a20.length, 'згадка', 'згадки', 'згадок') + '</span></div>' +
+    h += '<section class="ds-sec"><div class="ds-sh"><b>§ ' + (++sec) + '</b><h2>1918–1925 · справа про напад на Воробин</h2><span>' + a20.length + ' ' + plural(a20.length, 'згадка', 'згадки', 'згадок') + '</span></div>' +
       '<p class="ds-note">Підсудні, загиблі, свідки й розшукувані у справі Луцького окружного суду № 67/22 про напад на маєток Плятерів 21–22 листопада 1918 року.</p>' +
       '<div class="sp-scroll"><table class="sp-tbl"><thead><tr><th>Особа</th><th>Документ</th><th>Поселення</th><th>Хто в справі</th></tr></thead><tbody>' +
       a20.map(function(x){ return '<tr><td>' + esc(x[0]) + (x[1] ? '<span class="sp-fam">' + esc(x[1]) + '</span>' : '') + '</td><td><a href="' + esc(x[4]) + '">' + esc(x[3]) + '</a></td><td>' + (x[6] ? '<a href="poselennia.html?p=' + x[6] + '">' + esc(x[5]) + '</a>' : esc(x[5] || '—')) + '</td><td>' + esc(x[7] || '—') + '</td></tr>'; }).join('') +
