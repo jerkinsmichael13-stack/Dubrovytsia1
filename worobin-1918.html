@@ -440,6 +440,88 @@
 .w18-bios time{font:500 .92rem/1.35 var(--ds-display);color:var(--w-ink);font-variant-numeric:lining-nums}
 @media(max-width:900px){.w18-bios{grid-template-columns:1fr}}
 @media(max-width:460px){.w18-bios article{grid-template-columns:1fr}.w18-bios img{width:84px}}
+
+/* ── Документи справи: картки ── */
+.w18-docs{list-style:none;margin:0 0 2.6rem;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem}
+.w18-docs--s{grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+.w18-dc{display:grid;grid-template-columns:92px minmax(0,1fr);gap:.95rem;width:100%;height:100%;padding:.75rem;text-align:left;font:inherit;color:inherit;background:var(--w-card);border:1px solid var(--w-rule);border-radius:10px;cursor:pointer;transition:border-color .2s,transform .2s,box-shadow .2s}
+.w18-dc:hover{border-color:color-mix(in srgb,var(--w-gold) 55%,transparent);transform:translateY(-2px);box-shadow:0 10px 26px -18px rgba(40,28,10,.5)}
+.w18-dc:focus-visible{outline:2px solid var(--w-gold);outline-offset:2px}
+.w18-dc-im{display:block;aspect-ratio:3/4;overflow:hidden;border-radius:5px;background:#e9e1cf;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06)}
+.w18-dc-im img{width:100%;height:100%;object-fit:cover;object-position:50% 18%;display:block;filter:sepia(.12) contrast(1.02)}
+.w18-dc-tx{display:flex;flex-direction:column;gap:.28rem;min-width:0}
+.w18-dc-tx time{font:600 .66rem/1 var(--w-mono);letter-spacing:.04em;color:var(--w-gold)}
+.w18-dc-tx b{font:500 1.02rem/1.25 var(--ds-display);color:var(--w-ink)}
+.w18-dc-tx span{font-size:.8rem;line-height:1.45;color:var(--w-ink2)}
+.w18-dc-tx small{margin-top:auto;padding-top:.2rem;font:500 .66rem/1.4 var(--ds-body);letter-spacing:.02em;color:var(--w-ink3)}
+.w18-docs--s .w18-dc{grid-template-columns:64px minmax(0,1fr);padding:.6rem}
+.w18-docs--s .w18-dc-tx span{display:none}
+.w18-scanbtn{display:inline-flex;align-items:center;gap:.35rem;margin:.1rem 0 0;padding:.28rem .7rem .28rem .55rem;font:600 .68rem/1.2 var(--ds-body);letter-spacing:.03em;color:var(--w-gold);background:transparent;border:1px solid color-mix(in srgb,var(--w-gold) 40%,transparent);border-radius:100px;cursor:pointer;vertical-align:middle}
+.w18-scanbtn:hover{background:color-mix(in srgb,var(--w-gold) 10%,transparent)}
+.w18-scanbtn svg{width:13px;height:13px}
+
+/* ── Документи справи: переглядач ── */
+.w18-dv{position:fixed;inset:0;z-index:2000;display:grid;grid-template-rows:auto minmax(0,1fr);background:#100e0b;color:#f2ebdc}
+.w18-dv[hidden]{display:none}
+.w18-dv-bar{display:flex;align-items:center;gap:1rem;padding:calc(env(safe-area-inset-top,0px) + .65rem) 1rem .65rem 1.2rem;border-bottom:1px solid rgba(242,235,220,.1)}
+.w18-dv-h{flex:1;min-width:0;display:flex;align-items:baseline;gap:.8rem;overflow:hidden;white-space:nowrap}
+.w18-dv-h time{font:600 .72rem/1 var(--w-mono);color:#d9b44a;flex:none}
+.w18-dv-h b{font:500 1.1rem/1.2 var(--ds-display);overflow:hidden;text-overflow:ellipsis}
+.w18-dv-h small{font-size:.72rem;color:rgba(242,235,220,.5);flex:none}
+.w18-dv-nav{display:flex;align-items:center;gap:.4rem;flex:none}
+.w18-dv-nav span{min-width:3.6rem;text-align:center;font:500 .72rem/1 var(--w-mono);color:rgba(242,235,220,.6)}
+.w18-dv button{height:38px;min-width:38px;padding:0 .8rem;border:1px solid rgba(242,235,220,.18);border-radius:100px;background:rgba(242,235,220,.05);color:inherit;font:inherit;font-size:.86rem;cursor:pointer}
+.w18-dv button:hover{border-color:#d9b44a}
+.w18-dv .w18-dv-x{font-size:1.3rem;line-height:1}
+.w18-dv-tabs{display:none;gap:.3rem}
+.w18-dv-tabs button[aria-selected="true"]{background:#d9b44a;border-color:#d9b44a;color:#16110a}
+.w18-dv-body{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(340px,.85fr);min-height:0}
+.w18-dv-scan{display:grid;grid-template-rows:minmax(0,1fr) auto;min-height:0;border-right:1px solid rgba(242,235,220,.08)}
+.w18-dv-stage{overflow:auto;display:grid;place-items:center;padding:1rem;cursor:zoom-in;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+.w18-dv-stage img{display:block;max-width:100%;max-height:calc(100vh - 11rem);width:auto;height:auto;border-radius:3px;box-shadow:0 20px 60px rgba(0,0,0,.55);background:#2a241b;user-select:none;-webkit-user-drag:none}
+.w18-dv-stage.is-z{place-items:start;cursor:grab}
+.w18-dv-stage.is-z.is-drag{cursor:grabbing}
+.w18-dv-stage.is-z img{max-width:none;max-height:none;width:auto;height:auto}
+.w18-dv-stage.is-load img{opacity:.35}
+.w18-dv-pages{display:flex;gap:.5rem;padding:.6rem 1rem calc(env(safe-area-inset-bottom,0px) + .7rem);overflow-x:auto;border-top:1px solid rgba(242,235,220,.08)}
+.w18-dv-pages:empty{display:none}
+.w18-dv-pages button{flex:none;width:52px;height:68px;padding:0;border-radius:4px;overflow:hidden;opacity:.55;border:2px solid transparent;background:#2a241b}
+.w18-dv-pages button.is-on{opacity:1;border-color:#d9b44a}
+.w18-dv-pages img{width:100%;height:100%;object-fit:cover;display:block}
+.w18-dv-tr{overflow:auto;padding:1.6rem clamp(1.2rem,3vw,2.4rem) 3rem;background:var(--color-bg,#f8f4ec);color:var(--color-text,#1a1611);overscroll-behavior:contain;font-size:.95rem;line-height:1.65}
+.w18-dv-tr:focus{outline:none}
+.w18-dv-st{display:inline-block;margin:0 0 1rem;padding:.25rem .6rem;border-radius:100px;font:600 .66rem/1.3 var(--ds-body);letter-spacing:.03em;color:#2f6b3a;background:rgba(47,107,58,.1)}
+.w18-dv-st.part{color:var(--w-ember);background:color-mix(in srgb,var(--w-ember) 10%,transparent)}
+.w18-dv-tr h3{margin:0 0 .3rem;font:500 1.45rem/1.2 var(--ds-display)}
+.w18-dv-tr .meta{margin:0 0 1.2rem;font-size:.78rem;color:var(--w-ink3)}
+.w18-dv-tr p{margin:0 0 .8rem}
+.w18-dv-tr ul{margin:0 0 .9rem;padding-left:1.15rem}
+.w18-dv-tr li{margin:0 0 .35rem}
+.w18-dv-tr .stamp{font:500 .76rem/1.5 var(--ds-body);color:var(--w-ink3);font-style:italic}
+.w18-dv-tr .sig{font-size:.86rem;color:var(--w-ink2);text-align:right}
+.w18-dv-tr .pg{display:flex;align-items:center;gap:.6rem;margin:1.5rem 0 .8rem;padding:0;border:0;background:none;font:600 .7rem/1 var(--w-mono);letter-spacing:.04em;color:var(--w-gold);cursor:pointer;width:100%;text-align:left}
+.w18-dv-tr .pg::after{content:'';flex:1;height:1px;background:var(--w-rule2)}
+.w18-dv-tr .pg.no{color:var(--w-ink3);cursor:default}
+.w18-dv-tr .pg.is-on{color:var(--w-ember)}
+.w18-dv-tr .tw{overflow-x:auto;margin:0 0 1rem}
+.w18-dv-tr table{border-collapse:collapse;font-size:.8rem;line-height:1.4;min-width:100%}
+.w18-dv-tr th,.w18-dv-tr td{padding:.35rem .5rem;border-bottom:1px solid var(--w-rule);text-align:left;vertical-align:top}
+.w18-dv-tr th{font-weight:600;color:var(--w-ink2);background:var(--w-alt)}
+.w18-dv-tr .note{padding:.7rem .9rem;border-left:2px solid var(--w-gold);background:var(--w-alt);font-size:.84rem;color:var(--w-ink2)}
+@media(max-width:900px){
+  .w18-dv-bar{flex-wrap:wrap;gap:.5rem .8rem;padding-left:1rem}
+  .w18-dv-h{flex-basis:100%;order:-1;flex-direction:column;align-items:flex-start;gap:.25rem;white-space:normal}
+  .w18-dv-h b{font-size:1rem}
+  .w18-dv-tabs{display:flex}
+  .w18-dv-nav{margin-left:auto}
+  .w18-dv-nav span{display:none}
+  .w18-dv button{height:36px;min-width:36px;padding:0 .7rem}
+  .w18-dv-body{grid-template-columns:minmax(0,1fr)}
+  .w18-dv-body[data-v="scan"] .w18-dv-tr,.w18-dv-body[data-v="tr"] .w18-dv-scan{display:none}
+  .w18-dv-scan{border-right:0}
+  .w18-dv-stage{padding:.6rem}
+  .w18-dv-stage img{max-height:calc(100vh - 14rem)}
+}
 .w18 [id]{scroll-margin-top:calc(var(--ds-hdr) + 3.8rem)}
 </style>
 </head>
@@ -563,7 +645,8 @@
         <li><a href="#liudy"><b>11</b>Люди</a></li>
         <li><a href="#rozbizhnosti"><b>12</b>Розбіжності</a></li>
         <li><a href="#potim"><b>13</b>Потім</a></li>
-        <li><a href="#dzherelo"><b>14</b>Джерело</a></li>
+        <li><a href="#dokumenty"><b>14</b>Документи</a></li>
+        <li><a href="#dzherelo"><b>15</b>Джерело</a></li>
     </ol>
 </nav>
 
@@ -761,7 +844,7 @@
                 </tbody>
             </table>
         </div>
-        <p class="w18-src">Протокол огляду книги хворих, 30.V.1920, арк. 585; реєстр районного лікаря Добровольського, 3.VI.1920, арк. 598–599. Таблицю звірено зі сканами оригіналів; у реєстрі лікаря по батькові дописано олівцем, а місце рани подекуди відрізняється від книги.</p>
+        <p class="w18-src">Протокол огляду книги хворих, 30.V.1920, арк. 585; реєстр районного лікаря Добровольського, 3.VI.1920, арк. 598–599. Таблицю звірено зі сканами оригіналів; у реєстрі лікаря по батькові дописано олівцем, а місце рани подекуди відрізняється від книги. <button type="button" class="w18-scanbtn" data-doc="d86"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L12.5 4.5v10h-8.5z M9.5 1.5v3h3" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>скан книги хворих</button> <button type="button" class="w18-scanbtn" data-doc="d89"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L12.5 4.5v10h-8.5z M9.5 1.5v3h3" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>скан реєстру лікаря</button></p>
     </div>
 </section>
 
@@ -787,6 +870,7 @@
                     <div class="w18-v"><small>Люблін, 11.IX.1923</small><b>8 років — за амністією</b></div>
                     <div class="w18-v w18-v--end"><small>10.VIII.1924</small><b>помер у Луцькій в'язниці</b></div>
                 </div>
+                <p class="w18-src"><button type="button" class="w18-scanbtn" data-doc="d87"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L12.5 4.5v10h-8.5z M9.5 1.5v3h3" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>лист ґміни 1920</button> <button type="button" class="w18-scanbtn" data-doc="d119"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L12.5 4.5v10h-8.5z M9.5 1.5v3h3" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>рапорт поліції 1921</button> <button type="button" class="w18-scanbtn" data-doc="d274"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L12.5 4.5v10h-8.5z M9.5 1.5v3h3" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>смерть, 1924</button></p>
             </article>
 
             <article class="w18-p">
@@ -808,7 +892,7 @@
             <article class="w18-p">
                 <span class="w18-p-no">III</span>
                 <h3>Єремія Шеремета</h3>
-                <p class="w18-p-pl">Jeremiasz Szeremeta, син Сидора й Марії; нар. 1883 (ґміна, 1920); в одній копії постанови 1920 року — «син Федора»</p>
+                <p class="w18-p-pl">Jeremiasz Szeremeta, син Сидора й Марії; нар. 1883 (ґміна, 1920); в обох примірниках постанови 1920 року — «син Федора»</p>
                 <div class="w18-p-meta"><a href="poselennia.html?p=mochulyshche">с. Мочулище</a><span>40 років</span><span>3 дітей</span><span>затриманий 19.VIII.1921</span></div>
                 <dl>
                     <dt>Арешт</dt><dd>1919 року вже був під судом і втік зі шпиталю в Сарнах. 1921-го прийшов із болота «Козаки» додому змінити білизну, де його й схопили з двома гранатами. Затриманий у справі «Закордот»; як обвинуваченого в нападі на Воробин допитаний 27 січня 1922 року.</dd>
@@ -826,7 +910,7 @@
                 <span class="w18-p-no">IV</span>
                 <h3>Теодор Перішко</h3>
                 <p class="w18-p-pl">Teodor Periszko (Piryszko), син Бориса та Єви; у постановах — Федір</p>
-                <div class="w18-p-meta"><a href="poselennia.html?p=dombrovytsia">м. Дубровиця</a><span>нар. 1897–1898</span><span>швець</span><span>під вартою з 10.VI.1920</span><a href="#potim">1939 — новий вирок</a></div>
+                <div class="w18-p-meta"><a href="poselennia.html?p=dombrovytsia">м. Дубровиця</a><span>нар. 1897–1898</span><span>швець</span><span>під вартою з VI.1920</span><a href="#potim">1939 — новий вирок</a></div>
                 <dl>
                     <dt>Закидали</dt><dd>Уночі його привезли до лікарні з вогнепальним пораненням разом з іншими «з-під Воробина»: права гомілка з переломом, 101 день у лікарні.</dd>
                     <dt>Казав сам</dt><dd>1920 року: кілька озброєних більшовиків силоміць вивели його з хати й погнали до Воробина, і там <q>невідомий більшовик</q> поранив його в ногу. 1921 року: близько 9-ї ранку до майстерні прийшов замовник чобіт із трьома озброєними й повів його заарештованим; дорогою <q>якась блукаюча куля поранила мене</q>. Підмайстер Никон Цибульський запам'ятав інакше: Перішка поранили через тиждень після вбивства.</dd>
@@ -894,7 +978,7 @@
                 <div class="w18-p-meta"><a href="poselennia.html?p=orvianytsia">с. Орв'яниця</a><span>54 роки</span><span>10 десятин</span><span>під вартою з 19.II.1921</span></div>
                 <dl>
                     <dt>Закидали</dt><dd>Мольський 1920 року бачив Степана Будкевича на чолі загону, що йшов через Мочулище. Проте в Орв'яниці <q>прізвище Будкевич носить майже пів села</q>: тезка Степан, син Терентія, брат поранених Сергія й Федора, утопився навесні 1919 року. На суді Мольський визнав, що ватажком був Кирило Мозоль, якого <q>помилково називали Степаном Будкевичем</q>.</dd>
-                    <dt>Казав сам</dt><dd>1918 року був членом ґмінної ради, і повстанці вважали його ворогом. Того вечора о 8-й пішов із ґміни додому, а до першої ночі сидів у млині. Шістдесят господарів Орв'яниці поручилися за нього підписами, сольтис засвідчив їх печаткою, а священник дописав, що знає його як людину <q>порядну в усіх відношеннях</q>. З в'язниці писав: <q>настав час сіяти, через що гине все моє господарство</q>.</dd>
+                    <dt>Казав сам</dt><dd>1918 року був членом ґмінної ради, і повстанці вважали його ворогом. Того вечора о 8-й пішов із ґміни додому, а до першої ночі сидів у млині. Шістдесят господарів Орв'яниці поручилися за нього підписами, сольтис засвідчив їх печаткою, а священник дописав, що знає його як людину <q>порядну в усіх відношеннях</q>. З в'язниці писав: <q>настав час сіяти, через що гине все моє господарство</q>. <button type="button" class="w18-scanbtn" data-doc="d122"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L12.5 4.5v10h-8.5z M9.5 1.5v3h3" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>скан поруки</button></dd>
                 </dl>
                 <div class="w18-track">
                     <div class="w18-v w18-v--free"><small>Ковель, 15.III.1923</small><b>виправданий, звільнений того ж дня</b></div>
@@ -908,7 +992,7 @@
                 <h3>Розшукувані</h3>
                 <p>Постановою від 5 червня 1920 року слідчий суддя Родзевич притягнув сімнадцять обвинувачених — здебільшого за записами в книзі хворих. 9 травня 1921 року на тих, кого не знайшли, видали розшукові листи. 11 січня 1922 року до них додали Олександра Садовського й Миколу та Степана Лясковців, а 31 жовтня 1922 року справи тих, хто переховувався, виділили.</p>
                 <div class="w18-chips"><span><em>Олександр Садовський</em></span><span><em>Микола Лясковець</em></span><span>Федір Рабешко</span><span>Олександр Правник</span><span>Григорій Конончук</span><span>Василь Конончук</span><span>Михайло Конончук</span><span>Сергій Будкевич</span><span>Федір Будкевич</span><span>Марко Дем'янець</span><span>Марко Велінець</span><span>Михайло Мороз</span></div>
-                <p class="w18-src" style="margin-top:.8rem">Арк. 586–587, 694, 10, 312. У перекладі однієї з копій постанови рік прочитано як 1921, а замість Марка — Матвій Дем'янець. Садовський, за постановою 6.IX.1922, <q>перебуває в Радянській Росії</q>. Михайло Мороз — той самий візник Плятерів із Мочулища.</p>
+                <p class="w18-src" style="margin-top:.8rem">Арк. 586–587, 311, 694, 10, 312. Обидва примірники постанови, звірені зі сканами, датовано 5 червня 1920 року. Садовський, за постановою 6.IX.1922, <q>перебуває в Радянській Росії</q>. Михайло Мороз — той самий візник Плятерів із Мочулища. <button type="button" class="w18-scanbtn" data-doc="d93"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L12.5 4.5v10h-8.5z M9.5 1.5v3h3" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>скан постанови</button> <button type="button" class="w18-scanbtn" data-doc="d88"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L12.5 4.5v10h-8.5z M9.5 1.5v3h3" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>скан розшукової відомості</button></p>
             </div>
             <div>
                 <h3>Померли під час слідства</h3>
@@ -937,7 +1021,7 @@
             <figure class="w18-q"><blockquote>Іди забирай своїх вихованців, лежать уже побиті, як пси.</blockquote><figcaption><b>Єремія Шеремета</b><span>візникові Михайлові Морозу в Мочулищі, за Мольським · протокол суду 15.III.1923, арк. 118 зв.</span></figcaption></figure>
             <figure class="w18-q"><blockquote>Карабіни видавав нам організатор цієї банди Садовський або ж його помічники Лясковці, які дістали такі від німців.</blockquote><figcaption><b>Єремія Шеремета</b><span>протокол поліції № 411, 20.VIII.1921 · арк. 323</span></figcaption></figure>
             <figure class="w18-q"><blockquote>За кілька днів до нападу до мене приходила мати обвинуваченого Дем'янця і казала, що син казав їй про напад, який невдовзі мав відбутися на маєток Плятерів, і просив її попередити, щоб я виїхав і щоб також попередила про це Плятерів.</blockquote><figcaption><b>Віктор Ліпінський</b><span>на суді 15.III.1923 · арк. 118 зв.</span></figcaption></figure>
-            <figure class="w18-q"><blockquote>…у містечку Дубровиця є ще один Федір Рабешко, по батькові Павло, який справді є більшовиком і навіть був поранений під час пограбування маєтку Воробин.</blockquote><figcaption><b>Ксенія Рабешко</b><span>дружина коваля, заарештованого замість однофамільця; п'ятеро малих дітей · прохання 7.VI.1920, арк. 594</span></figcaption></figure>
+            <figure class="w18-q"><blockquote>…у містечку Дубровиця є ще один Федір Рабешко, по батькові Павло, який справді є більшовиком і навіть був поранений під час пограбування маєтку Воробин.</blockquote><figcaption><b>Ксенія Рабешко</b><span>дружина коваля, заарештованого замість однофамільця; п'ятеро малих дітей · прохання 7.VI.1920, арк. 594 <button type="button" class="w18-scanbtn" data-doc="d96"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L12.5 4.5v10h-8.5z M9.5 1.5v3h3" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>скан</button></span></figcaption></figure>
             <figure class="w18-q"><blockquote>…я був тоді хлопцем 17 років, і не лише те, що ніхто б мене не допустив до керівництва повстанням та не став би слухати, але й те, що я взагалі не мав жодного уявлення про вогнепальну зброю.</blockquote><figcaption><b>Степан Лясковець</b><span>скарга з Луцької в'язниці, 1.I.1923 · арк. 40 зв.</span></figcaption></figure>
             <figure class="w18-q"><blockquote>У в'язниці в Ковелі я сиджу вже 18 місяців, і доки я ще буду сидіти? Я залишив господарство своє, дружину і дітей, і все моє руйнується.</blockquote><figcaption><b>Іван Москальчук-Нашора</b><span>прохання, 2.VIII.1922, «+ + + значить Ян Нашора»</span></figcaption></figure>
             <figure class="w18-q"><blockquote>Місцеві селяни вважали нас петлюрівцями. Таємно ми дізналися про напад на Воробин, який мав відбутися ввечері; побоюючись, що нас втягнуть в участь у нападі, ми втекли й пішли кожен до свого села.</blockquote><figcaption><b>Голова ґміни Пляшко</b><span>свідок захисту Будкевича · арк. 119 зв.</span></figcaption></figure>
@@ -1014,7 +1098,7 @@
                     <li><time>20.IV.1920</time>Обвинувачені — Петрушко і Будкевич</li>
                     <li><time>20.V.1920</time>Бердников розповідає про ревком і трибунал</li>
                     <li><time>29–30.V.1920</time>Родзевич у Дубровиці: два з половиною десятки свідків і книга хворих</li>
-                    <li><time>5.VI.1920</time>Сімнадцять обвинувачених</li>
+                    <li><time>5.VI.1920</time>Сімнадцять обвинувачених; наступного дня жандармерія відсилає заарештованих Конончука, Рабешка, Перішка, Гончара, Велінця й Харківця</li>
                     <li><time>10.VI.1920</time>Допити Гончара й Перішка; чотирьох однофамільців звільнено</li>
                     <li><time>літо 1920</time>Наступ Червоної армії; арешт у Ковелі розформовано, Петрушко зникає</li>
                 </ol>
@@ -1040,7 +1124,7 @@
                     <tr><th scope="row">Москальчук-Нашора<small>м. Дубровиця</small></th><td class="d c-arr">II.1921</td><td><span class="w18-yr" style="--y:12"><i></i><b>12 р.</b></span></td><td><span class="w18-yr" style="--y:8"><i></i><b>8 р.</b><small>−⅓</small></span></td></tr>
                     <tr><th scope="row">Курач-Заєць<small>с. Селець</small></th><td class="d c-arr">IX.1922</td><td><span class="w18-yr" style="--y:12"><i></i><b>12 р.</b></span></td><td><span class="w18-yr" style="--y:6.67"><i></i><b>6 р. 8 міс.</b><small>−⅓</small></span></td></tr>
                     <tr><th scope="row">Шеремета<small>с. Мочулище</small></th><td class="d c-arr">19.VIII.1921</td><td><span class="w18-yr" style="--y:10"><i></i><b>10 р.</b></span></td><td><span class="w18-yr" style="--y:6.67"><i></i><b>6 р. 8 міс.</b><small>−⅓</small></span></td></tr>
-                    <tr><th scope="row">Перішко<small>м. Дубровиця</small></th><td class="d c-arr">10.VI.1920</td><td><span class="w18-yr" style="--y:10"><i></i><b>10 р.</b></span></td><td><span class="w18-free">виправдано</span></td></tr>
+                    <tr><th scope="row">Перішко<small>м. Дубровиця</small></th><td class="d c-arr">VI.1920</td><td><span class="w18-yr" style="--y:10"><i></i><b>10 р.</b></span></td><td><span class="w18-free">виправдано</span></td></tr>
                     <tr><th scope="row">Дем'янець<small>с. Берестя</small></th><td class="d c-arr">24.II.1921</td><td><span class="w18-yr" style="--y:10"><i></i><b>10 р.</b></span></td><td><span class="w18-free">виправдано</span></td></tr>
                     <tr><th scope="row">Харківець<small>с. Колки</small></th><td class="d c-arr">27.II.1921</td><td><span class="w18-yr" style="--y:10"><i></i><b>10 р.</b></span></td><td><span class="w18-free">виправдано</span></td></tr>
                     <tr><th scope="row">Лясковець<small>м. Дубровиця</small></th><td class="d c-arr">VIII.1921</td><td><span class="w18-free">виправдано</span></td><td class="d">—</td></tr>
@@ -1233,7 +1317,7 @@
                         <li><time>11.IX.1921</time>з Ковельської в'язниці: «під арештом понад два роки»</li>
                         <li><time>14.IX.1922</time>помер від сухот у епідемічному шпиталі Ковеля</li>
                     </ol>
-                    <p class="w18-src">Арк. 565–568, 682, 410; прохання 11.IX.1921</p>
+                    <p class="w18-src">Арк. 565–568, 682, 410; прохання 11.IX.1921 <button type="button" class="w18-scanbtn" data-doc="d131"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L12.5 4.5v10h-8.5z M9.5 1.5v3h3" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>скан допиту в Кракові</button></p>
                 </div>
             </article>
             <article>
@@ -1254,7 +1338,7 @@
                     <h3>Теодор Перішко<small>Дубровиця, 1898 — ? · швець</small></h3>
                     <ol>
                         <li><time>22.XI.1918</time>поранений під Воробином; 101 день у лікарні</li>
-                        <li><time>10.VI.1920</time>заарештований; три роки під вартою</li>
+                        <li><time>VI.1920</time>заарештований жандармерією (рапорт 6.VI.1920), 10.VI допитаний як обвинувачений; три роки під вартою</li>
                         <li><time>1923</time>засуджений у Ковелі на 10 років, у Любліні виправданий</li>
                         <li><time>1939</time>заарештований при спробі втекти до СРСР; Варшавський окружний суд дав «комуністові Теодору Пиришку» 10 років; газета називала його членом ЦК КПЗБ</li>
                         <li><time>1958</time>«Червоний прапор» друкує спогад «Ф. Пирішка, учасника повстання, члена КПРС з 1924 р.»</li>
@@ -1323,8 +1407,8 @@
         <div class="ds-sh"><b>§ 13</b><h2>Що було потім</h2><span>долі після вироку</span></div>
         <ul class="w18-after">
             <li><time>1923</time><p>12 вересня Перішка, Харківця й Дем'янця випустили з Ковельської в'язниці. Нашора ще з тюрми звинувачував свідків Свириденка й Литвинчука, але поліція визнала це наклепом.</p><p class="w18-src">Арк. 234, 247–250</p></li>
-            <li><time>1924</time><p>10 серпня Іван Москальчук-Нашора помер у Луцькій в'язниці, не відбувши й половини строку. Справу щодо нього закрили.</p><p class="w18-src">Прокуратура, 26.VIII.1924, арк. 253</p></li>
-            <li><time>1925</time><p>30 січня Гаврила Курача-Зайця випустили з в'язниці в Білостоці й передали Змішаній комісії для обміну політв'язнями з СРСР. На початку того ж року до СРСР обміняли й Степана Лясковця, який сидів у Білостоцькій тюрмі.</p><p class="w18-src">Прокуратура, 14.III.1925; ухвала 11.IX.1925, арк. 255; презентація</p></li>
+            <li><time>1924</time><p>10 серпня Іван Москальчук-Нашора помер у Луцькій в'язниці, не відбувши й половини строку. Справу щодо нього закрили.</p><p class="w18-src">Прокуратура, 26.VIII.1924, арк. 252 <button type="button" class="w18-scanbtn" data-doc="d274"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L12.5 4.5v10h-8.5z M9.5 1.5v3h3" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>скан</button></p></li>
+            <li><time>1925</time><p>30 січня Гаврила Курача-Зайця випустили з в'язниці в Білостоці й передали Змішаній комісії для обміну політв'язнями з СРСР. На початку того ж року до СРСР обміняли й Степана Лясковця, який сидів у Білостоцькій тюрмі.</p><p class="w18-src">Прокуратура, 18.III.1925, арк. 253; ухвала 11.IX.1925, арк. 255; презентація <button type="button" class="w18-scanbtn" data-doc="d275"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L12.5 4.5v10h-8.5z M9.5 1.5v3h3" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>скан</button></p></li>
             <li><time>1937</time><p>Степана Лясковця заарештовано в Харкові й розстріляно.</p><p class="w18-src">Презентація</p></li>
             <li><time>1939</time><p>Теодора Перішка засудили знову: 6 червня 1939 року Варшавський окружний суд дав «комуністові Теодору Пиришку» 10 років ув'язнення. Газета писала, що він був членом ЦК Комуністичної партії Західної Білорусі, його затримали при спробі втекти до СРСР, а 1918 року він входив до «банди», що спалила Воробин. Перед процесом прокуратура запитувала з Луцька вироки 1923 року на «Теодора Перішка, сина Бориса та Єви, 1898 р. н.».</p><p class="w18-src"><a href="presa.html?id=1939-06-freie-presse-laufbahn-eines-kommunisten">«Freie Presse», червень 1939</a> · арк. 287</p></li>
             <li><time>1958</time><p>Степана Лясковця посмертно реабілітовано. «Червоний прапор» друкує спогад «Ф. Пирішка, учасника повстання, члена КПРС з 1924 р.»; Федором слідство називало й Теодора Перішка.</p><p class="w18-src"><a href="presa.html?id=1958-11-23-chervonyi-prapor-dombryvytske-povstannia">«Червоний прапор», 23.XI.1958</a></p></li>
@@ -1333,9 +1417,42 @@
 </section>
 
 <!-- § 14 -->
+<section class="ds-sec" id="dokumenty">
+    <div class="w18-wrap">
+        <div class="ds-sh"><b>§ 14</b><h2>Документи справи</h2><span>скани аркушів і переклад поруч</span></div>
+        <p class="w18-lead">Добірка аркушів зі справи № 67/22 — фотографії оригіналів, зроблені в Державному архіві Рівненської області. Відкрийте документ: ліворуч скан (натисніть, щоб збільшити), праворуч переклад. Переклади цих аркушів звірено зі сканами; де звірено лише частину, це позначено.</p>
+        <h3 class="w18-h3">Основні документи</h3>
+        <ol class="w18-docs"><!--DC-M-->
+<li><button type="button" class="w18-dc" data-doc="d86"><span class="w18-dc-im"><img src="w18-scans/t/IMG_6989.webp" alt="" width="190" height="260" loading="lazy" decoding="async"></span><span class="w18-dc-tx"><time>30.V.1920</time><b>Огляд книги хворих Дубровицького шпиталю</b><span>Запис поранених 22 листопада 1918 року — звідси слідство взяло більшість обвинувачених.</span><small>арк. 585 · 1 арк.</small></span></button></li>
+<li><button type="button" class="w18-dc" data-doc="d87"><span class="w18-dc-im"><img src="w18-scans/t/IMG_6966.webp" alt="" width="190" height="260" loading="lazy" decoding="async"></span><span class="w18-dc-tx"><time>31.V.1920</time><b>Лист ґміни Дубровиця слідчому судді</b><span>Дати народження й прикмети: Шеремета, Мороз, Петрушко, Нашора, Будкевичі, Мозоль.</span><small>арк. 574–575 · 3 арк.</small></span></button></li>
+<li><button type="button" class="w18-dc" data-doc="d88"><span class="w18-dc-im"><img src="w18-scans/t/IMG_7015.webp" alt="" width="190" height="260" loading="lazy" decoding="async"></span><span class="w18-dc-tx"><time>1.VI.1920</time><b>Розшукова відомість ґміни Дубровиця</b><span>Сорок чотири розшукувані: підозрювані у вбивстві Полторацького й обвинувачені у справі Плятерів.</span><small>арк. 601 · 2 арк.</small></span></button></li>
+<li><button type="button" class="w18-dc" data-doc="d89"><span class="w18-dc-im"><img src="w18-scans/t/IMG_7012.webp" alt="" width="190" height="260" loading="lazy" decoding="async"></span><span class="w18-dc-tx"><time>3.VI.1920</time><b>Реєстр районного лікаря Добровольського</b><span>Чотирнадцять поранених із латинськими діагнозами, днями в лікарні й датами виписки.</span><small>арк. 598–599 · 2 арк.</small></span></button></li>
+<li><button type="button" class="w18-dc" data-doc="d93"><span class="w18-dc-im"><img src="w18-scans/t/IMG_6990.webp" alt="" width="190" height="260" loading="lazy" decoding="async"></span><span class="w18-dc-tx"><time>5.VI.1920</time><b>Постанова слідчого судді Родзевича</b><span>Сімнадцять осіб притягнуто як обвинувачених — за записами книги хворих і свідченнями.</span><small>2 арк.</small></span></button></li>
+<li><button type="button" class="w18-dc" data-doc="d95"><span class="w18-dc-im"><img src="w18-scans/t/IMG_6995.webp" alt="" width="190" height="260" loading="lazy" decoding="async"></span><span class="w18-dc-tx"><time>6.VI.1920</time><b>Рапорт жандармерії з Дубровиці</b><span>Кого заарештували, хто в більшовицькій армії, хто вбитий, хто переховується.</span><small>арк. 589 · 1 арк.</small></span></button></li>
+<li><button type="button" class="w18-dc" data-doc="d96"><span class="w18-dc-im"><img src="w18-scans/t/IMG_7008.webp" alt="" width="190" height="260" loading="lazy" decoding="async"></span><span class="w18-dc-tx"><time>7.VI.1920</time><b>Прохання Ксенії Рабешко</b><span>Дружина коваля Федора Рабешка пояснює, що чоловіка взяли замість однофамільця.</span><small>арк. 594 · 2 арк.</small></span></button></li>
+<li><button type="button" class="w18-dc" data-doc="d119"><span class="w18-dc-im"><img src="w18-scans/t/IMG_7056.webp" alt="" width="190" height="260" loading="lazy" decoding="async"></span><span class="w18-dc-tx"><time>27.II.1921</time><b>Рапорт поліції Дубровиці</b><span>Заарештовано Будкевича, Дем'янця, Конончука, Москальчука й Велінця; де решта.</span><small>арк. 629 · 2 арк.</small></span></button></li>
+<li><button type="button" class="w18-dc" data-doc="d122"><span class="w18-dc-im"><img src="w18-scans/t/IMG_7075.webp" alt="" width="190" height="260" loading="lazy" decoding="async"></span><span class="w18-dc-tx"><time>8.III.1921</time><b>Порука громади Орв'яниці</b><span>Понад шістдесят підписів односельців, сольтис і священник — за Степана Будкевича.</span><small>арк. 641–642 · 2 арк.</small></span></button></li>
+<li><button type="button" class="w18-dc" data-doc="d131"><span class="w18-dc-im"><img src="w18-scans/t/IMG_7136.webp" alt="" width="190" height="260" loading="lazy" decoding="async"></span><span class="w18-dc-tx"><time>6.V.1921</time><b>Допит Кирила Мозоля в Кракові</b><span>Кирило Мозоль, «званий Бендзяло»: «того дня був удома в Круповому».</span><small>арк. 682 · 2 арк.</small></span></button></li>
+<li><button type="button" class="w18-dc" data-doc="d206"><span class="w18-dc-im"><img src="w18-scans/t/IMG_6021.webp" alt="" width="190" height="260" loading="lazy" decoding="async"></span><span class="w18-dc-tx"><time>31.X.1922</time><b>Обвинувальний акт</b><span>Перший аркуш: вісім обвинувачених і опис облоги. Скани решти аркушів ще не додано.</span><small>арк. 3–6 зв. · 1 з 8 арк. · звірено частково</small></span></button></li>
+<li><button type="button" class="w18-dc" data-doc="d239"><span class="w18-dc-im"><img src="w18-scans/t/IMG_6206.webp" alt="" width="190" height="260" loading="lazy" decoding="async"></span><span class="w18-dc-tx"><time>15.III.1923</time><b>Протокол судового засідання в Ковелі</b><span>Перший аркуш: склад суду, захисники. Скани решти аркушів ще не додано.</span><small>арк. 117–121 зв. · 1 з 9 арк. · звірено частково</small></span></button></li>
+<li><button type="button" class="w18-dc" data-doc="d274"><span class="w18-dc-im"><img src="w18-scans/t/IMG_6442.webp" alt="" width="190" height="260" loading="lazy" decoding="async"></span><span class="w18-dc-tx"><time>26.VIII.1924</time><b>Повідомлення про смерть Івана Нашори</b><span>«Москальчук-Нашора Ян … 10 серпня 1924 р. помер» у Луцькій в'язниці.</span><small>1 арк.</small></span></button></li>
+<li><button type="button" class="w18-dc" data-doc="d275"><span class="w18-dc-im"><img src="w18-scans/t/IMG_6443.webp" alt="" width="190" height="260" loading="lazy" decoding="async"></span><span class="w18-dc-tx"><time>18.III.1925</time><b>Курач-Заєць переданий для обміну</b><span>Курача-Зайця звільнено з Білостоцької в'язниці й видано для обміну з Росією.</span><small>1 арк.</small></span></button></li>
+        <!--/DC-M--></ol>
+        <h3 class="w18-h3">Інші документи</h3>
+        <ol class="w18-docs w18-docs--s"><!--DC-S-->
+<li><button type="button" class="w18-dc" data-doc="d26"><span class="w18-dc-im"><img src="w18-scans/t/IMG_6909.webp" alt="" width="190" height="260" loading="lazy" decoding="async"></span><span class="w18-dc-tx"><time>12.I.1920</time><b>Картка арештанта Ісаака Петрушка</b><span>Картка польового арешту: прикмети Ісаака Петрушка.</span><small>арк. 540 · 1 арк.</small></span></button></li>
+<li><button type="button" class="w18-dc" data-doc="d39"><span class="w18-dc-im"><img src="w18-scans/t/IMG_6859.webp" alt="" width="190" height="260" loading="lazy" decoding="async"></span><span class="w18-dc-tx"><time>24.II.1920</time><b>Метрична довідка про смерть Прокопа Мітлюха</b><span>Прокіп Мітлюх помер від поворотного тифу в Луцькій тюрмі.</span><small>арк. 504 · 1 арк.</small></span></button></li>
+<li><button type="button" class="w18-dc" data-doc="d92"><span class="w18-dc-im"><img src="w18-scans/t/IMG_6548.webp" alt="" width="190" height="260" loading="lazy" decoding="async"></span><span class="w18-dc-tx"><time>5.VI.1920</time><b>Копія постанови 5.VI.1920</b><span>Інший примірник постанови 5.VI.1920: так само «Єремія, син Федора».</span><small>арк. 311 · 2 з 4 арк. · звірено частково</small></span></button></li>
+<li><button type="button" class="w18-dc" data-doc="d107"><span class="w18-dc-im"><img src="w18-scans/t/IMG_7034.webp" alt="" width="190" height="260" loading="lazy" decoding="async"></span><span class="w18-dc-tx"><time>20.II.1921</time><b>Рапорт поліції Дубровиці</b><span>Перший рапорт поліції 1921 року з прикметами тих, кого не знайшли.</span><small>арк. 613–614 · 3 арк.</small></span></button></li>
+<li><button type="button" class="w18-dc" data-doc="d130"><span class="w18-dc-im"><img src="w18-scans/t/IMG_7131.webp" alt="" width="190" height="260" loading="lazy" decoding="async"></span><span class="w18-dc-tx"><time>6.V.1921</time><b>Краківська поліція: затримано Бендзяла</b><span>Звіт краківської поліції про затримання Бендзяла з прикметами.</span><small>1 арк.</small></span></button></li>
+<li><button type="button" class="w18-dc" data-doc="d142"><span class="w18-dc-im"><img src="w18-scans/t/IMG_7099.webp" alt="" width="190" height="260" loading="lazy" decoding="async"></span><span class="w18-dc-tx"><time>3.VI.1921</time><b>Прохання Степана Будкевича з в'язниці</b><span>Кінець прохання з підписом «Butkiewicz Stefan».</span><small>арк. 654 · 1 з 2 арк. · звірено частково</small></span></button></li>
+        <!--/DC-S--></ol>
+    </div>
+</section>
+
 <section class="ds-sec" id="dzherelo">
     <div class="w18-wrap">
-        <div class="ds-sh"><b>§ 14</b><h2>Джерела</h2><span>що використано і що ще можна знайти</span></div>
+        <div class="ds-sh"><b>§ 15</b><h2>Джерела</h2><span>що використано і що ще можна знайти</span></div>
         <div class="w18-srcg">
             <div>
                 <h3 class="w18-h3">Використано</h3>
@@ -1368,6 +1485,20 @@
     </div>
 </section>
 
+<div class="w18-dv" id="w18Dv" role="dialog" aria-modal="true" aria-labelledby="w18DvT" hidden>
+    <div class="w18-dv-bar">
+        <div class="w18-dv-h"><time id="w18DvD"></time><b id="w18DvT"></b><small id="w18DvA"></small></div>
+        <div class="w18-dv-tabs" role="tablist"><button type="button" role="tab" data-v="scan" aria-selected="true">Скан</button><button type="button" role="tab" data-v="tr" aria-selected="false">Переклад</button></div>
+        <div class="w18-dv-nav"><button type="button" data-go="-1" aria-label="Попередній документ">←</button><span id="w18DvN"></span><button type="button" data-go="1" aria-label="Наступний документ">→</button><button type="button" class="w18-dv-x" aria-label="Закрити">×</button></div>
+    </div>
+    <div class="w18-dv-body" data-v="scan">
+        <div class="w18-dv-scan">
+            <div class="w18-dv-stage" id="w18DvStage"><img id="w18DvImg" alt="" decoding="async"></div>
+            <div class="w18-dv-pages" id="w18DvP"></div>
+        </div>
+        <article class="w18-dv-tr" id="w18DvTr" tabindex="0"></article>
+    </div>
+</div>
 <dialog class="w18-lb" id="w18Lb" aria-label="Перегляд зображення">
     <button type="button" aria-label="Закрити">×</button>
     <img src="" alt="">
@@ -1466,6 +1597,107 @@
     });
     lb.addEventListener('click', function(e){ if (e.target !== im) lb.close ? lb.close() : lb.removeAttribute('open'); });
   }
+})();
+(function(){
+  var dv = document.getElementById('w18Dv'); if (!dv) return;
+  var data = null, order = [], cur = -1, page = 0, lastFocus = null;
+  var $ = function(id){ return document.getElementById(id); };
+  var stage = $('w18DvStage'), img = $('w18DvImg'), tr = $('w18DvTr'), pg = $('w18DvP'), body = dv.querySelector('.w18-dv-body');
+  var esc = function(s){ return String(s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); };
+  function load(cb){
+    if (data) return cb();
+    fetch('w18-docs.json').then(function(r){ return r.json(); }).then(function(j){ data = {}; j.forEach(function(d){ data[d.id] = d; order.push(d.id); }); cb(); });
+  }
+  function render(d){
+    var h = '<span class="w18-dv-st' + (d.st === 'ok' ? '' : ' part') + '">' + (d.st === 'ok' ? 'Переклад звірено зі сканом' : 'Переклад звірено частково') + '</span>';
+    h += '<h3>' + esc(d.title) + '</h3><p class="meta">' + esc(d.date) + (d.arch ? ' · ' + esc(d.arch) : '') + ' · справа № 67/22</p>';
+    var ul = false;
+    d.tr.forEach(function(b){
+      var k = b[0], t = b[1];
+      if (k !== 'li' && ul) { h += '</ul>'; ul = false; }
+      if (k === 'img') {
+        var m = String(t).match(/IMG_(\d{4})/), i = m ? d.pages.indexOf(+m[1]) : -1;
+        h += i > -1 ? '<button type="button" class="pg" data-p="' + i + '">' + esc(t) + '</button>' : '<div class="pg no">' + esc(t) + ' · скан ще не додано</div>';
+      } else if (k === 'li') { if (!ul) { h += '<ul>'; ul = true; } h += '<li>' + esc(t) + '</li>'; }
+      else if (k === 'table') {
+        h += '<div class="tw"><table>' + t.map(function(r, ri){ return '<tr>' + r.map(function(c){ return ri ? '<td>' + esc(c) + '</td>' : '<th>' + esc(c) + '</th>'; }).join('') + '</tr>'; }).join('') + '</table></div>';
+      }
+      else if (k === 'stamp') h += '<p class="stamp">' + esc(t) + '</p>';
+      else if (k === 'sig') h += '<p class="sig">' + esc(t) + '</p>';
+      else h += '<p' + (/^(\[Переклад звірено|Примітка)/.test(t) ? ' class="note"' : '') + '>' + esc(t) + '</p>';
+    });
+    if (ul) h += '</ul>';
+    tr.innerHTML = h; tr.scrollTop = 0;
+  }
+  function show(i){
+    var d = data[order[cur]]; page = i;
+    stage.classList.remove('is-z'); stage.classList.add('is-load');
+    img.onload = function(){ stage.classList.remove('is-load'); };
+    img.src = 'w18-scans/IMG_' + d.pages[i] + '.webp';
+    img.alt = d.title + ', скан IMG_' + d.pages[i];
+    [].forEach.call(pg.children, function(b, j){ b.classList.toggle('is-on', j === i); });
+    [].forEach.call(tr.querySelectorAll('.pg[data-p]'), function(b){ b.classList.toggle('is-on', +b.getAttribute('data-p') === i); });
+    if (d.pages[i + 1]) { var pre = new Image(); pre.src = 'w18-scans/IMG_' + d.pages[i + 1] + '.webp'; }
+  }
+  function open(id, keepFocus){
+    load(function(){
+      if (!data[id]) return;
+      cur = order.indexOf(id); var d = data[id];
+      $('w18DvD').textContent = d.date; $('w18DvT').textContent = d.title; $('w18DvA').textContent = d.arch;
+      $('w18DvN').textContent = (cur + 1) + ' / ' + order.length;
+      pg.innerHTML = d.pages.length > 1 ? d.pages.map(function(p, j){ return '<button type="button" data-p="' + j + '" aria-label="Аркуш ' + (j + 1) + '"><img src="w18-scans/t/IMG_' + p + '.webp" alt="" loading="lazy"></button>'; }).join('') : '';
+      render(d); show(0);
+      if (dv.hidden) { lastFocus = document.activeElement; dv.hidden = false; document.documentElement.style.overflow = 'hidden'; }
+      if (!keepFocus) dv.querySelector('.w18-dv-x').focus();
+      try { history.replaceState(null, '', '#doc-' + id); } catch (e) {}
+    });
+  }
+  function close(){
+    dv.hidden = true; document.documentElement.style.overflow = ''; img.removeAttribute('src');
+    try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
+    if (lastFocus) lastFocus.focus();
+  }
+  document.addEventListener('click', function(e){
+    var b = e.target.closest && e.target.closest('[data-doc]');
+    if (b) { e.preventDefault(); open(b.getAttribute('data-doc')); }
+  });
+  dv.querySelector('.w18-dv-x').addEventListener('click', close);
+  [].forEach.call(dv.querySelectorAll('[data-go]'), function(b){ b.addEventListener('click', function(){ var n = cur + +b.getAttribute('data-go'); if (n >= 0 && n < order.length) open(order[n], true); }); });
+  [].forEach.call(dv.querySelectorAll('.w18-dv-tabs button'), function(b){ b.addEventListener('click', function(){
+    body.setAttribute('data-v', b.getAttribute('data-v'));
+    [].forEach.call(dv.querySelectorAll('.w18-dv-tabs button'), function(x){ x.setAttribute('aria-selected', x === b ? 'true' : 'false'); });
+  }); });
+  pg.addEventListener('click', function(e){ var b = e.target.closest('button'); if (b) show(+b.getAttribute('data-p')); });
+  tr.addEventListener('click', function(e){
+    var b = e.target.closest('.pg[data-p]'); if (!b) return; show(+b.getAttribute('data-p'));
+    if (getComputedStyle(dv.querySelector('.w18-dv-tabs')).display !== 'none') dv.querySelector('.w18-dv-tabs [data-v="scan"]').click();
+  });
+  var drag = null, moved = false;
+  stage.addEventListener('pointerdown', function(e){ if (!stage.classList.contains('is-z') || e.pointerType !== 'mouse') return; drag = { x: e.clientX, y: e.clientY, l: stage.scrollLeft, t: stage.scrollTop }; moved = false; stage.classList.add('is-drag'); });
+  addEventListener('pointermove', function(e){ if (!drag) return; var dx = e.clientX - drag.x, dy = e.clientY - drag.y; if (Math.abs(dx) + Math.abs(dy) > 4) moved = true; stage.scrollLeft = drag.l - dx; stage.scrollTop = drag.t - dy; });
+  addEventListener('pointerup', function(){ if (drag) { drag = null; stage.classList.remove('is-drag'); } });
+  stage.addEventListener('click', function(e){
+    if (moved) { moved = false; return; }
+    if (e.target !== img) return;
+    var r = img.getBoundingClientRect(), fx = (e.clientX - r.left) / r.width, fy = (e.clientY - r.top) / r.height;
+    var z = stage.classList.toggle('is-z');
+    if (z) { stage.scrollLeft = fx * img.offsetWidth - stage.clientWidth / 2; stage.scrollTop = fy * img.offsetHeight - stage.clientHeight / 2; }
+  });
+  document.addEventListener('keydown', function(e){
+    if (dv.hidden) return;
+    if (e.key === 'Escape') { e.preventDefault(); close(); }
+    else if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+      var d = data[order[cur]], s = e.key === 'ArrowRight' ? 1 : -1;
+      if (d.pages[page + s] !== undefined) show(page + s);
+      else if (order[cur + s]) open(order[cur + s], true);
+    } else if (e.key === 'Tab') {
+      var f = [].filter.call(dv.querySelectorAll('button, [tabindex="0"]'), function(x){ return x.offsetParent !== null; });
+      if (!f.length) return;
+      if (e.shiftKey && document.activeElement === f[0]) { e.preventDefault(); f[f.length - 1].focus(); }
+      else if (!e.shiftKey && document.activeElement === f[f.length - 1]) { e.preventDefault(); f[0].focus(); }
+    }
+  });
+  var m = location.hash.match(/^#doc-(d\d+)$/); if (m) open(m[1]);
 })();
 </script>
 </body>
