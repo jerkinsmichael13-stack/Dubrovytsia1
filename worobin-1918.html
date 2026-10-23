@@ -477,11 +477,11 @@
 .w18-dv-tabs button[aria-selected="true"]{background:#d9b44a;border-color:#d9b44a;color:#16110a}
 .w18-dv-body{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(340px,.85fr);min-height:0}
 .w18-dv-scan{display:grid;grid-template-rows:minmax(0,1fr) auto;min-height:0;border-right:1px solid rgba(242,235,220,.08)}
-.w18-dv-stage{overflow:auto;display:grid;place-items:center;padding:1rem;cursor:zoom-in;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
-.w18-dv-stage img{display:block;max-width:100%;max-height:calc(100vh - 11rem);width:auto;height:auto;border-radius:3px;box-shadow:0 20px 60px rgba(0,0,0,.55);background:#2a241b;user-select:none;-webkit-user-drag:none}
+.w18-dv-stage{overflow:auto;display:grid;place-items:safe center;padding:1rem;cursor:zoom-in;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+.w18-dv-stage img{display:block;max-width:none;max-height:none;border-radius:3px;box-shadow:0 20px 60px rgba(0,0,0,.55);background:#2a241b;user-select:none;-webkit-user-drag:none}
 .w18-dv-stage.is-z{place-items:start;cursor:grab}
 .w18-dv-stage.is-z.is-drag{cursor:grabbing}
-.w18-dv-stage.is-z img{max-width:none;max-height:none;width:auto;height:auto}
+.w18-dv-stage.is-z img{max-width:none;max-height:none}
 .w18-dv-stage.is-load img{opacity:.35}
 .w18-dv-pages{display:flex;gap:.5rem;padding:.6rem 1rem calc(env(safe-area-inset-bottom,0px) + .7rem);overflow-x:auto;border-top:1px solid rgba(242,235,220,.08)}
 .w18-dv-pages:empty{display:none}
@@ -520,8 +520,20 @@
   .w18-dv-body[data-v="scan"] .w18-dv-tr,.w18-dv-body[data-v="tr"] .w18-dv-scan{display:none}
   .w18-dv-scan{border-right:0}
   .w18-dv-stage{padding:.6rem}
-  .w18-dv-stage img{max-height:calc(100vh - 14rem)}
 }
+.w18-scanrow{display:flex;gap:1rem;margin:1.2rem 0 0;flex-wrap:wrap}
+.w18-scanrow button{display:flex;flex-direction:column;gap:.5rem;width:150px;padding:0;border:0;background:none;font:inherit;color:inherit;text-align:left;cursor:zoom-in}
+.w18-scanrow img{width:150px;height:200px;object-fit:cover;object-position:50% 15%;border-radius:6px;border:1px solid var(--w-rule);background:#e9e1cf;transition:transform .2s,box-shadow .2s}
+.w18-scanrow button:hover img{transform:translateY(-2px);box-shadow:0 10px 24px -14px rgba(40,28,10,.6)}
+.w18-scanrow span{font:500 .82rem/1.3 var(--ds-display);color:var(--w-ink)}
+.w18-scanrow small{display:block;font:500 .66rem/1.4 var(--ds-body);color:var(--w-ink3)}
+.w18-dv-st.raw{color:var(--w-ink3);background:var(--w-alt)}
+.w18-dv-zoom{position:absolute;right:.8rem;top:.8rem;display:flex;gap:.3rem;z-index:2}
+.w18-dv-zoom button{background:rgba(16,14,11,.82)!important;backdrop-filter:blur(4px)}
+.w18-dv-zoom span{display:flex;align-items:center;padding:0 .5rem;font:500 .7rem/1 var(--w-mono);color:rgba(242,235,220,.7);background:rgba(16,14,11,.82);border-radius:100px}
+.w18-dv-scan{position:relative}
+.w18-dv-stage{touch-action:none}
+.w18-dv-stage.is-z{cursor:grab}
 .w18 [id]{scroll-margin-top:calc(var(--ds-hdr) + 3.8rem)}
 </style>
 </head>
@@ -711,7 +723,7 @@
             </li>
             <li class="ph-night key">
                 <time>22:00<small>21 листопада</small></time>
-                <div class="w18-tl-b"><p><strong>Починається облога.</strong> <q>Численні натовпи селян із навколишніх сіл, озброєних карабінами, револьверами та гранатами, оточили фільварок</q>. Варта трубить на сполох, оборонці займають позиції.</p><p class="w18-src">Обвинувальний акт, арк. 3; Калінський на суді, арк. 119; Ліпінський — за апеляційним вироком, арк. 225 зв.</p><p class="w18-tl-note">Інші свідки називають близько півночі (Буйновський, Свириденко, 1920; Калінський, 1922), 1–2-гу (Мольський, 1922) або близько 2-ї (Свириденко на суді). У перекладі протоколу Ліпінського 1922 року — <q>близько 10-ї години ранку</q>, хоч у тому ж протоколі його поранено <q>ще вночі, до 12-ї</q>; найімовірніше, помилка прочитання. За спогадами учасників, загони рушили з Домбровиці опівночі.</p></div>
+                <div class="w18-tl-b"><p><strong>Починається облога.</strong> <q>Численні натовпи селян із навколишніх сіл, озброєних карабінами, револьверами та гранатами, оточили фільварок</q>. Варта трубить на сполох, оборонці займають позиції.</p><p class="w18-src">Обвинувальний акт, арк. 3; Калінський на суді, арк. 119; Ліпінський — за апеляційним вироком, арк. 225 зв.</p><p class="w18-tl-note">Інші свідки називають близько півночі (Буйновський, Свириденко, 1920; Калінський, 1922), 1–2-гу (Мольський, 1922) або близько 2-ї (Свириденко на суді). Сам Ліпінський 1922 року сказав: варта помітила селян <q>приблизно о 10-й годині</q>; у тому ж протоколі його поранено <q>уночі, ще до 12-ї</q>, тож ідеться про 10-ту вечора. За спогадами учасників, загони рушили з Домбровиці опівночі.</p></div>
             </li>
             <li class="ph-night">
                 <time>Перші хвилини</time>
@@ -752,7 +764,7 @@
             </li>
             <li class="ph-fire">
                 <time>Після розстрілу</time>
-                <div class="w18-tl-b"><p>Ліпінського й Піскунова три-чотири години б'ють прикладами і стріляють над ними. Ліпінського рятує селянин, який просить віддати його під «революційний трибунал»; пораненого кладуть на воза під два трупи. Свириденко бачить у дворі палацу 21 тіло: <q>жінки розпізнавали загиблих і голосили</q>.</p><p class="w18-src">Ліпінський, арк. 396 зв.; Свириденко, арк. 375</p></div>
+                <div class="w18-tl-b"><p>Ліпінського й Піскунова три-чотири години б'ють прикладами й ціляться в них із карабінів. Ліпінського рятує селянин, який просить віддати його під «революційний трибунал»; пораненого кладуть на воза під два трупи — одного з них він не впізнав, хоч той був «з нашого товариства». Свириденко за дві години бачить 21 тіло, що лежали рядком.</p><p class="w18-src">Ліпінський, арк. 396 зв.; Свириденко, арк. 375</p></div>
             </li>
             <li class="ph-fire">
                 <time>17:00 — 18:00</time>
@@ -813,7 +825,7 @@
         <div class="w18-mem-foot">
             <div><h4>Вижили</h4><p>Стражники Віктор Ліпінський і Дмитро Піскунов. <q>З усіх людей, які оборонялися в будинку, живими залишилося тільки двоє — я і Піскунов</q>, — свідчив Ліпінський. Обоє пролежали в лікарні понад два місяці.</p><p class="w18-src">Допит 6.IX.1922, арк. 397; реєстр лікаря, арк. 599</p></div>
             <div><h4>Касир Вахштейнський</h4><p>Землевласник із Лучиць Луцького повіту. Його вдова Марія їздила до Воробина, коли дізналася про вбивство. Восени 1919 року син, інженер Євген Вахштейнський, просив розшукати вбивць і називав свідків. Картка жандармерії 1920 року приписує смерть касира ревтрибуналові.</p><p class="w18-src">Заява 28.IX.1919, арк. 478–479; Крестовський, 10.III.1920, арк. 507; картка 12.II.1920, арк. 476</p></div>
-            <div><h4>Поховання</h4><p>Висновок експерта: <q>усім убитим було завдано ран безумовно смертельних</q>. Ігнація та Антонія після ексгумації 1919 року поховали на дубровицькому кладовищі, поруч із родинною каплицею. Свідки згадують також лісничого Угринського й помічника садівника Йосипа, яких немає в обвинувальному акті.</p><p class="w18-src">Д-р Весельський, арк. 120; <a href="plater.html">Плятери на Дубровиці</a></p></div>
+            <div><h4>Поховання</h4><p>Висновок експерта: <q>усім убитим було завдано ран безумовно смертельних</q>. Ігнація та Антонія після ексгумації 1919 року поховали на дубровицькому кладовищі, поруч із родинною каплицею. Фельдшери 1922 року згадують також тіло лісничого Угринського, якого немає в обвинувальному акті.</p><p class="w18-src">Д-р Весельський, арк. 120; <a href="plater.html">Плятери на Дубровиці</a></p></div>
         </div>
     </div>
 </section>
@@ -845,6 +857,11 @@
             </table>
         </div>
         <p class="w18-src">Протокол огляду книги хворих, 30.V.1920, арк. 585; реєстр районного лікаря Добровольського, 3.VI.1920, арк. 598–599. Таблицю звірено зі сканами оригіналів; у реєстрі лікаря по батькові дописано олівцем, а місце рани подекуди відрізняється від книги. <button type="button" class="w18-scanbtn" data-doc="d86"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L12.5 4.5v10h-8.5z M9.5 1.5v3h3" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>скан книги хворих</button> <button type="button" class="w18-scanbtn" data-doc="d89"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L12.5 4.5v10h-8.5z M9.5 1.5v3h3" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>скан реєстру лікаря</button></p>
+        <div class="w18-scanrow">
+            <button type="button" data-doc="d86"><img src="w18-scans/t/IMG_6989.webp" alt="Протокол огляду книги хворих, 30.V.1920" width="190" height="284" loading="lazy" decoding="async"><span>Огляд книги хворих<small>30.V.1920 · арк. 585</small></span></button>
+            <button type="button" data-doc="d89"><img src="w18-scans/t/IMG_7013.webp" alt="Реєстр поранених районного лікаря" width="190" height="281" loading="lazy" decoding="async"><span>Реєстр лікаря Добровольського<small>3.VI.1920 · арк. 598–599</small></span></button>
+            <button type="button" data-doc="d89"><img src="w18-scans/t/IMG_7012.webp" alt="Супровідний лист районного лікаря" width="190" height="145" loading="lazy" decoding="async"><span>Супровідний лист лікаря<small>3.VI.1920</small></span></button>
+        </div>
     </div>
 </section>
 
@@ -863,7 +880,7 @@
                 <dl>
                     <dt>Закидали</dt><dd>Радванський і Свириденко 1920 року переказали слідчому його слова: застрелив повіреного Пшедримирського в ту мить, коли той убив одного з нападників. Свириденко 1922–1923 років: Нашора вимагав у нього карабін і ставив під стіну. Сибіковський бачив його озброєним у натовпі; <q>ще за кілька тижнів після цих подій ходив зі зброєю та ніс варту</q>. Литвинчук зустрів його ввечері, коли той ішов із Воробина з карабіном, і зі слів Сибіковського переказав, що Нашора вбив повіреного. Поліція 1923 року: <q>першим організатором банди</q>.</dd>
                     <dt>Казав сам</dt><dd>1921 року: <q>у день зазначеного нападу я був удома і нікуди не виходив</q>, що підтвердять війт і Михайло Литвинчук, але Литвинчук свідчив проти нього. 1923 року: живе за 50 кроків від лікарні, вийшов подивитися на підводи з пораненими, і фельдшер Пальонка покликав допомогти їх заносити; свідки захисту Євчук і Салівонов бачили його біля лікарні о 8–9 ранку. Свириденко, за його словами, мстився, бо Нашора відмовився купити в нього плятерівських коней; поліція 1923 року, допитавши самих Свириденка й Литвинчука, визнала це наклепом. Донька Ганна і сімнадцять підписів: батька обмовили, вдома семеро дітей і стара мати.</dd>
-                    <dt>Що не сходиться</dt><dd>Мольський-молодший 1920 року казав, що чув хвальбу Нашори сам, а 1922-го визнав, що знає її від Радванського й Свириденка. Радванський на суді: це казав <q>якийсь селянин</q>, а ім'я він дізнався пізніше. Сибіковський: <q>Пшедримирського забили раніше, але хто саме — не знаю</q>; розмови з Литвинчуком не пам'ятав, і все ж окружний суд зарахував його до свідків, які <q>встановили</q>, що Нашора вбив повіреного. Ліпінський, єдиний оборонець-очевидець, Нашору не називав: повіреного застрелили на бігу, а хто — він не розгледів. За ґміною (31.V.1920), Нашору <q>заарештовано в січні цього року польською владою</q>; свідки того ж тижня казали, що він у таборі інтернованих під Краковом, але табір відповів, що такого на обліку немає. У лютому 1921 року поліція спершу писала, що він <q>вибув із місця проживання</q>, а за кілька днів заарештувала його вдома. Ґміна двічі записала дату народження — 2.XII.1883.</dd>
+                    <dt>Що не сходиться</dt><dd>Мольський-молодший 1920 року казав, що чув хвальбу Нашори сам, а 1922-го визнав, що знає її від Радванського й Свириденка. Радванський 1920 року сам застеріг, що він <q>короткозорий</q> і місцевих селян <q>дуже мало знає</q>; на суді сказав, що це казав <q>якийсь селянин</q>, а ім'я він дізнався пізніше. Сибіковський: <q>Пшедримирського забили раніше, але хто саме — не знаю</q>; розмови з Литвинчуком не пам'ятав, і все ж окружний суд зарахував його до свідків, які <q>встановили</q>, що Нашора вбив повіреного. Ліпінський, єдиний оборонець-очевидець, Нашору не називав: повіреного застрелили на бігу, а хто — він не розгледів. За ґміною (31.V.1920), Нашору <q>заарештовано в січні цього року польською владою</q>; свідки того ж тижня казали, що він у таборі інтернованих під Краковом, але табір відповів, що такого на обліку немає. У лютому 1921 року поліція спершу писала, що він <q>вибув із місця проживання</q>, а за кілька днів заарештувала його вдома. Ґміна двічі записала дату народження — 2.XII.1883.</dd>
                 </dl>
                 <div class="w18-track w18-track--3">
                     <div class="w18-v"><small>Ковель, 15.III.1923</small><b>12 років тяжкої тюрми</b></div>
@@ -879,7 +896,7 @@
                 <p class="w18-p-pl">Gawryło Kuracz vel Zając, син Данила</p>
                 <div class="w18-p-meta"><a href="poselennia.html?p=selets">с. Селець</a><span>42 роки</span><span>6 дітей</span><span>під вартою з вересня 1922</span></div>
                 <dl>
-                    <dt>Закидали</dt><dd>Ліпінський і Свириденко впізнали в ньому того, хто тягнув за ноги вмираючого Росіна. За Свириденком, «Заєць» затяг до хліва пораненого помічника садівника Йосипа і вбив його прикладом: <q>я тебе сам вилікую</q>.</dd>
+                    <dt>Закидали</dt><dd>Ліпінський і Свириденко впізнали в ньому того, хто тягнув за ноги вмираючого ветеринара Росіна. Свириденко 1922 року назвав його <q>Заєць, він же Клека, Гаврило із Сельця</q>: був озброєний і <q>знущався над пораненими</q>; на прохання Росіна відповів <q>вас ні треба…</q></dd>
                     <dt>Казав сам</dt><dd>Справжнє прізвище — Курач, а «Заєць» — так його кличуть люди. Того дня лежав хворий удома, за 4 версти від Воробина, лише до сходу сонця заходив до сусідів. Під час польсько-радянської війни рік був на заробітках «за Дніпром». Односельці: <q>чоловік порядний, спокійний</q>; у нападі, мовляв, був його брат.</dd>
                 </dl>
                 <div class="w18-track w18-track--3">
@@ -1383,7 +1400,7 @@
         <ul class="w18-diff">
             <li><h3>Дата нападу</h3><div><h4>Справа</h4><p>21–22 листопада 1918; книга хворих лікарні — 22 листопада. Прокурор 1922 року ще сумнівався, чи не з 22 на 23-тє, і фельдшер Пальонка підтвердив: <q>злочин було вчинено саме вдень 22 листопада</q>. Постанова 5.VI.1920 прямо називає 22 листопада <q>днем нападу на Воробин</q>. Мольський 1920 року датував прихід загону в Мочулище 23 листопада.</p></div><div><h4>Інші</h4><p>«Київська Думка» 27.XI.1918 і спогади учасників — так само. Стаття «Поліське повстання» і презентація — 3–6 грудня.</p></div>
                 <p class="ok">Перевірка: Сибіковський не пам'ятав числа, але назвав ніч «з четверга на п'ятницю»; Радванський — «у четвер»; Свириденко — «у п'ятницю 22 листопада». 21 листопада 1918 року справді четвер.</p></li>
-            <li><h3>Коли почалася облога</h3><div><h4>Справа</h4><p>Близько 22:00 (обвинувальний акт; Ліпінський — за апеляційним вироком; Калінський на суді); близько півночі (Буйновський, Свириденко, 1920; Калінський, 1922); 1–2-га (Мольський, 1922); близько 2-ї (Свириденко на суді); у перекладі протоколу Ліпінського 1922 року — «10-та ранку», найімовірніше помилка.</p></div><div><h4>Інші</h4><p>Загони рушили опівночі («Красная звезда», 1927); о 10-й вечора захопили варту в містечку, о 12-й почали наступ (Ф. Пирішко, 1958).</p></div></li>
+            <li><h3>Коли почалася облога</h3><div><h4>Справа</h4><p>Близько 22:00 (обвинувальний акт; Ліпінський — за апеляційним вироком; Калінський на суді); близько півночі (Буйновський, Свириденко, 1920; Калінський, 1922); 1–2-га (Мольський, 1922); близько 2-ї (Свириденко на суді); Ліпінський 1922: «приблизно о 10-й годині», уночі.</p></div><div><h4>Інші</h4><p>Загони рушили опівночі («Красная звезда», 1927); о 10-й вечора захопили варту в містечку, о 12-й почали наступ (Ф. Пирішко, 1958).</p></div></li>
             <li><h3>Чому оборонці вийшли</h3><div><h4>Справа</h4><p>Будинок горів, набої скінчилися (Ліпінський); <q>пообіцяли, що їх лише заарештують і що буде суд</q> (Буйновський); кулемет зіпсувався на початку бою (Лятта, Галушкевич).</p></div><div><h4>Інші</h4><p>Обложеним пообіцяли, що їх відпустять (спогади Вітольда Плятера).</p></div></li>
             <li><h3>Коли оборонці здалися й коли розстріл</h3><div><h4>Справа</h4><p>Капітуляція близько 16:00, розстріл близько 17:00 (Ліпінський); розстріл між 14:00 і 15:00 (Мольський, Калінський, Свириденко, Литвинчук); стрілянина до 15:00 (Буйновський), до полудня (Галушкевич).</p></div><div><h4>Інші</h4><p>До 17:00, «17-годинний бій» («Красная звезда»); «бій тривав 18 годин» (Пирішко); оборона «до другої години дня» (спогади Вітольда Плятера).</p></div></li>
             <li><h3>Хто оборонявся</h3><div><h4>Справа</h4><p>Брати Плятери, повірений, службовці й варта з 16 чоловік під командою Кальтенберга з Рівного; у будинку — «двадцять з гаком» (Ліпінський); кулемет.</p></div><div><h4>Інші</h4><p>«60 офіцерів плюс 15 осіб озброєної прислуги» («Красная звезда»); «каральний гайдамацький загін на чолі з катом Кальтенбергом» (Пирішко, 1958).</p></div></li>
@@ -1423,7 +1440,10 @@
         <p class="w18-lead">Добірка аркушів зі справи № 67/22 — фотографії оригіналів, зроблені в Державному архіві Рівненської області. Відкрийте документ: ліворуч скан (натисніть, щоб збільшити), праворуч переклад. Переклади цих аркушів звірено зі сканами; де звірено лише частину, це позначено.</p>
         <h3 class="w18-h3">Основні документи</h3>
         <ol class="w18-docs"><!--DC-M-->
+<li><button type="button" class="w18-dc" data-doc="d71"><span class="w18-dc-im"><img src="w18-scans/t/IMG_6954.webp" alt="" width="190" height="260" loading="lazy" decoding="async"></span><span class="w18-dc-tx"><time>29.V.1920</time><b>Допит Зигмунта Мольського-молодшого</b><span>Мольський-молодший: Мозоль у Мочулищі; «Москальчук казав мені, Радванському й механіку Свириденкові…»</span><small>арк. 568 · 2 арк. · звірено частково</small></span></button></li>
+<li><button type="button" class="w18-dc" data-doc="d72"><span class="w18-dc-im"><img src="w18-scans/t/IMG_6956.webp" alt="" width="190" height="260" loading="lazy" decoding="async"></span><span class="w18-dc-tx"><time>29.V.1920</time><b>Допит Мечислава Радванського</b><span>Радванський: відпустив «бандит із червоною кокардою»; «Москальчук сказав мені»; сам — «короткозорий».</span><small>арк. 569 · 2 арк. · звірено частково</small></span></button></li>
 <li><button type="button" class="w18-dc" data-doc="d86"><span class="w18-dc-im"><img src="w18-scans/t/IMG_6989.webp" alt="" width="190" height="260" loading="lazy" decoding="async"></span><span class="w18-dc-tx"><time>30.V.1920</time><b>Огляд книги хворих Дубровицького шпиталю</b><span>Запис поранених 22 листопада 1918 року — звідси слідство взяло більшість обвинувачених.</span><small>арк. 585 · 1 арк.</small></span></button></li>
+<li><button type="button" class="w18-dc" data-doc="d84"><span class="w18-dc-im"><img src="w18-scans/t/IMG_6985.webp" alt="" width="190" height="260" loading="lazy" decoding="async"></span><span class="w18-dc-tx"><time>30.V.1920</time><b>Допит механіка Олександра Свириденка</b><span>Свириденко 1920: кого бачив серед нападників і що казав йому Москальчук.</span><small>арк. 583 · 2 арк. · переклад ще не звірено</small></span></button></li>
 <li><button type="button" class="w18-dc" data-doc="d87"><span class="w18-dc-im"><img src="w18-scans/t/IMG_6966.webp" alt="" width="190" height="260" loading="lazy" decoding="async"></span><span class="w18-dc-tx"><time>31.V.1920</time><b>Лист ґміни Дубровиця слідчому судді</b><span>Дати народження й прикмети: Шеремета, Мороз, Петрушко, Нашора, Будкевичі, Мозоль.</span><small>арк. 574–575 · 3 арк.</small></span></button></li>
 <li><button type="button" class="w18-dc" data-doc="d88"><span class="w18-dc-im"><img src="w18-scans/t/IMG_7015.webp" alt="" width="190" height="260" loading="lazy" decoding="async"></span><span class="w18-dc-tx"><time>1.VI.1920</time><b>Розшукова відомість ґміни Дубровиця</b><span>Сорок чотири розшукувані: підозрювані у вбивстві Полторацького й обвинувачені у справі Плятерів.</span><small>арк. 601 · 2 арк.</small></span></button></li>
 <li><button type="button" class="w18-dc" data-doc="d89"><span class="w18-dc-im"><img src="w18-scans/t/IMG_7012.webp" alt="" width="190" height="260" loading="lazy" decoding="async"></span><span class="w18-dc-tx"><time>3.VI.1920</time><b>Реєстр районного лікаря Добровольського</b><span>Чотирнадцять поранених із латинськими діагнозами, днями в лікарні й датами виписки.</span><small>арк. 598–599 · 2 арк.</small></span></button></li>
@@ -1433,6 +1453,10 @@
 <li><button type="button" class="w18-dc" data-doc="d119"><span class="w18-dc-im"><img src="w18-scans/t/IMG_7056.webp" alt="" width="190" height="260" loading="lazy" decoding="async"></span><span class="w18-dc-tx"><time>27.II.1921</time><b>Рапорт поліції Дубровиці</b><span>Заарештовано Будкевича, Дем'янця, Конончука, Москальчука й Велінця; де решта.</span><small>арк. 629 · 2 арк.</small></span></button></li>
 <li><button type="button" class="w18-dc" data-doc="d122"><span class="w18-dc-im"><img src="w18-scans/t/IMG_7075.webp" alt="" width="190" height="260" loading="lazy" decoding="async"></span><span class="w18-dc-tx"><time>8.III.1921</time><b>Порука громади Орв'яниці</b><span>Понад шістдесят підписів односельців, сольтис і священник — за Степана Будкевича.</span><small>арк. 641–642 · 2 арк.</small></span></button></li>
 <li><button type="button" class="w18-dc" data-doc="d131"><span class="w18-dc-im"><img src="w18-scans/t/IMG_7136.webp" alt="" width="190" height="260" loading="lazy" decoding="async"></span><span class="w18-dc-tx"><time>6.V.1921</time><b>Допит Кирила Мозоля в Кракові</b><span>Кирило Мозоль, «званий Бендзяло»: «того дня був удома в Круповому».</span><small>арк. 682 · 2 арк.</small></span></button></li>
+<li><button type="button" class="w18-dc" data-doc="d184"><span class="w18-dc-im"><img src="w18-scans/t/IMG_6653.webp" alt="" width="190" height="260" loading="lazy" decoding="async"></span><span class="w18-dc-tx"><time>27.VIII.1922</time><b>Додатковий допит Олександра Свириденка</b><span>Свириденко 1922: Нашора й Конончук, «Заєць, він же Клека» і поранений Росін.</span><small>арк. 375 · 1 арк. · звірено частково</small></span></button></li>
+<li><button type="button" class="w18-dc" data-doc="d185"><span class="w18-dc-im"><img src="w18-scans/t/IMG_6656.webp" alt="" width="190" height="260" loading="lazy" decoding="async"></span><span class="w18-dc-tx"><time>27.VIII.1922</time><b>Допити Щеньовського й Литвинчука</b><span>Щеньовський про затримання Шеремети; Литвинчук про Нашору зі слів Сибіковського.</span><small>арк. 376–377 · 3 арк. · звірено частково</small></span></button></li>
+<li><button type="button" class="w18-dc" data-doc="d193"><span class="w18-dc-im"><img src="w18-scans/t/IMG_6686.webp" alt="" width="190" height="260" loading="lazy" decoding="async"></span><span class="w18-dc-tx"><time>6.IX.1922</time><b>Допит Віктора Ліпінського</b><span>Єдиний оборонець-очевидець, що вижив: облога, капітуляція, розстріл, Курач і Шеремета.</span><small>арк. 395–397 · 5 арк.</small></span></button></li>
+<li><button type="button" class="w18-dc" data-doc="d195"><span class="w18-dc-im"><img src="w18-scans/t/IMG_6691.webp" alt="" width="190" height="260" loading="lazy" decoding="async"></span><span class="w18-dc-tx"><time>7.IX.1922</time><b>Допит Аркадія Сибіковського</b><span>Сибіковський: голосування Конончука, тіло Пшедримирського, озброєний Нашора.</span><small>арк. 397 зв.–398 · 3 арк. · переклад ще не звірено</small></span></button></li>
 <li><button type="button" class="w18-dc" data-doc="d206"><span class="w18-dc-im"><img src="w18-scans/t/IMG_6021.webp" alt="" width="190" height="260" loading="lazy" decoding="async"></span><span class="w18-dc-tx"><time>31.X.1922</time><b>Обвинувальний акт</b><span>Перший аркуш: вісім обвинувачених і опис облоги. Скани решти аркушів ще не додано.</span><small>арк. 3–6 зв. · 1 з 8 арк. · звірено частково</small></span></button></li>
 <li><button type="button" class="w18-dc" data-doc="d239"><span class="w18-dc-im"><img src="w18-scans/t/IMG_6206.webp" alt="" width="190" height="260" loading="lazy" decoding="async"></span><span class="w18-dc-tx"><time>15.III.1923</time><b>Протокол судового засідання в Ковелі</b><span>Перший аркуш: склад суду, захисники. Скани решти аркушів ще не додано.</span><small>арк. 117–121 зв. · 1 з 9 арк. · звірено частково</small></span></button></li>
 <li><button type="button" class="w18-dc" data-doc="d274"><span class="w18-dc-im"><img src="w18-scans/t/IMG_6442.webp" alt="" width="190" height="260" loading="lazy" decoding="async"></span><span class="w18-dc-tx"><time>26.VIII.1924</time><b>Повідомлення про смерть Івана Нашори</b><span>«Москальчук-Нашора Ян … 10 серпня 1924 р. помер» у Луцькій в'язниці.</span><small>1 арк.</small></span></button></li>
@@ -1494,6 +1518,7 @@
     <div class="w18-dv-body" data-v="scan">
         <div class="w18-dv-scan">
             <div class="w18-dv-stage" id="w18DvStage"><img id="w18DvImg" alt="" decoding="async"></div>
+            <div class="w18-dv-zoom"><button type="button" data-z="-1" aria-label="Зменшити">−</button><span id="w18DvZ">100%</span><button type="button" data-z="1" aria-label="Збільшити">+</button><button type="button" data-z="0" aria-label="Вмістити на екран">⤢</button></div>
             <div class="w18-dv-pages" id="w18DvP"></div>
         </div>
         <article class="w18-dv-tr" id="w18DvTr" tabindex="0"></article>
@@ -1609,7 +1634,7 @@
     fetch('w18-docs.json').then(function(r){ return r.json(); }).then(function(j){ data = {}; j.forEach(function(d){ data[d.id] = d; order.push(d.id); }); cb(); });
   }
   function render(d){
-    var h = '<span class="w18-dv-st' + (d.st === 'ok' ? '' : ' part') + '">' + (d.st === 'ok' ? 'Переклад звірено зі сканом' : 'Переклад звірено частково') + '</span>';
+    var h = '<span class="w18-dv-st ' + d.st + '">' + ({ ok: 'Переклад звірено зі сканом', part: 'Переклад звірено частково', raw: 'Переклад ще не звірено зі сканом' })[d.st] + '</span>';
     h += '<h3>' + esc(d.title) + '</h3><p class="meta">' + esc(d.date) + (d.arch ? ' · ' + esc(d.arch) : '') + ' · справа № 67/22</p>';
     var ul = false;
     d.tr.forEach(function(b){
@@ -1631,7 +1656,7 @@
   }
   function show(i){
     var d = data[order[cur]]; page = i;
-    stage.classList.remove('is-z'); stage.classList.add('is-load');
+    stage.classList.add('is-load');
     img.onload = function(){ stage.classList.remove('is-load'); };
     img.src = 'w18-scans/IMG_' + d.pages[i] + '.webp';
     img.alt = d.title + ', скан IMG_' + d.pages[i];
@@ -1672,16 +1697,52 @@
     var b = e.target.closest('.pg[data-p]'); if (!b) return; show(+b.getAttribute('data-p'));
     if (getComputedStyle(dv.querySelector('.w18-dv-tabs')).display !== 'none') dv.querySelector('.w18-dv-tabs [data-v="scan"]').click();
   });
-  var drag = null, moved = false;
-  stage.addEventListener('pointerdown', function(e){ if (!stage.classList.contains('is-z') || e.pointerType !== 'mouse') return; drag = { x: e.clientX, y: e.clientY, l: stage.scrollLeft, t: stage.scrollTop }; moved = false; stage.classList.add('is-drag'); });
-  addEventListener('pointermove', function(e){ if (!drag) return; var dx = e.clientX - drag.x, dy = e.clientY - drag.y; if (Math.abs(dx) + Math.abs(dy) > 4) moved = true; stage.scrollLeft = drag.l - dx; stage.scrollTop = drag.t - dy; });
-  addEventListener('pointerup', function(){ if (drag) { drag = null; stage.classList.remove('is-drag'); } });
+  var sc = 1, fitW = 0, fitH = 0, ptrs = {}, pinch = null, pan = null, moved = false;
+  function fit(){
+    if (!img.naturalWidth) return;
+    var cs = getComputedStyle(stage), pw = stage.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight), ph = stage.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+    var r = Math.min(pw / img.naturalWidth, ph / img.naturalHeight);
+    fitW = img.naturalWidth * r; fitH = img.naturalHeight * r;
+  }
+  function setZ(n, cx, cy){
+    n = Math.max(1, Math.min(6, n));
+    var rect = stage.getBoundingClientRect();
+    if (cx === undefined) { cx = rect.left + stage.clientWidth / 2; cy = rect.top + stage.clientHeight / 2; }
+    var ir = img.getBoundingClientRect(), fx = (cx - ir.left) / ir.width, fy = (cy - ir.top) / ir.height;
+    sc = n;
+    img.style.width = fitW * sc + 'px'; img.style.height = fitH * sc + 'px';
+    stage.classList.toggle('is-z', sc > 1.001);
+    var ir2 = img.getBoundingClientRect();
+    stage.scrollLeft += (ir2.left + fx * ir2.width) - cx;
+    stage.scrollTop += (ir2.top + fy * ir2.height) - cy;
+    $('w18DvZ').textContent = Math.round(sc * 100) + '%';
+  }
+  function reset(){ fit(); sc = 1; img.style.width = fitW + 'px'; img.style.height = fitH + 'px'; stage.classList.remove('is-z'); stage.scrollLeft = stage.scrollTop = 0; $('w18DvZ').textContent = '100%'; }
+  img.addEventListener('load', reset);
+  addEventListener('resize', function(){ if (!dv.hidden) { var k = sc; reset(); if (k > 1) setZ(k); } });
+  [].forEach.call(dv.querySelectorAll('[data-z]'), function(b){ b.addEventListener('click', function(){ var z = +b.getAttribute('data-z'); if (!z) reset(); else setZ(sc * (z > 0 ? 1.5 : 1 / 1.5)); }); });
+  stage.addEventListener('wheel', function(e){ e.preventDefault(); setZ(sc * Math.exp(-e.deltaY * (e.ctrlKey ? 0.01 : 0.0022)), e.clientX, e.clientY); }, { passive: false });
+  stage.addEventListener('pointerdown', function(e){
+    ptrs[e.pointerId] = { x: e.clientX, y: e.clientY }; stage.setPointerCapture(e.pointerId); moved = false;
+    var ids = Object.keys(ptrs);
+    if (ids.length === 2) { var a = ptrs[ids[0]], b = ptrs[ids[1]]; pinch = { d: Math.hypot(a.x - b.x, a.y - b.y), s: sc }; pan = null; }
+    else if (ids.length === 1) pan = { x: e.clientX, y: e.clientY, l: stage.scrollLeft, t: stage.scrollTop };
+  });
+  stage.addEventListener('pointermove', function(e){
+    if (!ptrs[e.pointerId]) return; ptrs[e.pointerId] = { x: e.clientX, y: e.clientY };
+    var ids = Object.keys(ptrs);
+    if (pinch && ids.length === 2) { var a = ptrs[ids[0]], b = ptrs[ids[1]]; setZ(pinch.s * Math.hypot(a.x - b.x, a.y - b.y) / pinch.d, (a.x + b.x) / 2, (a.y + b.y) / 2); moved = true; }
+    else if (pan) { var dx = e.clientX - pan.x, dy = e.clientY - pan.y; if (Math.abs(dx) + Math.abs(dy) > 5) { moved = true; stage.classList.add('is-drag'); } stage.scrollLeft = pan.l - dx; stage.scrollTop = pan.t - dy; }
+  });
+  function up(e){ delete ptrs[e.pointerId]; if (Object.keys(ptrs).length < 2) pinch = null; if (!Object.keys(ptrs).length) { pan = null; stage.classList.remove('is-drag'); } }
+  stage.addEventListener('pointerup', up); stage.addEventListener('pointercancel', up);
+  var lastTap = 0;
   stage.addEventListener('click', function(e){
     if (moved) { moved = false; return; }
     if (e.target !== img) return;
-    var r = img.getBoundingClientRect(), fx = (e.clientX - r.left) / r.width, fy = (e.clientY - r.top) / r.height;
-    var z = stage.classList.toggle('is-z');
-    if (z) { stage.scrollLeft = fx * img.offsetWidth - stage.clientWidth / 2; stage.scrollTop = fy * img.offsetHeight - stage.clientHeight / 2; }
+    var now = Date.now();
+    if (e.pointerType === 'touch' || (e.detail === 0)) { if (now - lastTap < 320) { sc > 1.01 ? reset() : setZ(2.5, e.clientX, e.clientY); } lastTap = now; return; }
+    sc > 1.01 ? reset() : setZ(2.5, e.clientX, e.clientY);
   });
   document.addEventListener('keydown', function(e){
     if (dv.hidden) return;
