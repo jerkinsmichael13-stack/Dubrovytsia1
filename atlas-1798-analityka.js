@@ -28,6 +28,8 @@ function fmt(n){ return (Math.round(n)).toLocaleString('uk-UA').replace(/\s/g, '
 function pct(a, b, dp){ if (!b) return '0'; return (a / b * 100).toFixed(dp == null ? 1 : dp).replace('.', ','); }
 function dec(x, dp){ return x.toFixed(dp == null ? 1 : dp).replace('.', ','); }
 function plural(n, one, few, many){ var a = n % 10, b = n % 100; if (a === 1 && b !== 11) return one; if (a >= 2 && a <= 4 && (b < 12 || b > 14)) return few; return many; }
+function dush(n){ return plural(n, 'душа', 'душі', 'душ'); }
+
 function cv(k){ return 'var(--k-' + k + ')'; }
 function tot(r){ return r.m + r.f; }
 function catN(r, k){ return r.cats[k][0] + r.cats[k][1]; }
@@ -55,7 +57,7 @@ function place(r, withEstate){
 }
 function catTip(r){
     var t = tot(r), cs = catSum(r);
-    var h = '<b>' + esc(r.full) + '</b>' + fmt(t) + ' душ' + (r.dvory ? ', ' + fmt(r.dvory) + ' ' + plural(r.dvory, 'двір', 'двори', 'дворів') : '');
+    var h = '<b>' + esc(r.full) + '</b>' + fmt(t) + ' ' + dush(t) + (r.dvory ? ', ' + fmt(r.dvory) + ' ' + plural(r.dvory, 'двір', 'двори', 'дворів') : '');
     CATS.forEach(function(c){
         var n = catN(r, c.k); if (!n) return;
         h += '<div class="row"><span><i style="background:' + cv(c.k) + '"></i>' + c.l + '</span><span>' + fmt(n) + ' · ' + pct(n, cs) + '%</span></div>';
@@ -168,7 +170,7 @@ var WHERE_NOTES = {
         return 'Кріпаки жили майже скрізь — у <b>' + t.where.length + '</b> із 74 поселень. У ' + all.length + ' поселеннях, крім кріпаків, не записано взагалі нікого. Без жодного кріпака — лише ' + none.map(function(r){ return esc(r.name) + ' (' + (catN(r, 'nobles') === catSum(r) ? 'усі — шляхта' : 'усі — вільні люди') + ')'; }).join(', ') + '.';
     },
     churchSerfs: function(t){
-        return 'Селяни духовних маєтків жили лише в <b>' + t.where.length + '</b> містечках: у Бережниці (маєток ділили Чацький і духовенство Бережницького костелу) та в Домбровиці, де стояв костел із мурованими келіями. Селяни в маєтку Домбровицького кляштору піарів (Стрільськ, Глушиця та ін.) записані в таблиці в рубриці «власницьких» підданих.';
+        return 'Селяни духовних маєтків жили лише в <b>' + t.where.length + '</b> містечках: у Бережниці (маєток ділили Чацький і духовенство Бережницького костелу) та в Дубровиці, де стояв костел із мурованими келіями. Селяни в маєтку Дубровицького кляштору піарів (Стрільськ, Глушиця та ін.) записані в таблиці в рубриці «власницьких» підданих.';
     },
     free: function(t){
         return 'Два поселення цілком складалися з вільних людей: <b>Гута Каноницька</b> (скляна гута, де скло робили «вільні люди») і <b>Буда Цепцевицька</b> (поташний завод). Цікаво, що опис Буди каже: роботу на заводі виконують «власні селяни» маєтку.';
@@ -210,7 +212,7 @@ function renderComp(){
     if (!rows.length) h = '<p class="blk-note" style="grid-column:1/-1">Нічого не знайдено.</p>';
     else if (compGroup === 'estate' && !q) {
         ESTATES.slice().sort(function(a, b){ return b.pop - a.pop; }).forEach(function(e){
-            h += '<div class="comp-g"><span>' + esc(e.short) + '</span><span>' + fmt(e.pop) + ' душ</span></div>';
+            h += '<div class="comp-g"><span>' + esc(e.short) + '</span><span>' + fmt(e.pop) + ' ' + dush(e.pop) + '</span></div>';
             h += e.rows.slice().sort(sorter).map(compRow).join('');
         });
     } else h = rows.sort(sorter).map(compRow).join('');
@@ -255,7 +257,7 @@ renderComp();
     });
     el.innerHTML = hs;
     var men = sorted.slice(-3).reverse(), wom = sorted.slice(0, 3);
-    $('sexInsight').innerHTML = 'Найбільше чоловіків — у ' + men.map(function(p){ return '<b>' + esc(p.r.name) + '</b> (' + Math.round(p.v) + ')'; }).join(', ') + '; найбільше жінок — у ' + wom.map(function(p){ return '<b>' + esc(p.r.name) + '</b> (' + Math.round(p.v) + ')'; }).join(', ') + '. Показано ' + pts.length + ' поселень, де живе щонайменше 30 осіб: у менших один-два записи різко змінюють співвідношення.';
+    $('sexInsight').innerHTML = 'Найбільше чоловіків на 100 жінок — ' + men.map(function(p){ return '<b>' + esc(p.r.name) + '</b> (' + Math.round(p.v) + ')'; }).join(', ') + '; найменше — ' + wom.map(function(p){ return '<b>' + esc(p.r.name) + '</b> (' + Math.round(p.v) + ')'; }).join(', ') + '. Показано ' + pts.length + ' ' + plural(pts.length, 'поселення', 'поселення', 'поселень') + ', де жило щонайменше 30 осіб: у менших один-два записи різко змінюють співвідношення.';
 })();
 
 /* ══ § 4 Розмір поселень ════════════════════ */
@@ -267,13 +269,13 @@ renderComp();
         var hgt = c.length / mx * 100;
         return '<div class="hist-c" data-tip="<b>' + B[i][2] + ' душ</b>' + c.length + ' ' + plural(c.length, 'поселення', 'поселення', 'поселень') + ':<br>' + esc(c.map(function(r){ return r.name; }).join(', ')) + '"><b style="bottom:calc(' + hgt + '% + 4px)">' + c.length + '</b><i style="height:' + hgt + '%"></i></div>';
     }).join('') + '</div><div class="hist-x" style="--n:' + B.length + '">' + B.map(function(b){ return '<span>' + b[2] + '</span>'; }).join('') + '</div>' +
-    '<p class="blk-note">Медіанне поселення — ' + fmt(median(ROWS.map(tot))) + ' душ. Наведіть на стовпчик, щоб побачити назви.</p>';
+    '<p class="blk-note">Типове (медіанне) поселення — ' + fmt(median(ROWS.map(tot))) + ' ' + dush(median(ROWS.map(tot))) + '. Наведіть на стовпчик, щоб побачити назви.</p>';
 
     var types = {}; ROWS.forEach(function(r){ (types[r.type] = types[r.type] || []).push(r); });
     var tk = Object.keys(types).sort(function(a, b){ return types[b].length - types[a].length; }), tmax = types[tk[0]].length;
     $('types').innerHTML = tk.map(function(k){
         var list = types[k], p = sum(list, tot);
-        return '<div class="hb-l">' + k + '</div><div class="hb-t" data-tip="<b>' + k + '</b>' + esc(list.map(function(r){ return r.name; }).join(', ')) + '"><i style="width:' + (list.length / tmax * 100) + '%;background:var(--gold)"></i></div><div class="hb-v"><b>' + list.length + '</b> · ' + fmt(p) + ' душ</div>';
+        return '<div class="hb-l">' + k + '</div><div class="hb-t" data-tip="<b>' + k + '</b>' + esc(list.map(function(r){ return r.name; }).join(', ')) + '"><i style="width:' + (list.length / tmax * 100) + '%;background:var(--gold)"></i></div><div class="hb-v"><b>' + list.length + '</b> · ' + fmt(p) + ' ' + dush(p) + '</div>';
     }).join('');
 
     var big = ROWS.slice().sort(function(a, b){ return tot(b) - tot(a); }), bigAll = false, bmax = tot(big[0]);
@@ -302,13 +304,13 @@ renderComp();
         while (lanes[lane] != null && px - lanes[lane] < 1.2) lane++;
         lanes[lane] = px;
         var y = 50 + (lane % 2 ? 1 : -1) * Math.ceil(lane / 2) * 8;
-        hs += '<button type="button" class="dot" style="left:' + px + '%;top:' + y + 'px" data-tip="<b>' + esc(p.r.full) + '</b>' + dec(p.v) + ' душі на двір<br>' + fmt(tot(p.r)) + ' душ · ' + p.r.dvory + ' дв." aria-label="' + esc(p.r.name) + '"></button>';
+        hs += '<button type="button" class="dot" style="left:' + px + '%;top:' + y + 'px" data-tip="<b>' + esc(p.r.full) + '</b>' + dec(p.v) + ' душі на двір<br>' + fmt(tot(p.r)) + ' ' + dush(tot(p.r)) + ' · ' + p.r.dvory + ' дв." aria-label="' + esc(p.r.name) + '"></button>';
     });
     var top = pts[pts.length - 1];
     hs += '<span class="dot-l" style="left:' + Math.min(92, x(top.v)) + '%;top:0px">' + esc(top.r.name) + ' · ' + dec(top.v) + '</span>';
     $('dvirStrip').innerHTML = hs;
     var p2 = pts[pts.length - 2];
-    $('dvirInsight').innerHTML = 'Здебільшого в дворі жило 5–8 людей — велика родина з дітьми й старими. Разюче вибивається <b>' + esc(top.r.name) + '</b>: ' + top.r.dvory + ' дворів на ' + fmt(tot(top.r)) + ' душ, тобто ' + dec(top.v) + ' на двір — утричі більше за наступне за щільністю поселення (' + esc(p2.r.name) + ', ' + dec(p2.v) + '). Імовірно, це описка в кількості дворів у самій таблиці.';
+    $('dvirInsight').innerHTML = 'Здебільшого в дворі жило 5–8 людей — велика родина з дітьми й старими. Різко вирізняються <b>' + esc(top.r.name) + '</b>: ' + top.r.dvory + ' ' + plural(top.r.dvory, 'двір', 'двори', 'дворів') + ' на ' + fmt(tot(top.r)) + ' ' + dush(tot(top.r)) + ', тобто ' + dec(top.v) + ' на двір — утричі більше за наступне за щільністю поселення (' + esc(p2.r.name) + ', ' + dec(p2.v) + '). Імовірно, це описка в кількості дворів у самій таблиці.';
     $('dvirInsight').innerHTML = $('dvirInsight').innerHTML.replace('утричі більше', 'у ' + dec(top.v / p2.v) + ' раза більше');
 })();
 
@@ -323,9 +325,9 @@ renderComp();
         }).join('');
         var ch = (r.church || []).map(function(c){ return c[0]; });
         var facts = [
-            '<li><b>' + fmt(tot(r)) + '</b> душ · <b>' + r.dvory + '</b> дворів</li>',
+            '<li><b>' + fmt(tot(r)) + '</b> ' + dush(tot(r)) + ' · <b>' + r.dvory + '</b> ' + plural(r.dvory, 'двір', 'двори', 'дворів') + '</li>',
             r.fairs ? '<li>Ярмарки: ' + r.fairs.map(fairTxt).join(', ') + '</li>' : '',
-            ch.length ? '<li>Церкви: ' + ch.join('; ') + '</li>' : '',
+            ch.length ? '<li>' + (ch.length > 1 ? 'Церкви' : 'Церква') + ': ' + ch.join('; ') + '</li>' : '',
             r.kostel ? '<li>Костел латинського обряду</li>' : '',
             r.mills ? '<li>Млинів: ' + r.mills[0] + '</li>' : '',
             r.port ? '<li>Одна з найкращих пристаней на Горині</li>' : ''
@@ -355,8 +357,8 @@ function renderOwner(g){
     var inc = e.income ? fmt(e.income) + '<small style="font-size:.9rem"> руб.</small>' : '—';
     var kv = '<dl class="kv">' +
         '<div><dd>' + e.rows.length + '</dd><dt>' + plural(e.rows.length, 'поселення', 'поселення', 'поселень') + '</dt></div>' +
-        '<div><dd>' + fmt(e.dv) + '</dd><dt>дворів</dt></div>' +
-        '<div><dd>' + fmt(e.pop) + '</dd><dt>душ · ' + rank + '-й за населенням</dt><span class="cmp">' + (e.pop >= avgPop ? 'у ' + dec(e.pop / avgPop) + ' раза більше' : 'у ' + dec(avgPop / e.pop) + ' раза менше') + ' за середній маєток</span></div>' +
+        '<div><dd>' + fmt(e.dv) + '</dd><dt>' + plural(e.dv, 'двір', 'двори', 'дворів') + '</dt></div>' +
+        '<div><dd>' + fmt(e.pop) + '</dd><dt>' + dush(e.pop) + ' · ' + rank + '-й за населенням</dt><span class="cmp">' + (e.pop >= avgPop ? 'у ' + dec(e.pop / avgPop) + ' раза більше' : 'у ' + dec(avgPop / e.pop) + ' раза менше') + ' за середній маєток</span></div>' +
         '<div><dd>' + inc + '</dd><dt>' + (e.income ? (e.kind === 'оренда' ? 'оренда на рік' : 'дохід на рік') : 'прибуток не вказано') + '</dt>' + (e.income ? '<span class="cmp">' + dec(e.income / e.pop, 2) + ' руб. на душу</span>' : '') + '</div></dl>';
     // поселення маєтку
     var vmax = Math.max.apply(null, e.rows.map(tot));
@@ -418,13 +420,13 @@ heat($('cropHeat'), D.crops, function(e, c){ return e.crops.indexOf(c) !== -1; }
     var miss = {}; D.crops.forEach(function(c){ miss[c] = ESTATES.filter(function(e){ return e.crops.indexOf(c) === -1; }).map(function(e){ return e.short; }); });
     var every = D.crops.filter(function(c){ return !miss[c].length; });
     var some = D.crops.filter(function(c){ return miss[c].length; });
-    $('cropInsight').innerHTML = '<b>' + every.join(', ') + '</b> сіяли в усіх 16 маєтках. Не згадано: ' + some.map(function(c){ return c + ' — ' + miss[c].join(', '); }).join('; ') + '. Льон і коноплі були всюди — з них пряли й ткали: у маєтку Плятера опис прямо каже, що жінки «прядуть льон, вовну й коноплі та тчуть полотно… частково й на продаж».';
+    $('cropInsight').innerHTML = '<b>' + every.join(', ').replace(/^./, function(c){ return c.toUpperCase(); }) + '</b> сіяли в усіх 16 маєтках. Не згадано: ' + some.map(function(c){ return c + ' — ' + miss[c].join(', '); }).join('; ') + '. Льон і коноплі були всюди — з них пряли й ткали: у маєтку Плятера опис прямо каже, що жінки «прядуть льон, вовну й коноплі та тчуть полотно… частково й на продаж».';
 })();
 heat($('treeHeat'), D.trees, function(e, c){ return e.trees.indexOf(c) !== -1; }, function(e){ return e.forest ? esc(e.forest) : 'ліс не описано'; });
 (function(){
     var withF = ESTATES.filter(function(e){ return e.trees.length; });
     var cnt = function(t){ return withF.filter(function(e){ return e.trees.indexOf(t) !== -1; }).length; };
-    $('treeInsight').innerHTML = (cnt('сосна') === withF.length && cnt('береза') === withF.length ? 'Сосну й березу названо в усіх ' + withF.length + ' описаних лісах' : 'Сосна росла в ' + cnt('сосна') + ', береза — у ' + cnt('береза') + ' з ' + withF.length + ' описаних лісів') + ', вільха — у ' + cnt('вільха') + ', осика — у ' + cnt('осика') + '. Дуб названо в ' + cnt('дуб') + ', граб — лише в ' + cnt('граб') + ', клен — в одному маєтку (Чацького). Майже всюди ліс «дров’яний»: придатних для будівництва дерев мало, стовбури здебільшого до 4–6 вершків (18–27 см). Найкращий ліс — у Каноничах, 5–7 вершків (22–31 см).';
+    $('treeInsight').innerHTML = (cnt('сосна') === withF.length && cnt('береза') === withF.length ? 'Сосну й березу названо в усіх ' + withF.length + ' описаних лісах' : 'Сосну названо в ' + cnt('сосна') + ', березу — у ' + cnt('береза') + ' з ' + withF.length + ' описаних лісів') + ', вільху — у ' + cnt('вільха') + ', осику — у ' + cnt('осика') + '. Дуб названо в ' + cnt('дуб') + ', граб — лише в ' + cnt('граб') + ', клен — в одному маєтку (Чацького). Майже всюди ліс «дров’яний»: придатних для будівництва дерев мало, стовбури здебільшого до 4–6 вершків (18–27 см). Найкращий ліс — у Каноничах, 5–7 вершків (22–31 см).';
 })();
 (function(){
     function collect(key){
@@ -472,7 +474,7 @@ heat($('treeHeat'), D.trees, function(e, c){ return e.trees.indexOf(c) !== -1; }
     var by = function(m){ return sum(rows, function(r){ return r.mills[2] === m ? r.mills[0] : 0; }); };
     var stonesAll = sum(rows, function(r){ return r.mills[1]; });
     var noMill = ESTATES.filter(function(e){ return !e.mills; }).map(function(e){ return e.short; });
-    $('millInsight').innerHTML = 'Разом <b>' + (waterMills + horseMills) + ' млини</b>: ' + waterMills + ' водяних на ' + stonesAll + ' жорнових каменів і один кінний. Цілий рік працювали ' + by('рік') + ' — на повноводних Горині й Случі; ' + (by('весна-осінь') + by('весна')) + ' — лише навесні або восени, коли вистачало води в малих річках; для ' + by(null) + ' режим не вказано. Найбільше млинів мали Плятер і Чацький — по 7. Без млина в описі — ' + noMill.join(', ') + '.';
+    $('millInsight').innerHTML = 'Разом <b>' + (waterMills + horseMills) + ' млини</b>: ' + waterMills + ' ' + plural(waterMills, 'водяний', 'водяні', 'водяних') + ' (разом ' + stonesAll + ' ' + plural(stonesAll, 'жорновий камінь', 'жорнові камені', 'жорнових каменів') + ') і один кінний. Цілий рік працювали ' + by('рік') + ' — на повноводних Горині й Случі; ' + (by('весна-осінь') + by('весна')) + ' — лише навесні або восени, коли вистачало води в малих річках; для ' + by(null) + ' режим не вказано. Найбільше млинів мали Плятер і Чацький — по 7. Без млина в описі — ' + noMill.join(', ') + '.';
     var modeTxt = function(m){ return m === 'рік' ? 'цілий рік' : m === 'весна-осінь' ? 'навесні й восени' : m === 'весна' ? 'лише навесні' : 'режим не вказано'; };
     var items = rows.map(function(r){ return { r: r, h: '<li><span>' + place(r) + '<small>' + esc(EST[r.g].short) + (r.fulling ? ' · із сукновальнею' : '') + '</small></span><span class="r">' + r.mills[0] + ' ' + plural(r.mills[0], 'млин', 'млини', 'млинів') + ' · ' + r.mills[1] + ' ' + plural(r.mills[1], 'камінь', 'камені', 'каменів') + '<br>' + modeTxt(r.mills[2]) + '</span></li>' }; });
     ROWS.filter(function(r){ return r.horseMill; }).forEach(function(r){ items.push({ r: r, h: '<li><span>' + place(r) + '<small>' + esc(EST[r.g].short) + '</small></span><span class="r">1 кінний млин<br>не залежить від води</span></li>' }); });
@@ -499,10 +501,10 @@ heat($('treeHeat'), D.trees, function(e, c){ return e.trees.indexOf(c) !== -1; }
     var noCl = withCh.filter(function(r){ return !catN(r, 'clergy'); });
     var conf = { 'православна': 0, 'греко-унійна': 0 }; ch.forEach(function(c){ if (c.conf) conf[c.conf]++; });
     $('clergyChurch').innerHTML = '<dl class="kv" style="grid-template-columns:repeat(3,1fr)">' +
-        '<div><dd>' + ch.length + '</dd><dt>церков у ' + withCh.length + ' поселеннях</dt></div>' +
+        '<div><dd>' + ch.length + '</dd><dt>' + plural(ch.length, 'церква', 'церкви', 'церков') + ' у ' + withCh.length + ' ' + plural(withCh.length, 'поселенні', 'поселеннях', 'поселеннях') + '</dt></div>' +
         '<div><dd>' + kostels + '</dd><dt>костели — у всіх чотирьох містечках</dt></div>' +
         '<div><dd>' + dec(perChurch) + '</dd><dt>особи духовного стану на одну церкву</dt></div></dl>' +
-        '<p class="blk-note" style="margin-top:0">Конфесію названо лише для частини храмів: православні — ' + conf['православна'] + ', греко-унійні — ' + conf['греко-унійна'] + ' (обидві церкви Домбровиці). Для решти опис каже лише «церква». Духовенство записане в ' + clergyAt.length + ' із ' + withCh.length + ' поселень із церквою' + (noCl.length ? '; без духовенства — ' + noCl.map(function(r){ return esc(r.name); }).join(', ') : '') + '. Костели в Бережниці, Домбровиці й Володимирці стоять поруч із приміткою «+ католики» в рубриці духовенства.</p>';
+        '<p class="blk-note" style="margin-top:0">Конфесію названо лише для частини храмів: православні — ' + conf['православна'] + ', греко-унійні — ' + conf['греко-унійна'] + ' (обидві церкви Дубровиці). Для решти опис каже лише «церква». Духовенство записане в ' + clergyAt.length + ' з ' + withCh.length + ' ' + plural(withCh.length, 'поселення', 'поселень', 'поселень') + ', де є церква' + (noCl.length ? '; без духовенства — ' + noCl.map(function(r){ return esc(r.name); }).join(', ') : '') + '. У Бережниці, Дубровиці й Володимирці, де стояли костели, до числа духовенства в таблиці дописано «+ католики».</p>';
 
     var items = ch.map(function(c){ return '<li><span>' + place(c.r) + '<small>' + esc(EST[c.r.g].short) + '</small></span><span class="r">церква ' + esc(c.d) + (c.conf ? '<br>' + c.conf : '') + '</span></li>'; });
     ROWS.filter(function(r){ return r.kostel; }).forEach(function(r){ items.push('<li><span>' + place(r) + '<small>' + esc(EST[r.g].short) + '</small></span><span class="r">костел латинського обряду' + (r.garden ? '<br>муровані келії й сад' : '') + '</span></li>'); });
@@ -510,10 +512,10 @@ heat($('treeHeat'), D.trees, function(e, c){ return e.trees.indexOf(c) !== -1; }
 
     var man = ESTATES.map(function(e){ return { e: e, n: e.rows.filter(function(r){ return r.manor; }) }; }).filter(function(x){ return x.n.length; }).sort(function(a, b){ return b.n.length - a.n.length; });
     var mAll = sum(man, function(x){ return x.n.length; }), mmax = man[0].n.length;
-    $('manorSub').textContent = 'Усього ' + mAll + ' панських домів у ' + mAll + ' поселеннях. Наведіть, щоб побачити, де саме.';
+    $('manorSub').textContent = 'Усього ' + mAll + ' ' + plural(mAll, 'панський дім', 'панські доми', 'панських домів') + ' у ' + mAll + ' ' + plural(mAll, 'поселенні', 'поселеннях', 'поселеннях') + ' — по одному в кожному. Наведіть, щоб побачити, де саме.';
     $('manorBars').innerHTML = man.map(function(x){ return '<div class="hb-l">' + esc(x.e.short) + '</div><div class="hb-t" data-tip="<b>' + esc(x.e.short) + '</b>' + esc(x.n.map(function(r){ return r.name; }).join(', ')) + '"><i style="width:' + (x.n.length / mmax * 100) + '%;background:var(--gold)"></i></div><div class="hb-v"><b>' + x.n.length + '</b></div>'; }).join('');
     var silTot = ROWS.filter(function(r){ return r.type === 'Сільце'; }), silM = silTot.filter(function(r){ return r.manor; });
-    $('manorInsight').innerHTML = 'Панський дім стояв у ' + silM.length + ' з ' + silTot.length + ' сілець — це й відрізняло сільце від звичайного села. Усі панські доми дерев’яні; єдина кам’яна споруда серед панських садиб — двоповерхові муровані «служби» (господарські будівлі) у Великих Цепцевичах. Муровані також костел у Бережниці й келії при костелі в Домбровиці, а резиденція графа Плятера стояла у фільварку Воробин.';
+    $('manorInsight').innerHTML = (silM.length === silTot.length ? 'Панський дім був у кожному з ' + silTot.length + ' сілець' : 'Панський дім був у ' + silM.length + ' з ' + silTot.length + ' сілець') + ' — це й відрізняло сільце від звичайного села. Усі панські доми дерев’яні; єдина кам’яна споруда серед панських садиб — двоповерхові муровані «служби» (господарські будівлі) у Великих Цепцевичах. Мурованими опис називає також костел у Бережниці й келії при костелі в Дубровиці. Панський дім графа Плятера у фільварку Воробин 1798 року був дерев’яним.';
 })();
 
 /* ══ § 10 Гроші ═════════════════════════════ */
@@ -543,7 +545,7 @@ heat($('treeHeat'), D.trees, function(e, c){ return e.trees.indexOf(c) !== -1; }
     $('lorenz').innerHTML = svg;
     var top3 = list.slice(0, 3), t3 = sum(top3, function(e){ return e.income; }), t3v = sum(top3, function(e){ return e.rows.length; });
     var med = median(list.map(function(e){ return e.income; })), mean = total / list.length;
-    $('incInsight').innerHTML = 'Разом відомий прибуток маєтків — <b>' + fmt(total) + ' руб. на рік</b>. Троє найбагатших — ' + top3.map(function(e){ return e.short; }).join(', ') + ' — отримували ' + pct(t3, total, 0) + '% цієї суми, хоча мали ' + t3v + ' з 74 поселень. Середній маєток приносив ' + fmt(mean) + ' руб., але типовий (медіана) — лише ' + fmt(med) + ': кілька великих латифундій і довгий «хвіст» дрібних маєтків, зданих в оренду. Найбільше з однієї душі приносив маєток ' + ps[0].e.short + ' — ' + dec(ps[0].v, 2) + ' руб.; найменше — ' + ps[ps.length - 1].e.short + ' (' + dec(ps[ps.length - 1].v, 2) + ' руб.).';
+    $('incInsight').innerHTML = 'Разом відомий прибуток маєтків — <b>' + fmt(total) + ' руб. на рік</b>. Троє найбагатших — ' + top3.map(function(e){ return e.short; }).join(', ') + ' — отримували ' + pct(t3, total, 0) + '% цієї суми і мали ' + t3v + ' з 74 поселень. Середній маєток приносив ' + fmt(mean) + ' руб., але типовий (медіана) — лише ' + fmt(med) + ': кілька великих латифундій і довгий «хвіст» дрібних маєтків, зданих в оренду. Найбільше з однієї душі: ' + ps[0].e.short + ' — ' + dec(ps[0].v, 2) + ' руб.; найменше: ' + ps[ps.length - 1].e.short + ' — ' + dec(ps[ps.length - 1].v, 2) + ' руб.';
 
     var PAN = ['1 день', '2 дні', '3 дні'];
     var rows = ESTATES.slice().sort(function(a, b){ return b.pop - a.pop; });

@@ -580,7 +580,7 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
                             <div class="nav-menu-side">
                                 <p class="nav-menu-label">Постаті</p>
                                 <a href="plater.html" class="nav-person"><img src="nav-plater.jpg" alt="" width="40" height="40" loading="lazy" decoding="async"><span><span class="nav-person-name">Граф Юзеф Плятер</span><span class="nav-person-role">Власник Дубровиці</span></span></a>
-                                <a href="radzyvil.html" class="nav-person"><img src="nav-radzyvil.jpg" alt="" width="40" height="40" loading="lazy" decoding="async"><span><span class="nav-person-name">Князь Домінік Радзивілл</span><span class="nav-person-role">Власник сіл над Горинню</span></span></a>
+                                <a href="radzyvil.html" class="nav-person"><img src="nav-radzyvil.jpg" alt="" width="40" height="40" loading="lazy" decoding="async"><span><span class="nav-person-name">Князь Домінік Радзивіл</span><span class="nav-person-role">Власник сіл над Горинню</span></span></a>
                                 <p class="nav-menu-label nav-menu-label--gap">Каталоги</p>
                                     <a href="poselennia.html" class="nav-cat"><span>Поселення Дубровиччини</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
                                     <a href="prizvyshcha.html" class="nav-cat"><span>Прізвища й родини</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
@@ -619,7 +619,7 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
 <!-- ═══ ПЕРЕГЛЯДАЧ АТЛАСУ ═══ -->
 <section class="v" id="mapa" aria-label="Інтерактивний атлас">
     <div class="v-mapwrap">
-        <div id="atl-map" role="application" aria-label="Мапа аркуша атласу" tabindex="0"></div>
+        <div id="atl-map" role="application" aria-label="Аркуш карти 1827 року" tabindex="0"></div>
 
         <div class="v-tools">
             <svg class="v-rose" viewBox="0 0 100 100" aria-hidden="true">
@@ -645,7 +645,7 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
             <button type="button" id="vFilterOff">Скинути</button>
         </div>
 
-        <div class="v-sheets" role="tablist" aria-label="Аркуші атласу" id="vSheets"></div>
+        <div class="v-sheets" role="tablist" aria-label="Аркуші карти 1827 року" id="vSheets"></div>
         <div class="v-hint" id="vHint"><i></i>Натисніть позначку на мапі або назву в списку</div>
     </div>
 
@@ -702,7 +702,15 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
                 </div>
                 <div class="fade-in-up delay-2">
                     <h3>Як читати назви</h3>
-                    <p>Назви на мапі — у тогочасній орфографії, поруч — сучасна форма. «Рудня» в таблиці трапляється тричі: це різні, віддалені одне від одного села.</p>
+                    <p>Назви на мапі — у тогочасній орфографії, поруч — сучасна форма. У поясненнях сайту місто названо сучасною формою — Дубровиця; «Домбровиця» залишено лише в цитатах і перекладах джерел. «Рудня» в таблиці трапляється тричі: це різні, віддалені одне від одного села.</p>
+                </div>
+                <div class="fade-in-up">
+                    <h3>Як читати дати</h3>
+                    <p>Дати в описі — ярмарки, свята — записано за юліанським календарем, яким тоді користувалися в Російській імперії. У XVIII столітті він відставав від сучасного на 11 днів: ярмарок «6 січня» за нашим календарем припадав на 17 січня.</p>
+                </div>
+                <div class="fade-in-up delay-1">
+                    <h3>Слова джерела</h3>
+                    <p>Стани й назви подано так, як у таблиці 1798 року: «кріпаки», «піддані духовних маєтків», «вільні люди й цигани», «кляштор» (католицький монастир). «Душа» — будь-який мешканець, чоловік чи жінка.</p>
                 </div>
             </div>
         </div>
@@ -715,7 +723,7 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
         <div class="c-mark"><b>§ 2</b><span>Маєтки та власники</span></div>
         <div>
             <h2 class="c-h2 fade-in-up">Кому належали люди і землі</h2>
-            <p class="c-lede fade-in-up">Шістнадцять власників ділили між собою край навколо Дубровиці. Кожна смуга нижче — частка одного маєтку в загальній кількості мешканців. Наведіть, щоб побачити цифри, натисніть — щоб показати його села на мапі.</p>
+            <p class="c-lede fade-in-up">Край навколо Дубровиці ділили між собою шістнадцять маєтків. Кожна смуга нижче — частка одного маєтку в загальній кількості мешканців. Наведіть, щоб побачити цифри, натисніть — щоб показати його села на мапі.</p>
             <div class="o-strip-h"><span>Мешканці за маєтками</span><span><b id="oTotal">—</b> душ разом</span></div>
             <div class="o-strip" id="oStrip" role="list"></div>
             <p class="o-strip-note" id="oNote"></p>
@@ -724,7 +732,7 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
                 <tbody></tbody>
                 <tfoot class="o-foot"></tfoot>
             </table>
-            <p class="o-legend">Суцільна рамка — поселення є на мапі: натисніть, щоб відкрити його картку. Пунктирна — записане в атласі, але не потрапило на наявні аркуші. Прибуток — річна сума доходу або оренди в рублях, як її подано в описі маєтку.</p>
+            <p class="o-legend">Суцільна рамка — поселення є на мапі: натисніть, щоб відкрити його картку. Пунктирна — записане в атласі, але не потрапило на наявні аркуші карти 1827 року. Прибуток — річна сума доходу або оренди в рублях, як її подано в описі маєтку.</p>
             <p style="margin:1.8rem 0 0"><a class="btn-ink" href="atlas-1798-analityka.html">Повна аналітика: населення за станами, портрети маєтків, млини, храми, природа <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></p>
         </div>
     </div>
@@ -737,7 +745,7 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
         <div class="p-grid">
             <div class="p-text">
                 <h2 class="c-h2 fade-in-up">Граф Юзеф Антоній Броель-Плятер</h2>
-                <p class="fade-in-up">В атласі 1798 року він записаний як «граф і кавалер Антоній Плятер». Дубровиця перейшла до нього в 1775–1776 роках, після розподілу боргового маєтку Бжостовських, а резиденцію збудував у фільварку Воробин — там мав велику бібліотеку і збірку творів мистецтва.</p>
+                <p class="fade-in-up">В атласі 1798 року він записаний як «граф і кавалер Антоній Плятер». Дубровиця перейшла до нього в 1775–1776 роках, коли за рішенням сейму 1775 року маєток Бжостовських поділили через борги. У 1776 році брати Плятери ще тримали Дубровицю як заставу, тож на межових каменях того року вирізьблено імена Бжостовських. Резиденцію Плятер облаштував у фільварку Воробин — там мав велику бібліотеку і збірку творів мистецтва.</p>
                 <p class="fade-in-up">Посол на Великий сейм, прибічник Конституції 3 травня, кавалер орденів Святого Станіслава і Білого Орла. Помер 1832 року, похований у каплиці-гробівці на кладовищі в Дубровиці.</p>
                 <dl class="p-facts fade-in-up" id="pFacts"></dl>
                 <div class="p-btns fade-in-up">
@@ -785,7 +793,7 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
                         <div><dd>до червня</dd><dt>сезон плавання, з весни</dt></div>
                     </dl>
                     <ol class="r-route" aria-label="Шлях вантажу">
-                        <li class="port">Бережниця</li><li class="port">Домбровиця</li><li class="port">Висоцьк</li><li>Прип’ять</li><li>Пінськ</li><li>Рига</li>
+                        <li class="port">Бережниця</li><li class="port">Дубровиця</li><li class="port">Висоцьк</li><li>Прип’ять</li><li>Пінськ</li><li>Рига</li>
                     </ol>
                     <p class="r-route-l">Золотим позначено найкращі пристані на Горині.</p>
                 </div>
@@ -797,6 +805,33 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
 </main>
 
 <!-- Footer -->
+<section class="cite-sec" aria-label="Як цитувати цю сторінку">
+<div class="cite-box">
+<p class="cite-k">Як цитувати</p>
+<p class="cite-t">Атлас Волинської губернії 1798 року: Дубровиця та околиці. Цифровий архів Дубровиці : вебсайт. URL: https://dubrovytsia.site/atlas-1798.html (дата звернення: <span data-cite-date>17.11.2026</span>).</p>
+<button type="button" class="cite-copy">Скопіювати</button>
+</div>
+</section>
+<style>
+.cite-sec{max-width:1280px;margin:0 auto;padding:0 var(--spacing-md,1rem) 3.2rem}
+.cite-box{display:grid;grid-template-columns:auto 1fr auto;gap:.4rem 1.6rem;align-items:baseline;border-top:1px solid var(--color-border,#ddd);padding-top:1.4rem}
+.cite-k{margin:0;font:600 .7rem/1.6 var(--font-body);letter-spacing:.14em;text-transform:uppercase;color:var(--color-text-muted)}
+.cite-t{margin:0;font:400 .88rem/1.65 var(--font-body);color:var(--color-text-secondary);overflow-wrap:anywhere}
+.cite-copy{font:500 .8rem var(--font-body);color:var(--color-text);background:none;border:1px solid var(--color-border);border-radius:999px;padding:.4rem .95rem;cursor:pointer;white-space:nowrap}
+.cite-copy:hover{border-color:var(--color-border-hover,var(--color-text-muted))}
+@media (max-width:720px){.cite-box{grid-template-columns:1fr}.cite-copy{justify-self:start}}
+</style>
+<script>
+(function(){
+var d=new Date(),p=function(n){return (n<10?'0':'')+n;};
+document.querySelectorAll('[data-cite-date]').forEach(function(e){e.textContent=p(d.getDate())+'.'+p(d.getMonth()+1)+'.'+d.getFullYear();});
+document.querySelectorAll('.cite-copy').forEach(function(b){b.addEventListener('click',function(){
+var t=b.parentNode.querySelector('.cite-t').textContent;
+var done=function(){b.textContent='Скопійовано';setTimeout(function(){b.textContent='Скопіювати';},1800);};
+if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(done,function(){});
+});});
+})();
+</script>
 <footer class="footer">
     <div class="ft">
         <div class="ft-top">
@@ -835,7 +870,7 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
             <nav class="ft-col" aria-label="Постаті й каталоги">
                 <p class="ft-title">Постаті й каталоги</p>
                 <a href="plater.html">Граф Юзеф Плятер</a>
-                <a href="radzyvil.html">Князь Домінік Радзивілл</a>
+                <a href="radzyvil.html">Князь Домінік Радзивіл</a>
                 <a href="metrychni-knyhy.html#mkcalSection">Метричні книги</a>
                 <a href="metrychni-knyhy.html#booksCatalog">Книги про Дубровицю</a>
                 <a href="metrychni-knyhy.html">Усі архівні справи</a>
@@ -1447,7 +1482,7 @@ window.addEventListener('resize', function(){
             var label = (pl.slug && BY_SLUG[pl.slug]) ? BY_SLUG[pl.slug].rec.main : shortName(pl.name);
             var book = '<span class="v-row-i" title="Є поіменний список за інвентарем Плятера">' + BOOK + '</span>';
             if (pl.slug && BY_SLUG[pl.slug]) return '<button type="button" class="o-chip" data-slug="' + esc(pl.slug) + '">' + esc(label) + (INV_FOR[pl.slug] ? book : '') + '</button>';
-            if (INV_DOC[pl.name]) return '<a class="o-chip" href="inventar-naselennia.html?p=' + esc(INV_DOC[pl.name]) + '" title="Немає на наявних аркушах атласу, але є поіменний список в інвентарі Плятера">' + esc(label) + book + '</a>';
+            if (INV_DOC[pl.name]) return '<a class="o-chip" href="inventar-naselennia.html?p=' + esc(INV_DOC[pl.name]) + '" title="Немає на наявних аркушах карти 1827 року, але є поіменний список в інвентарі Плятера">' + esc(label) + book + '</a>';
             return '<span class="o-chip" title="Немає на наявних аркушах">' + esc(label) + '</span>';
         }).join('');
         return '<tr><td><p class="o-name">' + name + '</p><div class="o-chips">' + chips + '</div>' +
