@@ -205,19 +205,45 @@ function sorter(a, b){
     if (compSort === 'serfs') return catN(a, 'serfs') / (catSum(a) || 1) - catN(b, 'serfs') / (catSum(b) || 1) || tot(b) - tot(a);
     return tot(b) - tot(a);
 }
+var compAll = false, COMP_TOP = 15;
+/* маєток як один «рядок»: стани всіх його поселень разом */
+function estateRow(e){
+    var cats = {};
+    CATS.forEach(function(c){ cats[c.k] = [sum(e.rows, function(r){ return r.cats[c.k][0]; }), sum(e.rows, function(r){ return r.cats[c.k][1]; })]; });
+    return { name: e.short, full: 'Маєток: ' + e.short + ' (' + e.rows.length + ' ' + plural(e.rows.length, 'поселення', 'поселення', 'поселень') + ')', m: e.m, f: e.f, dvory: e.dv, cats: cats, nrows: e.rows.length };
+}
+function estateLine(e){
+    var r = estateRow(e);
+    return '<div class="hb-l">' + esc(r.name) + '<small>' + r.nrows + ' ' + plural(r.nrows, 'поселення', 'поселення', 'поселень') + '</small></div><div class="stack" role="img" aria-label="' + esc(r.full) + '">' + stackHtml(r) + '</div><div class="comp-v">' + fmt(tot(r)) + '</div>';
+}
 function renderComp(){
     var q = ($('compQ').value || '').trim().toLowerCase();
     var rows = ROWS.filter(function(r){ return !q || r.full.toLowerCase().indexOf(q) !== -1; });
-    var h = '';
+    var h = '', full = compAll || !!q;
+    var est = ESTATES.slice().sort(function(a, b){ return b.pop - a.pop; });
     if (!rows.length) h = '<p class="blk-note" style="grid-column:1/-1">Нічого не знайдено.</p>';
     else if (compGroup === 'estate' && !q) {
-        ESTATES.slice().sort(function(a, b){ return b.pop - a.pop; }).forEach(function(e){
+        if (!full) h = est.map(estateLine).join('');
+        else est.forEach(function(e){
             h += '<div class="comp-g"><span>' + esc(e.short) + '</span><span>' + fmt(e.pop) + ' ' + dush(e.pop) + '</span></div>';
             h += e.rows.slice().sort(sorter).map(compRow).join('');
         });
-    } else h = rows.sort(sorter).map(compRow).join('');
+    } else {
+        rows = rows.sort(sorter);
+        h = (full ? rows : rows.slice(0, COMP_TOP)).map(compRow).join('');
+    }
     $('comp').innerHTML = h;
+    var more = $('compMore');
+    more.hidden = !!q;
+    more.textContent = compAll ? 'Згорнути' : (compGroup === 'estate' ? 'Показати всі ' + ROWS.length + ' поселення за маєтками' : 'Показати всі ' + ROWS.length + ' поселення');
+    $('compSub').textContent = compGroup === 'estate' && !full
+        ? 'Кожна смуга — 100% мешканців маєтку за станами. Розгорніть, щоб побачити кожне з ' + ROWS.length + ' поселень. Наведіть на смугу — точні цифри.'
+        : 'Кожна смуга — 100% мешканців поселення за станами. Наведіть на смугу — точні цифри; натисніть назву — поселення на мапі.';
 }
+$('compMore').addEventListener('click', function(){
+    var wasAll = compAll; compAll = !compAll; renderComp();
+    if (wasAll) document.getElementById('comp').scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
 document.querySelectorAll('[data-grp]').forEach(function(b){ b.addEventListener('click', function(){ compGroup = b.getAttribute('data-grp'); document.querySelectorAll('[data-grp]').forEach(function(x){ x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); }); renderComp(); }); });
 document.querySelectorAll('[data-sort]').forEach(function(b){ b.addEventListener('click', function(){ compSort = b.getAttribute('data-sort'); document.querySelectorAll('[data-sort]').forEach(function(x){ x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); }); renderComp(); }); });
 $('compQ').addEventListener('input', renderComp);

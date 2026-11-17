@@ -505,7 +505,7 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
             <p class="insight" id="whereInsight"></p>
         </div>
         <div class="blk">
-            <div class="blk-h"><h3>Склад кожного поселення</h3><p>Усі 74 записи. Кожна смуга — 100% мешканців поселення за станами. Наведіть на смугу — точні цифри; натисніть назву — поселення на мапі.</p></div>
+            <div class="blk-h"><h3>Склад кожного поселення</h3><p id="compSub">Кожна смуга — 100% мешканців поселення за станами. Наведіть на смугу — точні цифри; натисніть назву — поселення на мапі.</p></div>
             <div class="tools">
                 <span class="seg" role="group" aria-label="Групування">
                     <button type="button" data-grp="estate" aria-pressed="true">За маєтками</button>
@@ -519,7 +519,7 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
                 <input type="search" id="compQ" placeholder="Знайти поселення" aria-label="Знайти поселення">
             </div>
             <ul class="legend" id="compLegend"></ul>
-            <div class="panel"><div class="comp" id="comp"></div></div>
+            <div class="panel"><div class="comp" id="comp"></div><button type="button" class="hb-more" id="compMore"></button></div>
         </div>
     </div>
 </section>

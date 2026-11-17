@@ -383,7 +383,11 @@
     .v-hint { left: calc(50% + 174px); }
 }
 @media (min-width: 901px) { .v-mapwrap { position: absolute; inset: 0; } }
+@media (min-width: 1181px) {
+    .v-sh-t span { white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+}
 @media (max-width: 900px) {
+    .v > .v-title { background: var(--paper); color: var(--ink); }
     .v { height: auto; min-height: 0; max-height: none; display: flex; flex-direction: column; overflow: visible; }
     .v-mapwrap { position: relative; height: 62svh; min-height: 400px; overflow: hidden; }
     .v-panel, .v-drawer { position: relative; inset: auto; width: auto; margin: 0; border-radius: 0; box-shadow: none; }
@@ -1551,6 +1555,20 @@ window.addEventListener('load', function(){
 map.on('click', function(e){
     console.log('[atlas-1798 · аркуш ' + state.sheet.n + '] coords:', [Math.round(e.latlng.lat), Math.round(e.latlng.lng)]);
 });
+})();
+</script>
+<script>
+/* На телефоні заголовок сторінки стоїть над мапою, на комп'ютері — у бічній панелі */
+(function(){
+    var mq = window.matchMedia('(max-width: 900px)'), v = document.querySelector('.v'),
+        t = document.querySelector('.v-title'), mw = document.querySelector('.v-mapwrap'), pnl = document.querySelector('.v-panel');
+    if (!v || !t || !mw || !pnl) return;
+    function place(){
+        if (mq.matches) { if (t.parentNode !== v) v.insertBefore(t, mw); }
+        else if (t.parentNode !== pnl) pnl.insertBefore(t, pnl.firstChild);
+    }
+    place();
+    if (mq.addEventListener) mq.addEventListener('change', function(){ place(); window.dispatchEvent(new Event('resize')); });
 })();
 </script>
 </body>
