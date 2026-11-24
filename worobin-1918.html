@@ -51,6 +51,7 @@
 .w18-hero .cover-title{max-width:12ch}
 .w18-hero .cover-lede{max-width:36rem}
 .w18-hero .cover-facts{max-width:44rem}
+.w18-hero .cover-facts dt a{color:inherit;text-decoration:none;border-bottom:1px dotted currentColor}
 .w18-folder{position:relative;justify-self:center;width:min(100%,370px);margin:0;transform:rotate(2deg);animation:w18Folder 1.3s cubic-bezier(.16,1,.3,1) .15s both}
 .w18-folder::before{content:'';position:absolute;inset:6% -14% -4% -14%;z-index:-1;border-radius:50%;background:radial-gradient(closest-side,rgba(214,96,44,.4),rgba(214,96,44,0));filter:blur(26px)}
 .w18-folder button{display:block;width:100%;padding:0;border:0;background:none;cursor:zoom-in;border-radius:3px}
@@ -145,11 +146,30 @@
 .w18-ten-m i{display:block;height:34px;border-radius:5px 5px 1px 1px;background:linear-gradient(rgba(239,230,210,.5),rgba(239,230,210,.12))}
 .w18-ten p{margin:0;font:300 clamp(1.3rem,2vw,1.65rem)/1.3 var(--ds-display);color:#f7f1e6}
 .w18-ten p small{display:block;margin-top:.3rem;font:500 .74rem var(--ds-body);color:rgba(239,230,210,.5)}
-.w18-mem-foot{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2rem;margin-top:2.4rem}
+.w18-mem-foot{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2rem;margin-top:2.4rem}
 .w18-mem-foot h4{margin:0 0 .5rem;font:600 .64rem var(--ds-body);letter-spacing:.2em;text-transform:uppercase;color:rgba(217,180,74,.8)}
 .w18-mem-foot p{margin:0;font:400 1.02rem/1.6 var(--ds-display);color:rgba(239,230,210,.75)}
 .w18-mem-foot .w18-src{color:rgba(239,230,210,.4)}
 .w18-mem-foot .w18-src a:hover{color:var(--w-gold-hi)}
+/* ── Двоє вижили ── */
+.w18-surv{margin:2.8rem 0 0;padding:2rem 2rem 1.8rem;border:1px solid rgba(217,180,74,.45);border-radius:var(--ds-r);background:linear-gradient(180deg,rgba(217,180,74,.10),rgba(217,180,74,.03))}
+.w18-surv-k{margin:0 0 .5rem;font:600 .66rem var(--ds-body);letter-spacing:.22em;text-transform:uppercase;color:rgba(217,180,74,.9)}
+.w18-surv h3{margin:0 0 .8rem;font:400 clamp(1.7rem,3vw,2.4rem)/1.1 var(--ds-display);color:#f7f1e6}
+.w18-surv h3 em{font-style:italic;color:var(--w-gold-hi)}
+.w18-surv-lead{max-width:62rem;margin:0 0 1.6rem;font:400 1.1rem/1.6 var(--ds-display);color:rgba(239,230,210,.85)}
+.w18-surv-q{margin:0 0 1.8rem;padding:0 0 0 1.2rem;border-left:2px solid var(--w-gold-hi)}
+.w18-surv-q blockquote{margin:0;font:italic 400 clamp(1.25rem,2.2vw,1.6rem)/1.4 var(--ds-display);color:#f7f1e6}
+.w18-surv-q figcaption{margin-top:.5rem;font:500 .74rem var(--ds-body);color:rgba(239,230,210,.55)}
+.w18-surv-g{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.4rem}
+.w18-surv-p{padding:1.3rem 1.35rem;border-radius:calc(var(--ds-r) - 2px);background:rgba(0,0,0,.18);border:1px solid rgba(239,230,210,.1)}
+.w18-surv-p h4{margin:0 0 .2rem;font:400 1.45rem/1.2 var(--ds-display);color:#f7f1e6}
+.w18-surv-p .sub{margin:0 0 .8rem;font:500 .74rem var(--ds-body);letter-spacing:.04em;color:rgba(217,180,74,.85)}
+.w18-surv-p ul{margin:0;padding:0;list-style:none}
+.w18-surv-p li{position:relative;margin:0 0 .5rem;padding-left:1rem;font:400 .98rem/1.55 var(--ds-display);color:rgba(239,230,210,.8)}
+.w18-surv-p li::before{content:"";position:absolute;left:0;top:.62em;width:5px;height:5px;border-radius:50%;background:rgba(217,180,74,.7)}
+.w18-surv-f{margin:1.4rem 0 0;font:400 .95rem/1.6 var(--ds-display);color:rgba(239,230,210,.7)}
+.w18-surv .w18-scanbtn{margin:.2rem .35rem .2rem 0}
+@media(max-width:860px){.w18-surv{padding:1.4rem 1.1rem}.w18-surv-g{grid-template-columns:1fr}}
 @media(max-width:860px){.w18-names{grid-template-columns:1fr}.w18-mem-foot{grid-template-columns:1fr;gap:1.4rem}.w18-ten{flex-direction:column;align-items:flex-start;gap:1rem}}
 
 /* ── § 4 Підсудні ── */
@@ -622,11 +642,11 @@
             <nav class="cover-crumbs" aria-label="Навігаційний ланцюжок"><a href="metrychni-knyhy.html">Архівні справи</a><span>/</span><a href="plater.html">Плятери</a><span>/</span>Воробин, 1918</nav>
             <p class="cover-kicker">Справа Луцького окружного суду · № 67/22</p>
             <h1 class="cover-title">Воробин, <em>листопад 1918</em></h1>
-            <p class="cover-lede">Ніч і день облоги, двадцять два загиблі, три слідства й два суди. Як напад на маєток Плятерів описала польська кримінальна справа 1919–1925 років і що про нього пишуть інші джерела.</p>
+            <p class="cover-lede">Ніч і день облоги, двадцять два загиблі — і двоє оборонців, які всупереч усім переказам вижили. Три слідства й два суди. Як напад на маєток Плятерів описала польська кримінальна справа 1919–1925 років і що про нього пишуть інші джерела.</p>
             <dl class="cover-facts">
                 <div><dt>годин облоги</dt><dd>18</dd></div>
                 <div><dt>загиблих у маєтку</dt><dd>22</dd></div>
-                <div><dt>обвинувачених 1920 року</dt><dd>17</dd></div>
+                <div><dt><a href="#vyzhyly">оборонців вижили</a></dt><dd>2</dd></div>
                 <div><dt>підсудних 1923 року</dt><dd>8</dd></div>
             </dl>
         </div>
@@ -668,7 +688,7 @@
         <div class="ds-sh"><b>§ 1</b><h2>Про що ця справа</h2><span>Дубровиця — Рівне — Луцьк — Ковель — Люблін, 1918–1925</span></div>
         <div class="w18-intro">
             <div class="w18-prose">
-                <p>Увечері 21 листопада 1918 року загони селян із Дубровиці та навколишніх сіл оточили <strong>Воробин</strong>, фільварок графів Плятерів на північ від містечка. Брати Ігнацій та Антоній Плятери, їхній повірений, службовці маєтку й найнята варта оборонялися в будинку всю ніч і половину наступного дня; кулемет, на який вони розраховували, заклинило на початку бою. Коли будинок підпалили, оборонці склали зброю: їм пообіцяли арешт і суд. Їх вивели на вулицю й розстріляли, а маєток розграбували.</p>
+                <p>Увечері 21 листопада 1918 року загони селян із Дубровиці та навколишніх сіл оточили <strong>Воробин</strong>, фільварок графів Плятерів на північ від містечка. Брати Ігнацій та Антоній Плятери, їхній повірений, службовці маєтку й найнята варта оборонялися в будинку всю ніч і половину наступного дня; кулемет, на який вони розраховували, заклинило на початку бою. Коли будинок підпалили, оборонці склали зброю: їм пообіцяли арешт і суд. Їх вивели на вулицю й розстріляли, а маєток розграбували. Вижили з оборонців будинку лише двоє поранених стражників — <a href="#vyzhyly">Віктор Ліпінський і Дмитро Піскунов</a>, — хоча досі прийнято писати, що загинули всі.</p>
                 <p>Для учасника повстання, який описав цей бій 1927 року, це була перемога над «гетьманським загоном». Польська жандармерія, що прийшла сюди 1919 року, назвала нападників «бандою» й почала арешти за доносами. Справа пройшла через три слідства: польових судів 1919 року, слідчого судді Родзевича 1920-го і слідчих суддів Сарненського повіту 1921–1922 років. Більшість ватажків до того часу загинули або пішли з Червоною армією, і 1923 року на лаві підсудних опинилися восьмеро чоловіків.</p>
                 <p>Ця сторінка зводить усі перекладені аркуші справи — близько шестисот знімків — у хронологію й порівнює їх з іншими джерелами: спогадами учасників повстання, газетами 1918 і 1939 років, спогадами Вітольда Плятера й матеріалами про Степана Лясковця. Там, де джерела розходяться, наведено обидві версії.</p>
             </div>
@@ -814,7 +834,7 @@
             <li><div><span class="n">Стефан Вахштейнський</span><span class="r">головний касир маєтку, син Станіслава</span><span class="v">в обвинувальному акті — Вахшлянський</span></div></li>
             <li><div><span class="n">Густав Гурський</span><span class="r">лісовий касир</span></div></li>
             <li><div><span class="n">Ойжинський</span><span class="r">головний бухгалтер</span></div></li>
-            <li><div><span class="n">Густав Неттер</span><span class="r">службовець маєтку</span><span class="v">1920 — Метлер, у вироку — Меттер</span></div></li>
+            <li><div><span class="n">Густав Меттер</span><span class="r">службовець маєтку</span><span class="v">1920 — Метлер; так само Меттер в обвинувальному акті й вироках</span></div></li>
             <li><div><span class="n">Леон Ціхий</span><span class="r">службовець маєтку</span></div></li>
             <li><div><span class="n">Росін</span><span class="r">ветеринарний лікар · тяжко поранений, помер від ран</span></div></li>
         </ol>
@@ -822,8 +842,41 @@
             <div class="w18-ten-m" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
             <p>І десять фільваркових стражників<small>чиїх прізвищ слідство так і не встановило; варту з 16 чоловік очолював Кальтенберг із Рівного</small></p>
         </div>
+        <div class="w18-surv" id="vyzhyly">
+            <p class="w18-surv-k">Що змінює ця справа</p>
+            <h3>Двоє <em>вижили</em></h3>
+            <p class="w18-surv-lead">Досі в переказах і публікаціях пишуть, що всі, хто оборонявся у Воробині, загинули разом із Плятерами. Справа каже інакше: з будинку, де трималася оборона, живими вийшли двоє поранених стражників — <strong>Віктор Ліпінський</strong> і <strong>Дмитро Піскунов</strong>. Їхні імена незалежно одне від одного записані в чотирьох документах: у списку лікаря Добровольського, у допитах обох фельдшерів 1920 року, в обвинувальному акті 1922 року й у допиті самого Ліпінського.</p>
+            <figure class="w18-surv-q"><blockquote>З усіх осіб, що оборонялися в домі, вціліли тільки двоє — я і Піскунов.</blockquote><figcaption>Віктор Ліпінський · допит 6.IX.1922, арк. 397 · <i lang="pl">«Z wszystkich osób, które broniły się w domu, ocalało tylko dwóch — ja i Piskunow»</i></figcaption></figure>
+            <div class="w18-surv-g">
+                <article class="w18-surv-p">
+                    <h4>Віктор Ліпінський</h4>
+                    <p class="sub">син Генрика · нар. бл. 1885 · стражник у варті Плятерів</p>
+                    <ul>
+                        <li>Служив у Воробині лише пів року; уночі, ще до 12-ї, його поранено в праву ногу.</li>
+                        <li>Коли оборонці склали зброю, у будинку лишилися троє поранених — він, Піскунов і ветеринар Росін.</li>
+                        <li>Після розстрілу селяни викинули їх на подвір'я; три-чотири години били прикладами й цілилися з карабінів. Один селянин попросив віддати його до «революційного трибуналу» — Ліпінського кинули на воза й зверху навалили два трупи.</li>
+                        <li>У лікарні — 66 днів, виписаний 27.I.1919.</li>
+                        <li>1922 року — осадник в осаді «Антонін» Дубровицької ґміни; головний свідок-очевидець на обох судах. На суді 1923 року впізнав Курача-Зайця й розповів, що мати Дем'янця заздалегідь попереджала його про напад.</li>
+                    </ul>
+                </article>
+                <article class="w18-surv-p">
+                    <h4>Дмитро Піскунов</h4>
+                    <p class="sub">стражник («гайдамака», за фельдшерами) · ім'я — з лікарняних документів</p>
+                    <ul>
+                        <li>Перший поранений оборонець: упав на подвір'ї від пострілів і гранат у перші хвилини нападу, з обома пораненими ногами.</li>
+                        <li>Оборонці занесли його й Росіна до будинку; після капітуляції його разом із Ліпінським викинули на подвір'я й катували.</li>
+                        <li>У лікарні — 73 дні, вогнепальна рана обох гомілок; виписаний 3.II.1919.</li>
+                        <li>Фельдшер Пальонка 1920 року: Піскунов і Ліпінський <q>одужали й виїхали, але куди — мені невідомо</q>.</li>
+                        <li>Його власних показань у справі немає: слідство його не знайшло, на суд його не викликали. Ліпінський 1922 року: <q>теперішньої його адреси не знаю, і імені його не пам'ятаю</q>.</li>
+                    </ul>
+                </article>
+            </div>
+            <p class="w18-surv-f">Обвинувальний акт 1922 року окремим пунктом закидав підсудним замах на вбивство Ліпінського й Піскунова, які <q>завдяки вжитим лікувальним заходам врятували своє життя</q>; суд нікого в цьому винним не визнав. Поза будинком уціліли й інші люди з варти та двору: Мечислав Радванський, якого призначили до охорони, відпустив «бандит із червоною кокардою»; вартового Станіслава Буйновського від оборонців відрізала річка; за механіка Свириденка вступився Конончук.</p>
+            <p class="w18-surv-f"><button type="button" class="w18-scanbtn" data-doc="d193"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L12.5 4.5v10h-8.5z M9.5 1.5v3h3" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>допит Ліпінського</button><button type="button" class="w18-scanbtn" data-doc="d89"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L12.5 4.5v10h-8.5z M9.5 1.5v3h3" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>список лікаря</button><button type="button" class="w18-scanbtn" data-doc="d79"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L12.5 4.5v10h-8.5z M9.5 1.5v3h3" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>фельдшери</button><button type="button" class="w18-scanbtn" data-doc="d206"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L12.5 4.5v10h-8.5z M9.5 1.5v3h3" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>обвинувальний акт</button></p>
+        </div>
+
         <div class="w18-mem-foot">
-            <div><h4>Вижили</h4><p>Стражники Віктор Ліпінський і Дмитро Піскунов. <q>З усіх людей, які оборонялися в будинку, живими залишилося тільки двоє — я і Піскунов</q>, — свідчив Ліпінський. Обоє пролежали в лікарні понад два місяці.</p><p class="w18-src">Допит 6.IX.1922, арк. 397; реєстр лікаря, арк. 599</p></div>
+            
             <div><h4>Касир Вахштейнський</h4><p>Землевласник із Лучиць Луцького повіту. Його вдова Марія їздила до Воробина, коли дізналася про вбивство. Восени 1919 року син, інженер Євген Вахштейнський, просив розшукати вбивць і називав свідків. Картка жандармерії 1920 року приписує смерть касира ревтрибуналові.</p><p class="w18-src">Заява 28.IX.1919, арк. 478–479; Крестовський, 10.III.1920, арк. 507; картка 12.II.1920, арк. 476</p></div>
             <div><h4>Поховання</h4><p>Висновок експерта: <q>усім убитим було завдано ран безумовно смертельних</q>. Ігнація та Антонія після ексгумації 1919 року поховали на дубровицькому кладовищі, поруч із родинною каплицею. Фельдшери 1922 року згадують також тіло лісничого Угринського, якого немає в обвинувальному акті.</p><p class="w18-src">Д-р Весельський, арк. 120; <a href="plater.html">Плятери на Дубровиці</a></p></div>
         </div>
