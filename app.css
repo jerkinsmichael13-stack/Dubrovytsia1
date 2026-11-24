@@ -4303,3 +4303,10 @@ html:not([data-theme="dark"]) body {
 /* Посилання всередині тексту мають бути видні не лише кольором (WCAG 1.4.1) */
 main p a:not([class]), main dd a:not([class]), main figcaption a:not([class]) { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .18em; text-decoration-color: color-mix(in srgb, currentColor 45%, transparent); }
 main p a:not([class]):hover { text-decoration-color: currentColor; }
+
+/* Фото без стрибків (app.js): ескіз із мініатюри, потім плавне проявлення */
+img.dx-fi { opacity: 0; transition: opacity .6s ease; }
+img.dx-fi.dx-sk { opacity: 1; background-size: cover; background-position: center; background-color: #e9dfcc; filter: saturate(.8); }
+img.dx-fi.dx-in { opacity: 1; filter: none; }
+[data-theme="dark"] img.dx-fi.dx-sk { background-color: #2a2317; }
+@media (prefers-reduced-motion: reduce) { img.dx-fi { transition: none; } }

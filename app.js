@@ -1606,3 +1606,57 @@ window.addEventListener('error', e => console.error('❌', e.message));
     function scan() { document.querySelectorAll('.cover-sheet img, .hero-doc .sheet img').forEach(attach); }
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', scan); else scan();
 })();
+
+// ================================================
+// Фото без стрибків: місце під знімок і ескіз, поки він вантажиться
+// Пропорції беремо з крихітної мініатюри imgur (~4 КБ) і пам'ятаємо
+// в браузері, тож при наступному відвідуванні місце є одразу.
+// ================================================
+(function () {
+    'use strict';
+    var KEY = 'dx-dims', C = {}, dirty = false;
+    try { C = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { C = {}; }
+    function save() {
+        if (dirty) return; dirty = true;
+        setTimeout(function () {
+            dirty = false;
+            try { var k = Object.keys(C); if (k.length > 1500) k.slice(0, k.length - 1500).forEach(function (x) { delete C[x]; }); localStorage.setItem(KEY, JSON.stringify(C)); } catch (e) {}
+        }, 800);
+    }
+    var RE = /i\.imgur\.com\/([A-Za-z0-9]{7})[A-Za-z]?\.(?:jpe?g|png|webp)/;
+    function idOf(img) { var m = RE.exec(img.getAttribute('src') || ''); return m && m[1]; }
+    function setAR(img, w, h) { if (w > 0 && h > 0) img.style.aspectRatio = w + ' / ' + h; }
+    function done(img, id) {
+        img.classList.add('dx-in'); img.classList.remove('dx-sk'); img.style.backgroundImage = '';
+        if (img.naturalWidth && !/[sb]\.(jpe?g|png)/.test(img.src.slice(-6))) { C[id] = [img.naturalWidth, img.naturalHeight]; save(); }
+    }
+    function prep(img) {
+        if (img.__dx) return; img.__dx = 1;
+        var id = idOf(img); if (!id) return;
+        if (img.closest('header,nav,.footer,.dock,.dxr,#ULB')) return;
+        if (img.hasAttribute('width') && img.hasAttribute('height')) return;
+        if (img.complete && img.naturalWidth) { C[id] = C[id] || [img.naturalWidth, img.naturalHeight]; return; }
+        var cs = getComputedStyle(img);
+        if (cs.position === 'absolute' || cs.position === 'fixed' || cs.display === 'none') return;
+        if (img.getBoundingClientRect().height >= 30) return;          /* висоту вже задає контейнер */
+        img.classList.add('dx-fi');
+        img.addEventListener('load', function () { done(img, id); }, { once: true });
+        img.addEventListener('error', function () { img.classList.add('dx-in'); img.classList.remove('dx-sk'); }, { once: true });
+        if (C[id]) { setAR(img, C[id][0], C[id][1]); return; }
+        var t = new Image();
+        t.onload = function () {
+            if (img.classList.contains('dx-in')) return;
+            setAR(img, t.naturalWidth, t.naturalHeight);
+            img.style.backgroundImage = 'url("' + t.src + '")'; img.classList.add('dx-sk');
+        };
+        t.src = 'https://i.imgur.com/' + id + 't.jpg';
+    }
+    function scan(root) { (root || document).querySelectorAll('img[src*="i.imgur.com"]').forEach(prep); }
+    function start() {
+        scan();
+        if ('MutationObserver' in window) new MutationObserver(function (ms) {
+            ms.forEach(function (m) { m.addedNodes.forEach(function (n) { if (n.nodeType !== 1) return; if (n.tagName === 'IMG') prep(n); else if (n.querySelector) scan(n); }); });
+        }).observe(document.body, { childList: true, subtree: true });
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
+})();
