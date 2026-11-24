@@ -274,6 +274,46 @@ a, button, [role="button"], input, select, textarea,
 .hx-more span{margin-right:.4rem;font:400 .8rem var(--ds-body);color:var(--color-text-light)}
 </style>
 
+<style>
+/* ═══ Стрічка часу на головній ═══ */
+.tl{position:relative;padding:clamp(4rem,8vw,6.5rem) 0 clamp(4rem,7vw,5.5rem);background:#14100b;color:#efe6d4;overflow:hidden;border-top:1px solid rgba(201,162,39,.3);border-bottom:1px solid rgba(201,162,39,.3)}
+.tl::before{content:"";position:absolute;inset:0;opacity:.06;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E")}
+.tl-in{position:relative;max-width:1320px;margin:0 auto;padding:0 2rem}
+.tl-h{max-width:44rem;margin-bottom:2.6rem}
+.tl-k{display:flex;align-items:center;gap:.8rem;margin:0 0 1rem;font:600 .7rem/1 var(--font-body,'Manrope',sans-serif);letter-spacing:.22em;text-transform:uppercase;color:#d9b44a}
+.tl-k::before{content:"";width:28px;height:1px;background:currentColor;opacity:.7}
+.tl-h h2{margin:0;font:400 clamp(2.4rem,5vw,4.2rem)/1 var(--font-display,'Cormorant Garamond',serif);color:#f7f1e6;letter-spacing:-.015em}
+.tl-h p{margin:1rem 0 0;font:400 1.15rem/1.5 var(--font-display,'Cormorant Garamond',serif);color:rgba(239,230,212,.72)}
+.tl-rail{position:relative;display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:0;margin:0 0 2.2rem;padding-top:1.2rem}
+.tl-rail::before{content:"";position:absolute;left:0;right:0;top:1.2rem;height:2px;background:linear-gradient(90deg,rgba(217,180,74,.15),rgba(217,180,74,.65) 50%,rgba(217,180,74,.15))}
+.tl-era{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:.2rem;padding:1.4rem .9rem .9rem 0;border:0;background:none;color:inherit;text-align:left;cursor:pointer}
+.tl-era i{position:absolute;left:0;top:-.42rem;width:12px;height:12px;border-radius:50%;background:#14100b;border:2px solid rgba(217,180,74,.7);transition:transform .3s cubic-bezier(.16,1,.3,1),background .2s}
+.tl-era b{font:500 1.06rem/1.15 var(--font-display,'Cormorant Garamond',serif);color:rgba(247,241,230,.82);transition:color .2s}
+.tl-era span{font:500 .72rem/1.3 var(--font-body,'Manrope',sans-serif);color:rgba(239,230,212,.5);font-variant-numeric:tabular-nums}
+.tl-era em{position:absolute;right:.9rem;top:1.35rem;font:600 .62rem/1 var(--font-body,'Manrope',sans-serif);font-style:normal;color:rgba(217,180,74,.6)}
+.tl-era:hover b{color:#fff}
+.tl-era:hover i{transform:scale(1.25)}
+.tl-era.on i{background:#d9b44a;border-color:#d9b44a;transform:scale(1.35);box-shadow:0 0 0 6px rgba(217,180,74,.16)}
+.tl-era.on b{color:#f7f1e6}
+.tl-era.on span{color:#d9b44a}
+.tl-era:focus-visible{outline:2px solid #d9b44a;outline-offset:4px;border-radius:4px}
+.tl-p{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.35fr);gap:clamp(1.6rem,4vw,3.5rem);animation:tlIn .45s cubic-bezier(.16,1,.3,1)}
+.tl-p[hidden]{display:none}
+@keyframes tlIn{from{opacity:0;transform:translateY(10px)}}
+.tl-p-y{margin:0 0 .4rem;font:600 .72rem/1 var(--font-body,'Manrope',sans-serif);letter-spacing:.14em;text-transform:uppercase;color:#d9b44a}
+.tl-p-txt h3{margin:0 0 .9rem;font:400 clamp(1.9rem,3vw,2.6rem)/1.05 var(--font-display,'Cormorant Garamond',serif);color:#f7f1e6}
+.tl-p-txt p:not(.tl-p-y){margin:0;font:400 1.12rem/1.6 var(--font-display,'Cormorant Garamond',serif);color:rgba(239,230,212,.8)}
+.tl-p-m{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem;align-content:start}
+.tl-m{display:flex;gap:.8rem;align-items:flex-start;padding:.8rem .9rem;border:1px solid rgba(239,230,212,.1);border-radius:8px;background:rgba(239,230,212,.03);color:inherit;text-decoration:none;transition:background .2s,border-color .2s,transform .25s cubic-bezier(.16,1,.3,1)}
+.tl-m:hover{background:rgba(239,230,212,.07);border-color:rgba(217,180,74,.45);transform:translateY(-2px)}
+.tl-m svg{flex:none;width:22px;height:22px;margin-top:.1rem;color:#d9b44a}
+.tl-m span{min-width:0}
+.tl-m small{display:block;font:700 .6rem/1 var(--font-body,'Manrope',sans-serif);letter-spacing:.14em;text-transform:uppercase;color:rgba(217,180,74,.75)}
+.tl-m b{display:block;margin-top:.3rem;font:500 1.05rem/1.2 var(--font-display,'Cormorant Garamond',serif);color:#f3ead8}
+.tl-m i{display:block;margin-top:.15rem;font:400 .76rem/1.35 var(--font-body,'Manrope',sans-serif);font-style:normal;color:rgba(239,230,212,.55)}
+@media (max-width:1100px){.tl-rail{display:flex;overflow-x:auto;scrollbar-width:none;margin-left:-2rem;margin-right:-2rem;padding-left:2rem;padding-right:2rem}.tl-rail::-webkit-scrollbar{display:none}.tl-era{flex:none;width:150px}.tl-rail::before{left:2rem;right:auto;width:calc(150px * 9)}}
+@media (max-width:860px){.tl-in{padding:0 1.15rem}.tl-rail{margin-left:-1.15rem;margin-right:-1.15rem;padding-left:1.15rem;padding-right:1.15rem}.tl-rail::before{left:1.15rem}.tl-p{grid-template-columns:1fr}.tl-p-m{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
     <!-- Header -->
@@ -417,6 +457,19 @@ a, button, [role="button"], input, select, textarea,
         </div>
     </section>
 
+
+        <!-- ═══ СТРІЧКА ЧАСУ (етап 5) ═══ -->
+    <section class="tl" id="tysiacha-rokiv" aria-labelledby="tlTitle">
+        <div class="tl-in">
+            <header class="tl-h">
+                <p class="tl-k">Вхід в архів через час</p>
+                <h2 id="tlTitle">Тисяча років Дубровиці</h2>
+                <p>Оберіть добу — і побачите, які документи, мапи, газети й світлини про неї є на сайті.</p>
+            </header>
+            <div class="tl-rail" role="tablist" aria-label="Доби історії Дубровиці"><button type="button" role="tab" class="tl-era" id="tl-t-rus" aria-controls="tl-p-rus" aria-selected="false" data-n="1"><i></i><b>Руська доба</b><span>1005 — 1240</span></button><button type="button" role="tab" class="tl-era" id="tl-t-lit" aria-controls="tl-p-lit" aria-selected="false" data-n="2"><i></i><b>Литовська доба</b><span>1240 — 1569</span></button><button type="button" role="tab" class="tl-era" id="tl-t-rp" aria-controls="tl-p-rp" aria-selected="false" data-n="7"><i></i><b>Річ Посполита</b><span>1569 — 1793</span></button><button type="button" role="tab" class="tl-era on" id="tl-t-ri" aria-controls="tl-p-ri" aria-selected="true" data-n="10"><i></i><b>Російська імперія</b><span>1793 — 1914</span></button><button type="button" role="tab" class="tl-era" id="tl-t-war" aria-controls="tl-p-war" aria-selected="false" data-n="4"><i></i><b>Війни й революції</b><span>1914 — 1921</span></button><button type="button" role="tab" class="tl-era" id="tl-t-pl" aria-controls="tl-p-pl" aria-selected="false" data-n="4"><i></i><b>Польща</b><span>1921 — 1939</span></button><button type="button" role="tab" class="tl-era" id="tl-t-ww2" aria-controls="tl-p-ww2" aria-selected="false" data-n="4"><i></i><b>Друга світова</b><span>1939 — 1944</span></button><button type="button" role="tab" class="tl-era" id="tl-t-sov" aria-controls="tl-p-sov" aria-selected="false" data-n="4"><i></i><b>Радянська доба</b><span>1944 — 1991</span></button><button type="button" role="tab" class="tl-era" id="tl-t-ua" aria-controls="tl-p-ua" aria-selected="false" data-n="2"><i></i><b>Незалежна Україна</b><span>1991 — сьогодні</span></button></div>
+            <div class="tl-p" role="tabpanel" id="tl-p-rus" aria-labelledby="tl-t-rus" hidden><div class="tl-p-txt"><p class="tl-p-y">1005 — 1240</p><h3>Руська доба</h3><p>Перша писемна згадка — 1005 рік: Дубровицю названо серед міст новозаснованої Турівської єпархії. У XII столітті тут сидять власні удільні князі. Князівство закінчується з монгольською навалою 1240 року.</p></div><div class="tl-p-m"><a class="tl-m tl-hist" href="history.html#epoch-kyivrus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h10l4 4v12H5z"/><path d="M15 4v4h4M8.5 12h7M8.5 15.5h7"/></svg><span><small>Історія</small><b>Давньоруська доба</b><i>від перших згадок до 1240</i></span></a></div></div><div class="tl-p" role="tabpanel" id="tl-p-lit" aria-labelledby="tl-t-lit" hidden><div class="tl-p-txt"><p class="tl-p-y">1240 — 1569</p><h3>Литовська доба</h3><p>У XIV столітті Погорина відходить до Великого князівства Литовського, і Дубровицею правлять намісники. Згодом нею володіють князі Гольшанські-Дубровицькі: 1537 року князь Юрій у заповіті називає три міські церкви.</p></div><div class="tl-p-m"><a class="tl-m tl-hist" href="history.html#epoch-litu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h10l4 4v12H5z"/><path d="M15 4v4h4M8.5 12h7M8.5 15.5h7"/></svg><span><small>Історія</small><b>Велике князівство Литовське</b><i>намісники й князі Гольшанські</i></span></a><a class="tl-m tl-page" href="architecture.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M9 20v-6h6v6"/></svg><span><small>Розділ</small><b>Церква Різдва Богородиці</b><i>перша згадка про Пречистенську церкву — 1537</i></span></a></div></div><div class="tl-p" role="tabpanel" id="tl-p-rp" aria-labelledby="tl-t-rp" hidden><div class="tl-p-txt"><p class="tl-p-y">1569 — 1793</p><h3>Річ Посполита</h3><p>Приватне містечко магнатів: Курбського, Дольських, з 1770-х — Плятерів. Хмельниччина й Руїна спустошують маєток, а наприкінці XVII століття піари будують костел і колегіум.</p></div><div class="tl-p-m"><a class="tl-m tl-doc" href="sumariusz-1642.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4h7l4 4v12H7z"/><path d="M14 4v4h4M9.5 12h5M9.5 15h5"/></svg><span><small>Документ</small><b>Сумаріуш маєтку, 1642</b><i>річний баланс маєтку</i></span></a><a class="tl-m tl-doc" href="akty-yevrei.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4h7l4 4v12H7z"/><path d="M14 4v4h4M9.5 12h5M9.5 15h5"/></svg><span><small>Документ</small><b>Євреї Дубровиці в судових актах, 1645–1646</b><i>орендар Давид Якович</i></span></a><a class="tl-m tl-doc" href="zhaloba-1650.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4h7l4 4v12H7z"/><path d="M14 4v4h4M9.5 12h5M9.5 15h5"/></svg><span><small>Документ</small><b>Скарга про спустошення, 1650</b><i>«люди з голоду пухнуть»</i></span></a><a class="tl-m tl-doc" href="akty-ruina.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4h7l4 4v12H7z"/><path d="M14 4v4h4M9.5 12h5M9.5 15h5"/></svg><span><small>Документ</small><b>Акти Руїни, 1654–1665</b><i>десять записів пінського суду</i></span></a><a class="tl-m tl-doc" href="rejestr-1665.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4h7l4 4v12H7z"/><path d="M14 4v4h4M9.5 12h5M9.5 15h5"/></svg><span><small>Документ</small><b>Реєстр збитків, 1665</b><i>свавілля Борків поіменно</i></span></a><a class="tl-m tl-page" href="architecture.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M9 20v-6h6v6"/></svg><span><small>Розділ</small><b>Костел Іоанна Хрестителя</b><i>піари, 1681–1742</i></span></a><a class="tl-m tl-3d" href="kostel-3d.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9z"/><path d="m4 7.5 8 4.5 8-4.5M12 12v9"/></svg><span><small>3D</small><b>Костел у 3D</b><i>таким, яким він був у 1930-х</i></span></a></div></div><div class="tl-p" role="tabpanel" id="tl-p-ri" aria-labelledby="tl-t-ri"><div class="tl-p-txt"><p class="tl-p-y">1793 — 1914</p><h3>Російська імперія</h3><p>Після поділів Польщі — Рівненський повіт Волинської губернії. Маєток і ліси лишаються за Плятерами, які живуть у Воробині. Місто описано вулиця за вулицею, а 1861 року зводять муровану церкву.</p></div><div class="tl-p-m"><a class="tl-m tl-map" href="atlas-1798.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 6 6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/></svg><span><small>Мапа</small><b>Атлас Волинської губернії, 1798</b><i>кожне село й власник</i></span></a><a class="tl-m tl-list" href="inventar-1780.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h12M8 12h12M8 18h12"/><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/></svg><span><small>Реєстр</small><b>Інвентар маєтку, бл. 1780–1820</b><i>понад вісімсот дворів поіменно</i></span></a><a class="tl-m tl-list" href="inventar-naselennia.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h12M8 12h12M8 18h12"/><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/></svg><span><small>Реєстр</small><b>Люди Дубровиці поіменно</b><i>вулиця за вулицею</i></span></a><a class="tl-m tl-who" href="plater.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.2"/><path d="M5.5 19c.8-3.3 3.4-5 6.5-5s5.7 1.7 6.5 5"/></svg><span><small>Постать</small><b>Граф Юзеф Антоній Плятер</b><i>власник Дубровиці, 1775–1832</i></span></a><a class="tl-m tl-who" href="radzyvil.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.2"/><path d="M5.5 19c.8-3.3 3.4-5 6.5-5s5.7 1.7 6.5 5"/></svg><span><small>Постать</small><b>Князь Домінік Радзивіл</b><i>власник шести сіл, 1798</i></span></a><a class="tl-m tl-map" href="index.html#TOPO"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 6 6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/></svg><span><small>Мапа</small><b>План міста, 1855</b><i>топографічний план</i></span></a><a class="tl-m tl-map" href="index.html#PLAN62"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 6 6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/></svg><span><small>Мапа</small><b>Мапа маєтку, 1862</b><i>розподіл власності</i></span></a><a class="tl-m tl-3d" href="worobin-3d.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9z"/><path d="m4 7.5 8 4.5 8-4.5M12 12v9"/></svg><span><small>3D</small><b>«Бібліотека» у Воробині</b><i>павільйон, що не зберігся</i></span></a><a class="tl-m tl-press" href="presa.html?era=empire"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5h11v14H6a1 1 0 0 1-1-1V5z"/><path d="M16 8h3v10a1 1 0 0 1-1 1h-2"/><path d="M8 9h5M8 12h5M8 15h3"/></svg><span><small>Преса</small><b>Газети до 1917 року</b><i>Вільно, Варшава, Київ</i></span></a><a class="tl-m tl-photo" href="photo-archive.html?period=before-1900"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="6" width="17" height="13" rx="1.5"/><circle cx="12" cy="12.5" r="3.2"/><path d="M8.5 6 10 4h4l1.5 2"/></svg><span><small>Світлини</small><b>Малюнки й перші світлини</b><i>Наполеон Орда, 1884</i></span></a></div></div><div class="tl-p" role="tabpanel" id="tl-p-war" aria-labelledby="tl-t-war" hidden><div class="tl-p-txt"><p class="tl-p-y">1914 — 1921</p><h3>Війни й революції</h3><p>Фронт за тридцять кілометрів, штаб армії в маєтку Плятерів. Потім влада змінюється понад десять разів за чотири роки, а в листопаді 1918-го селяни беруть Воробин.</p></div><div class="tl-p-m"><a class="tl-m tl-list" href="persha-svitova.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h12M8 12h12M8 18h12"/><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/></svg><span><small>Реєстр</small><b>Дубровиччина в Першій світовій</b><i>іменний реєстр</i></span></a><a class="tl-m tl-doc" href="worobin-1918.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4h7l4 4v12H7z"/><path d="M14 4v4h4M9.5 12h5M9.5 15h5"/></svg><span><small>Документ</small><b>Воробин, листопад 1918</b><i>справа № 67/22 і дві версії</i></span></a><a class="tl-m tl-map" href="index.html#AER"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 6 6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/></svg><span><small>Мапа</small><b>Аерофотознімки 1917 року</b><i>найдавніші знімки з повітря</i></span></a><a class="tl-m tl-press" href="presa.html?era=revolution"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5h11v14H6a1 1 0 0 1-1-1V5z"/><path d="M16 8h3v10a1 1 0 0 1-1 1h-2"/><path d="M8 9h5M8 12h5M8 15h3"/></svg><span><small>Преса</small><b>Газети 1917–1920</b><i>звістки здалеку</i></span></a></div></div><div class="tl-p" role="tabpanel" id="tl-p-pl" aria-labelledby="tl-t-pl" hidden><div class="tl-p-txt"><p class="tl-p-y">1921 — 1939</p><h3>Польща</h3><p>Ґміна Домбровиця Сарненського повіту. Містечко з ринком, крамницями й п'ятьма синагогами, польські військові осадники, яким держава роздала землю після 1919 року.</p></div><div class="tl-p-m"><a class="tl-m tl-list" href="vyborchi-1938.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h12M8 12h12M8 18h12"/><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/></svg><span><small>Реєстр</small><b>Список виборців 1938</b><i>8 619 мешканців поіменно</i></span></a><a class="tl-m tl-page" href="jewish-history.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M9 20v-6h6v6"/></svg><span><small>Розділ</small><b>Єврейська Дубровиця</b><i>громада до 1942 року</i></span></a><a class="tl-m tl-press" href="presa.html?era=poland"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5h11v14H6a1 1 0 0 1-1-1V5z"/><path d="M16 8h3v10a1 1 0 0 1-1 1h-2"/><path d="M8 9h5M8 12h5M8 15h3"/></svg><span><small>Преса</small><b>Польська преса</b><i>хроніка й нариси</i></span></a><a class="tl-m tl-photo" href="photo-archive.html?period=1900-1939"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="6" width="17" height="13" rx="1.5"/><circle cx="12" cy="12.5" r="3.2"/><path d="M8.5 6 10 4h4l1.5 2"/></svg><span><small>Світлини</small><b>Світлини 1900–1939</b><i>ринок, міст, школи</i></span></a></div></div><div class="tl-p" role="tabpanel" id="tl-p-ww2" aria-labelledby="tl-t-ww2" hidden><div class="tl-p-txt"><p class="tl-p-y">1939 — 1944</p><h3>Друга світова</h3><p>У вересні 1939 року приходить радянська влада, у 1941-му — німецька окупація. У серпні 1942 року знищено єврейську громаду міста. У січні 1944-го фронт проходить через Дубровицю.</p></div><div class="tl-p-m"><a class="tl-m tl-page" href="jewish-history.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M9 20v-6h6v6"/></svg><span><small>Розділ</small><b>Єврейська Дубровиця</b><i>книга пам&#x27;яті «Сефер Домбровіца»</i></span></a><a class="tl-m tl-map" href="index.html#AER"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 6 6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/></svg><span><small>Мапа</small><b>Аерофотознімки 1943–1944</b><i>знімки німецької авіарозвідки</i></span></a><a class="tl-m tl-press" href="presa.html?era=ww2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5h11v14H6a1 1 0 0 1-1-1V5z"/><path d="M16 8h3v10a1 1 0 0 1-1 1h-2"/><path d="M8 9h5M8 12h5M8 15h3"/></svg><span><small>Преса</small><b>Окупаційна преса</b><i>читати як пропаганду</i></span></a><a class="tl-m tl-photo" href="photo-archive.html?period=1939-1945"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="6" width="17" height="13" rx="1.5"/><circle cx="12" cy="12.5" r="3.2"/><path d="M8.5 6 10 4h4l1.5 2"/></svg><span><small>Світлини</small><b>Світлини 1939–1945</b><i>роки війни</i></span></a></div></div><div class="tl-p" role="tabpanel" id="tl-p-sov" aria-labelledby="tl-t-sov" hidden><div class="tl-p-txt"><p class="tl-p-y">1944 — 1991</p><h3>Радянська доба</h3><p>Райцентр. Костел стає складом, церкву 1962 року закривають під склад солі. Місто перебудовують, а районна газета пише про повстання 1918 року ювілейною мовою.</p></div><div class="tl-p-m"><a class="tl-m tl-press" href="presa.html?era=soviet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5h11v14H6a1 1 0 0 1-1-1V5z"/><path d="M16 8h3v10a1 1 0 0 1-1 1h-2"/><path d="M8 9h5M8 12h5M8 15h3"/></svg><span><small>Преса</small><b>«Червоний прапор» і радянська преса</b><i>з коментарями</i></span></a><a class="tl-m tl-photo" href="photo-archive.html?period=1945-1991"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="6" width="17" height="13" rx="1.5"/><circle cx="12" cy="12.5" r="3.2"/><path d="M8.5 6 10 4h4l1.5 2"/></svg><span><small>Світлини</small><b>Світлини 1945–1991</b><i>площі, флот, пляжі</i></span></a><a class="tl-m tl-map" href="index.html#CMP"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 6 6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/></svg><span><small>Мапа</small><b>Місто 1944 і 2021</b><i>порівняння знімків</i></span></a><a class="tl-m tl-page" href="architecture.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M9 20v-6h6v6"/></svg><span><small>Розділ</small><b>Пам&#x27;ятки</b><i>що сталося з храмами</i></span></a></div></div><div class="tl-p" role="tabpanel" id="tl-p-ua" aria-labelledby="tl-t-ua" hidden><div class="tl-p-txt"><p class="tl-p-y">1991 — сьогодні</p><h3>Незалежна Україна</h3><p>Храми повертають громадам: костел освячено вдруге 1992 року. Із 2020-го Дубровиця — центр міської громади Сарненського району.</p></div><div class="tl-p-m"><a class="tl-m tl-hist" href="history.html#epoch-ukraine"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h10l4 4v12H5z"/><path d="M15 4v4h4M8.5 12h7M8.5 15.5h7"/></svg><span><small>Історія</small><b>Дубровиця в незалежній Україні</b><i>з 1991 року</i></span></a><a class="tl-m tl-photo" href="photo-archive.html?period=after-1991"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="6" width="17" height="13" rx="1.5"/><circle cx="12" cy="12.5" r="3.2"/><path d="M8.5 6 10 4h4l1.5 2"/></svg><span><small>Світлини</small><b>Сучасні світлини</b><i>місто й села з висоти</i></span></a></div></div>
+        </div>
+    </section>
 
     <!-- ═══ ЩО НОВОГО ═══ -->
     <section class="whatsnew" id="shcho-novoho">
@@ -582,32 +635,7 @@ a, button, [role="button"], input, select, textarea,
     </section>
 
 
-    <section class="stats-section">
-        <div class="container">
-            <div class="stats-grid">
-                <div class="stat-item fade-in-up">
-                    <div class="stat-number" data-target="1021">0</div>
-                    <span class="stat-number-accent"></span>
-                    <div class="stat-label">Років історії</div>
-                </div>
-                <div class="stat-item fade-in-up delay-1">
-                    <div class="stat-number" id="photoCountStat">—</div>
-                    <span class="stat-number-accent"></span>
-                    <div class="stat-label">Історичних фотографій</div>
-                </div>
-                <div class="stat-item fade-in-up delay-2">
-                    <div class="stat-number" data-target="2">0</div>
-                    <span class="stat-number-accent"></span>
-                    <div class="stat-label">Пам'яток нац. значення</div>
-                </div>
-                <div class="stat-item fade-in-up delay-3">
-                    <div class="stat-number" data-target="20">0</div>
-                    <span class="stat-number-accent"></span>
-                    <div class="stat-label">Книг та досліджень</div>
-                </div>
-            </div>
-        </div>
-    </section>
+
 
     <!-- ═══ FEATURED ARCHIVAL DOCUMENTS ═══ -->
     <section class="featured-archives">
@@ -5623,863 +5651,7 @@ a, button, [role="button"], input, select, textarea,
     </section>
     <!-- ═══ END WIDE AREA COMPARISON ═══ -->
 
-    <!-- ═══ HORIZONTAL TIMELINE ═══ -->
 
-<!-- ═══ IMPROVED HISTORICAL TIMELINE ═══ -->
-<section id="HTL">
-<style>
-/* ══════════════════════════════════════════════════════════════
-   ПОКРАЩЕНА ІСТОРИЧНА ШКАЛА ЧАСУ — PREMIUM VERSION
-   ══════════════════════════════════════════════════════════════ */
-#HTL {
-    padding: 6rem 0 4rem;
-    background: linear-gradient(180deg, #faf7f2 0%, #f4efe7 100%);
-    border-top: 1px solid rgba(201,162,39,.08);
-    position: relative;
-    overflow: hidden;
-}
-[data-theme="dark"] #HTL {
-    background: linear-gradient(180deg, #0e0c0a 0%, #161310 100%);
-    border-color: rgba(201,162,39,.12);
-}
-
-/* Premium decorative overlay */
-#HTL::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: 
-        radial-gradient(ellipse 50% 30% at 50% 0%, rgba(201,162,39,.04) 0%, transparent 70%),
-        radial-gradient(ellipse 40% 25% at 20% 100%, rgba(168,132,28,.03) 0%, transparent 60%);
-    pointer-events: none;
-    z-index: 0;
-}
-
-/* ── HEADER ── */
-.HTL-HEAD {
-    text-align: center;
-    margin-bottom: 4rem;
-    position: relative;
-    z-index: 1;
-}
-.HTL-EYEBROW {
-    display: inline-flex;
-    align-items: center;
-    gap: .8rem;
-    margin-bottom: 1.4rem;
-}
-.HTL-EYEBROW::before,
-.HTL-EYEBROW::after {
-    content: '';
-    display: block;
-    width: 36px;
-    height: 1px;
-}
-.HTL-EYEBROW::before {
-    background: linear-gradient(90deg, transparent, rgba(201,162,39,.5));
-}
-.HTL-EYEBROW::after {
-    background: linear-gradient(90deg, rgba(201,162,39,.5), transparent);
-}
-.HTL-EYEBROW span {
-    font-family: 'Manrope', sans-serif;
-    font-size: .62rem;
-    letter-spacing: .3em;
-    text-transform: uppercase;
-    color: #c9a227;
-    font-weight: 500;
-}
-.HTL-TITLE {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2.4rem, 5vw, 3.8rem);
-    font-weight: 300;
-    color: #1c1917;
-    line-height: 1.1;
-    margin: 0 0 .8rem;
-}
-[data-theme="dark"] .HTL-TITLE { color: #f0e6c8; }
-.HTL-TITLE em {
-    font-style: italic;
-    background: linear-gradient(135deg, #b8891e 0%, #ddb830 45%, #c9a227 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-.HTL-SUB {
-    font-family: 'Manrope', sans-serif;
-    font-size: .85rem;
-    letter-spacing: .12em;
-    color: rgba(28,25,23,.4);
-    margin: 0;
-}
-[data-theme="dark"] .HTL-SUB { color: rgba(240,230,200,.35); }
-
-/* ── SCROLLABLE TRACK ── */
-.HTL-TRACK {
-    position: relative;
-    overflow-x: auto;
-    overflow-y: hidden;
-    cursor: grab;
-    user-select: none;
-    -webkit-overflow-scrolling: touch;
-    scroll-behavior: auto;
-    padding: 2rem 0 3rem;
-    z-index: 1;
-    
-    /* Hide scrollbar but keep functionality */
-    scrollbar-width: thin;
-    scrollbar-color: rgba(201,162,39,.3) transparent;
-}
-.HTL-TRACK::-webkit-scrollbar {
-    height: 6px;
-}
-.HTL-TRACK::-webkit-scrollbar-track {
-    background: rgba(201,162,39,.08);
-    border-radius: 3px;
-}
-.HTL-TRACK::-webkit-scrollbar-thumb {
-    background: rgba(201,162,39,.3);
-    border-radius: 3px;
-    transition: background .2s;
-}
-.HTL-TRACK::-webkit-scrollbar-thumb:hover {
-    background: rgba(201,162,39,.5);
-}
-.HTL-TRACK:active { cursor: grabbing; }
-
-/* ── ROW — horizontal flex layout ── */
-.HTL-ROW {
-    display: flex;
-    align-items: stretch;
-    gap: 0;
-    min-width: min-content;
-    height: 580px;
-    padding: 0 max(2rem, calc(50vw - 650px));
-    position: relative;
-}
-
-/* ── SPINE (golden line) ── */
-.HTL-SPINE {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(
-        90deg,
-        transparent 0%,
-        rgba(201,162,39,.15) 3%,
-        rgba(201,162,39,.35) 20%,
-        rgba(201,162,39,.35) 80%,
-        rgba(201,162,39,.15) 97%,
-        transparent 100%
-    );
-    transform: translateY(-50%);
-    z-index: 1;
-    pointer-events: none;
-}
-
-/* ── TIMELINE ITEM ── */
-.HTL-ITEM {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    width: 280px;
-    flex-shrink: 0;
-    position: relative;
-    z-index: 2;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity .6s cubic-bezier(.22,1,.36,1),
-                transform .6s cubic-bezier(.22,1,.36,1);
-}
-.HTL-ITEM.htl-visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* ── DOT ── */
-.HTL-DOT {
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background: #c9a227;
-    border: 3px solid var(--color-bg-alt, #f4efe7);
-    box-shadow: 
-        0 0 0 5px rgba(201,162,39,.15),
-        0 2px 8px rgba(201,162,39,.3);
-    position: relative;
-    z-index: 10;
-    flex-shrink: 0;
-    transition: transform .3s cubic-bezier(.34,1.56,.64,1),
-                box-shadow .3s ease;
-}
-[data-theme="dark"] .HTL-DOT {
-    border-color: #161310;
-}
-.HTL-ITEM:hover .HTL-DOT {
-    transform: scale(1.3);
-    box-shadow: 
-        0 0 0 6px rgba(201,162,39,.25),
-        0 4px 16px rgba(201,162,39,.4);
-}
-
-/* ── TOP / BOTTOM containers ── */
-.HTL-TOP,
-.HTL-BOTTOM {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0;
-    flex: 1;
-    width: 100%;
-}
-.HTL-TOP {
-    justify-content: flex-end;
-    padding-bottom: 1rem;
-}
-.HTL-BOTTOM {
-    justify-content: flex-start;
-    padding-top: 1rem;
-}
-
-/* ── CONNECTING LINES ── */
-.HTL-LINE-UP,
-.HTL-LINE-DOWN {
-    width: 2px;
-    flex: 1;
-    min-height: 24px;
-    flex-shrink: 0;
-}
-.HTL-LINE-UP {
-    background: linear-gradient(to bottom, transparent 0%, rgba(201,162,39,.4) 100%);
-    margin-top: 12px;
-}
-.HTL-LINE-DOWN {
-    background: linear-gradient(to top, transparent 0%, rgba(201,162,39,.4) 100%);
-    margin-bottom: 12px;
-}
-
-/* ── ENHANCED PHOTO with reveal effect ── */
-.HTL-PHOTO {
-    width: 200px;
-    height: 140px;
-    border-radius: 10px;
-    overflow: hidden;
-    position: relative;
-    box-shadow:
-        0 0 0 1px rgba(201,162,39,.2),
-        0 8px 32px rgba(0,0,0,.18),
-        0 2px 8px rgba(0,0,0,.1);
-    background: linear-gradient(145deg, rgba(201,162,39,.08), rgba(201,162,39,.02));
-    flex-shrink: 0;
-    transition: transform .4s cubic-bezier(.22,1,.36,1),
-                box-shadow .4s ease;
-}
-.HTL-ITEM:hover .HTL-PHOTO {
-    transform: scale(1.05) translateY(-4px);
-    box-shadow:
-        0 0 0 1px rgba(201,162,39,.3),
-        0 16px 48px rgba(0,0,0,.24),
-        0 4px 12px rgba(0,0,0,.14);
-}
-
-.HTL-PHOTO img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    filter: sepia(.15) contrast(1.08) brightness(.98);
-    transition: filter .5s ease, transform .8s cubic-bezier(.22,1,.36,1);
-}
-.HTL-ITEM:hover .HTL-PHOTO img {
-    filter: sepia(.05) contrast(1.12) brightness(1.02);
-    transform: scale(1.08);
-}
-
-/* Subtle overlay gradient */
-.HTL-PHOTO::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-        to top,
-        rgba(0,0,0,.4) 0%,
-        rgba(0,0,0,.1) 40%,
-        transparent 100%
-    );
-    pointer-events: none;
-    opacity: .7;
-    transition: opacity .4s ease;
-}
-.HTL-ITEM:hover .HTL-PHOTO::after {
-    opacity: .3;
-}
-
-/* Gold accent edge on top — removed */
-.HTL-PHOTO::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 0;
-    pointer-events: none;
-}
-
-/* ── PLACEHOLDER with icon (no photo) ── */
-.HTL-PHOTO.no-img {
-    background: linear-gradient(145deg,
-        rgba(201,162,39,.1) 0%,
-        rgba(201,162,39,.04) 50%,
-        rgba(168,132,28,.08) 100%);
-    border: 1px solid rgba(201,162,39,.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 3rem;
-    backdrop-filter: blur(6px);
-}
-[data-theme="dark"] .HTL-PHOTO.no-img {
-    background: linear-gradient(145deg, rgba(201,162,39,.12), rgba(201,162,39,.05));
-    border-color: rgba(201,162,39,.25);
-}
-.HTL-PHOTO.no-img img { display: none !important; }
-.HTL-PHOTO.no-img::after,
-.HTL-PHOTO.no-img::before { display: none !important; }
-
-/* ── TEXT BLOCK ── */
-.HTL-TEXT {
-    text-align: center;
-    max-width: 230px;
-    padding: 0 6px;
-}
-.HTL-YEAR {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2rem;
-    font-weight: 500;
-    line-height: 1;
-    background: linear-gradient(135deg, #a8701a 0%, #c9a227 45%, #e0bd5a 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    display: block;
-    margin-bottom: .55rem;
-    letter-spacing: -.015em;
-    transition: transform .3s ease;
-}
-.HTL-ITEM:hover .HTL-YEAR {
-    transform: scale(1.05);
-}
-.HTL-ETITLE {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #1c1917;
-    line-height: 1.35;
-    margin: 0 0 .5rem;
-    letter-spacing: .005em;
-    transition: color .3s ease;
-}
-[data-theme="dark"] .HTL-ETITLE { color: #e8d8b8; }
-.HTL-ITEM:hover .HTL-ETITLE {
-    color: #c9a227;
-}
-[data-theme="dark"] .HTL-ITEM:hover .HTL-ETITLE {
-    color: #ddb830;
-}
-.HTL-EDESC {
-    font-family: 'Manrope', sans-serif;
-    font-size: .74rem;
-    font-weight: 400;
-    line-height: 1.68;
-    color: rgba(44,40,36,.54);
-    letter-spacing: .008em;
-}
-[data-theme="dark"] .HTL-EDESC { color: rgba(240,230,200,.4); }
-
-/* ── CTA BUTTON ── */
-.HTL-CTA {
-    text-align: center;
-    padding: 2.5rem 0 6rem;
-    position: relative;
-    z-index: 1;
-}
-.HTL-CTA a {
-    display: inline-flex;
-    align-items: center;
-    gap: .7rem;
-    font-family: 'Manrope', sans-serif;
-    font-size: .7rem;
-    letter-spacing: .24em;
-    text-transform: uppercase;
-    color: #c9a227;
-    text-decoration: none;
-    padding: 1rem 2.8rem;
-    border: 1px solid rgba(201,162,39,.4);
-    border-radius: 3px;
-    transition: all .3s cubic-bezier(.22,1,.36,1);
-    position: relative;
-    overflow: hidden;
-    background: rgba(201,162,39,.02);
-}
-.HTL-CTA a::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(201,162,39,.06), rgba(201,162,39,.02));
-    transform: translateX(-100%);
-    transition: transform .3s cubic-bezier(.22,1,.36,1);
-}
-.HTL-CTA a:hover {
-    background: #c9a227;
-    color: #0f0a00;
-    border-color: #c9a227;
-    box-shadow: 
-        0 4px 24px rgba(201,162,39,.35),
-        0 0 0 4px rgba(201,162,39,.15);
-    transform: translateY(-2px);
-}
-.HTL-CTA a:hover::before {
-    transform: translateX(0);
-}
-.HTL-CTA a svg {
-    width: 14px;
-    height: 14px;
-    transition: transform .3s cubic-bezier(.34,1.56,.64,1);
-}
-.HTL-CTA a:hover svg {
-    transform: translateX(3px);
-}
-
-/* ── MOBILE OPTIMIZATIONS ── */
-@media (max-width: 600px) {
-    #HTL { padding: 4rem 0 2rem; }
-    .HTL-HEAD { margin-bottom: 2.8rem; }
-    .HTL-ROW {
-        height: 540px;
-        padding: 0 1.5rem;
-    }
-    .HTL-ITEM { width: 240px; }
-    .HTL-PHOTO {
-        width: 170px;
-        height: 120px;
-    }
-    .HTL-YEAR { font-size: 1.65rem; }
-    .HTL-ETITLE { font-size: 1rem; }
-    .HTL-EDESC { font-size: .7rem; }
-    .HTL-CTA { padding: 2rem 0 4rem; }
-}
-</style>
-
-<div class="HTL-HEAD">
-    <div class="HTL-EYEBROW"><span>1005 — сьогодення</span></div>
-    <h2 class="HTL-TITLE">Ключові моменти історії</h2>
-    <p class="HTL-SUB">Понад тисячу років живої пам'яті — гортайте вправо</p>
-</div>
-
-<div class="HTL-TRACK" id="htlTrack">
-  <div class="HTL-ROW">
-    <div class="HTL-SPINE"></div>
-
-    <!-- 1: 1005 — Перша згадка -->
-    <div class="HTL-ITEM">
-      <div class="HTL-TOP">
-        <div class="HTL-PHOTO"><img src="https://i.imgur.com/ZKkcU77m.jpeg" alt="Дубровиця 1920-і" loading="lazy" decoding="async" width="200" height="140"></div>
-        <div class="HTL-LINE-UP"></div>
-      </div>
-      <div class="HTL-DOT"></div>
-      <div class="HTL-BOTTOM">
-        <div class="HTL-LINE-DOWN"></div>
-        <div class="HTL-TEXT">
-          <span class="HTL-YEAR">1005</span>
-          <p class="HTL-ETITLE">Перша писемна згадка</p>
-          <p class="HTL-EDESC">Дубровиця в переліку міст Турівської єпархії за часів Володимира Великого</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- 2: XII ст. — Князівство -->
-    <div class="HTL-ITEM">
-      <div class="HTL-TOP">
-        <div class="HTL-TEXT">
-          <span class="HTL-YEAR">XII ст.</span>
-          <p class="HTL-ETITLE">Столиця удільного князівства</p>
-          <p class="HTL-EDESC">Дубровиця стає центром окремого Дубровицького удільного князівства</p>
-        </div>
-        <div class="HTL-LINE-UP"></div>
-      </div>
-      <div class="HTL-DOT"></div>
-      <div class="HTL-BOTTOM">
-        <div class="HTL-LINE-DOWN"></div>
-        <div class="HTL-PHOTO no-img">⚔️</div>
-      </div>
-    </div>
-
-    <!-- 3: 1240 — Монгольська навала -->
-    <div class="HTL-ITEM">
-      <div class="HTL-TOP">
-        <div class="HTL-PHOTO no-img">🔥</div>
-        <div class="HTL-LINE-UP"></div>
-      </div>
-      <div class="HTL-DOT"></div>
-      <div class="HTL-BOTTOM">
-        <div class="HTL-LINE-DOWN"></div>
-        <div class="HTL-TEXT">
-          <span class="HTL-YEAR">1240</span>
-          <p class="HTL-ETITLE">Монгольська навала</p>
-          <p class="HTL-EDESC">Орда Батия зруйнувала місто. Кінець Дубровицького удільного князівства</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- 4: 1571 — Андрій Курбський -->
-    <div class="HTL-ITEM">
-      <div class="HTL-TOP">
-        <div class="HTL-TEXT">
-          <span class="HTL-YEAR">1571</span>
-          <p class="HTL-ETITLE">Андрій Курбський</p>
-          <p class="HTL-EDESC">Московський боярин-втікач, що осів на Волині, одержує Дубровицю як придане</p>
-        </div>
-        <div class="HTL-LINE-UP"></div>
-      </div>
-      <div class="HTL-DOT"></div>
-      <div class="HTL-BOTTOM">
-        <div class="HTL-LINE-DOWN"></div>
-        <div class="HTL-PHOTO no-img">👑</div>
-      </div>
-    </div>
-
-    <!-- 5: 1695–1702 — Костел -->
-    <div class="HTL-ITEM">
-      <div class="HTL-TOP">
-        <div class="HTL-PHOTO"><img src="https://i.imgur.com/n74FSvKm.jpeg" alt="Костел Іоанна Хрестителя" loading="lazy" decoding="async" width="200" height="140"></div>
-        <div class="HTL-LINE-UP"></div>
-      </div>
-      <div class="HTL-DOT"></div>
-      <div class="HTL-BOTTOM">
-        <div class="HTL-LINE-DOWN"></div>
-        <div class="HTL-TEXT">
-          <span class="HTL-YEAR">1681–1742</span>
-          <p class="HTL-ETITLE">Костел Іоанна Хрестителя</p>
-          <p class="HTL-EDESC">Фундація піарів і зведення барочного костелу та колегіуму — пам'ятка національного значення</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- 6: 1793 — Російська імперія -->
-    <div class="HTL-ITEM">
-      <div class="HTL-TOP">
-        <div class="HTL-TEXT">
-          <span class="HTL-YEAR">1793</span>
-          <p class="HTL-ETITLE">Загарбання Російською імперією</p>
-          <p class="HTL-EDESC">Після другого поділу Польщі край анексований Росією. Початок тривалого колоніального гніту</p>
-        </div>
-        <div class="HTL-LINE-UP"></div>
-      </div>
-      <div class="HTL-DOT"></div>
-      <div class="HTL-BOTTOM">
-        <div class="HTL-LINE-DOWN"></div>
-        <div class="HTL-PHOTO no-img">🦅</div>
-      </div>
-    </div>
-
-    <!-- 7: 1861 — Церква Різдва -->
-    <div class="HTL-ITEM">
-      <div class="HTL-TOP">
-        <div class="HTL-PHOTO"><img src="https://i.imgur.com/0HyroRqm.jpeg" alt="Церква Різдва Богородиці" loading="lazy" decoding="async" width="200" height="140"></div>
-        <div class="HTL-LINE-UP"></div>
-      </div>
-      <div class="HTL-DOT"></div>
-      <div class="HTL-BOTTOM">
-        <div class="HTL-LINE-DOWN"></div>
-        <div class="HTL-TEXT">
-          <span class="HTL-YEAR">1861</span>
-          <p class="HTL-ETITLE">Церква Різдва Богородиці</p>
-          <p class="HTL-EDESC">Зведення православного храму — нині пам'ятка архітектури та культури</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- 8: 1916 — Перша світова -->
-    <div class="HTL-ITEM">
-      <div class="HTL-TOP">
-        <div class="HTL-TEXT">
-          <span class="HTL-YEAR">1914–1918</span>
-          <p class="HTL-ETITLE">Перша світова війна</p>
-          <p class="HTL-EDESC">Дубровиця — у центрі Східного фронту. Тут розміщувався штаб Третьої та Особливої російських армій</p>
-        </div>
-        <div class="HTL-LINE-UP"></div>
-      </div>
-      <div class="HTL-DOT"></div>
-      <div class="HTL-BOTTOM">
-        <div class="HTL-LINE-DOWN"></div>
-        <div class="HTL-PHOTO"><img src="https://i.imgur.com/YxFni3Mm.png" alt="Солдати біля Дубровиці, 1914–1916" loading="lazy" decoding="async" width="200" height="140"></div>
-      </div>
-    </div>
-
-    <!-- 9: 1920–1939 — Польща -->
-    <div class="HTL-ITEM">
-      <div class="HTL-TOP">
-        <div class="HTL-PHOTO"><img src="https://i.imgur.com/qcjgN1Im.jpeg" alt="Дубровиця міжвоєнна" loading="lazy" decoding="async" width="200" height="140"></div>
-        <div class="HTL-LINE-UP"></div>
-      </div>
-      <div class="HTL-DOT"></div>
-      <div class="HTL-BOTTOM">
-        <div class="HTL-LINE-DOWN"></div>
-        <div class="HTL-TEXT">
-          <span class="HTL-YEAR">1920–1939</span>
-          <p class="HTL-ETITLE">У складі Польщі</p>
-          <p class="HTL-EDESC">Дубровиця у Волинському воєводстві — регіональний центр торгівлі та культури</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- 10: 1929 — Фотографії архітектури -->
-    <div class="HTL-ITEM">
-      <div class="HTL-TOP">
-        <div class="HTL-TEXT">
-          <span class="HTL-YEAR">1931</span>
-          <p class="HTL-ETITLE">Масові зібрання на площі</p>
-          <p class="HTL-EDESC">Дубровиця — активний релігійний та громадський центр Волині. Тисячі людей збираються перед костелом</p>
-        </div>
-        <div class="HTL-LINE-UP"></div>
-      </div>
-      <div class="HTL-DOT"></div>
-      <div class="HTL-BOTTOM">
-        <div class="HTL-LINE-DOWN"></div>
-        <div class="HTL-PHOTO"><img src="https://i.imgur.com/DBD4YZWm.jpeg" alt="Площа перед костелом, 1931" loading="lazy" decoding="async" width="200" height="140"></div>
-      </div>
-    </div>
-
-    <!-- 11: 1940 — Статус міста -->
-    <div class="HTL-ITEM">
-      <div class="HTL-TOP">
-        <div class="HTL-PHOTO"><img src="https://i.imgur.com/WzMH0hhm.jpeg" alt="Будівлі Дубровиці" loading="lazy" decoding="async" width="200" height="140"></div>
-        <div class="HTL-LINE-UP"></div>
-      </div>
-      <div class="HTL-DOT"></div>
-      <div class="HTL-BOTTOM">
-        <div class="HTL-LINE-DOWN"></div>
-        <div class="HTL-TEXT">
-          <span class="HTL-YEAR">1940</span>
-          <p class="HTL-ETITLE">Офіційний статус міста</p>
-          <p class="HTL-EDESC">Дубровиця отримує статус міста та стає центром Дубровицького району</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- 12: 1943 — УПА -->
-    <div class="HTL-ITEM">
-      <div class="HTL-TOP">
-        <div class="HTL-TEXT">
-          <span class="HTL-YEAR">1943</span>
-          <p class="HTL-ETITLE">Дубровиця під контролем УПА</p>
-          <p class="HTL-EDESC">Навесні підрозділи УПА атакували нацистський гарнізон. Місто перейшло під контроль повстанців</p>
-        </div>
-        <div class="HTL-LINE-UP"></div>
-      </div>
-      <div class="HTL-DOT"></div>
-      <div class="HTL-BOTTOM">
-        <div class="HTL-LINE-DOWN"></div>
-        <div class="HTL-PHOTO"><img src="https://i.imgur.com/zef8WRym.jpeg" alt="Аерофото 1943" loading="lazy" decoding="async" width="200" height="140"></div>
-      </div>
-    </div>
-
-    <!-- 13: 1944 — Червона армія -->
-    <div class="HTL-ITEM">
-      <div class="HTL-TOP">
-        <div class="HTL-PHOTO"><img src="https://i.imgur.com/CImFE7Sm.jpeg" alt="Аерофото 1944" loading="lazy" decoding="async" width="200" height="140"></div>
-        <div class="HTL-LINE-UP"></div>
-      </div>
-      <div class="HTL-DOT"></div>
-      <div class="HTL-BOTTOM">
-        <div class="HTL-LINE-DOWN"></div>
-        <div class="HTL-TEXT">
-          <span class="HTL-YEAR">1944</span>
-          <p class="HTL-ETITLE">Прихід Червоної армії</p>
-          <p class="HTL-EDESC">10 січня до міста вступили радянські війська. 15 серпня місто отримало сучасну назву Дубровиця</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- 14: 1945 — Повоєнна відбудова -->
-    <div class="HTL-ITEM">
-      <div class="HTL-TOP">
-        <div class="HTL-TEXT">
-          <span class="HTL-YEAR">1945</span>
-          <p class="HTL-ETITLE">Знищення храмів</p>
-          <p class="HTL-EDESC">Костел і церква закриваються. Унікальний венеційський вітраж костелу безслідно зникає</p>
-        </div>
-        <div class="HTL-LINE-UP"></div>
-      </div>
-      <div class="HTL-DOT"></div>
-      <div class="HTL-BOTTOM">
-        <div class="HTL-LINE-DOWN"></div>
-        <div class="HTL-PHOTO no-img">🏗️</div>
-      </div>
-    </div>
-
-    <!-- 15: 1960–80-ті — Радянська доба -->
-    <div class="HTL-ITEM">
-      <div class="HTL-TOP">
-        <div class="HTL-PHOTO"><img src="https://i.imgur.com/irxrwBom.jpeg" alt="Пам'ятник Щанкіна" loading="lazy" decoding="async" width="200" height="140"></div>
-        <div class="HTL-LINE-UP"></div>
-      </div>
-      <div class="HTL-DOT"></div>
-      <div class="HTL-BOTTOM">
-        <div class="HTL-LINE-DOWN"></div>
-        <div class="HTL-TEXT">
-          <span class="HTL-YEAR">1960–80-ті</span>
-          <p class="HTL-ETITLE">Радянська доба</p>
-          <p class="HTL-EDESC">Форсована індустріалізація та колективізація. Придушення релігії та української ідентичності</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- 16: 1982 — Будівництво -->
-    <div class="HTL-ITEM">
-      <div class="HTL-TOP">
-        <div class="HTL-TEXT">
-          <span class="HTL-YEAR">1982</span>
-          <p class="HTL-ETITLE">Радянська забудова</p>
-          <p class="HTL-EDESC">Будівництво дев'ятиповерхових будинків та масова забудова міста змінили його вигляд назавжди</p>
-        </div>
-        <div class="HTL-LINE-UP"></div>
-      </div>
-      <div class="HTL-DOT"></div>
-      <div class="HTL-BOTTOM">
-        <div class="HTL-LINE-DOWN"></div>
-        <div class="HTL-PHOTO"><img src="https://i.imgur.com/NKpzDFwm.jpeg" alt="Будівництво дев'ятиповерхівки, 1982" loading="lazy" decoding="async" width="200" height="140"></div>
-      </div>
-    </div>
-
-    <!-- 17: 1991 — Незалежність -->
-    <div class="HTL-ITEM">
-      <div class="HTL-TOP">
-        <div class="HTL-PHOTO no-img">🇺🇦</div>
-        <div class="HTL-LINE-UP"></div>
-      </div>
-      <div class="HTL-DOT"></div>
-      <div class="HTL-BOTTOM">
-        <div class="HTL-LINE-DOWN"></div>
-        <div class="HTL-TEXT">
-          <span class="HTL-YEAR">1991</span>
-          <p class="HTL-ETITLE">Незалежна Україна</p>
-          <p class="HTL-EDESC">Початок нового розділу. Відновлення храмів, реформування місцевого самоврядування</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- 18: 2005 — Тисячоліття -->
-    <div class="HTL-ITEM">
-      <div class="HTL-TOP">
-        <div class="HTL-TEXT">
-          <span class="HTL-YEAR">2005</span>
-          <p class="HTL-ETITLE">1000-ліття Дубровиці</p>
-          <p class="HTL-EDESC">Державне святкування тисячолітнього ювілею міста</p>
-        </div>
-        <div class="HTL-LINE-UP"></div>
-      </div>
-      <div class="HTL-DOT"></div>
-      <div class="HTL-BOTTOM">
-        <div class="HTL-LINE-DOWN"></div>
-        <div class="HTL-PHOTO no-img">🎉</div>
-      </div>
-    </div>
-
-    <!-- 19: 2020 — Адміністративна реформа -->
-    <div class="HTL-ITEM" style="margin-right:3rem;">
-      <div class="HTL-TOP">
-        <div class="HTL-PHOTO no-img">🏛️</div>
-        <div class="HTL-LINE-UP"></div>
-      </div>
-      <div class="HTL-DOT"></div>
-      <div class="HTL-BOTTOM">
-        <div class="HTL-LINE-DOWN"></div>
-        <div class="HTL-TEXT">
-          <span class="HTL-YEAR">2020</span>
-          <p class="HTL-ETITLE">Адміністративна реформа</p>
-          <p class="HTL-EDESC">Ліквідація Дубровицького району. Утворення міської громади в Сарненському районі</p>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<div class="HTL-CTA">
-  <a href="history.html">
-    Повна історія міста
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-      <path d="M9 5l7 7-7 7"/>
-    </svg>
-  </a>
-</div>
-
-<script>
-(function(){
-  var track = document.getElementById('htlTrack');
-  if (!track) return;
-
-  // ── Drag to scroll ──
-  var isDown = false, startX = 0, scrollLeft = 0;
-  track.addEventListener('mousedown', function(e) {
-    isDown = true;
-    track.style.cursor = 'grabbing';
-    startX = e.pageX - track.offsetLeft;
-    scrollLeft = track.scrollLeft;
-  });
-  document.addEventListener('mouseup', function() {
-    isDown = false;
-    track.style.cursor = '';
-  });
-  document.addEventListener('mousemove', function(e) {
-    if (!isDown) return;
-    e.preventDefault();
-    var x = e.pageX - track.offsetLeft;
-    var walk = (x - startX) * 1.5;
-    track.scrollLeft = scrollLeft - walk;
-  });
-
-  // ── Scroll-in animation ──
-  var items = track.querySelectorAll('.HTL-ITEM');
-  if ('IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          setTimeout(function() {
-            entry.target.classList.add('htl-visible');
-          }, 80);
-          io.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12, root: track });
-    items.forEach(function(item) { io.observe(item); });
-  } else {
-    items.forEach(function(item) { item.classList.add('htl-visible'); });
-  }
-
-  // ── Gentle hint scroll on load ──
-  setTimeout(function() {
-    var max = track.scrollWidth - track.clientWidth;
-    if (max <= 0) return;
-    var dist = Math.min(200, max * 0.14);
-    var start = null, dur = 1800;
-    function step(ts) {
-      if (!start) start = ts;
-      var p = (ts - start) / dur;
-      if (p > 1) { track.scrollLeft = 0; return; }
-      var v = p < .5 ? 2*p*p : -1+(4-2*p)*p;
-      track.scrollLeft = p < .75 ? dist * v / 0.75 : dist * (1 - (p-.75)/.25);
-      if (p < 1) requestAnimationFrame(step);
-    }
-    requestAnimationFrame(step);
-  }, 600);
-})();
-</script>
-</section>
-<!-- ═══ END IMPROVED HISTORICAL TIMELINE ═══ -->
-    <!-- ═══ END HORIZONTAL TIMELINE ═══ -->
 
     <!-- Footer -->
         <div id="ULB">
@@ -7017,5 +6189,28 @@ g.ULB={open:open,close:close,nav:nav,
 })();
 </script>
 
+
+<script>
+(function(){
+  var rail = document.querySelector('.tl-rail'); if (!rail) return;
+  var tabs = [].slice.call(rail.querySelectorAll('.tl-era'));
+  function pick(t, focus){
+    tabs.forEach(function(x){ var on = x === t; x.classList.toggle('on', on); x.setAttribute('aria-selected', on ? 'true' : 'false'); x.tabIndex = on ? 0 : -1;
+      document.getElementById(x.getAttribute('aria-controls')).hidden = !on; });
+    if (focus) t.focus();
+    var r = t.getBoundingClientRect(), rr = rail.getBoundingClientRect();
+    if (r.left < rr.left || r.right > rr.right) rail.scrollTo({ left: t.offsetLeft - rail.clientWidth / 2 + t.offsetWidth / 2, behavior: 'smooth' });
+  }
+  tabs.forEach(function(t, i){
+    t.tabIndex = t.classList.contains('on') ? 0 : -1;
+    t.addEventListener('click', function(){ pick(t); });
+    t.addEventListener('keydown', function(e){
+      var j = e.key === 'ArrowRight' ? i + 1 : e.key === 'ArrowLeft' ? i - 1 : e.key === 'Home' ? 0 : e.key === 'End' ? tabs.length - 1 : -1;
+      if (j < 0 || j >= tabs.length) return; e.preventDefault(); pick(tabs[j], true);
+    });
+  });
+  var on = rail.querySelector('.tl-era.on'); if (on && innerWidth < 1100) rail.scrollLeft = on.offsetLeft - 40;
+})();
+</script>
 </body>
 </html>
