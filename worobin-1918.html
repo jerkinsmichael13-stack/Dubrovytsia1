@@ -18,7 +18,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Дубровицьке повстання 1918 року і напад на маєток Плятерів у Воробині: звідки в Дубровиці взялися більшовики, хроніка облоги за справою Луцького окружного суду № 67/22, загиблі, ревком і «червона Дубровиця», слідство, вісім підсудних, два вироки й радянська пам'ять про ту саму ніч.">
 <meta property="og:title" content="Воробин, листопад 1918 — справа про напад на маєток Плятерів">
-<meta property="og:description" content="Звідки взялося повстання, ніч облоги, ревком, суд і дві пам'яті — радянська книжка й польська кримінальна справа поруч.">
+<meta property="og:description" content="Звідки взялося повстання, ніч облоги, ревком, суд і дві версії — радянська книжка й польська кримінальна справа поруч.">
 <meta property="og:image" content="worobin-1918-sprava.jpg">
 <title>Воробин, 1918 — справа про напад на маєток Плятерів — Дубровиця</title>
 <script>!function(){var t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t)}()</script>
@@ -800,26 +800,8 @@
 @media(max-width:640px){.w18-pow{padding:1.2rem 1rem 1.1rem}}
 
 /* § республіка: схема залізниці + хроніка */
-.w18-rep-g{display:grid;grid-template-columns:minmax(260px,320px) minmax(0,1fr);gap:clamp(1.5rem,5vw,4.5rem);margin:3rem 0 0;align-items:start}
+.w18-rep-g{display:grid;grid-template-columns:minmax(300px,380px) minmax(0,1fr);gap:clamp(1.5rem,5vw,4.5rem);margin:3rem 0 0;align-items:start}
 .w18-rep-map{position:sticky;top:calc(var(--ds-hdr,64px) + 4.2rem);padding:1rem .6rem .4rem;border-radius:var(--ds-r-lg);background:var(--w-card);border:1px solid var(--w-rule)}
-.w18-rep-map svg{display:block;width:100%;height:auto;max-height:calc(100vh - var(--ds-hdr,64px) - 6.5rem);overflow:visible}
-#w18Rail .rl-lines path{fill:none;stroke:var(--w-ink3);stroke-linecap:round}
-#w18Rail .rl-main{stroke-width:3}
-#w18Rail .rl-br{stroke-width:2}
-#w18Rail .rl-nar{stroke-width:1.5;stroke-dasharray:3 4}
-#w18Rail .rl-off{stroke-width:2;stroke-dasharray:2 5}
-#w18Rail .rl-st circle,#w18Rail .rl-st rect{fill:var(--w-card);stroke:var(--w-ink2);stroke-width:2;transform-box:fill-box;transform-origin:center;transition:fill .4s,stroke .4s,transform .5s cubic-bezier(.34,1.56,.64,1)}
-#w18Rail .rl-big circle{fill:var(--w-ink);stroke:var(--w-ink)}
-#w18Rail text{font:500 12.5px var(--ds-body);fill:var(--w-ink2);transition:fill .4s}
-#w18Rail .rl-big text{font:600 15px var(--ds-display);fill:var(--w-ink)}
-#w18Rail .rl-big .rl-sub,#w18Rail .rl-sub{font:500 9.5px var(--ds-body);fill:var(--w-ink3)}
-#w18Rail .rl-town text{font-size:11.5px;font-style:italic}
-#w18Rail .rl-note{font:500 9px var(--ds-body);fill:var(--w-ink3)}
-#w18Rail .rl-st.on circle,#w18Rail .rl-st.on rect{fill:var(--w-ember);stroke:var(--w-ember);transform:scale(1.45)}
-#w18Rail .rl-st.on text{fill:var(--w-ember)}
-#w18Rail .rl-st.on .rl-sub{fill:var(--w-ember)}
-#w18Rail .rl-st.on circle{animation:w18Ping 1.8s ease-out infinite}
-@keyframes w18Ping{0%{filter:drop-shadow(0 0 0 rgba(226,124,76,.7))}70%{filter:drop-shadow(0 0 9px rgba(226,124,76,0))}100%{filter:none}}
 .w18-rep-tl{position:relative;margin:0;padding:0;list-style:none}
 .w18-rep-tl::before{content:'';position:absolute;left:0;top:.5rem;bottom:.5rem;width:1px;background:var(--w-rule2)}
 .w18-rep-tl li{position:relative;padding:0 0 2.4rem 2rem;transition:opacity .5s}
@@ -836,13 +818,12 @@
 @media(max-width:900px){
   .w18-rep-g{grid-template-columns:1fr}
   .w18-rep-map{position:static;max-width:380px;padding:.8rem .4rem .2rem}
-  .w18-rep-map svg{max-height:none}
 }
 
 /* § долі */
 .w18 .w18-after{grid-template-columns:repeat(auto-fill,minmax(270px,1fr))}
 .w18-after li.is-book{border-top:2px solid var(--w-ember)}
-.w18-after li.is-book time::after{content:'за Степановим';display:inline-block;margin-left:.6rem;padding:.12rem .5rem;border-radius:999px;vertical-align:.7rem;font:600 .56rem var(--ds-body);letter-spacing:.08em;text-transform:uppercase;color:var(--w-ember);background:color-mix(in srgb,var(--w-ember) 12%,transparent)}
+.w18-after li.is-book time::after{content:'лише в радянській книжці';display:inline-block;margin-left:.6rem;padding:.12rem .5rem;border-radius:999px;vertical-align:.7rem;font:600 .56rem var(--ds-body);letter-spacing:.08em;text-transform:uppercase;color:var(--w-ember);background:color-mix(in srgb,var(--w-ember) 12%,transparent)}
 .w18-after li h3{margin:.55rem 0 0;font:500 1.15rem/1.25 var(--ds-display);color:var(--w-ink)}
 
 @media(prefers-reduced-motion:reduce){
@@ -852,8 +833,117 @@
   .w18 .ds-sh.pre::after,.w18-act.pre .w18-act-q::before{transform:none}
   .w18-act.pre .w18-act-t,.w18-act.pre .w18-act-q p{opacity:1;transform:none}
   .w18-pow.pre .w18-pow-bar>span{transform:none}
-  #w18Rail .rl-st.on circle{animation:none}
+  #w18Rail .rl-st.on .mp-pulse{animation:none}
 }
+
+/* § Під чиєю владою */
+.w18{--w-ru:#8d7b5f;--w-tu:#b3a27f;--w-rp:#a89a7c;--w-ss:#7a2c22}
+[data-theme="dark"] .w18{--w-ru:#a8977a;--w-tu:#8b7d62;--w-rp:#6e6552;--w-ss:#c8705f}
+.w18 .k-rp{background:var(--w-rp)}.w18 .k-ru{background:var(--w-ru)}.w18 .k-tu{background:var(--w-tu)}.w18 .k-red{background:var(--w-ember)}.w18 .k-unr{background:var(--w-unr)}.w18 .k-ger{background:var(--w-ger)}.w18 .k-pl{background:var(--w-pl)}.w18 .k-ss{background:var(--w-ss)}
+.w18 .k-mix{background:repeating-linear-gradient(135deg,var(--w-ember) 0 6px,var(--w-unr) 6px 12px)}
+.w18 .k-chaos{background:repeating-linear-gradient(90deg,var(--w-tu) 0 2px,var(--w-ember) 2px 5px,var(--w-unr) 5px 7px,var(--w-ger) 7px 10px)}
+.w18-vl-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;margin:2.2rem 0 0;border-radius:var(--ds-r-lg);overflow:hidden;background:var(--w-rule);border:1px solid var(--w-rule)}
+.w18-vl-stats>div{padding:1.4rem 1.5rem 1.3rem;background:var(--w-card)}
+.w18-vl-stats b{font:300 clamp(3rem,6vw,4.6rem)/.9 var(--ds-display);font-variant-numeric:lining-nums tabular-nums;color:var(--w-ink)}
+.w18-vl-stats b em{font-style:normal}
+.w18-vl-stats sup{font:300 2rem var(--ds-display);color:var(--w-ember);vertical-align:1.4rem;margin-left:.1rem}
+.w18-vl-stats span{display:block;margin-top:.55rem;font:500 .8rem/1.4 var(--ds-body);color:var(--w-ink2)}
+.w18-vl-stats>div:nth-child(1) b{color:var(--w-ru)}.w18-vl-stats>div:nth-child(2) b{color:var(--w-ember)}.w18-vl-stats>div:nth-child(3) b{color:var(--w-pl)}
+.w18-vl-viz{margin:1.6rem 0 0;padding:1.6rem 1.7rem 1.3rem;border-radius:var(--ds-r-lg);background:var(--w-alt);border:1px solid var(--w-rule)}
+.w18-vl-cap{margin:0 0 .6rem;font:600 .64rem var(--ds-body);letter-spacing:.16em;text-transform:uppercase;color:var(--w-ink3)}
+.w18-vl-ov{position:relative;display:flex;height:46px;border-radius:8px;overflow:hidden}
+.w18-vl-ov>span{position:relative;height:100%;cursor:pointer;transition:filter .25s}
+.w18-vl-ov>span:hover{filter:brightness(1.1)}
+.w18-vl-ov b{position:absolute;left:.6rem;top:50%;transform:translateY(-50%);white-space:nowrap;font:600 .7rem var(--ds-body);color:#fff;pointer-events:none}
+.w18-vl-ov .k-rp b,.w18-vl-ov .k-ss b{left:50%;transform:translate(-50%,-50%);font-size:.62rem}
+.w18-vl-win{position:absolute;top:-3px;bottom:-3px;border:2px solid var(--w-ink);border-radius:4px;box-shadow:0 0 0 4px color-mix(in srgb,var(--w-gold) 35%,transparent);pointer-events:none;animation:w18Win 2.4s ease-in-out infinite}
+@keyframes w18Win{50%{box-shadow:0 0 0 8px color-mix(in srgb,var(--w-gold) 10%,transparent)}}
+.w18-vl-ax{position:relative;height:1.5rem;margin-top:.3rem}
+.w18-vl-ax span{position:absolute;top:.25rem;transform:translateX(-50%);font:500 .68rem var(--w-mono);color:var(--w-ink3)}
+.w18-vl-ax span::before{content:'';position:absolute;left:50%;top:-.4rem;width:1px;height:.3rem;background:var(--w-rule2)}
+.w18-vl-lens{height:54px;margin:-.2rem 0 .7rem;background:linear-gradient(180deg,color-mix(in srgb,var(--w-gold) 30%,transparent),color-mix(in srgb,var(--w-gold) 6%,transparent));clip-path:polygon(var(--zl) 0,var(--zr) 0,100% 100%,0 100%)}
+.w18-vl-sc{overflow-x:auto;scrollbar-width:thin;padding-top:2.4rem}
+.w18-vl-det{position:relative;display:flex;min-width:720px;height:64px;border-radius:8px}
+.w18-vl-det>button{position:relative;flex:none;height:100%;padding:0;border:0;border-right:2px solid var(--w-alt);cursor:pointer;transform-origin:50% 100%;transition:transform .3s cubic-bezier(.16,1,.3,1),filter .25s}
+.w18-vl-det>button:first-child{border-radius:8px 0 0 8px}.w18-vl-det>button:last-of-type{border-radius:0 8px 8px 0;border-right:0}
+.w18-vl-det>button b{position:absolute;left:.45rem;right:.2rem;top:50%;transform:translateY(-50%);overflow:hidden;white-space:nowrap;text-align:left;font:600 .66rem var(--ds-body);color:#fff;pointer-events:none}
+.w18-vl-det>button.k-tu b{color:#2b241a}
+.w18-vl-det>button:hover,.w18-vl-det>button:focus-visible{filter:brightness(1.12);transform:scaleY(1.12);outline:none;z-index:2}
+.w18-vl-det>button.on{transform:scaleY(1.16);box-shadow:0 0 0 2px var(--w-ink);z-index:2}
+.w18-vl-mk{position:absolute;top:-.9rem;bottom:-4px;width:0;border-left:2px solid var(--w-ink);pointer-events:none}
+.w18-vl-mk em{position:absolute;bottom:100%;left:0;transform:translateX(-50%);padding:.1rem .45rem;border-radius:999px;background:var(--w-ink);color:var(--color-bg);font:normal 600 .62rem var(--ds-body);white-space:nowrap}
+.w18-vl-mk::after{content:'';position:absolute;left:-5px;bottom:-4px;width:8px;height:8px;border-radius:50%;background:var(--w-ink)}
+.w18-vl-ax2{min-width:720px}
+.w18-vl-key{display:flex;flex-wrap:wrap;gap:.35rem 1.1rem;margin:.6rem 0 0;padding:0;list-style:none;font-size:.75rem;color:var(--w-ink2)}
+.w18-vl-key i{display:inline-block;width:.75rem;height:.75rem;margin-right:.4rem;border-radius:3px;vertical-align:-1px}
+.w18-vl-list{position:relative;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 2.4rem;grid-auto-flow:column;grid-template-rows:repeat(7,auto);margin:2.2rem 0 1rem;padding:0;list-style:none}
+.w18-vl-list li{position:relative;display:grid;grid-template-columns:14px minmax(0,1fr);column-gap:1rem;padding:1rem 1rem 1.05rem .2rem;border-top:1px solid var(--w-rule);border-radius:6px;transition:background .35s}
+.w18-vl-list li>i{grid-row:1/4;width:14px;height:100%;min-height:3rem;border-radius:4px}
+.w18-vl-list time{font:600 .66rem var(--ds-body);letter-spacing:.12em;text-transform:uppercase;color:var(--w-ink3)}
+.w18-vl-list h3{margin:.2rem 0 .35rem;font:400 1.4rem/1.15 var(--ds-display);color:var(--w-ink)}
+.w18-vl-list p{margin:0;font:400 .98rem/1.55 var(--ds-display);color:var(--w-ink2);text-wrap:pretty}
+.w18-vl-list li.on{background:color-mix(in srgb,var(--w-gold) 13%,transparent)}
+.w18-vl-list li.on h3{color:var(--w-ember)}
+@media(max-width:760px){.w18-vl-stats{grid-template-columns:1fr}.w18-vl-stats>div{display:flex;align-items:baseline;gap:.8rem;padding:1rem 1.1rem}.w18-vl-stats span{margin:0}.w18-vl-viz{padding:1.2rem 1rem 1rem}.w18-vl-list{grid-template-columns:1fr;grid-auto-flow:row;grid-template-rows:none}.w18-vl-ov b{font-size:.6rem}.w18-vl-ov .k-ru b{content:''}}
+
+/* справжня карта */
+.w18-rep-map{background:var(--mp-bg)}
+.w18{--mp-bg:#f3ecdf;--mp-water:#9db6c8;--mp-bd:#b9a98c;--mp-rail:#4a4238;--mp-ink:#3b342b}
+[data-theme="dark"] .w18{--mp-bg:#1b1712;--mp-water:#3e5d73;--mp-bd:#6b5e47;--mp-rail:#bfb29b;--mp-ink:#e6dccb}
+.w18-rep-map{margin:0;padding:0;overflow:hidden}
+.w18-rep-map figcaption{padding:.6rem .9rem .7rem;font:500 .68rem/1.45 var(--ds-body);color:var(--w-ink3);border-top:1px solid var(--w-rule);background:var(--w-card)}
+#w18Rail{display:block;width:100%;height:auto;max-height:calc(100vh - var(--ds-hdr,64px) - 9rem);--k:1}
+#w18Rail .mp-bg{fill:var(--mp-bg)}
+#w18Rail .mp-geo path{fill:none;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+#w18Rail .mp-rv{stroke:var(--mp-water);stroke-width:1.1}
+#w18Rail .mp-rv-b{stroke-width:2.2}
+#w18Rail .mp-bd{stroke:var(--mp-bd);stroke-width:1.2;stroke-dasharray:6 4}
+#w18Rail .mp-rl{fill:none;stroke:var(--mp-rail);stroke-width:3.2;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+#w18Rail .mp-rl2{fill:none;stroke:var(--mp-bg);stroke-width:1.4;stroke-dasharray:5 5;vector-effect:non-scaling-stroke}
+#w18Rail text{font:500 calc(13.5px * var(--k)) var(--ds-body);fill:var(--mp-ink);paint-order:stroke;stroke:var(--mp-bg);stroke-width:calc(3.2px * var(--k));stroke-linejoin:round;transition:fill .3s}
+#w18Rail .mp-rlab{font:italic 500 calc(14px * var(--k)) var(--ds-display);fill:var(--mp-water)}
+#w18Rail .mp-ctry{font:600 calc(9.5px * var(--k)) var(--ds-body);letter-spacing:.3em;fill:var(--mp-bd)}
+#w18Rail .rl-st circle,#w18Rail .rl-st rect{fill:var(--mp-bg);stroke:var(--mp-ink);stroke-width:1.8;vector-effect:non-scaling-stroke;transition:fill .3s,stroke .3s}
+#w18Rail .rl-city text{font-weight:700}
+#w18Rail .rl-off path{fill:none;stroke:var(--mp-ink);stroke-width:1.4;vector-effect:non-scaling-stroke}
+#w18Rail .mp-scale path{stroke:var(--mp-ink);stroke-width:2;vector-effect:non-scaling-stroke}
+#w18Rail .mp-scale text{font-size:calc(9px * var(--k))}
+#w18Rail .rl-st.on circle,#w18Rail .rl-st.on rect{fill:var(--w-ember);stroke:var(--w-ember)}
+#w18Rail .rl-st.on text{fill:var(--w-ember);font-weight:700}
+#w18Rail .mp-pulse{fill:none;stroke:var(--w-ember);stroke-width:2;vector-effect:non-scaling-stroke;opacity:0}
+#w18Rail .rl-st.on .mp-pulse{animation:w18Pulse 1.8s ease-out infinite}
+@keyframes w18Pulse{0%{opacity:.8;transform:scale(1)}100%{opacity:0;transform:scale(3.2)}}
+#w18Rail .mp-pulse{transform-box:fill-box;transform-origin:center}
+
+/* словничок і терміни */
+.w18-term{padding:0;border:0;background:none;font:inherit;color:inherit;cursor:help;text-decoration:underline dotted;text-decoration-color:color-mix(in srgb,var(--w-gold) 80%,transparent);text-underline-offset:3px;text-decoration-thickness:1.5px}
+.w18-term:hover,.w18-term:focus-visible{color:var(--w-ember);outline:none}
+.w18-tip{position:fixed;z-index:1300;max-width:min(20rem,calc(100vw - 2rem));padding:.75rem .9rem .8rem;border-radius:8px;background:var(--w-ink);color:var(--color-bg);box-shadow:0 18px 40px rgba(0,0,0,.25);font:400 .82rem/1.5 var(--ds-body);opacity:0;transform:translateY(4px);pointer-events:none;transition:opacity .18s,transform .18s}
+.w18-tip.on{opacity:1;transform:none}
+.w18-tip b{display:block;margin-bottom:.2rem;font:600 .95rem var(--ds-display);color:var(--w-gold-hi)}
+.w18-src-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin:2.6rem 0 0}
+.w18-src-cards article{padding:1.2rem 1.25rem 1.1rem;border-radius:var(--ds-r);background:var(--w-card);border:1px solid var(--w-rule)}
+.w18-src-cards small{display:block;font:600 .6rem var(--ds-body);letter-spacing:.16em;text-transform:uppercase}
+.w18-src-cards article:nth-child(1) small{color:var(--w-plc)}.w18-src-cards article:nth-child(2) small{color:var(--w-ember)}.w18-src-cards article:nth-child(3) small{color:var(--w-gold)}
+.w18-src-cards h3{margin:.4rem 0 .45rem;font:400 1.3rem/1.15 var(--ds-display);color:var(--w-ink)}
+.w18-src-cards p{margin:0;font-size:.84rem;line-height:1.55;color:var(--w-ink2)}
+.w18-gloss{margin:1.2rem 0 0;border-radius:var(--ds-r);border:1px solid var(--w-rule);background:var(--w-card)}
+.w18-gloss summary{display:flex;align-items:center;gap:.6rem;padding:.95rem 1.2rem;cursor:pointer;list-style:none;font:500 1.05rem var(--ds-display);color:var(--w-ink)}
+.w18-gloss summary::-webkit-details-marker{display:none}
+.w18-gloss summary::after{content:'+';margin-left:auto;font:300 1.4rem/1 var(--ds-body);color:var(--w-gold);transition:transform .3s}
+.w18-gloss[open] summary::after{transform:rotate(45deg)}
+.w18-gloss summary small{font:500 .74rem var(--ds-body);color:var(--w-ink3)}
+.w18-gloss dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.2rem 2rem;margin:0;padding:.2rem 1.2rem 1.2rem}
+.w18-gloss dl>div{padding:.6rem 0;border-top:1px dotted var(--w-rule2)}
+.w18-gloss dt{font:600 .95rem var(--ds-display);color:var(--w-ink)}
+.w18-gloss dd{margin:.15rem 0 0;font-size:.82rem;line-height:1.5;color:var(--w-ink2)}
+@media(max-width:760px){.w18-src-cards,.w18-gloss dl{grid-template-columns:1fr}}
+.w18-date-os{display:inline;white-space:nowrap;color:var(--w-ink3)}
+
+.w18-rep-pow{margin:1.2rem 0 0;font-size:.9rem;color:var(--w-ink2)}
+.w18-rep-pow a{color:var(--w-gold)}
+@media(max-width:900px){#w18Rail{max-height:none}}
+@media(max-width:760px){.w18-vl-ov .k-rp b,.w18-vl-ov .k-ss b,.w18-vl-ov .k-pl b{display:none}.w18-vl-ov .k-ru b{font-size:.62rem}.w18-vl-ax:not(.w18-vl-ax2) span:nth-child(2),.w18-vl-ax:not(.w18-vl-ax2) span:nth-child(3){display:none}}
 </style>
 </head>
 <body>
@@ -975,28 +1065,29 @@
     <ol>
         <li><a href="#sprava"><b>1</b>Справа</a></li>
         <li class="w18-toc-act" aria-hidden="true">I</li>
-        <li><a href="#peredistoriia"><b>2</b>Передісторія</a></li>
-        <li><a href="#chomu"><b>3</b>Причини</a></li>
+        <li><a href="#vlada"><b>2</b>Влада</a></li>
+        <li><a href="#peredistoriia"><b>3</b>Передісторія</a></li>
+        <li><a href="#chomu"><b>4</b>Причини</a></li>
         <li class="w18-toc-act" aria-hidden="true">II</li>
-        <li><a href="#khronika"><b>4</b>Хроніка</a></li>
-        <li><a href="#mapa"><b>5</b>Мапа</a></li>
-        <li><a href="#zahybli"><b>6</b>Загиблі</a></li>
-        <li><a href="#poraneni"><b>7</b>Книга хворих</a></li>
-        <li><a href="#dvi-pamiati"><b>8</b>Дві пам'яті</a></li>
+        <li><a href="#khronika"><b>5</b>Хроніка</a></li>
+        <li><a href="#mapa"><b>6</b>Мапа</a></li>
+        <li><a href="#zahybli"><b>7</b>Загиблі</a></li>
+        <li><a href="#poraneni"><b>8</b>Книга хворих</a></li>
+        <li><a href="#dvi-pamiati"><b>9</b>Дві версії</a></li>
         <li class="w18-toc-act" aria-hidden="true">III</li>
-        <li><a href="#povstannia"><b>9</b>Ревком</a></li>
-        <li><a href="#respublika"><b>10</b>Республіка</a></li>
-        <li><a href="#liudy"><b>11</b>Люди</a></li>
+        <li><a href="#povstannia"><b>10</b>Ревком</a></li>
+        <li><a href="#respublika"><b>11</b>Республіка</a></li>
+        <li><a href="#liudy"><b>12</b>Люди</a></li>
         <li class="w18-toc-act" aria-hidden="true">IV</li>
-        <li><a href="#sud"><b>12</b>Слідство й суд</a></li>
-        <li><a href="#pidsudni"><b>13</b>Підсудні</a></li>
-        <li><a href="#holosy"><b>14</b>Голоси</a></li>
-        <li><a href="#nevynni"><b>15</b>Не ті люди</a></li>
+        <li><a href="#sud"><b>13</b>Слідство й суд</a></li>
+        <li><a href="#pidsudni"><b>14</b>Підсудні</a></li>
+        <li><a href="#holosy"><b>15</b>Голоси</a></li>
+        <li><a href="#nevynni"><b>16</b>Не ті люди</a></li>
         <li class="w18-toc-act" aria-hidden="true">V</li>
-        <li><a href="#potim"><b>16</b>Долі</a></li>
-        <li><a href="#rozbizhnosti"><b>17</b>Розбіжності</a></li>
-        <li><a href="#dokumenty"><b>18</b>Документи</a></li>
-        <li><a href="#dzherelo"><b>19</b>Джерела</a></li>
+        <li><a href="#potim"><b>17</b>Долі</a></li>
+        <li><a href="#rozbizhnosti"><b>18</b>Розбіжності</a></li>
+        <li><a href="#dokumenty"><b>19</b>Документи</a></li>
+        <li><a href="#dzherelo"><b>20</b>Джерела</a></li>
     </ol>
 </nav>
 
@@ -1024,6 +1115,13 @@
                 </dl>
             </aside>
         </div>
+        <div class="w18-src-cards">
+            <article><small>Польська версія</small><h3>Кримінальна справа № 67/22</h3><p>Слідство й суд 1919–1925 років: протоколи жандармерії й поліції, допити свідків, лікарняна книга, вироки. Близько шестисот аркушів, усі перекладено.</p></article>
+            <article><small>Радянська версія</small><h3>Книжка «Безсмертя батьків»</h3><p>Лев Степанов, Львів, 1968. Найдокладніша радянська розповідь про повстання — за спогадами учасників і партійними архівами, з радянськими оцінками.</p></article>
+            <article><small>Свідки й газети</small><h3>Спогади й преса 1918–1985</h3><p>Перші газетні звістки 1918 року, спогади повстанців 1927 і 1958 років, ювілейні статті районної газети, спогади брата загиблих Плятерів.</p></article>
+        </div>
+        <details class="w18-gloss"><summary>Короткий словничок <small>ревком, Директорія, гетьман, ґміна та інші слова з цієї історії</small></summary><dl><div><dt>Берестейський мир</dt><dd>Договір УНР з Німеччиною та її союзниками (лютий 1918). Після нього німецькі війська прийшли в Україну.</dd></div><div><dt>Волость</dt><dd>Сільська адміністративна одиниця в Російській імперії.</dd></div><div><dt>Гайдамаки</dt><dd>Тут: збройні загони українських урядів 1917–1918 років. У радянських текстах так називали будь-яких противників більшовиків.</dd></div><div><dt>Гетьман</dt><dd>Павло Скоропадський, глава Української Держави (квітень — грудень 1918). Його влада трималася на німецьких військах.</dd></div><div><dt>Державна варта</dt><dd>Поліція Української Держави гетьмана Скоропадського.</dd></div><div><dt>Дефензива</dt><dd>Польська політична поліція й контррозвідка 1920–1930-х років.</dd></div><div><dt>Директорія</dt><dd>Уряд УНР з грудня 1918 року, від 1919-го на чолі із Симоном Петлюрою.</dd></div><div><dt>«Закордот»</dt><dd>Закордонний відділ ЦК компартії України. На початку 1920-х засилав до Польщі розвідників і партизанів.</dd></div><div><dt>КПЗБ</dt><dd>Комуністична партія Західної Білорусі. Діяла підпільно в Польщі, зокрема на Поліссі.</dd></div><div><dt>Особлива армія</dt><dd>Армія російського Південно-Західного фронту, яка 1916–1917 років стояла на Волині.</dd></div><div><dt>Петлюрівці</dt><dd>Так радянські й польські документи називали війська УНР за прізвищем Симона Петлюри.</dd></div><div><dt>Повірений</dt><dd>Довірена особа власника, яка керувала маєтком від його імені, тобто управитель.</dd></div><div><dt>Ревком</dt><dd>Революційний комітет: тимчасовий орган влади, який створювали більшовики та їхні прихильники.</dd></div><div><dt>Ревтрибунал</dt><dd>Революційний трибунал: суд, створений ревкомом. Судив без звичайних процедур і міг виносити смертні вироки.</dd></div><div><dt>Ризький мир</dt><dd>Договір 1921 року між Польщею й радянськими Росією та Україною. Західна Волинь відійшла до Польщі.</dd></div><div><dt>Спартаківці</dt><dd>Німецькі ліві соціалісти. Тут: революційно налаштовані солдати німецького гарнізону, які не хотіли воювати з повстанцями.</dd></div><div><dt>Старий стиль</dt><dd>Юліанський календар. 1918 року він відставав від нового, григоріанського, на 13 днів. В Україні новий стиль запровадили з 1 березня 1918 року.</dd></div><div><dt>Січовики</dt><dd>Військові частини УНР, зокрема Січові стрільці з Галичини.</dd></div><div><dt>УНР</dt><dd>Українська Народна Республіка (1917–1921). Спершу нею керувала Центральна Рада, з грудня 1918 року — Директорія.</dd></div><div><dt>Фільварок</dt><dd>Панська господарська садиба, частина великого маєтку.</dd></div><div><dt>Центральна Рада</dt><dd>Український парламент і уряд у Києві 1917–1918 років. Проголосила Українську Народну Республіку.</dd></div><div><dt>ЧК</dt><dd>Надзвичайна комісія: радянська політична поліція.</dd></div><div><dt>Червона гвардія</dt><dd>Збройні загони більшовиків, створені ще до Червоної армії.</dd></div><div><dt>Ґміна</dt><dd>Найнижча адміністративна одиниця в Польщі, приблизно як волость.</dd></div></dl></details>
+
     </div>
 </section>
 
@@ -1033,16 +1131,67 @@
         <div>
             <p class="w18-act-k">Частина перша</p>
             <h2 class="w18-act-t">Звідки все почалося</h2>
-            <p class="w18-act-y">1905 — листопад 1918</p>
-            <blockquote class="w18-act-q"><p>…ліси рубають, влада не діє.</p><cite>телеграма графині Броель-Плятер губернському комісарові, 1917 · за Степановим</cite></blockquote>
+            <p class="w18-act-y">до листопада 1918</p>
+            <blockquote class="w18-act-q"><p>…ліси рубають, влада не діє.</p><cite>телеграма графині Броель-Плятер губернському комісарові, 1917 · цитата з книжки Л. Степанова</cite></blockquote>
         </div>
     </div>
 </div>
 
 <!-- § 2 -->
+<section class="ds-sec w18-vl" id="vlada">
+    <div class="w18-wrap">
+        <div class="ds-sh"><b>§ 2</b><h2>Під чиєю владою</h2><span>Дубровиця 1793 — 1939</span></div>
+        <p class="w18-lead">Щоб зрозуміти, що сталося у Воробині, треба знати одне: восени 1918 року в Дубровиці фактично не було держави. Понад сто років містечко жило в Російській імперії, потім за чотири роки влада змінилася більше десяти разів, а наприкінці на вісімнадцять років прийшла Польща. Натисніть на будь-який відрізок, щоб прочитати, що це була за влада.</p>
+
+        <div class="w18-vl-stats">
+            <div><b><em data-count="124">124</em></b><span>роки — Російська імперія</span></div>
+            <div><b><em data-count="12">12</em><sup>+</sup></b><span>змін влади з 1917 по 1920 рік</span></div>
+            <div><b><em data-count="18">18</em></b><span>років — Польща, до вересня 1939</span></div>
+        </div>
+
+        <div class="w18-vl-viz">
+            <p class="w18-vl-cap">Півтора століття одним рядком</p>
+            <div class="w18-vl-ov"><span class="k-rp" style="width:6%" data-e="rp"><b>до 1793</b></span><span class="k-ru" style="width:74.842%" data-e="ru"><b>Російська імперія · 124 роки</b></span><span class="k-chaos" style="width:2.411%" data-e="rv"></span><span class="k-pl" style="width:10.747%" data-e="p2"><b>Польща · 18 років</b></span><span class="k-ss" style="width:6%" data-e="ss"><b>СРСР</b></span><i class="w18-vl-win" style="left:80.842%;width:2.411%"></i></div>
+            <div class="w18-vl-ax"><span style="left:6.000%">1793</span><span style="left:40.356%">1850</span><span style="left:70.493%">1900</span><span style="left:80.740%">1917</span><span style="left:94.000%">1939</span></div>
+            <div class="w18-vl-lens" style="--zl:80.842%;--zr:83.253%" aria-hidden="true"></div>
+            <p class="w18-vl-cap">Чотири роки під лупою: березень 1917 — березень 1921</p>
+            <div class="w18-vl-sc">
+                <div class="w18-vl-det"><button type="button" class="k-tu" style="width:17.728%" data-e="tu" aria-label="Тимчасовий уряд"><b>Тимчасовий уряд</b></button><button type="button" class="k-red" style="width:2.396%" data-e="r1" aria-label="ради"><b>ради</b></button><button type="button" class="k-unr" style="width:1.437%" data-e="u1" aria-label="УНР"><b>УНР</b></button><button type="button" class="k-red" style="width:3.149%" data-e="r2" aria-label="ради"><b>ради</b></button><button type="button" class="k-ger" style="width:4.312%" data-e="u2" aria-label="УНР і німці"><b>УНР і німці</b></button><button type="button" class="k-ger" style="width:14.100%" data-e="he" aria-label="гетьман і німці"><b>гетьман і німці</b></button><button type="button" class="k-red" style="width:2.396%" data-e="rv" aria-label="ревком"><b>ревком</b></button><button type="button" class="k-unr" style="width:0.548%" data-e="rv" aria-label="зміна влади"><b></b></button><button type="button" class="k-red" style="width:1.095%" data-e="rv" aria-label="зміна влади"><b></b></button><button type="button" class="k-unr" style="width:1.164%" data-e="rv" aria-label="зміна влади"><b></b></button><button type="button" class="k-red" style="width:2.053%" data-e="rv" aria-label="зміна влади"><b></b></button><button type="button" class="k-unr" style="width:4.723%" data-e="u3" aria-label="УНР"><b>УНР</b></button><button type="button" class="k-pl" style="width:28.542%" data-e="p1" aria-label="Польща"><b>Польща</b></button><button type="button" class="k-red" style="width:5.613%" data-e="r3" aria-label="Червона армія"><b>Червона армія</b></button><button type="button" class="k-pl" style="width:10.746%" data-e="p2" aria-label="Польща →"><b>Польща →</b></button><span class="w18-vl-mk" style="left:43.190%"><em>Воробин</em></span></div>
+                <div class="w18-vl-ax w18-vl-ax2"><span style="left:20.945%">1918</span><span style="left:45.927%">1919</span><span style="left:70.910%">1920</span><span style="left:95.962%">1921</span></div>
+            </div>
+            <ul class="w18-vl-key">
+                <li><i class="k-ru"></i>Російська імперія, Тимчасовий уряд</li>
+                <li><i class="k-red"></i>ради, ревком, Червона армія</li>
+                <li><i class="k-unr"></i>УНР: Центральна Рада, Директорія</li>
+                <li><i class="k-ger"></i>німецькі війська, гетьман</li>
+                <li><i class="k-pl"></i>Польща</li>
+            </ul>
+        </div>
+
+        <ol class="w18-vl-list">
+<li data-e="rp"><i class="k-rp"></i><time>до 1793</time><h3>Річ Посполита</h3><p>Польсько-литовська держава. Дубровиця — приватне містечко: спершу князів, з 1770-х років — графів Плятерів.</p></li>
+<li data-e="ru"><i class="k-ru"></i><time>1793 — 1917</time><h3>Російська імперія</h3><p>Після другого поділу Польщі край відійшов до Росії. З 1796 року Дубровиця — у Рівненському повіті Волинської губернії. Маєток і ліси лишаються за Плятерами. 1915–1917 роки — прифронтова смуга, у маєтку штаб армії.</p></li>
+<li data-e="tu"><i class="k-tu"></i><time>березень — листопад 1917</time><h3>Тимчасовий уряд Росії</h3><p>Царя скинуто. У Дубровиці з'являються ради й солдатські комітети, село починає брати панський ліс і землю. У Києві Центральна Рада домагається автономії України.</p></li>
+<li data-e="r1"><i class="k-red"></i><time>листопад — грудень 1917</time><h3>Ради під більшовиками</h3><p>У Петрограді владу беруть більшовики. Дубровицьку волосну раду очолює більшовик Петро Шпаковський, і рада починає ділити поміщицьку землю.</p></li>
+<li data-e="u1"><i class="k-unr"></i><time>грудень 1917 — січень 1918</time><h3>Українська Народна Республіка</h3><p>УНР, проголошена в Києві Центральною Радою, воює з більшовиками. Кінний загін розганяє Дубровицьку раду, Шпаковського везуть до в'язниці в Рівному.</p></li>
+<li data-e="r2"><i class="k-red"></i><time>січень — лютий 1918</time><h3>Знову ради</h3><p>Більшовицькі частини беруть Рівне. 22 січня в Дубровиці збирається волосний з'їзд рад, у містечку діє червона гвардія.</p></li>
+<li data-e="u2"><i class="k-ger"></i><time>лютий — квітень 1918</time><h3>УНР і німецькі війська</h3><p>За Берестейським миром УНР кличе на допомогу Німеччину й Австро-Угорщину. Німецькі війська займають Полісся, поміщики повертаються до маєтків.</p></li>
+<li data-e="he"><i class="k-ger"></i><time>квітень — листопад 1918</time><h3>Українська Держава гетьмана</h3><p>Німці розганяють Центральну Раду й ставлять гетьманом Павла Скоропадського. Влада тримається на німецьких гарнізонах. Селян змушують повернути взяті землю, ліс і худобу.</p></li>
+<li data-e="rv"><i class="k-mix"></i><time>21 листопада 1918 — 7 березня 1919</time><h3>Ревком і Директорія по черзі</h3><p>Повстанці беруть Воробин і владу в Дубровиці. Директорія — новий уряд УНР, згодом на чолі з Петлюрою, — двічі забирає містечко, а повстанці разом із Червоною армією двічі його повертають.</p></li>
+<li data-e="u3"><i class="k-unr"></i><time>березень — весна 1919</time><h3>Директорія УНР</h3><p>7 березня Північна армія отамана Оскілка остаточно бере Дубровицю. Ревкомівців, які не встигли піти, вбивають.</p></li>
+<li data-e="p1"><i class="k-pl"></i><time>весна 1919 — літо 1920</time><h3>Польща, військова влада</h3><p>Польське військо займає Полісся. Жандармерія проводить ексгумацію у Воробині й починає слідство, з документів якого складається ця сторінка.</p></li>
+<li data-e="r3"><i class="k-red"></i><time>липень — вересень 1920</time><h3>Червона армія</h3><p>Під час польсько-радянської війни Червона армія доходить до Варшави і на кілька тижнів займає Полісся. Слідство переривається, частина заарештованих зникає.</p></li>
+<li data-e="p2"><i class="k-pl"></i><time>1920 — 1939</time><h3>Друга Річ Посполита</h3><p>Ризький мир 1921 року залишає Західну Волинь Польщі. Дубровиця — містечко Сарненського повіту Волинського воєводства. 1923 року тут судять учасників нападу на Воробин, а колишні повстанці йдуть у підпілля.</p></li>
+<li data-e="ss"><i class="k-ss"></i><time>з 17 вересня 1939</time><h3>СРСР</h3><p>Червона армія займає Західну Україну. Для Дубровиці починається радянська влада, а з нею — нова історія.</p></li>
+        </ol>
+        <p class="w18-src">Межі відрізків приблизні: де джерела не дають дня, взято середину місяця. Дати 1917–1919 років — за книжкою Л. Степанова, справою № 67/22 і <a href="history.html">історією Дубровиці</a> на цьому сайті.</p>
+    </div>
+</section>
+
+<!-- § 3 -->
 <section class="ds-sec w18-pre" id="peredistoriia">
     <div class="w18-wrap">
-        <div class="ds-sh"><b>§ 2</b><h2>Кузня, фронт і дві революції</h2><span>Дубровиця 1905 — листопад 1918</span></div>
+        <div class="ds-sh"><b>§ 3</b><h2>Кузня, фронт і дві революції</h2><span>Дубровиця 1905 — листопад 1918</span></div>
         <p class="w18-lead">Повстання не почалося в листопаді 1918 року. Люди, зброя й образи, які зійшлися того вечора біля Воробина, збиралися в Дубровиці півтора десятиліття. Найдокладніше цей шлях описав Лев Степанов у книжці <a class="w18-link" href="#dzherelo">«Безсмертя батьків»</a> 1968 року. Книжка радянська, і мова в ній відповідна: «трудящі», «карателі», «буржуазні націоналісти». Звідси взято факти: імена, дати й події. Оцінки лишаються авторові. Де є інші джерела, їх названо поруч.</p>
 
         <ol class="w18-pre-steps">
@@ -1089,7 +1238,7 @@
                 <div class="w18-pre-y"><span>1918</span><small>весна — літо</small></div>
                 <div class="w18-pre-b">
                     <h3>Маєток повертається</h3>
-                    <p>Слідом за німецькими ешелонами повернулися поміщики й управителі, і те, що село взяло 1917 року, тепер вимагали назад: ліс, з якого постраждалі від війни поставили собі хати, худобу, збіжжя. За Степановим, на села накладали контрибуції <q>для покриття графських збитків</q>, суму яких граф визначав сам. Землю, яку селяни восени 1917 року зорали й засіяли, повернули родині Плятерів, а за випас на графських луках брали штрафи.</p>
+                    <p>Слідом за німецькими ешелонами повернулися поміщики й управителі, і те, що село взяло 1917 року, тепер вимагали назад: ліс, з якого постраждалі від війни поставили собі хати, худобу, збіжжя. Степанов пише, що на села накладали контрибуції <q>для покриття графських збитків</q>, суму яких граф визначав сам. Землю, яку селяни восени 1917 року зорали й засіяли, повернули родині Плятерів, а за випас на графських луках брали штрафи.</p>
                     <p>Порядок у маєтках тримали кінні загони. Радянські тексти пам'ятають їх як «карателів», польські свідки 1920 року — як найнятих вартових. Степанов пише, що у Воробині селян тримали в льохах по груди у воді, а управитель застрелив бідняка Миколу Романушка, і похорон Романушка став першою демонстрацією проти гетьманської влади. Польські документи цієї історії не знають. Проте й вони визнають, що стосунки маєтку з селом були <q>вельми недобрими</q>, а повірений — <q>дуже суворим до селян</q>. Фельдшер Пальонка уточнив: <q>а саме — бив</q>.</p>
                     <p>У Сельці гайдамаки шукали Трохима Камінського. Не знайшовши, били нагаями його батьків, а хату спалили. Камінський сховався в лісі й зібрав загін на двісті чоловік, з одним кулеметом.</p>
                     <p class="w18-src">Степанов, с. 38–45; Мацкевич, 6.IX.1922, арк. 401; Пальонка, 1920</p>
@@ -1100,7 +1249,7 @@
                 <div class="w18-pre-b">
                     <h3>«Це авантюризм»</h3>
                     <p>Навесні підпілля склало комітети в Орв'яниці, Сельці, Мочулищі, Круповому, Бересті, Колках та інших селях. Знайомих людей влаштували вартовими на військові склади, що лишилися в Дубровиці від царської армії, і звідти потроху виносили зброю. На початку червня склади загорілися. <q>Протягом багатьох годин… в небі, затягнутому чорними клубами диму, блискавками миготіли спалахи розривів</q>, — згадував Модек. Степанов приписує підпал підпільникам.</p>
-                    <p>За Степановим, 20 липня в хаті коваля Йосипа Лясковця зібралися вісімнадцять делегатів. Григорій Лясковець, Григорій Лебеда й Андрій Правник вимагали піднімати повстання негайно: на Сарненському вузлі саме страйкували залізничники. Микола Лясковець відповів, що загони малі, патронів немає, навколо німецькі гарнізони з артилерією, а до радянського кордону п'ятсот верст: <q>Це авантюризм, а не революційна боротьба</q>. Більшість проголосувала чекати. Господиня, Ольга Лясковець, помітила біля хати відомого провокатора, і делегати встигли розійтися.</p>
+                    <p>Степанов пише, що 20 липня в хаті коваля Йосипа Лясковця зібралися вісімнадцять делегатів. Григорій Лясковець, Григорій Лебеда й Андрій Правник вимагали піднімати повстання негайно: на Сарненському вузлі саме страйкували залізничники. Микола Лясковець відповів, що загони малі, патронів немає, навколо німецькі гарнізони з артилерією, а до радянського кордону п'ятсот верст: <q>Це авантюризм, а не революційна боротьба</q>. Більшість проголосувала чекати. Господиня, Ольга Лясковець, помітила біля хати відомого провокатора, і делегати встигли розійтися.</p>
                     <p>Наступного дня почалися обшуки. Модека й Григорія Лясковця заарештували й повезли до Лунінця, звідки вони втекли підкопом. Цей епізод має відлуння і в польській справі: того ж серпня начальник міліції Мацкевич доповів слідчому Бердникову про змову <q>на чолі з головним організатором… Миколою Лясковцем</q>.</p>
                     <p class="w18-src">Степанов, с. 41–50; Бердников, 20.V.1920, арк. 563</p>
                 </div>
@@ -1118,10 +1267,10 @@
     </div>
 </section>
 
-<!-- § 3 -->
+<!-- § 4 -->
 <section class="ds-sec w18-why" id="chomu">
     <div class="w18-wrap">
-        <div class="ds-sh"><b>§ 3</b><h2>Чому Дубровиця повстала</h2><span>що зійшлося восени 1918 року</span></div>
+        <div class="ds-sh"><b>§ 4</b><h2>Чому Дубровиця повстала</h2><span>що зійшлося восени 1918 року</span></div>
         <p class="w18-lead">У радянських авторів пояснення просте: бідняки під проводом більшовиків піднялися проти панів. У польського слідства теж просте: банда грабувала й убивала. Кожне з них пояснює лише половину того, що сталося. Якщо скласти докупи книгу, спогади й справу, видно щонайменше п'ять сил, які зійшлися в одному місці на одному тижні.</p>
 
         <div class="w18-why-grid">
@@ -1129,31 +1278,31 @@
                 <span class="w18-why-n">01</span>
                 <h3>Земля</h3>
                 <p>Дубровиця й навколишні села межували з землями й лісами Плятерів. 1917 року селяни взяли ліс, луки й поле, 1918-го мусили все повернути й заплатити штрафи. Ворожнеча вийшла особистою: у Воробині був конкретний повірений, у селах — конкретні контрибуції й хати, поставлені з «графського» лісу.</p>
-                <dl><dt>Книга</dt><dd>контрибуції «для покриття графських збитків», с. 44</dd><dt>Справа</dt><dd>стосунки «вельми недобрі» (Мацкевич); помста повіреному (Пальонка, Буйновський)</dd></dl>
+                <dl><dt>Радянська книжка</dt><dd>контрибуції «для покриття графських збитків», с. 44</dd><dt>Польська справа</dt><dd>стосунки «вельми недобрі» (Мацкевич); помста повіреному (Пальонка, Буйновський)</dd></dl>
             </article>
             <article class="w18-why-c">
                 <span class="w18-why-n">02</span>
                 <h3>Війна</h3>
                 <p>Три роки Дубровиця жила в прифронтовій смузі: штаб армії в маєтку, майстерні на станції, тисячі солдатів і агітаторів. Війна лишила по собі фронтовиків, які вміли стріляти, і склади зброї російської армії в Дубровиці й Видіборі, що нікому вже не належали.</p>
-                <dl><dt>Книга</dt><dd>склади в Дубровиці й Видіборі, с. 46, 86–88</dd><dt>Справа</dt><dd>«карабіни… дістали від німців» (Шеремета, 1921)</dd></dl>
+                <dl><dt>Радянська книжка</dt><dd>склади в Дубровиці й Видіборі, с. 46, 86–88</dd><dt>Польська справа</dt><dd>«карабіни… дістали від німців» (Шеремета, 1921)</dd></dl>
             </article>
             <article class="w18-why-c">
                 <span class="w18-why-n">03</span>
                 <h3>Організація</h3>
                 <p>Ядро було невелике, зате згуртоване: родина ковалів Лясковців, Шпаковський, фронтовики, машиністи, що возили людей і літературу. Вони пережили арешти 1918 року, мали зв'язок із Рівним і Москвою — і, на відміну від «лівих», уміли чекати.</p>
-                <dl><dt>Книга</dt><dd>конференції 20 липня й 3–4 грудня, с. 47–49, 62–67</dd><dt>Справа</dt><dd>у серпні 1918 міліція вже знає «головного організатора» Миколу Лясковця</dd></dl>
+                <dl><dt>Радянська книжка</dt><dd>конференції 20 липня й 3–4 грудня, с. 47–49, 62–67</dd><dt>Польська справа</dt><dd>у серпні 1918 міліція вже знає «головного організатора» Миколу Лясковця</dd></dl>
             </article>
             <article class="w18-why-c">
                 <span class="w18-why-n">04</span>
                 <h3>Безвладдя</h3>
                 <p>У листопаді 1918 року гетьманська влада трималася на німецьких багнетах, а німці збиралися додому. Директорія сама закликала повставати проти гетьмана. На кілька тижнів владою ставав той, хто мав зброю й організацію.</p>
-                <dl><dt>Книга</dt><dd>німецька солдатська рада обіцяє не втручатися, с. 65–66</dd><dt>Справа</dt><dd>напад стався <q>у переломний момент… коли Гетьманський уряд був повалений</q> (обвинувальний акт)</dd></dl>
+                <dl><dt>Радянська книжка</dt><dd>німецька солдатська рада обіцяє не втручатися, с. 65–66</dd><dt>Польська справа</dt><dd>напад стався <q>у переломний момент… коли Гетьманський уряд був повалений</q> (обвинувальний акт)</dd></dl>
             </article>
             <article class="w18-why-c">
                 <span class="w18-why-n">05</span>
                 <h3>Помста і страх</h3>
-                <p>Радянські тексти пишуть, що люди мстилися за льохи, нагаї й Романушка. Польські документи — що грабували й зводили рахунки. Для натовпу, який кричав <q>Де гайдамаки?!</q>, вартові маєтку були тією самою гетьманською силою, що 1918 року забирала в сіл ліс і худобу.</p>
-                <dl><dt>Книга</dt><dd>«ненависні селянам» управитель і варта, с. 43–45, 70</dd><dt>Справа</dt><dd>убили <q>виключно як великих землевласників</q> (Бердников); помста (Пальонка)</dd></dl>
+                <p>Радянські тексти пишуть, що люди мстилися за побої, за сидіння в холодних льохах маєтку і за селянина Миколу Романушка, якого, за їхніми словами, застрелив управитель. Польські документи — що грабували й зводили рахунки. Для натовпу, який кричав <q>Де гайдамаки?!</q>, вартові маєтку були тією самою гетьманською силою, що 1918 року забирала в сіл ліс і худобу.</p>
+                <dl><dt>Радянська книжка</dt><dd>«ненависні селянам» управитель і варта, с. 43–45, 70</dd><dt>Польська справа</dt><dd>убили <q>виключно як великих землевласників</q> (Бердников); помста (Пальонка)</dd></dl>
             </article>
         </div>
         <p class="w18-why-end">Жодна з цих причин не пояснює, чому полонених, яким пообіцяли суд, розстріляли просто біля палацу. Це рішення ухвалили люди, що стояли там 22 листопада, і про нього наступна частина.</p>
@@ -1172,10 +1321,10 @@
     </div>
 </div>
 
-<!-- § 4 -->
+<!-- § 5 -->
 <section class="ds-sec" id="khronika">
     <div class="w18-wrap">
-        <div class="ds-sh"><b>§ 4</b><h2>Вісімнадцять годин</h2><span>з вечора 21 листопада до вечора 22 листопада 1918</span></div>
+        <div class="ds-sh"><b>§ 5</b><h2>Вісімнадцять годин</h2><span>з вечора 21 листопада до вечора 22 листопада 1918</span></div>
         <p class="w18-lead">Хроніку складено за протоколами слідства 1919–1922 років, показаннями на суді й висновками суду. Час подано так, як його називали свідки; де їхні слова розходяться, це зазначено.</p>
         <ol class="w18-tl">
             <li class="grp ph-pre"><h3>Перед нападом<span>травень — 21 листопада</span></h3></li>
@@ -1282,10 +1431,10 @@
     </div>
 </section>
 
-<!-- § 5 -->
+<!-- § 6 -->
 <section class="ds-sec" id="mapa">
     <div class="w18-wrap">
-        <div class="ds-sh"><b>§ 5</b><h2>Штурм на мапі 1927 року</h2><span>схема з газети «Красная звезда»</span></div>
+        <div class="ds-sh"><b>§ 6</b><h2>Штурм на мапі 1927 року</h2><span>схема з газети «Красная звезда»</span></div>
         <div class="w18-map">
             <figure>
                 <button type="button" class="w18-zoom" data-lb="worobin-1918-mapa-1927.jpg" data-cap="Схема наступу на маєток Воробин із газети «Красная звезда», 1927. Унизу — містечко Домбровиця, угорі — маєток, праворуч — річка Горинь." aria-label="Збільшити схему наступу">
@@ -1324,10 +1473,10 @@
     </div>
 </section>
 
-<!-- § 6 -->
+<!-- § 7 -->
 <section class="w18-mem" id="zahybli">
     <div class="w18-wrap">
-        <div class="ds-sh"><b>§ 6</b><h2>Двадцять два</h2><span>загиблі у Воробині 22 листопада 1918</span></div>
+        <div class="ds-sh"><b>§ 7</b><h2>Двадцять два</h2><span>загиблі у Воробині 22 листопада 1918</span></div>
         <p class="w18-mem-lead">Імена й посади подано за свідченням Юзефа Вев'юровського 1920 року й обвинувальним актом 1922-го. Написання прізвищ у документах справи різниться; тут вони зведені до одного.</p>
         <ol class="w18-names">
             <li class="pl"><div><span class="n">Ігнацій Плятер</span><span class="r">власник маєтку · 1888–1918</span></div></li>
@@ -1388,10 +1537,10 @@
     </div>
 </section>
 
-<!-- § 7 -->
+<!-- § 8 -->
 <section class="ds-sec" id="poraneni">
     <div class="w18-wrap">
-        <div class="ds-sh"><b>§ 7</b><h2>Книга хворих</h2><span>дубровицька лікарня, записи від 22 листопада 1918</span></div>
+        <div class="ds-sh"><b>§ 8</b><h2>Книга хворих</h2><span>дубровицька лікарня, записи від 22 листопада 1918</span></div>
         <p class="w18-lead">30 травня 1920 року слідчий суддя Родзевич оглянув у Дубровиці книгу хворих повітової лікарні: на сторінках 32–37 записано дванадцять чоловіків, привезених 22 листопада з вогнепальними ранами. Районний лікар Добровольський додав реєстр із діагнозами й датами виписки. За цими записами слідство шукало обвинувачених — і через них же заарештовувало однофамільців.</p>
         <div class="w18-tblw">
             <table class="w18-tbl w18-ledger">
@@ -1423,17 +1572,17 @@
     </div>
 </section>
 
-<!-- § 8 -->
+<!-- § 9 -->
 <section class="ds-sec w18-two" id="dvi-pamiati" data-view="both">
     <div class="w18-wrap">
-        <div class="ds-sh"><b>§ 8</b><h2>Дві пам'яті</h2><span>одна ніч у радянських книжках і в польській кримінальній справі</span></div>
+        <div class="ds-sh"><b>§ 9</b><h2>Дві версії однієї ночі</h2><span>радянські книжки й польська кримінальна справа — поруч</span></div>
         <div class="w18-two-in">
             <p class="w18-lead">Про Воробин майже пів століття писали двічі, і ці дві розповіді не перетинались. Для радянських авторів це був перший бій <q>червоної Дубровиці</q> — штурм замку, де засіли <q>гайдамаки-карателі</q>. Для польського слідства — напад <q>банди</q>, після якого двадцять двох людей розстріляли на дорозі. Нижче обидві розповіді поставлено поруч, крок за кроком: що каже кожна сторона, де вони несподівано збігаються і де одна з них мовчить.</p>
         </div>
 
         <div class="w18-two-src">
             <div class="sv">
-                <h3><i aria-hidden="true"></i>Радянська пам'ять</h3>
+                <h3><i aria-hidden="true"></i>Радянська версія</h3>
                 <ol>
                     <li><time>1927</time><span><a href="presa.html?id=1927-krasnaia-zvezda-dubrovytske-povstannia-1918">«Красная звезда»</a> — анонімний «учасник повстання», зі схемою наступу</span></li>
                     <li><time>1958</time><span><a href="presa.html?id=1958-11-23-chervonyi-prapor-dombryvytske-povstannia">«Червоний прапор»</a> — спогад Федора Пирішка</span></li>
@@ -1443,13 +1592,13 @@
                 </ol>
             </div>
             <div class="pl">
-                <h3><i aria-hidden="true"></i>Польська справа й свідки</h3>
+                <h3><i aria-hidden="true"></i>Польська версія: справа й свідки</h3>
                 <ol>
                     <li><time>1918</time><span><a href="presa.html?id=1918-12-01-przeglad-wieczorny-pozoga">«Przegląd Wieczorny»</a> — перша звістка: «у Дубровиці вбито 20 осіб, серед них 2 Плятерів»</span></li>
                     <li><time>1919–1922</time><span>протоколи жандармерії, слідчого судді Родзевича й слідчих Сарненського повіту: оборонці, що вижили, службовці, фельдшери, сусіди, обвинувачені</span></li>
                     <li><time>1922–1923</time><span>обвинувальний акт, вирок Окружного суду в Ковелі, апеляційний вирок у Любліні</span></li>
                     <li><time>1959</time><span>спогади Вітольда Плятера, брата загиблих (<a href="plater.html">сторінка Плятерів</a>)</span></li>
-                    <li><time>1967</time><span>уривок того самого обвинувального акту в <a href="presa.html?id=1967-polisky-mayak-lita-buremni-dokumenty">районній газеті</a> — єдине місце, де дві пам'яті торкнулися</span></li>
+                    <li><time>1967</time><span>уривок того самого обвинувального акту в <a href="presa.html?id=1967-polisky-mayak-lita-buremni-dokumenty">районній газеті</a> — єдине місце, де дві версії перетнулися</span></li>
                 </ol>
             </div>
         </div>
@@ -1458,7 +1607,7 @@
             <div class="w18-shift-t">
                 <h3 id="w18-shift-h">Чому радянський Воробин — у грудні</h3>
                 <p>Усі польські документи, перша газетна звістка («Київська Думка» вже 27 листопада) і навіть спогади 1927 та 1958 років називають ніч з 21 на 22 листопада 1918 року. З кінця 1960-х радянські тексти пишуть <b>4 грудня</b>, Степанов — ніч на 5 грудня. Різниця рівно тринадцять днів — стільки, скільки між старим і новим стилем.</p>
-                <p>Як вона могла з'явитися, показує <a href="presa.html?id=1967-polisky-mayak-lita-buremni-dokumenty">районна газета 1967 року</a>: уривок польського обвинувального акту там надруковано під заголовком <q>21 листопада 1918 р. (за старим стилем)</q>. Але польський суд і гетьманська Україна з весни 1918 року вже жили за новим стилем — дату «перевели» вдруге. Якщо відняти ці 13 днів, ранні дати Степанова лягають на справу: конференція 3–4 грудня — це 20–21 листопада (як у спогаді 1927 року), похорон «у суботу 7 грудня» — 24 листопада, похід на Сарни 8 грудня — 25 листопада.</p>
+                <p>Як вона могла з'явитися, показує <a href="presa.html?id=1967-polisky-mayak-lita-buremni-dokumenty">районна газета 1967 року</a>: уривок польського обвинувального акту там надруковано під заголовком <q>21 листопада 1918 р. (за старим стилем)</q>. Але польський суд і гетьманська Україна з весни 1918 року вже жили за новим стилем — дату «перевели» вдруге. Якщо відняти ці 13 днів, ранні дати Степанова лягають на справу: конференція 3–4 грудня — це 20–21 листопада (як у спогаді 1927 року), похорон 7 грудня — 24 листопада, похід на Сарни 8 грудня — 25 листопада.</p>
             </div>
             <div class="w18-cal" aria-hidden="true">
                 <div class="m">
@@ -1477,87 +1626,87 @@
         <div class="w18-two-tg" role="group" aria-label="Що показувати">
             <button type="button" data-v="both" aria-pressed="true">Поруч</button>
             <button type="button" data-v="sv" aria-pressed="false">Лише радянська</button>
-            <button type="button" data-v="pl" aria-pressed="false">Лише справа</button>
+            <button type="button" data-v="pl" aria-pressed="false">Лише польська</button>
         </div>
 
         <ol class="w18-ep">
             <li>
                 <h3><span>01</span>Маєток перед повстанням</h3>
                 <div class="sv"><small>Радянська версія</small><p>У Воробині стоїть <q>один з таких каральних загонів</q> гетьманців: селян прив'язують до сідел і женуть за вершником, кидають у <q>графські льохи</q> з крижаною водою. Управитель Пшедримирський (у Степанова — Пшежемирський) <q>без попередження стріляв у селян</q>, які ступали на графське поле, — <q>саме так забив він бідняка Миколу Романушка</q>. Дубровицькі підпільники Сидір Лебеда й Мусій Кузьмич пропонують убити графа із засідки, але комітет забороняє терор.</p><cite>Степанов, с. 43–45</cite></div>
-                <div class="pl"><small>Справа й польські джерела</small><p>Начальник міліції Мацкевич: від самої революції стосунки маєтку з селянами були <q>вельми недобрими</q>, селяни розтягали майно, адміністрація відповідала репресіями. Обвинувальний акт: <q>селяни самовільно забирали інвентар з маєтку Плятерів</q>. Свідки 1920 року кажуть про повіреного Пшедримирського, що він <q>був дуже суворий до селян</q>. Охорону маєтку становлять наймані вартові — 16 чоловік під командою Кальтенберга з Рівного.</p><cite>Мацкевич, 1920; обвинувальний акт, арк. 3–6; протоколи 1920 р.</cite></div>
+                <div class="pl"><small>Польська версія</small><p>Начальник міліції Мацкевич: від самої революції стосунки маєтку з селянами були <q>вельми недобрими</q>, селяни розтягали майно, адміністрація відповідала репресіями. Обвинувальний акт: <q>селяни самовільно забирали інвентар з маєтку Плятерів</q>. Свідки 1920 року кажуть про повіреного Пшедримирського, що він <q>був дуже суворий до селян</q>. Охорону маєтку становлять наймані вартові — 16 чоловік під командою Кальтенберга з Рівного.</p><cite>Мацкевич, 1920; обвинувальний акт, арк. 3–6; протоколи 1920 р.</cite></div>
                 <p class="vd"><b class="part">Частково</b>Ворожнечу між маєтком і селом визнають обидві сторони, і обидві виділяють жорсткого повіреного. «Каральний загін» у справі — найнята варта; убивства Романушка польські документи не згадують.</p>
             </li>
             <li>
                 <h3><span>02</span>Змова</h3>
                 <div class="sv"><small>Радянська версія</small><p>Друга підпільна конференція збирається в хаті коваля Йосипа Лясковця — зовні це гулянка з випивкою й іконами на стінах. Потім делегати переходять до хати Григорія Нашори, де мати ставить на стіл варену картоплю. Обирають ревком: голова — <b>Степан Лясковець</b>, військовий комісар — <b>Микола Лясковець</b>; ревтрибунал очолює Семен Майсурадзе. У сусідній кімнаті перекладач-латиш Арвід Скуїн домовляється зі <q>спартаківцями</q> німецького гарнізону.</p><cite>Степанов, с. 62–67</cite></div>
-                <div class="pl"><small>Справа й польські джерела</small><p>Ще в серпні 1918 року міліція доповідає слідчому про змову <q>на чолі з головним організатором… Миколою Лясковцем</q>. Колишній слідчий Бердников, який сам ходив до ревкому, називає Миколу <q>головнокомандувачем збройної сили проти Рівного</q>, військовим комісаром — Олександра Садовського, головою трибуналу — Антона Садовського; Майсурадзе — прокурор, що за кілька днів утік із чужими грошима. Степанові Лясковцю було тоді 19, і він сам писав, що був <q>хлопцем 17 років</q>.</p><cite>Мацкевич; Бердников, 1919–1920, арк. 484–489, 563–564</cite></div>
+                <div class="pl"><small>Польська версія</small><p>Ще в серпні 1918 року міліція доповідає слідчому про змову <q>на чолі з головним організатором… Миколою Лясковцем</q>. Колишній слідчий Бердников, який сам ходив до ревкому, називає Миколу <q>головнокомандувачем збройної сили проти Рівного</q>, військовим комісаром — Олександра Садовського, головою трибуналу — Антона Садовського; Майсурадзе — прокурор, що за кілька днів утік із чужими грошима. Степанові Лясковцю було тоді 19, і він сам писав, що був <q>хлопцем 17 років</q>.</p><cite>Мацкевич; Бердников, 1919–1920, арк. 484–489, 563–564</cite></div>
                 <p class="vd"><b class="part">Частково</b>Головний ватажок в обох — Микола Лясковець. А от Олександр Садовський, якого справа називає воєнкомом і командиром розстрілу, у книзі Степанова в повстанні взагалі не згаданий.</p>
             </li>
             <li>
                 <h3><span>03</span>Скільки їх було</h3>
                 <div class="sv"><small>Радянська версія</small><p>Дев'ять великих загонів, <q>понад 1600 повстанців</q>: колківський — 300, орв'яницький — 200, берестецький — 250, селецький і бережківський — по 150. У передмові тієї ж книжки — <q>більш як 10 тисяч поліщуків</q>. Проти них, за спогадами 1967 року, — <q>близько 180</q> гайдамаків; за «Красной звездой» 1927 року — <q>60 офіцерів плюс 15 осіб озброєної прислуги</q>.</p><cite>Степанов, с. 3, 64; Модек та ін., 1967; «Красная звезда», 1927</cite></div>
-                <div class="pl"><small>Справа й польські джерела</small><p><q>Численні натовпи селян</q> з навколишніх сіл; з чуток — від тисячі до кількох тисяч. Загін, що пройшов через Мочулище, — близько сорока людей. У будинку — брати Плятери, повірений, службовці й варта: за Ліпінським, <q>двадцять з гаком</q> чоловік і один кулемет, який заклинило на початку бою.</p><cite>обвинувальний акт; Бердников; Мольський; Ліпінський, арк. 395 зв.</cite></div>
+                <div class="pl"><small>Польська версія</small><p><q>Численні натовпи селян</q> з навколишніх сіл; з чуток — від тисячі до кількох тисяч. Загін, що пройшов через Мочулище, — близько сорока людей. У будинку — брати Плятери, повірений, службовці й варта: за Ліпінським, <q>двадцять з гаком</q> чоловік і один кулемет, який заклинило на початку бою.</p><cite>обвинувальний акт; Бердников; Мольський; Ліпінський, арк. 395 зв.</cite></div>
                 <p class="vd"><b class="no">Розходиться</b>Нападників у справі — тисячі, і радянські цифри цього не заперечують. А от оборонців радянські тексти збільшують у вісім-дев'ять разів і перетворюють найманих вартових на офіцерський загін.</p>
             </li>
             <li>
                 <h3><span>04</span>Нічний бій</h3>
                 <div class="sv"><small>Радянська версія</small><p>Три зведені групи: В'ячеслав Лясковець іде шляхом з Дубровиці, Олександр Конончук — лівим флангом до <q>Чорної брами</q>, Федір Рабешко — правим; з тилу, з-за Горині, б'є колківський загін Пилипа Борка-Бруяки. Гайдамаки строчать з кулеметів <q>у глибокому рові</q>, потім тікають за <q>товсті кам'яні мури</q> замку, <q>уцілілого ще з середньовіччя</q>. <q>Жорстокий бій тривав усю ніч</q>.</p><cite>Степанов, с. 67–70; схема — «Красная звезда», 1927</cite></div>
-                <div class="pl"><small>Справа й польські джерела</small><p>Близько 22:00 21 листопада фільварок оточують. Селяни стріляють і кидають гранати; кулемет оборонців заклинює. Протягом двадцяти хвилин оборонці відходять до двоповерхової кам'яниці й тримаються там усю ніч. Опівночі нападники обшукують помешкання службовців з криками <q>Бий, грабуй, дери гайдамаків!</q></p><cite>обвинувальний акт; Ліпінський; Радванський і Галушкевич, 1920</cite></div>
+                <div class="pl"><small>Польська версія</small><p>Близько 22:00 21 листопада фільварок оточують. Селяни стріляють і кидають гранати; кулемет оборонців заклинює. Протягом двадцяти хвилин оборонці відходять до двоповерхової кам'яниці й тримаються там усю ніч. Опівночі нападники обшукують помешкання службовців з криками <q>Бий, грабуй, дери гайдамаків!</q></p><cite>обвинувальний акт; Ліпінський; Радванський і Галушкевич, 1920</cite></div>
                 <p class="vd"><b class="ok">Збігається</b>Нічний наступ із кількох боків, відступ оборонців у кам'яний будинок, бій до наступного дня — і в справі, і в радянських текстах. «Середньовічний замок» з ровом, брамами й бійницями — прикраса: у справі це двоповерховий кам'яний будинок із крилами.</p>
             </li>
             <li>
                 <h3><span>05</span>Німці</h3>
                 <div class="sv"><small>Радянська версія</small><p>Голова солдатської ради Кунчке обіцяє: <q>солдати не підуть на повстанців, хоча і був такий наказ офіцерів</q>; спартаківці передають бомби, патрони, револьвери. Під час бою <q>реакційні німецькі офіцери</q> намагаються підняти солдатів, розквартированих у самому Воробині, — ті відмовляються. Спартаківці навіть думали вдарити з гармат, що стояли біля костелу.</p><cite>Степанов, с. 65–70; Модек та ін., 1967; «Красная звезда», 1927</cite></div>
-                <div class="pl"><small>Справа й польські джерела</small><p>Ліпінський: у Воробині стояв полк німецької артилерії, і <q>його пости з боку саду пропустили селян крізь свої ряди</q>. Шеремета в поліції 1921 року: карабіни видавали організатори, <q>які дістали такі від німців</q>. 15 листопада губернський староста телеграфує: у Домбровиці німецькі солдати заарештували своїх офіцерів.</p><cite>Ліпінський, арк. 395 зв.; Шеремета, 20.VIII.1921, арк. 323; телеграма № 410</cite></div>
+                <div class="pl"><small>Польська версія</small><p>Ліпінський: у Воробині стояв полк німецької артилерії, і <q>його пости з боку саду пропустили селян крізь свої ряди</q>. Шеремета в поліції 1921 року: карабіни видавали організатори, <q>які дістали такі від німців</q>. 15 листопада губернський староста телеграфує: у Домбровиці німецькі солдати заарештували своїх офіцерів.</p><cite>Ліпінський, арк. 395 зв.; Шеремета, 20.VIII.1921, арк. 323; телеграма № 410</cite></div>
                 <p class="vd"><b class="ok">Збігається</b>Найнесподіваніший збіг: обидві сторони кажуть, що німецький гарнізон у Воробині не захистив маєток і що зброя повстанців частково німецька. Розходяться лише в тому, чи це була революційна солідарність, чи небажання воювати.</p>
             </li>
             <li>
                 <h3><span>06</span>Вогонь</h3>
                 <div class="sv"><small>Радянська версія</small><p><q>Коли стемніло</q>, повстанці підкочують до замку великі вози соломи й підпалюють під вікнами; <q>загорілася суха, натерта воском підлога</q> (Степанов). У спогадах 1967 року — <q>обклали будинок соломою та горючим матеріалом</q>, дим заповнив <q>блокгауз</q>. Охрім Хомич з Колок пам'ятав, що це сталося <q>зі сходом сонця</q>. «Красная звезда» 1927 року: хотіли підірвати піроксиліном, але гонець запізнився, тож <q>вдалися до гасу</q>.</p><cite>Степанов, с. 70; Модек та ін., 1967; Хомич, 1967; «Красная звезда», 1927</cite></div>
-                <div class="pl"><small>Справа й польські джерела</small><p>Близько 10:30 будинок горить зсередини; оборонці переходять із правого крила через горище до лівого. Тоді ж до дубровицької аптеки вривається озброєний чоловік і вимагає два пуди бензину: <q>Бензин потрібен, щоби підпалити палац Плятерів, бо вони зачинилися всередині і захищаються зі зброєю!</q> За обвинувальним актом, оборонці здалися <q>після підпалу палацу</q>.</p><cite>Ліпінський, арк. 395 зв.–396; Більчинська, 29.V.1920, арк. 566 зв.–567</cite></div>
+                <div class="pl"><small>Польська версія</small><p>Близько 10:30 будинок горить зсередини; оборонці переходять із правого крила через горище до лівого. Тоді ж до дубровицької аптеки вривається озброєний чоловік і вимагає два пуди бензину: <q>Бензин потрібен, щоби підпалити палац Плятерів, бо вони зачинилися всередині і захищаються зі зброєю!</q> За обвинувальним актом, оборонці здалися <q>після підпалу палацу</q>.</p><cite>Ліпінський, арк. 395 зв.–396; Більчинська, 29.V.1920, арк. 566 зв.–567</cite></div>
                 <p class="vd"><b class="part">Частково</b>Підпал — спільне місце всіх розповідей, і саме він вирішив справу. Час розходиться: ранок, «зі сходом сонця» чи «коли стемніло». Бензин, солома чи гас — три різні пам'яті про один вогонь.</p>
             </li>
             <li>
                 <h3><span>07</span>Смерть повіреного</h3>
                 <div class="sv"><small>Радянська версія</small><p><q>Першим з охопленого полум'ям замка вискочив на сніг графський управитель, ненависний селянам садист і кат Пшежемирський. Його тут же ударом штика повалили на землю.</q> У нарисі 1967 року першими виходять <q>з піднятими руками брати Антон і Гнат Плятери</q>.</p><cite>Степанов, с. 70; Хомич, 1967</cite></div>
-                <div class="pl"><small>Справа й польські джерела</small><p>Ліпінський: Пшедримирського застрелили на бігу, коли той намагався втекти, хто — не розгледів. Сибіковський бачив його тіло під кущем ще до розстрілу графів. Іван Москальчук-Нашора, за свідками, хвалився, що застрелив повіреного саме тоді, коли той убив одного з нападників. Суди визнали вбивцею Нашору.</p><cite>Ліпінський, арк. 396; Сибіковський, арк. 398; Радванський, Свириденко, 1920</cite></div>
-                <p class="vd"><b class="no">Розходиться</b>Повірений загинув окремо від інших і першим — у цьому джерела згодні. Але Іван Москальчук-Нашора, за це засуджений і померлий у в'язниці, у радянській пам'яті не існує зовсім: її Нашора — Гнат, продовольчий комісар ревкому.</p>
+                <div class="pl"><small>Польська версія</small><p>Ліпінський: Пшедримирського застрелили на бігу, коли той намагався втекти, хто — не розгледів. Сибіковський бачив його тіло під кущем ще до розстрілу графів. Іван Москальчук-Нашора, за свідками, хвалився, що застрелив повіреного саме тоді, коли той убив одного з нападників. Суди визнали вбивцею Нашору.</p><cite>Ліпінський, арк. 396; Сибіковський, арк. 398; Радванський, Свириденко, 1920</cite></div>
+                <p class="vd"><b class="no">Розходиться</b>Повірений загинув окремо від інших і першим — у цьому джерела згодні. Але Іван Москальчук-Нашора, за це засуджений і померлий у в'язниці, у радянських текстах не існує зовсім: її Нашора — Гнат, продовольчий комісар ревкому.</p>
             </li>
             <li class="key">
                 <h3><span>08</span>Розстріл</h3>
                 <div class="sv"><small>Радянська версія</small><p>Ревком хотів віддати полонених <q>під суд трибуналу в Дубровиці</q>. Коли їх вивели за Чорну браму, повз тіла вбитих повстанців, натовп закричав: <q>Розстріляти всіх собак!</q> Олександр Конончук вискочив наперед: <q>Товариші, спокійно!.. Ми будемо їх судити іменем революції!..</q> — <q>але його голос заглушили постріли</q>. Більшість інших радянських текстів про розстріл мовчить: <q>під кінець дня перемогою над ворогом закінчилась і ця операція</q>.</p><cite>Степанов, с. 70–71; Модек та ін., 1967</cite></div>
-                <div class="pl"><small>Справа й польські джерела</small><p>Оборонці складають зброю, бо їм пообіцяли, <q>що їх лише заарештують і що буде суд</q>. Селяни кидаються на них з багнетами, але <q>один із ватажків, здається, більшовик</q>, зупиняє. Натовп радиться, і <q>Олександр Конончук поставив це питання на голосування</q>. Полонених виводять на вулицю й розстрілюють; тіла грабують. Вітольд Плятер, брат загиблих, 1959 року писав: обложеним пообіцяли, що їх відпустять, а 22 чоловіків розстріляли на дорозі до Дубровиці. Двоє поранених вартових, Ліпінський і Піскунов, виживають.</p><cite>Буйновський, арк. 579 зв.; Ліпінський, арк. 396; Сибіковський, арк. 398; спогади В. Плятера, 1959</cite></div>
+                <div class="pl"><small>Польська версія</small><p>Оборонці складають зброю, бо їм пообіцяли, <q>що їх лише заарештують і що буде суд</q>. Селяни кидаються на них з багнетами, але <q>один із ватажків, здається, більшовик</q>, зупиняє. Натовп радиться, і <q>Олександр Конончук поставив це питання на голосування</q>. Полонених виводять на вулицю й розстрілюють; тіла грабують. Вітольд Плятер, брат загиблих, 1959 року писав: обложеним пообіцяли, що їх відпустять, а 22 чоловіків розстріляли на дорозі до Дубровиці. Двоє поранених вартових, Ліпінський і Піскунов, виживають.</p><cite>Буйновський, арк. 579 зв.; Ліпінський, арк. 396; Сибіковський, арк. 398; спогади В. Плятера, 1959</cite></div>
                 <p class="vd"><b class="ok">Збігається — і саме тут найцікавіше</b>Обидві розповіді ставлять у центр одну людину й один жест: Олександр Конончук зупиняє натовп і говорить про суд. За справою, після цього він ставить долю полонених на голосування. За книгою, постріли лунають усупереч йому. Обіцяний суд згадують обидві сторони — і в обох його не було.</p>
             </li>
             <li>
                 <h3><span>09</span>Ціна для нападників</h3>
                 <div class="sv"><small>Радянська версія</small><p>Загинули <q>С. Адамчук, І. Мартинчук, І. Коржик, В. Слобода та інші</q> (Степанов); Стефан Мартинчук, Іван Адамчук і двоє братів Слобеди (Пирішко, 1958); двоє — Мартинчук та Адамчук (1967). Поранених — 17. <q>В перший день боїв у лікарню доставили з-під Воробино 15 поранених</q> (1968). 1985 року газета називає їх поіменно: <q>Федір Рабешко, Василь Конончук, Григорій Конончук, а також Марко Дем'янець з Берестя, Онуфрій Харковець з Колок, Марко Веленець із Сельця</q>.</p><cite>Степанов, с. 70; «Червоний прапор», 1958; «Поліський маяк», 1968, 1985</cite></div>
-                <div class="pl"><small>Справа й польські джерела</small><p>У книзі хворих Дубровицької лікарні за 22 листопада 1918 року — дванадцять чоловіків із вогнепальними ранами: серед них Федір Рабешко, Василь і Григорій Конончуки, Марко й Іван Дем'янці з Берестя, Онуфрій Харківець з Колок, Марко Велінець із Сельця, Федір Перішко. Троє вбитих нападників поховані на цвинтарі (Радванський). За цим списком 1920 року жандармерія й почала арешти.</p><cite>протокол огляду книги хворих, 30.V.1920, арк. 585; Радванський, 1920</cite></div>
-                <p class="vd"><b class="ok">Збігається поіменно</b>Радянська газета 1985 року як героїв штурму перелічує тих самих людей, яких польське слідство знайшло в лікарняній книзі й посадило на лаву підсудних. Харківця й Дем'янця апеляційний суд 1923 року виправдав: <q>крім самого факту поранення</q>, вини їхньої не довели. Для радянської пам'яті саме це поранення й було доказом участі.</p>
+                <div class="pl"><small>Польська версія</small><p>У книзі хворих Дубровицької лікарні за 22 листопада 1918 року — дванадцять чоловіків із вогнепальними ранами: серед них Федір Рабешко, Василь і Григорій Конончуки, Марко й Іван Дем'янці з Берестя, Онуфрій Харківець з Колок, Марко Велінець із Сельця, Федір Перішко. Троє вбитих нападників поховані на цвинтарі (Радванський). За цим списком 1920 року жандармерія й почала арешти.</p><cite>протокол огляду книги хворих, 30.V.1920, арк. 585; Радванський, 1920</cite></div>
+                <p class="vd"><b class="ok">Збігається поіменно</b>Радянська газета 1985 року як героїв штурму перелічує тих самих людей, яких польське слідство знайшло в лікарняній книзі й посадило на лаву підсудних. Харківця й Дем'янця апеляційний суд 1923 року виправдав: <q>крім самого факту поранення</q>, вини їхньої не довели. Для радянських авторів саме це поранення й було доказом участі.</p>
             </li>
             <li>
                 <h3><span>10</span>Після</h3>
                 <div class="sv"><small>Радянська версія</small><p>Перемога <q>повсталої Дубровиці була повною</q>; поранених доглядають санітарки Катерина й Ганна Конончук, Марія Кузло, Ірина Пирішко, Олександра Царик; населення несе полотно на бинти. Проголошено <q>Дубровицьку Радянську Республіку</q>. «Карателів», захоплених під Володимирцем, <q>пішим строєм погнали в Дубровицю</q>, і трибунал <q>багатьом з них виніс смертний вирок</q>. 1919 року у Воробині — <q>перша на Західній Україні сільськогосподарська комуна</q>.</p><cite>Степанов, с. 71–80, 135</cite></div>
-                <div class="pl"><small>Справа й польські джерела</small><p>Маєток <q>повністю пограбований</q>; Лук'ян Гончар приносить дружині дорогий одяг із Воробина, Яків Пальонка збирає там шапки вбитих графів. Ревтрибунал розстрілює слідчого Полторацького, привезеного з Володимирця, і близько двадцяти поміщиків, службовців і євреїв; уночі забирають аптекаря Більчинського. Тіла з Воробина перепоховують лише після ексгумації у вересні 1919 року. Протокол земельного відділу Рівненського повітревкому 11 липня 1919 року відводить Воробин під радянське господарство.</p><cite>обвинувальний акт; Бердников; протокол ексгумації, арк. 440; ДАРО, ф. Р-466, оп. 1, спр. 6, арк. 72</cite></div>
+                <div class="pl"><small>Польська версія</small><p>Маєток <q>повністю пограбований</q>; Лук'ян Гончар приносить дружині дорогий одяг із Воробина, Яків Пальонка збирає там шапки вбитих графів. Ревтрибунал розстрілює слідчого Полторацького, привезеного з Володимирця, і близько двадцяти поміщиків, службовців і євреїв; уночі забирають аптекаря Більчинського. Тіла з Воробина перепоховують лише після ексгумації у вересні 1919 року. Протокол земельного відділу Рівненського повітревкому 11 липня 1919 року відводить Воробин під радянське господарство.</p><cite>обвинувальний акт; Бердников; протокол ексгумації, арк. 440; ДАРО, ф. Р-466, оп. 1, спр. 6, арк. 72</cite></div>
                 <p class="vd"><b class="part">Частково</b>Страти Володимирця обидві сторони, найпевніше, описують ту саму подію — тільки одна каже «каральні загони», а друга називає імена. Про пограбування маєтку, аптекаря Більчинського й касира Вахштейнського радянські тексти мовчать.</p>
             </li>
         </ol>
 
-        <h3 class="w18-h3 w18-who-h">Одні й ті самі люди в двох пам'ятях</h3>
+        <h3 class="w18-h3 w18-who-h">Ті самі люди у двох версіях</h3>
         <ul class="w18-who">
-            <li><h4>Федір (Теодор) Перішко</h4><p class="sv"><b>Радянська</b>поранений під час штурму; «серед них був і мій брат Федір — один з організаторів» (сестра Ірина, 1983); згодом керівник секретаріату ЦК КПЗБ</p><p class="pl"><b>Справа</b>швець, 101 день у лікарні; твердив, що його силоміць погнали до Воробина; 10 років у Ковелі, у Любліні виправданий</p></li>
-            <li><h4>Онуфрій Харківець</h4><p class="sv"><b>Радянська</b>«важко поранений» учасник штурму з Колок (1985)</p><p class="pl"><b>Справа</b>17 років у книзі хворих, сам писав «мені було лише 14»; 10 років, в апеляції виправданий</p></li>
-            <li><h4>Нашора</h4><p class="sv"><b>Радянська</b>Гнат Нашора — член ревкому, продовольчий комісар, у Харкові 1925 року; у хаті Григорія Нашори — штаб повстання</p><p class="pl"><b>Справа</b>Іван Москальчук-Нашора — визнаний убивцею повіреного; помер від сухот у Луцькій в'язниці 1924 року</p></li>
-            <li><h4>Гаврило Курач</h4><p class="sv"><b>Радянська</b>організатор повстанського загону 1919 року; на фото зльоту в Харкові 1925 року з дружиною й сином</p><p class="pl"><b>Справа</b>«того дня лежав хворий удома»; засуджений; 30.I.1925 переданий СРСР в обмін на політв'язнів</p></li>
-            <li><h4>Олександр Конончук</h4><p class="sv"><b>Радянська</b>командувач загонів, голова військревкому; «Ми будемо їх судити іменем революції!»</p><p class="pl"><b>Справа</b>«поставив це питання на голосування»; розшукуваний, справу щодо нього виділено</p></li>
-            <li><h4>Олександр Садовський</h4><p class="sv"><b>Радянська</b>у Степанова в повстанні не згаданий; у спогадах 1967 року — начальник штабу</p><p class="pl"><b>Справа</b>військовий комісар ревкому; за Шереметою, командував розстрілом</p></li>
-            <li><h4>Семен Майсурадзе</h4><p class="sv"><b>Радянська</b>голова ревтрибуналу; «армійський більшовик» (1968)</p><p class="pl"><b>Справа</b>прокурор трибуналу, що судив Полторацького; приблизно на п'ятий день утік, «привласнивши чужі гроші та майно»</p></li>
-            <li><h4>Григорій Бовгиря</h4><p class="sv"><b>Радянська</b>«дрібний лавочник, атеїст»; комісар господарської комісії; вбитий 1919 року</p><p class="pl"><b>Справа</b>завідувач при маєтках Плятерів; за жандармерією — член ревтрибуналу; Свириденко 1922 року: <q>пізніше вбитий петлюрівцями</q></p></li>
-            <li><h4>Повірений Пшедримирський</h4><p class="sv"><b>Радянська</b>«садист і кат», що застрелив бідняка Романушка; вбитий ударом штика першим</p><p class="pl"><b>Справа</b>«дуже суворий до селян»; застрелений на бігу; за свідками, перед смертю встиг убити одного з нападників</p></li>
+            <li><h4>Федір (Теодор) Перішко</h4><p class="sv"><b>Радянська</b>поранений під час штурму; «серед них був і мій брат Федір — один з організаторів» (сестра Ірина, 1983); згодом керівник секретаріату ЦК КПЗБ</p><p class="pl"><b>Польська</b>швець, 101 день у лікарні; твердив, що його силоміць погнали до Воробина; 10 років у Ковелі, у Любліні виправданий</p></li>
+            <li><h4>Онуфрій Харківець</h4><p class="sv"><b>Радянська</b>«важко поранений» учасник штурму з Колок (1985)</p><p class="pl"><b>Польська</b>17 років у книзі хворих, сам писав «мені було лише 14»; 10 років, в апеляції виправданий</p></li>
+            <li><h4>Нашора</h4><p class="sv"><b>Радянська</b>Гнат Нашора — член ревкому, продовольчий комісар, у Харкові 1925 року; у хаті Григорія Нашори — штаб повстання</p><p class="pl"><b>Польська</b>Іван Москальчук-Нашора — визнаний убивцею повіреного; помер від сухот у Луцькій в'язниці 1924 року</p></li>
+            <li><h4>Гаврило Курач</h4><p class="sv"><b>Радянська</b>організатор повстанського загону 1919 року; на фото зльоту в Харкові 1925 року з дружиною й сином</p><p class="pl"><b>Польська</b>«того дня лежав хворий удома»; засуджений; 30.I.1925 переданий СРСР в обмін на політв'язнів</p></li>
+            <li><h4>Олександр Конончук</h4><p class="sv"><b>Радянська</b>командувач загонів, голова військревкому; «Ми будемо їх судити іменем революції!»</p><p class="pl"><b>Польська</b>«поставив це питання на голосування»; розшукуваний, справу щодо нього виділено</p></li>
+            <li><h4>Олександр Садовський</h4><p class="sv"><b>Радянська</b>у Степанова в повстанні не згаданий; у спогадах 1967 року — начальник штабу</p><p class="pl"><b>Польська</b>військовий комісар ревкому; за Шереметою, командував розстрілом</p></li>
+            <li><h4>Семен Майсурадзе</h4><p class="sv"><b>Радянська</b>голова ревтрибуналу; «армійський більшовик» (1968)</p><p class="pl"><b>Польська</b>прокурор трибуналу, що судив Полторацького; приблизно на п'ятий день утік, «привласнивши чужі гроші та майно»</p></li>
+            <li><h4>Григорій Бовгиря</h4><p class="sv"><b>Радянська</b>«дрібний лавочник, атеїст»; комісар господарської комісії; вбитий 1919 року</p><p class="pl"><b>Польська</b>завідувач при маєтках Плятерів; за жандармерією — член ревтрибуналу; Свириденко 1922 року: <q>пізніше вбитий петлюрівцями</q></p></li>
+            <li><h4>Повірений Пшедримирський</h4><p class="sv"><b>Радянська</b>«садист і кат», що застрелив бідняка Романушка; вбитий ударом штика першим</p><p class="pl"><b>Польська</b>«дуже суворий до селян»; застрелений на бігу; за свідками, перед смертю встиг убити одного з нападників</p></li>
         </ul>
 
         <div class="w18-two-end">
-            <p><b>Як читати обидві.</b> Радянські тексти писали через пів століття, для ювілеїв, і з них зникло все, що не вкладалося в ювілейну розповідь: розстріл без суду, страти трибуналу, пограбування, людей з «неправильними» біографіями. Польська справа писалася по гарячих слідах, але її свідки — переважно службовці маєтку, а обвинувачені рятували себе й часто казали неправду. Проте там, де обидві пам'яті, нічого не знаючи одна про одну, називають ті самі імена — Конончука з його «судом», поранених із лікарняної книги, німців, що пропустили селян, — можна бути певним, що це справді було.</p>
+            <p><b>Як читати обидві.</b> Радянські тексти писали через пів століття, для ювілеїв, і з них зникло все, що не вкладалося в ювілейну розповідь: розстріл без суду, страти трибуналу, пограбування, людей з «неправильними» біографіями. Польська справа писалася по гарячих слідах, але її свідки — переважно службовці маєтку, а обвинувачені рятували себе й часто казали неправду. Проте там, де обидві версії, нічого не знаючи одна про одну, називають ті самі імена — Конончука з його «судом», поранених із лікарняної книги, німців, що пропустили селян, — можна бути певним, що це справді було.</p>
         </div>
     </div>
 </section>
@@ -1569,15 +1718,15 @@
             <p class="w18-act-k">Частина третя</p>
             <h2 class="w18-act-t">Червона Дубровиця</h2>
             <p class="w18-act-y">листопад 1918 — травень 1919</p>
-            <blockquote class="w18-act-q"><p>— Почекайте!.. Буде вам, як у Дубровиці!</p><cite>так, за Степановим, казали на Волині взимку 1918–1919 року</cite></blockquote>
+            <blockquote class="w18-act-q"><p>— Почекайте!.. Буде вам, як у Дубровиці!</p><cite>так, пише радянський автор Л. Степанов, казали на Волині взимку 1918–1919 року</cite></blockquote>
         </div>
     </div>
 </div>
 
-<!-- § 9 -->
+<!-- § 10 -->
 <section class="ds-sec" id="povstannia">
     <div class="w18-wrap">
-        <div class="ds-sh"><b>§ 9</b><h2>Ревком і трибунал</h2><span>що про владу повстанців знає польська справа</span></div>
+        <div class="ds-sh"><b>§ 10</b><h2>Ревком і трибунал</h2><span>що про владу повстанців знає польська справа</span></div>
         <div class="w18-ctx">
             <div>
                 <p class="w18-p-text">За обвинувальним актом, напад стався <q>у переломний момент на колишній Україні, коли Гетьманський уряд був повалений прихильниками Петлюри</q>. Бердников згадував відозву Петлюри й Винниченка із закликом до повстання проти гетьмана, яку місцеве населення отримало в середині листопада, — і додавав, що повстання <q>мало суто більшовицький характер</q>. Шеремета в поліції 1921 року пояснив мету так: загін організували <q>з метою підняття повстання і винищення гетьманської влади</q>, і <q>найперше було влаштовано напад на маєток графів Плятерів</q>. Учасник повстання в 1927 році теж називає Воробин першим завданням ревкому.</p>
@@ -1624,59 +1773,16 @@
     </div>
 </section>
 
-<!-- § 10 -->
+<!-- § 11 -->
 <section class="ds-sec w18-rep" id="respublika">
     <div class="w18-wrap">
-        <div class="ds-sh"><b>§ 10</b><h2>Червона Дубровиця</h2><span>листопад 1918 — травень 1919 · ревком, полк і залізниця</span></div>
+        <div class="ds-sh"><b>§ 11</b><h2>Червона Дубровиця</h2><span>листопад 1918 — травень 1919 · ревком, полк і залізниця</span></div>
         <p class="w18-lead">Після Воробина ревком узяв Дубровицю, а за місяць — залізницю від Сарн до Лунінця. Радянські автори назвали цей клапоть Полісся «Дубровицькою Радянською республікою». Протримався він до березня 1919 року і за цей час двічі переходив до Директорії й назад. Нижче події переказано за Степановим і спогадами Модека та Миколи Лясковця, які він цитує. Польська справа про ці місяці знає небагато, і там, де вона щось каже, її свідчення стоять поруч.</p>
 
-        <figure class="w18-pow" aria-labelledby="w18PowT">
-            <figcaption><h3 id="w18PowT">Хто тримав Дубровицю</h3><p>За три з половиною роки влада в містечку змінювалася щонайменше дванадцять разів. Межі приблизні: де джерела не дають дня, перехід розмито.</p></figcaption>
-            <div class="w18-pow-sc">
-                <div class="w18-pow-bar"><span class="k-old" style="width:18.474%" tabindex="0" data-t="березень — листопад 1917: Тимчасовий уряд; з серпня у волосному виконкомі переважають більшовики" aria-label="березень — листопад 1917: Тимчасовий уряд; з серпня у волосному виконкомі переважають більшовики"><b>Тимчасовий уряд</b></span><span class="k-red fz" style="width:2.496%" tabindex="0" data-t="листопад — грудень 1917: волосна Рада, більшовики" aria-label="листопад — грудень 1917: волосна Рада, більшовики"><b>Рада</b></span><span class="k-unr fz" style="width:1.498%" tabindex="0" data-t="грудень 1917: гайдамаки Чарноцького розганяють Раду" aria-label="грудень 1917: гайдамаки Чарноцького розганяють Раду"><b>ЦР</b></span><span class="k-red fz" style="width:3.281%" tabindex="0" data-t="січень — лютий 1918: Раду відновлено, з'їзд Рад 22 січня, червона гвардія" aria-label="січень — лютий 1918: Раду відновлено, з'їзд Рад 22 січня, червона гвардія"><b>Рада</b></span><span class="k-unr" style="width:4.494%" tabindex="0" data-t="лютий — квітень 1918: німецькі війська й Центральна Рада" aria-label="лютий — квітень 1918: німецькі війська й Центральна Рада"><b>ЦР і німці</b></span><span class="k-ger" style="width:14.693%" tabindex="0" data-t="29 квітня — 21 листопада 1918: гетьманат, німецький гарнізон" aria-label="29 квітня — 21 листопада 1918: гетьманат, німецький гарнізон"><b>Гетьман і німці</b></span><span class="k-red fz" style="width:2.496%" tabindex="0" data-t="21–22 листопада — кінець грудня 1918: ревком" aria-label="21–22 листопада — кінець грудня 1918: ревком"><b>Ревком</b></span><span class="k-unr fz" style="width:0.571%" tabindex="0" data-t="кінець грудня 1918: Дубровицю вперше бере Директорія" aria-label="кінець грудня 1918: Дубровицю вперше бере Директорія"><b></b></span><span class="k-red fz" style="width:1.141%" tabindex="0" data-t="січень 1919: повстанці й роти Червоної армії; відступ 18 січня" aria-label="січень 1919: повстанці й роти Червоної армії; відступ 18 січня"><b></b></span><span class="k-unr" style="width:1.213%" tabindex="0" data-t="19 січня — 5 лютого 1919: Директорія, отаман Оскілко" aria-label="19 січня — 5 лютого 1919: Директорія, отаман Оскілко"><b></b></span><span class="k-red" style="width:2.140%" tabindex="0" data-t="5 лютого — 7 березня 1919: радянська влада, 21-й Волинський полк" aria-label="5 лютого — 7 березня 1919: радянська влада, 21-й Волинський полк"><b></b></span><span class="k-unr fz" style="width:4.922%" tabindex="0" data-t="7 березня — весна 1919: Північна армія Оскілка" aria-label="7 березня — весна 1919: Північна армія Оскілка"><b>УНР</b></span><span class="k-pl fz" style="width:29.743%" tabindex="0" data-t="з весни 1919: польське військо, жандармерія, перше слідство" aria-label="з весни 1919: польське військо, жандармерія, перше слідство"><b>Польща</b></span><span class="k-red fz" style="width:5.849%" tabindex="0" data-t="літо 1920: польсько-радянська війна, у Дубровиці Червона армія" aria-label="літо 1920: польсько-радянська війна, у Дубровиці Червона армія"><b>РСЧА</b></span><span class="k-pl fz" style="width:6.990%" tabindex="0" data-t="з осені 1920: знову Польща, до 1939 року" aria-label="з осені 1920: знову Польща, до 1939 року"><b>Польща →</b></span></div>
-                <div class="w18-pow-ax"><span style="left:0%">1917</span><span style="left:21.826%">1918</span><span style="left:47.860%">1919</span><span style="left:73.894%">1920</span></div>
-            </div>
-            <ul class="w18-pow-key">
-                <li><i class="k-old"></i>Тимчасовий уряд</li>
-                <li><i class="k-red"></i>ради, ревком, радянська влада</li>
-                <li><i class="k-unr"></i>Центральна Рада, Директорія</li>
-                <li><i class="k-ger"></i>німці й гетьман</li>
-                <li><i class="k-pl"></i>Польща</li>
-            </ul>
-        </figure>
+        <p class="w18-rep-pow">Як за ці місяці змінювалася влада в Дубровиці, показано на смузі в розділі <a href="#vlada">«Під чиєю владою»</a>.</p>
 
         <div class="w18-rep-g">
-            <div class="w18-rep-map">
-                <svg viewBox="0 0 300 660" role="img" aria-labelledby="w18RlT w18RlD" id="w18Rail">
-                    <title id="w18RlT">Схема залізниці Пінськ — Лунінець — Сарни — Рівне</title>
-                    <desc id="w18RlD">Станції, за які воювали повстанці в грудні 1918 — березні 1919 року. Схема, не в масштабі.</desc>
-                    <g class="rl-lines">
-                        <path class="rl-main" d="M150 40 V600"/>
-                        <path class="rl-br" d="M150 40 H48"/>
-                        <path class="rl-nar" d="M150 432 L58 470"/>
-                        <path class="rl-off" d="M150 600 V640"/>
-                    </g>
-                    <g class="rl-st" data-st="pinsk"><circle cx="48" cy="40" r="6"/><text x="48" y="24" text-anchor="middle">Пінськ</text></g>
-                    <g class="rl-st" data-st="luninets"><circle cx="150" cy="40" r="6"/><text x="164" y="44">Лунінець</text></g>
-                    <g class="rl-st" data-st="vydybor"><circle cx="150" cy="118" r="7"/><text x="166" y="122">Видібор</text><text class="rl-sub" x="166" y="136">склади зброї</text></g>
-                    <g class="rl-st" data-st="horyn"><circle cx="150" cy="170" r="5"/><text x="164" y="174">Горинь</text></g>
-                    <g class="rl-st rl-town" data-st="stolin"><rect x="226" y="150" width="9" height="9" rx="2"/><text x="242" y="158">Столін</text></g>
-                    <g class="rl-st" data-st="udrytsk"><circle cx="150" cy="214" r="5"/><text x="164" y="218">Удрицьк</text></g>
-                    <g class="rl-st" data-st="bila"><circle cx="150" cy="256" r="5"/><text x="164" y="260">Біла</text></g>
-                    <g class="rl-st rl-town" data-st="vysotsk"><rect x="226" y="262" width="9" height="9" rx="2"/><text x="242" y="270">Висоцьк</text></g>
-                    <g class="rl-st rl-town" data-st="vorobyn"><rect x="196" y="292" width="9" height="9" rx="2"/><text x="212" y="300">Воробин</text></g>
-                    <g class="rl-st rl-big" data-st="dubr"><circle cx="150" cy="318" r="10"/><text x="92" y="314" text-anchor="end">Дубровиця</text><text class="rl-sub" x="92" y="328" text-anchor="end">станція Домбровиця</text></g>
-                    <g class="rl-st" data-st="strilsk"><circle cx="150" cy="372" r="5"/><text x="164" y="376">Стрільськ</text></g>
-                    <g class="rl-st" data-st="sarny"><circle cx="150" cy="432" r="8"/><text x="166" y="436">Сарни</text></g>
-                    <g class="rl-st rl-town" data-st="ant"><rect x="53" y="465" width="9" height="9" rx="2"/><text x="58" y="492" text-anchor="middle">Антонівка</text></g>
-                    <g class="rl-st rl-town" data-st="vol"><rect x="22" y="404" width="9" height="9" rx="2"/><text x="26" y="396" text-anchor="middle">Володимирець</text></g>
-                    <g class="rl-st" data-st="malynsk"><circle cx="150" cy="500" r="5"/><text x="164" y="504">Малинськ</text></g>
-                    <g class="rl-st" data-st="kostopil"><circle cx="150" cy="548" r="5"/><text x="164" y="552">Костопіль</text></g>
-                    <g class="rl-st" data-st="rivne"><circle cx="150" cy="600" r="8"/><text x="166" y="604">Рівне</text></g>
-                    <g class="rl-st rl-offst" data-st="shep"><text x="164" y="644">до Шепетівки ↓</text></g>
-                    <text class="rl-note" x="10" y="654">схема, не в масштабі</text>
-                </svg>
-            </div>
+            <figure class="w18-rep-map"><svg viewBox="0 0 340 765" role="img" aria-labelledby="w18RlT w18RlD" id="w18Rail" data-w="340" data-h="765"><title id="w18RlT">Карта: залізниця Пінськ — Лунінець — Сарни — Рівне</title><desc id="w18RlD">Справжні розташування міст, станцій і річок. Лінії залізниці за сучасними даними Natural Earth; пунктир — сучасний кордон України й Білорусі.</desc><rect class="mp-bg" x="-400" y="-400" width="1140" height="1565"/><g class="mp-geo"><path class="mp-rv mp-rv-b" d="M-12.3 130.4 L-5.9 128.9 L21.3 114.8 L30.1 112.9 L33.4 113.6 L39.3 116.1 L42.8 116.3 L51.3 110.2 L72.3 105.9 L79.2 106.0 L91.9 109.7 L99.9 110.5 L110.6 105.7 L128.3 116.3 L134.3 117.1 L140.8 116.3 L147.3 113.3 L153.0 107.6 L158.0 103.8 L163.9 103.4 L175.1 106.0 L227.4 102.6 L249.0 106.0 L254.6 104.1 L265.3 95.1 L271.4 92.4 L277.9 93.0 L291.3 98.3 L298.1 99.5 L302.5 97.7 L314.4 88.7 L320.6 85.6 L327.0 84.5 L347.2 85.6 L349.7 86.7 L353.8 91.3"/><path class="mp-rv mp-rv-b" d="M68.7 787.0 L59.1 770.6 L37.4 738.8 L38.5 734.5 L42.8 732.3 L48.2 732.4 L58.0 729.7 L72.8 720.8 L86.8 708.6 L98.6 692.3 L104.2 689.7 L110.4 688.3 L116.2 684.9 L120.6 677.4 L123.2 665.9 L123.2 654.2 L119.4 638.1 L120.0 613.5 L119.0 605.2 L119.4 599.3 L126.3 585.4 L126.0 576.3 L126.6 566.6 L132.1 557.5 L138.6 549.9 L141.3 544.0 L140.1 537.0 L134.0 516.7 L133.8 503.1 L131.6 490.7 L132.9 483.9 L136.7 477.9 L160.5 459.7 L175.0 445.6 L179.1 442.5 L186.6 439.1 L194.4 431.4 L198.8 418.3 L199.9 404.3 L199.1 388.1 L203.4 377.3 L204.5 368.0 L206.8 359.3 L212.2 354.7 L220.6 350.1 L230.0 341.2 L237.3 330.5 L244.0 312.6 L252.7 302.5 L263.3 294.4 L271.3 290.4 L276.6 290.4 L280.2 292.2 L283.4 291.4 L287.4 284.8 L289.6 275.1 L288.0 260.5 L290.7 255.9 L294.7 251.7 L300.1 240.6 L310.6 229.0 L312.8 221.2 L314.0 213.0 L316.8 205.8 L323.7 198.4 L335.1 189.4 L347.9 183.6"/><path class="mp-rv" d="M-5.9 226.2 L12.2 220.5 L21.4 216.2 L27.7 210.3 L28.6 204.0 L27.6 195.0"/><path class="mp-rv mp-rv-b" d="M-13.9 549.5 L-6.4 548.4 L-1.2 549.0 L2.1 546.9 L4.8 539.2 L0.7 525.6 M-14.4 465.3 L6.1 453.6 L14.2 445.4 L18.3 436.7 L23.7 428.2 L45.9 414.4 L51.2 408.6 L53.8 402.8 L62.3 390.8 L62.4 385.8 L60.9 380.4 L60.8 373.8 L62.3 367.7 L69.2 356.9 L82.5 331.5 L96.9 311.8 L100.4 301.0 L102.7 291.1 L106.0 284.3 L107.0 274.6 L103.5 258.0 L97.3 240.1 L88.7 219.5 L88.6 210.2 L83.9 203.9 L76.8 198.0 L66.8 191.3 L65.0 186.5 L66.9 180.1 L76.3 166.5 L78.9 153.9 L85.0 140.5 L86.0 135.3 L91.1 129.6 L104.0 122.1 L121.6 112.3"/><path class="mp-rv mp-rv-b" d="M-8.5 209.6 L6.0 203.1 L27.6 195.0 L33.7 192.7 L43.3 187.5 L48.7 181.2 L52.7 173.2 L54.3 165.2 L54.0 158.9 L55.2 153.6 L66.3 140.8 L69.0 132.7 L68.6 123.4 L66.9 107.0"/><path class="mp-rv" d="M-13.9 22.3 L-6.9 23.5 L4.7 27.7 L41.9 49.4 L58.6 57.4 L70.0 60.8 L81.7 62.5 L87.2 66.1 L91.4 72.2 L93.1 79.1 L95.5 83.9 L101.5 84.7 L109.7 84.4 L124.4 88.5 L132.4 89.0 L139.3 87.2 L144.1 84.2 L148.3 84.2 L153.6 90.0 L164.0 103.4"/><path class="mp-rv mp-rv-b" d="M351.3 748.7 L327.4 742.1 L319.6 736.7 L316.2 730.5 L315.1 725.0 L311.0 716.2 L300.6 701.9 L287.2 687.3 L268.1 670.3 L262.3 661.6 L259.7 653.6 L259.9 640.5 L255.5 619.1 L257.5 613.2 L261.8 607.8 L265.6 599.1 L267.5 589.2 L267.2 581.1 L264.5 574.9 L255.3 562.8 L241.8 540.8 L232.7 530.5 L226.5 518.8 L225.9 503.7 L227.6 490.0 L226.6 481.5 L226.7 476.0 L236.1 460.8 L238.0 449.9 L235.8 439.2 L226.2 422.2 L223.3 411.0 L223.1 398.8 L226.4 376.7 L226.2 362.4 L224.7 346.3"/><path class="mp-bd" d="M37.6 212.6 L47.0 214.7 L67.1 232.6 L76.4 236.6 L148.9 239.7 L152.6 241.6 L152.7 245.1 L151.7 249.7 L152.4 254.5 L156.3 259.9 L160.7 262.2 L229.3 264.3 L288.2 290.3 L308.7 293.7 M15.9 213.3 L37.6 212.6 M308.7 293.7 L340.1 282.7"/></g><path class="mp-rl" d="M257.7 -24.9 L259.0 -21.7 L260.3 -18.6 L261.8 -15.7 L263.6 -12.9 L265.5 -10.3 L267.8 -7.9 L270.1 -5.6 L272.7 -3.5 L274.8 -1.0 L276.6 1.8 L277.9 4.9 L278.7 8.5 L279.0 12.4 L278.7 16.7 L277.8 20.8 L277.1 22.6 L276.5 24.3 L275.6 28.3 L274.6 32.4 L274.1 36.9 L273.8 40.0 L273.3 43.9 M354.8 57.6 L350.8 57.4 L346.7 56.5 L342.6 55.6 L339.0 54.3 L335.1 53.2 L333.4 52.5 L331.5 51.8 L326.9 51.4 L322.5 51.1 L318.0 50.8 L313.7 50.1 L309.1 49.7 L304.7 48.9 L300.3 48.2 L295.7 47.8 L291.3 47.5 L286.8 47.2 L283.0 47.8 L279.7 48.8 L275.9 48.5 L274.1 45.7 L273.3 43.9 M273.3 43.9 L273.1 40.6 L270.5 38.5 L267.6 36.5 L264.5 34.7 L261.0 33.5 L257.6 31.9 L254.2 30.6 L250.4 29.4 L246.2 28.5 L242.1 27.6 L238.0 26.7 L233.9 25.8 L229.8 25.0 L225.9 23.9 L222.0 22.8 L217.9 21.8 L213.8 21.0 L209.4 20.3 L205.0 19.6 L200.6 18.9 L196.0 18.5 L191.8 18.5 L188.0 19.0 L184.2 19.6 L180.8 20.6 L177.6 21.8 L174.7 23.5 L171.9 25.1 L169.1 26.9 L166.4 28.7 L163.8 30.8 L161.3 32.9 L159.9 34.2 L158.9 35.1 L156.1 37.2 L153.5 39.2 L151.0 41.2 L148.4 43.3 L146.1 45.6 L143.5 47.6 L141.0 49.7 L138.7 51.9 L135.9 53.8 L133.3 55.8 L130.8 57.9 L128.0 59.7 L125.2 61.4 L122.0 62.8 L119.4 64.6 L116.6 66.4 L114.1 67.7 L110.9 69.7 L107.8 71.2 L105.2 73.1 L102.6 75.1 L100.1 77.1 L97.7 79.4 L95.1 81.5 L92.4 83.3 L89.7 85.0 L86.7 86.7 L84.0 88.5 L81.2 90.3 L78.2 91.8 L75.3 93.3 L72.7 95.4 L70.0 97.2 L67.3 99.0 L64.5 100.8 L61.4 102.1 L59.3 102.9 L58.2 103.3 L56.6 103.8 L54.8 104.4 L51.2 105.3 L47.3 105.6 L43.2 105.8 L39.2 106.1 L35.4 106.7 L31.9 107.5 L28.3 108.3 L24.5 108.9 L21.8 109.1 L20.5 109.2 L16.7 109.7 L12.7 110.0 L8.5 110.1 L4.3 110.1 L-0.1 110.0 L-4.3 110.0 L-8.7 109.9 L-13.2 109.7 M273.3 43.9 L272.9 45.7 L272.2 50.1 L272.2 54.3 L271.5 58.5 L270.8 62.8 L270.0 66.9 L269.2 71.2 L268.8 75.7 L267.8 79.7 L267.1 84.0 L266.4 88.3 L265.7 92.6 L265.6 95.6 L265.5 97.1 L264.8 101.3 L264.5 105.7 L264.5 109.9 L264.8 113.7 L265.1 117.6 L264.9 121.5 L264.0 125.6 L263.3 129.9 L263.0 134.3 L263.0 138.5 L262.5 142.9 L262.6 147.1 L262.1 151.7 L261.6 156.2 L261.1 160.3 L260.6 164.9 L260.4 169.2 L260.4 173.3 L260.4 177.5 L260.4 181.7 L260.4 185.7 L261.0 189.4 L261.3 193.5 L261.3 197.6 L261.3 201.7 L261.3 205.8 L261.6 209.9 L261.8 213.7 L261.8 217.9 L262.2 221.7 L262.3 225.3 L263.0 228.9 L264.1 232.2 L265.1 235.6 L266.1 237.6 L267.9 241.5 L269.2 244.7 L270.2 248.1 L271.3 251.4 L271.3 255.4 L270.6 259.7 L269.3 263.3 L267.7 266.7 L265.8 269.4 L264.3 272.6 L262.6 275.7 L260.6 278.5 L259.1 281.8 L257.8 285.3 L256.5 288.9 L255.3 292.4 L254.1 296.3 L253.0 300.0 L251.9 303.8 L251.0 307.9 L250.3 312.2 L249.5 316.3 L248.8 320.6 L248.1 324.9 L247.4 329.0 L246.9 333.6 L246.9 337.8 L246.0 341.8 L244.3 344.9 L242.4 347.6 L240.5 350.4 L238.9 353.7 L237.6 357.2 L235.9 360.3 L233.2 362.1 L230.1 363.3 L226.9 364.7 L223.7 366.0 L221.1 367.8 L218.3 369.4 L216.0 371.8 L213.7 374.0 L211.8 376.9 L209.9 379.7 L208.0 382.5 L206.1 385.3 L204.6 388.2 L203.9 391.5 M188.2 388.9 L190.0 391.1 L193.5 392.5 L197.7 392.4 L201.4 391.9 L203.9 391.5 M-15.0 356.5 L-11.2 357.6 L-7.3 357.4 L-3.9 356.2 L-0.8 354.9 L1.9 353.1 L4.7 351.3 L7.4 349.4 L10.0 347.6 L13.4 346.7 L17.7 347.2 L21.7 346.9 L25.9 346.9 L30.2 347.5 L32.8 349.2 L34.9 351.7 L36.4 354.6 L38.0 357.5 L39.6 360.4 L41.1 363.3 L43.4 365.6 L46.2 367.5 L48.8 369.6 L50.5 372.2 L52.4 375.0 L54.2 377.6 L56.0 380.4 L58.3 382.6 L61.4 384.4 L65.2 385.4 L69.0 386.5 L71.1 389.0 L71.1 393.2 L70.3 397.2 L69.6 401.5 L70.1 405.3 L70.3 408.9 L69.2 412.8 L68.0 414.9 L67.5 415.8 L66.6 419.9 L66.6 424.0 L65.2 427.2 L64.3 431.4 L65.6 434.4 L66.5 438.1 L68.0 440.8 L69.8 443.6 L71.6 446.2 L73.9 448.6 L75.5 451.5 L76.5 454.9 L77.0 458.6 L77.4 462.5 L78.2 466.0 L80.0 468.8 L82.0 471.2 L83.8 473.9 L84.1 476.0 M62.8 458.7 L65.2 460.6 L67.3 462.6 L69.5 465.0 L71.8 467.2 L73.9 469.7 L75.9 472.2 L78.5 474.3 L82.1 475.6 L84.1 476.0 M203.9 391.5 L203.7 392.6 L203.7 396.7 L204.0 400.7 L204.4 404.6 L204.8 408.6 L205.3 412.4 L205.2 414.9 L205.0 416.7 L204.2 420.7 L203.7 425.3 L203.2 429.9 L203.0 434.2 L202.5 438.7 L202.5 442.9 L202.8 445.1 L202.1 449.4 L202.1 453.6 L202.6 457.4 L202.9 461.2 L203.0 465.4 L203.2 469.3 L203.8 473.1 L204.3 476.8 L204.8 480.6 L205.8 483.9 L206.3 487.6 L207.1 491.1 L207.4 491.8 M207.4 491.8 L208.9 492.2 M84.1 476.0 L84.4 477.6 L85.2 481.2 L85.9 484.7 L86.5 488.5 L87.2 491.9 L88.1 495.6 L89.6 498.5 L91.9 500.7 L93.5 501.8 M207.4 491.8 L204.0 490.1 L201.3 491.9 L200.0 495.6 L199.2 499.6 L197.3 501.8 M208.5 506.8 L209.1 503.0 L209.8 498.3 L209.5 494.4 L208.9 492.2 M208.5 506.8 L204.8 507.2 L203.7 507.1 L200.9 506.7 L198.1 504.7 L197.3 501.8 M197.3 501.8 L193.1 502.4 L189.1 501.5 L185.3 500.4 L181.2 499.4 L177.6 499.1 L172.2 498.6 L168.1 498.6 L164.1 498.9 L160.4 499.4 L156.5 499.7 L152.8 500.3 L148.8 500.6 L144.9 500.8 L141.3 501.7 L137.6 502.1 L134.2 502.9 L130.6 503.8 L127.3 504.7 L123.9 505.8 L120.7 506.8 L117.5 508.2 L115.8 508.9 M84.1 476.0 L85.9 476.3 L89.2 477.6 L91.2 480.3 L92.5 483.3 L93.3 486.8 L94.1 490.4 L94.9 493.9 L96.4 496.8 L99.0 498.9 L102.5 500.1 L106.0 501.5 L109.6 502.8 L112.2 504.9 L114.4 507.1 L115.8 508.9 M115.8 508.9 L114.4 509.4 L111.3 510.7 M93.5 501.8 L94.7 502.6 L98.2 503.9 L101.5 505.4 L104.6 507.1 L107.6 508.7 L110.7 510.4 L111.3 510.7 M93.5 501.8 L90.9 504.6 L88.5 506.8 L85.9 508.6 L83.4 510.7 L80.7 512.5 L78.2 514.0 M37.9 492.9 L42.4 493.3 L46.5 494.2 L50.3 495.3 L53.8 496.5 L56.3 498.6 L58.4 501.1 L60.2 503.8 L62.8 505.8 L65.5 507.8 L69.1 509.0 L72.4 510.6 L75.9 511.8 L78.2 514.0 M78.2 514.0 L78.2 517.8 M111.3 510.7 L108.5 512.2 L105.1 513.3 L102.0 514.6 L98.8 516.0 L95.6 516.9 L92.1 517.8 L88.4 518.3 L84.2 518.3 L79.9 518.2 L78.2 517.8 M78.2 517.8 L75.8 517.4 L71.8 516.4 L67.5 515.8 L63.2 515.6 L59.5 516.1 L55.9 516.9 L52.5 517.8 L48.9 518.6 L44.6 518.3 L41.0 517.5 L37.5 516.3 L33.2 515.7 L28.9 515.0 L27.5 515.0 M35.8 549.2 L36.3 545.1 L35.9 541.2 L35.1 537.6 L33.8 534.6 L33.3 533.0 L32.8 531.3 L31.8 527.9 L30.5 524.6 L29.7 521.0 L28.4 517.9 L27.5 515.0 M27.5 515.0 L24.8 515.0 L21.8 515.1 L20.6 515.1 L16.1 514.7 L12.0 513.7 L8.2 512.8 L4.4 511.7 L0.4 510.8 L-3.6 510.0 L-8.0 509.3 L-12.2 508.7 M208.9 492.2 L211.5 493.1 L215.6 493.9 L218.9 495.4 L222.9 496.3 L226.3 495.3 L229.4 494.0 L233.3 493.7 L237.6 494.4 L241.6 495.3 L245.4 496.4 L249.2 497.5 L252.3 498.6 L256.2 500.0 L259.8 501.4 L263.3 502.6 L267.0 504.0 L271.4 504.7 L275.2 505.8 L279.1 506.7 L283.5 507.4 L287.7 508.1 L292.0 508.7 L296.3 509.4 L300.8 510.0 L305.4 510.4 L309.6 511.1 L313.9 511.8 L318.2 512.5 L322.2 513.5 L326.5 514.2 L330.6 515.1 L333.4 516.0 L338.6 516.9 L342.2 516.1 L345.4 515.1 L349.2 514.6 L353.5 514.9 M160.1 723.1 L161.7 719.6 L162.9 716.1 L164.4 712.8 L165.7 709.2 L167.1 706.0 L168.4 702.4 L169.6 698.9 L171.2 695.6 L172.4 691.9 L173.7 688.5 L174.8 684.7 L176.1 681.1 L177.1 677.4 L177.6 675.6 L178.2 673.5 L179.3 669.7 L180.6 666.1 L181.0 665.0 L181.8 663.1 L183.1 659.6 L183.9 655.6 L184.6 651.3 L185.5 647.1 L186.4 643.1 L187.2 639.0 L187.7 634.4 L187.9 630.4 L188.3 625.8 L188.8 621.3 L189.5 616.9 L190.3 612.9 L191.0 608.6 L191.7 604.3 L192.4 600.0 L192.8 595.4 L193.5 591.1 L194.2 586.8 L194.8 582.6 L195.4 578.1 L196.2 574.0 L197.1 569.9 L198.2 566.1 L199.1 562.1 L199.9 558.1 L200.6 553.8 L201.3 549.4 L201.9 545.1 L202.5 540.6 L202.9 536.0 L203.6 531.8 L204.4 527.6 L205.1 523.3 L206.0 519.3 L206.7 515.0 L207.6 511.0 L208.5 506.9 L208.5 506.8 M93.8 702.4 L97.4 703.6 L101.4 704.4 L105.7 704.7 L109.8 704.6 L113.9 704.6 L118.0 704.6 L122.2 705.1 L125.9 706.2 L129.5 707.5 L132.9 708.9 L136.0 710.6 L139.5 711.8 L142.7 713.3 L145.8 715.0 L149.3 716.3 L152.3 717.9 L155.0 719.9 L158.1 721.5 L160.1 723.1 M-15.1 781.4 L-11.4 782.5 L-8.1 783.9 L-4.4 785.0 L-0.3 785.8 L3.6 786.7 L6.5 786.9 L10.0 788.1 L13.8 789.0 L18.0 789.7 M134.8 788.6 L136.6 785.8 L138.3 782.8 L140.1 779.9 L141.6 776.7 L142.9 773.1 L143.9 769.3 L145.2 765.7 L146.5 762.2 L147.7 758.6 L149.0 755.1 L150.4 751.8 L151.9 748.5 L153.0 744.7 L154.1 741.0 L155.1 737.1 L156.1 733.3 L157.6 730.0 L159.1 726.7 L160.1 723.1"/><path class="mp-rl2" d="M257.7 -24.9 L259.0 -21.7 L260.3 -18.6 L261.8 -15.7 L263.6 -12.9 L265.5 -10.3 L267.8 -7.9 L270.1 -5.6 L272.7 -3.5 L274.8 -1.0 L276.6 1.8 L277.9 4.9 L278.7 8.5 L279.0 12.4 L278.7 16.7 L277.8 20.8 L277.1 22.6 L276.5 24.3 L275.6 28.3 L274.6 32.4 L274.1 36.9 L273.8 40.0 L273.3 43.9 M354.8 57.6 L350.8 57.4 L346.7 56.5 L342.6 55.6 L339.0 54.3 L335.1 53.2 L333.4 52.5 L331.5 51.8 L326.9 51.4 L322.5 51.1 L318.0 50.8 L313.7 50.1 L309.1 49.7 L304.7 48.9 L300.3 48.2 L295.7 47.8 L291.3 47.5 L286.8 47.2 L283.0 47.8 L279.7 48.8 L275.9 48.5 L274.1 45.7 L273.3 43.9 M273.3 43.9 L273.1 40.6 L270.5 38.5 L267.6 36.5 L264.5 34.7 L261.0 33.5 L257.6 31.9 L254.2 30.6 L250.4 29.4 L246.2 28.5 L242.1 27.6 L238.0 26.7 L233.9 25.8 L229.8 25.0 L225.9 23.9 L222.0 22.8 L217.9 21.8 L213.8 21.0 L209.4 20.3 L205.0 19.6 L200.6 18.9 L196.0 18.5 L191.8 18.5 L188.0 19.0 L184.2 19.6 L180.8 20.6 L177.6 21.8 L174.7 23.5 L171.9 25.1 L169.1 26.9 L166.4 28.7 L163.8 30.8 L161.3 32.9 L159.9 34.2 L158.9 35.1 L156.1 37.2 L153.5 39.2 L151.0 41.2 L148.4 43.3 L146.1 45.6 L143.5 47.6 L141.0 49.7 L138.7 51.9 L135.9 53.8 L133.3 55.8 L130.8 57.9 L128.0 59.7 L125.2 61.4 L122.0 62.8 L119.4 64.6 L116.6 66.4 L114.1 67.7 L110.9 69.7 L107.8 71.2 L105.2 73.1 L102.6 75.1 L100.1 77.1 L97.7 79.4 L95.1 81.5 L92.4 83.3 L89.7 85.0 L86.7 86.7 L84.0 88.5 L81.2 90.3 L78.2 91.8 L75.3 93.3 L72.7 95.4 L70.0 97.2 L67.3 99.0 L64.5 100.8 L61.4 102.1 L59.3 102.9 L58.2 103.3 L56.6 103.8 L54.8 104.4 L51.2 105.3 L47.3 105.6 L43.2 105.8 L39.2 106.1 L35.4 106.7 L31.9 107.5 L28.3 108.3 L24.5 108.9 L21.8 109.1 L20.5 109.2 L16.7 109.7 L12.7 110.0 L8.5 110.1 L4.3 110.1 L-0.1 110.0 L-4.3 110.0 L-8.7 109.9 L-13.2 109.7 M273.3 43.9 L272.9 45.7 L272.2 50.1 L272.2 54.3 L271.5 58.5 L270.8 62.8 L270.0 66.9 L269.2 71.2 L268.8 75.7 L267.8 79.7 L267.1 84.0 L266.4 88.3 L265.7 92.6 L265.6 95.6 L265.5 97.1 L264.8 101.3 L264.5 105.7 L264.5 109.9 L264.8 113.7 L265.1 117.6 L264.9 121.5 L264.0 125.6 L263.3 129.9 L263.0 134.3 L263.0 138.5 L262.5 142.9 L262.6 147.1 L262.1 151.7 L261.6 156.2 L261.1 160.3 L260.6 164.9 L260.4 169.2 L260.4 173.3 L260.4 177.5 L260.4 181.7 L260.4 185.7 L261.0 189.4 L261.3 193.5 L261.3 197.6 L261.3 201.7 L261.3 205.8 L261.6 209.9 L261.8 213.7 L261.8 217.9 L262.2 221.7 L262.3 225.3 L263.0 228.9 L264.1 232.2 L265.1 235.6 L266.1 237.6 L267.9 241.5 L269.2 244.7 L270.2 248.1 L271.3 251.4 L271.3 255.4 L270.6 259.7 L269.3 263.3 L267.7 266.7 L265.8 269.4 L264.3 272.6 L262.6 275.7 L260.6 278.5 L259.1 281.8 L257.8 285.3 L256.5 288.9 L255.3 292.4 L254.1 296.3 L253.0 300.0 L251.9 303.8 L251.0 307.9 L250.3 312.2 L249.5 316.3 L248.8 320.6 L248.1 324.9 L247.4 329.0 L246.9 333.6 L246.9 337.8 L246.0 341.8 L244.3 344.9 L242.4 347.6 L240.5 350.4 L238.9 353.7 L237.6 357.2 L235.9 360.3 L233.2 362.1 L230.1 363.3 L226.9 364.7 L223.7 366.0 L221.1 367.8 L218.3 369.4 L216.0 371.8 L213.7 374.0 L211.8 376.9 L209.9 379.7 L208.0 382.5 L206.1 385.3 L204.6 388.2 L203.9 391.5 M188.2 388.9 L190.0 391.1 L193.5 392.5 L197.7 392.4 L201.4 391.9 L203.9 391.5 M-15.0 356.5 L-11.2 357.6 L-7.3 357.4 L-3.9 356.2 L-0.8 354.9 L1.9 353.1 L4.7 351.3 L7.4 349.4 L10.0 347.6 L13.4 346.7 L17.7 347.2 L21.7 346.9 L25.9 346.9 L30.2 347.5 L32.8 349.2 L34.9 351.7 L36.4 354.6 L38.0 357.5 L39.6 360.4 L41.1 363.3 L43.4 365.6 L46.2 367.5 L48.8 369.6 L50.5 372.2 L52.4 375.0 L54.2 377.6 L56.0 380.4 L58.3 382.6 L61.4 384.4 L65.2 385.4 L69.0 386.5 L71.1 389.0 L71.1 393.2 L70.3 397.2 L69.6 401.5 L70.1 405.3 L70.3 408.9 L69.2 412.8 L68.0 414.9 L67.5 415.8 L66.6 419.9 L66.6 424.0 L65.2 427.2 L64.3 431.4 L65.6 434.4 L66.5 438.1 L68.0 440.8 L69.8 443.6 L71.6 446.2 L73.9 448.6 L75.5 451.5 L76.5 454.9 L77.0 458.6 L77.4 462.5 L78.2 466.0 L80.0 468.8 L82.0 471.2 L83.8 473.9 L84.1 476.0 M62.8 458.7 L65.2 460.6 L67.3 462.6 L69.5 465.0 L71.8 467.2 L73.9 469.7 L75.9 472.2 L78.5 474.3 L82.1 475.6 L84.1 476.0 M203.9 391.5 L203.7 392.6 L203.7 396.7 L204.0 400.7 L204.4 404.6 L204.8 408.6 L205.3 412.4 L205.2 414.9 L205.0 416.7 L204.2 420.7 L203.7 425.3 L203.2 429.9 L203.0 434.2 L202.5 438.7 L202.5 442.9 L202.8 445.1 L202.1 449.4 L202.1 453.6 L202.6 457.4 L202.9 461.2 L203.0 465.4 L203.2 469.3 L203.8 473.1 L204.3 476.8 L204.8 480.6 L205.8 483.9 L206.3 487.6 L207.1 491.1 L207.4 491.8 M207.4 491.8 L208.9 492.2 M84.1 476.0 L84.4 477.6 L85.2 481.2 L85.9 484.7 L86.5 488.5 L87.2 491.9 L88.1 495.6 L89.6 498.5 L91.9 500.7 L93.5 501.8 M207.4 491.8 L204.0 490.1 L201.3 491.9 L200.0 495.6 L199.2 499.6 L197.3 501.8 M208.5 506.8 L209.1 503.0 L209.8 498.3 L209.5 494.4 L208.9 492.2 M208.5 506.8 L204.8 507.2 L203.7 507.1 L200.9 506.7 L198.1 504.7 L197.3 501.8 M197.3 501.8 L193.1 502.4 L189.1 501.5 L185.3 500.4 L181.2 499.4 L177.6 499.1 L172.2 498.6 L168.1 498.6 L164.1 498.9 L160.4 499.4 L156.5 499.7 L152.8 500.3 L148.8 500.6 L144.9 500.8 L141.3 501.7 L137.6 502.1 L134.2 502.9 L130.6 503.8 L127.3 504.7 L123.9 505.8 L120.7 506.8 L117.5 508.2 L115.8 508.9 M84.1 476.0 L85.9 476.3 L89.2 477.6 L91.2 480.3 L92.5 483.3 L93.3 486.8 L94.1 490.4 L94.9 493.9 L96.4 496.8 L99.0 498.9 L102.5 500.1 L106.0 501.5 L109.6 502.8 L112.2 504.9 L114.4 507.1 L115.8 508.9 M115.8 508.9 L114.4 509.4 L111.3 510.7 M93.5 501.8 L94.7 502.6 L98.2 503.9 L101.5 505.4 L104.6 507.1 L107.6 508.7 L110.7 510.4 L111.3 510.7 M93.5 501.8 L90.9 504.6 L88.5 506.8 L85.9 508.6 L83.4 510.7 L80.7 512.5 L78.2 514.0 M37.9 492.9 L42.4 493.3 L46.5 494.2 L50.3 495.3 L53.8 496.5 L56.3 498.6 L58.4 501.1 L60.2 503.8 L62.8 505.8 L65.5 507.8 L69.1 509.0 L72.4 510.6 L75.9 511.8 L78.2 514.0 M78.2 514.0 L78.2 517.8 M111.3 510.7 L108.5 512.2 L105.1 513.3 L102.0 514.6 L98.8 516.0 L95.6 516.9 L92.1 517.8 L88.4 518.3 L84.2 518.3 L79.9 518.2 L78.2 517.8 M78.2 517.8 L75.8 517.4 L71.8 516.4 L67.5 515.8 L63.2 515.6 L59.5 516.1 L55.9 516.9 L52.5 517.8 L48.9 518.6 L44.6 518.3 L41.0 517.5 L37.5 516.3 L33.2 515.7 L28.9 515.0 L27.5 515.0 M35.8 549.2 L36.3 545.1 L35.9 541.2 L35.1 537.6 L33.8 534.6 L33.3 533.0 L32.8 531.3 L31.8 527.9 L30.5 524.6 L29.7 521.0 L28.4 517.9 L27.5 515.0 M27.5 515.0 L24.8 515.0 L21.8 515.1 L20.6 515.1 L16.1 514.7 L12.0 513.7 L8.2 512.8 L4.4 511.7 L0.4 510.8 L-3.6 510.0 L-8.0 509.3 L-12.2 508.7 M208.9 492.2 L211.5 493.1 L215.6 493.9 L218.9 495.4 L222.9 496.3 L226.3 495.3 L229.4 494.0 L233.3 493.7 L237.6 494.4 L241.6 495.3 L245.4 496.4 L249.2 497.5 L252.3 498.6 L256.2 500.0 L259.8 501.4 L263.3 502.6 L267.0 504.0 L271.4 504.7 L275.2 505.8 L279.1 506.7 L283.5 507.4 L287.7 508.1 L292.0 508.7 L296.3 509.4 L300.8 510.0 L305.4 510.4 L309.6 511.1 L313.9 511.8 L318.2 512.5 L322.2 513.5 L326.5 514.2 L330.6 515.1 L333.4 516.0 L338.6 516.9 L342.2 516.1 L345.4 515.1 L349.2 514.6 L353.5 514.9 M160.1 723.1 L161.7 719.6 L162.9 716.1 L164.4 712.8 L165.7 709.2 L167.1 706.0 L168.4 702.4 L169.6 698.9 L171.2 695.6 L172.4 691.9 L173.7 688.5 L174.8 684.7 L176.1 681.1 L177.1 677.4 L177.6 675.6 L178.2 673.5 L179.3 669.7 L180.6 666.1 L181.0 665.0 L181.8 663.1 L183.1 659.6 L183.9 655.6 L184.6 651.3 L185.5 647.1 L186.4 643.1 L187.2 639.0 L187.7 634.4 L187.9 630.4 L188.3 625.8 L188.8 621.3 L189.5 616.9 L190.3 612.9 L191.0 608.6 L191.7 604.3 L192.4 600.0 L192.8 595.4 L193.5 591.1 L194.2 586.8 L194.8 582.6 L195.4 578.1 L196.2 574.0 L197.1 569.9 L198.2 566.1 L199.1 562.1 L199.9 558.1 L200.6 553.8 L201.3 549.4 L201.9 545.1 L202.5 540.6 L202.9 536.0 L203.6 531.8 L204.4 527.6 L205.1 523.3 L206.0 519.3 L206.7 515.0 L207.6 511.0 L208.5 506.9 L208.5 506.8 M93.8 702.4 L97.4 703.6 L101.4 704.4 L105.7 704.7 L109.8 704.6 L113.9 704.6 L118.0 704.6 L122.2 705.1 L125.9 706.2 L129.5 707.5 L132.9 708.9 L136.0 710.6 L139.5 711.8 L142.7 713.3 L145.8 715.0 L149.3 716.3 L152.3 717.9 L155.0 719.9 L158.1 721.5 L160.1 723.1 M-15.1 781.4 L-11.4 782.5 L-8.1 783.9 L-4.4 785.0 L-0.3 785.8 L3.6 786.7 L6.5 786.9 L10.0 788.1 L13.8 789.0 L18.0 789.7 M134.8 788.6 L136.6 785.8 L138.3 782.8 L140.1 779.9 L141.6 776.7 L142.9 773.1 L143.9 769.3 L145.2 765.7 L146.5 762.2 L147.7 758.6 L149.0 755.1 L150.4 751.8 L151.9 748.5 L153.0 744.7 L154.1 741.0 L155.1 737.1 L156.1 733.3 L157.6 730.0 L159.1 726.7 L160.1 723.1"/><text class="mp-rlab" x="298.7" y="251.7">Горинь</text><text class="mp-rlab" x="136.1" y="557.5">Горинь</text><text class="mp-rlab" x="265.8" y="607.8">Случ</text><text class="mp-rlab" x="73.2" y="356.9">Стир</text><text class="mp-rlab" x="151.3" y="113.3">Прип'ять</text><text class="mp-rlab" x="113.7" y="84.4">Ясельда</text><text class="mp-ctry" x="190" y="214">БІЛОРУСЬ</text><text class="mp-ctry" x="164" y="262">УКРАЇНА</text><g class="rl-st rl-city" data-st="pinsk" data-x="51.2" data-y="105.3"><circle class="mp-pulse" cx="51.2" cy="105.3" r="5.5"/><circle cx="51.2" cy="105.3" r="5.5" data-r="5.5"/><text x="51.2" y="95.3" text-anchor="middle">Пінськ</text></g><g class="rl-st rl-city" data-st="luninets" data-x="273.1" data-y="40.6"><circle class="mp-pulse" cx="273.1" cy="40.6" r="5.5"/><circle cx="273.1" cy="40.6" r="5.5" data-r="5.5"/><text x="282.1" y="44.6" text-anchor="start">Лунінець</text></g><g class="rl-st rl-st" data-st="vydybor" data-x="261.7" data-y="170.5"><circle class="mp-pulse" cx="261.7" cy="170.5" r="4"/><circle cx="261.7" cy="170.5" r="4" data-r="4"/><text x="252.7" y="174.5" text-anchor="end">Видібор</text></g><g class="rl-st rl-st" data-st="horyn" data-x="262.2" data-y="221.7"><circle class="mp-pulse" cx="262.2" cy="221.7" r="4"/><circle cx="262.2" cy="221.7" r="4" data-r="4"/><text x="253.2" y="225.7" text-anchor="end">Горинь</text></g><g class="rl-st rl-town" data-st="stolin" data-x="285.4" data-y="219.5"><circle class="mp-pulse" cx="285.4" cy="219.5" r="3.6"/><rect x="281.9" y="216.0" width="7" height="7" rx="1.5" data-c="285.4,219.5"/><text x="294.4" y="223.5" text-anchor="start">Столін</text></g><g class="rl-st rl-st" data-st="udrytsk" data-x="254.1" data-y="296.3"><circle class="mp-pulse" cx="254.1" cy="296.3" r="4"/><circle cx="254.1" cy="296.3" r="4" data-r="4"/><text x="263.1" y="300.3" text-anchor="start">Удрицьк</text></g><g class="rl-st rl-town" data-st="vysotsk" data-x="224.7" data-y="304.0"><circle class="mp-pulse" cx="224.7" cy="304.0" r="3.6"/><rect x="221.2" y="300.5" width="7" height="7" rx="1.5" data-c="224.7,304.0"/><text x="215.7" y="308.0" text-anchor="end">Висоцьк</text></g><g class="rl-st rl-st" data-st="bila" data-x="246.0" data-y="341.8"><circle class="mp-pulse" cx="246.0" cy="341.8" r="4"/><circle cx="246.0" cy="341.8" r="4" data-r="4"/><text x="255.0" y="345.8" text-anchor="start">Біле</text></g><g class="rl-st rl-st" data-st="kolky" data-x="216.0" data-y="371.8"><circle class="mp-pulse" cx="216.0" cy="371.8" r="4"/><circle cx="216.0" cy="371.8" r="4" data-r="4"/><text x="225.0" y="375.8" text-anchor="start">Колки</text></g><g class="rl-st rl-town" data-st="vorobyn" data-x="200.4" data-y="367.5"><circle class="mp-pulse" cx="200.4" cy="367.5" r="3.6"/><rect x="196.9" y="364.0" width="7" height="7" rx="1.5" data-c="200.4,367.5"/><text x="191.4" y="371.5" text-anchor="end">Воробин</text></g><g class="rl-st rl-city" data-st="dubr" data-x="198.1" data-y="379.7"><circle class="mp-pulse" cx="198.1" cy="379.7" r="5.5"/><circle cx="198.1" cy="379.7" r="5.5" data-r="5.5"/><text x="189.1" y="383.7" text-anchor="end">Дубровиця</text></g><g class="rl-st rl-st" data-st="strilsk" data-x="202.8" data-y="445.1"><circle class="mp-pulse" cx="202.8" cy="445.1" r="4"/><circle cx="202.8" cy="445.1" r="4" data-r="4"/><text x="211.8" y="449.1" text-anchor="start">Стрільськ</text></g><g class="rl-st rl-city" data-st="sarny" data-x="209.5" data-y="494.4"><circle class="mp-pulse" cx="209.5" cy="494.4" r="5.5"/><circle cx="209.5" cy="494.4" r="5.5" data-r="5.5"/><text x="218.5" y="498.4" text-anchor="start">Сарни</text></g><g class="rl-st rl-town" data-st="vol" data-x="67.0" data-y="454.5"><circle class="mp-pulse" cx="67.0" cy="454.5" r="3.6"/><rect x="63.5" y="451.0" width="7" height="7" rx="1.5" data-c="67.0,454.5"/><text x="67.0" y="470.5" text-anchor="middle">Володимирець</text></g><g class="rl-st rl-st" data-st="malynsk" data-x="189.5" data-y="616.9"><circle class="mp-pulse" cx="189.5" cy="616.9" r="4"/><circle cx="189.5" cy="616.9" r="4" data-r="4"/><text x="198.5" y="620.9" text-anchor="start">Малинськ</text></g><g class="rl-st rl-town" data-st="kostopil" data-x="159.1" data-y="726.7"><circle class="mp-pulse" cx="159.1" cy="726.7" r="3.6"/><rect x="155.6" y="723.2" width="7" height="7" rx="1.5" data-c="159.1,726.7"/><text x="150.1" y="730.7" text-anchor="end">Костопіль</text></g><g class="rl-st rl-st" data-st="dubr" data-x="206.1" data-y="385.3"><circle class="mp-pulse" cx="206.1" cy="385.3" r="4"/><circle cx="206.1" cy="385.3" r="4" data-r="4"/><text x="215.1" y="397.3" text-anchor="start"></text></g><g class="rl-st rl-off" data-st="rivne" data-x="153.1" data-y="735"><path d="M167.1 735 v14 l-4 -6 m4 6 l4 -6"/><text x="177.1" y="745">Рівне — 30 км</text><text x="177.1" y="760">Шепетівка — 150 км</text></g><g class="mp-scale" transform="translate(14 695)"><path d="M0 0 h90.1"/><text x="0" y="-5">0</text><text x="90.1" y="-5" text-anchor="end">20 км</text></g></svg><figcaption>Справжня географія: річки й залізниці за даними Natural Earth, пунктир — сучасний кордон України й Білорусі. Карта наближається до місць, про які йдеться в тексті.</figcaption></figure>
 
             <ol class="w18-rep-tl">
                 <li data-st="dubr vorobyn">
@@ -1697,7 +1803,7 @@
                     <p>Із Сарн повстанці поїхали на Рівне, але на станції Малинськ дізналися, що німці оголосили в місті облоговий стан і виставили артилерію. Похід скасували. Члени рівненського підпілля Єфімов, Блуфштейн і Полонський переїхали до повстанців.</p>
                     <p class="w18-src">Степанов, с. 76–77</p>
                 </li>
-                <li data-st="vol ant stolin">
+                <li data-st="vol stolin">
                     <time>грудень</time>
                     <h3>Володимирець, Антонівка, Столін</h3>
                     <p>Загін Гната Нашори вночі болотами вийшов на Володимирець, де стояли гетьманські вершники, і пригнав полонених до Дубровиці; трибунал багатьох засудив до смерті. Справа знає цю подію з іншого боку: з Володимирця до Дубровиці привезли слідчого Полторацького й близько двадцяти поміщиків, службовців і євреїв, і всіх розстріляли. Найпевніше, обидві сторони пам'ятають ту саму ніч. Загін Олександра Конончука тим часом роззброїв гарнізон в Антонівці, а білоруські й висоцькі загони вибили гайдамаків зі Століна.</p>
@@ -1712,7 +1818,7 @@
                 <li data-st="rivne" class="is-mark">
                     <time>14 грудня</time>
                     <h3>Директорія</h3>
-                    <p>Гетьман зрікся влади, Київ узяла Директорія. Майже вся Волинь перейшла під її владу, крім півночі з центром у Дубровиці. Проти ревкому послали Північну групу отамана Володимира Оскілка з центром у Рівному.</p>
+                    <p>Гетьман зрікся влади, Київ узяла Директорія. Майже вся Волинь перейшла під її владу, крім півночі з центром у Дубровиці. Проти ревкому послали Північну групу отамана Володимира Оскілка зі штабом у Рівному.</p>
                     <p class="w18-src">Степанов, с. 81–85</p>
                 </li>
                 <li data-st="vydybor">
@@ -1733,7 +1839,7 @@
                     <p>Поки головні сили стояли у Видіборі, січовики взяли Сарни й Дубровицю. Члена ревкому Антона Садовського й повстанців Павла Мунька та Павла Чухна повезли до штабу Оскілка в Рівне й розстріляли на цвинтарі Грабник; Степанов докладно пише про тортури. Михайла Фішмана й Залмена Мушера вбили на залізничному роз'їзді. Тут книга і справа знову сходяться: Бердников 1919–1920 років каже, що Антона Садовського розстріляли петлюрівці, а Мушер і Фішман загинули від їхніх рук.</p>
                     <p class="w18-src">Степанов, с. 98–99; Бердников, арк. 484–489, 563–564</p>
                 </li>
-                <li data-st="dubr luninets pinsk">
+                <li data-st="dubr kolky luninets pinsk">
                     <time>кінець грудня — 5 січня</time>
                     <h3>Назад до Дубровиці</h3>
                     <p>Полки контратакували від Горині, а під Колками на січовиків із тилу вийшли селяни з вилами. Дубровицю відбили. Другий Поліський полк тим часом зайняв Лунінець: 5 січня німецька солдатська рада погодилася евакуюватися. Спроба взяти Пінськ скінчилася тим, що німецька артилерія відкрила вогонь по повстанцях.</p>
@@ -1775,7 +1881,7 @@
                     <p>Наприкінці лютого з заходу вдарило польське військо, і червоні полки перекинули проти нього. 5 березня Північна армія Оскілка взяла Сарни, 7 березня — Дубровицю, 11 березня — Столін. Цього разу вбивали тих, хто не встиг піти: серед загиблих Степанов називає Григорія Бовгирю, Василя Конончука й Івана Петрушка (не плутати з Ісааком Петрушком із Мочулища). Польська справа підтверджує принаймні одну з цих смертей: механік Свириденко 1922 року згадав Бовгирю, <q>пізніше вбитого петлюрівцями</q>. У 21-му полку з двох тисяч бійців лишилося близько двохсот, і 9 квітня його розформували.</p>
                     <p class="w18-src">Степанов, с. 136–142; Свириденко, 27.VIII.1922, арк. 375</p>
                 </li>
-                <li data-st="shep">
+                <li data-st="shep rivne">
                     <time>30 квітня</time>
                     <h3>Ільїн</h3>
                     <p>Загін із 450 дубровичан під командою Ільїна й Миколи Лясковця пішов у тил Директорії між Мирополем і Шепетівкою й розібрав колію перед бронепоїздом «Черепаха». Ільїн пішов до бронепоїзда сам, щоб умовити екіпаж здатися, і загинув від кулеметної черги. Його поховали в Мінську.</p>
@@ -1792,10 +1898,10 @@
     </div>
 </section>
 
-<!-- § 11 -->
+<!-- § 12 -->
 <section class="ds-sec" id="liudy">
     <div class="w18-wrap">
-        <div class="ds-sh"><b>§ 11</b><h2>Люди повстання</h2><span>біографії за справою; портрети з презентації, родинного архіву Лясковців і музейної добірки</span></div>
+        <div class="ds-sh"><b>§ 12</b><h2>Люди повстання</h2><span>біографії за справою; портрети з презентації, родинного архіву Лясковців і музейної добірки</span></div>
         <article class="w18-bio">
             <figure>
                 <img src="w18-slyaskovets.jpg" alt="Портрет молодого чоловіка з зачесаним назад волоссям, у військовому кітелі" width="208" height="315" loading="lazy" decoding="async">
@@ -1957,10 +2063,10 @@
     </div>
 </div>
 
-<!-- § 12 -->
+<!-- § 13 -->
 <section class="ds-sec" id="sud">
     <div class="w18-wrap">
-        <div class="ds-sh"><b>§ 12</b><h2>Три слідства й два вироки</h2><span>1919 — 1923</span></div>
+        <div class="ds-sh"><b>§ 13</b><h2>Три слідства й два вироки</h2><span>1919 — 1923</span></div>
         <p class="w18-lead">Справу розслідували тричі: військові слідчі після приходу польського війська, слідчий суддя з Луцька навесні 1920 року і слідчі судді Сарненського повіту після польсько-радянської війни. Щоразу частина обвинувачених уже загинула або втекла, а за ґратами нерідко сиділи не ті.</p>
         <div class="w18-waves">
             <article>
@@ -2042,10 +2148,10 @@
     </div>
 </section>
 
-<!-- § 13 -->
+<!-- § 14 -->
 <section class="ds-sec" id="pidsudni">
     <div class="w18-wrap">
-        <div class="ds-sh"><b>§ 13</b><h2>На лаві підсудних</h2><span>вісім обвинувачених · вік — на час суду 1923 року</span></div>
+        <div class="ds-sh"><b>§ 14</b><h2>На лаві підсудних</h2><span>вісім обвинувачених · вік — на час суду 1923 року</span></div>
         <p class="w18-lead">Під кожним іменем — коли й за яких обставин його заарештували, що закидало слідство, що відповідав сам підсудний і чим закінчилися обидва суди. Польське написання — так, як у документах справи.</p>
         <div class="w18-acc">
 
@@ -2218,10 +2324,10 @@
     </div>
 </section>
 
-<!-- § 14 -->
+<!-- § 15 -->
 <section class="ds-sec" id="holosy">
     <div class="w18-wrap">
-        <div class="ds-sh"><b>§ 14</b><h2>Голоси зі справи</h2><span>свідки, обвинувачені, родини, суд</span></div>
+        <div class="ds-sh"><b>§ 15</b><h2>Голоси зі справи</h2><span>свідки, обвинувачені, родини, суд</span></div>
         <figure class="w18-qhero">
             <blockquote>Хотів побачити кров Плятерів, але побачив свою!</blockquote>
             <figcaption><b>Федір Рабешко</b> — Броніславі Старчевській восени 1919 року, коли та пригрозила йому судом за забраних кабанів. Рабешка поранили під Воробином у праву гомілку. Свідчення Старчевської, 29.V.1920, арк. 570 зв.</figcaption>
@@ -2245,10 +2351,10 @@
     </div>
 </section>
 
-<!-- § 15 -->
+<!-- § 16 -->
 <section class="ds-sec" id="nevynni">
     <div class="w18-wrap">
-        <div class="ds-sh"><b>§ 15</b><h2>Не ті люди</h2><span>однофамільці, доноси, сусідські суперечки · 1919–1923</span></div>
+        <div class="ds-sh"><b>§ 16</b><h2>Не ті люди</h2><span>однофамільці, доноси, сусідські суперечки · 1919–1923</span></div>
         <p class="w18-lead">Слідство йшло за доносами й прізвищами, а прізвища в цих селах повторювалися з хати в хату. Поліція забирала однофамільців, сусіди зводили рахунки за землю й спадщину, громади відповідали поруками з десятками підписів.</p>
         <figure class="w18-q w18-q--court w18-q--wide"><blockquote>Дубровиця складається з близько п'ятнадцяти родинних кланів тутешніх мешканців, котрі тісно пов'язані між собою сімейними узами. За арешт будь-якого одного бандита до 50 подібних йому бандитів виставляють свої прізвища з порукою добропорядності та невинуватості даної особи.</blockquote><figcaption><b>Військовий слідчий Головного командування Волинського фронту</b><span>протокол польової жандармерії, Дубровиця, 26.IX.1919 · арк. 440 зв.</span></figcaption></figure>
         <div class="w18-inn">
@@ -2273,16 +2379,16 @@
             <p class="w18-act-k">Частина п'ята</p>
             <h2 class="w18-act-t">Долі й пам'ять</h2>
             <p class="w18-act-y">1923 — 1985</p>
-            <blockquote class="w18-act-q"><p>Історія нас розсудить…</p><cite>комбриг Васильєв начальникові дивізії, січень 1919 · за Степановим</cite></blockquote>
+            <blockquote class="w18-act-q"><p>Історія нас розсудить…</p><cite>червоний комбриг Васильєв своєму начальникові, січень 1919 · з книжки Л. Степанова</cite></blockquote>
         </div>
     </div>
 </div>
 
-<!-- § 16 -->
+<!-- § 17 -->
 <section class="ds-sec" id="potim">
     <div class="w18-wrap">
-        <div class="ds-sh"><b>§ 16</b><h2>Долі</h2><span>що сталося з людьми цієї історії · 1919–1983</span></div>
-        <p class="w18-lead">Картки з позначкою «за Степановим» спираються лише на книжку 1968 року: про кар'єри колишніх повстанців вона пише охоче, а про розстріли 1937 року мовчить. Решту взято зі справи, тюремних документів, газет і презентації про Степана Лясковця.</p>
+        <div class="ds-sh"><b>§ 17</b><h2>Долі</h2><span>що сталося з людьми цієї історії · 1919–1983</span></div>
+        <p class="w18-lead">Картки з позначкою «лише в радянській книжці» спираються тільки на «Безсмертя батьків» Лева Степанова (1968). Про кар'єри колишніх повстанців ця книжка пише охоче, а про розстріли 1937 року мовчить. Решту взято зі справи, тюремних документів, газет і презентації про Степана Лясковця.</p>
         <ul class="w18-after">
             <li class="is-book"><time>1919</time><h3>Рівне</h3><p>Після того як 23 травня Червона армія взяла Рівне, Микола й Григорій Лясковці та Микола Єфімов працювали в ревкомі, а Степан і В'ячеслав Лясковці, Дмитро Будкевич, Олександр Модек та Арвід Скуїн — у повітовій ЧК.</p><p class="w18-src">Степанов, с. 146–147</p></li>
             <li class="is-book"><time>1920-ті</time><h3>Під польською владою</h3><p>За Степановим, старого коваля Якова Лясковця, батька Миколи й В'ячеслава, закатувала польська дефензива. Олександр Кренько, рятуючись від арешту, виїхав до Аргентини, а Микола Євчук, якому 1918 року було п'ятнадцять, очолив у Дубровиці підпільний райком КПЗБ.</p><p class="w18-src">Степанов, с. 149–150</p></li>
@@ -2301,10 +2407,10 @@
     </div>
 </section>
 
-<!-- § 17 -->
+<!-- § 18 -->
 <section class="ds-sec" id="rozbizhnosti">
     <div class="w18-wrap">
-        <div class="ds-sh"><b>§ 17</b><h2>Що розходиться в джерелах</h2><span>справа 1919–1923 проти інших свідчень</span></div>
+        <div class="ds-sh"><b>§ 18</b><h2>Що розходиться в джерелах</h2><span>справа 1919–1923 проти інших свідчень</span></div>
         <div class="w18-diff-hd" aria-hidden="true"><span>Питання</span><span>Справа № 67/22</span><span>Інші джерела</span></div>
         <ul class="w18-diff">
             <li><h3>Дата нападу</h3><div><h4>Справа</h4><p>21–22 листопада 1918; книга хворих лікарні — 22 листопада. Прокурор 1922 року ще сумнівався, чи не з 22 на 23-тє, і фельдшер Пальонка підтвердив: <q>злочин було вчинено саме вдень 22 листопада</q>. Постанова 5.VI.1920 прямо називає 22 листопада <q>днем нападу на Воробин</q>. Частина свідків зсуває все на добу: Мольський (лютий і травень 1920, серпень 1922) і вартовий Буйновський кажуть про ніч з 22 на 23 листопада, Свириденко 1920 року — <q>у ніч на 23 листопада</q>, а 1922-го — <q>у п'ятницю 23 листопада</q>, хоча п'ятницею було 22-ге. Суд і слідство прийняли 21–22 листопада.</p></div><div><h4>Інші</h4><p>«Київська Думка» 27.XI.1918 і спогади учасників — так само. Стаття «Поліське повстання» і презентація — 3–6 грудня. Спогади О. Модека, П. Борка-Бруяки, Й. Сушка, І. Пирішка й П. Лосика (журнал «Жовтень», 1967, № 7; передрук у районній газеті) і «Поліський маяк» 1978 року — штурм 4 грудня.</p></div>
@@ -2327,10 +2433,10 @@
     </div>
 </section>
 
-<!-- § 18 -->
+<!-- § 19 -->
 <section class="ds-sec" id="dokumenty">
     <div class="w18-wrap">
-        <div class="ds-sh"><b>§ 18</b><h2>Документи справи</h2><span>скани аркушів і переклад поруч</span></div>
+        <div class="ds-sh"><b>§ 19</b><h2>Документи справи</h2><span>скани аркушів і переклад поруч</span></div>
         <p class="w18-lead">Добірка аркушів зі справи № 67/22 — фотографії оригіналів, зроблені в Державному архіві Рівненської області. Відкрийте документ: ліворуч скан (натисніть, щоб збільшити), праворуч переклад. Переклади цих аркушів звірено зі сканами; де звірено лише частину, це позначено.</p>
         <h3 class="w18-h3">Основні документи</h3>
         <ol class="w18-docs"><!--DC-M-->
@@ -2412,10 +2518,10 @@
     </div>
 </section>
 
-<!-- § 19 -->
+<!-- § 20 -->
 <section class="ds-sec" id="dzherelo">
     <div class="w18-wrap">
-        <div class="ds-sh"><b>§ 19</b><h2>Джерела</h2><span>що використано і що ще можна знайти</span></div>
+        <div class="ds-sh"><b>§ 20</b><h2>Джерела</h2><span>що використано і що ще можна знайти</span></div>
         <div class="w18-srcg">
             <div>
                 <h3 class="w18-h3">Використано</h3>
@@ -2526,6 +2632,7 @@
     </div>
 </footer>
 
+<script>window.W18_GLOSS=[["ревком[а-яіїєґ'’]*", "Ревком", "Революційний комітет: тимчасовий орган влади, який створювали більшовики та їхні прихильники."], ["ревтрибунал[а-яіїєґ'’]*", "Ревтрибунал", "Революційний трибунал: суд, створений ревкомом. Судив без звичайних процедур і міг виносити смертні вироки."], ["Центральн[а-яіїєґ'’]+ Рад[а-яіїєґ'’]*", "Центральна Рада", "Український парламент і уряд у Києві 1917–1918 років. Проголосила Українську Народну Республіку."], ["УНР(?![а-яіїєґ])", "УНР", "Українська Народна Республіка (1917–1921). Спершу нею керувала Центральна Рада, з грудня 1918 року — Директорія."], ["гетьман[а-яіїєґ'’]*", "Гетьман", "Павло Скоропадський, глава Української Держави (квітень — грудень 1918). Його влада трималася на німецьких військах."], ["Директорі[а-яіїєґ'’]*", "Директорія", "Уряд УНР з грудня 1918 року, від 1919-го на чолі із Симоном Петлюрою."], ["петлюрівц[а-яіїєґ'’]*", "Петлюрівці", "Так радянські й польські документи називали війська УНР за прізвищем Симона Петлюри."], ["січовик[а-яіїєґ'’]*", "Січовики", "Військові частини УНР, зокрема Січові стрільці з Галичини."], ["гайдамак[а-яіїєґ'’]*", "Гайдамаки", "Тут: збройні загони українських урядів 1917–1918 років. У радянських текстах так називали будь-яких противників більшовиків."], ["державн[а-яіїєґ'’]+ варт[а-яіїєґ'’]*", "Державна варта", "Поліція Української Держави гетьмана Скоропадського."], ["спартаків[а-яіїєґ'’]*", "Спартаківці", "Німецькі ліві соціалісти. Тут: революційно налаштовані солдати німецького гарнізону, які не хотіли воювати з повстанцями."], ["червоногвардій[а-яіїєґ'’]*", "Червона гвардія", "Збройні загони більшовиків, створені ще до Червоної армії."], ["Особлив[а-яіїєґ'’]+ армі[а-яіїєґ'’]*", "Особлива армія", "Армія російського Південно-Західного фронту, яка 1916–1917 років стояла на Волині."], ["Берестейськ[а-яіїєґ'’]+ мир[а-яіїєґ'’]*", "Берестейський мир", "Договір УНР з Німеччиною та її союзниками (лютий 1918). Після нього німецькі війська прийшли в Україну."], ["Ризьк[а-яіїєґ'’]+ мир[а-яіїєґ'’]*", "Ризький мир", "Договір 1921 року між Польщею й радянськими Росією та Україною. Західна Волинь відійшла до Польщі."], ["волост[а-яіїєґ'’]*", "Волость", "Сільська адміністративна одиниця в Російській імперії."], ["ґмін[а-яіїєґ'’]*", "Ґміна", "Найнижча адміністративна одиниця в Польщі, приблизно як волость."], ["фільварок|фільварк[а-яіїєґ'’]*", "Фільварок", "Панська господарська садиба, частина великого маєтку."], ["повірен[а-яіїєґ'’]*", "Повірений", "Довірена особа власника, яка керувала маєтком від його імені, тобто управитель."], ["ЧК(?![а-яіїєґ])", "ЧК", "Надзвичайна комісія: радянська політична поліція."], ["КПЗБ(?![а-яіїєґ])", "КПЗБ", "Комуністична партія Західної Білорусі. Діяла підпільно в Польщі, зокрема на Поліссі."], ["дефензив[а-яіїєґ'’]*", "Дефензива", "Польська політична поліція й контррозвідка 1920–1930-х років."], ["Закордот[а-яіїєґ'’]*", "«Закордот»", "Закордонний відділ ЦК компартії України. На початку 1920-х засилав до Польщі розвідників і партизанів."], ["стар[а-яіїєґ'’]+ стил[а-яіїєґ'’]*", "Старий стиль", "Юліанський календар. 1918 року він відставав від нового, григоріанського, на 13 днів. В Україні новий стиль запровадили з 1 березня 1918 року."]];</script>
 <script src="app.js?v=12"></script>
 <script>
 (function(){
@@ -2706,38 +2813,137 @@
 })();
 (function(){
   var rm = matchMedia('(prefers-reduced-motion: reduce)').matches, io = 'IntersectionObserver' in window;
-  /* прогрес читання (якщо немає scroll-timeline) */
+  var ease = function(t){ return t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2; };
+  /* прогрес читання */
   var pr = document.querySelector('.w18-prog');
   if (pr && !(window.CSS && CSS.supports && CSS.supports('animation-timeline: scroll()'))) {
     var tk = false;
-    var upd = function(){ tk = false; var h = document.documentElement, m = h.scrollHeight - innerHeight; pr.style.transform = 'scaleX(' + (m > 0 ? Math.min(1, scrollY / m) : 0) + ')'; };
+    var upd = function(){ tk = false; var m = document.documentElement.scrollHeight - innerHeight; pr.style.transform = 'scaleX(' + (m > 0 ? Math.min(1, scrollY / m) : 0) + ')'; };
     addEventListener('scroll', function(){ if (!tk) { tk = true; requestAnimationFrame(upd); } }, { passive: true }); upd();
   }
+
+  /* словничок: перше згадування терміна стає підказкою */
+  var G = window.W18_GLOSS || [];
+  var main = document.querySelector('main.w18'), tip = null, tipFor = null;
+  if (main && G.length) {
+    tip = document.createElement('div'); tip.className = 'w18-tip'; tip.setAttribute('role', 'tooltip'); document.body.appendChild(tip);
+    var used = {}, L = 'А-Яа-яІіЇїЄєҐґ\'’';
+    var walker = document.createTreeWalker(main, NodeFilter.SHOW_TEXT, { acceptNode: function(n){
+      var p = n.parentNode; if (!p || !n.nodeValue.trim()) return 2;
+      if (p.closest('h1,h2,h3,h4,button,a,summary,.w18-gloss,.w18-hero,.w18-toc,.w18-act,figcaption,.w18-src,script,style,svg,time,.w18-dv,dialog,.w18-vl-key,small,cite,label,th')) return 2;
+      return 1; } });
+    var nodes = []; while (walker.nextNode()) nodes.push(walker.currentNode);
+    G.forEach(function(g, gi){
+      var re = new RegExp('(^|[^' + L + '])(' + g[0] + ')', 'iu');
+      for (var i = 0; i < nodes.length && !used[gi]; i++) {
+        var n = nodes[i], m = re.exec(n.nodeValue); if (!m) continue;
+        var st = m.index + m[1].length, word = m[2];
+        var after = n.splitText(st); after.nodeValue = after.nodeValue.slice(word.length);
+        var b = document.createElement('button'); b.type = 'button'; b.className = 'w18-term'; b.textContent = word; b.setAttribute('data-g', gi);
+        b.setAttribute('aria-label', word + ': ' + g[1] + ' — ' + g[2]);
+        n.parentNode.insertBefore(b, after); nodes.splice(i + 1, 0, after); used[gi] = 1;
+      }
+    });
+    var show = function(b){
+      var g = G[+b.getAttribute('data-g')]; tipFor = b;
+      tip.innerHTML = '<b></b><span></span>'; tip.firstChild.textContent = g[1]; tip.lastChild.textContent = g[2];
+      var r = b.getBoundingClientRect(), tw = Math.min(320, innerWidth - 32);
+      tip.style.left = Math.max(16, Math.min(r.left + r.width / 2 - tw / 2, innerWidth - tw - 16)) + 'px';
+      tip.style.width = tw + 'px';
+      var top = r.top - 10; tip.classList.add('on');
+      var th = tip.offsetHeight; tip.style.top = (top - th > 70 ? top - th : r.bottom + 10) + 'px';
+    };
+    var hide = function(){ tip.classList.remove('on'); tipFor = null; };
+    main.addEventListener('mouseover', function(e){ var b = e.target.closest && e.target.closest('.w18-term'); if (b) show(b); });
+    main.addEventListener('mouseout', function(e){ var b = e.target.closest && e.target.closest('.w18-term'); if (b) hide(); });
+    main.addEventListener('focusin', function(e){ if (e.target.classList && e.target.classList.contains('w18-term')) show(e.target); });
+    main.addEventListener('focusout', hide);
+    main.addEventListener('click', function(e){ var b = e.target.closest && e.target.closest('.w18-term'); if (b) { e.preventDefault(); tipFor === b && tip.classList.contains('on') ? hide() : show(b); } });
+    addEventListener('scroll', function(){ if (tipFor) hide(); }, { passive: true });
+  }
+
+  /* лічильники */
+  var count = function(el){
+    var to = +el.getAttribute('data-count'), t0 = null;
+    if (rm) { el.textContent = to; return; }
+    var step = function(t){ if (!t0) t0 = t; var p = Math.min(1, (t - t0) / 1400); el.textContent = Math.round(to * ease(p)); if (p < 1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  };
+  var heroN = document.querySelectorAll('.w18-hero .cover-facts dd');
+  [].forEach.call(heroN, function(d){ var v = parseInt(d.textContent, 10); if (!isNaN(v)) { d.setAttribute('data-count', v); count(d); } });
+
+  /* «Під чиєю владою»: відрізки ↔ картки */
+  var vl = document.getElementById('vlada');
+  if (vl) {
+    var rows = {}; [].forEach.call(vl.querySelectorAll('.w18-vl-list li'), function(li){ rows[li.getAttribute('data-e')] = li; });
+    var segs = vl.querySelectorAll('[data-e]');
+    var pick = function(e, scroll){
+      [].forEach.call(segs, function(s){ s.classList.toggle('on', s.getAttribute('data-e') === e && s.tagName !== 'LI'); });
+      Object.keys(rows).forEach(function(k){ rows[k].classList.toggle('on', k === e); });
+      if (scroll && rows[e]) { var r = rows[e].getBoundingClientRect(); if (r.top < 90 || r.bottom > innerHeight) rows[e].scrollIntoView({ behavior: rm ? 'auto' : 'smooth', block: 'center' }); }
+    };
+    [].forEach.call(vl.querySelectorAll('.w18-vl-det [data-e], .w18-vl-ov [data-e]'), function(s){
+      s.addEventListener('click', function(){ pick(s.getAttribute('data-e'), true); });
+      s.addEventListener('mouseenter', function(){ pick(s.getAttribute('data-e'), false); });
+    });
+    Object.keys(rows).forEach(function(k){ rows[k].addEventListener('mouseenter', function(){ pick(k, false); }); });
+    if (io) {
+      var co = new IntersectionObserver(function(es){ es.forEach(function(e){ if (e.isIntersecting) { [].forEach.call(vl.querySelectorAll('[data-count]'), count); co.disconnect(); } }); }, { threshold: .4 });
+      co.observe(vl.querySelector('.w18-vl-stats'));
+    }
+  }
   if (!io) return;
-  /* одноразові появи: лінії заголовків, розділювачі частин, смуга влади */
+
+  /* одноразові появи */
   if (!rm) {
     var once = new IntersectionObserver(function(es){ es.forEach(function(e){ if (e.isIntersecting) { e.target.classList.add('in'); once.unobserve(e.target); } }); }, { rootMargin: '0px 0px -12% 0px' });
-    [].forEach.call(document.querySelectorAll('.w18 .ds-sh, .w18-act, .w18-pow'), function(el){
+    [].forEach.call(document.querySelectorAll('.w18 .ds-sh, .w18-act'), function(el){
       if (el.getBoundingClientRect().top < innerHeight * .85) return;
       el.classList.add('pre'); once.observe(el);
     });
-    var pw = document.querySelector('.w18-pow-bar');
-    if (pw) [].forEach.call(pw.children, function(s, i){ s.style.transitionDelay = (i * 55) + 'ms'; });
   }
-  /* активний крок: передісторія і республіка */
+  /* активний крок */
   var act = function(sel, cb){
     var items = [].slice.call(document.querySelectorAll(sel)); if (!items.length) return;
     var ob = new IntersectionObserver(function(es){ es.forEach(function(e){ if (e.isIntersecting) cb(e.target, items); }); }, { rootMargin: '-38% 0px -52% 0px' });
     items.forEach(function(it){ ob.observe(it); });
   };
   act('.w18-pre-step', function(t, items){ items.forEach(function(x){ x.classList.toggle('is-on', x === t); }); });
-  var rail = document.getElementById('w18Rail');
-  if (rail) {
-    var st = {}; [].forEach.call(rail.querySelectorAll('[data-st]'), function(g){ st[g.getAttribute('data-st')] = g; });
+
+  /* карта: підсвітка й наближення */
+  var svg = document.getElementById('w18Rail');
+  if (svg) {
+    var W = +svg.getAttribute('data-w'), H = +svg.getAttribute('data-h'), A = W / H;
+    var groups = [].slice.call(svg.querySelectorAll('.rl-st[data-st]'));
+    var vb = [0, 0, W, H], anim = null;
+    var circles = svg.querySelectorAll('circle[data-r], circle.mp-pulse'), rects = svg.querySelectorAll('rect[data-c]');
+    var apply = function(b){
+      vb = b; svg.setAttribute('viewBox', b.map(function(v){ return v.toFixed(1); }).join(' '));
+      var k = b[2] / W; svg.style.setProperty('--k', k);
+      [].forEach.call(circles, function(c){ var r0 = +(c.getAttribute('data-r') || c.getAttribute('data-r0') || (c.setAttribute('data-r0', c.getAttribute('r')), c.getAttribute('r'))); c.setAttribute('r', (r0 * k).toFixed(2)); });
+      [].forEach.call(rects, function(r){ var c = r.getAttribute('data-c').split(','), s = 7 * k; r.setAttribute('x', (+c[0] - s / 2).toFixed(2)); r.setAttribute('y', (+c[1] - s / 2).toFixed(2)); r.setAttribute('width', s.toFixed(2)); r.setAttribute('height', s.toFixed(2)); r.setAttribute('rx', (1.5 * k).toFixed(2)); });
+    };
+    var fly = function(to){
+      if (anim) cancelAnimationFrame(anim);
+      var from = vb.slice(), t0 = null;
+      if (rm) return apply(to);
+      var step = function(t){ if (!t0) t0 = t; var p = Math.min(1, (t - t0) / 1100), e = ease(p);
+        apply(from.map(function(v, i){ return v + (to[i] - v) * e; })); if (p < 1) anim = requestAnimationFrame(step); };
+      anim = requestAnimationFrame(step);
+    };
+    var zoomOK = function(){ return innerWidth > 900; };
     act('.w18-rep-tl li', function(t, items){
       items.forEach(function(x){ x.classList.toggle('is-on', x === t); });
-      var on = (t.getAttribute('data-st') || '').split(' ');
-      Object.keys(st).forEach(function(k){ st[k].classList.toggle('on', on.indexOf(k) > -1); });
+      var on = (t.getAttribute('data-st') || '').split(' '), xs = [], ys = [];
+      groups.forEach(function(g){ var hit = on.indexOf(g.getAttribute('data-st')) > -1; g.classList.toggle('on', hit);
+        if (hit) { xs.push(+g.getAttribute('data-x')); ys.push(+g.getAttribute('data-y')); } });
+      if (!zoomOK()) return;
+      if (!xs.length || on.indexOf('shep') > -1) return fly([0, 0, W, H]);
+      var x0 = Math.min.apply(0, xs) - 70, x1 = Math.max.apply(0, xs) + 70, y0 = Math.min.apply(0, ys) - 90, y1 = Math.max.apply(0, ys) + 90;
+      var w = x1 - x0, h = y1 - y0; if (h < 300) { y0 -= (300 - h) / 2; h = 300; }
+      if (w / h < A) { var nw = h * A; x0 -= (nw - w) / 2; w = nw; } else { var nh = w / A; y0 -= (nh - h) / 2; h = nh; }
+      if (h > H) { fly([0, 0, W, H]); return; }
+      fly([x0, y0, w, h]);
     });
   }
 })();
