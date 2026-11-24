@@ -326,7 +326,7 @@ def page(key):
 
 {footer}
 
-<script src="app.js?v=14"></script>
+<script src="app.js?v=15"></script>
 <script>{js}</script>
 <script src="reader.js?v=2" defer></script>
 </body>

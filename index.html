@@ -3242,7 +3242,7 @@ a, button, [role="button"], input, select, textarea,
 
       function loadMap(mid, file, legId) {
         var leg = document.getElementById(legId);
-        fetch('https://raw.githubusercontent.com/jerkinsmichael13-stack/Dubrovytsia1/main/'+file+'?v='+Date.now())
+        fetch(file,{cache:'no-cache'}).then(function(r){if(!r.ok)throw 0;return r;}).catch(function(){return fetch('https://raw.githubusercontent.com/jerkinsmichael13-stack/Dubrovytsia1/main/'+file+'?v='+Date.now());})
           .then(function(r) { return r.ok ? r.json() : []; })
           .then(function(data) {
             if (!Array.isArray(data) || !data.length) {
@@ -3796,7 +3796,7 @@ a, button, [role="button"], input, select, textarea,
       box.addEventListener('click', function(e){ if (!e.target.closest('.TPPIN,.TPMTTIP')) hideTip(); });
 
       // ── LOAD PINS ────────────────────────────────────────────
-      fetch(GH_RAW + GH_FILE + '?v=' + Date.now())
+      fetch(GH_FILE,{cache:'no-cache'}).then(function(r){if(!r.ok)throw 0;return r;}).catch(function(){return fetch(GH_RAW + GH_FILE + '?v=' + Date.now());})
         .then(function(r){ return r.ok ? r.json() : []; })
         .then(function(data) {
           if (!Array.isArray(data)) return;
@@ -5726,7 +5726,7 @@ a, button, [role="button"], input, select, textarea,
         </div>
     </footer>
 
-    <script src="app.js?v=14"></script>
+    <script src="app.js?v=15"></script>
 
     <!-- FULLSCREEN SLIDER OVERLAY -->
     <div id="SFS-OVERLAY">

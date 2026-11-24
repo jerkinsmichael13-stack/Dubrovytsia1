@@ -1068,7 +1068,7 @@ html, body { touch-action: manipulation; }
     <div class="lb-strip" id="LB-STRIP" aria-label="Мініатюри"></div>
 </div>
 
-<script src="app.js?v=14"></script>
+<script src="app.js?v=15"></script>
 <script>
 /* ══════════════════════════════════════════════════════════════
    DL — завантаження з водяним знаком (Canvas)
@@ -1729,7 +1729,8 @@ function openDeep() {
 }
 
 function fetchJSON(url) {
-  return fetch(url + (url.indexOf('?') > -1 ? '&' : '?') + 'v=' + Date.now(), { cache: 'no-store' })
+  var raw = /^https?:/.test(url);
+  return fetch(raw ? url + (url.indexOf('?') > -1 ? '&' : '?') + 'v=' + Date.now() : url, { cache: raw ? 'no-store' : 'no-cache' })
     .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); });
 }
 fetchJSON('photos.json')

@@ -22,6 +22,13 @@
 // ================================================
 
 const GITHUB_RAW = 'https://raw.githubusercontent.com/jerkinsmichael13-stack/Dubrovytsia1/main/';
+/* дані беремо з самого сайту: no-cache щоразу звіряє файл із сервером (дешева відповідь 304, якщо не змінився);
+   якщо сайт не віддав файл — запасний шлях через GitHub, як було раніше */
+function dxGet(file) {
+    return fetch(file, { cache: 'no-cache' })
+        .then(r => { if (!r.ok) throw new Error(r.status); return r; })
+        .catch(() => fetch(GITHUB_RAW + file + '?v=' + Date.now()));
+}
 
 // ─── Дані ─────────────────────────────────────
 let ALL_PHOTOS   = [];
@@ -362,7 +369,7 @@ async function initPhotoGallery() {
     if (!gallery) return;
     gallery.innerHTML = '<p class="loading-msg">⏳ Завантаження...</p>';
     try {
-        const r = await fetch(GITHUB_RAW + 'photos.json?v=' + Date.now());
+        const r = await dxGet('photos.json');
         if (r.ok) ALL_PHOTOS = await r.json(); else throw new Error();
     } catch {
         gallery.innerHTML = '<p class="loading-msg">Фотоархів порожній. Додайте фото через <a href="admin.html">адмін-панель</a>.</p>';
@@ -652,7 +659,7 @@ async function initBooksPage() {
     if (!grid) return;
     grid.innerHTML = '<p class="loading-msg" style="grid-column:1/-1">⏳ Завантаження...</p>';
     try {
-        const r = await fetch(GITHUB_RAW + 'books.json?v=' + Date.now());
+        const r = await dxGet('books.json');
         if (r.ok) ALL_BOOKS = await r.json(); else throw new Error();
     } catch { ALL_BOOKS = []; }
     renderBooks();
@@ -774,7 +781,7 @@ async function initMetricsPage() {
     if (!grid) return;
     grid.innerHTML = '<p class="loading-msg" style="grid-column:1/-1">⏳ Завантаження...</p>';
     try {
-        const r = await fetch(GITHUB_RAW + 'metrics.json?v=' + Date.now());
+        const r = await dxGet('metrics.json');
         if (r.ok) ALL_METRICS = await r.json(); else throw new Error();
     } catch { ALL_METRICS = []; }
     renderMetrics();
@@ -998,10 +1005,10 @@ async function initArchiveSearch() {
 
     // Load all data sources in parallel
     const [docsRes, personRes, pressRes, booksRes] = await Promise.allSettled([
-        fetch(GITHUB_RAW + 'docs-data.json?v=' + Date.now()).then(r => r.ok ? r.json() : []),
-        fetch(GITHUB_RAW + 'personalia.json?v=' + Date.now()).then(r => r.ok ? r.json() : []),
-        fetch(GITHUB_RAW + 'press-index.json?v=' + Date.now()).then(r => r.ok ? r.json() : []),
-        fetch(GITHUB_RAW + 'books.json?v=' + Date.now()).then(r => r.ok ? r.json() : []),
+        dxGet('docs-data.json').then(r => r.ok ? r.json() : []),
+        dxGet('personalia.json').then(r => r.ok ? r.json() : []),
+        dxGet('press-index.json').then(r => r.ok ? r.json() : []),
+        dxGet('books.json').then(r => r.ok ? r.json() : []),
     ]);
 
     SEARCH_DOCS       = docsRes.status === 'fulfilled'   ? docsRes.value   : [];
@@ -1200,7 +1207,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const heroNum = document.getElementById('heroLiveNum');
     if (stat) stat.textContent = '0';
     if (stat || heroNum) {
-        fetch(GITHUB_RAW + 'photos.json?v=' + Date.now())
+        dxGet('photos.json')
             .then(r => r.ok ? r.json() : null)
             .then(d => {
                 if (!d?.length) return;

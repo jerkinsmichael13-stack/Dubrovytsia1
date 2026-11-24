@@ -1067,7 +1067,7 @@ opacity: 0;
     </div>
 </footer>
 
-<script src="app.js?v=14"></script>
+<script src="app.js?v=15"></script>
 <script>
 (function(){
 'use strict';
@@ -1437,7 +1437,7 @@ $('ww1Overlay').addEventListener('click',function(e){
 document.addEventListener('keydown',function(e){if(e.key==='Escape')ww1Close();});
 
 // Load data
-fetch(GH+'ww1.json?v='+Date.now())
+fetch('ww1.json',{cache:'no-cache'}).then(function(r){if(!r.ok)throw 0;return r;}).catch(function(){return fetch(GH+'ww1.json?v='+Date.now());})
     .then(function(r){if(r.ok)return r.json();throw new Error();})
     .then(function(data){
         ALL=data; shown=data;

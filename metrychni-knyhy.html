@@ -1539,7 +1539,7 @@ a, button, [role="button"], input, select, textarea,
     });
 
     /* ── Fetch data and init ─────────────────────────── */
-    fetch(GH_RAW + FILE + '?v=' + Date.now())
+    fetch(FILE,{cache:'no-cache'}).then(function(r){if(!r.ok)throw 0;return r;}).catch(function(){return fetch(GH_RAW + FILE + '?v=' + Date.now());})
         .then(function (r) { return r.ok ? r.json() : []; })
         .then(function (data) {
             mkcBooks   = Array.isArray(data) ? data : [];
@@ -1708,7 +1708,7 @@ a, button, [role="button"], input, select, textarea,
         </div>
     </footer>
 
-    <script src="app.js?v=14"></script>
+    <script src="app.js?v=15"></script>
     <script>
     // Підсвічування поточного розділу в панелі переходів
     (function(){
