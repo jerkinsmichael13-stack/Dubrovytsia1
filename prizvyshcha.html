@@ -17,7 +17,7 @@
 <meta property="og:type" content="website">
 <title>Прізвища Дубровиччини — пошук предків</title>
 <script>!function(){var t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t)}()</script>
-<link rel="stylesheet" href="app.css?v=11">
+<link rel="stylesheet" href="app.css?v=12">
 <link rel="stylesheet" href="ds.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -318,7 +318,7 @@ function catalog(){
     var tot = L.reduce(function(s, x){ return s + x[2] + x[3] + x[4] + (x[7] || 0); }, 0);
     var top = L.filter(function(x){ return [x[2], x[3], x[4]].filter(Boolean).length >= 2; }).sort(function(a, b){ return (b[2] + b[3] + b[4] + b[5]) - (a[2] + a[3] + a[4] + a[5]); }).slice(0, 12);
     var h = '<section class="ds-desk"><div class="ds-wrap"><p class="ds-crumbs"><a href="index.html">Головна</a> / Прізвища</p><p class="ds-kick">Пошук предків</p>' +
-      '<h1 class="ds-title">Прізвища <em>Дубровиччини</em></h1><p class="ds-lede">П\'ять джерел, майже три століття: акти пінських гродських книг і реєстр збитків 1645–1665 років, інвентар графа Плятера близько 1800 року, документи Першої світової війни, справа про напад на Воробин 1918 року й список виборців 1938 року. Українське, російське й польське написання, а також помилки писарів зведено в одне прізвище.</p>' +
+      '<h1 class="ds-title">Прізвища Дубровиччини</h1><p class="ds-lede">П\'ять джерел, майже три століття: акти пінських гродських книг і реєстр збитків 1645–1665 років, інвентар графа Плятера близько 1800 року, документи Першої світової війни, справа про напад на Воробин 1918 року й список виборців 1938 року. Українське, російське й польське написання, а також помилки писарів зведено в одне прізвище.</p>' +
       '<dl class="ds-facts"><div><dd>' + fmt(L.length) + '</dd><dt>прізвищ</dt></div><div><dd>' + fmt(tot) + '</dd><dt>іменних записів</dt></div><div><dd>XVII–XX</dd><dt>століття</dt></div></dl>' +
       '<div class="sc-tools"><input type="search" id="scQ" placeholder="Ваше прізвище — наприклад, Кулик або Kulik" autocomplete="off" aria-label="Знайти прізвище"></div></div></section>' +
       '<div class="ds-wrap"><section class="ds-sec" id="scTopSec"><div class="ds-sh"><b>§ 1</b><h2>Родини, що пройшли крізь століття</h2><span>є щонайменше у двох джерелах</span></div><div class="sc-top">' +

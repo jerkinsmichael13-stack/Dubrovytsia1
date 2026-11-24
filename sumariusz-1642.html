@@ -20,7 +20,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Manrope:wght@300;400;500;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="app.css?v=11">
+    <link rel="stylesheet" href="app.css?v=12">
 
 <style>
 /* ══════════════════════════════════════════════════════
@@ -670,22 +670,25 @@ a, button, [role="button"], input, select, textarea,
     </header>
 
     <!-- ══ HERO ══ -->
-    <section class="cover" aria-label="Сумаріуш маєтку Дубровиця">
+    <section class="cover cover--doc" aria-label="Сумаріуш маєтку Дубровиця">
         <img class="cover-img cover-img--paper" src="https://i.imgur.com/eCkmrb3.jpeg" alt="" fetchpriority="high" decoding="async" style="--cover-pos:center 25%">
         <div class="cover-shade"></div>
         <div class="cover-inner">
-            <nav class="cover-crumbs" aria-label="Навігаційний ланцюжок"><a href="metrychni-knyhy.html">Архівні справи</a><span>/</span>Сумаріуш 1642</nav>
-            <p class="cover-kicker">Архівний документ · Річ Посполита · грудень 1642</p>
-            <h1 class="cover-title">Сумаріуш маєтку <em>Дубровиця</em></h1>
-            <p class="cover-lede"><i>Sumariusz Maietności Dąbrowice, Anno 1642 Decemb.</i> — звіт про доходи маєтку: рудні, озера, млини, корчми й замок над Горинню.</p>
-            <dl class="cover-facts">
-                <div><dt>рік складання</dt><dd>1642</dd></div>
-                <div><dt>злотих доходу</dt><dd>11 586</dd></div>
-                <div><dt>сторінки документа</dt><dd>3</dd></div>
-                <div><dt>озер у маєтку</dt><dd>20</dd></div>
-            </dl>
-            <p class="cover-credit"><b>На зображенні</b>Сторінка оригіналу, 1642 рік</p>
+        <div class="cover-copy">
+                <nav class="cover-crumbs" aria-label="Навігаційний ланцюжок"><a href="metrychni-knyhy.html">Архівні справи</a><span>/</span>Сумаріуш 1642</nav>
+                <p class="cover-kicker">Річ Посполита · грудень 1642</p>
+                <h1 class="cover-title">Сумаріуш маєтку Дубровиця</h1>
+            <p class="cover-orig" lang="pl">Sumariusz Maietności Dąbrowice, Anno 1642 Decemb.</p>
+                <p class="cover-lede">Річний баланс маєтку за кілька років до Хмельниччини: залізні рудні, двадцять озер, поташня, млини, корчми й замок над Горинню — разом 11 586 злотих доходу.</p>
+                <dl class="cover-facts">
+                    <div><dt>рік складання</dt><dd>1642</dd></div>
+                    <div><dt>злотих доходу</dt><dd>11 586</dd></div>
+                    <div><dt>сторінки документа</dt><dd>3</dd></div>
+                    <div><dt>озер у маєтку</dt><dd>20</dd></div>
+                </dl>
         </div>
+        <figure class="cover-sheet"><a href="#panel-scans" aria-label="Перейти до сканів документа"><img src="https://i.imgur.com/eCkmrb3.jpeg" alt="Сумаріуш, грудень 1642 року" decoding="async"></a><figcaption><b>Сторінка оригіналу</b>Сумаріуш, грудень 1642 року</figcaption></figure>
+    </div>
     </section>
 
     <!-- ══ BODY ══ -->
@@ -760,7 +763,7 @@ a, button, [role="button"], input, select, textarea,
                     <p style="font-family:'Manrope',sans-serif;font-size:.8rem;line-height:1.75;color:var(--ink-faded);margin:0;">
                         Документ складений у грудні 1642 року (Anno 1642 Decemb.) як звіт про поточні та потенційні доходи маєтку Дубровиця. 
                         Зберігається у приватному архіві. Є одним із найдавніших збережених господарських документів, що стосуються Дубровиці.
-                        Містить унікальні відомості про економіку міста, навколишні рудні, пущу, замок і річкову навігацію на Горині та Случі.
+                        Містить рідкісні відомості про економіку міста, навколишні рудні, пущу, замок і річкову навігацію на Горині та Случі.
                     </p>
                 </div>
             </div>
@@ -986,7 +989,7 @@ uchwalono bywa, Czyni in Summa —
                     <div style="padding:1.4rem;background:var(--sepia-pale);border:1px solid var(--ruling);border-radius:10px;margin-bottom:1.5rem;">
                         <div style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:400;font-style:italic;color:var(--ink);margin-bottom:.6rem;">«潛在» прибутки</div>
                         <p style="font-family:'Manrope',sans-serif;font-size:.78rem;line-height:1.85;color:var(--ink-faded);">
-                            Друга сторінка унікальна тим, що автор описує не лише реальний дохід, а й <strong style="color:var(--ink)">«невикористаний потенціал»</strong>. 
+                            Друга сторінка цікава тим, що автор описує не лише реальний дохід, а й <strong style="color:var(--ink)">«невикористаний потенціал»</strong>. 
                             Наприклад, якщо заборонити міщанам гнати горілку вдома — орендний дохід зросте з 650 до 2000 зл (приріст 350 зл).
                         </p>
                     </div>

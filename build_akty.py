@@ -28,8 +28,8 @@ PAGES = {
         desc='Десять записів пінських гродських книг 1654–1665 років про Дубровицю, Воробин, Кураш, Клесів, Бродець, Жадень у роки війни: переклад українською, оригінальний текст, скани видання 1909 року, покажчики осіб, місць і термінів.',
         crumbs='<a href="metrychni-knyhy.html">Архівні справи</a><span>/</span>Акти Руїни',
         kicker='Пінські гродські книги · 1654–1665',
-        h1='Акти <em>Руїни</em>',
-        lede='Татари, козацькі залоги, московські полки й дейнеки на Горині: десять скарг, присяг і універсалів із пінських гродських книг про Дубровицю, Воробин, Кураш та навколишні села.',
+        h1='Акти Руїни',
+        lede='Татари, козацькі залоги, московські полки й дейнеки на Горині. Десять записів пінського суду: спалені Бродець і Клесів, згарища Воробина, присяга міщан, що в Дубровиці не лишилося жодного купця.',
         intro=('<p>Після 1648 року Дубровиччина опинилася на шляху всіх армій: татар, козацьких залог над Горинню, московських полків, що йшли на Пінськ. '
                'Шляхта й міщани приходили до пінського гродського суду, щоб записати збитки: це звільняло від податків, які платити вже не було з чого.</p>'
                '<p>Оригінальні тексти подано так, як їх надрукувала Віленська археографічна комісія 1909 року: польською з руськими судовими формулами. '
@@ -42,7 +42,7 @@ PAGES = {
         desc='Три записи пінських гродських книг 1645–1646 років про євреїв Дубровиці й Пінська: орендар Давид Якович, Зельман Якубович і Випозловський дворик. Оригінальний текст, скани, покажчики.',
         crumbs='<a href="jewish-history.html">Єврейська спадщина</a><span>/</span>Акти 1645–1646',
         kicker='Пінські гродські книги · 1645–1646',
-        h1='Євреї Дубровиці <em>в судових актах</em>',
+        h1='Євреї Дубровиці в&nbsp;судових актах',
         lede='Три записи пінського суду 1645–1646 років: дубровицький орендар Давид Якович, якого били й обкрадали, і пінський кредитор Зельман Якубович.',
         intro=('<p>За сто років до того, як громада отримала самостійність, євреї вже тримали в Дубровиці оренду: шинки, млини, дрібні податки. '
                'Три записи пінського гродського суду 1645–1646 років показують, як жилося орендареві між панами, їхніми підданими й конкурентами.</p>'
@@ -277,7 +277,7 @@ def page(key):
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="app.css?v=11">
+    <link rel="stylesheet" href="app.css?v=12">
 <style>{css}</style>
 <link rel="stylesheet" href="ds.css">
 </head>
@@ -285,10 +285,11 @@ def page(key):
 
 {header}
 
-<section class="cover" aria-label="{ogt}">
+<section class="cover cover--doc" aria-label="{ogt}">
     <img class="cover-img cover-img--paper" src="{cover}" alt="" fetchpriority="high" decoding="async" style="--cover-pos:center 20%">
     <div class="cover-shade"></div>
     <div class="cover-inner">
+      <div class="cover-copy">
         <nav class="cover-crumbs" aria-label="Навігаційний ланцюжок">{crumbs}</nav>
         <p class="cover-kicker">{kicker}</p>
         <h1 class="cover-title cover-title--long">{h1}</h1>
@@ -299,7 +300,8 @@ def page(key):
             <div><dt>сканів видання</dt><dd>{ns}</dd></div>
             <div><dt>осіб у покажчиках</dt><dd>{npers}</dd></div>
         </dl>
-        <p class="cover-credit"><b>На зображенні</b>{credit}</p>
+      </div>
+      <figure class="cover-sheet"><a href="#{first}" aria-label="Перейти до першого акта"><img src="{cover}" alt="{credit}" decoding="async"></a><figcaption><b>На зображенні</b>{credit}</figcaption></figure>
     </div>
 </section>
 
@@ -324,11 +326,11 @@ def page(key):
 
 {footer}
 
-<script src="app.js?v=11"></script>
+<script src="app.js?v=12"></script>
 <script>{js}</script>
 </body>
 </html>
-'''.format(desc=esc(P['desc']), ogt=esc(re.sub(r'<[^>]+>', '', P['h1'])), title=esc(P['title']), css=CSS, header=header, cover=esc(docs[0]['scans'][0]),
+'''.format(desc=esc(P['desc']), ogt=esc(re.sub(r'<[^>]+>', '', P['h1']).replace('&nbsp;', ' ')), title=esc(P['title']), css=CSS, header=header, cover=esc(docs[0]['scans'][0]), first=docs[0]['id'],
            crumbs=P['crumbs'], kicker=P['kicker'], h1=P['h1'], lede=esc(P['lede']), nd=len(docs), wacts='акти' if len(docs) < 5 else 'актів',
            years=years[0] + ('–' + years[-1] if len(years) > 1 else ''), ns=nscans, npers=npers, credit=P['credit'], toc=toc, also=also,
            intro=P['intro'], vols='; '.join(VOL[v] for v in vols), articles=''.join(article(d) for d in docs), footer=FOOTER,

@@ -17,7 +17,7 @@
 <meta property="og:type" content="website">
 <title>Поселення Дубровиччини — Цифровий архів</title>
 <script>!function(){var t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t)}()</script>
-<link rel="stylesheet" href="app.css?v=11">
+<link rel="stylesheet" href="app.css?v=12">
 <link rel="stylesheet" href="ds.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -409,7 +409,7 @@ function renderCatalog(P){
     (groups[g] = groups[g] || []).push(k);
   });
   var order = Object.keys(groups).sort(function(a, b){ return groups[b].length - groups[a].length; });
-  var h = '<section class="pc-hero"><div class="pw"><h1>Поселення <em>Дубровиччини</em></h1><p>Кожне місто й село — з атласом 1798 року, поіменними списками з інвентаря Плятера, газетними згадками й світлинами на одній сторінці. Згруповано за власниками 1798 року.</p>' +
+  var h = '<section class="pc-hero"><div class="pw"><h1>Поселення Дубровиччини</h1><p>Кожне місто й село — з атласом 1798 року, поіменними списками з інвентаря Плятера, газетними згадками й світлинами на одній сторінці. Згруповано за власниками 1798 року.</p>' +
     '<div class="pc-tools"><input type="search" id="pcQ" placeholder="Знайти поселення…" autocomplete="off" aria-label="Знайти поселення"><button type="button" class="pc-chip" data-f="" aria-pressed="true">Усі</button><button type="button" class="pc-chip" data-f="inv" aria-pressed="false">Є поіменний список</button><button type="button" class="pc-chip" data-f="press" aria-pressed="false">Є в пресі</button></div></div></section><div class="pw" id="pcList"></div><div class="pw pv-foot"></div>';
   $('pp').innerHTML = h;
   var F = '', Q = '';
