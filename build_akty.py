@@ -328,6 +328,7 @@ def page(key):
 
 <script src="app.js?v=13"></script>
 <script>{js}</script>
+<script src="reader.js?v=1" defer></script>
 </body>
 </html>
 '''.format(desc=esc(P['desc']), ogt=esc(re.sub(r'<[^>]+>', '', P['h1']).replace('&nbsp;', ' ')), title=esc(P['title']), css=CSS, header=header, cover=esc(docs[0]['scans'][0]), first=docs[0]['id'],

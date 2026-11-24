@@ -2211,5 +2211,6 @@ function rjNavLB(dir){ rjIdx=(rjIdx+dir+RJ_SCANS.length)%RJ_SCANS.length; rjOpen
 document.addEventListener('keydown',function(e){ if(!rjOpen)return; if(e.key==='Escape')rjCloseLB(); if(e.key==='ArrowLeft')rjNavLB(-1); if(e.key==='ArrowRight')rjNavLB(1); });
 document.getElementById('RJLB').addEventListener('click',function(e){ if(e.target===this)rjCloseLB(); });
 </script>
+<script src="reader.js?v=1" defer></script>
 </body>
 </html>
