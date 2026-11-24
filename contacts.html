@@ -22,10 +22,10 @@
     <meta property="og:type" content="website">
     <title>Про проєкт — Цифровий архів Дубровиці</title>
     <script>!function(){var t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t)}()</script>
-    <link rel="stylesheet" href="app.css?v=13">
+    <link rel="stylesheet" href="app.css?v=14">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Manrope:wght@300;400;500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 /* ══════════════════════════════════════════════════════════════════
@@ -58,7 +58,7 @@
 .ct-ornament-diamond{width:8px;height:8px;background:#c9a227;transform:rotate(45deg);box-shadow:0 0 14px rgba(201,162,39,.5);}
 .ct-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(.95rem,1.6vw,1.25rem);font-weight:300;font-style:italic;color:rgba(255,255,255,.55);max-width:620px;line-height:1.6;opacity:0;animation:ctup .9s cubic-bezier(.16,1,.3,1) .65s forwards;}
 .ct-badge-row{margin-top:2.5rem;display:flex;flex-wrap:wrap;justify-content:center;gap:.9rem;opacity:0;animation:ctup .9s cubic-bezier(.16,1,.3,1) .85s forwards;}
-.ct-badge{display:inline-flex;align-items:center;gap:.55rem;padding:.45rem 1.1rem;border-radius:100px;border:1px solid rgba(201,162,39,.35);background:rgba(0,0,0,.25);backdrop-filter:blur(8px);font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.72);}
+.ct-badge{display:inline-flex;align-items:center;gap:.55rem;padding:.45rem 1.1rem;border-radius:100px;border:1px solid rgba(201,162,39,.35);background:rgba(0,0,0,.25);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.72);}
 .ct-badge-dot{width:5px;height:5px;border-radius:50%;background:#c9a227;box-shadow:0 0 8px rgba(201,162,39,.6);}
 @keyframes ctup{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 .ct-scroll-cue{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);z-index:10;opacity:0;animation:ctup 1s cubic-bezier(.16,1,.3,1) 1.2s forwards,ctscrollbob 2.6s ease-in-out infinite 2s;display:flex;flex-direction:column;align-items:center;gap:.6rem;pointer-events:none;}
@@ -150,7 +150,7 @@
 .ct-gal-item:hover .ct-gal-caption{opacity:1;transform:translateY(0);}
 .ct-gal-item:nth-child(1) .ct-gal-caption{font-size:.95rem;padding:1.2rem 1.5rem;}
 .ct-gal-date{display:inline-block;font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;color:#e0bd5a;margin-bottom:.4rem;font-style:normal;}
-.ct-gal-credit{text-align:center;margin-top:2rem;font-family:'Manrope',sans-serif;font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;color:var(--color-text-muted,#a89880);}
+.ct-gal-credit{text-align:center;margin-top:2rem;font-family:'Manrope',sans-serif;font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;color:var(--color-text-muted);}
 .ct-gal-credit strong{color:#c9a227;letter-spacing:.12em;font-weight:500;}
 
 /* ── Contact Form ──────────────────────────── */
@@ -172,7 +172,7 @@
 [data-theme="dark"] .ct-form-input:focus,[data-theme="dark"] .ct-form-select:focus,[data-theme="dark"] .ct-form-textarea:focus{background:#181310;}
 .ct-form-textarea{resize:vertical;min-height:140px;line-height:1.55;}
 .ct-form-select{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c9a227' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center;padding-right:2.6rem;}
-.ct-form-hint{font-family:'Manrope',sans-serif;font-size:.68rem;color:var(--color-text-muted,#a89880);font-style:italic;margin-top:.2rem;}
+.ct-form-hint{font-family:'Manrope',sans-serif;font-size:.68rem;color:var(--color-text-muted);font-style:italic;margin-top:.2rem;}
 .ct-form-submit{margin-top:.8rem;padding:1.1rem 2.4rem;background:linear-gradient(135deg,#c9a227 0%,#a8841c 100%);color:#fff;border:0;border-radius:8px;font-family:'Manrope',sans-serif;font-size:.68rem;letter-spacing:.28em;text-transform:uppercase;font-weight:600;cursor:pointer;transition:transform .2s ease,box-shadow .3s ease,background .3s ease;display:inline-flex;align-items:center;justify-content:center;gap:.8rem;box-shadow:0 8px 24px rgba(201,162,39,.28),0 1px 2px rgba(0,0,0,.08);}
 .ct-form-submit:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 14px 32px rgba(201,162,39,.38),0 1px 2px rgba(0,0,0,.08);}
 .ct-form-submit:active:not(:disabled){transform:translateY(0);}
@@ -190,7 +190,7 @@
 [data-theme="dark"] .ct-form-status.success{background:rgba(39,145,82,.12);color:#5ec584;}
 [data-theme="dark"] .ct-form-status.error{background:rgba(180,42,42,.15);color:#e68585;}
 .ct-form-status strong{font-weight:600;}
-.ct-form-alt{margin-top:1.8rem;text-align:center;padding-top:1.6rem;border-top:1px solid var(--color-border-light,rgba(201,162,39,.12));font-family:'Cormorant Garamond',serif;font-size:.95rem;color:var(--color-text-muted,#a89880);font-style:italic;}
+.ct-form-alt{margin-top:1.8rem;text-align:center;padding-top:1.6rem;border-top:1px solid var(--color-border-light,rgba(201,162,39,.12));font-family:'Cormorant Garamond',serif;font-size:.95rem;color:var(--color-text-muted);font-style:italic;}
 .ct-form-alt a{color:var(--color-accent-dark,#8b6f1c);text-decoration:none;font-weight:500;}
 [data-theme="dark"] .ct-form-alt a{color:#e0bd5a;}
 .ct-form-alt a:hover{text-decoration:underline;}
@@ -211,7 +211,7 @@
 .ct-reveal{opacity:0;transform:translateY(22px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1);}
 .ct-reveal.in{opacity:1;transform:translateY(0);}
 </style>
-<link rel="stylesheet" href="ds.css">
+<link rel="stylesheet" href="ds.css?v=2">
 </head>
 <body>
     <!-- Reading progress -->
@@ -432,11 +432,11 @@
             <div class="ct-section-hd ct-reveal">
                 <div class="ct-sh-eyebrow"><span class="ct-sh-ln"></span><span>Особлива подяка</span><span class="ct-sh-ln"></span></div>
                 <h2 class="ct-sh-title">Аерофотознімки 1943–1944</h2>
-                <p class="ct-sh-sub">Унікальні знімки Дубровиці, замовлені Назарієм Столярцем з американського архіву NARA</p>
+                <p class="ct-sh-sub">Знімки Дубровиці з американського архіву NARA, замовлені Назарієм Столярцем</p>
             </div>
 
             <p class="ct-gallery-intro ct-reveal">
-                Аерофотознімки Дубровиці 1943–1944 років зберігалися в американському архіві NARA (National Archives and Records Administration) десятиліттями. Завдяки наполегливості <strong>Назарія Столярця</strong>, який особисто замовив ці знімки за власний кошт, ми маємо унікальну можливість побачити наше місто з висоти пташиного польоту в один із найтрагічніших періодів XX століття.
+                Аерофотознімки Дубровиці 1943–1944 років зберігалися в американському архіві NARA (National Archives and Records Administration) десятиліттями. Завдяки наполегливості <strong>Назарія Столярця</strong>, який особисто замовив ці знімки за власний кошт, ми можемо побачити місто згори в один із найтяжчих періодів XX століття.
             </p>
 
             <div class="ct-gallery-grid ct-reveal">

@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Адмін-панель — Дубровиця</title>
     <script>!function(){var t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t)}()</script>
-    <link rel="stylesheet" href="app.css?v=13">
+    <link rel="stylesheet" href="app.css?v=14">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -664,7 +664,7 @@
                 </svg>
                 <!-- Instruction overlay -->
                 <div id="editorHint" style="position:absolute;top:10px;left:50%;transform:translateX(-50%);
-                     background:rgba(10,8,5,0.82);backdrop-filter:blur(8px);
+                     background:rgba(10,8,5,0.82);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
                      border:1px solid rgba(201,162,39,0.3);border-radius:8px;
                      padding:6px 14px;font-family:'Manrope',sans-serif;font-size:0.72rem;
                      color:#c9a227;white-space:nowrap;pointer-events:none;">
@@ -689,7 +689,7 @@
 
             <!-- Modal for new pin info -->
             <div id="pinModal" style="display:none;position:fixed;inset:0;z-index:10000;
-                 background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);
+                 background:rgba(0,0,0,0.6);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);
                  align-items:center;justify-content:center;">
                 <div style="background:var(--color-bg-card);border-radius:14px;padding:1.75rem;
                      width:min(420px,92vw);box-shadow:0 20px 60px rgba(0,0,0,0.3);
@@ -733,7 +733,7 @@
                      xmlns="http://www.w3.org/2000/svg">
                 </svg>
                 <div id="kostelEditorHint" style="position:absolute;top:10px;left:50%;transform:translateX(-50%);
-                     background:rgba(10,8,5,0.85);backdrop-filter:blur(8px);
+                     background:rgba(10,8,5,0.85);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
                      border:1px solid rgba(201,162,39,0.35);border-radius:8px;
                      padding:6px 16px;font-family:'Manrope',sans-serif;font-size:0.72rem;
                      color:#c9a227;white-space:nowrap;pointer-events:none;">
@@ -758,7 +758,7 @@
 
             <!-- Modal for new pin -->
             <div id="kostelPinModal" style="display:none;position:fixed;inset:0;z-index:10000;
-                 background:rgba(0,0,0,0.65);backdrop-filter:blur(5px);
+                 background:rgba(0,0,0,0.65);-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);
                  align-items:center;justify-content:center;">
                 <div style="background:var(--color-bg-card);border-radius:14px;padding:1.75rem;
                      width:min(480px,94vw);box-shadow:0 20px 60px rgba(0,0,0,0.35);
@@ -828,7 +828,7 @@
                 <svg id="topoEditorSVG" style="position:absolute;top:0;left:0;width:100%;height:100%;overflow:visible;pointer-events:all;"
                      xmlns="http://www.w3.org/2000/svg"></svg>
                 <div style="position:absolute;top:10px;left:50%;transform:translateX(-50%);
-                     background:rgba(10,8,5,0.85);backdrop-filter:blur(8px);
+                     background:rgba(10,8,5,0.85);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
                      border:1px solid rgba(201,162,39,0.35);border-radius:8px;
                      padding:6px 16px;font-family:'Manrope',sans-serif;font-size:0.72rem;
                      color:#c9a227;white-space:nowrap;pointer-events:none;">
@@ -853,7 +853,7 @@
 
             <!-- Modal -->
             <div id="topoPinModal" style="display:none;position:fixed;inset:0;z-index:10000;
-                 background:rgba(0,0,0,0.65);backdrop-filter:blur(5px);
+                 background:rgba(0,0,0,0.65);-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);
                  align-items:center;justify-content:center;">
                 <div style="background:var(--color-bg-card);border-radius:14px;padding:1.75rem;
                      width:min(420px,94vw);box-shadow:0 20px 60px rgba(0,0,0,0.35);border:1px solid var(--color-border);">
@@ -1196,7 +1196,7 @@
 
     <!-- ── Edit modal ─────────────────────────────────── -->
     <div id="mkcalEditModal" style="display:none;position:fixed;inset:0;z-index:10000;
-         background:rgba(0,0,0,0.6);backdrop-filter:blur(5px);
+         background:rgba(0,0,0,0.6);-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);
          align-items:center;justify-content:center;">
         <div style="background:var(--color-bg-card,var(--color-surface));border-radius:16px;
              padding:1.75rem;width:min(520px,94vw);
@@ -2075,7 +2075,7 @@ function openEditModal(fieldsHtml, onSave) {
     document.getElementById('editModal')?.remove();
     const m = document.createElement('div');
     m.id = 'editModal';
-    m.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.78);backdrop-filter:blur(10px);z-index:9999;display:flex;align-items:center;justify-content:center;padding:1rem;';
+    m.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.78);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);z-index:9999;display:flex;align-items:center;justify-content:center;padding:1rem;';
     m.innerHTML = `
         <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:1.25rem;padding:2rem;width:100%;max-width:620px;max-height:92vh;overflow-y:auto;box-shadow:0 40px 100px rgba(0,0,0,0.55);">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">

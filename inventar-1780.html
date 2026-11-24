@@ -22,7 +22,7 @@
 <meta property="og:image" content="atlas-1798-preview.jpg">
 <title>Інвентар маєтку Дубровиця — Folwark Worobin z Miastem Dombrowicą · Цифровий архів</title>
 <script>!function(){var t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t)}()</script>
-<link rel="stylesheet" href="app.css?v=13">
+<link rel="stylesheet" href="app.css?v=14">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -33,9 +33,9 @@
 ═════════════════════════════════════════════════════════ */
 :root {
     --hdr: 76px;
-    --ink: #2b2418; --ink-2: #5a4a2e; --ink-3: #8a7a5c;
+    --ink: #2b2418; --ink-2: #5a4a2e; --ink-3: #74664b;
     --paper: #f7f1e3; --paper-2: #efe6d0;
-    --gold: #a9822f; --gold-hi: #d4b25a;
+    --gold: #86661b; --gold-hi: #d4b25a;
     --rule: rgba(90,74,46,.18); --rule-2: rgba(90,74,46,.09);
     --warn: #9a4e1c;
     --ease: cubic-bezier(.16,1,.3,1);
@@ -139,7 +139,7 @@ html { scroll-behavior: smooth; }
 @media (max-width: 520px) { .sc-card:not(.big) { grid-column: span 6; } }
 .sc-cap { position: absolute; inset: auto 0 0 0; display: flex; gap: .7rem; align-items: baseline; padding: 2.2rem 1rem .85rem; background: linear-gradient(transparent, rgba(20,15,8,.86)); color: #f4e9c8; font-family: var(--font-body); font-size: .76rem; line-height: 1.4; }
 .sc-cap i { font-family: var(--font-display); font-style: italic; font-size: 1.4rem; line-height: 1; color: var(--gold-hi); }
-.sc-tag { position: absolute; top: .8rem; left: .8rem; padding: .25rem .6rem; border-radius: 999px; background: rgba(20,15,8,.7); color: #f4e9c8; font-family: var(--font-body); font-size: .68rem; backdrop-filter: blur(6px); }
+.sc-tag { position: absolute; top: .8rem; left: .8rem; padding: .25rem .6rem; border-radius: 999px; background: rgba(20,15,8,.7); color: #f4e9c8; font-family: var(--font-body); font-size: .68rem; -webkit-backdrop-filter: blur(6px);backdrop-filter: blur(6px); }
 .sc-note { margin-top: 1rem; font-family: var(--font-body); font-size: .78rem; color: var(--color-text-light); }
 
 /* лайтбокс */
@@ -341,7 +341,7 @@ html, body { touch-action: manipulation; }
 a, button, [role="button"], input, select, textarea, .nav-link, .logo,
 .mobile-toggle, .theme-toggle, .scroll-top-btn { touch-action: manipulation; }
 </style>
-<link rel="stylesheet" href="ds.css">
+<link rel="stylesheet" href="ds.css?v=2">
 </head>
 <body>
 
@@ -434,7 +434,7 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
         <div><dd id="hHH">—</dd><dt>дворів поіменно</dt></div>
         <div><dd>~1776</dd><dt>рік межування міста</dt></div>
       </dl>
-      <div class="iv-btns"><a class="iv-btn dark" href="#meshkantsi"><span>Списки мешканців</span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a><a class="iv-btn line" href="#skany"><span>Переглянути скани</span></a></div>
+      <div class="iv-btns"><a class="iv-btn dark" href="#meshkantsi"><span>Списки мешканців</span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></div>
     </div>
     <figure class="hero-doc">
       <button type="button" data-lb="1" aria-label="Відкрити скан титульної сторінки"><span class="sheet"><img src="https://i.imgur.com/r6LODUt.jpeg" alt="Титульна сторінка інвентаря" decoding="async"></span></button>
@@ -467,11 +467,11 @@ a, button, [role="button"], input, select, textarea, .nav-link, .logo,
 
 <section class="iv-sec" id="kameni"><div class="iv-wrap iv-cols"><div class="iv-mark"><b>§ 5</b><span>Межові камені</span></div><div><h2 class="iv-h2">Сім каменів 1776 року</h2>
 <p class="iv-p">У 1776 році, за власників міста <strong>Міхала й Казимири Бжостовських</strong> (він — великий підскарбій ВКЛ), разом із монастирем Піарів було встановлено <strong>сім великих пласких каменів</strong> із вирізьбленими написами — щоб назавжди зафіксувати межі між міськими землями та монастирськими угіддями. Межу, позначену цими каменями, докладно описує й пізніший інвентар, складений уже за Плятерів. Маршрут каменів можна частково відновити за описами інвентаря.</p>
-<div class="sn-wrap"><ul class="sn-list" role="tablist" aria-label="Камені"><li><button type="button" class="sn-b" role="tab" data-sn="0" aria-selected="true"><i>1</i><span>Камінь Перший</span></button></li><li><button type="button" class="sn-b" role="tab" data-sn="1" aria-selected="false"><i>2</i><span>Камінь Другий</span></button></li><li><button type="button" class="sn-b" role="tab" data-sn="2" aria-selected="false"><i>3</i><span>Камінь Третій</span></button></li><li><button type="button" class="sn-b" role="tab" data-sn="3" aria-selected="false"><i>4</i><span>Камінь Четвертий</span></button></li><li><button type="button" class="sn-b" role="tab" data-sn="4" aria-selected="false"><i>5</i><span>Камінь П&#x27;ятий</span></button></li><li><button type="button" class="sn-b" role="tab" data-sn="5" aria-selected="false"><i>6</i><span>Камінь Шостий</span></button></li><li><button type="button" class="sn-b" role="tab" data-sn="6" aria-selected="false"><i>7</i><span>Камінь Сьомий</span></button></li></ul>
+<div class="sn-wrap"><ul class="sn-list" role="tablist" aria-label="Камені"><li role="presentation"><button type="button" class="sn-b" role="tab" data-sn="0" aria-selected="true"><i>1</i><span>Камінь Перший</span></button></li><li role="presentation"><button type="button" class="sn-b" role="tab" data-sn="1" aria-selected="false"><i>2</i><span>Камінь Другий</span></button></li><li role="presentation"><button type="button" class="sn-b" role="tab" data-sn="2" aria-selected="false"><i>3</i><span>Камінь Третій</span></button></li><li role="presentation"><button type="button" class="sn-b" role="tab" data-sn="3" aria-selected="false"><i>4</i><span>Камінь Четвертий</span></button></li><li role="presentation"><button type="button" class="sn-b" role="tab" data-sn="4" aria-selected="false"><i>5</i><span>Камінь П&#x27;ятий</span></button></li><li role="presentation"><button type="button" class="sn-b" role="tab" data-sn="5" aria-selected="false"><i>6</i><span>Камінь Шостий</span></button></li><li role="presentation"><button type="button" class="sn-b" role="tab" data-sn="6" aria-selected="false"><i>7</i><span>Камінь Сьомий</span></button></li></ul>
 <div class="sn-card" id="snCard" aria-live="polite"><span class="num" id="snNum"></span><h3 id="snName"></h3><small id="snLet"></small><p id="snText"></p></div></div>
 <blockquote class="iv-quote" style="margin-top:2.6rem"><p>«Плац, що належить до тутешнього костелу, площею 23 морги й 160 квадратних прутів, походить з надання Бжостовських. Колись він на всьому своєму обширі був позначений каменями, багато з яких лишилося й досі, з вирізьбленими літерами: з одного боку — „Michał i Kaźmira Brzostowscy podskarbiowie w. w. x. l.“, з другого — „Imię Marya 1776 roku“. Записуємо цю подробицю на пам'ять, бо колись, може, в недалекому майбутньому, археологи ламатимуть голови над значенням цих каменів і вирізьблених на них літер.»</p><cite>Т. Є. Стецький, «Z boru i stepu: obrazy i pamiątki», 1898 · розділ «Księstwo dubrowickie na wołyńskiem Polesiu»</cite></blockquote>
 <blockquote class="iv-quote" style="margin-top:2.6rem"><p>«На північ від міста, в провулку біля лазні, стирчала скеля заввишки приблизно півтора метра, на якій були вирізьблені кілька нечітких слів, а також кілька цифр, що починалися з 17…; слова та цифри ніколи не були розшифровані.»</p><cite>Книга єврейської громади Дубровиці · XX ст. · Свідчення про невідомий камінь у північній частині міста</cite></blockquote>
-<div class="cx-cards one rv"><article><h3>Загадковий камінь із книги єврейської громади</h3><p>Книга пам'яті єврейської громади Дубровиці зберегла таке свідчення: <strong>на північ від міста, в провулку біля лазні</strong>, стирчала скеля заввишки близько півтора метра з вирізьбленими написами та цифрами, що починались з «17…». Пояснення, що це за камінь, у книзі немає. <br><br> Чи це один із межових каменів 1776 року? <strong>Можливо, але не напевно.</strong> На користь цього — цифри «17…», що узгоджуються з датою межування, і написи, які людям без знання контексту могли здаватися загадковими: латинські ініціали й титули Бжостовських та ім'я MARYA. Проти — місце і вигляд. Межові камені 1776 року стояли довкола костельного плацу піарів — від ринку до Замкової вулички й над Горинню, — а цей камінь був на півночі міста. До того ж інвентар описує їх як <em>великі пласкі</em> камені, частково вкопані в землю, а свідок пам'ятав «скелю» заввишки близько півтора метра. <br><br> Тож це може бути й інший камінь того самого століття. Якщо ж це таки один із каменів 1776 року, він зберігся щонайменше до середини XX ст. — і може існувати досі, просто не впізнаний.</p></article></div></div></div></section>
+<div class="cx-cards one rv"><article><h3>Невідомий камінь із книги єврейської громади</h3><p>Книга пам'яті єврейської громади Дубровиці зберегла таке свідчення: <strong>на північ від міста, в провулку біля лазні</strong>, стирчала скеля заввишки близько півтора метра з вирізьбленими написами та цифрами, що починались з «17…». Пояснення, що це за камінь, у книзі немає. <br><br> Чи це один із межових каменів 1776 року? <strong>Можливо, але не напевно.</strong> На користь цього — цифри «17…», що узгоджуються з датою межування, і написи, які людям без знання контексту могли здаватися загадковими: латинські ініціали й титули Бжостовських та ім'я MARYA. Проти — місце і вигляд. Межові камені 1776 року стояли довкола костельного плацу піарів — від ринку до Замкової вулички й над Горинню, — а цей камінь був на півночі міста. До того ж інвентар описує їх як <em>великі пласкі</em> камені, частково вкопані в землю, а свідок пам'ятав «скелю» заввишки близько півтора метра. <br><br> Тож це може бути й інший камінь того самого століття. Якщо ж це таки один із каменів 1776 року, він зберігся щонайменше до середини XX ст. — і може існувати досі, просто не впізнаний.</p></article></div></div></div></section>
 
 <section class="iv-sec" id="meshkantsi"><div class="iv-wrap iv-cols"><div class="iv-mark"><b>§ 6</b><span>Мешканці</span></div><div><h2 class="iv-h2">Хто жив у місті й селах</h2>
 <p class="iv-p">Інвентар записує двори поіменно: господаря, синів, дочок, братів і сестер. Маєток він описує за фільварками: до кожного панського двору належали свої села. Усі списки перенесено зі збереженням порядку вулиць, рядів і дворів.</p>
@@ -593,12 +593,14 @@ if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeT
 </footer>
 
 <script src="app.js?v=14"></script>
+<script src="reader.js?v=2" defer></script>
 <script src="inventar-plater-data.js"></script>
 <script src="sela_data_embed.js"></script>
 <script>
 (function(){
 'use strict';
 var SCANS = [{"src": "https://i.imgur.com/nkoLQ6R.jpeg", "n": "★", "l": "План міста Домбровиця з околицями · кін. XVIII–XIX ст."}, {"src": "https://i.imgur.com/r6LODUt.jpeg", "n": "I", "l": "00009318-7 · Титульна сторінка"}, {"src": "https://i.imgur.com/fq9QEd3.jpeg", "n": "II", "l": "00009318-47 · Місто та вулиці"}, {"src": "https://i.imgur.com/bGkfvuT.jpeg", "n": "III", "l": "00009318-48 · Землі Піарів · 7 каменів"}, {"src": "https://i.imgur.com/5gR14At.jpeg", "n": "IV", "l": "00009318-49 · Передмістя та церкви"}, {"src": "https://i.imgur.com/uIUoLrQ.jpeg", "n": "V", "l": "00009318-9 · Реєстр ринку"}];
+window.IV_SCANS = SCANS;
 var STONES = [{"l": "A", "n": "Камінь Перший", "d": "На розі ринкових площ та Замкової вулички. З одного боку — напис «Michał i Kaźmira Brzostowscy podskarbiowie w. w. x. l.», тобто імена тогочасних власників, підскарбія Міхала Бжостовського та його дружини Казимири, з іншого — ім'я <em>MARYA</em> та рік 1776. З нього починалася межа."}, {"l": "B", "n": "Камінь Другий", "d": "Встановлений на розі самого валу, на відстані приблизно 8 шнурів від першого каменя. Мав такі самі написи. Позначав поворот межі від лінії Передкостельного провулку до сходу, в бік річки."}, {"l": "C", "n": "Камінь Третій", "d": "У транскрипції літеру цього каменя прочитано як «G», але за порядком (A, B, …, D) це, найімовірніше, «C»: у скорописі ці літери схожі. Розміщений над самою <strong>протокою Горині</strong>, на відстані 8 шнурів на схід. Позначав межу монастирських угідь безпосередньо на березі річки. Звідси межа пролягала вздовж протоки до місця злиття з руслом."}, {"l": "D", "n": "Камінь Четвертий", "d": "Встановлений у місці, де стара Горинь зливалась із протокою (Прервою). Це вузлова точка: далі межа повертала на південь уздовж старого русла річки."}, {"l": "E", "n": "Камінь П'ятий", "d": "Закопаний і вставлений уздовж берега <strong>старої Горині</strong>, трохи вище за течією на схід. Відділяв міські луки від монастирських заростей на острові між рукавами річки."}, {"l": "F", "n": "Камінь Шостий", "d": "Розміщений у низинах, серед заростей, над протокою. Ліворуч від нього — Миколаївські угіддя, праворуч — монастирські зарості. Від цього каменя межа знову переходила через протоку."}, {"l": "G", "n": "Камінь Сьомий", "d": "Вкопаний на повороті Замкової вулички, дороги від ринку до річки. Від нього межа поверталась уздовж юридичного саду й ділянок монастиря назад до першого каменя, замикаючи кільце."}];
 var RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
 function $(id){ return document.getElementById(id); }

@@ -19,7 +19,7 @@
     <title>Архівні справи — Дубровиця</title>
     <meta name="description" content="Архівні справи Дубровиці: метричні книги XIX — початку XX століття, сумаріуш 1642 року, інвентар маєтку, судові реєстри XVII століття, списки виборців 1938 року та бібліографія.">
     <script>!function(){var t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t)}()</script>
-    <link rel="stylesheet" href="app.css?v=13">
+    <link rel="stylesheet" href="app.css?v=14">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Manrope:wght@300;400;500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -620,7 +620,7 @@ a, button, [role="button"], input, select, textarea,
     .ar-century { padding-top: 3.5rem; }
 }
 </style>
-<link rel="stylesheet" href="ds.css">
+<link rel="stylesheet" href="ds.css?v=2">
 </head>
 <body>
     <!-- Header -->
@@ -982,7 +982,7 @@ a, button, [role="button"], input, select, textarea,
     display: flex; align-items: center; gap: 0.55rem;
     font-family: 'Manrope', sans-serif;
     font-size: 0.72rem; font-weight: 500;
-    color: var(--color-text-muted, #a89880);
+    color: var(--color-text-muted);
 }
 .mkcal-leg-sq {
     width: 14px; height: 14px; border-radius: 4px; flex-shrink: 0;
@@ -1181,7 +1181,7 @@ a, button, [role="button"], input, select, textarea,
 }
 .mkcal-pi-cnt {
     font-family: 'Manrope', sans-serif;
-    font-size: 0.8rem; color: var(--color-text-muted, #a89880);
+    font-size: 0.8rem; color: var(--color-text-muted);
     flex: 1; padding-top: 0.2rem;
 }
 .mkcal-pi-x {
@@ -1190,7 +1190,7 @@ a, button, [role="button"], input, select, textarea,
     border: 1px solid var(--color-border, rgba(201,162,39,0.14));
     display: flex; align-items: center; justify-content: center;
     cursor: pointer; font-size: 0.78rem;
-    color: var(--color-text-muted, #a89880);
+    color: var(--color-text-muted);
     transition: all 0.2s; flex-shrink: 0; line-height: 1;
 }
 .mkcal-pi-x:hover { border-color: #c62828; color: #c62828; background: rgba(198,40,40,0.06); }
@@ -1235,7 +1235,7 @@ a, button, [role="button"], input, select, textarea,
 }
 .mkcal-book-loc {
     font-family: 'Manrope', sans-serif;
-    font-size: 0.69rem; color: var(--color-text-muted, #a89880);
+    font-size: 0.69rem; color: var(--color-text-muted);
     line-height: 1.44; margin-top: 0.05rem;
 }
 .mkcal-book-arch {
@@ -1267,7 +1267,7 @@ a, button, [role="button"], input, select, textarea,
 .mkcal-note {
     text-align: center; margin-top: 1.75rem;
     font-family: 'Manrope', sans-serif;
-    font-size: 0.68rem; color: var(--color-text-muted, #a89880);
+    font-size: 0.68rem; color: var(--color-text-muted);
     letter-spacing: 0.03em;
 }
 .mkcal-note a { color: #c9a227; text-decoration: none; }
@@ -1574,9 +1574,9 @@ a, button, [role="button"], input, select, textarea,
         .mk-books-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,1.7vw,1.2rem);font-weight:300;font-style:italic;color:var(--color-text-light,#8b6f3e);max-width:640px;margin:0 auto;}
         /* Filters */
         .mk-bk-filters{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;justify-content:center;margin-bottom:3rem;}
-        .mk-bk-filters-label{font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--color-text-muted,#a89880);flex-shrink:0;margin-right:.4rem;}
+        .mk-bk-filters-label{font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--color-text-muted);flex-shrink:0;margin-right:.4rem;}
         /* Override catalog-filter-btn for light background context */
-        .mk-bk-filters .catalog-filter-btn{background:var(--color-bg-secondary,#f0ebe0);color:var(--color-text-secondary,#5a4a2e);border-color:rgba(201,162,39,.3);backdrop-filter:none;}
+        .mk-bk-filters .catalog-filter-btn{background:var(--color-bg-secondary,#f0ebe0);color:var(--color-text-secondary,#5a4a2e);border-color:rgba(201,162,39,.3);-webkit-backdrop-filter:none;backdrop-filter:none;}
         .mk-bk-filters .catalog-filter-btn:hover{background:rgba(201,162,39,.12);color:var(--color-text,#1a1000);border-color:rgba(201,162,39,.55);}
         .mk-bk-filters .catalog-filter-btn.active{background:#c9a227;color:#1a1208;border-color:#c9a227;font-weight:600;box-shadow:0 3px 12px rgba(201,162,39,.35);}
         [data-theme="dark"] .mk-bk-filters .catalog-filter-btn{background:rgba(255,255,255,.07);color:rgba(255,255,255,.72);border-color:rgba(255,255,255,.15);}
@@ -1598,8 +1598,8 @@ a, button, [role="button"], input, select, textarea,
         .bk-card:hover .bk-cover-img{transform:translateY(-3px) rotate(-.5deg);box-shadow:10px 16px 40px rgba(0,0,0,.24),3px 6px 12px rgba(0,0,0,.14);}
         .bk-cover-placeholder{width:120px;height:172px;border-radius:3px;background:linear-gradient(160deg,var(--color-bg-secondary,#f5f1e8),var(--color-bg-alt,rgba(201,162,39,.04)));border:1px solid var(--color-border-light,rgba(201,162,39,.15));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;flex-shrink:0;}
         .bk-cover-placeholder svg{opacity:.3;}
-        .bk-cover-placeholder span{font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--color-text-muted,#a89880);opacity:.6;}
-        .bk-badge{display:inline-flex;align-items:center;gap:.3rem;padding:.25rem .7rem;border-radius:100px;border:1px solid var(--color-border,rgba(201,162,39,.2));font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--color-text-muted,#a89880);background:var(--color-bg,#faf7f2);white-space:nowrap;}
+        .bk-cover-placeholder span{font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--color-text-muted);opacity:.6;}
+        .bk-badge{display:inline-flex;align-items:center;gap:.3rem;padding:.25rem .7rem;border-radius:100px;border:1px solid var(--color-border,rgba(201,162,39,.2));font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--color-text-muted);background:var(--color-bg,#faf7f2);white-space:nowrap;}
         [data-theme="dark"] .bk-badge{background:#0e0c0a;}
         .bk-info{display:flex;flex-direction:column;gap:0;}
         .bk-num{font-family:'Cormorant Garamond',serif;font-size:.78rem;color:#c9a227;opacity:.5;letter-spacing:.1em;margin-bottom:.4rem;}
@@ -1608,7 +1608,7 @@ a, button, [role="button"], input, select, textarea,
         .bk-author-line{width:16px;height:1px;background:#c9a227;opacity:.5;flex-shrink:0;}
         .bk-author{font-family:'Manrope',sans-serif;font-size:.72rem;color:var(--color-accent-dark,#8b6f1c);font-weight:500;letter-spacing:.04em;}
         [data-theme="dark"] .bk-author{color:#e0bd5a;}
-        .bk-year{font-family:'Manrope',sans-serif;font-size:.65rem;color:var(--color-text-muted,#a89880);margin-left:.3rem;}
+        .bk-year{font-family:'Manrope',sans-serif;font-size:.65rem;color:var(--color-text-muted);margin-left:.3rem;}
         .bk-desc{font-family:'Cormorant Garamond',serif;font-size:.95rem;line-height:1.72;color:var(--color-text-secondary,#5a4a2e);margin-bottom:1.2rem;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;}
         .bk-desc-full{-webkit-line-clamp:unset;overflow:visible;display:block;}
         .bk-read-more{background:none;border:none;padding:0;cursor:pointer;font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:#c9a227;display:inline-flex;align-items:center;gap:.3rem;margin-bottom:1rem;transition:gap .2s ease;}
@@ -1617,7 +1617,7 @@ a, button, [role="button"], input, select, textarea,
         .bk-location a{font-family:'Manrope',sans-serif;font-size:.66rem;letter-spacing:.05em;color:var(--color-accent-dark,#8b6f1c);text-decoration:none;display:inline-flex;align-items:center;gap:.35rem;transition:gap .2s ease;}
         [data-theme="dark"] .bk-location a{color:#e0bd5a;}
         .bk-location a:hover{gap:.55rem;}
-        .bk-empty{display:none;text-align:center;padding:5rem 1rem;font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-style:italic;color:var(--color-text-muted,#a89880);grid-column:1 / -1;}
+        .bk-empty{display:none;text-align:center;padding:5rem 1rem;font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-style:italic;color:var(--color-text-muted);grid-column:1 / -1;}
         @media(max-width:520px){.bk-card{grid-template-columns:90px 1fr;padding:1.6rem 1.2rem;gap:0;}.bk-cover-col{padding-right:1.2rem;}.bk-cover-img{width:90px;height:128px;}.bk-cover-placeholder{width:90px;height:128px;}.bk-badge{display:none;}.bk-title{font-size:1.05rem;}.bk-desc{-webkit-line-clamp:3;}}
         @media(max-width:400px){.bk-card{grid-template-columns:1fr;padding:1.4rem 1rem;}.bk-cover-col{flex-direction:row;align-items:center;gap:1rem;padding-right:0;margin-bottom:1rem;}.bk-cover-img{width:72px;height:103px;flex-shrink:0;}.bk-cover-placeholder{width:72px;height:103px;flex-shrink:0;}.bk-badge{display:inline-block;}.bk-num{display:none;}}
         </style>

@@ -3,7 +3,7 @@
    app.css v11 — спільна шапка, меню й підвал; Manrope + Cormorant
    ================================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Manrope:wght@300;400;500;600;700&family=Jost:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Manrope:wght@300;400;500;600;700&display=swap');
 
 /* ================================================================
    CSS ЗМІННІ — ДИЗАЙН СИСТЕМА
@@ -31,8 +31,8 @@
     /* Текст */
     --color-text:           #1c1917;
     --color-text-secondary: #44403c;
-    --color-text-light:     #78716c;
-    --color-text-muted:     #a8a29e;
+    --color-text-light:     #6e675f;
+    --color-text-muted:     #736d67;
 
     /* Бордери */
     --color-border:         #ddd5c8;
@@ -91,8 +91,8 @@
 
     --color-text:           #f5f0e8;
     --color-text-secondary: #c4b9a8;
-    --color-text-light:     #8a7d6e;
-    --color-text-muted:     #5c5044;
+    --color-text-light:     #9a8d7b;
+    --color-text-muted:     #958977;
 
     --color-border:         #2e2820;
     --color-border-light:   #252018;
@@ -818,7 +818,7 @@ html[data-theme="dark"] .moon-icon { display: none; }
     z-index: 4;
     display: flex; align-items: center; gap: .75rem;
     background: rgba(255,255,255,.06);
-    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);backdrop-filter: blur(12px);
     border: 1px solid rgba(255,255,255,.12);
     border-radius: 12px;
     padding: .75rem 1.25rem;
@@ -940,7 +940,7 @@ html[data-theme="dark"] .moon-icon { display: none; }
     background: rgba(255,255,255,.1);
     color: rgba(255,255,255,.9);
     border: 1px solid rgba(255,255,255,.2);
-    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);backdrop-filter: blur(8px);
 }
 .hero-btn-secondary:hover {
     background: rgba(255,255,255,.18);
@@ -955,7 +955,7 @@ html[data-theme="dark"] .moon-icon { display: none; }
     z-index: 4;
     display: flex; align-items: center; gap: .75rem;
     background: rgba(255,255,255,.06);
-    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);backdrop-filter: blur(12px);
     border: 1px solid rgba(255,255,255,.12);
     border-radius: 12px;
     padding: .75rem 1.25rem;
@@ -1592,14 +1592,14 @@ html[data-theme="dark"] .moon-icon { display: none; }
     line-height: 1.7;
     color: rgba(245, 240, 232, 0.55);
 }
-.ft-copy a { color: var(--color-accent-light); }
+.ft-copy a { color: var(--color-accent-light); text-decoration: underline; text-underline-offset: 2px; text-decoration-color: rgba(224, 189, 90, .45); }
 .ft-copy a:hover { color: #f5f0e8; }
 .ft-notice {
     max-width: 68rem;
     margin-top: .9rem;
     font-size: .74rem;
     line-height: 1.75;
-    color: rgba(245, 240, 232, 0.38);
+    color: rgba(245, 240, 232, 0.6);
 }
 .ft-notice a { color: rgba(224, 189, 90, 0.75); text-decoration: underline; text-underline-offset: 2px; text-decoration-color: rgba(224, 189, 90, 0.3); }
 .ft-notice a:hover { color: #f5f0e8; }
@@ -1895,7 +1895,7 @@ html[data-theme="dark"] .moon-icon { display: none; }
     border-radius: var(--radius-full);
     background-color: rgba(255,255,255,0.12);
     color: white;
-    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);backdrop-filter: blur(8px);
     transition: all var(--transition-base);
 }
 .search-input::placeholder { color: rgba(255,255,255,0.5); }
@@ -1936,7 +1936,7 @@ html[data-theme="dark"] .moon-icon { display: none; }
     transition: all 0.2s ease;
     font-size: 0.82rem;
     letter-spacing: 0.03em;
-    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);backdrop-filter: blur(4px);
     font-family: var(--font-body);
 }
 .catalog-filter-btn:hover {
@@ -1958,7 +1958,7 @@ html[data-theme="dark"] .moon-icon { display: none; }
     background: var(--color-bg-secondary);
     color: var(--color-text-secondary);
     border-color: var(--color-border);
-    backdrop-filter: none;
+    -webkit-backdrop-filter: none;backdrop-filter: none;
 }
 .books-filters-wrap .catalog-filter-btn:hover,
 .mk-filters-bar .catalog-filter-btn:hover {
@@ -2213,7 +2213,7 @@ html[data-theme="dark"] .moon-icon { display: none; }
     transition: all 0.2s ease;
     font-size: 0.82rem;
     letter-spacing: 0.03em;
-    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);backdrop-filter: blur(4px);
     font-family: var(--font-body);
 }
 .filter-btn:hover, .category-btn:hover {
@@ -2430,7 +2430,7 @@ html[data-theme="dark"] .moon-icon { display: none; }
     display: inline-block;
     padding: 0.2rem 0.7rem;
     background-color: rgba(255,255,255,0.18);
-    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);backdrop-filter: blur(6px);
     border-radius: var(--radius-full);
     font-size: 0.8rem;
     margin-right: 0.375rem;
@@ -2528,7 +2528,7 @@ html[data-theme="dark"] .moon-icon { display: none; }
     position: fixed;
     inset: 0;
     background-color: rgba(5, 4, 3, 0.97);
-    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);backdrop-filter: blur(20px);
     z-index: 2000;
     display: none;
     flex-direction: column;
@@ -2546,7 +2546,7 @@ html[data-theme="dark"] .moon-icon { display: none; }
     top: 1.25rem; right: 1.25rem;
     width: 44px; height: 44px;
     background: rgba(255,255,255,0.1);
-    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);backdrop-filter: blur(8px);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -2573,7 +2573,7 @@ html[data-theme="dark"] .moon-icon { display: none; }
     right: 4.5rem;
     width: 44px; height: 44px;
     background: rgba(255,255,255,0.1);
-    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);backdrop-filter: blur(8px);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -2598,7 +2598,7 @@ html[data-theme="dark"] .moon-icon { display: none; }
     top: 50%; transform: translateY(-50%);
     width: 48px; height: 48px;
     background: rgba(255,255,255,0.08);
-    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);backdrop-filter: blur(8px);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -3053,7 +3053,7 @@ select.admin-input { cursor: pointer; }
     padding: 0.5rem 0.8rem; border-radius: 6px;
     font-size: 0.7rem; z-index: 100000; pointer-events: none;
     box-shadow: 0 4px 16px rgba(0,0,0,0.3);
-    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);backdrop-filter: blur(10px);
     border: 1px solid rgba(201,162,39,0.2);
 }
 
@@ -3513,7 +3513,7 @@ img[loading="lazy"] { transition: opacity 0.6s ease; }
     align-items: flex-start;
     gap: 8px;
     background: rgba(10, 8, 5, 0.92);
-    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);backdrop-filter: blur(12px);
     border: 1px solid rgba(201, 162, 39, 0.3);
     border-radius: var(--radius-lg);
     padding: 10px 13px;
@@ -3610,7 +3610,7 @@ img[loading="lazy"] { transition: opacity 0.6s ease; }
 .aerial-ctrl-btn {
     width: 34px; height: 34px;
     background: rgba(10, 8, 5, 0.82);
-    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);backdrop-filter: blur(8px);
     border: 1px solid rgba(201,162,39,0.25);
     border-radius: var(--radius-md);
     color: #d4b86a;
@@ -3636,7 +3636,7 @@ img[loading="lazy"] { transition: opacity 0.6s ease; }
     top: 14px;
     right: 14px;
     background: rgba(10, 8, 5, 0.80);
-    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);backdrop-filter: blur(10px);
     border: 1px solid rgba(201,162,39,0.25);
     border-radius: var(--radius-md);
     padding: 6px 12px;
@@ -4299,3 +4299,7 @@ html:not([data-theme="dark"]) body {
     box-shadow: 0 0 0 3px rgba(243, 234, 214, .95), 0 0 0 4px rgba(154, 116, 22, .55), 0 18px 40px rgba(0, 0, 0, .5); opacity: 0; transform: scale(.85); transition: opacity .18s, transform .25s cubic-bezier(.16, 1, .3, 1); }
 .loupe.on { opacity: 1; transform: none; }
 .cover-sheet img, .hero-doc .sheet img { cursor: crosshair; }
+
+/* Посилання всередині тексту мають бути видні не лише кольором (WCAG 1.4.1) */
+main p a:not([class]), main dd a:not([class]), main figcaption a:not([class]) { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .18em; text-decoration-color: color-mix(in srgb, currentColor 45%, transparent); }
+main p a:not([class]):hover { text-decoration-color: currentColor; }

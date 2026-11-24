@@ -4,9 +4,9 @@
    Підключення: <link rel="stylesheet" href="ds.css"> після app.css
    ═══════════════════════════════════════════════════════════════ */
 :root{
-  --ds-ink:#2b2418;--ds-ink-2:#5a4a2e;--ds-ink-3:#8a7a5c;
+  --ds-ink:#2b2418;--ds-ink-2:#5a4a2e;--ds-ink-3:#74664b;
   --ds-paper:#f7f1e3;--ds-paper-2:#efe6d0;--ds-desk:#1b150d;
-  --ds-gold:#a9822f;--ds-gold-hi:#d4b25a;--ds-red:#a8322a;
+  --ds-gold:#86661b;--ds-gold-hi:#d4b25a;--ds-red:#a8322a;
   --ds-rule:rgba(90,74,46,.18);--ds-rule-2:rgba(90,74,46,.09);
   --ds-r-sm:9px;--ds-r:14px;--ds-r-lg:22px;
   --ds-shadow:0 18px 44px rgba(20,15,8,.14);--ds-shadow-lg:0 30px 70px rgba(0,0,0,.45);

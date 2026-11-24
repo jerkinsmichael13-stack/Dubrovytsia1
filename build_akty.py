@@ -277,9 +277,9 @@ def page(key):
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="app.css?v=13">
+    <link rel="stylesheet" href="app.css?v=14">
 <style>{css}</style>
-<link rel="stylesheet" href="ds.css">
+<link rel="stylesheet" href="ds.css?v=2">
 </head>
 <body class="ak-page">
 
@@ -328,7 +328,7 @@ def page(key):
 
 <script src="app.js?v=14"></script>
 <script>{js}</script>
-<script src="reader.js?v=1" defer></script>
+<script src="reader.js?v=2" defer></script>
 </body>
 </html>
 '''.format(desc=esc(P['desc']), ogt=esc(re.sub(r'<[^>]+>', '', P['h1']).replace('&nbsp;', ' ')), title=esc(P['title']), css=CSS, header=header, cover=esc(docs[0]['scans'][0]), first=docs[0]['id'],

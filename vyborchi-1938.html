@@ -13,7 +13,7 @@
 <title>Список виборців 1938 — Дубровиця</title>
 <meta name="description" content="Список виборців Дубровиці 1938 — 6 357 записів, 60+ професій, Фонд 263 ДАРО">
 <script>!function(){document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')||'light')}()</script>
-<link rel="stylesheet" href="app.css?v=13">
+<link rel="stylesheet" href="app.css?v=14">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -38,7 +38,7 @@ html,body{touch-action:manipulation;}
 .vbh-rl-l{flex:1;height:1px;background:linear-gradient(90deg,rgba(201,162,39,.45),transparent);}
 .vbh-rl-d{width:5px;height:5px;background:rgba(201,162,39,.55);transform:rotate(45deg);flex-shrink:0;}
 .vbh-meta{display:flex;flex-wrap:wrap;gap:.5rem;opacity:0;animation:up .8s cubic-bezier(.16,1,.3,1) .5s forwards;justify-content:center;}
-.vbh-tag{font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.09em;padding:.38rem 1rem;border:1px solid rgba(201,162,39,.2);border-radius:100px;color:rgba(255,255,255,.45);background:rgba(0,0,0,.3);backdrop-filter:blur(8px);}
+.vbh-tag{font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.09em;padding:.38rem 1rem;border:1px solid rgba(201,162,39,.2);border-radius:100px;color:rgba(255,255,255,.45);background:rgba(0,0,0,.3);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);}
 .vbh-tag b{color:#c9a227;font-weight:600;}
 .vbh-stats{display:flex;flex-wrap:wrap;gap:0;margin-top:2.8rem;opacity:0;animation:up .8s cubic-bezier(.16,1,.3,1) .6s forwards;justify-content:center;}
 .vbh-st{padding:1rem 2rem 1rem 0;margin-right:2rem;border-right:1px solid rgba(201,162,39,.12);}
@@ -170,7 +170,7 @@ html,body{touch-action:manipulation;}
 .vbg-badge{font-family:'Manrope',sans-serif;font-size:.62rem;font-weight:700;letter-spacing:.06em;padding:.22rem .65rem;border-radius:100px;background:rgba(201,162,39,.12);color:#c9a227;border:1px solid rgba(201,162,39,.2);white-space:nowrap;flex-shrink:0;}
 .vbg-divider{height:1px;background:linear-gradient(90deg,rgba(201,162,39,.15),transparent);margin-bottom:1rem;}
 .vbg-short{font-family:'Cormorant Garamond',serif;font-size:.92rem;font-style:italic;color:var(--color-text-light,#8b6f3e);margin-bottom:.75rem;line-height:1.4;}
-.vbg-desc{font-family:'Manrope',sans-serif;font-size:.75rem;line-height:1.72;color:var(--color-text-muted,#a89880);}
+.vbg-desc{font-family:'Manrope',sans-serif;font-size:.75rem;line-height:1.72;color:var(--color-text-muted);}
 .vbg-desc strong{color:var(--color-text,#1a1000);font-weight:600;}
 [data-theme="dark"] .vbg-desc strong{color:#e8dbb5;}
 .vbg-desc em{color:rgba(201,162,39,.75);font-style:italic;}
@@ -198,7 +198,7 @@ html,body{touch-action:manipulation;}
 .vbr-bdg{background:linear-gradient(135deg,#c9a227,#a07c10);color:#0a0805;font-family:'Manrope',sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.07em;padding:.6rem 1.3rem;border-radius:100px;white-space:nowrap;flex-shrink:0;box-shadow:0 4px 20px rgba(201,162,39,.22);}
 .vbr-tabs{display:flex;border-bottom:2px solid rgba(201,162,39,.1);margin-bottom:1.6rem;overflow-x:auto;scrollbar-width:none;}
 .vbr-tabs::-webkit-scrollbar{display:none;}
-.vbr-tab{font-family:'Manrope',sans-serif;font-size:.62rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;padding:.7rem 1.6rem;cursor:pointer;border:none;background:transparent;color:var(--color-text-muted,#a89880);border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .22s;white-space:nowrap;flex-shrink:0;}
+.vbr-tab{font-family:'Manrope',sans-serif;font-size:.62rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;padding:.7rem 1.6rem;cursor:pointer;border:none;background:transparent;color:var(--color-text-muted);border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .22s;white-space:nowrap;flex-shrink:0;}
 .vbr-tab:hover{color:var(--color-text,#1a1000);}
 .vbr-tab.on{color:#c9a227;border-bottom-color:#c9a227;font-weight:700;}
 [data-theme="dark"] .vbr-tab:hover{color:#e8dbb5;}
@@ -218,9 +218,9 @@ html,body{touch-action:manipulation;}
 [data-theme="dark"] .vbr-si{background:#100d09;color:#e8dbb5;border-color:rgba(201,162,39,.13);}
 .vbr-ib{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.8rem;padding:.65rem 1.3rem;background:var(--color-bg-card,#fcf9f2);border:1px solid rgba(201,162,39,.09);border-radius:10px;margin-bottom:1.2rem;}
 [data-theme="dark"] .vbr-ib{background:#100d09;}
-.vbr-ib-c{font-family:'Manrope',sans-serif;font-size:.73rem;color:var(--color-text-muted,#a89880);}
+.vbr-ib-c{font-family:'Manrope',sans-serif;font-size:.73rem;color:var(--color-text-muted);}
 .vbr-ib-c strong{color:#c9a227;font-weight:700;}
-.vbr-ib-p{font-family:'Manrope',sans-serif;font-size:.68rem;color:var(--color-text-muted,#a89880);}
+.vbr-ib-p{font-family:'Manrope',sans-serif;font-size:.68rem;color:var(--color-text-muted);}
 /* TABLE */
 .vbr-tw{position:relative;border-radius:20px;overflow:hidden;isolation:isolate;box-shadow:0 24px 70px rgba(0,0,0,.28);}
 .vbr-tw-bg{position:absolute;inset:0;background:#0d0b08;z-index:0;}
@@ -268,10 +268,10 @@ html,body{touch-action:manipulation;}
 .pg:hover:not(:disabled){background:rgba(201,162,39,.09);border-color:rgba(201,162,39,.35);color:#c9a227;}
 .pg.on{background:linear-gradient(135deg,#c9a227,#9d7b0c);color:#0a0805;border-color:transparent;font-weight:700;box-shadow:0 4px 16px rgba(201,162,39,.25);}
 .pg:disabled{opacity:.22;cursor:not-allowed;}
-.pg-dots{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--color-text-muted,#a89880);padding:0 .2rem;}
+.pg-dots{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--color-text-muted);padding:0 .2rem;}
 [data-theme="dark"] .pg{background:#100d09;color:rgba(232,219,181,.42);border-color:rgba(201,162,39,.09);}
 [data-theme="dark"] .pg.on{background:linear-gradient(135deg,#c9a227,#9d7b0c);color:#0a0805;}
-.vbr-note{font-family:'Manrope',sans-serif;font-size:.7rem;color:var(--color-text-muted,#a89880);text-align:center;margin-top:2.8rem;line-height:1.8;}
+.vbr-note{font-family:'Manrope',sans-serif;font-size:.7rem;color:var(--color-text-muted);text-align:center;margin-top:2.8rem;line-height:1.8;}
 .vbr-note a{color:#c9a227;text-decoration:none;}
 .sbdg{display:inline-block;padding:.1rem .44rem;border-radius:4px;font-size:.62rem;font-weight:700;letter-spacing:.04em;margin:0 .1rem;}
 .sb1{background:rgba(201,162,39,.12);color:rgba(201,162,39,.8);}
@@ -411,7 +411,15 @@ html,body{touch-action:manipulation;}
 [data-theme="dark"] .vb-map-cap-txt{color:rgba(201,162,39,.7);}
 @media(max-width:600px){.vb-map-open{top:auto;bottom:3.6rem;right:50%;transform:translateX(50%);}.vb-map-wrap{height:52vh;min-height:280px;}.vb-map-cap-line{width:28px;}.vb-map-cap-txt{font-size:.65rem;}}
 </style>
-<link rel="stylesheet" href="ds.css">
+<link rel="stylesheet" href="ds.css?v=2">
+<style>/* контраст дрібного тексту (WCAG AA) */
+html[data-theme="light"] .td-born,html[data-theme="light"] .td-addr,html[data-theme="light"] .td-since,html[data-theme="light"] .vbc-txt,html[data-theme="light"] .vbg-desc{color:#66583f!important}
+html[data-theme="light"] .vbg-prof-pl,html[data-theme="light"] .vbr-filter-label,html[data-theme="light"] .vbr-hd-sup,html[data-theme="light"] .vbc-txt em,html[data-theme="light"] .vbg-desc em,html[data-theme="light"] .vbr-t em{color:#86661b!important}
+html[data-theme="dark"] .td-born,html[data-theme="dark"] .td-addr,html[data-theme="dark"] .td-since,html[data-theme="dark"] .vbc-txt,html[data-theme="dark"] .vbg-desc{color:#a99d87!important}
+html[data-theme="dark"] .vbg-prof-pl,html[data-theme="dark"] .vbr-filter-label,html[data-theme="dark"] .vbr-hd-sup,html[data-theme="dark"] .vbc-txt em,html[data-theme="dark"] .vbg-desc em,html[data-theme="dark"] .src-p.src-4,html[data-theme="dark"] .pp-ril.pp{color:#cfa94a!important}
+.fp-ct{opacity:.9!important}
+html[data-theme="light"] .vbr-t thead th{color:#86661b!important}html[data-theme="dark"] .vbr-t thead th{color:#cfa94a!important}
+</style>
 </head>
 <body>
 <style>
@@ -619,7 +627,7 @@ html,body{touch-action:manipulation;}
   <div class="vbc-in">
     <div class="vbc-card"><div class="vbc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4 3 6.5v13.5l6-2.5 6 2.5 6-2.5V4l-6 2.5z"/><path d="M9 4v13.5M15 6.5V20"/></svg></div><div><div class="vbc-ttl">Польський період</div><div class="vbc-txt">У 1938 р. Дубровиця входила до Польської Республіки. Список складався для парламентських виборів і фіксував дорослих мешканців з правом голосу.</div></div></div>
     <div class="vbc-card"><div class="vbc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3.5" width="14" height="17" rx="2"/><path d="M9 3.5h6v2.5H9zM8.5 10.5h7M8.5 14h7M8.5 17.5h4"/></svg></div><div><div class="vbc-ttl">Що містить список</div><div class="vbc-txt">Прізвище та ім'я, дата народження, <em>рід занять</em>, адреса та дата поселення. Понад <em>65 різних професій</em> зафіксовано в реєстрі.</div></div></div>
-    <div class="vbc-card"><div class="vbc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5.5" r="2.2"/><circle cx="6" cy="17.5" r="2.2"/><circle cx="18" cy="17.5" r="2.2"/><path d="M12 7.7V12M6 15.3V12h12v3.3"/></svg></div><div><div class="vbc-ttl">Для генеалогічних досліджень</div><div class="vbc-txt">Унікальне першоджерело для пошуку предків 1930-х. Пошук за прізвищем або ім'ям, фільтр за пунктом або родом занять.</div></div></div>
+    <div class="vbc-card"><div class="vbc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5.5" r="2.2"/><circle cx="6" cy="17.5" r="2.2"/><circle cx="18" cy="17.5" r="2.2"/><path d="M12 7.7V12M6 15.3V12h12v3.3"/></svg></div><div><div class="vbc-ttl">Для генеалогічних досліджень</div><div class="vbc-txt">Поіменний список дорослих мешканців — для пошуку предків 1930-х. Пошук за прізвищем або ім'ям, фільтр за пунктом або родом занять.</div></div></div>
     <div class="vbc-card"><div class="vbc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 7.5 12 3.5l8.5 4v9L12 20.5l-8.5-4z"/><path d="M3.5 7.5 12 11.5l8.5-4M12 11.5v9"/></svg></div><div><div class="vbc-ttl">Архівне джерело</div><div class="vbc-txt"><em>Фонд 263 ДАРО</em> — Державний архів Рівненської обл. П'ять описів: місто Домбровиця, гміна Домбровиця та навколишні села: Соломіївка, Орв'яниця, Селець, Ясинець, Воробин та інші.</div></div></div>
   </div>
 </section>
@@ -735,32 +743,32 @@ html,body{touch-action:manipulation;}
           Населений пункт
         </div>
         <div class="vbr-fp" id="tVil">
-          <button class="fp on" data-village="all">📍 Усі населені пункти<span class="fp-ct">8 619</span></button>
-<button class="fp" data-village="Дубровиця"><span class="fp-ic">🏙️</span>Дубровиця<span class="fp-ct">2 630</span></button>
-<button class="fp" data-village="Бережниця"><span class="fp-ic">🌿</span>Бережниця<span class="fp-ct">1 177</span></button>
-<button class="fp" data-village="Селець"><span class="fp-ic">🌾</span>Селець<span class="fp-ct">907</span></button>
-<button class="fp" data-village="Берестя"><span class="fp-ic">🌿</span>Берестя<span class="fp-ct">831</span></button>
-<button class="fp" data-village="Орв'яниця"><span class="fp-ic">🌾</span>Орв'яниця<span class="fp-ct">771</span></button>
-<button class="fp" data-village="Соломіївка"><span class="fp-ic">🌾</span>Соломіївка<span class="fp-ct">405</span></button>
-<button class="fp" data-village="Крупове"><span class="fp-ic">🌾</span>Крупове<span class="fp-ct">385</span></button>
-<button class="fp" data-village="Мочулище"><span class="fp-ic">🌊</span>Мочулище<span class="fp-ct">320</span></button>
-<button class="fp" data-village="Сохи"><span class="fp-ic">🌾</span>Сохи<span class="fp-ct">224</span></button>
-<button class="fp" data-village="Заріччя (ст. Дубровиця)"><span class="fp-ic">🚂</span>Заріччя (ст. Дубровиця)<span class="fp-ct">220</span></button>
-<button class="fp" data-village="Ясинець"><span class="fp-ic">🌿</span>Ясинець<span class="fp-ct">192</span></button>
-<button class="fp" data-village="Острівці"><span class="fp-ic">🏝️</span>Острівці<span class="fp-ct">118</span></button>
-<button class="fp" data-village="Осада Адольфув"><span class="fp-ic">🏡</span>Осада Адольфув<span class="fp-ct">104</span></button>
-<button class="fp" data-village="Працуки"><span class="fp-ic">📍</span>Працюки<span class="fp-ct">96</span></button>
-<button class="fp" data-village="Воробин"><span class="fp-ic">🏡</span>Воробин<span class="fp-ct">82</span></button>
-<button class="fp" data-village="Фільварк Антонін"><span class="fp-ic">🏡</span>Фільварк Антонін<span class="fp-ct">45</span></button>
-<button class="fp" data-village="Ремчиці"><span class="fp-ic">🌾</span>Ремчиці<span class="fp-ct">31</span></button>
-<button class="fp" data-village="Осова"><span class="fp-ic">🌾</span>Осова<span class="fp-ct">20</span></button>
-<button class="fp" data-village="Рудня"><span class="fp-ic">🌾</span>Рудня<span class="fp-ct">20</span></button>
-<button class="fp" data-village="Фільварк Мочулище"><span class="fp-ic">🏡</span>Фільварк Мочулище<span class="fp-ct">18</span></button>
-<button class="fp" data-village="Вонячувка (смолярня)"><span class="fp-ic">🌲</span>Вонячувка (смолярня)<span class="fp-ct">11</span></button>
-<button class="fp" data-village="Урочище Гать"><span class="fp-ic">🌊</span>Урочище Гать<span class="fp-ct">7</span></button>
-<button class="fp" data-village="Гай Каравиця"><span class="fp-ic">🌲</span>Гай Каравиця<span class="fp-ct">2</span></button>
-<button class="fp" data-village="Осада Зарічиця"><span class="fp-ic">🏡</span>Осада Зарічиця<span class="fp-ct">2</span></button>
-<button class="fp" data-village="Кураш"><span class="fp-ic">🌾</span>Кураш<span class="fp-ct">1</span></button>
+          <button class="fp on" data-village="all">Усі населені пункти<span class="fp-ct">8 619</span></button>
+<button class="fp" data-village="Дубровиця">Дубровиця<span class="fp-ct">2 630</span></button>
+<button class="fp" data-village="Бережниця">Бережниця<span class="fp-ct">1 177</span></button>
+<button class="fp" data-village="Селець">Селець<span class="fp-ct">907</span></button>
+<button class="fp" data-village="Берестя">Берестя<span class="fp-ct">831</span></button>
+<button class="fp" data-village="Орв'яниця">Орв'яниця<span class="fp-ct">771</span></button>
+<button class="fp" data-village="Соломіївка">Соломіївка<span class="fp-ct">405</span></button>
+<button class="fp" data-village="Крупове">Крупове<span class="fp-ct">385</span></button>
+<button class="fp" data-village="Мочулище">Мочулище<span class="fp-ct">320</span></button>
+<button class="fp" data-village="Сохи">Сохи<span class="fp-ct">224</span></button>
+<button class="fp" data-village="Заріччя (ст. Дубровиця)">Заріччя (ст. Дубровиця)<span class="fp-ct">220</span></button>
+<button class="fp" data-village="Ясинець">Ясинець<span class="fp-ct">192</span></button>
+<button class="fp" data-village="Острівці">Острівці<span class="fp-ct">118</span></button>
+<button class="fp" data-village="Осада Адольфув">Осада Адольфув<span class="fp-ct">104</span></button>
+<button class="fp" data-village="Працуки">Працюки<span class="fp-ct">96</span></button>
+<button class="fp" data-village="Воробин">Воробин<span class="fp-ct">82</span></button>
+<button class="fp" data-village="Фільварк Антонін">Фільварк Антонін<span class="fp-ct">45</span></button>
+<button class="fp" data-village="Ремчиці">Ремчиці<span class="fp-ct">31</span></button>
+<button class="fp" data-village="Осова">Осова<span class="fp-ct">20</span></button>
+<button class="fp" data-village="Рудня">Рудня<span class="fp-ct">20</span></button>
+<button class="fp" data-village="Фільварк Мочулище">Фільварк Мочулище<span class="fp-ct">18</span></button>
+<button class="fp" data-village="Вонячувка (смолярня)">Вонячувка (смолярня)<span class="fp-ct">11</span></button>
+<button class="fp" data-village="Урочище Гать">Урочище Гать<span class="fp-ct">7</span></button>
+<button class="fp" data-village="Гай Каравиця">Гай Каравиця<span class="fp-ct">2</span></button>
+<button class="fp" data-village="Осада Зарічиця">Осада Зарічиця<span class="fp-ct">2</span></button>
+<button class="fp" data-village="Кураш">Кураш<span class="fp-ct">1</span></button>
 
         </div>
       </div>
@@ -771,28 +779,28 @@ html,body{touch-action:manipulation;}
           Рід занять
         </div>
         <div class="vbr-fp" id="tProf">
-<button class="fp on" data-prof="all">✦ Усі заняття<span class="fp-ct">8 619</span></button>
-<button class="fp" data-prof="рільник">🌾 Рільник<span class="fp-ct">4 217</span></button>
-<button class="fp" data-prof="домашнє господарство">🏠 Домашнє господарство<span class="fp-ct">1 586</span></button>
-<button class="fp" data-prof="торгівля">🛒 Торгівля<span class="fp-ct">377</span></button>
-<button class="fp" data-prof="робітник">⚒️ Робітник<span class="fp-ct">244</span></button>
+<button class="fp on" data-prof="all">Усі заняття<span class="fp-ct">8 619</span></button>
+<button class="fp" data-prof="рільник">Рільник<span class="fp-ct">4 217</span></button>
+<button class="fp" data-prof="домашнє господарство">Домашнє господарство<span class="fp-ct">1 586</span></button>
+<button class="fp" data-prof="торгівля">Торгівля<span class="fp-ct">377</span></button>
+<button class="fp" data-prof="робітник">Робітник<span class="fp-ct">244</span></button>
 <button class="fp" data-prof="__empty__">— Не вказано<span class="fp-ct">1 721</span></button>
 <button class="fp" data-prof="без професії">— Без професії<span class="fp-ct">47</span></button>
 <button type="button" class="fp fp-more" id="profMore" aria-expanded="false" aria-controls="profPanel">Інші заняття · 38</button>
         </div>
         <div class="prof-panel" id="profPanel" hidden>
           <div class="prof-find"><input type="search" id="profFind" placeholder="Знайти заняття: коваль, вчитель, лікар…" autocomplete="off" aria-label="Знайти заняття"></div>
-          <div class="prof-grp" data-grp="agri"><p class="prof-grp-h">Землеробство</p><div class="prof-grp-b"><button class="fp" data-prof="садівник">🌱 Садівник<span class="fp-ct">2</span></button></div></div>
-          <div class="prof-grp" data-grp="craft"><p class="prof-grp-h">Ремесло</p><div class="prof-grp-b"><button class="fp" data-prof="швець">👟 Швець<span class="fp-ct">54</span></button><button class="fp" data-prof="кравець">🧵 Кравець<span class="fp-ct">41</span></button><button class="fp" data-prof="столяр">🪑 Столяр<span class="fp-ct">21</span></button><button class="fp" data-prof="коваль">⚒️ Коваль<span class="fp-ct">18</span></button><button class="fp" data-prof="тесля">🪚 Тесля<span class="fp-ct">14</span></button><button class="fp" data-prof="шапкар">🎩 Шапкар<span class="fp-ct">10</span></button><button class="fp" data-prof="бляхар">🔧 Бляхар<span class="fp-ct">7</span></button><button class="fp" data-prof="муляр">🧱 Муляр<span class="fp-ct">4</span></button><button class="fp" data-prof="слюсар">🔧 Слюсар<span class="fp-ct">4</span></button><button class="fp" data-prof="скляр">🪟 Скляр<span class="fp-ct">4</span></button><button class="fp" data-prof="стельмах">🛞 Стельмах<span class="fp-ct">3</span></button><button class="fp" data-prof="кушнір">🧥 Кушнір<span class="fp-ct">3</span></button><button class="fp" data-prof="годинникар">⌚ Годинникар<span class="fp-ct">2</span></button><button class="fp" data-prof="ткач">🧶 Ткач<span class="fp-ct">1</span></button></div></div>
-          <div class="prof-grp" data-grp="trade"><p class="prof-grp-h">Торгівля</p><div class="prof-grp-b"><button class="fp" data-prof="власник">🏪 Власник<span class="fp-ct">8</span></button></div></div>
-          <div class="prof-grp" data-grp="food"><p class="prof-grp-h">Харчування</p><div class="prof-grp-b"><button class="fp" data-prof="різник">🔪 Різник<span class="fp-ct">33</span></button><button class="fp" data-prof="пекар">🍞 Пекар<span class="fp-ct">2</span></button></div></div>
-          <div class="prof-grp" data-grp="transport"><p class="prof-grp-h">Транспорт</p><div class="prof-grp-b"><button class="fp" data-prof="візник">🐴 Візник<span class="fp-ct">15</span></button><button class="fp" data-prof="залізничник">🚂 Залізничник<span class="fp-ct">9</span></button></div></div>
-          <div class="prof-grp" data-grp="intell"><p class="prof-grp-h">Освіта і наука</p><div class="prof-grp-b"><button class="fp" data-prof="вчитель">📖 Вчитель<span class="fp-ct">43</span></button><button class="fp" data-prof="урядовець">📋 Урядовець<span class="fp-ct">26</span></button><button class="fp" data-prof="бухгалтер">📊 Бухгалтер<span class="fp-ct">5</span></button><button class="fp" data-prof="інженер">📐 Інженер<span class="fp-ct">2</span></button><button class="fp" data-prof="юрист">⚖️ Юрист<span class="fp-ct">1</span></button></div></div>
-          <div class="prof-grp" data-grp="medical"><p class="prof-grp-h">Медицина</p><div class="prof-grp-b"><button class="fp" data-prof="лікар">⚕️ Лікар<span class="fp-ct">3</span></button><button class="fp" data-prof="акушерка">👶 Акушерка<span class="fp-ct">3</span></button><button class="fp" data-prof="дантист">🦷 Дантист<span class="fp-ct">1</span></button></div></div>
-          <div class="prof-grp" data-grp="state"><p class="prof-grp-h">Держава</p><div class="prof-grp-b"><button class="fp" data-prof="поліцейський">🛡️ Поліцейський<span class="fp-ct">8</span></button></div></div>
-          <div class="prof-grp" data-grp="relig"><p class="prof-grp-h">Духовенство</p><div class="prof-grp-b"><button class="fp" data-prof="священник">⛪ Священник<span class="fp-ct">8</span></button></div></div>
-          <div class="prof-grp" data-grp="service"><p class="prof-grp-h">Послуги</p><div class="prof-grp-b"><button class="fp" data-prof="перукар">✂️ Перукар<span class="fp-ct">6</span></button><button class="fp" data-prof="фотограф">📷 Фотограф<span class="fp-ct">2</span></button><button class="fp" data-prof="друкар">🖨️ Друкар<span class="fp-ct">1</span></button><button class="fp" data-prof="музикант">🎵 Музикант<span class="fp-ct">1</span></button></div></div>
-          <div class="prof-grp" data-grp="industry"><p class="prof-grp-h">Промисловість</p><div class="prof-grp-b"><button class="fp" data-prof="лісник">🌲 Лісник<span class="fp-ct">11</span></button><button class="fp" data-prof="браківник">🪵 Браківник<span class="fp-ct">9</span></button><button class="fp" data-prof="механік">🔩 Механік<span class="fp-ct">5</span></button><button class="fp" data-prof="мельник">⚙️ Мельник<span class="fp-ct">3</span></button></div></div>
+          <div class="prof-grp" data-grp="agri"><p class="prof-grp-h">Землеробство</p><div class="prof-grp-b"><button class="fp" data-prof="садівник">Садівник<span class="fp-ct">2</span></button></div></div>
+          <div class="prof-grp" data-grp="craft"><p class="prof-grp-h">Ремесло</p><div class="prof-grp-b"><button class="fp" data-prof="швець">Швець<span class="fp-ct">54</span></button><button class="fp" data-prof="кравець">Кравець<span class="fp-ct">41</span></button><button class="fp" data-prof="столяр">Столяр<span class="fp-ct">21</span></button><button class="fp" data-prof="коваль">Коваль<span class="fp-ct">18</span></button><button class="fp" data-prof="тесля">Тесля<span class="fp-ct">14</span></button><button class="fp" data-prof="шапкар">Шапкар<span class="fp-ct">10</span></button><button class="fp" data-prof="бляхар">Бляхар<span class="fp-ct">7</span></button><button class="fp" data-prof="муляр">Муляр<span class="fp-ct">4</span></button><button class="fp" data-prof="слюсар">Слюсар<span class="fp-ct">4</span></button><button class="fp" data-prof="скляр">Скляр<span class="fp-ct">4</span></button><button class="fp" data-prof="стельмах">Стельмах<span class="fp-ct">3</span></button><button class="fp" data-prof="кушнір">Кушнір<span class="fp-ct">3</span></button><button class="fp" data-prof="годинникар">Годинникар<span class="fp-ct">2</span></button><button class="fp" data-prof="ткач">Ткач<span class="fp-ct">1</span></button></div></div>
+          <div class="prof-grp" data-grp="trade"><p class="prof-grp-h">Торгівля</p><div class="prof-grp-b"><button class="fp" data-prof="власник">Власник<span class="fp-ct">8</span></button></div></div>
+          <div class="prof-grp" data-grp="food"><p class="prof-grp-h">Харчування</p><div class="prof-grp-b"><button class="fp" data-prof="різник">Різник<span class="fp-ct">33</span></button><button class="fp" data-prof="пекар">Пекар<span class="fp-ct">2</span></button></div></div>
+          <div class="prof-grp" data-grp="transport"><p class="prof-grp-h">Транспорт</p><div class="prof-grp-b"><button class="fp" data-prof="візник">Візник<span class="fp-ct">15</span></button><button class="fp" data-prof="залізничник">Залізничник<span class="fp-ct">9</span></button></div></div>
+          <div class="prof-grp" data-grp="intell"><p class="prof-grp-h">Освіта і наука</p><div class="prof-grp-b"><button class="fp" data-prof="вчитель">Вчитель<span class="fp-ct">43</span></button><button class="fp" data-prof="урядовець">Урядовець<span class="fp-ct">26</span></button><button class="fp" data-prof="бухгалтер">Бухгалтер<span class="fp-ct">5</span></button><button class="fp" data-prof="інженер">Інженер<span class="fp-ct">2</span></button><button class="fp" data-prof="юрист">Юрист<span class="fp-ct">1</span></button></div></div>
+          <div class="prof-grp" data-grp="medical"><p class="prof-grp-h">Медицина</p><div class="prof-grp-b"><button class="fp" data-prof="лікар">Лікар<span class="fp-ct">3</span></button><button class="fp" data-prof="акушерка">Акушерка<span class="fp-ct">3</span></button><button class="fp" data-prof="дантист">Дантист<span class="fp-ct">1</span></button></div></div>
+          <div class="prof-grp" data-grp="state"><p class="prof-grp-h">Держава</p><div class="prof-grp-b"><button class="fp" data-prof="поліцейський">Поліцейський<span class="fp-ct">8</span></button></div></div>
+          <div class="prof-grp" data-grp="relig"><p class="prof-grp-h">Духовенство</p><div class="prof-grp-b"><button class="fp" data-prof="священник">Священник<span class="fp-ct">8</span></button></div></div>
+          <div class="prof-grp" data-grp="service"><p class="prof-grp-h">Послуги</p><div class="prof-grp-b"><button class="fp" data-prof="перукар">Перукар<span class="fp-ct">6</span></button><button class="fp" data-prof="фотограф">Фотограф<span class="fp-ct">2</span></button><button class="fp" data-prof="друкар">Друкар<span class="fp-ct">1</span></button><button class="fp" data-prof="музикант">Музикант<span class="fp-ct">1</span></button></div></div>
+          <div class="prof-grp" data-grp="industry"><p class="prof-grp-h">Промисловість</p><div class="prof-grp-b"><button class="fp" data-prof="лісник">Лісник<span class="fp-ct">11</span></button><button class="fp" data-prof="браківник">Браківник<span class="fp-ct">9</span></button><button class="fp" data-prof="механік">Механік<span class="fp-ct">5</span></button><button class="fp" data-prof="мельник">Мельник<span class="fp-ct">3</span></button></div></div>
           <p class="prof-none" id="profNone" hidden>Такого заняття в реєстрі немає. Спробуйте пошук за текстом нижче.</p>
         </div>
       </div>
@@ -853,19 +861,19 @@ html,body{touch-action:manipulation;}
     </div>
     <div class="vbg-filters" id="vbgFilters">
       <button class="vbg-fp on" data-cat="all">Усі</button>
-      <button class="vbg-fp" data-cat="agri">🌾 Землеробство</button>
-      <button class="vbg-fp" data-cat="craft">🔨 Ремесло</button>
-      <button class="vbg-fp" data-cat="trade">🛒 Торгівля</button>
-      <button class="vbg-fp" data-cat="food">🍞 Харчування</button>
-      <button class="vbg-fp" data-cat="transport">🐴 Транспорт</button>
-      <button class="vbg-fp" data-cat="intell">📚 Освіта і наука</button>
-      <button class="vbg-fp" data-cat="medical">🏥 Медицина</button>
-      <button class="vbg-fp" data-cat="state">📋 Держава</button>
-      <button class="vbg-fp" data-cat="relig">⛪ Духовенство</button>
-      <button class="vbg-fp" data-cat="service">✂️ Послуги</button>
-      <button class="vbg-fp" data-cat="industry">🪵 Промисловість</button>
-      <button class="vbg-fp" data-cat="labor">⚒️ Праця</button>
-      <button class="vbg-fp" data-cat="home">🏠 Дом. господарство</button>
+      <button class="vbg-fp" data-cat="agri">Землеробство</button>
+      <button class="vbg-fp" data-cat="craft">Ремесло</button>
+      <button class="vbg-fp" data-cat="trade">Торгівля</button>
+      <button class="vbg-fp" data-cat="food">Харчування</button>
+      <button class="vbg-fp" data-cat="transport">Транспорт</button>
+      <button class="vbg-fp" data-cat="intell">Освіта і наука</button>
+      <button class="vbg-fp" data-cat="medical">Медицина</button>
+      <button class="vbg-fp" data-cat="state">Держава</button>
+      <button class="vbg-fp" data-cat="relig">Духовенство</button>
+      <button class="vbg-fp" data-cat="service">Послуги</button>
+      <button class="vbg-fp" data-cat="industry">Промисловість</button>
+      <button class="vbg-fp" data-cat="labor">Праця</button>
+      <button class="vbg-fp" data-cat="home">Дом. господарство</button>
     </div>
     <div class="vbg-grid" id="vbgGrid"></div>
   </div>
@@ -1140,7 +1148,7 @@ function normProf(p) {
         +'<div class="vbg-divider"></div>'
         +'<div class="vbg-short">'+esc(p.short)+'</div>'
         +'<div class="vbg-desc">'+p.desc+'</div>'
-        +(isClickable?'<div class="vbg-filter-hint">🔍 Показати у реєстрі ↑</div>':'')
+        +(isClickable?'<div class="vbg-filter-hint">Показати у реєстрі ↑</div>':'')
         +'</div>';
     });
     if(cut) h+='<div class="vbg-more-wrap"><button type="button" class="vbs-more vbg-more">Показати всі '+entries.length+' професій</button></div>';

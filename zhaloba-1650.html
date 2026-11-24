@@ -20,7 +20,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Manrope:wght@300;400;500;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="app.css?v=13">
+    <link rel="stylesheet" href="app.css?v=14">
 
 <style>
 /* ══════════════════════════════════════════════════════
@@ -121,7 +121,7 @@
     border: 1px solid rgba(201,162,39,.2);
     border-radius: 12px;
     background: rgba(255,255,255,.04);
-    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);backdrop-filter: blur(6px);
     overflow: hidden;
     max-width: 620px; margin: 0 auto 2rem;
     position: relative; z-index: 1;
@@ -276,7 +276,7 @@
     position: absolute; top: .65rem; left: .65rem;
     font-family: 'Manrope', sans-serif;
     font-size: .62rem; letter-spacing: .18em; text-transform: uppercase;
-    background: rgba(20,10,4,.82); backdrop-filter: blur(6px);
+    background: rgba(20,10,4,.82); -webkit-backdrop-filter: blur(6px);backdrop-filter: blur(6px);
     border: 1px solid rgba(201,162,39,.25);
     border-radius: 4px; padding: .25rem .6rem;
     color: rgba(201,162,39,.8);
@@ -284,7 +284,7 @@
 .zh-scan-zoom {
     position: absolute; top: .65rem; right: .65rem;
     width: 30px; height: 30px; border-radius: 50%;
-    background: rgba(255,255,255,.12); backdrop-filter: blur(6px);
+    background: rgba(255,255,255,.12); -webkit-backdrop-filter: blur(6px);backdrop-filter: blur(6px);
     border: 1px solid rgba(255,255,255,.2);
     display: flex; align-items: center; justify-content: center;
     opacity: 0; transition: opacity .2s ease;
@@ -610,7 +610,7 @@
     position: absolute; top: .9rem; right: 1rem;
     width: 40px; height: 40px; border-radius: 50%;
     border: 1px solid rgba(255,255,255,.22);
-    background: rgba(255,255,255,.1); backdrop-filter: blur(8px);
+    background: rgba(255,255,255,.1); -webkit-backdrop-filter: blur(8px);backdrop-filter: blur(8px);
     color: rgba(255,255,255,.85); cursor: pointer;
     display: flex; align-items: center; justify-content: center;
     transition: background .15s; z-index: 2; padding: 0;
@@ -634,7 +634,7 @@
     position: absolute; top: 50%; transform: translateY(-50%);
     width: 46px; height: 46px; border-radius: 50%;
     border: 1px solid rgba(255,255,255,.16);
-    background: rgba(8,5,2,.72); backdrop-filter: blur(8px);
+    background: rgba(8,5,2,.72); -webkit-backdrop-filter: blur(8px);backdrop-filter: blur(8px);
     color: rgba(255,255,255,.88); cursor: pointer;
     display: flex; align-items: center; justify-content: center;
     font-size: 1.5rem; line-height: 1; padding: 0; z-index: 2;
@@ -645,7 +645,7 @@
 #ZHLB-NAV-R { right: .6rem; }
 #ZHLB-BAR {
     flex-shrink: 0; padding: .65rem 1.2rem;
-    background: rgba(8,5,2,.92); backdrop-filter: blur(12px);
+    background: rgba(8,5,2,.92); -webkit-backdrop-filter: blur(12px);backdrop-filter: blur(12px);
     border-top: 1px solid rgba(255,255,255,.06);
     display: flex; align-items: center; justify-content: center; gap: .8rem;
 }
@@ -678,7 +678,7 @@ a, button, [role="button"], input, select, textarea,
     touch-action: manipulation;
 }
 </style>
-<link rel="stylesheet" href="ds.css">
+<link rel="stylesheet" href="ds.css?v=2">
 </head>
 <body class="zh-page">
 
@@ -1400,7 +1400,7 @@ a, button, [role="button"], input, select, textarea,
                 </div>
                 <div class="zh-context-body">
                     Попри воєнний хаос, <strong>бюрократична машина Речі Посполитої продовжувала працювати</strong>. Гродські книги велись, возні виїжджали «в поле», шляхтичі-свідки підписувались, а документи сплачували по <strong>6 грошів мита</strong>.<br><br>
-                    Це свідчить про неймовірну інституційну живучість правової системи — і про те, що власники мали чіткий юридичний інтерес: зафіксовані збитки = підстава для <strong>звільнення від податків</strong>.
+                    Суди, отже, працювали й у розпал війни, а власники мали чіткий юридичний інтерес: зафіксовані збитки = підстава для <strong>звільнення від податків</strong>.
                 </div>
             </div>
 
@@ -1410,8 +1410,8 @@ a, button, [role="button"], input, select, textarea,
                     Виживаність народу
                 </div>
                 <div class="zh-context-body">
-                    Найдивовижніший факт документа — <strong>Стрільськ і Глушиця</strong>. Обидва села були повністю спалені. Але в атестації від квітня 1650 р. там уже нараховано <strong>20 і 8 нових хат</strong> «на погорілищі».<br><br>
-                    Від пожежі до відбудови — менше року. Люди поверталися на попелища і починали жити заново. Це не просто статистика — це свідчення <strong>неймовірної стійкості поліщуків</strong>.
+                    Показові тут <strong>Стрільськ і Глушиця</strong>. Обидва села були повністю спалені. Але в атестації від квітня 1650 р. там уже нараховано <strong>20 і 8 нових хат</strong> «на погорілищі».<br><br>
+                    Від пожежі до відбудови — менше року. Люди поверталися на попелища і починали жити заново.
                 </div>
             </div>
 
@@ -1588,6 +1588,6 @@ document.getElementById('ZHLB').addEventListener('click', function(e) {
     if (e.target === this) zhCloseLB();
 });
 </script>
-<script src="reader.js?v=1" defer></script>
+<script src="reader.js?v=2" defer></script>
 </body>
 </html>

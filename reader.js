@@ -18,9 +18,9 @@
     '.dxr-ttl small{display:block;font-size:.62rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#c9a75a}',
     '.dxr-ttl b{display:block;margin-top:.1rem;font:500 1.12rem/1.25 var(--font-display,"Cormorant Garamond",serif);color:#f6efe2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}',
     '.dxr-mode{display:inline-flex;padding:3px;border-radius:999px;background:rgba(239,230,212,.07);border:1px solid rgba(239,230,212,.12)}',
-    '.dxr-mode button{padding:.42rem .85rem;border:0;border-radius:999px;background:none;color:#cbbfa8;font:600 .74rem/1 inherit;cursor:pointer}',
+    '.dxr-mode button{padding:.42rem .85rem;border:0;border-radius:999px;background:none;color:#cbbfa8;font-family:inherit;font-weight:600;font-size:.74rem;line-height:1;cursor:pointer}',
     '.dxr-mode button[aria-pressed="true"]{background:#d9b44a;color:#1c1712}',
-    '.dxr-ib{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;height:36px;min-width:36px;padding:0 .7rem;border:1px solid rgba(239,230,212,.14);border-radius:999px;background:none;color:#e9dfcb;font:600 .74rem/1 inherit;cursor:pointer}',
+    '.dxr-ib{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;height:36px;min-width:36px;padding:0 .7rem;border:1px solid rgba(239,230,212,.14);border-radius:999px;background:none;color:#e9dfcb;font-family:inherit;font-weight:600;font-size:.74rem;line-height:1;cursor:pointer}',
     '.dxr-ib:hover{background:rgba(239,230,212,.08)}',
     '.dxr-ib svg{width:17px;height:17px}',
     '.dxr-body{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr)}',
@@ -46,7 +46,7 @@
     '.dxr-seg b{display:block;margin-top:.25rem;font:500 1.45rem/1.2 var(--font-display,"Cormorant Garamond",serif)}',
     '.dxr-cols{display:grid;gap:2rem}',
     '.dxr.mode-both .dxr-cols{grid-template-columns:1fr 1fr}',
-    '.dxr-col h4{margin:0 0 .7rem;font:700 .64rem/1 inherit;letter-spacing:.14em;text-transform:uppercase;color:#8a7a60}',
+    '.dxr-col h4{margin:0 0 .7rem;font-family:var(--font-body,"Manrope",sans-serif);font-weight:700;font-size:.64rem;line-height:1;letter-spacing:.14em;text-transform:uppercase;color:#8a7a60}',
     '.dxr-col{font:400 1.08rem/1.7 var(--font-display,"Cormorant Garamond",serif)}',
     '.dxr-col p{margin:0 0 .85em}',
     '.dxr-col[data-k="or"]{font-size:1.02rem;color:#4a3f30}',
@@ -59,12 +59,13 @@
     '.dxr-th.on{opacity:1;border-color:#d9b44a;box-shadow:0 0 0 1px #d9b44a}',
     '.dxr-th:hover{opacity:.9}',
     '.dxr-gap{flex:none;width:1px;margin:0 .3rem;background:rgba(217,180,74,.35)}',
-    '.dxr-toast{position:absolute;left:50%;top:4.2rem;transform:translateX(-50%);padding:.5rem .9rem;border-radius:999px;background:#d9b44a;color:#1c1712;font:600 .78rem/1 inherit;opacity:0;transition:opacity .25s;pointer-events:none;z-index:5}',
+    '.dxr-toast{position:absolute;left:50%;top:4.2rem;transform:translateX(-50%);padding:.5rem .9rem;border-radius:999px;background:#d9b44a;color:#1c1712;font-family:inherit;font-weight:600;font-size:.78rem;line-height:1;opacity:0;transition:opacity .25s;pointer-events:none;z-index:5}',
     '.dxr-toast.on{opacity:1}',
     '.dxr-cnt{font-size:.74rem;color:#b9ad98;white-space:nowrap;font-variant-numeric:tabular-nums}',
     '@media (max-width:860px){',
     ' .dxr-top{flex-wrap:wrap;gap:.6rem;padding:.6rem .7rem}',
-    ' .dxr-ttl{flex-basis:calc(100% - 100px)}',
+    ' .dxr-ttl{flex-basis:calc(100% - 7.5rem)}',
+    ' .dxr-mode{flex-basis:100%;justify-content:center}',
     ' .dxr-mode{order:3}',
     ' .dxr-mode button{padding:.4rem .7rem}',
     ' .dxr-hide-s{display:none}',
@@ -73,6 +74,11 @@
     ' .dxr-text{padding:1.2rem 1.1rem 2rem}',
     ' .dxr-nav{width:38px;height:38px;margin-top:-19px}',
     '}',
+    '.dxr.gal .dxr-body{grid-template-columns:1fr;grid-template-rows:minmax(0,1fr) auto}',
+    '.dxr.gal .dxr-text,.dxr.gal .dxr-mode,.dxr.gal .dxr-cap{display:none}',
+    '.dxr-gcap{display:none;margin:0;padding:.75rem clamp(1rem,4vw,3rem);border-top:1px solid rgba(239,230,212,.1);font-size:.86rem;line-height:1.55;color:#e6dcc7;max-height:30vh;overflow:auto}',
+    '.dxr.gal .dxr-gcap{display:block}',
+    '@media (max-width:860px){.dxr.gal .dxr-body{grid-template-rows:minmax(0,1fr) auto}.dxr-gcap{font-size:.8rem}}',
     '.dxr-open-btn{margin-top:1.6rem}',
     '.cover-actions .dxr-open-btn{margin-top:0}',
     'html.dxr-lock,html.dxr-lock body{overflow:hidden}',
@@ -117,6 +123,23 @@
                     or: html([].slice.call(document.querySelectorAll('#part-t' + n + ' .rj-original'))),
                     tr: html([].slice.call(document.querySelectorAll('#part-tr' + n + ' .rj-translation'))) }; }) };
         },
+        'inventar-1780': function () {
+            var SC = window.IV_SCANS; if (!SC || !document.querySelector('.tx-spread')) return null;
+            var sp = function (k, c) { var e = document.querySelector('.tx-spread[data-spread="' + k + '"] .' + c); if (!e) return ''; e = e.cloneNode(true); var l = e.querySelector('.tx-lang'); if (l) l.remove(); var t = e.querySelector('.tx-t'); if (t) t.remove(); return e.innerHTML; };
+            var none = '<p><i>Цей аркуш ще не транскрибовано. Прочитано й перекладено аркуші 47, 48 і 49 — гортайте далі.</i></p>';
+            var map = { 2: 0, 3: 1, 4: 2 };
+            return { title: 'Інвентар маєтку Дубровиця', scans: SC.map(function (s) { return { src: s.src, cap: s.l }; }), segs: SC.map(function (s, i) {
+                var k = map[i];
+                if (i === 0) return { label: s.l, pages: [0], tr: '<p><i>Це картографічний план міста й околиць: тексту для перекладу на ньому немає. Наближайте колесом миші або щипком, щоб роздивитися вулиці.</i></p>', or: '<p><i>—</i></p>' };
+                return { label: s.l, pages: [i], tr: k == null ? none : sp(k, 'tx-u'), or: k == null ? none : sp(k, 'tx-o') }; }),
+                btnHost: '.iv-btns', btnClass: 'iv-btn line' };
+        },
+        'worobin-1918': function () {
+            var bs = [].slice.call(document.querySelectorAll('[data-lb]')); if (!bs.length) return null;
+            var scans = [], seen = {};
+            bs.forEach(function (b) { var src = b.getAttribute('data-lb'); b.setAttribute('data-gi', seen[src] != null ? seen[src] : (seen[src] = scans.length, scans.push({ src: src, cap: b.getAttribute('data-cap') || '', th: (b.querySelector('img') || {}).src || src }), seen[src])); });
+            return { title: 'Справа про розгром маєтку Воробин', gallery: true, scans: scans, segs: [{ label: '', pages: scans.map(function (x, i) { return i; }) }] };
+        },
         'akty': function () {
             var arts = document.querySelectorAll('article.ak-doc'); if (!arts.length) return null;
             var scans = [], segs = [];
@@ -134,7 +157,7 @@
     var key = /^akty-/.test(page) ? 'akty' : page;
 
     var D = null, pageSeg = [], cur = 0, mode = 'tr', root, img, scanEl, load, textEl, strip, cnt, ttlB, ttlS, toast;
-    var z = 1, fit = 1, tx = 0, ty = 0;
+    var z = 1, fit = 1, tx = 0, ty = 0, HP = 'chytaty-';
 
     function build() {
         var st = document.createElement('style'); st.textContent = CSS; document.head.appendChild(st);
@@ -148,8 +171,9 @@
             '<div class="dxr-body"><div class="dxr-scan"><img alt=""><div class="dxr-load"></div><span class="dxr-cap"></span>' +
             '<button type="button" class="dxr-nav dxr-prev" aria-label="Попередній аркуш">' + ic('l') + '</button><button type="button" class="dxr-nav dxr-next" aria-label="Наступний аркуш">' + ic('r') + '</button>' +
             '<div class="dxr-zoom"><button type="button" class="dxr-ib" data-z="1" aria-label="Наблизити">' + ic('p') + '</button><button type="button" class="dxr-ib" data-z="-1" aria-label="Віддалити">' + ic('m') + '</button><button type="button" class="dxr-ib" data-z="0" aria-label="Увесь аркуш">' + ic('f') + '</button></div></div>' +
-            '<div class="dxr-text" tabindex="0"></div></div><div class="dxr-strip" aria-label="Аркуші"></div><div class="dxr-toast">Посилання на аркуш скопійовано</div>';
+            '<div class="dxr-text" tabindex="0"></div><p class="dxr-gcap" aria-live="polite"></p></div><div class="dxr-strip" aria-label="Аркуші"></div><div class="dxr-toast">Посилання на аркуш скопійовано</div>';
         document.body.appendChild(root);
+        if (D.gallery) { root.classList.add('gal'); root.setAttribute('aria-label', 'Перегляд світлин'); root.querySelector('.dxr-link').title = 'Скопіювати посилання на це зображення'; root.querySelector('.dxr-toast').textContent = 'Посилання скопійовано'; }
         img = root.querySelector('.dxr-scan img'); scanEl = root.querySelector('.dxr-scan'); load = root.querySelector('.dxr-load');
         textEl = root.querySelector('.dxr-text'); strip = root.querySelector('.dxr-strip'); cnt = root.querySelector('.dxr-cnt');
         ttlB = root.querySelector('.dxr-ttl b'); ttlS = root.querySelector('.dxr-ttl small'); toast = root.querySelector('.dxr-toast');
@@ -163,6 +187,15 @@
         bindPan();
         document.addEventListener('keydown', function (e) {
             if (!root.classList.contains('on')) return;
+            if (e.key === 'Tab') {
+                var fs = [].filter.call(root.querySelectorAll('button,[tabindex="0"]'), function (x) { return x.offsetParent !== null; });
+                if (!fs.length) return;
+                var a = fs[0], b = fs[fs.length - 1];
+                if (e.shiftKey && document.activeElement === a) { e.preventDefault(); b.focus(); }
+                else if (!e.shiftKey && document.activeElement === b) { e.preventDefault(); a.focus(); }
+                else if (!root.contains(document.activeElement)) { e.preventDefault(); a.focus(); }
+                return;
+            }
             if (e.key === 'Escape') close();
             else if (e.key === 'ArrowRight') go(cur + 1);
             else if (e.key === 'ArrowLeft') go(cur - 1);
@@ -192,19 +225,21 @@
         load.classList.remove('off'); img.style.opacity = '0';
         img.src = s.src;
         root.querySelector('.dxr-cap').textContent = s.cap || ('Аркуш ' + (p + 1));
-        cnt.textContent = 'аркуш ' + (p + 1) + ' з ' + n;
+        cnt.textContent = (D.gallery ? '' : 'аркуш ') + (p + 1) + ' з ' + n;
+        if (D.gallery) { root.querySelector('.dxr-gcap').textContent = s.cap || ''; img.alt = s.cap || ''; }
         strip.querySelectorAll('.dxr-th').forEach(function (b) { var on = +b.dataset.p === p; b.classList.toggle('on', on); if (on) b.scrollIntoView({ block: 'nearest', inline: 'center' }); });
         var si = pageSeg[p] || 0;
         if (si !== shownSeg) {
             shownSeg = si; var sg = D.segs[si];
-            ttlB.textContent = D.title; ttlS.textContent = 'Читальня · ' + (D.segs.length > 1 ? 'частина ' + (si + 1) + ' з ' + D.segs.length : 'документ');
-            textEl.innerHTML = '<div class="dxr-seg"><small>' + (D.segs.length > 1 ? 'Частина ' + (si + 1) : 'Документ') + ' · аркуші ' + (sg.pages[0] + 1) + (sg.pages.length > 1 ? '–' + (sg.pages[sg.pages.length - 1] + 1) : '') + '</small><b></b></div>' +
+            var one = D.segs.length === D.scans.length;
+            ttlB.textContent = D.title; ttlS.textContent = D.gallery ? 'Світлини й документи' : 'Читальня · ' + (one ? 'аркуш ' + (si + 1) + ' з ' + D.segs.length : D.segs.length > 1 ? 'частина ' + (si + 1) + ' з ' + D.segs.length : 'документ');
+            textEl.innerHTML = '<div class="dxr-seg"><small>' + (one ? 'Аркуш ' + (si + 1) : (D.segs.length > 1 ? 'Частина ' + (si + 1) : 'Документ') + ' · ' + (sg.pages.length > 1 ? 'аркуші ' + (sg.pages[0] + 1) + '–' + (sg.pages[sg.pages.length - 1] + 1) : 'аркуш ' + (sg.pages[0] + 1))) + '</small><b></b></div>' +
                 '<div class="dxr-cols"><div class="dxr-col" data-k="tr"><h4>Переклад українською</h4>' + (sg.tr || '<p><i>Перекладу цієї частини немає.</i></p>') + '</div>' +
                 '<div class="dxr-col" data-k="or"><h4>Оригінал</h4>' + (sg.or || '<p><i>Транскрипції цієї частини немає.</i></p>') + '</div></div>';
             textEl.querySelector('.dxr-seg b').textContent = sg.label;
             textEl.scrollTop = 0;
         }
-        if (history.replaceState) history.replaceState(null, '', '#chytaty-' + (p + 1));
+        if (history.replaceState) history.replaceState(null, '', '#' + HP + (p + 1));
     }
     function fitImg() {
         if (!img.naturalWidth) return;
@@ -251,7 +286,7 @@
         scanEl.addEventListener('pointerup', up); scanEl.addEventListener('pointercancel', up);
     }
     function copyLink() {
-        var u = location.href.split('#')[0] + '#chytaty-' + (cur + 1);
+        var u = location.href.split('#')[0] + '#' + HP + (cur + 1);
         var done = function () { toast.classList.add('on'); setTimeout(function () { toast.classList.remove('on'); }, 1600); };
         if (navigator.clipboard) navigator.clipboard.writeText(u).then(done, done); else done();
     }
@@ -277,7 +312,16 @@
         if (!D || !D.scans || !D.scans.length) return;
         window.DxReader = { open: open, close: close, data: D };
         /* старі переглядачі сторінок тепер відкривають читальню */
-        ['openScanLB', 'zhOpenLB', 'rjOpenLB'].forEach(function (fn) { if (typeof window[fn] === 'function') window[fn] = function (i) { open(i); }; });
+        if (D.gallery) HP = 'foto-';
+        ['openScanLB', 'zhOpenLB', 'rjOpenLB', 'openLb'].forEach(function (fn) { if (typeof window[fn] === 'function') window[fn] = function (i) { open(i); }; });
+        if (D.gallery) document.addEventListener('click', function (e) {
+            var b = e.target.closest('[data-gi]'); if (!b) return;
+            e.preventDefault(); e.stopImmediatePropagation(); open(+b.getAttribute('data-gi'));
+        }, true);
+        if (key === 'inventar-1780') document.addEventListener('click', function (e) {
+            var b = e.target.closest('[data-lb]'); if (!b) return;
+            e.preventDefault(); e.stopImmediatePropagation(); open(+b.getAttribute('data-lb'));
+        }, true);
         if (key === 'akty') document.addEventListener('click', function (e) {
             var b = e.target.closest('.ak-scan'); if (!b) return;
             e.preventDefault(); e.stopImmediatePropagation();
@@ -285,7 +329,11 @@
             open(seg ? seg.pages[+b.dataset.i || 0] : 0);
         }, true);
         /* кнопка на обкладинці */
-        var copy = document.querySelector('.cover-copy') || document.querySelector('.cover-inner');
+        var copy = D.gallery ? null : D.btnHost ? document.querySelector(D.btnHost) : (document.querySelector('.cover-copy') || document.querySelector('.cover-inner'));
+        if (copy && D.btnHost && !copy.querySelector('.dxr-open-btn')) {
+            var b0 = document.createElement('button'); b0.type = 'button'; b0.className = D.btnClass + ' dxr-open-btn'; b0.style.marginTop = '0';
+            b0.innerHTML = '<span>Читати документ</span>'; b0.onclick = function () { open(2); }; copy.appendChild(b0); copy = null;
+        }
         if (copy && !copy.querySelector('.dxr-open-btn')) {
             var acts = copy.querySelector('.cover-actions');
             if (!acts) { acts = document.createElement('div'); acts.className = 'cover-actions'; copy.appendChild(acts); }
@@ -293,7 +341,7 @@
             b.innerHTML = ic('b') + '<span>Читати документ</span>';
             b.onclick = function () { open(0); }; acts.insertBefore(b, acts.firstChild);
         }
-        var m = /^#chytaty-(\d+)$/.exec(location.hash);
+        var m = new RegExp('^#' + HP + '(\\d+)$').exec(location.hash);
         if (m) open(Math.max(0, +m[1] - 1));
     }
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();

@@ -20,10 +20,10 @@
     <meta property="og:type" content="website">
     <title>Єврейська Дубровиця — Цифровий архів</title>
     <script>!function(){var t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t)}()</script>
-    <link rel="stylesheet" href="app.css?v=13">
+    <link rel="stylesheet" href="app.css?v=14">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Manrope:wght@300;400;500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 /* ═══════════════════════════════════════════════
@@ -1768,7 +1768,12 @@ a, button, [role="button"], input, select, textarea,
 .footer-copyright-notice { max-width: 1100px !important; width: 100% !important; padding: 0 1rem !important; }
 .footer-copyright-row { width: 100% !important; }
 </style>
-<link rel="stylesheet" href="ds.css">
+<link rel="stylesheet" href="ds.css?v=2">
+<style>/* контраст дрібних підписів (WCAG AA) */
+:root:not([data-theme="dark"]) .jh-highlight-box-title,:root:not([data-theme="dark"]) .jh-intro-label,:root:not([data-theme="dark"]) .jh-book-meta-label,:root:not([data-theme="dark"]) .jh-akt-date,:root:not([data-theme="dark"]) .jh-section-eyebrow{color:#86661b}
+:root:not([data-theme="dark"]) .jtp-eyebrow span{color:#7a5226}:root:not([data-theme="dark"]) .jtp-sub{color:#6b655d}:root:not([data-theme="dark"]) .jtp-open-btn{color:#7a5226}
+:root:not([data-theme="dark"]) .jh-aside-image-caption{color:#615b55}
+</style>
 </head>
 <body>
 
@@ -1930,7 +1935,7 @@ a, button, [role="button"], input, select, textarea,
 </div>
 
 <!-- ═══════════ BOOK READER MODAL ═══════════ -->
-<div id="bookReaderModal" style="display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.88);backdrop-filter:blur(10px);overflow-y:auto;padding:2rem 1rem;" onclick="if(event.target===this)closeBookReader()">
+<div id="bookReaderModal" style="display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.88);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);overflow-y:auto;padding:2rem 1rem;" onclick="if(event.target===this)closeBookReader()">
 <div style="max-width:780px;margin:0 auto;background:var(--color-bg);border-radius:16px;box-shadow:0 40px 120px rgba(0,0,0,0.6);overflow:hidden;position:relative;">
   <button onclick="closeBookReader()" style="position:absolute;top:1rem;right:1rem;width:34px;height:34px;border-radius:50%;border:1px solid var(--color-border);background:var(--color-bg-card);cursor:pointer;color:var(--color-text-muted);font-size:1.1rem;display:flex;align-items:center;justify-content:center;z-index:1;line-height:1;">×</button>
   <div style="display:grid;grid-template-columns:110px 1fr;gap:1.8rem;align-items:center;padding:2rem 2.2rem 1.6rem;border-bottom:1px solid var(--color-border-light);background:var(--color-bg-alt);">
@@ -2061,7 +2066,7 @@ a, button, [role="button"], input, select, textarea,
 [data-theme="dark"] .jtp-map-wrap{background:#1a160e;border-color:rgba(201,162,39,.12);}
 .jtp-map-wrap img{width:100%;display:block;transition:transform .4s ease;}
 .jtp-map-wrap:hover img{transform:scale(1.02);}
-.jtp-zoom-hint{position:absolute;bottom:.8rem;right:.8rem;background:rgba(8,6,2,.72);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.12);border-radius:100px;padding:.3rem .8rem;font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.07em;color:rgba(255,255,255,.6);pointer-events:none;display:flex;align-items:center;gap:.4rem;}
+.jtp-zoom-hint{position:absolute;bottom:.8rem;right:.8rem;background:rgba(8,6,2,.72);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.12);border-radius:100px;padding:.3rem .8rem;font-family:'Manrope',sans-serif;font-size:.62rem;letter-spacing:.07em;color:rgba(255,255,255,.6);pointer-events:none;display:flex;align-items:center;gap:.4rem;}
 .jtp-zoom-hint svg{width:11px;height:11px;flex-shrink:0;}
 .jtp-side{display:flex;flex-direction:column;gap:1rem;}
 .jtp-leg-wrap{border-radius:4px;overflow:hidden;cursor:zoom-in;border:1px solid rgba(139,90,43,.15);background:#e8e0d0;transition:box-shadow .22s;}
@@ -2574,7 +2579,7 @@ a, button, [role="button"], input, select, textarea,
                 <div class="jh-chapter-num">04</div>
                 <div class="jh-chapter-label">Розділ четвертий</div>
                 <h3 class="jh-chapter-aside-title">Старожитності та загадки міста</h3>
-                <p class="jh-chapter-aside-desc">Скеля з нерозшифрованим написом «17…», підземний хід від костелу та загадкова «Сокольня» — артефакти, що зберігали свої таємниці від усіх поколінь.</p>
+                <p class="jh-chapter-aside-desc">Скеля з нерозшифрованим написом «17…», підземний хід від костелу й «Сокольня» — те, чого місто так і не пояснило.</p>
             </div>
         </div>
     </div>
@@ -2663,7 +2668,7 @@ a, button, [role="button"], input, select, textarea,
             <div class="jh-chapter-body">
                 <h3>Між молотом і ковадлом:<br><em>1920 рік</em></h3>
                 <p>
-                    Влітку 1920 року місто пережило неймовірний хаос. У суботу, 10 липня, польський комендант зганяв євреїв копати окопи. Ввечері кавалеристи відступили, підпаливши довгий міст між містом і залізничною станцією. Три дні тривало безвладдя — місто тремтіло перед партизанськими загонами.
+                    Влітку 1920 року місто опинилося просто на лінії фронту. У суботу, 10 липня, польський комендант зганяв євреїв копати окопи. Ввечері кавалеристи відступили, підпаливши довгий міст між містом і залізничною станцією. Три дні тривало безвладдя — місто тремтіло перед партизанськими загонами.
                 </p>
                 <div class="jh-quote">
                     <p>«Таким чином у нас за три дні тричі змінювалася влада: вдень — більшовики, вдень — поляки, а ввечері — знову більшовики. Наше становище за таких умов можна легко уявити: постійно між молотом і ковадлом, і за все доводилося розплачуватися…»</p>
@@ -2872,19 +2877,19 @@ a, button, [role="button"], input, select, textarea,
         </div>
         <div class="jh-legacy-grid">
             <div class="jh-legacy-card">
-                <h4>📚 Книга пам'яті «Сефер Домбровіца»</h4>
+                <h4>Книга пам'яті «Сефер Домбровіца»</h4>
                 <p>У 1964 році в Тель-Авіві вихідці з Дубровиці видали книгу пам'яті, куди увійшли спогади, нариси та списки загиблих. Основну частину — детальну хроніку міського побуту — написав Шмуель Зальцман, уродженець Дубровиці, що виїхав до Ізраїлю до початку Другої світової.</p>
             </div>
             <div class="jh-legacy-card">
-                <h4>🌿 Ті, хто встиг виїхати</h4>
+                <h4>Ті, хто встиг виїхати</h4>
                 <p>Завдяки сіоністському руху сотні молодих людей встигли перебратися до Ерець-Ісраель у 1920–30-х роках. Зальцман зустрів їх в Ізраїлі «в кібуцах, поселеннях, на роботі та в сільському господарстві». Масова еміграція перших десятиліть XX ст. врятувала десятки родин від Голокосту.</p>
             </div>
             <div class="jh-legacy-card">
-                <h4>🏛️ Архіви та документи</h4>
+                <h4>Архіви та документи</h4>
                 <p>Документи про долю єврейської громади Дубровиці зберігаються в Яд Вашем (Єрусалим), Державному архіві Рівненської області (ДАРО), Федеральному архіві Берліна (BA-L), а також у Фонді відеоісторії (VHF). Метричні книги частково оцифровані та доступні дослідникам.</p>
             </div>
             <div class="jh-legacy-card">
-                <h4>✡️ Місця пам'яті</h4>
+                <h4>Місця пам'яті</h4>
                 <p>Єврейське кладовище Дубровиці збереглося частково. Пам'ятник жертвам Голокосту встановлено поблизу місця розстрілів. Кожного року 26 серпня — річниця ліквідації гетто — до Дубровиці приїздять нащадки єврейської громади з Ізраїлю, США та Канади.</p>
             </div>
         </div>

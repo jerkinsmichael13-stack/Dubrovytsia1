@@ -22,7 +22,7 @@
     <meta property="og:type" content="website">
     <title>Архітектурні пам'ятки — Дубровиця</title>
     <script>!function(){var t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t)}()</script>
-    <link rel="stylesheet" href="app.css?v=13">
+    <link rel="stylesheet" href="app.css?v=14">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -172,7 +172,7 @@
         font-size: clamp(.88rem, 1.6vw, 1.12rem); font-style: italic;
         color: var(--color-text-light, #78716c); margin-bottom: .5rem;
     }
-    .KPH-M { font-size: .62rem; letter-spacing: .15em; text-transform: uppercase; color: var(--color-text-muted, #a8a29e); }
+    .KPH-M { font-size: .62rem; letter-spacing: .15em; text-transform: uppercase; color: var(--color-text-muted); }
 
     /* ═══════════════════════════════════════
        ANNOTATED STAGE — WIDE LAYOUT
@@ -271,7 +271,7 @@
         font-size: .68rem; font-weight: 300; line-height: 1.85;
         color: var(--color-text-secondary, #5a5248);
     }
-    [data-theme="dark"] .KCARD-TEXT { color: rgba(200,185,155,.6); }
+    [data-theme="dark"] .KCARD-TEXT { color: rgba(200,185,155,.78); }
     .KCARD-TEXT + .KCARD-TEXT { margin-top: .5rem; }
 
     /* ── Hide panels + arrows on mobile, show accordion instead ── */
@@ -337,7 +337,7 @@
     .KHINT {
         text-align: center; margin: .7rem 0 0;
         font-size: .62rem; letter-spacing: .2em; text-transform: uppercase;
-        color: var(--color-text-muted, #a8a29e);
+        color: var(--color-text-muted);
         display: flex; align-items: center; justify-content: center; gap: .5rem;
     }
     @media (max-width: 960px) { .KHINT { display: none; } }
@@ -364,7 +364,7 @@
         -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
         margin-bottom: .3rem;
     }
-    .KST-K { font-size: .62rem; letter-spacing: .13em; text-transform: uppercase; color: var(--color-text-muted, #a8a29e); margin-bottom: .28rem; }
+    .KST-K { font-size: .62rem; letter-spacing: .13em; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: .28rem; }
     .KST-D { font-size: .68rem; font-weight: 300; line-height: 1.7; color: var(--color-text-secondary, #44403c); opacity: .8; }
 
     /* Gallery */
@@ -481,7 +481,7 @@
 
     .ygal-cap {
         font-size: .62rem; letter-spacing: .07em;
-        color: var(--color-text-muted, #a8a29e);
+        color: var(--color-text-muted);
         margin-top: .3rem; text-align: center; line-height: 1.55;
     }
     [data-theme="dark"] .ygal-cap { color: rgba(240,230,200,.3); }
@@ -504,7 +504,7 @@ a, button, [role="button"], input, select, textarea,
 .footer-copyright-notice { max-width: 1100px !important; width: 100% !important; padding: 0 1rem !important; }
 .footer-copyright-row { width: 100% !important; }
 </style>
-<link rel="stylesheet" href="ds.css">
+<link rel="stylesheet" href="ds.css?v=2">
 </head>
 <body>
     <header class="header">
@@ -675,7 +675,7 @@ a, button, [role="button"], input, select, textarea,
                 <div class="KCARD" id="c1-E">
                     <span class="KCARD-LABEL">Втрачено 1945 р. ✝</span>
                     <div class="KCARD-TITLE">Венеційський вітраж</div>
-                    <div class="KCARD-TEXT">Найцінніший елемент інтер'єру — вітраж, замовлений і виготовлений спеціально у Венеції. Він вважався унікальним для всього регіону Полісся: жоден інший костел чи церква в окрузі не мали нічого подібного за художньою цінністю.</div>
+                    <div class="KCARD-TEXT">Найцінніший елемент інтер'єру — вітраж, замовлений і виготовлений спеціально у Венеції. Подібного вітража не мав жоден інший храм в окрузі.</div>
                     <div class="KCARD-TEXT">Знищений одразу після закриття костелу у 1945 р. Від нього не залишилося ані фрагментів, ані документальних зображень. Відновлення вітражу досі не відбулося.</div>
                 </div>
             </div>
@@ -732,7 +732,7 @@ a, button, [role="button"], input, select, textarea,
                     <div class="KMOB-CHEVRON">▾</div>
                 </button>
                 <div class="KMOB-CARD-BODY">
-                    <p class="KMOB-TEXT">Найцінніший елемент інтер'єру — вітраж, замовлений і виготовлений спеціально у Венеції. Унікальний для всього регіону Полісся. Знищений одразу після закриття костелу у 1945 р. Від нього не залишилося ані фрагментів, ані документальних зображень.</p>
+                    <p class="KMOB-TEXT">Найцінніший елемент інтер'єру — вітраж, замовлений і виготовлений спеціально у Венеції. Подібного не мав жоден храм в окрузі. Знищений одразу після закриття костелу у 1945 р. Від нього не залишилося ані фрагментів, ані документальних зображень.</p>
                 </div>
             </div>
         </div>
