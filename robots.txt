@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /admin.html
+Disallow: /editor.html
+Disallow: /mkcal-admin-card.html
+Disallow: /mkcal-insert.html
+
+Sitemap: https://dubrovytsia.site/sitemap.xml

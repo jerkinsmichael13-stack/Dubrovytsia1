@@ -336,6 +336,8 @@ def page(key):
            years=years[0] + ('–' + years[-1] if len(years) > 1 else ''), ns=nscans, npers=npers, credit=P['credit'], toc=toc, also=also,
            intro=P['intro'], vols='; '.join(VOL[v] for v in vols), articles=''.join(article(d) for d in docs), footer=FOOTER,
            js=JS % json.dumps(sc, ensure_ascii=False))
+    import meta_tags  # og:image, og:url, canonical — для прев'ю посилань
+    out = meta_tags.fix(out, P['file'])
     open(os.path.join(ROOT, P['file']), 'w', encoding='utf-8').write(out)
     print(P['file'], len(out), len(docs))
 
