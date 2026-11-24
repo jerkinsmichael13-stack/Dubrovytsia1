@@ -18,7 +18,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Фотоархів Дубровиці: понад 300 світлин XIX–XXI століть — церкви, вулиці, люди, події, аерофотознімки й плани міста. Пошук, фільтри за епохами та завантаження у високій якості.">
     <meta property="og:title" content="Фотоархів — Дубровиця">
-    <meta property="og:image" content="https://i.imgur.com/qcjgN1I.jpeg">
+    <meta property="og:image" content="https://i.imgur.com/caTP3ND.jpeg">
     <link rel="preconnect" href="https://i.imgur.com">
     <title>Фотоархів — Дубровиця</title>
     <script>!function(){var t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t)}()</script>
@@ -863,7 +863,7 @@ html, body { touch-action: manipulation; }
 <main id="main">
 
 <section class="cover" aria-labelledby="paTitle">
-    <img class="cover-img" src="https://i.imgur.com/qcjgN1I.jpeg" alt="" fetchpriority="high" decoding="async" style="--cover-pos:center 42%">
+    <img class="cover-img" src="https://i.imgur.com/caTP3ND.jpeg" alt="" fetchpriority="high" decoding="async" style="--cover-pos:center 45%">
     <div class="cover-shade"></div>
     <div class="cover-inner">
         <p class="cover-kicker">Фотоархів · 1884 — сьогодні</p>
@@ -874,7 +874,7 @@ html, body { touch-action: manipulation; }
             <div><dt>рубрик</dt><dd>7</dd></div>
             <div><dt>найдавніший знімок</dt><dd>1884</dd></div>
         </dl>
-        <button type="button" class="cover-credit" data-feat="hero"><b>На фото</b>Центр міста, 1920–1930-ті роки</button>
+        <button type="button" class="cover-credit" data-feat="hero"><b>На фото</b>Ринкова площа в суботу: єврейські крамниці зачинені. 1930-ті роки</button>
     </div>
 </section>
 
@@ -1433,7 +1433,7 @@ if ('IntersectionObserver' in window) {
 }
 
 /* ── П'ять епох: картка відкриває всі світлини свого часу ── */
-var HERO = [{ src: 'https://i.imgur.com/qcjgN1I.jpeg', title: 'Центр міста', date: '1920–1939', cat: 'streets', per: '1900-1939', exact: true, id: 'qcjgN1I' }];
+var HERO = [{ src: 'https://i.imgur.com/caTP3ND.jpeg', title: 'Ринкова площа в суботу — єврейські крамниці зачинені', date: '1930–1939', cat: 'streets', per: '1900-1939', exact: true, id: 'caTP3ND' }];
 document.querySelectorAll('[data-feat="hero"]').forEach(function (el) { el.addEventListener('click', function () { openList(HERO, 0); }); });
 document.querySelectorAll('[data-era]').forEach(function (el) {
   el.addEventListener('click', function () { state.cat = 'all'; state.q = ''; var si = $('pxSearch'); if (si) si.value = ''; state.per = el.getAttribute('data-era'); apply(true); var bar = $('pxBar'); if (bar) window.scrollTo({ top: bar.getBoundingClientRect().top + window.scrollY - (parseInt(getComputedStyle(document.documentElement).getPropertyValue('--hdr-h')) || 76), behavior: 'smooth' }); });
