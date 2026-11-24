@@ -842,7 +842,7 @@ a, button, [role="button"], input, select, textarea,
 
             <div style="display:flex;align-items:center;gap:1.2rem;margin-bottom:2.8rem;">
                 <div style="flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(201,162,39,.3));"></div>
-                <span style="font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;color:#b8902a;white-space:nowrap;">Свята, пов'язана з цим місцем</span>
+                <span style="font-size:.82rem;font-weight:600;color:var(--ds-gold,#86661b);white-space:nowrap;">Свята, пов'язана з цим місцем</span>
                 <div style="flex:1;height:1px;background:linear-gradient(90deg,rgba(201,162,39,.3),transparent);"></div>
             </div>
 
@@ -1250,5 +1250,39 @@ g.ULB={open:open,close:close,nav:nav,
         setTimeout(function(){hero.classList.add('hero-loaded');},80);
     })();
     </script>
+<style id="arch-v2">
+/* ═══ Пам'ятки v2: фото костелу ліворуч і текст праворуч, без карток-обгорток ═══ */
+@media (min-width:1101px){
+  html .KSTAGE{grid-template-columns:minmax(0,1.08fr) minmax(0,1fr);gap:0 4rem;max-width:1240px;padding:0 2rem 1rem}
+  html .KPHOTO-COL{grid-column:1;grid-row:1 / span 2;position:sticky;top:100px}
+  html .KPANEL{grid-column:2;padding:0;align-items:stretch}
+  html .KPANEL-L{grid-row:1;padding-top:.5rem}
+  html .KPANEL-R{grid-row:2}
+}
+html .KCARD,html .KPANEL-R .KCARD{background:none;border:0;border-top:1px solid var(--color-border,#ddd5c8);border-radius:0;box-shadow:none;margin:0;padding:1.6rem 0 1.8rem;text-align:left;transform:translateY(10px)}
+html .KCARD.vis{transform:none}
+html .KCARD:hover,html .KPANEL-R .KCARD:hover{box-shadow:none;border-color:var(--color-border,#ddd5c8)}
+html .KPANEL-L .KCARD:first-child{border-top:2px solid var(--color-text,#1c1917)}
+html .KCARD-LABEL,html .KPANEL-R .KCARD-LABEL{background:none;padding:0;margin:0 0 .45rem;border-radius:0;color:var(--ds-gold,#86661b)}
+html .KCARD-TITLE{font-family:var(--font-display,'Cormorant Garamond',serif);font-size:1.6rem;font-weight:500;line-height:1.15;margin-bottom:.7rem}
+html .KCARD-TEXT{font-size:.96rem;font-weight:400;line-height:1.75;color:var(--color-text-secondary,#5a5248)}
+html .KCARD-TEXT+.KCARD-TEXT{margin-top:.8rem}
+html .KCARD-TEXT i,html .KCARD-TEXT em{font-family:var(--font-display,'Cormorant Garamond',serif);font-size:1.05em}
+[data-theme="dark"] .KCARD{background:none}
+/* цифри — тихим рядком фактів, як на нових сторінках */
+html .KSTATS{background:none;box-shadow:none;border-radius:0;gap:0 2.4rem;border-top:2px solid var(--color-text,#1c1917);max-width:1176px;padding:0;margin-left:auto;margin-right:auto}
+html .KST,html .KST:hover{background:none;padding:1.3rem 0 .4rem}
+html .KST::before{display:none}
+html .KST-V{background:none;-webkit-text-fill-color:currentColor;color:var(--color-text,#1c1917);font-size:2.6rem;font-weight:400}
+html .KST-K{font-size:.86rem!important;font-weight:600!important;color:var(--color-text,#1c1917);margin:.35rem 0 .3rem}
+html .KST-D{font-size:.84rem;opacity:1;color:var(--color-text-secondary,#5a5248)}
+@media (max-width:640px){html .KSTATS{gap:0 1.4rem;margin-left:1rem;margin-right:1rem}}
+html .KTXT-COLS{font-size:1rem;line-height:1.75}
+html .KTXT-P{font-size:.98rem;font-weight:400;line-height:1.75}
+html .KGAL,html .KTXT-BLOCK{max-width:1240px;padding-left:2rem;padding-right:2rem}
+html .yuliania-name *{font-style:normal!important;color:inherit!important;-webkit-text-fill-color:currentColor!important;background:none!important}
+html .KGAL-TITLE{font-style:normal;font-size:clamp(1.6rem,2.6vw,2.1rem);font-weight:400}
+@media (max-width:640px){html .KGAL,html .KTXT-BLOCK{padding-left:1rem;padding-right:1rem}}
+</style>
 </body>
 </html>

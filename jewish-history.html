@@ -2444,7 +2444,7 @@ a, button, [role="button"], input, select, textarea,
     <div class="container">
         <div class="jh-chapter-inner">
             <div class="jh-chapter-aside">
-                <div class="jh-chapter-num">01</div>
+                <div class="jh-chapter-num">1</div>
                 <div class="jh-chapter-label">Розділ перший</div>
                 <h3 class="jh-chapter-aside-title">Місто, громада та її устрій</h3>
                 <p class="jh-chapter-aside-desc">Від середньовічного поселення до незалежної єврейської громади 1753 року — як формувалося єврейське самоврядування Дубровиці.</p>
@@ -2511,7 +2511,7 @@ a, button, [role="button"], input, select, textarea,
                 </div>
             </div>
             <div class="jh-chapter-aside">
-                <div class="jh-chapter-num">02</div>
+                <div class="jh-chapter-num">2</div>
                 <div class="jh-chapter-label">Розділ другий</div>
                 <h3 class="jh-chapter-aside-title">Синагоги, рабини та хасидизм</h3>
                 <p class="jh-chapter-aside-desc">П'ять синагог і чотири рабини на одне невелике поліське містечко.</p>
@@ -2529,7 +2529,7 @@ a, button, [role="button"], input, select, textarea,
     <div class="container">
         <div class="jh-chapter-inner">
             <div class="jh-chapter-aside">
-                <div class="jh-chapter-num">03</div>
+                <div class="jh-chapter-num">3</div>
                 <div class="jh-chapter-label">Розділ третій</div>
                 <h3 class="jh-chapter-aside-title">Освіта, культура і сіонізм</h3>
                 <p class="jh-chapter-aside-desc">Від традиційних хедерів до школи «Тарбут» з навчанням на івриті — шлях єврейської освіти Дубровиці через три покоління.</p>
@@ -2582,7 +2582,7 @@ a, button, [role="button"], input, select, textarea,
                 </div>
             </div>
             <div class="jh-chapter-aside">
-                <div class="jh-chapter-num">04</div>
+                <div class="jh-chapter-num">4</div>
                 <div class="jh-chapter-label">Розділ четвертий</div>
                 <h3 class="jh-chapter-aside-title">Старожитності та загадки міста</h3>
                 <p class="jh-chapter-aside-desc">Скеля з нерозшифрованим написом «17…», підземний хід від костелу й «Сокольня» — те, чого місто так і не пояснило.</p>
@@ -2596,7 +2596,7 @@ a, button, [role="button"], input, select, textarea,
     <div class="container">
         <div class="jh-chapter-inner">
             <div class="jh-chapter-aside">
-                <div class="jh-chapter-num">05</div>
+                <div class="jh-chapter-num">5</div>
                 <div class="jh-chapter-label">Розділ п'ятий</div>
                 <h3 class="jh-chapter-aside-title">Будинки зсередини та ззовні</h3>
                 <p class="jh-chapter-aside-desc">Дерев'яне і цегляне будівництво, три типи планування, груба піч та самовар — побут єврейської родини Дубровиці крізь опис Зальцмана.</p>
@@ -2644,7 +2644,7 @@ a, button, [role="button"], input, select, textarea,
                 </p>
             </div>
             <div class="jh-chapter-aside">
-                <div class="jh-chapter-num">06</div>
+                <div class="jh-chapter-num">6</div>
                 <div class="jh-chapter-label">Розділ шостий</div>
                 <h3 class="jh-chapter-aside-title">Транспортне сполучення</h3>
                 <p class="jh-chapter-aside-desc">Від парому через Горинь — до залізниці 1884 року та вузькоколійки Першої світової. Як Дубровиця виходила зі своєї поліської замкнутості у великий світ.</p>
@@ -2662,7 +2662,7 @@ a, button, [role="button"], input, select, textarea,
     <div class="container">
         <div class="jh-chapter-inner">
             <div class="jh-chapter-aside">
-                <div class="jh-chapter-num">07</div>
+                <div class="jh-chapter-num">7</div>
                 <div class="jh-chapter-label">Розділ сьомий</div>
                 <h3 class="jh-chapter-aside-title">Хаос 1920 року і польський майор</h3>
                 <p class="jh-chapter-aside-desc">Три влади за три дні. Балаховці, що спустошили десять містечок регіону. І польський офіцер, що стояв як залізний мур між погромниками та Дубровицею.</p>
@@ -3598,5 +3598,20 @@ function jhSeek(e){
     });
 })();
 </script>
+<style id="jh-v2">
+/* ═══ Єврейська Дубровиця v2: факти рядком, номери розділів без контуру, підсумки без карток ═══ */
+html .jh-stats-row{border:0;border-top:2px solid var(--color-text);border-radius:0;background:none;box-shadow:none;gap:0 2.4rem}
+html .jh-stat{text-align:left;border:0!important;padding:1.3rem 0 .4rem}
+html .jh-stat-num{color:var(--color-text);font-weight:400;font-size:2.8rem}
+html .jh-stat-label{font-size:.86rem!important;color:var(--color-text-secondary)!important;font-weight:500!important}
+html .jh-chapter-num{-webkit-text-stroke:0!important;color:var(--ds-gold,#86661b)!important;opacity:1!important;font-size:2.4rem;font-weight:400;font-style:italic;letter-spacing:0;margin-bottom:.2rem}
+html .jh-chapter-num::before{content:"§ "}
+html .jh-legacy-grid{gap:0 3rem}
+html .jh-legacy-card{background:none;border:0;border-top:1px solid var(--color-border);border-radius:0;box-shadow:none;padding:1.4rem 0 1.8rem}
+html .jh-legacy-card h4{font-size:1.5rem;font-weight:500}
+html .jh-legacy-card p{font-size:.96rem;line-height:1.75}
+html .jh-chapter-body :is(.jh-highlight-box,.jh-quote) p:first-of-type::first-letter{float:none;font-size:inherit;color:inherit;margin:0;padding:0;font-family:inherit;line-height:inherit;font-weight:inherit}
+@media (max-width:768px){html .jh-stats-row{gap:0 1.4rem}html .jh-stat{border-bottom:0!important}}
+</style>
 </body>
 </html>
