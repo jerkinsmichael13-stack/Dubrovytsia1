@@ -1291,6 +1291,7 @@ window.addEventListener('error', e => console.error('❌', e.message));
 (function () {
     'use strict';
     if (window.__dxPalette) return; window.__dxPalette = true;
+    window.dxOpenSearch = function () { show(); };
     var IDX = null, loading = null, open = false, sel = 0, flat = [], FT = null, ftLoading = null, NM = null;
     var TYPES = {
         place:   ['Поселення', '<path d="M12 21s-6-5.3-6-10a6 6 0 1 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/>'],
@@ -1459,4 +1460,85 @@ window.addEventListener('error', e => console.error('❌', e.message));
         else if (e.key === 'Escape' && open) hide();
     });
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mount); else mount();
+})();
+
+// ================================================
+// ЕТАП 2 · нижня панель на телефоні
+// ================================================
+(function () {
+    'use strict';
+    if (window.__dxDock || document.querySelector('.a-page, .w3d-page')) return; window.__dxDock = true;
+    var here = (location.pathname.split('/').pop() || 'index.html').replace(/\?.*$/, '');
+    var ARCH = /^(metrychni|sumariusz|zhaloba|akty|rejestr|inventar|atlas|sela|vyborchi|persha|plater|radzyvil|worobin|prizvyshcha|poselennia)/;
+    var I = {
+        home: '<path d="M4 11.5 12 5l8 6.5V20a1 1 0 0 1-1 1h-4.5v-6h-5v6H5a1 1 0 0 1-1-1z"/>',
+        hist: '<path d="M5 4h10l4 4v12H5z"/><path d="M15 4v4h4M8.5 12h7M8.5 15.5h7"/>',
+        arch: '<rect x="3.5" y="4" width="17" height="5" rx="1"/><path d="M5 9v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9M10 13h4"/>',
+        foto: '<rect x="3.5" y="6" width="17" height="13" rx="1.5"/><circle cx="12" cy="12.5" r="3.2"/><path d="M8.5 6 10 4h4l1.5 2"/>',
+        find: '<circle cx="11" cy="11" r="6.5"/><path d="m20 20-4-4"/>'
+    };
+    var items = [
+        ['index.html', 'Головна', 'home', here === 'index.html' || here === ''],
+        ['history.html', 'Історія', 'hist', here === 'history.html'],
+        ['metrychni-knyhy.html', 'Архів', 'arch', ARCH.test(here)],
+        ['photo-archive.html', 'Фото', 'foto', here === 'photo-archive.html'],
+        [null, 'Пошук', 'find', false]
+    ];
+    function build() {
+        var nav = document.createElement('nav');
+        nav.className = 'dock'; nav.setAttribute('aria-label', 'Швидкі розділи');
+        nav.innerHTML = items.map(function (it) {
+            var ic = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + I[it[2]] + '</svg>';
+            return it[0] ? '<a href="' + it[0] + '"' + (it[3] ? ' class="on" aria-current="page"' : '') + '>' + ic + '<span>' + it[1] + '</span></a>'
+                         : '<button type="button" class="dock-find">' + ic + '<span>' + it[1] + '</span></button>';
+        }).join('');
+        document.body.appendChild(nav);
+        document.documentElement.classList.add('has-dock');
+        nav.querySelector('.dock-find').addEventListener('click', function () {
+            if (window.dxOpenSearch) window.dxOpenSearch();
+            else { var b = document.querySelector('.dxk-btn'); if (b) b.click(); }
+        });
+        var last = scrollY, tick = false;
+        addEventListener('scroll', function () {
+            if (tick) return; tick = true;
+            requestAnimationFrame(function () {
+                var y = scrollY, d = y - last;
+                if (Math.abs(d) > 6) { nav.classList.toggle('hide', d > 0 && y > 160); last = y; }
+                tick = false;
+            });
+        }, { passive: true });
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', build); else build();
+})();
+
+// ================================================
+// ЕТАП 2 · лупа на аркушах документів
+// ================================================
+(function () {
+    'use strict';
+    if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    var Z = 2.6, R = 95, lp = null;
+    function attach(img) {
+        if (img.__lp) return; img.__lp = true;
+        var host = img.parentElement;
+        host.style.position = host.style.position || 'relative';
+        img.addEventListener('mouseenter', function () {
+            if (!lp) { lp = document.createElement('div'); lp.className = 'loupe'; }
+            host.appendChild(lp); lp.style.backgroundImage = 'url("' + (img.currentSrc || img.src) + '")'; lp.classList.add('on');
+        });
+        img.addEventListener('mouseleave', function () { if (lp) lp.classList.remove('on'); });
+        img.addEventListener('mousemove', function (e) {
+            if (!lp || !img.naturalWidth) return;
+            var r = img.getBoundingClientRect(), hr = host.getBoundingClientRect();
+            var nw = img.naturalWidth, nh = img.naturalHeight;
+            var fit = getComputedStyle(img).objectFit, s = fit === 'cover' ? Math.max(r.width / nw, r.height / nh) : Math.min(r.width / nw, r.height / nh);
+            var dw = nw * s, dh = nh * s, ox = (r.width - dw) / 2, oy = /top/.test(getComputedStyle(img).objectPosition.split(' ')[1] || '') || getComputedStyle(img).objectPosition.split(' ')[1] === '0%' ? 0 : (r.height - dh) / 2;
+            var x = e.clientX - r.left, y = e.clientY - r.top;
+            lp.style.left = (e.clientX - hr.left - R) + 'px'; lp.style.top = (e.clientY - hr.top - R) + 'px';
+            lp.style.backgroundSize = (dw * Z) + 'px ' + (dh * Z) + 'px';
+            lp.style.backgroundPosition = (-((x - ox) * Z - R)) + 'px ' + (-((y - oy) * Z - R)) + 'px';
+        });
+    }
+    function scan() { document.querySelectorAll('.cover-sheet img, .hero-doc .sheet img').forEach(attach); }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', scan); else scan();
 })();

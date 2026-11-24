@@ -4246,3 +4246,56 @@ img[loading="lazy"] { transition: opacity 0.6s ease; }
     .cover-facts div + div::before { display: none; }
     .cover--life .cover-facts, .cover--life .cover-facts:has(> div:nth-child(4)) { display: grid; grid-template-columns: 1fr; grid-auto-flow: row; }
 }
+
+/* ================================================================
+   ЕТАП 2 · рух і фактура
+   ================================================================ */
+/* плавний перехід між сторінками (Chrome, Edge, Safari 18+) */
+@view-transition { navigation: auto; }
+.header { view-transition-name: site-header; }
+::view-transition-old(root) { animation: vtOut .2s ease both; }
+::view-transition-new(root) { animation: vtIn .42s cubic-bezier(.16, 1, .3, 1) both; }
+::view-transition-group(site-header) { animation-duration: 0s; }
+@keyframes vtOut { to { opacity: 0; } }
+@keyframes vtIn { from { opacity: 0; transform: translateY(12px); } }
+@media (prefers-reduced-motion: reduce) { ::view-transition-old(root), ::view-transition-new(root) { animation: none; } }
+
+/* фактура паперу під світлою темою */
+html:not([data-theme="dark"]) body {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .28 0 0 0 0 .18 0 0 0 .055 0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23p)'/%3E%3C/svg%3E");
+}
+
+/* виділення тексту й фокус у тон сайту */
+::selection { background: rgba(201, 162, 39, .28); }
+:focus-visible { outline: 2px solid #c9a227; outline-offset: 3px; }
+
+/* нижня панель на телефоні */
+.dock { display: none; }
+@media (max-width: 760px) {
+    .dock {
+        position: fixed; left: .6rem; right: .6rem; bottom: calc(.6rem + env(safe-area-inset-bottom)); z-index: 900;
+        display: grid; grid-template-columns: repeat(5, 1fr);
+        padding: .35rem .25rem; border-radius: 18px;
+        background: rgba(250, 246, 238, .88); -webkit-backdrop-filter: blur(16px) saturate(1.3); backdrop-filter: blur(16px) saturate(1.3);
+        border: 1px solid rgba(90, 74, 46, .14); box-shadow: 0 12px 34px rgba(20, 15, 8, .18);
+        transition: transform .35s cubic-bezier(.16, 1, .3, 1), opacity .25s;
+    }
+    .dock.hide { transform: translateY(calc(100% + 1.2rem)); opacity: 0; }
+    .dock a, .dock button {
+        display: flex; flex-direction: column; align-items: center; gap: .15rem; padding: .35rem 0 .3rem; border: 0; border-radius: 12px; background: none;
+        color: #6b5d48; font: 600 .62rem/1.1 var(--font-body, 'Manrope', sans-serif); letter-spacing: .02em; text-decoration: none; -webkit-tap-highlight-color: transparent;
+    }
+    .dock svg { width: 22px; height: 22px; }
+    .dock .on { color: #1c1917; background: rgba(201, 162, 39, .18); }
+    .dock .on svg { color: #9a7416; }
+    [data-theme="dark"] .dock { background: rgba(26, 21, 15, .86); border-color: rgba(212, 178, 90, .18); box-shadow: 0 12px 34px rgba(0, 0, 0, .5); }
+    [data-theme="dark"] .dock a, [data-theme="dark"] .dock button { color: #b9ab92; }
+    [data-theme="dark"] .dock .on { color: #f3ead8; background: rgba(212, 178, 90, .16); }
+    [data-theme="dark"] .dock .on svg { color: #d9b44a; }
+    html.has-dock body { padding-bottom: calc(4.6rem + env(safe-area-inset-bottom)); }
+    html.has-dock .back-to-top { bottom: calc(5.4rem + env(safe-area-inset-bottom)); }
+}
+.loupe { position: absolute; z-index: 5; width: 190px; height: 190px; border-radius: 50%; pointer-events: none; background-repeat: no-repeat; background-color: #efe6d2;
+    box-shadow: 0 0 0 3px rgba(243, 234, 214, .95), 0 0 0 4px rgba(154, 116, 22, .55), 0 18px 40px rgba(0, 0, 0, .5); opacity: 0; transform: scale(.85); transition: opacity .18s, transform .25s cubic-bezier(.16, 1, .3, 1); }
+.loupe.on { opacity: 1; transform: none; }
+.cover-sheet img, .hero-doc .sheet img { cursor: crosshair; }
