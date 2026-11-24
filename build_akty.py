@@ -260,7 +260,7 @@ def page(key):
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){{dataLayer.push(arguments);}}
-  gtag('js', new Date());
+  gtag('consent','default',{{analytics_storage:(function(){{try{{return localStorage.getItem('dx-consent')==='yes'?'granted':'denied'}}catch(e){{return 'denied'}}}})(),ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'}});gtag('js', new Date());
   gtag('config', 'G-WGBZ0BD23K');
 </script>
     <meta charset="UTF-8">
@@ -326,7 +326,7 @@ def page(key):
 
 {footer}
 
-<script src="app.js?v=16"></script>
+<script src="app.js?v=17"></script>
 <script>{js}</script>
 <script src="reader.js?v=2" defer></script>
 </body>

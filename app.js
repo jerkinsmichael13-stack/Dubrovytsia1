@@ -1,14 +1,45 @@
-// ── Google Analytics 4 ──────────────────────────
+// ── Google Analytics 4 і згода на cookies ──────
+// Сам лічильник підключено в <head> кожної сторінки з Consent Mode:
+// поки відвідувач не дозволив, GA працює без cookies. Тут — лише вибір.
 (function(){
-    var s1 = document.createElement('script');
-    s1.async = true;
-    s1.src = 'https://www.googletagmanager.com/gtag/js?id=G-WGBZ0BD23K';
-    document.head.appendChild(s1);
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    window.gtag = gtag;
-    gtag('js', new Date());
-    gtag('config', 'G-WGBZ0BD23K');
+    if (!window.gtag) window.gtag = function(){ dataLayer.push(arguments); };
+    var K = 'dx-consent';
+    function get(){ try { return localStorage.getItem(K); } catch (e) { return 'no'; } }
+    function set(v){
+        try { localStorage.setItem(K, v); } catch (e) {}
+        gtag('consent', 'update', { analytics_storage: v === 'yes' ? 'granted' : 'denied' });
+    }
+    var CSS = '.dxc{position:fixed;left:1rem;bottom:1rem;z-index:950;max-width:min(380px,calc(100vw - 2rem));padding:1rem 1.1rem 1rem;border-radius:14px;border:1px solid rgba(224,189,90,.32);background:#1c1710;color:#efe6d4;box-shadow:0 18px 44px rgba(0,0,0,.35);font:400 .86rem/1.55 var(--font-body,"Manrope",sans-serif);transform:translateY(12px);opacity:0;transition:opacity .35s,transform .45s cubic-bezier(.16,1,.3,1)}' +
+        '.dxc.on{transform:none;opacity:1}.dxc p{margin:0 0 .8rem}.dxc a{color:#e0bd5a}.dxc-b{display:flex;gap:.5rem;flex-wrap:wrap}' +
+        '.dxc button{flex:1 1 auto;padding:.6rem .9rem;border-radius:10px;border:1px solid rgba(239,230,212,.22);background:none;color:#efe6d4;font:600 .8rem var(--font-body,"Manrope",sans-serif);cursor:pointer}' +
+        '.dxc button.y{background:#d9b44a;border-color:#d9b44a;color:#1c1712}.dxc button:focus-visible{outline:2px solid #e0bd5a;outline-offset:2px}' +
+        '@media(max-width:760px){html.has-dock .dxc{bottom:calc(5.4rem + env(safe-area-inset-bottom))}}' +
+        '.dxc-link{background:none;border:0;padding:0;color:inherit;font:inherit;text-decoration:underline;text-underline-offset:2px;cursor:pointer;opacity:.8}';
+    var box = null;
+    function show(){
+        if (box) { box.classList.add('on'); return; }
+        var st = document.createElement('style'); st.textContent = CSS; document.head.appendChild(st);
+        box = document.createElement('div'); box.className = 'dxc'; box.setAttribute('role', 'dialog'); box.setAttribute('aria-label', 'Згода на cookies аналітики');
+        box.innerHTML = '<p>Ми рахуємо відвідування через Google Analytics, щоб розуміти, які сторінки читають. Дозволите cookies аналітики? Без них сайт працює так само.</p>' +
+            '<div class="dxc-b"><button type="button" class="y">Дозволити</button><button type="button" class="n">Ні, дякую</button></div>';
+        document.body.appendChild(box);
+        box.querySelector('.y').onclick = function(){ set('yes'); hide(); };
+        box.querySelector('.n').onclick = function(){ set('no'); hide(); };
+        requestAnimationFrame(function(){ requestAnimationFrame(function(){ box.classList.add('on'); }); });
+    }
+    function hide(){ if (box) box.classList.remove('on'); }
+    window.dxConsent = show;
+    function init(){
+        var c = get();
+        if (c !== 'yes' && c !== 'no') setTimeout(show, 1200);
+        var ft = document.querySelector('.ft-copy, .footer');
+        if (ft && !document.querySelector('.dxc-link')) {
+            var b = document.createElement('button'); b.type = 'button'; b.className = 'dxc-link'; b.textContent = 'Налаштування cookies';
+            b.onclick = show; var w = document.createElement('span'); w.appendChild(document.createTextNode(' · ')); w.appendChild(b); ft.appendChild(w);
+        }
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
 
 // ⚡ Застосувати тему ДО рендеру — без блимання

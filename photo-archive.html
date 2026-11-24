@@ -6,7 +6,7 @@
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  gtag('consent','default',{analytics_storage:(function(){try{return localStorage.getItem('dx-consent')==='yes'?'granted':'denied'}catch(e){return 'denied'}})(),ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});gtag('js', new Date());
   gtag('config', 'G-WGBZ0BD23K');
 </script>
     <meta charset="UTF-8">
@@ -1075,7 +1075,7 @@ html, body { touch-action: manipulation; }
     <div class="lb-strip" id="LB-STRIP" aria-label="Мініатюри"></div>
 </div>
 
-<script src="app.js?v=16"></script>
+<script src="app.js?v=17"></script>
 <script>
 /* ══════════════════════════════════════════════════════════════
    DL — завантаження з водяним знаком (Canvas)
