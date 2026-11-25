@@ -433,20 +433,29 @@ function init(api){
       },
       kostel: function(){
         lawn();
-        /* the churchyard as the old photographs show it: the wall runs well in front of the church, a few metres off its right
-           side and far out to its left, where the yard held the old trees; the gate on the axis */
-        var fz = bx.max.z + 7.5, bz = bx.min.z - 6, xl = bx.min.x - 22, xr = bx.max.x + 5.5;
+        /* the churchyard after the photographs of 1915–1916 and the 1930s (the same yard as on the home page): the wall runs some
+           twenty metres before the facade, with the gate on the axis and big old limes and chestnuts on either side of the walk;
+           ten or so metres off the long sides, fifteen behind the altar. Before the gate an unpaved market square. */
+        var fz = bx.max.z + 19.4, bz = bx.min.z - 15, xl = bx.min.x - 11.4, xr = bx.max.x + 9.4;
         FENCE = {front: fz, back: bz, left: xl, right: xr};
-        cobbles(rrect(-60, fz, 60, fz + 40, 0));                                         // the market square before the gate
-        var round = rrect(bx.min.x - 1.6, bx.min.z - 1.6, bx.max.x + 1.6, bx.max.z + 1.6, 1.2);
+        var out = new Path2D(); out.rect(0, 0, CW, CW); out.rect(X(xl), Z(bz), M(xr - xl), M(fz - bz));   // beyond the fence: rougher, yellower grass
+        K.save(); K.fillStyle = 'rgba(150,138,78,.3)'; K.fill(out, 'evenodd'); K.clip(out, 'evenodd'); noise('#8f8650', 1400, 1, 3, .45); noise('#6c6a3c', 500, 4, 14, .25); K.restore();
+        var sq = rrect(-60, fz + .4, 60, fz + 40, 0); dirt(sq, '#a08b67');                 // the square: packed sandy earth, worn into ruts
+        K.save(); K.clip(sq); K.strokeStyle = 'rgba(96,78,52,.35)'; K.lineWidth = M(.22);
+        [[-2, 0], [-.7, 0], [1.6, .6], [2.9, .6]].forEach(function(q){ K.beginPath(); K.moveTo(X(-40), Z(fz + 13 + q[0])); K.bezierCurveTo(X(-12), Z(fz + 8 + q[0]), X(10), Z(fz + 6 + q[0] + q[1]), X(40), Z(fz + 10 + q[0] + q[1])); K.stroke(); });
+        K.restore();
+        var round = rrect(bx.min.x - 1.8, bx.min.z - 1.8, bx.max.x + 1.8, bx.max.z + 2.4, 1.2);  // gravel round the walls
         K.fillStyle = '#a2967c'; K.fill(round); K.save(); K.clip(round); noise('#b8ad94', 3000, .8, 2, .6); noise('#857a63', 2000, .8, 2, .5); K.restore();
-        cobbles(rrect(-1.6, bx.max.z - .5, 1.6, fz, .1));                                // flagged walk from the gate to the door
-        var side = new Path2D(); [[-2, fz - 2.5], [xl + 6, fz - 3.5], [xl + 7, bz + 6]].forEach(function(q, i){ i ? side.lineTo(X(q[0]), Z(q[1])) : side.moveTo(X(q[0]), Z(q[1])); });
-        K.save(); K.lineCap = K.lineJoin = 'round'; K.strokeStyle = 'rgba(110,92,62,.4)'; K.lineWidth = M(1.6); K.stroke(side); K.strokeStyle = '#9a8a68'; K.lineWidth = M(1.1); K.stroke(side); K.restore();
-        /* old chestnuts and limes: a grove in the wide left part of the yard, a row along the right wall */
-        for (var gx = xl + 3.5; gx < bx.min.x - 4; gx += 6.2) for (var gz = fz - 5; gz > bz + 3; gz -= 7.4){ if (rnd() < .22) continue; plant(gx + (rnd() - .5)*2, gz + (rnd() - .5)*2, rnd() < .65 ? 'chestnut' : 'linden', 1.6 + rnd()*.5); }
-        [fz - 4, fz - 15, bz + 8].forEach(function(z){ plant(xr - 2.6, z, 'chestnut', 1.7); });
-        plant(bx.min.x + 4, bz + 2.6, 'linden', 1.6); plant(bx.max.x - 3, bz + 2.6, 'chestnut', 1.6);
+        cobbles(rrect(-1.6, bx.max.z + 2, 1.6, fz + .3, .1));                            // the stone path from the gate to the door
+        cobbles(rrect(-1.8, fz + .3, 1.8, fz + 2.2, .1));                                // and a step of paving out to the square
+        /* old trees, as in the photographs: a great lime left of the walk and a chestnut right of it, a few limes along the sides,
+           a tall tree at the right front corner of the church with young spruces along the right aisle (photo of 1929), a grove behind */
+        plant(xl + 5.5, fz - 6, 'linden', 2.35); plant(xl + 5, fz - 16, 'chestnut', 1.9); plant(-7.5, fz - 4.5, 'linden', 1.55);
+        plant(xr - 5, fz - 5.5, 'chestnut', 2.0); plant(9, fz - 3.5, 'linden', 1.45);
+        plant(xr - 3.6, bx.max.z - 3, 'linden', 2.1);
+        [bx.max.z - 12, bx.max.z - 20].forEach(function(z){ plant(xr - 3.8, z, 'con', 1.05); });
+        plant(xl + 4.2, bx.max.z - 12, 'linden', 1.9); plant(xl + 4.5, bx.max.z - 24, 'chestnut', 1.8);
+        [[xl + 5, bz + 5], [-3, bz + 4.5], [xr - 5, bz + 5.5]].forEach(function(q, i){ plant(q[0], q[1], i === 1 ? 'chestnut' : 'linden', 1.7 + rnd()*.3); });
         return {outer: 12, outerKinds: ['linden', 'chestnut', 'con', 'ash']};
       },
       cerkva: function(){
@@ -592,15 +601,35 @@ function init(api){
         var eg = new T.ExtrudeGeometry(sh, {depth: .5, bevelEnabled: false}); eg.translate(0, 0, -.25); var w = new T.Mesh(eg, plaster); w.castShadow = w.receiveShadow = true; g.add(w);
         bxm(.9, .9, .05, 0, .02, -.06, wood, g); for (var i = 0; i < 5; i++) bxm(.05, .9, .04, -.36 + i*.18, .92, -.06, wood, g); bxm(.9, .06, .06, 0, 1.78, -.06, wood, g);
       });
-      /* pickets and piers round the rest of the yard */
-      function run(x0, z0, x1, z1, step){
-        var L = Math.hypot(x1 - x0, z1 - z0), n = Math.max(1, Math.round(L/step)), rot = Math.atan2(-(z1 - z0), x1 - x0);
+      /* iron railings on a low plastered plinth between two piers (along the square, as in the photographs of the 1930s) */
+      var iron = new T.MeshStandardMaterial({color: '#25231f', roughness: .5, metalness: .45});
+      function railings(x0, z0, x1, z1){
+        var dx = x1 - x0, dz = z1 - z0, L = Math.hypot(dx, dz), a = Math.atan2(-dz, dx), g = new T.Group(); g.position.set((x0 + x1)/2, 0, (z0 + z1)/2); g.rotation.y = a; Gf.add(g);
+        bxm(L, .56, .4, 0, 0, 0, plaster, g); bxm(L + .04, .08, .5, 0, .56, 0, plaster, g);
+        bxm(L, .05, .05, 0, .82, 0, iron, g); bxm(L, .05, .05, 0, 1.9, 0, iron, g);
+        var n = Math.floor(L/.14), bg = new T.BoxGeometry(.026, 1.3, .026); bg.translate(0, 1.29, 0);
+        var tg = new T.ConeGeometry(.04, .13, 4); tg.rotateY(Math.PI/4); tg.translate(0, 2.0, 0);
+        var ib = new T.InstancedMesh(bg, iron, n), it = new T.InstancedMesh(tg, iron, n), m4 = new T.Matrix4();
+        for (var i = 0; i < n; i++){ m4.makeTranslation(-L/2 + (i + .5)*L/n, 0, 0); ib.setMatrixAt(i, m4); it.setMatrixAt(i, m4); }
+        ib.castShadow = it.castShadow = true; g.add(ib); g.add(it);
+      }
+      /* a solid whitewashed stretch of wall with a coping (the left part of the front, as in the photographs of the square) */
+      function wall(x0, z0, x1, z1){
+        var dx = x1 - x0, dz = z1 - z0, L = Math.hypot(dx, dz), a = Math.atan2(-dz, dx), g = new T.Group(); g.position.set((x0 + x1)/2, 0, (z0 + z1)/2); g.rotation.y = a; Gf.add(g);
+        bxm(L, .34, .56, 0, 0, 0, plaster, g); bxm(L, 1.86, .46, 0, .34, 0, plaster, g); bxm(L + .04, .1, .58, 0, 2.2, 0, plaster, g);
+        gable(.62, .16, L, 0, 2.3, 0, Math.PI/2, tile, g);
+      }
+      function run(x0, z0, x1, z1, step, kind){
+        var L = Math.hypot(x1 - x0, z1 - z0), n = Math.max(1, Math.round(L/step)), rot = Math.atan2(-(z1 - z0), x1 - x0), fn = kind === 'rail' ? railings : kind === 'wall' ? wall : pickets;
         for (var i = 0; i < n; i++){ var a0 = i/n, a1 = (i + 1)/n;
-          pickets(x0 + (x1 - x0)*a0, z0 + (z1 - z0)*a0, x0 + (x1 - x0)*a1, z0 + (z1 - z0)*a1);
+          fn(x0 + (x1 - x0)*a0, z0 + (z1 - z0)*a0, x0 + (x1 - x0)*a1, z0 + (z1 - z0)*a1);
           pier(x0 + (x1 - x0)*a1, z0 + (z1 - z0)*a1, rot, false); }
       }
-      run(5.12, fz, F.right, fz, 3.6); run(F.right, fz, F.right, bz, 3.8);
-      run(-5.12, fz, F.left, fz, 3.8); run(F.left, fz, F.left, bz, 3.8);
+      /* along the square: railings both sides of the gate, the left end walled; pickets on the sides and behind */
+      var xw = F.left + (F.right - F.left)*.2;
+      run(5.12, fz, F.right, fz, 4.8, 'rail');
+      run(-5.12, fz, xw, fz, 4.8, 'rail'); run(xw, fz, F.left, fz, 4.2, 'wall');
+      run(F.right, fz, F.right, bz, 3.8); run(F.left, fz, F.left, bz, 3.8);
       run(F.left, bz, F.right, bz, 4);
       /* the piers stand on the ground, which is level here */
       var y0 = probe(0, fz + 2); if (y0 != null && y0 !== false) Gf.position.y = y0;
