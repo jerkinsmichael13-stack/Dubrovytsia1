@@ -257,7 +257,7 @@ function attach(api, o){
     var P = [], N = [], r = function(i){ var v = Math.sin(seed*91.7 + i*12.989)*43758.5453; return v - Math.floor(v); };
     parts.forEach(function(q, j){ var g = new T.IcosahedronGeometry(q[3], 1).toNonIndexed(), pa = g.attributes.position, na = g.attributes.normal, v = new T.Vector3(), c = new T.Vector3(0, 0, 0);
       for (var i = 0; i < pa.count; i++){ v.fromBufferAttribute(pa, i);
-        var d = 1 + rough*(Math.sin(v.x*5.1 + j*1.7 + seed)*Math.sin(v.y*4.3 + j)*Math.sin(v.z*5.7 + seed*.3)) + rough*.5*(r(i*3 + j*101 + Math.round(v.x*9 + v.y*13 + v.z*7)) - .5);
+        var d = 1 + rough*(Math.sin(v.x*5.1 + j*1.7 + seed)*Math.sin(v.y*4.3 + j)*Math.sin(v.z*5.7 + seed*.3)) + rough*.5*(r(j*101 + Math.round(v.x*9 + v.y*13 + v.z*7)) - .5);   // by position only: no cracks between faces
         v.multiplyScalar(d); v.x += q[0]; v.y += q[1]; v.z += q[2]; pa.setXYZ(i, v.x, v.y, v.z);
         var rn = v.clone().sub(c).normalize(), ln = new T.Vector3().fromBufferAttribute(na, i); ln.lerp(rn, .7).normalize(); na.setXYZ(i, ln.x, ln.y, ln.z); }
       P.push(pa.array); N.push(na.array); });
@@ -303,6 +303,7 @@ function attach(api, o){
     if (oldK > 2 && rnd() < .3) continue;                                            // bigger crowns, a few fewer of them
     var cdx = x2 + 88, cdz = z2 - 37, along = cdx*.915 - cdz*.402, side = cdx*.402 + cdz*.915;   // the first view: from (−88, 37) toward the house
     if (along > 0 && along < 58 && side > -4 && side < 26) continue;                 // keep the near lawn clear, so no crown sits on the caption
+    var th = Math.atan2(ddx, ddz); if (th > -2.45 && th < .3 && rh > 58 && rh < 125) continue;   // nor on the arc the camera drifts along
     add(rnd() < (pk ? .18 : .3) ? 'cone' : 'blob', x2, z2, (1.7 + rnd()*1.2)*Math.min(1.8, .75 + .25*big)*oldK, pk ? 1 : 0);
   }
   /* hedgerows and lone trees on the fields and meadows */
@@ -392,7 +393,7 @@ function attach(api, o){
         var prev = m.onBeforeCompile, key = m.customProgramCacheKey();
         m.onBeforeCompile = function(sh, r){ if (prev) prev.call(this, sh, r); sh.uniforms.uLampP = LAMPU; sh.uniforms.uLampC = LAMPC; sh.uniforms.uLampK = LAMPK; sh.uniforms.uWet = U.uWet;
           sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nuniform vec4 uLampP[' + NLAMP + '];\nuniform vec3 uLampC;\nuniform float uLampK, uWet;')
-            .replace('#include <normal_fragment_maps>', '#include <normal_fragment_maps>\nif (uWet > 0.001){ float upw = clamp(dot(normal, normalize((viewMatrix*vec4(0.0, 1.0, 0.0, 0.0)).xyz)), 0.0, 1.0); float wt = uWet*smoothstep(.25, .9, upw); diffuseColor.rgb *= 1.0 - .3*wt; roughnessFactor = mix(roughnessFactor, .16, wt*.8); }')
+            .replace('#include <normal_fragment_maps>', '#include <normal_fragment_maps>\nif (uWet > 0.001){ float upw = clamp(dot(normal, normalize((viewMatrix*vec4(0.0, 1.0, 0.0, 0.0)).xyz)), 0.0, 1.0); float wt = uWet*smoothstep(.25, .9, upw); diffuseColor.rgb *= 1.0 - .22*wt; roughnessFactor = mix(roughnessFactor, .62, wt*.6); }')   // damp, with a faint sheen — not a mirror
             .replace('#include <lights_fragment_end>', ['#include <lights_fragment_end>',
               'if (uLampK > 0.001){ vec3 vp = -vViewPosition; float acc = 0.0;',
               '  for (int i = 0; i < ' + NLAMP + '; i++){ vec3 Lv = (viewMatrix*vec4(uLampP[i].xyz, 1.0)).xyz - vp; float d2 = dot(Lv, Lv); if (d2 > 64.0) continue;',
