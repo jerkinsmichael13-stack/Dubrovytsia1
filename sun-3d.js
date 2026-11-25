@@ -94,6 +94,7 @@ function attach(api, o){
   var p = el('section', 'sun-p'); p.id = 'sunPanel'; p.setAttribute('aria-label', 'Сонце над Дубровицею');
   p.innerHTML = '<div class="sun-h"><b id="sunDate"></b><span>сонце над Дубровицею</span></div>' +
     '<div class="sun-d" role="group" aria-label="Дата">' + PRESETS.map(function(x, i){ return '<button type="button" data-p="' + i + '" title="' + x.k + '">' + x.k + ' · ' + x.t + '</button>'; }).join('') +
+    '<button type="button" data-q="dawn" title="Схід сонця: туман над землею, промені крізь дерева">світанок у тумані</button><button type="button" data-q="dusk" title="Захід сонця: довгі тіні, світло у вікнах">вечір</button>' +
     '<button type="button" data-p="now">зараз</button><label title="Будь-яка дата"><input type="date" id="sunPick" aria-label="Дата"></label></div>' +
     '<div class="sun-t"><button type="button" class="sun-play" id="sunPlay" aria-label="Прогорнути день" title="Прогорнути день від сходу до заходу"></button>' +
     '<input type="range" id="sunTime" min="0" max="1439" step="1" aria-label="Година за київським часом"><output id="sunOut"></output></div>' +
@@ -150,6 +151,8 @@ function attach(api, o){
   play.addEventListener('click', run);
   pick.addEventListener('change', function(){ var v = pick.value.split('-'); if (v.length === 3) setDate(+v[0], +v[1] - 1, +v[2]); });
   p.addEventListener('click', function(e){
+    var q = e.target.closest('[data-q]');
+    if (q && rs){ stop(); if (rs.rise != null) T = Math.round(q.dataset.q === 'dawn' ? rs.rise + 45 : rs.set - 25); apply(); return; }
     var b = e.target.closest('[data-p]'); if (!b) return; stop();
     if (b.dataset.p === 'now'){ var n = new Date(); T = n.getHours()*60 + n.getMinutes(); setDate(n.getFullYear(), n.getMonth(), n.getDate()); return; }
     var x = PRESETS[+b.dataset.p]; if (T < 300 || T > 1290) T = 600; setDate(Y, x.m, x.d);

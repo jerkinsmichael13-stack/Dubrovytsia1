@@ -65,7 +65,7 @@ renderer.outputEncoding = THREE.sRGBEncoding;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 1.0;
 renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.shadowMap.type = THREE.PCFShadowMap;                    // PCF with a radius: softer edges, and softer still when the sun is low
 
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera(34, 1, 0.5, 800);
@@ -862,7 +862,7 @@ var sun = new THREE.DirectionalLight('#ffeccd', 1.55);
 sun.position.set(-40, 50, 34); sun.target.position.set(0, 10, -15);
 sun.castShadow = true; sun.shadow.mapSize.set(o.shadow, o.shadow);
 var sc = sun.shadow.camera; sc.left = -42; sc.right = 42; sc.top = 42; sc.bottom = -42; sc.near = 20; sc.far = 160;
-sun.shadow.bias = -.0003; sun.shadow.normalBias = .035;
+sun.shadow.bias = -.0003; sun.shadow.normalBias = .035; sun.shadow.radius = 2.2;
 scene.add(sun); scene.add(sun.target);
 var fill = new THREE.DirectionalLight('#d3dcff', .5); fill.position.set(42, 18, -20); scene.add(fill);
 
@@ -895,7 +895,7 @@ function envScale(k){
 }
 function setLight(s){
   setLamps(s ? s.lamps || 0 : 0);
-  if (!s){ envScale(1);
+  if (!s){ envScale(1); sun.shadow.radius = 2.2;
     sun.position.copy(L0.sp); sun.color.copy(L0.sc); sun.intensity = L0.si; fill.position.copy(L0.fp); fill.color.copy(L0.fc); fill.intensity = L0.fi;
     hemi.color.copy(L0.hs); hemi.groundColor.copy(L0.hg); hemi.intensity = L0.hi; renderer.toneMappingExposure = L0.ex; shadowBox(L0.box, L0.far);
   } else {
@@ -906,6 +906,8 @@ function setLight(s){
     hemi.color.set(s.sky); hemi.groundColor.set(s.ground); hemi.intensity = s.hemiI; renderer.toneMappingExposure = s.exposure;
     envScale(s.env);
     var lo = Math.max(.12, d.y); shadowBox(Math.min(L0.box*2.2, L0.box/Math.sqrt(lo)*.62 + L0.box*.4), 240);
+    sun.shadow.radius = 2.2 + 5*(1 - Math.min(1, Math.max(0, (d.y - .08)/.5)));      // long low-sun shadows blur out
+    M.glass.emissiveIntensity = Math.max(M.glass.emissiveIntensity, (s.warm || 0)*.75);   // candles lit in the windows at dusk
   }
   wake();
 }

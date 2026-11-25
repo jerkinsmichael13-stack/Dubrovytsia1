@@ -1395,8 +1395,79 @@ function init(api){
     new MutationObserver(function(){ var m = /^(\d+):(\d+)/.exec(sunOut.textContent); if (!m) return; var h = +m[1];
       if (lastH !== null && h !== lastH && performance.now() - lastToll > 1500){ lastToll = performance.now(); Snd.hour(h); } lastH = h; }).observe(sunOut, {childList: true, characterData: true, subtree: true}); }, 500);
 
+  /* ── ATMOSPHERE for the sun slider: morning mist lying on the ground, shafts of low sun through the crowns, windows warming at dusk.
+     It follows api.light(L) (sun-3d.js): L.dir points at the sun, L.sunColor/L.sky colour it; with no sun panel it all stays off ── */
+  var Atmo = (function(){
+    if (!api.light || !api.compass) return null;
+    function ss(a, b, x){ var t = Math.max(0, Math.min(1, (x - a)/(b - a))); return t*t*(3 - 2*t); }
+    var R = Math.max(size.x, size.z)*.9 + 16;
+    /* mist: three soft layers of drifting noise close to the ground, fading out towards the rim of the turntable */
+    function noiseTex(){ var c = document.createElement('canvas'), N = 256; c.width = c.height = N; var k = c.getContext('2d'); k.fillStyle = '#000'; k.fillRect(0, 0, N, N);
+      for (var i = 0; i < 260; i++){ var x = Math.random()*N, y = Math.random()*N, r = 14 + Math.random()*46, g = k.createRadialGradient(x, y, 0, x, y, r), a = .05 + Math.random()*.09;
+        g.addColorStop(0, 'rgba(255,255,255,' + a + ')'); g.addColorStop(1, 'rgba(255,255,255,0)'); k.fillStyle = g;
+        for (var ox = -N; ox <= N; ox += N) for (var oy = -N; oy <= N; oy += N){ k.save(); k.translate(ox, oy); k.fillRect(x - r, y - r, r*2, r*2); k.restore(); } }
+      var t = new T.CanvasTexture(c); t.wrapS = t.wrapT = T.RepeatWrapping; return t; }
+    function radial(){ var c = document.createElement('canvas'); c.width = c.height = 128; var k = c.getContext('2d'), g = k.createRadialGradient(64, 64, 0, 64, 64, 64);
+      g.addColorStop(0, '#fff'); g.addColorStop(.62, '#fff'); g.addColorStop(1, '#000'); k.fillStyle = g; k.fillRect(0, 0, 128, 128); return new T.CanvasTexture(c); }
+    var nt = noiseTex(), rt = radial(), layers = [];
+    [[.35, 1.0], [1.3, .75], [2.8, .45]].forEach(function(q, i){
+      var m = new T.MeshBasicMaterial({color: '#e9e4da', map: nt.clone(), alphaMap: rt, transparent: true, opacity: 0, depthWrite: false, fog: false});
+      m.map.needsUpdate = true; m.map.repeat.set(2.2 + i*.5, 2.2 + i*.5);
+      var p = new T.Mesh(new T.PlaneGeometry(R*2, R*2), m); p.rotation.x = -Math.PI/2; p.position.set(centre.x, q[0], centre.z); p.renderOrder = 8; p.visible = false; p.userData.k = q[1];
+      scene.add(p); layers.push(p); });
+    /* shafts: long thin crossed quads from inside a crown down along the sunlight, added on top of the picture */
+    var shaftTex = (function(){ var c = document.createElement('canvas'); c.width = 64; c.height = 256; var k = c.getContext('2d');
+      var gx = k.createLinearGradient(0, 0, 64, 0); gx.addColorStop(0, 'rgba(255,255,255,0)'); gx.addColorStop(.5, 'rgba(255,255,255,1)'); gx.addColorStop(1, 'rgba(255,255,255,0)');
+      k.fillStyle = gx; k.fillRect(0, 0, 64, 256); k.globalCompositeOperation = 'destination-in';
+      var gy = k.createLinearGradient(0, 0, 0, 256); gy.addColorStop(0, 'rgba(0,0,0,0)'); gy.addColorStop(.12, 'rgba(0,0,0,1)'); gy.addColorStop(.55, 'rgba(0,0,0,.55)'); gy.addColorStop(1, 'rgba(0,0,0,0)');
+      k.fillStyle = gy; k.fillRect(0, 0, 64, 256); return new T.CanvasTexture(c); })();
+    var shaftM = new T.MeshBasicMaterial({color: '#ffd9a0', map: shaftTex, transparent: true, opacity: 0, blending: T.AdditiveBlending, depthWrite: false, side: T.DoubleSide, fog: false});
+    var seeds = [];
+    trees.forEach(function(o){ if (o.kind === 'con' || o.low) return; var b = new T.Box3().setFromObject(o.g); if (b.max.y - b.min.y < 6) return;
+      var c = b.getCenter(new T.Vector3()), r = (b.max.x - b.min.x)*.35;
+      for (var i = 0; i < 4; i++) seeds.push({p: new T.Vector3(c.x + (Math.random() - .5)*r*2, c.y + (Math.random() - .2)*(b.max.y - c.y)*.7, c.z + (Math.random() - .5)*r*2), w: 1.2 + Math.random()*2.2}); });
+    var sg = new T.BufferGeometry(), N = seeds.length*2, pos = new Float32Array(N*12), uv = new Float32Array(N*8), idx = [];
+    for (var i = 0; i < N; i++){ uv.set([0, 1, 1, 1, 1, 0, 0, 0], i*8); idx.push(i*4, i*4 + 1, i*4 + 2, i*4, i*4 + 2, i*4 + 3); }
+    sg.setAttribute('position', new T.BufferAttribute(pos, 3)); sg.setAttribute('uv', new T.BufferAttribute(uv, 2)); sg.setIndex(idx);
+    var shafts = new T.Mesh(sg, shaftM); shafts.frustumCulled = false; shafts.renderOrder = 9; shafts.visible = false; scene.add(shafts);
+    function layShafts(d){                                                            // d: unit vector towards the sun
+      var a = d.clone().negate(), p1 = new T.Vector3().crossVectors(a, new T.Vector3(0, 1, 0)); if (p1.lengthSq() < 1e-4) p1.set(1, 0, 0); p1.normalize();
+      var p2 = new T.Vector3().crossVectors(a, p1).normalize(), k = 0;
+      seeds.forEach(function(sd){ var L = Math.min(16, sd.p.y/Math.max(.25, -a.y) + 1), e = sd.p.clone().addScaledVector(a, L);
+        [p1, p2].forEach(function(pp){ var w = pp.clone().multiplyScalar(sd.w/2);
+          pos.set([sd.p.x - w.x, sd.p.y - w.y, sd.p.z - w.z, sd.p.x + w.x, sd.p.y + w.y, sd.p.z + w.z, e.x + w.x*1.6, e.y + w.y*1.6, e.z + w.z*1.6, e.x - w.x*1.6, e.y - w.y*1.6, e.z - w.z*1.6], k*12); k++; }); });
+      sg.attributes.position.needsUpdate = true; sg.computeBoundingSphere();
+    }
+    var fog0 = scene.fog, myFog = new T.FogExp2(0xdddddd, 0), K = {mist: 0, shaft: 0}, tgt = {mist: 0, shaft: 0}, last = 0;
+    var light0 = api.light;
+    api.light = function(L){
+      var r = light0.apply(this, arguments);
+      if (!L || !L.dir){ tgt.mist = tgt.shaft = 0; return r; }
+      var d = new T.Vector3(L.dir[0], L.dir[1], L.dir[2]).normalize(), alt = Math.asin(d.y)*180/Math.PI;
+      var E = api.compass.east, morning = d.x*E[0] + d.z*E[1] > 0;
+      tgt.mist = (morning ? (1 - ss(6, 20, alt))*(.35 + .65*ss(-6, 1, alt)) : .25*(1 - ss(-2, 6, alt)))*(1 - .7*(L.night || 0));
+      tgt.shaft = ss(.5, 4, alt)*(1 - ss(14, 34, alt))*(.55 + .45*tgt.mist);
+      var mc = new T.Color(L.sky || '#ddd').lerp(new T.Color('#e8ecef'), .55).lerp(new T.Color(L.sunColor || '#fff'), .12);
+      layers.forEach(function(p){ p.material.color.copy(mc); });
+      shaftM.color.set(L.sunColor || '#ffd9a0');
+      if (seeds.length) layShafts(d);
+      myFog.color.copy(mc);
+      return r;
+    };
+    function step(now){
+      var dt = last ? Math.min(.1, (now - last)/1000) : 0; last = now;
+      K.mist += (tgt.mist - K.mist)*Math.min(1, dt*3); K.shaft += (tgt.shaft - K.shaft)*Math.min(1, dt*3);
+      layers.forEach(function(p, i){ p.visible = K.mist > .01; p.material.opacity = K.mist*.62*p.userData.k;
+        if (!reduced){ p.material.map.offset.x += dt*.006*(i + 1); p.material.map.offset.y += dt*.003*(2 - i); } });
+      shafts.visible = K.shaft > .01 && seeds.length > 0; shaftM.opacity = K.shaft*.1;
+      if (scene.fog === fog0 && K.mist > .01) scene.fog = myFog; else if (scene.fog === myFog && K.mist <= .01) scene.fog = fog0;
+      myFog.density = K.mist*.0045;
+    }
+    return {step: step};
+  })();
+
   /* ── frame loop ── */
-  (function frame(now){ stepFlight(now); stepTour(now); stepScenes(now); stepFx(now); stepTrees(); if (spotsOn || cur >= 0) place(now); requestAnimationFrame(frame); })(0);
+  (function frame(now){ stepFlight(now); stepTour(now); stepScenes(now); stepFx(now); stepTrees(); if (Atmo) Atmo.step(now); if (spotsOn || cur >= 0) place(now); requestAnimationFrame(frame); })(0);
   window.x3dExtras = {scenes: SCENES, view: function(i){ var v = viewFor(chapterCam(CH[i].cam)); return {p: v.p.toArray(), t: v.t.toArray()}; }, show: show, tour: startTour, weather: setWeather, sound: function(){ bSound.click(); }, spots: spots};
 }
 if (window.x3dApi) init(window.x3dApi);
