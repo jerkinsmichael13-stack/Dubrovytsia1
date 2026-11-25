@@ -271,7 +271,7 @@ function attach(api, o){
   var conM = new T.MeshStandardMaterial({roughness: .95, flatShading: true}); windy(conM, .025);
   var trunkM = new T.MeshStandardMaterial({color: '#4a3826', roughness: 1});
   var list = {blob: [], cone: [], pop: []};
-  function add(kind, x, z, s){ list[kind].push([x, H(x, z), z, s]); }
+  function add(kind, x, z, s, old){ list[kind].push([x, H(x, z), z, s, old || 0]); }
   /* the forest */
   var step = lite ? 9 : 6, rnd = (function(seed){ return function(){ seed = (seed*16807) % 2147483647; return (seed - 1)/2147483646; }; })(1918);
   for (var fx = CX - SIZE/2 + 4; fx < CX + SIZE/2 - 4; fx += step) for (var fz = -SIZE/2 + 4; fz < SIZE/2 - 4; fz += step){
@@ -280,25 +280,32 @@ function attach(api, o){
     if (rnd() > thin) continue;
     var x2 = fx + (rnd() - .5)*step*.9, z2 = fz + (rnd() - .5)*step*.9, f = forest(x2, z2);
     if (rnd() > f) continue;
-    var big = 1/Math.sqrt(thin);
-    add(rnd() < (inPark(x2, z2) ? .18 : .3) ? 'cone' : 'blob', x2, z2, (1.7 + rnd()*1.2)*Math.min(1.8, .75 + .25*big));
+    var big = 1/Math.sqrt(thin), pk = inPark(x2, z2), rh = Math.hypot(x2 - GX, z2 - GZ);
+    /* the old park: limes, oaks and maples 20–25 m high, crowns standing over the roof as in the photographs of 1914 and 1937 */
+    var ddx = x2 - GX, ddz = z2 - GZ, lawnSide = (ddx < 0 && ddz > -30 && rh < 150) || (ddz > 0 && rh < 120);   // the open lawn the camera looks across
+    var oldK = pk && rh < 200 && !lawnSide ? 2.15 + .5*rnd() : pk && !lawnSide ? 1.5 : 1;
+    if (oldK > 2 && rnd() < .3) continue;                                            // bigger crowns, a few fewer of them
+    add(rnd() < (pk ? .18 : .3) ? 'cone' : 'blob', x2, z2, (1.7 + rnd()*1.2)*Math.min(1.8, .75 + .25*big)*oldK, pk ? 1 : 0);
   }
   /* hedgerows and lone trees on the fields and meadows */
   for (var k2 = 0; k2 < (lite ? 40 : 80); k2++){ var lx = -40 - rnd()*90, lz = Math.floor((rnd()*360 - 180)/15)*15; if (forest(lx, lz) > .2) continue; add('blob', lx, lz, 1.2 + rnd()*.8); }
   for (k2 = 0; k2 < 26; k2++){ var mz = rnd()*300 - 150, mx = riverX(mz) + (rnd() < .5 ? -1 : 1)*(8 + rnd()*5); if (Math.hypot(mx - GX, mz - GZ) < 30) continue; add(rnd() < .5 ? 'pop' : 'blob', mx, mz, 1.3 + rnd()*.6); }   // willows and poplars along the banks
   /* the park: an avenue of limes along the drive, groups of white poplars, spruces behind the tower, chestnuts by the ponds */
-  for (var ax = -68; ax <= -24; ax += 6.5){ add('blob', ax, -5.2, 1.25); add('blob', ax + 3.2, 5.2, 1.25); }
-  [[-20.5, -7], [-20.5, 7.2], [-15, -8.6], [-11.5, 15], [13, 10.5], [9.5, 14.6], [14.5, 4], [-26, -18], [-30, 14], [-8, 22], [6, 21.5]].forEach(function(q){ add('blob', q[0], q[1], 1.15 + rnd()*.2); });
-  [[5, -15.5], [8.5, -14], [11.5, -11.8], [19, -9], [21, 22], [-3, -21]].forEach(function(q){ add('pop', q[0], q[1], 1.15); });
-  [[-1.5, -16.5], [-5.5, -16], [-9.5, -13.8], [-13, -18], [-18, -12]].forEach(function(q){ add('cone', q[0], q[1], 1.05); });
+  for (var ax = -68; ax <= -24; ax += 6.5){ add('blob', ax, -5.2, 1.5, 1); add('blob', ax + 3.2, 5.2, 1.5, 1); }
+  [[-20.5, -7, 1.3], [-20.5, 7.2, 1.15], [-15, -8.6, 1.5], [-11.5, 15, 1.4], [13, 10.5, 3.6], [9.5, 14.6, 3.2], [14.5, 4, 3.4], [-26, -18, 2.2], [-30, 14, 1.1], [-8, 22, 1.5], [6, 21.5, 1.8]].forEach(function(q){ add('blob', q[0], q[1], q[2] + rnd()*.15, q[2] > 1.6 ? 1 : 0); });   // the ones between the camera and the house stay small
+  /* old trees behind the house, on the edge of the terrace and north of the tower: in every photograph the roof stands against crowns, not sky */
+  [[20, -4, 5.6], [22, 7, 5.2], [19, 17, 4.8], [2, -27, 5.4], [10, -25, 5.0], [17, -18, 5.4], [-7, -29, 5.2], [-16, -27, 4.6]].forEach(function(q){ add('blob', q[0], q[1], q[2] + rnd()*.2, 1); });
+  [[5, -15.5], [8.5, -14], [11.5, -11.8], [19, -9], [21, 22], [-3, -21]].forEach(function(q){ add('pop', q[0], q[1], 2.3 + rnd()*.4, 1); });   // white poplars over the roof, as in Orda's drawing
+  [[-1.5, -16.5], [-5.5, -16], [-9.5, -13.8], [-13, -18], [-18, -12]].forEach(function(q){ add('cone', q[0], q[1], 2.0 + rnd()*.4); });
   function instance(kind, geo, mat, colors, trunkH, crownY, cast){
     var L = list[kind]; if (!L.length) return;
     var im = new T.InstancedMesh(geo, mat, L.length), tr = new T.InstancedMesh(new T.CylinderGeometry(.12, .2, 1, 6), trunkM, L.length), m4 = new T.Matrix4(), q = new T.Quaternion(), sv = new T.Vector3(), pv = new T.Vector3(), e = new T.Euler();
     L.forEach(function(t, i){
       var s = t[3]; q.setFromEuler(e.set(0, hash(t[0], t[2])*6.28, 0));
-      m4.compose(pv.set(t[0], t[1] + trunkH*s + crownY*s, t[2]), q, sv.set(s, s*(kind === 'blob' ? .9 : 1), s)); im.setMatrixAt(i, m4);
+      var oT = t[4] ? .62 : 1, oY = t[4] ? 1.18 : 1, tk = Math.min(1, 1.5/Math.sqrt(s));
+      m4.compose(pv.set(t[0], t[1] + trunkH*s*oT + crownY*s*oY, t[2]), q, sv.set(s, s*(kind === 'blob' ? .9 : 1)*oY, s)); im.setMatrixAt(i, m4);
       im.setColorAt(i, colors[Math.floor(hash(t[2], t[0])*colors.length)]);
-      m4.compose(pv.set(t[0], t[1] + trunkH*s/2, t[2]), q, sv.set(s, trunkH*s + .2, s)); tr.setMatrixAt(i, m4);
+      m4.compose(pv.set(t[0], t[1] + trunkH*s*oT/2 + .4, t[2]), q, sv.set(s*tk, trunkH*s*oT + 1, s*tk)); tr.setMatrixAt(i, m4);
     });
     im.castShadow = tr.castShadow = cast; im.receiveShadow = true; scene.add(im); scene.add(tr);
     if (kind !== 'cone') CROWNS.push({im: im, base: im.instanceColor.array.slice(), L: L});
@@ -734,12 +741,12 @@ function attach(api, o){
   /* ── seasons, picked by hand in the hero (summer by default): autumn turns the park to gold and rust and sends leaves
      drifting down; winter strips the broadleaves, lays snow on the land, the roofs and the crowns, and freezes the water ── */
   var SEASON = 'summer', SW = 0, SA = 0, ctT = 1;
-  var AUTC = ['#c8862e', '#e0a93a', '#b4542a', '#e8c04a', '#9c3c22', '#d07a28', '#c9a23a', '#8f8a38'].map(lin), BARE = [lin('#a0968a'), lin('#928879'), lin('#aaa196')];
+  var AUTC = ['#a7803a', '#b8953f', '#8c5a2c', '#9d7a33', '#7a4f2b', '#a06a30', '#8f8640', '#6f6b3a', '#b09a52'].map(lin), BARE = [lin('#a0968a'), lin('#928879'), lin('#aaa196')];
   function crownTarget(c, k){
     var a = c.base.slice(), L = c.L, col = new T.Color();
     if (k === 'summer') return a;
     for (var i = 0; i < L.length; i++){ var h = hash(L[i][0]*1.7, L[i][2]*2.3);
-      if (k === 'autumn'){ col.copy(AUTC[Math.floor(h*AUTC.length)]); if (hash(L[i][2], L[i][0]*3.1) < .16) col.lerp(new T.Color(a[i*3], a[i*3 + 1], a[i*3 + 2]), .65); }   // a few still green
+      if (k === 'autumn'){ col.copy(AUTC[Math.floor(h*AUTC.length)]); if (hash(L[i][2], L[i][0]*3.1) < .22) col.lerp(new T.Color(a[i*3], a[i*3 + 1], a[i*3 + 2]), .55); }   // a few still green
       else col.copy(BARE[Math.floor(h*BARE.length)]);
       a[i*3] = col.r; a[i*3 + 1] = col.g; a[i*3 + 2] = col.b; }
     return a;
@@ -889,6 +896,29 @@ function attach(api, o){
   setSky(); setInterval(setSky, 60000); patchLamps();
   wxApply(); wxFetch(); setInterval(function(){ wxFetch(true); }, 15*60000);
   api.heroWeather = function(k){ wxPick = k; wxApply(); for (var q in WX) WXc[q] = WX[q]; WXc.wet = WX.rain > .05 ? 1 : 0; setSky(); }; api.__wx = function(){ return {WX: WX, WXc: WXc, live: wxLive}; };
+
+  /* ── the house as the photographs of 1914 and 1937 show it: lime plaster gone grey-ochre with the years, not new white;
+     the panes take a little of the sky instead of reading as black holes; a soft shadow where the walls meet the ground ── */
+  (function(){
+    var TINT = {wall: [.86, .82, .73], blind: [.86, .82, .73], WE_masonry: [.86, .82, .73], trim: [.9, .87, .79], col: [.9, .87, .79],
+                plinth: [.8, .76, .67], sash: [.88, .86, .8], step: [.9, .88, .82]}, seen = [];
+    model.traverse(function(ob){ if (!ob.isMesh) return;
+      (Array.isArray(ob.material) ? ob.material : [ob.material]).forEach(function(m){
+        if (!m || seen.indexOf(m) > -1) return; seen.push(m);
+        var k = TINT[m.name]; if (k && m.color) m.color.multiply(new T.Color(k[0], k[1], k[2]));
+        if (m.name === 'glass'){ m.color.set('#3e4a53'); m.roughness = .08; m.metalness = .3; }
+      }); });
+    var c = document.createElement('canvas'); c.width = c.height = 256; var g = c.getContext('2d');
+    var X0 = -24, Z0 = -22, SZ = 44, px = function(v, o0){ return (v - o0)/SZ*256; };
+    g.shadowColor = 'rgba(0,0,0,1)'; g.shadowBlur = 14; g.shadowOffsetX = 1000; g.fillStyle = '#000';   // only the blurred shadow lands on the canvas
+    [[-8.9, 8.9, -8.9, 8.9], [-12.7, -8.5, -6, 6], [-9, 9, 8.5, 12.6]].forEach(function(r){
+      g.fillRect(px(r[0], X0) - 1000, px(r[2], Z0), px(r[1], X0) - px(r[0], X0), px(r[3], Z0) - px(r[2], Z0)); });
+    var tex = new T.CanvasTexture(c);
+    var geo = new T.PlaneGeometry(SZ, SZ, 44, 44); geo.rotateX(-Math.PI/2); geo.translate(X0 + SZ/2, 0, Z0 + SZ/2);
+    var gp = geo.attributes.position; for (var i = 0; i < gp.count; i++) gp.setY(i, H(gp.getX(i), gp.getZ(i)) + .06);
+    var ao = new T.Mesh(geo, new T.MeshBasicMaterial({map: tex, color: '#1a140c', transparent: true, opacity: .5, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -2}));
+    ao.renderOrder = 1; scene.add(ao);
+  })();
 
   /* ── frame the house on the right, so the copy on the left has open sky and land behind it ── */
   var shift = o.shift || 0;
