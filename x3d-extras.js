@@ -343,6 +343,46 @@ function init(api){
       var t = new T.CanvasTexture(c); t.encoding = T.sRGBEncoding; t.anisotropy = 4; return t;
     })();
     var leafDepth = new T.MeshDepthMaterial({depthPacking: T.RGBADepthPacking, map: leafTex, alphaTest: .5, side: T.DoubleSide});
+    /* spruce sprays: a twig with rows of short needles, narrowing to the tip; the spruces are built of drooping tiers of these */
+    var needleTex = (function(){
+      var c = document.createElement('canvas'), W = 64, H = 256; c.width = W; c.height = H; var k = c.getContext('2d');
+      var r = (function(sd){ return function(){ sd = (sd*16807) % 2147483647; return (sd - 1)/2147483646; }; })(777);
+      k.lineCap = 'round';
+      function spray(x0, y0, x1, y1, w0, side){                                       // a twig from (x0,y0) to (x1,y1) with needles both sides
+        var n = 40, dx = x1 - x0, dy = y1 - y0, L = Math.hypot(dx, dy), ux = dx/L, uy = dy/L;
+        k.strokeStyle = 'rgb(120,110,96)'; k.lineWidth = 2; k.beginPath(); k.moveTo(x0, y0); k.lineTo(x1, y1); k.stroke();
+        for (var i = 0; i < n; i++){ var t = i/n, px = x0 + dx*t, py = y0 + dy*t, l = w0*(1 - .65*t)*(.8 + r()*.4);
+          [-1, 1].forEach(function(s){ var a = s*(.95 + r()*.25), vx = ux*Math.cos(a) - uy*Math.sin(a), vy = ux*Math.sin(a) + uy*Math.cos(a), g = 150 + (r()*100 | 0);
+            k.strokeStyle = 'rgb(' + g + ',' + g + ',' + g + ')'; k.lineWidth = 2.2 + r()*1.0; k.beginPath(); k.moveTo(px, py); k.lineTo(px + vx*l, py + vy*l); k.stroke(); }); }
+      }
+      spray(W/2, H - 2, W/2, 6, 24);                                                    // the main twig, base at the bottom
+      for (var j = 0; j < 10; j++){ var y = H - 22 - j*22, s = j % 2 ? 1 : -1; spray(W/2, y, W/2 + s*(24 - j*1.6), y - 30 + j*1.5, 12 - j*.7); }
+      var t = new T.CanvasTexture(c); t.encoding = T.sRGBEncoding; t.anisotropy = 4; return t;
+    })();
+    var needleDepth = new T.MeshDepthMaterial({depthPacking: T.RGBADepthPacking, map: needleTex, alphaTest: .5, side: T.DoubleSide});
+    function spruceCards(s, y0){
+      var pos = [], nor = [], uv = [], col = [], idx = [], TI = 14, HT = 6.3*s;
+      function quad(b, d, sd, len, w, k, n){
+        var base = pos.length/3, tip = [b[0] + d[0]*len, b[1] + d[1]*len, b[2] + d[2]*len];
+        [[b, -1, 0], [b, 1, 0], [tip, 1, 1], [tip, -1, 1]].forEach(function(q){ var P = q[0], ww = w*(q[2] ? .35 : .5);
+          pos.push(P[0] + sd[0]*ww*q[1], P[1] + sd[1]*ww*q[1], P[2] + sd[2]*ww*q[1]); nor.push(n[0], n[1], n[2]); uv.push((q[1] + 1)/2, q[2]); col.push(k, k*1.02, k*.96); });
+        idx.push(base, base + 1, base + 2, base, base + 2, base + 3);
+      }
+      for (var i = 0; i < TI; i++){
+        var f = i/(TI - 1), y = y0 + .25*s + f*HT, R = 2.45*s*Math.pow(1 - f, .92) + .3*s, n = Math.round(9 + 7*(1 - f));
+        for (var j = 0; j < n; j++){
+          var a = j/n*6.283 + i*.9 + rnd()*.5, dr = -(.22 + rnd()*.3)*(1 - .5*f), len = R*(.8 + rnd()*.35);
+          var d = [Math.cos(a), dr, Math.sin(a)], dl = Math.hypot(d[0], d[1], d[2]); d = [d[0]/dl, d[1]/dl, d[2]/dl];
+          var sd = [-Math.sin(a), 0, Math.cos(a)], up = [d[1]*sd[2] - d[2]*sd[1], d[2]*sd[0] - d[0]*sd[2], d[0]*sd[1] - d[1]*sd[0]];
+          var nn = [Math.cos(a)*.6, .8, Math.sin(a)*.6], k = (.55 + .45*f)*(.85 + rnd()*.3), b = [d[0]*.08, y, d[2]*.08];
+          quad(b, d, sd, len, len*.95, k, nn);
+          quad(b, d, up, len*.9, len*.6, k*.85, nn);
+        }
+      }
+      var top = [0, y0 + .25*s + HT, 0]; quad([0, top[1] - .2*s, 0], [0, 1, 0], [1, 0, 0], .9*s, .55*s, 1, [0, 1, 0]); quad([0, top[1] - .2*s, 0], [0, 1, 0], [0, 0, 1], .9*s, .55*s, 1, [0, 1, 0]);
+      var g = new T.BufferGeometry(); g.setAttribute('position', new T.Float32BufferAttribute(pos, 3)); g.setAttribute('normal', new T.Float32BufferAttribute(nor, 3));
+      g.setAttribute('uv', new T.Float32BufferAttribute(uv, 2)); g.setAttribute('color', new T.Float32BufferAttribute(col, 3)); g.setIndex(idx); return g;
+    }
     function leafCards(blobs, per, size, lo, hi){
       var pos = [], nor = [], uv = [], col = [], idx = [], d = new T.Vector3(), t1 = new T.Vector3(), t2 = new T.Vector3(), up = new T.Vector3(0, 1, 0), n = new T.Vector3(), c = new T.Vector3(), sh = new T.Vector3();
       var C = new T.Vector3(), y0 = 1e9, y1 = -1e9, R = 0; blobs.forEach(function(b){ C.add(b.p); y0 = Math.min(y0, b.p.y - b.r*b.sy); y1 = Math.max(y1, b.p.y + b.r*b.sy); }); C.multiplyScalar(1/blobs.length);
@@ -375,8 +415,10 @@ function init(api){
       var sp = SP[kind] || SP.dec, trunkH = kind === 'con' ? 1.4*s : sp.tr*s, tr = new T.Mesh(trunkG, trunkM); tr.scale.set(s*(kind === 'chestnut' ? 1.3 : 1), Math.max(.01, trunkH), s*(kind === 'chestnut' ? 1.3 : 1)); tr.position.y = trunkH/2; g.add(tr);
       g.userData.ph = rnd()*6.28;
       if (kind === 'con'){
-        var cm = new T.MeshStandardMaterial({color: conC, roughness: .95, vertexColors: true}); mats.push(cm);
-        for (var k = 0; k < 4; k++){ var c = new T.Mesh(coneG, cm), w = (2.1 - k*.42)*s; c.scale.set(w, 2.6*s, w); c.position.y = trunkH + k*1.45*s + 1.1*s; g.add(c); }
+        var cm = new T.MeshStandardMaterial({color: '#' + new T.Color(conC).multiplyScalar(.55).getHexString(), roughness: .95, vertexColors: true}); mats.push(cm);
+        for (var k = 0; k < 4; k++){ var c = new T.Mesh(coneG, cm), w = (2.1 - k*.42)*s*.55; c.scale.set(w, 2.6*s, w); c.position.y = trunkH + k*1.45*s + 1.1*s; g.add(c); }   // a dark core between the sprays
+        var nm = new T.MeshStandardMaterial({color: conC, roughness: .95, metalness: 0, envMapIntensity: .4, vertexColors: true, map: needleTex, alphaTest: .5, side: T.DoubleSide}); mats.push(nm);
+        var sc = new T.Mesh(spruceCards(s, trunkH - .9*s), nm); sc.customDepthMaterial = needleDepth; g.add(sc);
       } else {
         var li = sp.c != null ? sp.c : (rnd()*4) | 0, dk = '#' + new T.Color(leafC[li]).multiplyScalar(.45).getHexString(), lm = new T.MeshStandardMaterial({color: dk, roughness: .9, vertexColors: true}); lm.userData.leaf = li; lm.userData.c0 = dk; lm.userData.blob = true; lm.userData.c1 = autumnC[li]; mats.push(lm); FOL.push(lm);
         var top = sp.tr ? trunkH + sp.cy*s : sp.cy*s, crown = new T.Group(); crown.position.y = trunkH; g.add(crown); g.userData.crown = crown;
@@ -396,7 +438,7 @@ function init(api){
       }
       mats.push(trunkM);
       g.traverse(function(m){ if (m.isMesh){ m.castShadow = true; m.receiveShadow = true; } });
-      scene.add(g); trees.push({g: g, mats: mats.filter(function(m){ return m !== trunkM; }), kind: kind, x: x, z: z, fade: 0, low: !sp.tr && kind !== 'con', trunk: trunkM});
+      scene.add(g); trees.push({g: g, mats: mats.filter(function(m){ return m !== trunkM; }), kind: kind, x: x, z: z, fade: 0, low: !sp.tr || kind === 'con', trunk: trunkM});   // narrow spruces never need to fade out of the way
       placed.push([x, z]);
     }
     /* ── GROUNDS: each building gets its own setting, painted onto a skin over the turntable and planted deliberately:

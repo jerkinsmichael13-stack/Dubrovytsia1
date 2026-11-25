@@ -137,7 +137,57 @@ function weatherK(m, k){
   m.customProgramCacheKey = function(){ return (prevKey ? prevKey.call(this) : '') + '|kw' + k; };
   m.needsUpdate = true;
 }
-if (HIST){ weatherK(M.wall, 1); weatherK(M.field, .8); weatherK(M.trim, .7); }
+if (HIST){ weatherK(M.wall, 1); weatherK(M.field, .8); weatherK(M.trim, .7); stoneOrn(M.orn); }
+/* ── the roofs as the photographs show them: old clay tiles over the nave and the presbytery, dulled and browned by a century of
+   weather, with lichen in the damp patches; the low aisle roofs and the cornice flashings in grey sheet metal with standing seams ── */
+/* the portal's figures, capitals and cartouche frame are whitewashed stone on the old photographs, not dark bronze;
+   only the door's own astragal below stays dark */
+function stoneOrn(m){
+  var prev = m.onBeforeCompile;
+  m.onBeforeCompile = function(sh, r){
+    if (prev) prev.call(this, sh, r);
+    sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vWPos;')
+      .replace('#include <begin_vertex>', '#include <begin_vertex>\nvWPos = (modelMatrix * vec4(transformed, 1.0)).xyz;');
+    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying vec3 vWPos;\n' + WNOISE)
+      .replace('#include <map_fragment>', '#include <map_fragment>\nif (vWPos.y > 4.55){ float n = fbm(vWPos*3.0); diffuseColor.rgb = vec3(0.8, 0.77, 0.71)*(0.86 + 0.22*n); }');
+  };
+  m.customProgramCacheKey = function(){ return 'kstone'; };
+  m.needsUpdate = true;
+}
+function roofK(m){
+  var frag = [
+    'vec3 wp = vWPos; float wm = fbm(wp*0.22), wg = vn(wp*2.6), wl = fbm(wp*1.15 + 4.0);',
+    'bool tile = wp.y > 12.3 && abs(vWN.y) < 0.86;',
+    'if (tile){',
+    '  float lum = dot(diffuseColor.rgb, vec3(0.3, 0.59, 0.11));',
+    '  vec3 c = mix(vec3(lum), diffuseColor.rgb, 0.62)*vec3(0.8, 0.74, 0.7);',
+    '  c *= 0.84 + 0.3*(wm - 0.5) - 0.06*wg;',
+    '  c = mix(c, vec3(0.31, 0.3, 0.24), smoothstep(0.58, 0.82, wl)*0.42);',
+    '  c = mix(c, vec3(0.2, 0.18, 0.16), smoothstep(0.66, 0.9, fbm(vec3(wp.x*0.6, wp.y*2.2, wp.z*0.6)))*0.3);',
+    '  diffuseColor.rgb = c;',
+    '} else {',
+    '  float s = fract((abs(vWN.x) > abs(vWN.z) ? wp.z : wp.x)/0.58);',
+    '  float seam = 1.0 - smoothstep(0.0, 0.07, min(s, 1.0 - s));',
+    '  vec3 c = vec3(0.37, 0.39, 0.39)*(0.88 + 0.22*(wm - 0.5) + 0.05*wg);',
+    '  c = mix(c, vec3(0.43, 0.33, 0.25), smoothstep(0.6, 0.84, wl)*0.45);',
+    '  diffuseColor.rgb = c*(1.0 + 0.22*seam);',
+    '}'
+  ].join('\n');
+  var prev = m.onBeforeCompile;
+  m.onBeforeCompile = function(sh, r){
+    if (prev) prev.call(this, sh, r);
+    sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vWPos; varying vec3 vWN;')
+      .replace('#include <beginnormal_vertex>', '#include <beginnormal_vertex>\nvWN = normalize(mat3(modelMatrix)*objectNormal);')
+      .replace('#include <begin_vertex>', '#include <begin_vertex>\nvWPos = (modelMatrix * vec4(transformed, 1.0)).xyz;');
+    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying vec3 vWPos; varying vec3 vWN;\n' + WNOISE)
+      .replace('#include <map_fragment>', '#include <map_fragment>\n' + frag)
+      .replace('#include <roughnessmap_fragment>', '#include <roughnessmap_fragment>\nif (!(vWPos.y > 12.3 && abs(vWN.y) < 0.86)) roughnessFactor = 0.56;')
+      .replace('#include <metalnessmap_fragment>', '#include <metalnessmap_fragment>\nif (!(vWPos.y > 12.3 && abs(vWN.y) < 0.86)) metalnessFactor = 0.3;');
+  };
+  m.customProgramCacheKey = function(){ return 'kroof3'; };
+  m.needsUpdate = true;
+}
+
 
 /* louvres in the tower openings: horizontal slats */
 M.louv.map = canvasTex(16, 64, function(k){ k.fillStyle = '#1c1a17'; k.fillRect(0, 0, 16, 64); var g = k.createLinearGradient(0, 0, 0, 64); g.addColorStop(0, '#5a524a'); g.addColorStop(.6, '#3a352f'); g.addColorStop(1, '#1c1a17'); k.fillStyle = g; k.fillRect(0, 6, 16, 50); });
@@ -358,20 +408,22 @@ cornice(-HW, HW, -FD, 0, 16.85, [[.25,.12],[.35,.3],[.3,.48],[.25,.55]]);      /
 });
 win(FF, 0, 12.0, 1.85, 2.75, false, .2, [.64], M.leaded, .35, {frame: M.frameG, sill: M.frameG, seg: .22, sash: M.sash});
 /* inscription in the frieze */
+function labelTex(text){
+  return canvasTex(1024, 180, function(k){
+    k.fillStyle = HIST ? '#2a2724' : '#eebf30'; k.fillRect(0, 0, 1024, 180);
+    k.font = 'bold 150px "Times New Roman", Georgia, serif'; k.textAlign = 'center'; k.textBaseline = 'middle';
+    try { k.letterSpacing = '10px'; } catch(e){}
+    if (HIST){ k.fillStyle = 'rgba(214,206,190,.55)'; k.fillText(text, 512, 98, 1000); return; }
+    /* bronze letters with a gilded edge, as on the facade */
+    k.lineJoin = 'round'; k.strokeStyle = '#b8924a'; k.lineWidth = 9; k.strokeText(text, 512, 98, 1000);
+    k.fillStyle = '#5a3a26'; k.fillText(text, 512, 98, 1000);
+  });
+}
 (function(){
   function label(text, w, x){
-    var t = canvasTex(1024, 180, function(k){
-      k.fillStyle = HIST ? '#2a2724' : '#eebf30'; k.fillRect(0, 0, 1024, 180);
-      k.font = 'bold 150px "Times New Roman", Georgia, serif'; k.textAlign = 'center'; k.textBaseline = 'middle';
-      try { k.letterSpacing = '10px'; } catch(e){}
-      if (HIST){ k.fillStyle = 'rgba(214,206,190,.55)'; k.fillText(text, 512, 98, 1000); return; }
-      /* bronze letters with a gilded edge, as on the facade */
-      k.lineJoin = 'round'; k.strokeStyle = '#b8924a'; k.lineWidth = 9; k.strokeText(text, 512, 98, 1000);
-      k.fillStyle = '#5a3a26'; k.fillText(text, 512, 98, 1000);
-    });
-    add(new THREE.PlaneGeometry(w, w*180/1024), new THREE.MeshStandardMaterial({map:t, roughness:.9}), x, 16.4, .015).castShadow = false;
+    add(new THREE.PlaneGeometry(w, w*180/1024), new THREE.MeshStandardMaterial({map:labelTex(text), roughness:.9}), x, 16.4, .015).castShadow = false;
   }
-  label('SAMEMU', 3.7, -7.99); label('BOGU CZESC I', 4.9, 0); label('CHWALA', 3.7, 7.99);
+  label('SAMEMU', 3.7, -7.99); label('BOGU CZEŚĆ I', 4.9, 0); label('CHWAŁA', 3.7, 7.99);
 })();
 
 /* ═══════════ TOWERS · 5.6 m square, flush with the facade's corners ═══════════ */
@@ -996,7 +1048,10 @@ function useGLB(gltf){
     var mt = ob.material, nm = mt.name || '', k = nm.replace(/^KX_/, '');
     if (nm !== k && M[k] && !M[k].map){ ob.material = M[k]; mt.dispose(); }
     else if (nm === 'KE_masonry'){ mt.roughness = .93; mt.metalness = 0; if (HIST) weatherK(mt, 1); }
-    else if (nm === 'KE_roof'){ mt.roughness = .84; mt.metalness = 0; }
+    else if (nm === 'Material_6' || nm === 'Material_7'){        // the frieze plates were baked without Polish letters
+      var lt = labelTex(nm === 'Material_6' ? 'BOGU CZEŚĆ I' : 'CHWAŁA');                 // keeps flipY: the baked images are stored upside down
+      if (mt.map) mt.map.dispose(); mt.map = lt; mt.roughness = .9; mt.metalness = 0; mt.needsUpdate = true; }
+    else if (nm === 'KE_roof'){ mt.roughness = .84; mt.metalness = 0; if (HIST) roofK(mt); }
     else if (nm === 'KE_dome'){ mt.roughness = .5; mt.metalness = .35; }
     else { mt.roughness = Math.max(mt.roughness, .6); mt.metalness = 0; }
     if (ob.material.map) ob.material.map.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
