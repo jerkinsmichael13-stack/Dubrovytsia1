@@ -915,29 +915,6 @@ function attach(api, o){
   wxApply(); wxFetch(); setInterval(function(){ wxFetch(true); }, 15*60000);
   api.heroWeather = function(k){ wxPick = k; wxApply(); for (var q in WX) WXc[q] = WX[q]; WXc.wet = WX.rain > .05 ? 1 : 0; setSky(); }; api.__wx = function(){ return {WX: WX, WXc: WXc, live: wxLive}; };
 
-  /* ── the house as the photographs of 1914 and 1937 show it: lime plaster gone grey-ochre with the years, not new white;
-     the panes take a little of the sky instead of reading as black holes; a soft shadow where the walls meet the ground ── */
-  (function(){
-    var TINT = {wall: [.86, .82, .73], blind: [.86, .82, .73], WE_masonry: [.86, .82, .73], trim: [.9, .87, .79], col: [.9, .87, .79],
-                plinth: [.8, .76, .67], sash: [.88, .86, .8], step: [.9, .88, .82]}, seen = [];
-    model.traverse(function(ob){ if (!ob.isMesh) return;
-      (Array.isArray(ob.material) ? ob.material : [ob.material]).forEach(function(m){
-        if (!m || seen.indexOf(m) > -1) return; seen.push(m);
-        var k = TINT[m.name]; if (k && m.color) m.color.multiply(new T.Color(k[0], k[1], k[2]));
-        if (m.name === 'glass'){ m.color.set('#3e4a53'); m.roughness = .08; m.metalness = .3; }
-      }); });
-    var c = document.createElement('canvas'); c.width = c.height = 256; var g = c.getContext('2d');
-    var X0 = -24, Z0 = -22, SZ = 44, px = function(v, o0){ return (v - o0)/SZ*256; };
-    g.shadowColor = 'rgba(0,0,0,1)'; g.shadowBlur = 14; g.shadowOffsetX = 1000; g.fillStyle = '#000';   // only the blurred shadow lands on the canvas
-    [[-8.9, 8.9, -8.9, 8.9], [-12.7, -8.5, -6, 6], [-9, 9, 8.5, 12.6]].forEach(function(r){
-      g.fillRect(px(r[0], X0) - 1000, px(r[2], Z0), px(r[1], X0) - px(r[0], X0), px(r[3], Z0) - px(r[2], Z0)); });
-    var tex = new T.CanvasTexture(c);
-    var geo = new T.PlaneGeometry(SZ, SZ, 44, 44); geo.rotateX(-Math.PI/2); geo.translate(X0 + SZ/2, 0, Z0 + SZ/2);
-    var gp = geo.attributes.position; for (var i = 0; i < gp.count; i++) gp.setY(i, H(gp.getX(i), gp.getZ(i)) + .06);
-    var ao = new T.Mesh(geo, new T.MeshBasicMaterial({map: tex, color: '#1a140c', transparent: true, opacity: .5, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -2}));
-    ao.renderOrder = 1; scene.add(ao);
-  })();
-
   /* ── frame the house on the right, so the copy on the left has open sky and land behind it ── */
   var shift = o.shift || 0;
   function frame(){

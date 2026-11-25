@@ -141,6 +141,11 @@ shaderHook(M.brick, 'brick', [
   'vec3 bc = vec3(0.50, 0.27, 0.19)*(0.8 + 0.4*h3(vec3(floor(u), row, 3.0)))*(0.85 + 0.25*fbm(vWPos*1.5));',
   'diffuseColor.rgb = mix(bc, vec3(0.55, 0.52, 0.47), mortar);'
 ].join('\n'), true);
+/* the house as the photographs of 1914 and 1937 show it: lime plaster gone grey-ochre with the years, not new white,
+   and panes that take a little of the sky instead of reading as black holes (the same on the home page and here) */
+var AGE = {wall: [.86, .82, .73], blind: [.86, .82, .73], trim: [.9, .87, .79], col: [.9, .87, .79], plinth: [.8, .76, .67], sash: [.88, .86, .8], step: [.9, .88, .82]};
+Object.keys(AGE).forEach(function(k){ if (M[k]) M[k].color.multiply(new THREE.Color(AGE[k][0], AGE[k][1], AGE[k][2])); });
+M.glass.color.set('#3e4a53'); M.glass.roughness = .08; M.glass.metalness = .3;
 var house = new THREE.Group(); scene.add(house);
 function add(geo, m, x, y, z, parent){ var ob = new THREE.Mesh(geo, m); ob.position.set(x||0, y||0, z||0); ob.castShadow = ob.receiveShadow = true; (parent||house).add(ob); return ob; }
 function box(w, h, d, x, y, z, m, parent){ return add(new THREE.BoxGeometry(w, h, d), m, x, y + h/2, z, parent); }
@@ -717,6 +722,19 @@ var GX = -3.4, GZ = -.4;
   var g = add(pg, gm, GX, 0, GZ, scene); g.castShadow = false;
 })();
 
+/* a soft shadow where the walls and the podium meet the ground (40 m wide, so the home page's landscape keeps it) */
+(function(){
+  var c = document.createElement('canvas'); c.width = c.height = 256; var g = c.getContext('2d');
+  var X0 = -22, Z0 = -20, SZ = 40, px = function(v, o0){ return (v - o0)/SZ*256; };
+  g.shadowColor = 'rgba(0,0,0,1)'; g.shadowBlur = 14; g.shadowOffsetX = 1000; g.fillStyle = '#000';   // only the blurred shadow lands on the canvas
+  [[-8.9, 8.9, -8.9, 8.9], [-12.7, -8.5, -6, 6], [-9, 9, 8.5, 12.6]].forEach(function(r){
+    g.fillRect(px(r[0], X0) - 1000, px(r[2], Z0), px(r[1], X0) - px(r[0], X0), px(r[3], Z0) - px(r[2], Z0)); });
+  var geo = new THREE.PlaneGeometry(SZ, SZ, 40, 40); geo.rotateX(-Math.PI/2); geo.translate(X0 + SZ/2, 0, Z0 + SZ/2);
+  var gp = geo.attributes.position; for (var i = 0; i < gp.count; i++) gp.setY(i, ground(gp.getX(i)) + .06);
+  var ao = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({map: new THREE.CanvasTexture(c), color: '#1a140c', transparent: true, opacity: .5, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -2}));
+  ao.renderOrder = 1; ao.userData.contact = true; scene.add(ao);
+})();
+
 /* ── light ── */
 var hemi = new THREE.HemisphereLight('#fff4de', '#3a3420', .42); scene.add(hemi);
 var sun = new THREE.DirectionalLight('#ffeccd', 1.6);
@@ -859,7 +877,7 @@ function useGLB(gltf){
   meshes.forEach(function(ob){
     var mt = ob.material, nm = mt.name || '', k = nm.replace(/^KX_/, '').replace(/\.\d+$/, '');
     if (nm !== k && M[k] && !M[k].map){ ob.material = M[k]; mt.dispose(); }
-    else if (nm === 'WE_masonry'){ mt.roughness = .93; mt.metalness = 0; }
+    else if (nm === 'WE_masonry'){ mt.roughness = .93; mt.metalness = 0; mt.color.multiply(new THREE.Color(AGE.wall[0], AGE.wall[1], AGE.wall[2])); }
     else if (nm === 'WE_roof'){ mt.roughness = .5; mt.metalness = .35; }
     else if (nm === 'WE_brick'){ mt.roughness = .92; mt.metalness = 0; }
     else { mt.roughness = Math.max(mt.roughness, .5); }

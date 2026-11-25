@@ -98,7 +98,7 @@ function attach(api, o){
     '<div class="sun-t"><button type="button" class="sun-play" id="sunPlay" aria-label="Прогорнути день" title="Прогорнути день від сходу до заходу"></button>' +
     '<input type="range" id="sunTime" min="0" max="1439" step="1" aria-label="Година за київським часом"><output id="sunOut"></output></div>' +
     '<p class="sun-i"><span id="sunRS"></span><span id="sunPos"></span></p>' +
-    '<button type="button" class="sun-l" id="sunLamps" aria-pressed="true" title="Нічна підсвітка храму"><i></i>Нічна підсвітка</button>';
+    '<button type="button" class="sun-l" id="sunLamps" aria-pressed="true" title="Нічна підсвітка будівлі"><i></i>Нічна підсвітка</button>';
   (o.mount || document.body).appendChild(p);
   var $ = function(id){ return document.getElementById(id); }, rng = $('sunTime'), out = $('sunOut'), pick = $('sunPick'), play = $('sunPlay');
   var MON = ['січня', 'лютого', 'березня', 'квітня', 'травня', 'червня', 'липня', 'серпня', 'вересня', 'жовтня', 'листопада', 'грудня'];

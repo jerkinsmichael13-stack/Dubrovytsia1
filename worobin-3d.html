@@ -150,7 +150,7 @@ h1{margin:0;font:400 clamp(1.8rem,3.4vw,2.8rem)/1 var(--display);letter-spacing:
 </div>
 
 <script src="x3d-loader.js"></script>
-<script src="worobin-3d.js?v=20261019c"></script>
+<script src="worobin-3d.js?v=20261125c"></script>
 <script src="sun-3d.js"></script>
 <script>
 (function(){
@@ -163,7 +163,7 @@ h1{margin:0;font:400 clamp(1.8rem,3.4vw,2.8rem)/1 var(--display);letter-spacing:
   }
   if (!window.Worobin3D){ fail('load'); return; }
   var narrow = matchMedia('(max-width:640px)').matches;
-  Worobin3D.mount(cv, {glb: narrow || (navigator.deviceMemory || 8) < 4 ? 'worobin-1k.glb?v=20261019c' : 'worobin-2k.glb?v=20261019c', fit: narrow ? 1.05 : 1.1,
+  Worobin3D.mount(cv, {glb: narrow || (navigator.deviceMemory || 8) < 4 ? 'worobin-1k.glb?v=20261019c' : 'worobin-2k.glb?v=20261019c', fit: narrow ? 1.05 : 1.1, floodK: .15,
     onStart: function(){ hint.style.opacity = 0; spin.setAttribute('aria-pressed', 'false'); },
     onReady: function(){ cv.classList.add('on'); poster.classList.add('off'); load.classList.add('off'); },
     onFail: fail
@@ -194,6 +194,6 @@ h1{margin:0;font:400 clamp(1.8rem,3.4vw,2.8rem)/1 var(--display);letter-spacing:
 })();
 </script>
 <script src="ar-3d.js" data-model="worobin" data-name="«Бібліотека» Плятерів у Воробині" data-acc="«Бібліотеку»" data-scale="1:45" defer></script>
-<script src="x3d-extras.js?v=20261019c" data-model="worobin" defer></script>
+<script src="x3d-extras.js?v=20261125c" data-model="worobin" defer></script>
 </body>
 </html>

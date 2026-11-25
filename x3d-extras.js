@@ -310,7 +310,7 @@ function init(api){
     function farFromOthers(x, z, d){ return placed.every(function(p){ return (p[0] - x)*(p[0] - x) + (p[1] - z)*(p[1] - z) > d*d; }); }
     function jitter(g, amt){ var a = g.attributes.position; for (var i = 0; i < a.count; i++){ var v = new T.Vector3().fromBufferAttribute(a, i), n = 1 + (Math.sin(v.x*3.1 + v.y*1.7) + Math.cos(v.z*2.3 - v.y*2.9))*amt; a.setXYZ(i, v.x*n, v.y*n, v.z*n); } g.computeVertexNormals(); return g; }
     var trunkM = new T.MeshStandardMaterial({color: '#4a3826', roughness: 1});
-    var leafC = ['#4f6f33', '#5b7a38', '#46652e', '#62803c'], autumnC = ['#b8742a', '#c99a35', '#a5532a', '#d0a640'], conC = '#2e4a2f';
+    var leafC = ['#4f6f33', '#5b7a38', '#46652e', '#62803c'], autumnC = ['#a7803a', '#b8953f', '#8c5a2c', '#9d7a33'], conC = '#2e4a2f';
     function shade(g, lo, hi){ var a = g.attributes.position, c = new Float32Array(a.count*3); for (var i = 0; i < a.count; i++){ var y = a.getY(i), k = lo + (hi - lo)*Math.min(1, Math.max(0, (y + 1)/2)); k *= .92 + .16*Math.abs(Math.sin(a.getX(i)*7.3 + a.getZ(i)*5.1)); c[i*3] = c[i*3 + 1] = c[i*3 + 2] = k; } g.setAttribute('color', new T.BufferAttribute(c, 3)); return g; }
     /* foliage shades softly, as a mass of leaves does: normals lean out from the lump's centre, and a leafy break-up rides on the colour */
     function soft(g){ var a = g.attributes.position, n = g.attributes.normal, v = new T.Vector3(), w = new T.Vector3();
@@ -385,7 +385,7 @@ function init(api){
     function edgeLine(shape, col, w){ K.save(); K.strokeStyle = col; K.lineWidth = M(w); K.stroke(shape); K.restore(); }
     function hedgeBed(x0, z0, x1, z1){                                                 // a flower bed edged with clipped box
       var p = rrect(x0, z0, x1, z1, .3); K.save(); K.fillStyle = '#5a4430'; K.fill(p); K.clip(p);
-      ['#c9563f', '#e3c26a', '#efe6d4', '#b8506e', '#8a5fb0'].forEach(function(c){ K.fillStyle = c; for (var i = 0; i < 60; i++){ K.globalAlpha = .8; K.beginPath(); K.arc(X(x0 + .4 + rnd()*(x1 - x0 - .8)), Z(z0 + .4 + rnd()*(z1 - z0 - .8)), M(.07 + rnd()*.06), 0, 6.283); K.fill(); } });
+      ['#a65a44', '#c4a35c', '#d8cfbb', '#94586a', '#7d6690'].forEach(function(c){ K.fillStyle = c; for (var i = 0; i < 30; i++){ K.globalAlpha = .8; K.beginPath(); K.arc(X(x0 + .4 + rnd()*(x1 - x0 - .8)), Z(z0 + .4 + rnd()*(z1 - z0 - .8)), M(.07 + rnd()*.06), 0, 6.283); K.fill(); } });
       K.restore(); edgeLine(p, '#3f5a2c', .32);
     }
     /* the building's footprint: where a ray from above meets the model more than half a metre up (pavings and steps don't count) */
@@ -423,9 +423,10 @@ function init(api){
         K.fillStyle = '#4f6a34'; for (var ri = 0; ri < 120; ri++){ var ra = Math.random()*6.283, rr = 1 + Math.random()*.12; K.fillRect(X(12.6 + Math.cos(ra)*3.2*rr), Z(1.8 + Math.sin(ra)*2.2*rr), M(.06), M(.25)); }
         /* trees: lindens framing the forecourt, white poplars and spruces behind the tower, chestnuts and ash on the slope */
         plant(-20.5, -6.8, 'linden', 1.05); plant(-20.5, 6.8, 'linden', 1.0); plant(-15.2, -8.2, 'linden', .95);
-        plant(-1.5, -16.2, 'con', 1.05); plant(-5.5, -15.8, 'con', .9); plant(-9.5, -13.6, 'con', 1.0);
-        plant(5, -15.5, 'poplar', 1.1); plant(8.5, -14, 'poplar', 1.0); plant(11.5, -11.8, 'poplar', 1.15);
-        plant(14.5, 4, 'ash', 1.0); plant(13, 10.5, 'chestnut', 1.0); plant(9.5, 14.2, 'chestnut', .9); plant(-11.5, 14.5, 'linden', .95);
+        /* the old park round the house, as on the home page and in the photographs of 1914 and 1937: crowns over the roof */
+        plant(-1.5, -16.2, 'con', 1.8); plant(-5.5, -15.8, 'con', 1.6); plant(-9.5, -13.6, 'con', 1.7);
+        plant(5, -15.5, 'poplar', 2.0); plant(8.5, -14, 'poplar', 1.9); plant(11.5, -11.8, 'poplar', 2.1);
+        plant(14.5, 4, 'ash', 2.0); plant(13, 10.5, 'chestnut', 1.9); plant(9.5, 14.2, 'chestnut', 1.15); plant(-11.5, 14.5, 'linden', 1.0);   // these two stand before the colonnade: kept small
         [[-9, 13.6], [9, 13.6], [-9, -10.2]].forEach(function(q){ plant(q[0], q[1], 'shrub', .8); });
         /* beyond the ring: the edge of the forest */
         return {outer: 12, outerKinds: ['con', 'linden', 'poplar', 'ash', 'con']};
@@ -631,7 +632,7 @@ function init(api){
     }
     }
   })();
-  var AUT = ['#d4862e', '#e8b440', '#b8452a', '#f0c855', '#c26a24', '#8d9a3c', '#9c3422', '#e39a35', '#c9a23a', '#a85a28'];
+  var AUT = ['#a7803a', '#b8953f', '#8c5a2c', '#9d7a33', '#7a4f2b', '#a06a30', '#8f8640', '#6f6b3a', '#b09a52', '#94703a'];   // late Polissia autumn: ochre, rust-brown, faded olive
   function seasonTrees(w){ FOL.forEach(function(m, i){ m.userData.ca = AUT[(i*7 + 3) % AUT.length]; m.color.set(w === 'autumn' ? m.userData.ca : m.userData.c0); }); }
   var bare = '#6e6050', tmpC = new T.Color();
   function winterTrees(k){                                                            // broadleaves drop their leaves: the crowns thin and turn to bare grey twigs
