@@ -1088,6 +1088,79 @@
 .w18-wit-notes b{color:var(--w-ink)}
 .w18-link-btn{padding:0;border:0;background:none;font:inherit;color:inherit;text-decoration:underline;text-underline-offset:2px;cursor:pointer}
 @media(max-width:900px){.w18-wit-g{grid-template-columns:1fr}.w18-wit-side{position:static}.w18-wit-scans{grid-template-columns:repeat(5,minmax(0,1fr))}.w18-wit-notes{margin-left:0}.w18-wit-arc{float:none;display:block;width:auto;margin:0 0 .2rem;text-align:left}}
+/* досьє Степана Лясковця */
+.w18-st-top{display:grid;grid-template-columns:minmax(0,13rem) minmax(0,1fr);gap:clamp(1.4rem,3.5vw,2.8rem);align-items:start;margin:2rem 0 0;padding:clamp(1.2rem,2.6vw,1.8rem);border:1px solid var(--w-rule);border-radius:var(--ds-r-lg,16px);background:var(--w-alt)}
+.w18-st-ph{margin:0}
+.w18-st-ph button{display:block;width:100%;padding:0;border:0;background:none;cursor:zoom-in}
+.w18-st-ph img{display:block;width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:6px;filter:contrast(1.05);box-shadow:0 18px 36px rgba(28,22,12,.18)}
+.w18-st-ph figcaption{margin-top:.6rem;font-size:.72rem;line-height:1.5;color:var(--w-ink3)}
+.w18-st-facts{display:grid;grid-template-columns:minmax(0,10rem) minmax(0,1fr);margin:0;border-top:1px solid var(--w-rule2)}
+.w18-st-facts dt,.w18-st-facts dd{margin:0;padding:.7rem 0;border-bottom:1px solid var(--w-rule)}
+.w18-st-facts dt{padding-right:1rem;font:600 .62rem/1.5 var(--ds-body);letter-spacing:.14em;text-transform:uppercase;color:var(--w-ink3)}
+.w18-st-facts dd{font:400 1rem/1.5 var(--ds-display);color:var(--w-ink)}
+.w18-st-h{margin:3.4rem 0 1.1rem;font:400 clamp(1.5rem,2.4vw,1.9rem)/1.15 var(--ds-display);color:var(--w-ink)}
+.w18-st-sub{margin:-.5rem 0 1.4rem;font-size:.88rem;color:var(--w-ink3)}
+.w18-st-form{display:grid;grid-template-columns:minmax(0,9rem) minmax(0,25rem) minmax(0,1fr);gap:clamp(1.2rem,3vw,2.4rem);align-items:start}
+.w18-st-scans{display:grid;gap:.5rem;position:sticky;top:calc(var(--hdr,64px) + 1.2rem)}
+.w18-st-scans button{position:relative;display:block;padding:0;border:1px solid var(--w-rule2);border-radius:6px;overflow:hidden;background:var(--w-card);cursor:zoom-in;aspect-ratio:3/4;transition:transform .2s,box-shadow .2s}
+.w18-st-scans button:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(30,22,10,.16)}
+.w18-st-scans img{display:block;width:100%;height:100%;object-fit:cover}
+.w18-st-scans span{position:absolute;left:0;right:0;bottom:0;padding:.9rem .3rem .25rem;font:600 .6rem var(--ds-body);color:#fff;text-align:center;background:linear-gradient(transparent,rgba(0,0,0,.6))}
+.w18-st-q{padding:1.2rem 1.3rem 1.3rem;border:1px solid var(--w-rule2);border-radius:12px;background:var(--w-card);box-shadow:0 1px 0 var(--w-rule)}
+.w18-st-q-h{margin:0 0 .8rem;font:600 .62rem/1.5 var(--ds-body);letter-spacing:.12em;text-transform:uppercase;color:var(--w-ink3)}
+.w18-st-q dl{display:grid;grid-template-columns:minmax(0,8.5rem) minmax(0,1fr);margin:0}
+.w18-st-q dt,.w18-st-q dd{margin:0;padding:.42rem 0;border-bottom:1px dashed var(--w-rule2)}
+.w18-st-q dt{padding-right:.8rem;font:500 .74rem/1.45 var(--ds-body);color:var(--w-ink3)}
+.w18-st-q dd{font:italic 400 .98rem/1.45 var(--ds-display);color:var(--w-ink)}
+.w18-st-q .on{background:color-mix(in srgb,var(--w-ember) 9%,transparent)}
+.w18-st-q dt.on{padding-left:.5rem;color:var(--w-ember);font-weight:600}
+.w18-st-q dd.on{padding-right:.5rem}
+.w18-st-crop{margin:1rem 0 0}
+.w18-st-crop button{display:block;width:100%;padding:0;border:0;background:none;cursor:zoom-in}
+.w18-st-crop img{display:block;width:100%;height:auto;border-radius:6px;border:1px solid var(--w-rule2)}
+.w18-st-crop figcaption{margin-top:.35rem;font:500 .7rem/1.4 var(--ds-body);color:var(--w-ink3)}
+.w18-st-crop--sig img{max-width:15rem;opacity:.95}
+.w18-st-den{margin:1.1rem 0 0;padding-left:.9rem;border-left:3px solid var(--w-ember);font:italic 400 1.02rem/1.55 var(--ds-display);color:var(--w-ink)}
+.w18-st-read p{margin:0 0 1rem;font:400 .95rem/1.66 var(--ds-body);color:var(--w-ink2);text-wrap:pretty}
+.w18-st-read b{color:var(--w-ink)}
+.w18-st-src{list-style:none;margin:0;padding:0;border-top:1px solid var(--w-rule2)}
+.w18-st-src>li{display:grid;grid-template-columns:minmax(0,8.5rem) minmax(0,1fr);gap:clamp(1rem,3vw,2.4rem);padding:1.4rem 0;border-bottom:1px solid var(--w-rule);--k:var(--w-ink3)}
+.w18-st-src>li.st-pl{--k:var(--w-pl)}.w18-st-src>li.st-self{--k:var(--w-ember)}.w18-st-src>li.st-sov{--k:var(--w-unr)}.w18-st-src>li.st-fam{--k:var(--w-gold)}
+.w18-st-src time{font:400 1.05rem/1.3 var(--ds-display);color:var(--w-ink);font-variant-numeric:lining-nums}
+.w18-st-src small{display:inline-flex;align-items:center;gap:.45rem;font:600 .62rem/1.4 var(--ds-body);letter-spacing:.12em;text-transform:uppercase;color:var(--k)}
+.w18-st-src small::before{content:"";width:.55rem;height:.55rem;border-radius:50%;background:var(--k)}
+.w18-st-src h4{margin:.35rem 0 .6rem;font:400 clamp(1.15rem,1.7vw,1.35rem)/1.25 var(--ds-display);color:var(--w-ink)}
+.w18-st-src p{max-width:46rem;margin:0 0 .6rem;font:400 .94rem/1.64 var(--ds-body);color:var(--w-ink2);text-wrap:pretty}
+.w18-st-src blockquote{max-width:44rem;margin:.2rem 0 .8rem;padding-left:1rem;border-left:3px solid var(--k);font:italic 400 1.08rem/1.5 var(--ds-display);color:var(--w-ink)}
+.w18-st-src .w18-st-a{font:500 .74rem/1.6 var(--ds-body);color:var(--w-ink3)}
+.w18-st-a .w18-link-btn{margin-right:.5rem}
+.w18-st-pp{list-style:none;margin:.2rem 0 .8rem;padding:0;max-width:46rem}
+.w18-st-pp li{display:grid;grid-template-columns:4.6rem minmax(0,1fr);gap:.8rem;padding:.38rem 0;border-bottom:1px dotted var(--w-rule2);font:400 .9rem/1.5 var(--ds-body);color:var(--w-ink2)}
+.w18-st-pp b{font:500 .74rem/1.9 var(--w-mono);color:var(--w-unr)}
+.w18-st-t{width:100%;border-collapse:collapse;font:400 .86rem/1.5 var(--ds-body);color:var(--w-ink2)}
+.w18-st-t th,.w18-st-t td{padding:.7rem .8rem;border-bottom:1px solid var(--w-rule);text-align:left;vertical-align:top}
+.w18-st-t thead th{font:600 .62rem/1.4 var(--ds-body);letter-spacing:.12em;text-transform:uppercase;color:var(--w-ink3);border-bottom:1px solid var(--w-rule2)}
+.w18-st-t thead th:nth-child(2){color:var(--w-pl)}.w18-st-t thead th:nth-child(3){color:var(--w-unr)}.w18-st-t thead th:nth-child(4){color:var(--w-gold)}
+.w18-st-t tbody th{width:13%;font:400 1rem/1.35 var(--ds-display);color:var(--w-ink)}
+.w18-st-d{list-style:none;margin:0;padding:0;display:grid;gap:.6rem}
+.w18-st-d li{display:grid;grid-template-columns:minmax(0,14rem) 7.5rem minmax(0,1fr);gap:1rem;align-items:baseline;padding:.9rem 1.1rem;border:1px solid var(--w-rule);border-radius:12px;background:var(--w-card)}
+.w18-st-d b{font:400 1.02rem/1.35 var(--ds-display);color:var(--w-ink)}
+.w18-st-d span{justify-self:start;padding:.18rem .55rem;border-radius:100px;font:600 .6rem/1.4 var(--ds-body);letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
+.w18-st-d span.m{color:var(--w-ink3);border:1px dashed var(--w-rule2)}
+.w18-st-d span.z{color:var(--w-pl);border:1px solid color-mix(in srgb,var(--w-pl) 40%,transparent)}
+.w18-st-d span.y{color:#fff;background:var(--w-ember)}
+.w18-st-d p{margin:0;font:400 .92rem/1.62 var(--ds-body);color:var(--w-ink2);text-wrap:pretty}
+.w18-st-d li:last-child{border-color:color-mix(in srgb,var(--w-ember) 45%,transparent)}
+.w18-st-gap{max-width:46rem;margin:1.4rem 0 0;font:italic 400 1.12rem/1.55 var(--ds-display);color:var(--w-ink)}
+.w18-st-obmin{margin:3rem 0 1.6rem;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:clamp(1.2rem,3vw,2.4rem);align-items:end}
+.w18-st-obmin button{display:block;padding:0;border:0;background:none;cursor:zoom-in}
+.w18-st-obmin img{display:block;width:100%;height:auto;border-radius:6px;box-shadow:0 18px 40px rgba(28,22,12,.2)}
+.w18-st-obmin figcaption{font:400 .9rem/1.62 var(--ds-body);color:var(--w-ink2)}
+.w18-st-obmin figcaption b{display:block;margin-bottom:.4rem;font:400 1.3rem/1.2 var(--ds-display);color:var(--w-ink)}
+@media(max-width:900px){.w18-st-form{grid-template-columns:1fr}.w18-st-scans{position:static;grid-template-columns:repeat(4,minmax(0,1fr))}.w18-st-obmin{grid-template-columns:1fr}.w18-st-d li{grid-template-columns:1fr}}
+@media(max-width:640px){.w18-st-top{grid-template-columns:1fr}.w18-st-ph{max-width:11rem}.w18-st-facts{grid-template-columns:1fr}.w18-st-facts dt{padding-bottom:0;border-bottom:0}.w18-st-src>li{grid-template-columns:1fr;gap:.3rem}.w18-st-q dl{grid-template-columns:1fr}.w18-st-q dt{padding-bottom:0;border-bottom:0}.w18-st-t thead{display:none}.w18-st-t tr{display:block;padding:.6rem 0;border-bottom:1px solid var(--w-rule2)}.w18-st-t th,.w18-st-t td{display:block;width:auto;padding:.2rem 0;border:0}.w18-st-t td::before{display:block;font:600 .58rem/1.6 var(--ds-body);letter-spacing:.12em;text-transform:uppercase;color:var(--w-ink3)}.w18-st-t td:nth-of-type(1)::before{content:"Польська справа"}.w18-st-t td:nth-of-type(2)::before{content:"Радянські тексти"}.w18-st-t td:nth-of-type(3)::before{content:"Презентація"}}
+.w18-st-tw{overflow-x:auto}.w18-st-a .w18-link-btn{color:var(--w-gold)}
+@media(max-width:640px){.w18-st-t tbody th{width:auto;font-size:1.1rem}}
 
 /* ── Харків, 1925 ── */
 .w18-k25-ph{margin:2.2rem calc((100% - min(100vw - 2rem, 1320px)) / 2) 0;padding:clamp(.6rem,1.4vw,1.1rem);background:#100d0a;border-radius:6px;box-shadow:0 30px 70px rgba(0,0,0,.28)}
@@ -1323,10 +1396,11 @@
         <li><a href="#nevynni"><b>17</b>Не ті люди</a></li>
         <li class="w18-toc-act" aria-hidden="true">V</li>
         <li><a href="#kharkiv-1925"><b>18</b>Харків, 1925</a></li>
-        <li><a href="#potim"><b>19</b>Долі</a></li>
-        <li><a href="#rozbizhnosti"><b>20</b>Розбіжності</a></li>
-        <li><a href="#dokumenty"><b>21</b>Документи</a></li>
-        <li><a href="#dzherelo"><b>22</b>Джерела</a></li>
+        <li><a href="#stepan"><b>19</b>Степан</a></li>
+        <li><a href="#potim"><b>20</b>Долі</a></li>
+        <li><a href="#rozbizhnosti"><b>21</b>Розбіжності</a></li>
+        <li><a href="#dokumenty"><b>22</b>Документи</a></li>
+        <li><a href="#dzherelo"><b>23</b>Джерела</a></li>
     </ol>
 </nav>
 
@@ -2294,11 +2368,11 @@
                     <li><time>1920–1921</time><span>через двоюрідного брата Миколу Лясковця вступив до «Закордоту»; у червні 1921 року разом із Шереметою, Пилипом та Іваном Лосями, Романом Дубинцем та ще двома (так у протоколі допиту Шеремети, арк. 323) повернувся як «делегат» ЦК з Києва, табір на болоті «Козаки»</span></li>
                     <li><time>24.VIII.1921</time><span>облава на «Козаках»: заарештовані Степан, його батько Йосип і Кузьма Подолянко</span></li>
                     <li><time>27.I.1922</time><span>допит у Луцьку як обвинуваченого в нападі на Воробин: вину заперечив</span></li>
-                    <li><time>до 1925</time><span>два роки в Білостоцькій тюрмі; на початку 1925 року обміняний як політв'язень до СРСР</span></li>
+                    <li><time>1.II.1925</time><span>після двох років у Білостоцькій тюрмі обміняний як політв'язень до СРСР</span></li>
                     <li><time>1925–1934</time><span>Харків; 1931 року закінчив факультет журналістики Комуністичного університету імені Артема</span></li>
-                    <li><time>1937</time><span>заарештований у так званій «польській» справі й розстріляний; 1958 року посмертно реабілітований</span></li>
+                    <li><time>1937</time><span>начальник партвідділу окружної газети «Червоний воїн»; заарештований у так званій «польській» справі й розстріляний; 1958 року посмертно реабілітований</span></li>
                 </ol>
-                <p class="w18-src">Презентація про С. Й. Лясковця, протоколи справи (арк. 315–316, 323, 376).</p>
+                <p class="w18-src">Презентація про С. Й. Лясковця, протоколи справи (арк. 315–316, 323, 376) · <a class="w18-link" href="#stepan">повне досьє: що про нього писали різні джерела</a></p>
             </div>
         </article>
 
@@ -2600,6 +2674,7 @@
                 <div class="w18-track">
                     <div class="w18-v"><small>Ковель, 15.III.1923</small><b>10 років тяжкої тюрми</b></div>
                     <div class="w18-v"><small>Люблін, 11.IX.1923</small><b>6 років 8 місяців</b></div>
+                    <div class="w18-v w18-v--end"><small>1.II.1925</small><b>«Шеремета» в списку обміняних до СРСР (<a class="w18-link" href="#stepan">світлина</a>)</b></div>
                 </div>
             </article>
 
@@ -2659,7 +2734,7 @@
                 <div class="w18-p-meta"><a href="poselennia.html?p=dombrovytsia">м. Дубровиця</a><span>22 роки на допиті 1922</span><span>слюсар</span><span>затриманий у серпні 1921</span><a href="#liudy">біографія</a></div>
                 <dl>
                     <dt>Арешт</dt><dd>Схоплений під час нічної облави на болоті «Козаки»: місце показав Шеремета, але облаву, щоб він не втік, зробили без нього. Затриманий у справі «Закордот»; обвинувачення в нападі на Воробин пред'явлено 11 січня 1922 року.</dd>
-                    <dt>Прикмети</dt><dd>Неодружений, без майна, закінчив два класи народної школи. В анкеті допиту: на грудях — татуювання зірок.</dd>
+                    <dt>Прикмети</dt><dd>Неодружений, без майна, закінчив два класи народної школи. В анкеті допиту: на грудях — знак зірки, найімовірніше татуювання (<a class="w18-link" href="#stepan">досьє</a>).</dd>
                     <dt>Казав сам</dt><dd>Того дня був удома в батьків; керували Микола Лясковець і Олександр Садовський, а він був <q>хлопцем 17 років</q>. Ліпінський 1922 року назвав серед нападників «Лясковця (імені не знаю)», а на суді сказав: <q>Лясковця я в натовпі не бачив</q>.</dd>
                 </dl>
                 <div class="w18-track">
@@ -2801,7 +2876,7 @@
 <li id="k25-o-kononchuk" class="w18-k25-c d-u" data-k="o-kononchuk"><figure><img src="w18-port/k25/o-kononchuk.webp" alt="Олександр Конончук на світлині 1925 року" width="320" height="410" loading="lazy" decoding="async"><i>12</i></figure><div class="w18-k25-tx"><p class="w18-k25-role">член ревкому, командир Сарненської ділянки</p><h3>Олександр Конончук</h3><p class="w18-k25-sub">Олександр Васильович</p><p>Машиніст: 1918 року привозив із Орші й Брянська підпільну літературу та гроші. Пилип Мацкевич, який 1918 року розслідував заворушення в Дубровиці, на допиті 1922 року згадав саме його й Миколу Лясковця. Під Воробином, за свідком Сибіковським, саме він поставив на голосування долю полонених; у Степанова він вигукує «Ми будемо їх судити іменем революції!». Командував Сарненською ділянкою фронту, артдивізіоном 21-го Волинського полку й бронепоїздами. «Поліський маяк» і Степанов пишуть, що згодом він закінчив академію імені Фрунзе, командував танковою частиною й служив у Генштабі.</p><p class="w18-k25-d"><b>Смерть</b>Не знайдено.</p><p class="w18-src">Степанов, с. 41–42, 71, 151 · справа, арк. 397 зв.–398, 401–402 · «Поліський маяк», 3.XII.1968 · <button type="button" class="w18-k25-back" data-k="o-kononchuk">показати на світлині</button></p></div></li>
 <li id="k25-rokka" class="w18-k25-c d-u" data-k="rokka"><figure><img src="w18-port/k25/rokka.webp" alt="Федір Рокка на світлині 1925 року" width="320" height="410" loading="lazy" decoding="async"><i>13</i></figure><div class="w18-k25-tx"><p class="w18-k25-role">машиніст, комісар Сарненського вузла</p><h3>Федір Рокка</h3><p class="w18-k25-sub">у Степанова також Роковський і Раковський</p><p>Залізничник, машиніст. Навесні 1918 року — у підпіллі на станції Сарни, з травня — у підпільному комітеті, возив із Росії літературу й гроші. Після Воробина подав потяг, яким загони поїхали на Сарни, і став комісаром Сарненського залізничного вузла. Пригнав паровоз для нальоту на склади у Видиборі й того ж вечора подав состав під зброю.</p><p class="w18-k25-d"><b>Смерть</b>Не знайдено.</p><p class="w18-src">Степанов, с. 41–42, 45, 74, 76, 86–87 · <button type="button" class="w18-k25-back" data-k="rokka">показати на світлині</button></p></div></li>
 <li class="w18-k25-sep" aria-hidden="true"><span>Третій ряд</span></li>
-<li id="k25-s-lyaskovets" class="w18-k25-c d-k" data-k="s-lyaskovets"><figure><img src="w18-port/k25/s-lyaskovets.webp" alt="Степан Лясковець на світлині 1925 року" width="320" height="410" loading="lazy" decoding="async"><i>14</i></figure><div class="w18-k25-tx"><p class="w18-k25-role">голова ревкому</p><h3>Степан Лясковець</h3><p class="w18-k25-sub">1899 — 1937</p><p>Син коваля Йосипа. У презентації про нього сказано, що на підпільній нараді в домі батька його обрали головою ревкому. Польський суд у справі Плятерів його виправдав, а в справі «Закордоту» засудив на десять років. На початку 1925 року його обміняли до СРСР, і він оселився в Харкові. Докладніше — <a href="#liudy">у розділі «Люди»</a>.</p><p class="w18-k25-d"><b>Смерть</b>Заарештований у Харкові 1937 року й розстріляний; реабілітований 1958 року.</p><p class="w18-src">Презентація · справа, арк. 315–316, 323, 376 · <button type="button" class="w18-k25-back" data-k="s-lyaskovets">показати на світлині</button></p></div></li>
+<li id="k25-s-lyaskovets" class="w18-k25-c d-k" data-k="s-lyaskovets"><figure><img src="w18-port/k25/s-lyaskovets.webp" alt="Степан Лясковець на світлині 1925 року" width="320" height="410" loading="lazy" decoding="async"><i>14</i></figure><div class="w18-k25-tx"><p class="w18-k25-role">голова ревкому</p><h3>Степан Лясковець</h3><p class="w18-k25-sub">1899 — 1937</p><p>Син коваля Йосипа. У презентації про нього сказано, що на підпільній нараді в домі батька його обрали головою ревкому. Польський суд у справі Плятерів його виправдав, а в справі «Закордоту» засудив на десять років. На початку 1925 року його обміняли до СРСР, і він оселився в Харкові. Докладніше — <a href="#stepan">у досьє</a>.</p><p class="w18-k25-d"><b>Смерть</b>Заарештований 1937 року й розстріляний; реабілітований 1958 року.</p><p class="w18-src">Презентація · справа, арк. 315–316, 323, 376 · <button type="button" class="w18-k25-back" data-k="s-lyaskovets">показати на світлині</button></p></div></li>
 <li id="k25-yefimov" class="w18-k25-c d-k" data-k="yefimov"><figure><img src="w18-port/k25/yefimov.webp" alt="Микола Єфімов на світлині 1925 року" width="320" height="410" loading="lazy" decoding="async"><i>15</i></figure><div class="w18-k25-tx"><p class="w18-k25-role">комісар Першого Дубровицького полку</p><h3>Микола Єфімов</h3><p class="w18-k25-sub">справжнє ім'я — Йосип Давидович Заграничний</p><p>Рівнянин, у 1917–1918 роках — у червоногвардійському загоні Кіквідзе й делегат першого з'їзду КП(б)У. У Рівному працював у підпіллі вже під прізвищем Єфімов, від підпільного комітету приїхав до повстанців і став комісаром Першого Дубровицького комуністичного полку. 1919 року — у Рівненському ревкомі. 1930 року закінчив Харківський технологічний інститут, 1930–1934 років очолював Харківський механіко-машинобудівний інститут, 1934–1936 років був ректором Київського політехнічного. По батькові в різних джерелах різне: Давидович (Степанов), Филипович (спогади 1967 року), Пилипович (КПІ).</p><p class="w18-k25-d"><b>Смерть</b>Заарештований 28 грудня 1936 року. 28 березня 1937 року Військова колегія Верховного суду СРСР засудила його як члена «контрреволюційної троцькістської терористичної організації», і того ж дня його розстріляли. Реабілітований 1958 року.</p><p class="w18-src">Степанов, с. 4, 56, 90, 147, 150 · «Поліський маяк», 1968 · КПІ, «Відомі невідомі ректори» · <button type="button" class="w18-k25-back" data-k="yefimov">показати на світлині</button></p></div></li>
 <li id="k25-dubynets" class="w18-k25-c d-u" data-k="dubynets"><figure><img src="w18-port/k25/dubynets.webp" alt="Роман Дубинець на світлині 1925 року" width="320" height="410" loading="lazy" decoding="async"><i>16</i></figure><div class="w18-k25-tx"><p class="w18-k25-role">організатор повстанського загону</p><h3>Роман Дубинець</h3><p>У січні 1919 року організував новий загін. У червні 1921 року разом з Іваном і Пилипом Лосями та Степаном Лясковцем повернувся з Червоної армії до Дубровиці, за зізнанням Шеремети — щоб організовувати загони проти польської влади. 1922 року Шеремета називав його серед тих, хто ховався на болоті «Козаки».</p><p class="w18-k25-d"><b>Смерть</b>Не знайдено.</p><p class="w18-src">Степанов, с. 112 · справа, арк. 323, 376–377 · <button type="button" class="w18-k25-back" data-k="dubynets">показати на світлині</button></p></div></li>
 <li id="k25-kolpatskyi" class="w18-k25-c d-u" data-k="kolpatskyi"><figure><img src="w18-port/k25/kolpatskyi.webp" alt="Петро Колпацький на світлині 1925 року" width="320" height="410" loading="lazy" decoding="async"><i>17</i></figure><div class="w18-k25-tx"><p class="w18-k25-role">підпільник</p><h3>Петро Колпацький</h3><p>Від 1917 року в революційному русі, 1918-го — у підпіллі. Під час другої підпільної конференції, напередодні повстання, він у сусідній кімнаті разом із Модеком, Скуїном, Григорієм Нашорою й Григорієм Лебедою вів переговори з німецькими солдатами-спартаківцями. У січні 1919 року організував новий загін.</p><p class="w18-k25-d"><b>Смерть</b>Не знайдено.</p><p class="w18-src">Степанов, с. 30, 41, 50, 65, 112 · <button type="button" class="w18-k25-back" data-k="kolpatskyi">показати на світлині</button></p></div></li>
@@ -2824,9 +2899,249 @@
 </section>
 
 <!-- § 19 -->
+<section class="ds-sec w18-st" id="stepan">
+    <div class="w18-wrap">
+        <div class="ds-sh"><b>§ 19</b><h2>Досьє: Степан Лясковець</h2><span>як його описували і що писали про його смерть · 1921–1985</span></div>
+        <p class="w18-lead">Голова ревкому в радянських книжках. «Хлопець 17 років» у власній скарзі з в'язниці. Обвинувачений, якого польський суд виправдав за браком доказів. Політемігрант, студент, журналіст, офіцер, розстріляний 1937 року. Про Степана Лясковця пишуть польська кримінальна справа, книжка Степанова, районна газета й родинна презентація, і майже в жодній деталі вони не збігаються. Тут зібрано все, що про нього є в наших джерелах: хто і як його описував, де свідчення розходяться і що кожне джерело каже про його смерть, а що замовчує.</p>
+
+        <div class="w18-st-top">
+            <figure class="w18-st-ph">
+                <button type="button" data-lb="w18-slyaskovets.jpg" data-cap="Степан Йосипович Лясковець. Фото з родинного архіву." aria-label="Збільшити портрет"><img src="w18-slyaskovets.jpg" alt="Портрет молодого чоловіка у військовому кітелі" width="208" height="315" loading="lazy" decoding="async"></button>
+                <figcaption>Фото з родинного архіву. Під таким самим портретом у книжці Степанова (с. 40) підпис «С. Я. Лясковець».</figcaption>
+            </figure>
+            <dl class="w18-st-facts">
+                <dt>Ім'я в документах</dt><dd>Степан Йосипович Лясковець; у польських паперах Stefan Laskowiec, Laskowicz, Ласькович; сам підписувався кирилицею «Ст. Лясковец»</dd>
+                <dt>Батьки</dt><dd>коваль Йосип Григорович (1868–1931) і Ольга Григорівна; брати Григорій (1895–1966) і Сергій, сестра Віра</dd>
+                <dt>Народився</dt><dd>22 березня 1899 року, Дубровиця</dd>
+                <dt>Загинув</dt><dd>1937 рік, розстріляний; посмертно реабілітований 1958 року</dd>
+                <dt>У справі Плятерів</dt><dd>обвинувачений № 6; 15 березня 1923 року виправданий</dd>
+            </dl>
+        </div>
+
+        <h3 class="w18-st-h">Анкета 27 січня 1922 року</h3>
+        <div class="w18-st-form">
+            <div class="w18-st-scans">
+                <button type="button" data-doc="d315" aria-label="Відкрити протокол допиту, аркуш 315"><img src="w18-scans/t/IMG_6553.webp" alt="Аркуш 315" width="254" height="380" loading="lazy" decoding="async"><span>315</span></button>
+                <button type="button" data-doc="d315" aria-label="Відкрити протокол допиту, аркуш 315 зворот"><img src="w18-scans/t/IMG_6555.webp" alt="Аркуш 315 зворот" width="187" height="380" loading="lazy" decoding="async"><span>315 зв.</span></button>
+                <button type="button" data-doc="d315" aria-label="Відкрити протокол допиту, аркуш 316"><img src="w18-scans/t/IMG_6558.webp" alt="Аркуш 316" width="231" height="380" loading="lazy" decoding="async"><span>316</span></button>
+                <button type="button" data-doc="d313" aria-label="Відкрити постанову про арешт, аркуш 313"><img src="w18-scans/t/IMG_6551.webp" alt="Аркуш 313" width="285" height="380" loading="lazy" decoding="async"><span>313</span></button>
+            </div>
+            <div class="w18-st-q">
+                <p class="w18-st-q-h">Протокол допиту обвинуваченого · Луцьк · слідчий суддя I ревіру Луцького повіту</p>
+                <dl>
+                    <dt>Прізвище та ім'я</dt><dd>Стефан Лясковець, син Юзефа і Ольги</dd>
+                    <dt>Вік</dt><dd>22 роки</dd>
+                    <dt>Національність</dt><dd>росіянин (Rosjanin)</dd>
+                    <dt>Освіта</dt><dd>закінчив 2 класи народної школи</dd>
+                    <dt>Родинний стан</dt><dd>неодружений</dd>
+                    <dt>Ремесло</dt><dd>слюсар, без майна</dd>
+                    <dt>Хвороби</dt><dd>не пиячу; хворів на висипний тиф</dd>
+                    <dt class="on">Особливі прикмети</dt><dd class="on">на грудях маю [татуювання?] у вигляді зірки</dd>
+                    <dt class="on">Військова служба</dt><dd class="on">не служив</dd>
+                    <dt>Судимість</dt><dd>не карався</dd>
+                </dl>
+                <figure class="w18-st-crop">
+                    <button type="button" data-lb="w18-stepan/tatu.webp" data-cap="Графи 14–15 анкети: «…chorowałem na tyfus plamisty» і «na piersi mam … gwiazdy». Аркуш 315 зв." aria-label="Збільшити рядок анкети"><img src="w18-stepan/tatu.webp" alt="Рукописний рядок анкети: na piersi mam … gwiazdy" width="1200" height="186" loading="lazy" decoding="async"></button>
+                    <figcaption>«na piersi mam … gwiazdy» · аркуш 315 зв.</figcaption>
+                </figure>
+                <p class="w18-st-den"><q>Цього дня я перебував цілий день у Дубровиці, вдома в батьків. До фільварку Мочулище я того дня не ходив. Більше сказати нічого не можу.</q></p>
+                <figure class="w18-st-crop w18-st-crop--sig">
+                    <img src="w18-stepan/pidpys-1922.webp" alt="Підпис кирилицею: Ст. Лясковец" width="800" height="250" loading="lazy" decoding="async">
+                    <figcaption>Підпис під протоколом: «Ст. Лясковец», кирилицею</figcaption>
+                </figure>
+            </div>
+            <div class="w18-st-read">
+                <p><b>Зірка на грудях.</b> Прикмету він назвав сам: так заповнювали графу «особливі прикмети». Слово перед <i>gwiazdy</i> заходить у згин аркуша, і впевнено його не прочитати, але це, найімовірніше, татуювання. Зірка одна, а не дві, як подавали раніше. Яка саме, п'ятикутна чи ні, протокол не каже. Проте зірка на грудях у 1922 році, в людини, що два роки провела в Червоній армії, найвірогідніше означала саме червону армійську зірку. Це знак, від якого не відмовишся на допиті, як від слів. Авторка родинної презентації згодом назве його <q>фанатичним більшовиком</q>.</p>
+                <p><b>Що він сказав неправду.</b> У графі «військова служба» записано «не служив». Але Шеремета ще в серпні 1921 року розповів поліції, що Степан повернувся до Дубровиці разом із ним із Червоної армії. А 1937 року на допиті в НКВС Степан сам розповідав про Таращанську бригаду й посаду воєнкома бронепоїздів № 96 «Червоний ураган» і № 104. Через рік, у скарзі з в'язниці, він назве себе <q>хлопцем 17 років</q> на час нападу. Насправді в листопаді 1918 року йому було дев'ятнадцять.</p>
+                <p><b>Неписьменний?</b> «Два класи народної школи» і <q>польською читати не вмію</q> (1923). Підписувався він упевнено, кирилицею «Ст. Лясковец», а повістку до суду 1923 року підписав латинкою, «S Laskowiec». За дев'ять років по тому він закінчить факультет журналістики Комуністичного університету в Харкові.</p>
+                <p><b>Того ж дня.</b> Слідчий суддя обрав йому запобіжний захід: арешт (арк. 313). Під постановою Степан розписався кирилицею. Того ж 27 січня допитали й Шеремету, і той сказав: <q>Степана Ласьковича я на той час не знав</q>, хоча за п'ять місяців до того, у поліції, називав його одним з організаторів «банди».</p>
+            </div>
+        </div>
+
+        <h3 class="w18-st-h">Як його описували</h3>
+        <p class="w18-st-sub">Джерела в тому порядку, в якому їх писали. Позначка показує, чий це голос.</p>
+        <ol class="w18-st-src">
+            <li class="st-pl">
+                <time>1919–1922</time>
+                <div>
+                    <small>Польське слідство · свідки</small>
+                    <h4>Бердников, ґміна, Мацкевич: Степана немає</h4>
+                    <p>Колишній судовий слідчий Бердников (1919–1920) докладно описує ревком і трибунал, але з Лясковців називає тільки Миколу. Розшукова відомість Дубровицької ґміни 1920 року Степана теж не містить. Колишній начальник міліції Мацкевич 1922 року пише про «братів Ласьковичів», але організатором знає одного, Миколу: <q>Ласькович був ще раніше головним організатором підготовки того нападу</q>.</p>
+                    <p class="w18-st-a"><button type="button" class="w18-link-btn" data-doc="d70">Бердников, 1920</button> <button type="button" class="w18-link-btn" data-doc="d88">відомість ґміни</button> <button type="button" class="w18-link-btn" data-doc="d192">Мацкевич, 1922</button></p>
+                </div>
+            </li>
+            <li class="st-pl">
+                <time>20.VIII.1921</time>
+                <div>
+                    <small>Польська поліція · зізнання Шеремети</small>
+                    <h4>Уперше: «Степаном Ласьковичем»</h4>
+                    <blockquote>Року 1918 у місяці листопаді пішов я добровольцем до банди, котра організована була в Дубровиці Садовським і Миколою та Степаном Ласьковичами.</blockquote>
+                    <p>Шеремета розповідає, що в червні 1921 року повернувся з Червоної армії разом зі Степаном, Пилипом Лосем, Романом Дубинцем та іншими як «делегатами» ЦК з Києва, щоб організовувати повстанські загони проти польської влади, і що вони отримали великі суми в царських рублях і марках. Табір — на болоті «Козаки».</p>
+                    <p class="w18-st-a">арк. 323–324 <button type="button" class="w18-link-btn" data-doc="d145">переклад і скани</button></p>
+                </div>
+            </li>
+            <li class="st-pl">
+                <time>VIII.1921 · 1922</time>
+                <div>
+                    <small>Польська поліція · пшодовник Щеньовський</small>
+                    <h4>Облава на «Козаках»</h4>
+                    <p>Шеремета показав місце табору й просив узяти його провідником, <q>але щоб він не втік, нічну облаву зробили без нього, і під час неї зловили Лясковців та інших</q>. На болоті, за словами Щеньовського, були <q>Лясковці — батько й син</q>, тобто Йосип і Степан. На суді 1923 року поліцейський додав, що Шеремета називав серед нападників на Воробин <q>Лясковців: Миколая, В'ячеслава, і, здається, говорив про Лясковців: батька та сина</q>.</p>
+                    <p class="w18-st-a">арк. 376; протокол суду, арк. 119 <button type="button" class="w18-link-btn" data-doc="d185">допит Щеньовського</button> <button type="button" class="w18-link-btn" data-doc="d239">протокол суду</button></p>
+                </div>
+            </li>
+            <li class="st-pl">
+                <time>6.IX.1922 · 15.III.1923</time>
+                <div>
+                    <small>Польське слідство · вартовий Ліпінський</small>
+                    <h4>«Лясковця, імені якого не знаю»</h4>
+                    <p>1922 року єдиний вартовий, що бачив облогу зсередини, назвав серед нападників, крім Шеремети, <q>Лясковця, імені якого не знаю</q>. На суді він уточнив: <q>Пред'явленого мені обвинуваченого Лясковця я в натовпі не бачив, а тільки чув, лежачи пораненим у лікарні, що якийсь Лясковець брав участь у нападі</q>.</p>
+                    <p class="w18-st-a"><a class="w18-link" href="#svidok">протокол Ліпінського повністю</a></p>
+                </div>
+            </li>
+            <li class="st-self">
+                <time>1.I.1923</time>
+                <div>
+                    <small>Сам Степан · скарга з Луцької в'язниці</small>
+                    <h4>«Я був тоді хлопцем 17 років»</h4>
+                    <blockquote>…ніхто б мене не допустив до керівництва повстанням та не став би слухати, а я взагалі не мав жодного уявлення про вогнепальну зброю.</blockquote>
+                    <p>Степан просить нового слідства: обвинувального акта йому не прочитали, <q>а сам я польською читати не вмію</q>. Повстанням, пише він, керували Микола Лясковець і Олександр Садовський, і на це вказав сам Мацкевич. Свідка, що бачив би його у Воробині, він просить поставити перед ним, бо <q>тоді я не був настільки популярним, аби мене всі знали</q>. І наостанок: <q>не маю жодного наміру нести наслідки відповідальності за злочини, вчинені іншими Лясковцями</q>. В'язниця переслала скаргу до суду як скаргу в'язня <q>у справі «ЗАКОРДОТ»</q>.</p>
+                    <p class="w18-st-a">арк. 40 <button type="button" class="w18-link-btn" data-doc="d228">переклад і скани</button></p>
+                </div>
+            </li>
+            <li class="st-pl">
+                <time>15.III.1923</time>
+                <div>
+                    <small>Окружний суд у Ковелі</small>
+                    <h4>«Ні, не винен»</h4>
+                    <p>На всі три питання про Степана (участь у збіговиську, вбивство Плятерів, вбивство службовців і вартових) суд відповів <q>Ні, не винен</q>. У вироку сказано, що його та Степана Будкевича <q>з огляду на брак будь-яких доказів належить виправдати</q>. Ув'язнення він не уникнув: у справі «Закордоту» його засудили до десяти років.</p>
+                    <p class="w18-st-a">арк. 122–129 <button type="button" class="w18-link-btn" data-doc="d240">питання суду</button> <button type="button" class="w18-link-btn" data-doc="d241">вирок</button></p>
+                </div>
+            </li>
+            <li class="st-self">
+                <time>?</time>
+                <div>
+                    <small>Сам Степан · спогади</small>
+                    <h4>«Розсадник більшовизму на Поліссі»</h4>
+                    <blockquote>Незважаючи на передвиборну атаку всіх угодовських партій, робітничий клас і селянство залишилися непорушними захисниками диктатури пролетаріату… Дубровиця стала розсадником більшовизму на Поліссі.</blockquote>
+                    <p>Єдині слова самого Степана з радянського боку. Їх наводить Степанов (с. 20) із його спогадів у Рівненському партархіві (ПАРО, ф. 4149, оп. 1, спр. 5, арк. 79). Коли ці спогади написано, книжка не каже. Можливо, у Харкові 1925–1934 років, де колишні повстанці, як пише Степанов (с. 150), готували книжку про повстання.</p>
+                </div>
+            </li>
+            <li class="st-sov">
+                <time>1958 · 1963</time>
+                <div>
+                    <small>Газети · «Червоний прапор», «Радянська Україна»</small>
+                    <h4>Повстання без Степана</h4>
+                    <p>У рік реабілітації Степана, до 40-річчя повстання, «Червоний прапор» друкує короткий спогад Федора Пирішка, де жодного ватажка не названо. 1963 року «Радянська Україна» в нарисі «До сердець промовляє історія» називає ватажком Миколу Лясковця. Степана немає в жодному з цих текстів.</p>
+                    <p class="w18-st-a"><a class="w18-link" href="presa.html?id=1958-11-23-chervonyi-prapor-dombryvytske-povstannia">1958</a> · <a class="w18-link" href="presa.html?id=1963-12-04-radianska-ukraina-do-serdets-promovliaie-istorii">1963</a></p>
+                </div>
+            </li>
+            <li class="st-sov">
+                <time>1967</time>
+                <div>
+                    <small>Спогади учасників · «Жовтень», № 7; передрук у «Поліському маяку»</small>
+                    <h4>«Від Дубровицького ревкому — С. І. Лясковець»</h4>
+                    <p>Модек, Борко-Бруяка, Сушко, Пиришко й Лосик згадують його лише раз: серед членів Військової ради повстанських військ Західної України й Білорусії. Головою ревкому його тут не названо, а по батькові подано «І.»</p>
+                    <p class="w18-st-a"><a class="w18-link" href="presa.html?id=1967-polisky-mayak-dubrovytske-zbroine-povstannia">текст у вкладці «Преса»</a></p>
+                </div>
+            </li>
+            <li class="st-sov">
+                <time>1968</time>
+                <div>
+                    <small>Л. Степанов, «Безсмертя батьків»</small>
+                    <h4>Голова ревкому, чекіст, журналіст</h4>
+                    <ul class="w18-st-pp">
+                        <li><b>с. 9, 12</b><span>разом із «братами» В'ячеславом і Миколою в підпіллі до 1917 року (насправді вони двоюрідні)</span></li>
+                        <li><b>с. 29–30</b><span>1917: від більшовиків у Дубровицькій раді</span></li>
+                        <li><b>с. 37</b><span>у ядрі дубровицького червоногвардійського загону</span></li>
+                        <li><b>с. 40</b><span>портрет із підписом «С. Я. Лясковець»</span></li>
+                        <li><b>с. 46</b><span>травень 1918: заступник голови підпільного ревкому, голова — Павло Конончук</span></li>
+                        <li><b>с. 50</b><span>серпень 1918: голова відновленого підпільного ревкому</span></li>
+                        <li><b>с. 63–64</b><span>3 грудня 1918, у хаті свого батька: доповідає конференції про дев'ять загонів, <q>понад 1600 повстанців</q></span></li>
+                        <li><b>с. 66–67</b><span>обраний головою ревкому, а також членом ревтрибуналу</span></li>
+                        <li><b>с. 102</b><span>січень 1919: знову голова ревкому у відвойованій Дубровиці</span></li>
+                        <li><b>с. 147</b><span>травень 1919: разом із В'ячеславом у Рівненській повітовій ЧК; на груповому фото 1925 року в третьому ряду</span></li>
+                        <li><b>с. 148–150</b><span>1920: серед керівників партизанів; з батьком поранені в бою й схоплені; процес у «справі Закордоту»; обмін до СРСР; <q>закінчив інститут, працював журналістом</q></span></li>
+                    </ul>
+                    <p>Штурм Воробина Степанов описує, але Степана з ним не пов'язує. Що Степана судили саме за Воробин і що суд його виправдав, у книжці не сказано: єдиний процес, який там згадано, — «справа Закордота».</p>
+                </div>
+            </li>
+            <li class="st-sov">
+                <time>4.XII.1968</time>
+                <div>
+                    <small>«Правда»</small>
+                    <h4>Один із «ватажків»</h4>
+                    <p>До 50-річчя повстання в Дубровиці відкрито музейну експозицію про <q>ватажків О. М. Ільїна, С. І. Лясковця, О. В. Конончука, М. І. Грицюка-Антонова та інших комуністів-ленінців</q>. Двоє з чотирьох, Лясковець і Грицюк-Антонов, загинули в репресіях 1930-х років. Газета про це не пише.</p>
+                    <p class="w18-st-a"><a class="w18-link" href="presa.html?id=1968-12-04-pravda-heroi-chervonoi-dubrovytsi">текст у вкладці «Преса»</a></p>
+                </div>
+            </li>
+            <li class="st-sov">
+                <time>6.XII.1983</time>
+                <div>
+                    <small>«Поліський маяк» · Г. Чміль, «Вони були першими»</small>
+                    <h4>«Ревком на чолі із Степаном Лясковцем»</h4>
+                    <p>Короткий переказ Степанова до 65-річчя. Головою ревкому Степан тут уже без варіантів. Уперше в районній газеті його портрет з підписом «С. Й. Лясковець», поруч з Ільїним і прапором Першого Дубровицького полку.</p>
+                    <p class="w18-st-a"><a class="w18-link" href="presa.html?id=1983-12-06-polisky-mayak-vony-buly-pershymy">газета зі світлиною</a></p>
+                </div>
+            </li>
+            <li class="st-sov">
+                <time>5.XII.1985</time>
+                <div>
+                    <small>«Поліський маяк» · Г. Чміль, «Правильний шлях»</small>
+                    <h4>«Голова військово-революційного комітету С. Й. Лясковець»</h4>
+                    <p>Перший у переліку героїв повстання, перед Борком-Бруякою, Грицюком-Антоновим і Камінським.</p>
+                    <p class="w18-st-a"><a class="w18-link" href="presa.html?id=1985-12-05-polisky-mayak-pravylnyi-shliakh">текст у вкладці «Преса»</a></p>
+                </div>
+            </li>
+            <li class="st-fam">
+                <time>після 2000</time>
+                <div>
+                    <small>Презентація про С. Й. Лясковця · родинний архів</small>
+                    <h4>«Фанатичний більшовик»</h4>
+                    <p>Найдокладніший життєпис, складений за родинними паперами, протоколом допиту в НКВС 1937 року та збірником документів про «Закордот» (2000). Тут є все, чого бракує іншим: служба в Таращанській бригаді Боженка й на бронепоїздах; «Закордот» через двоюрідного брата Миколу; група з двадцяти осіб, переправлена через кордон; арешт 24 серпня 1921 року з револьвером «Steyr», кулеметною стрічкою й картою Сарненського району; десять років тюрми; Білосток; обмін; Комуністичний університет; політскладу РСЧА; і кінець 1937 року. Авторка підсумовує: <q>син бідного коваля з провінційного містечка, фанатичний більшовик, боєць Червоної армії, розвідник-нелегал, офіцер політскладу РСЧА, полковник, військовий журналіст</q>.</p>
+                </div>
+            </li>
+        </ol>
+
+        <h3 class="w18-st-h">Де джерела розходяться</h3>
+        <div class="w18-st-tw">
+            <table class="w18-st-t">
+                <thead><tr><th scope="col">Питання</th><th scope="col">Польська справа</th><th scope="col">Радянські тексти</th><th scope="col">Презентація</th></tr></thead>
+                <tbody>
+                    <tr><th scope="row">Рік народження</th><td>22 роки в січні 1922-го, тобто 1899; сам у скарзі: «хлопець 17 років» у 1918-му, тобто близько 1901</td><td>не подано</td><td>22.III.1899 під портретом; 1898 у тексті</td></tr>
+                    <tr><th scope="row">По батькові</th><td>син Юзефа (Йосипа) і Ольги</td><td>«С. І.» у 1967 і в «Правді» 1968; «С. Я.» у Степанова (с. 40, 150); «С. Й.» у «Поліському маяку» 1983 і 1985</td><td>Йосипович</td></tr>
+                    <tr><th scope="row">Ким доводився Миколі й В'ячеславу</th><td>«брати Ласьковичі» в Мацкевича й у проєкті обвинувачення 1921 року; але Степан — син Юзефа, а Микола — син Якова, тобто двоюрідні</td><td>«брат» у Степанова (с. 9, 12), а на с. 147–150 — син Йосипа, тобто двоюрідний</td><td>двоюрідний брат</td></tr>
+                    <tr><th scope="row">Роль у листопаді 1918</th><td>свідки 1919–1920 його не згадують; Шеремета 1921: співорганізатор «банди»; сам: «ніхто б мене не допустив до керівництва»; суд: доказів немає</td><td>голова ревкому й член трибуналу (Степанов, «Поліський маяк» 1983, 1985); у 1967 — лише член Військової ради</td><td>голова ревкому</td></tr>
+                    <tr><th scope="row">Військова служба</th><td>«не служив» (анкета 1922); повернувся з Червоної армії (Шеремета 1921)</td><td>1919: Рівненська повітова ЧК (Степанов, с. 147)</td><td>з літа 1919 політпрацівник Таращанської бригади, воєнком бронепоїздів № 96 і № 104</td></tr>
+                    <tr><th scope="row">Як його схопили 1921 року</th><td>нічна облава на болоті «Козаки» після зізнання Шеремети</td><td>з батьком поранені в бою й схоплені (Степанов, с. 149)</td><td>облава 24.VIII.1921 начальника таємної поліції в Сарнах Романа Ленковського</td></tr>
+                    <tr><th scope="row">Освіта</th><td>два класи; «польською читати не вмію»</td><td>«закінчив інститут, працював журналістом»</td><td>факультет журналістики Харківського комуніверситету імені Артема, 1928–1931</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3 class="w18-st-h">Що писали про його смерть</h3>
+        <ul class="w18-st-d">
+            <li><b>Польська справа, 1921–1925</b><span class="z">лише до 1923</span><p>Останній слід — 1923 рік: виправдальний вирок у справі Плятерів і в'язниця «у справі «ЗАКОРДОТ»».</p></li>
+            <li><b>Спогади учасників, 1967</b><span class="m">мовчать</span><p>Лише ініціали «С. І.» серед членів Військової ради. Ні дат життя, ні долі.</p></li>
+            <li><b>Степанов, 1968</b><span class="m">мовчить</span><p>Книжка вийшла через десять років після реабілітації. Про Степана сказано: <q>закінчив інститут, працював журналістом</q>. У тому самому абзаці перелічено кар'єри інших повстанців, серед них Миколи Єфімова, ректора Київського політехнічного. Що Єфімова розстріляли того самого 1937 року, книжка теж не каже.</p></li>
+            <li><b>«Правда», 1968</b><span class="m">мовчить</span><p>«Ватажок» і «комуніст-ленінець», без жодної дати.</p></li>
+            <li><b>«Поліський маяк», 1983 і 1985</b><span class="m">мовчить</span><p>«Голова ревкому», портрет. Про 1937 рік ні слова.</p></li>
+            <li><b>Презентація з родинного архіву</b><span class="y">розповідає</span><p>На час арешту 1937 року Степан був начальником партвідділу окружної газети «Червоний воїн» Закавказького військового округу (у презентації — «Зак. ВО»). Справу проти нього відкрили в січні–лютому 1937 року <q>за наклепом</q>, слідство тягнулося сім місяців. Він писав скарги аж до Маленкова, завідувача ОРПО ЦК ВКП(б). Потім вийшов наказ НКВС № 00485 (11 серпня 1937 року) про «польську операцію». Його четверта категорія — <q>політемігранти і політобмінені з Польщі</q> — точно описувала Степана. <q>Він був заарештований і розстріляний.</q> Розстріляли й брата Сергія. Серед репресованих учасників повстання презентація називає також В'ячеслава Лясковця, Грицюка-Антонова, Козубовського і Єремію Шеремету. Реабілітований 1958 року.</p></li>
+        </ul>
+        <p class="w18-st-gap">Точної дати арешту, вироку й розстрілу, як і місця поховання, немає в жодному з наших джерел. Радянські тексти, які писали про Степана після 1958 року, знали, що він реабілітований, тобто знали, що його розстріляли, і жоден цього не написав.</p>
+
+        <figure class="w18-st-obmin">
+            <button type="button" data-lb="w18-stepan/obmin-1925.webp" data-cap="«Прибывшие политэмигранты по персональному обмену состоявш. СССР с Польшей 1-го февраля 1925 г.» Під № 33 — Лясковець, № 26 — Курач, № 27 — Романушко, № 30 — Шеремета, № 61 — Лось. Фото з презентації про С. Й. Лясковця." aria-label="Збільшити світлину політемігрантів 1925 року"><img src="w18-stepan/obmin-1925.webp" alt="Групове фото кількох десятків чоловіків у пальтах і кашкетах на тлі дощатої стіни, з транспарантом" width="925" height="715" loading="lazy" decoding="async"></button>
+            <figcaption><b>1 лютого 1925 року.</b> «Прибулі політемігранти з персонального обміну між СРСР і Польщею». У підписі під № 33 Лясковець, № 26 Курач, № 30 Шеремета, № 27 Романушко, № 61 Лось. Тим самим обміном перейшов кордон Гаврило Курач-Заєць, засуджений у справі Плятерів на 12 років, і, найімовірніше, Єремія Шеремета: той, хто 1921 року показав поліції табір на «Козаках», де схопили Степана. У презентації сказано, що 1937 року НКВС розшукував учасників повстання саме за цією світлиною, вилученою в Шеремети.</figcaption>
+        </figure>
+
+        <p class="w18-src">ДАРО, ф. 32, оп. 28, спр. 904, арк. 40, 119, 122–129, 312–316, 323–324, 376, 395–397, 401–402, 563–564, 601 · Л. С. Степанов, «Безсмертя батьків», Львів, 1968 · «Червоний прапор», 23.XI.1958 · «Радянська Україна», 4.XII.1963 · «Поліський маяк», 1967; 6.XII.1983; 5.XII.1985 · «Правда», 4.XII.1968 · Презентація про С. Й. Лясковця (родинний архів) · <button type="button" class="w18-link-btn" data-doc="d315">допит 27.I.1922 у переглядачі документів</button></p>
+    </div>
+</section>
+
+<!-- § 20 -->
 <section class="ds-sec" id="potim">
     <div class="w18-wrap">
-        <div class="ds-sh"><b>§ 19</b><h2>Долі</h2><span>що сталося з людьми цієї історії · 1919–1983</span></div>
+        <div class="ds-sh"><b>§ 20</b><h2>Долі</h2><span>що сталося з людьми цієї історії · 1919–1983</span></div>
         <p class="w18-lead">Картки з позначкою «лише в радянській книжці» спираються тільки на «Безсмертя батьків» Лева Степанова (1968). Про кар'єри колишніх повстанців ця книжка пише охоче, а про розстріли 1937 року мовчить. Решту взято зі справи, тюремних документів, газет і презентації про Степана Лясковця.</p>
         <ul class="w18-after">
             <li class="is-book"><time>1919</time><h3>Рівне</h3><p>Після того як 23 травня Червона армія взяла Рівне, Микола й Григорій Лясковці та Микола Єфімов працювали в ревкомі, а Степан і В'ячеслав Лясковці, Дмитро Будкевич, Олександр Модек та Арвід Скуїн — у повітовій ЧК.</p><p class="w18-src">Степанов, с. 146–147</p></li>
@@ -2836,7 +3151,7 @@
             <li><time>1925</time><h3>Обмін</h3><p>30 січня Гаврила Курача-Зайця випустили з в'язниці в Білостоці й передали Змішаній комісії для обміну політв'язнями з СРСР. На початку того ж року до СРСР обміняли й Степана Лясковця, який сидів у Білостоцькій тюрмі. 11 вересня окружний суд у Рівному затвердив подання прокуратури зупинити виконання кари Курача-Зайця.</p><p class="w18-src">Прокуратура, 18.III.1925, арк. 253; ухвала 11.IX.1925, арк. 255; презентація <button type="button" class="w18-scanbtn" data-doc="d275"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L12.5 4.5v10h-8.5z M9.5 1.5v3h3" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>скан</button> <button type="button" class="w18-scanbtn" data-doc="k255"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L12.5 4.5v10h-8.5z M9.5 1.5v3h3" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>ухвала</button></p></li>
             <li class="is-book"><time>1925</time><h3>Харків</h3><p>З ініціативи Інституту історії партії колишні повстанці зібралися в Харкові, тодішній столиці радянської України. На світлині — Лясковці з батьками, Гнат Нашора, Модек, Будкевич, Конончуки, а також Гаврило Курач із дружиною, якого Польща того ж року видала в обмін на політв'язнів. За пропозицією Горького вони взялися писати книгу про повстання; до війни вона так і не вийшла.</p><p class="w18-src">Степанов, с. 5, 147, 150 · <a href="#kharkiv-1925">світлина й довідки на кожного</a></p></li>
             <li class="is-book"><time>1920–1930-ті</time><h3>Кар'єри</h3><p>Микола Лясковець став інженером і будував залізниці, Микола Єфімов очолював Харківський механіко-машинобудівний, а згодом Київський політехнічний інститут. Федір Козубовський, командир Другого Поліського полку, керував Інститутом матеріальної культури, Модек викладав у військовій академії імені Фрунзе, Олександр Конончук служив у Генштабі, Островський — у прокуратурі СРСР. В'ячеслав Лясковець і Борко-Бруяка стали чекістами.</p><p class="w18-src">Степанов, с. 150–151</p></li>
-            <li><time>1937</time><h3>Розстріли</h3><p>Степана Лясковця заарештовано в Харкові й розстріляно. 28 березня того ж року розстріляли Миколу Єфімова, колишнього комісара Першого Дубровицького полку й ректора КПІ, а 23 лютого 1939 року — Миколу Грицюка-Антонова, колишнього начальника тюремного відділу НКВС СРСР.</p><p class="w18-src">Презентація · КПІ · довідка про кадри НКВС · <a href="#kharkiv-1925">довідки до світлини 1925 року</a></p></li>
+            <li><time>1937</time><h3>Розстріли</h3><p>Степана Лясковця заарештовано й розстріляно; радянські книжки й газети про це так і не написали (<a class="w18-link" href="#stepan">досьє</a>). 28 березня того ж року розстріляли Миколу Єфімова, колишнього комісара Першого Дубровицького полку й ректора КПІ, а 23 лютого 1939 року — Миколу Грицюка-Антонова, колишнього начальника тюремного відділу НКВС СРСР.</p><p class="w18-src">Презентація · КПІ · довідка про кадри НКВС · <a href="#kharkiv-1925">довідки до світлини 1925 року</a></p></li>
             <li><time>1939</time><h3>Новий вирок</h3><p>Теодора Перішка засудили знову: 6 червня 1939 року Варшавський окружний суд дав «комуністові Теодору Пиришку» 10 років ув'язнення. Газета писала, що він був членом ЦК Комуністичної партії Західної Білорусі, його затримали при спробі втекти до СРСР, а 1918 року він входив до «банди», що спалила Воробин. Перед процесом прокуратура запитувала з Луцька вироки 1923 року на «Теодора Перішка, сина Бориса та Єви, 1898 р. н.».</p><p class="w18-src"><a href="presa.html?id=1939-06-freie-presse-laufbahn-eines-kommunisten">«Freie Presse», червень 1939</a> · арк. 287</p></li>
             <li class="is-book"><time>1941–1943</time><h3>Кренько</h3><p>Олександр Кренько з Аргентини поїхав воювати в Іспанію комісаром кулеметної роти. У липні 1941 року його з групою колишніх дубровицьких повстанців скинули з літака на парашутах біля Дубровиці. Він створив одну з перших підпільних організацій на Рівненщині, разом із ним діяли доньки Марія й Олімпіада. У липні 1943 року Кренька вбили; Степанов пише, що це зробив агент українських націоналістів.</p><p class="w18-src">Степанов, с. 150–151</p></li>
             <li><time>1958</time><h3>Реабілітація</h3><p>Степана Лясковця й Миколу Єфімова посмертно реабілітовано. «Червоний прапор» друкує спогад «Ф. Пирішка, учасника повстання, члена КПРС з 1924 р.»; Федором слідство називало й Теодора Перішка.</p><p class="w18-src"><a href="presa.html?id=1958-11-23-chervonyi-prapor-dombryvytske-povstannia">«Червоний прапор», 23.XI.1958</a></p></li>
@@ -2846,10 +3161,10 @@
     </div>
 </section>
 
-<!-- § 20 -->
+<!-- § 21 -->
 <section class="ds-sec" id="rozbizhnosti">
     <div class="w18-wrap">
-        <div class="ds-sh"><b>§ 20</b><h2>Що розходиться в джерелах</h2><span>справа 1919–1923 проти інших свідчень</span></div>
+        <div class="ds-sh"><b>§ 21</b><h2>Що розходиться в джерелах</h2><span>справа 1919–1923 проти інших свідчень</span></div>
         <div class="w18-diff-hd" aria-hidden="true"><span>Питання</span><span>Справа № 67/22</span><span>Інші джерела</span></div>
         <ul class="w18-diff">
             <li><h3>Дата нападу</h3><div><h4>Справа</h4><p>21–22 листопада 1918; книга хворих лікарні — 22 листопада. Прокурор 1922 року ще сумнівався, чи не з 22 на 23-тє, і фельдшер Пальонка підтвердив: <q>злочин було вчинено саме вдень 22 листопада</q>. Постанова 5.VI.1920 прямо називає 22 листопада <q>днем нападу на Воробин</q>. Частина свідків зсуває все на добу: Мольський (лютий і травень 1920, серпень 1922) і вартовий Буйновський кажуть про ніч з 22 на 23 листопада, Свириденко 1920 року — <q>у ніч на 23 листопада</q>, а 1922-го — <q>у п'ятницю 23 листопада</q>, хоча п'ятницею було 22-ге. Суд і слідство прийняли 21–22 листопада.</p></div><div><h4>Інші</h4><p>«Київська Думка» 27.XI.1918 і спогади учасників — так само. Стаття «Поліське повстання» і презентація — 3–6 грудня. Спогади О. Модека, П. Борка-Бруяки, Й. Сушка, І. Пирішка й П. Лосика (журнал «Жовтень», 1967, № 7; передрук у районній газеті) і «Поліський маяк» 1978 року — штурм 4 грудня.</p></div>
@@ -2872,10 +3187,10 @@
     </div>
 </section>
 
-<!-- § 21 -->
+<!-- § 22 -->
 <section class="ds-sec" id="dokumenty">
     <div class="w18-wrap">
-        <div class="ds-sh"><b>§ 21</b><h2>Документи справи</h2><span>скани аркушів і переклад поруч</span></div>
+        <div class="ds-sh"><b>§ 22</b><h2>Документи справи</h2><span>скани аркушів і переклад поруч</span></div>
         <p class="w18-lead">Добірка аркушів зі справи № 67/22 — фотографії оригіналів, зроблені в Державному архіві Рівненської області. Відкрийте документ: ліворуч скан (натисніть, щоб збільшити), праворуч переклад. Переклади цих аркушів звірено зі сканами; де звірено лише частину, це позначено.</p>
         <h3 class="w18-h3">Основні документи</h3>
         <ol class="w18-docs"><!--DC-M-->
@@ -2957,10 +3272,10 @@
     </div>
 </section>
 
-<!-- § 22 -->
+<!-- § 23 -->
 <section class="ds-sec" id="dzherelo">
     <div class="w18-wrap">
-        <div class="ds-sh"><b>§ 22</b><h2>Джерела</h2><span>що використано і що ще можна знайти</span></div>
+        <div class="ds-sh"><b>§ 23</b><h2>Джерела</h2><span>що використано і що ще можна знайти</span></div>
         <div class="w18-srcg">
             <div>
                 <h3 class="w18-h3">Використано</h3>
