@@ -1161,6 +1161,45 @@
 @media(max-width:640px){.w18-st-top{grid-template-columns:1fr}.w18-st-ph{max-width:11rem}.w18-st-facts{grid-template-columns:1fr}.w18-st-facts dt{padding-bottom:0;border-bottom:0}.w18-st-src>li{grid-template-columns:1fr;gap:.3rem}.w18-st-q dl{grid-template-columns:1fr}.w18-st-q dt{padding-bottom:0;border-bottom:0}.w18-st-t thead{display:none}.w18-st-t tr{display:block;padding:.6rem 0;border-bottom:1px solid var(--w-rule2)}.w18-st-t th,.w18-st-t td{display:block;width:auto;padding:.2rem 0;border:0}.w18-st-t td::before{display:block;font:600 .58rem/1.6 var(--ds-body);letter-spacing:.12em;text-transform:uppercase;color:var(--w-ink3)}.w18-st-t td:nth-of-type(1)::before{content:"Польська справа"}.w18-st-t td:nth-of-type(2)::before{content:"Радянські тексти"}.w18-st-t td:nth-of-type(3)::before{content:"Презентація"}}
 .w18-st-tw{overflow-x:auto}.w18-st-a .w18-link-btn{color:var(--w-gold)}
 @media(max-width:640px){.w18-st-t tbody th{width:auto;font-size:1.1rem}}
+/* родина Лясковців */
+.w18-ly-tree{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;margin:2rem 0 2.4rem}
+.w18-ly-br{padding:1.1rem 1.2rem;border:1px solid var(--w-rule2);border-radius:14px;background:var(--w-alt)}
+.w18-ly-pa{margin:0 0 .7rem;padding-bottom:.7rem;border-bottom:1px solid var(--w-rule2);font:400 1.15rem/1.4 var(--ds-display);color:var(--w-ink)}
+.w18-ly-tree small{display:block;font:500 .68rem/1.4 var(--ds-body);color:var(--w-ink3);letter-spacing:.02em}
+.w18-ly-pa small{display:inline;margin:0 .2rem 0 .45rem}
+.w18-ly-tree ul{list-style:none;margin:0;padding:0 0 0 1.1rem;display:flex;flex-wrap:wrap;gap:.5rem 1.6rem;border-left:2px solid var(--w-rule2)}
+.w18-ly-tree li{font:400 1.02rem/1.3 var(--ds-display);color:var(--w-ink)}
+.w18-ly-tree a{color:var(--w-ink);text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--w-gold) 45%,transparent);text-underline-offset:3px}
+.w18-ly-tree a:hover{color:var(--w-gold)}
+.w18-ly-g{display:grid;gap:1.1rem}
+.w18-ly-c{display:grid;grid-template-columns:minmax(0,8.5rem) minmax(0,1fr);gap:clamp(1rem,2.6vw,2rem);padding:clamp(1.1rem,2.4vw,1.6rem);border:1px solid var(--w-rule);border-radius:14px;background:var(--w-card);scroll-margin-top:calc(var(--hdr,64px) + 4rem)}
+.w18-ly-ph{display:block;align-self:start;padding:0;border:0;background:none;cursor:zoom-in}
+.w18-ly-ph img{display:block;width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:6px;filter:contrast(1.04);box-shadow:0 10px 24px rgba(28,22,12,.16)}
+.w18-ly-ph--none{aspect-ratio:2/3;display:grid;place-items:center;border-radius:6px;background:var(--w-alt);border:1px dashed var(--w-rule2);cursor:default}
+.w18-ly-ph--none span{font:400 2.4rem var(--ds-display);color:var(--w-ink3)}
+.w18-ly-c h3{margin:0;font:400 clamp(1.3rem,2vw,1.6rem)/1.15 var(--ds-display);color:var(--w-ink)}
+.w18-ly-c h3 small{display:block;margin-top:.3rem;font:500 .74rem/1.4 var(--ds-body);color:var(--w-gold)}
+.w18-ly-role{margin:.5rem 0 .8rem;font:600 .62rem/1.5 var(--ds-body);letter-spacing:.12em;text-transform:uppercase;color:var(--w-ink3)}
+.w18-ly-c p{max-width:48rem;margin:0 0 .8rem;font:400 .94rem/1.64 var(--ds-body);color:var(--w-ink2);text-wrap:pretty}
+.w18-ly-s{display:grid;grid-template-columns:minmax(0,9rem) minmax(0,1fr);max-width:48rem;margin:.3rem 0 .9rem;border-top:1px solid var(--w-rule)}
+.w18-ly-s dt,.w18-ly-s dd{margin:0;padding:.5rem 0;border-bottom:1px solid var(--w-rule)}
+.w18-ly-s dt{display:flex;gap:.45rem;align-items:baseline;padding-right:.8rem;font:600 .6rem/1.6 var(--ds-body);letter-spacing:.1em;text-transform:uppercase;--k:var(--w-ink3);color:var(--k)}
+.w18-ly-s dt::before{content:"";flex:none;width:.5rem;height:.5rem;border-radius:50%;background:var(--k);transform:translateY(-.05rem)}
+.w18-ly-s dt.pl{--k:var(--w-pl)}.w18-ly-s dt.sov{--k:var(--w-unr)}.w18-ly-s dt.fam{--k:var(--w-gold)}
+.w18-ly-s dd{font:400 .88rem/1.58 var(--ds-body);color:var(--w-ink2)}
+.w18-ly-f{padding:.6rem .85rem;border-left:3px solid var(--w-ember);background:color-mix(in srgb,var(--w-ember) 6%,transparent);border-radius:0 8px 8px 0}
+.w18-ly-f b{color:var(--w-ink)}
+.w18-ly-doc{float:right;width:min(14rem,40%);margin:.2rem 0 .8rem 1.2rem}
+.w18-ly-doc button{display:block;padding:0;border:0;background:none;cursor:zoom-in;width:100%}
+.w18-ly-doc img{display:block;width:100%;height:auto;border-radius:6px;box-shadow:0 8px 18px rgba(28,22,12,.16)}
+.w18-ly-doc figcaption{margin-top:.3rem;font:500 .68rem/1.4 var(--ds-body);color:var(--w-ink3)}
+.w18-ly-c .w18-src{clear:both}
+.w18-ly-c .w18-link-btn{color:var(--w-gold)}
+.w18-ly-c--link{background:var(--w-alt)}
+.w18-ly-other{max-width:48rem;margin:1.6rem 0 0;font:400 .9rem/1.62 var(--ds-body);color:var(--w-ink2)}
+.w18-ly-other b{color:var(--w-ink)}
+@media(max-width:700px){.w18-ly-tree{grid-template-columns:1fr}.w18-ly-c{grid-template-columns:minmax(0,5.5rem) minmax(0,1fr)}.w18-ly-c>div{grid-column:1/-1}.w18-ly-c>.w18-ly-ph{grid-column:1}.w18-ly-s{grid-template-columns:1fr}.w18-ly-s dt{padding-bottom:0;border-bottom:0}.w18-ly-doc{float:none;width:100%;margin:0 0 .8rem}}
+.w18-ly-c .w18-ly-role{margin:.45rem 0 .8rem;font:600 .62rem/1.5 var(--ds-body);letter-spacing:.12em;text-transform:uppercase;color:var(--w-ink3)}
 
 /* ── Харків, 1925 ── */
 .w18-k25-ph{margin:2.2rem calc((100% - min(100vw - 2rem, 1320px)) / 2) 0;padding:clamp(.6rem,1.4vw,1.1rem);background:#100d0a;border-radius:6px;box-shadow:0 30px 70px rgba(0,0,0,.28)}
@@ -1397,10 +1436,11 @@
         <li class="w18-toc-act" aria-hidden="true">V</li>
         <li><a href="#kharkiv-1925"><b>18</b>Харків, 1925</a></li>
         <li><a href="#stepan"><b>19</b>Степан</a></li>
-        <li><a href="#potim"><b>20</b>Долі</a></li>
-        <li><a href="#rozbizhnosti"><b>21</b>Розбіжності</a></li>
-        <li><a href="#dokumenty"><b>22</b>Документи</a></li>
-        <li><a href="#dzherelo"><b>23</b>Джерела</a></li>
+        <li><a href="#lyaskovtsi"><b>20</b>Лясковці</a></li>
+        <li><a href="#potim"><b>21</b>Долі</a></li>
+        <li><a href="#rozbizhnosti"><b>22</b>Розбіжності</a></li>
+        <li><a href="#dokumenty"><b>23</b>Документи</a></li>
+        <li><a href="#dzherelo"><b>24</b>Джерела</a></li>
     </ol>
 </nav>
 
@@ -2389,7 +2429,7 @@
                         <li><time>1920–1921</time><span>вводить Степана до «Закордоту» (так у презентації про С. Й. Лясковця)</span></li>
                         <li><time>11.I.1922</time><span>притягнутий як обвинувачений; справу виділено</span></li>
                     </ol>
-                    <p class="w18-src">Арк. 563–564, 601, 312; презентація</p>
+                    <p class="w18-src">Арк. 563–564, 601, 312; презентація · <a class="w18-link" href="#ly-mykola">уся родина Лясковців</a></p>
                 </div>
             </article>
             <article>
@@ -2911,7 +2951,7 @@
             </figure>
             <dl class="w18-st-facts">
                 <dt>Ім'я в документах</dt><dd>Степан Йосипович Лясковець; у польських паперах Stefan Laskowiec, Laskowicz, Ласькович; сам підписувався кирилицею «Ст. Лясковец»</dd>
-                <dt>Батьки</dt><dd>коваль Йосип Григорович (1868–1931) і Ольга Григорівна; брати Григорій (1895–1966) і Сергій, сестра Віра</dd>
+                <dt>Батьки</dt><dd>коваль Йосип Григорович (1868–1931) і Ольга Григорівна; брати Григорій (1895–1966) і Сергій, сестра Віра (<a class="w18-link" href="#lyaskovtsi">родина Лясковців</a>)</dd>
                 <dt>Народився</dt><dd>22 березня 1899 року, Дубровиця</dd>
                 <dt>Загинув</dt><dd>1937 рік, розстріляний; посмертно реабілітований 1958 року</dd>
                 <dt>У справі Плятерів</dt><dd>обвинувачений № 6; 15 березня 1923 року виправданий</dd>
@@ -3139,9 +3179,154 @@
 </section>
 
 <!-- § 20 -->
+<section class="ds-sec w18-ly" id="lyaskovtsi">
+    <div class="w18-wrap">
+        <div class="ds-sh"><b>§ 20</b><h2>Родина Лясковців</h2><span>два ковалі, їхні сини й що про кожного пишуть джерела</span></div>
+        <p class="w18-lead">У Дубровиці були двоє братів-ковалів, Яків і Йосип Григоровичі. Їхні сини опинилися в центрі повстання 1918 року. Степанов називає всіх чотирьох молодших Лясковців «братами». Польські документи точніші: Микола й В'ячеслав — сини Якова, Степан — син Юзефа (Йосипа), тож вони двоюрідні брати. Нижче короткі біографії кожного: що про нього пишуть польська справа, Степанов, газети й родинна презентація і чим, за цими джерелами, скінчилося його життя.</p>
+
+        <div class="w18-ly-tree" aria-label="Родовід">
+            <div class="w18-ly-br">
+                <p class="w18-ly-pa"><a href="#ly-yakiv">Яків Григорович</a><small>коваль</small></p>
+                <ul>
+                    <li><a href="#ly-viacheslav">В'ячеслав</a><small>1888 (?) · «Орлов»</small></li>
+                    <li><a href="#ly-mykola">Микола</a><small>1896 (?)</small></li>
+                </ul>
+            </div>
+            <div class="w18-ly-br">
+                <p class="w18-ly-pa"><a href="#ly-yosyp">Йосип Григорович</a><small>1868–1931 · коваль</small> + <a href="#ly-olha">Ольга Григорівна</a></p>
+                <ul>
+                    <li><a href="#ly-hryhorii">Григорій</a><small>1895–1966</small></li>
+                    <li><a href="#stepan">Степан</a><small>1899–1937</small></li>
+                    <li><a href="#ly-serhii">Сергій</a><small>1899–1937</small></li>
+                    <li><span>Віра</span><small>відоме лише ім'я</small></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="w18-ly-g">
+
+            <article class="w18-ly-c" id="ly-mykola">
+                <button type="button" class="w18-ly-ph" data-lb="w18-port/mlyaskovets.webp" data-cap="М. Я. Лясковець — командир Дубровицького комуністичного повстанського полку. Світлина з музейної добірки." aria-label="Збільшити портрет: Микола Лясковець"><img src="w18-port/mlyaskovets-t.webp" alt="Портрет чоловіка у військовому кашкеті" width="359" height="560" loading="lazy" decoding="async"></button>
+                <div>
+                    <h3>Микола Якович Лясковець<small>Дубровиця, 24.VIII.1896 (?) — ?</small></h3>
+                    <p class="w18-ly-role">учитель; ватажок ревкому; командир Першого Дубровицького полку</p>
+                    <p>Двоюрідний брат Степана. 1917 року — солдат-більшовик 126-ї дивізії Особливої армії; Степанов пише, що він привіз із фронту друкарську машинку для листівок. Улітку 1918 року міліція вже вважала його головним змовником. У листопаді говорив від імені ревкому, а взимку командував Першим Дубровицьким комуністичним полком, потім був комісаром 21-го Волинського. У березні 1919 року його поранило й контузило під Століном. Він же написав спогади, на яких Степанов найбільше спирався. Наприкінці 1920 року, як розповідає родинна презентація, саме Микола в Києві привів Степана до «Закордоту».</p>
+                    <dl class="w18-ly-s">
+                        <dt class="pl">Польська справа</dt><dd>Мацкевич (1922): <q>головним організатором підготовки того нападу</q> ще влітку 1918 року. Бердников (1919–1920): <q>місцевий учитель</q>; суддям сказав, що <q>ревком вирішить вашу долю пізніше, коли закінчить розправу з Плятерами</q>; підписувався <q>головнокомандувачем збройної сили проти Рівного</q>. Член трибуналу, що засудив касира Вахштейнського. У розшуковій відомості ґміни 1920 року: <q>високий, русявий</q>. 11.I.1922 притягнутий як обвинувачений.</dd>
+                        <dt class="sov">Степанов, 1968</dt><dd><q>досвідчений більшовик</q>, який на конференції в липні 1918 року стримав «лівих» (с. 48); військовий комісар повстання й член трибуналу (с. 67); командир полку (с. 88, 94); <q>став талановитим інженером, одним з керівників будівництва залізничних шляхів на Україні</q> (с. 150).</dd>
+                        <dt class="sov">Газети</dt><dd>1963: повстанці, <q>очолені комуністом Миколою Яковичем Лясковцем</q>; 1967: загальне керівництво наступом на Сарни; 1983: військовий комісар повстання й командир полку.</dd>
+                        <dt class="fam">Презентація</dt><dd>військовий комісар повстання; привів Степана до «Закордоту».</dd>
+                    </dl>
+                    <p class="w18-ly-f"><b>Доля.</b> Польська справа: <q>відступив разом із більшовиками</q>, справу щодо нього виділено. Степанов пише про кар'єру інженера, але дат не дає; у подяці книжки названо його дружину Олену Костянтинівну й доньок. Коли і де він помер, у наших джерелах немає.</p>
+                    <p class="w18-src">Арк. 312, 484–489, 563–564, 601, 401–402 <button type="button" class="w18-link-btn" data-doc="d70">Бердников</button> <button type="button" class="w18-link-btn" data-doc="d192">Мацкевич</button> · Степанов, с. 6, 26–27, 42, 48, 67, 88, 94, 138, 146–150 · «Радянська Україна», 4.XII.1963; «Поліський маяк», 1967, 1983</p>
+                </div>
+            </article>
+
+            <article class="w18-ly-c" id="ly-viacheslav">
+                <button type="button" class="w18-ly-ph" data-lb="w18-port/vlyaskovets.webp" data-cap="В. Я. Лясковець — учасник Дубровицького повстання. Світлина з музейної добірки." aria-label="Збільшити портрет: В'ячеслав Лясковець"><img src="w18-port/vlyaskovets-t.webp" alt="Портрет чоловіка у військовому однострої" width="364" height="560" loading="lazy" decoding="async"></button>
+                <div>
+                    <h3>В'ячеслав Якович Лясковець<small>Дубровиця, 23.I.1888 (?) — ? · підпільне ім'я «Орлов»</small></h3>
+                    <p class="w18-ly-role">командир зведеної групи під Воробином; чекіст</p>
+                    <p>Старший син Якова. Служив сапером у Сибіру; після Ленського розстрілу 1912 року його заарештували за пропаганду й вигнали з армії. 1913 року повернувся до батькової кузні й став найближчим соратником Петра Шпаковського. Згодом його заарештували на маївці над Горинню й відвезли до рівненської в'язниці. У листопаді 1918 року, як пише Степанов, вів першу групу повстанців шляхом з Дубровиці на Воробин. Потім їздив до німців на переговори в Сарни й Видибір. 1919 року працював у Рівненській повітовій ЧК.</p>
+                    <dl class="w18-ly-s">
+                        <dt class="pl">Польська справа</dt><dd>У розшуковій відомості ґміни 1920 року серед підозрюваних: <q>вищий за середній, шатен</q>. Поліцейський Щеньовський на суді 1923 року переказав, що Шеремета називав серед нападників <q>Лясковців: Миколая, В'ячеслава</q>.</dd>
+                        <dt class="sov">Степанов, 1968</dt><dd>цитує його спогади (с. 8); портрет «В. Я. Лясковець (Орлов)» (с. 22); командир першої групи (с. 65, 68); <q>Чекістами стали В. Я. Лясковець і П. Є. Борко-Бруяка</q> (с. 150).</dd>
+                        <dt class="sov">Газети</dt><dd>1963: член Військово-революційної ради. 1967: мав вести ешелон на Рівне, але <q>з якоїсь причини не з'явився</q>, і його замінив Модек; у січні 1919 року разом з Єфімовим керував групою, що наступала на Дубровицю з боку Висоцька.</dd>
+                        <dt class="fam">Презентація</dt><dd>1934 року, коли НКВС за дорученням парткомісії розбирався в історії повстання, він разом з Олександром Конончуком стверджував, що загальне керівництво повстанням здійснювали саме вони. Степана тоді викликали свідком.</dd>
+                    </dl>
+                    <p class="w18-ly-f"><b>Доля.</b> Презентація зараховує його до учасників повстання, <q>знищених органами НКВС під час репресій</q>, без дати. Степанов 1968 року пише лише, що він став чекістом.</p>
+                    <p class="w18-src">Арк. 601; протокол суду, арк. 119 <button type="button" class="w18-link-btn" data-doc="d239">протокол суду</button> · Степанов, с. 8–9, 13, 22, 65, 68, 75, 86–88, 147, 150 · «Радянська Україна», 4.XII.1963; «Поліський маяк», 1967 · презентація</p>
+                </div>
+            </article>
+
+            <article class="w18-ly-c" id="ly-yakiv">
+                <button type="button" class="w18-ly-ph" data-lb="w18-port/lyaskovets-simia.webp" data-cap="Сім'я Якова Григоровича Лясковця. Світлина з музейної добірки." aria-label="Збільшити світлину родини Якова Лясковця"><img src="w18-port/lyaskovets-simia-t.webp" alt="Родинна світлина: двоє чоловіків у костюмах, молода жінка, літня жінка в темній хустці й дитина" width="647" height="900" loading="lazy" decoding="async"></button>
+                <div>
+                    <h3>Яків Григорович Лясковець<small>Дубровиця · коваль</small></h3>
+                    <p class="w18-ly-role">батько Миколи й В'ячеслава</p>
+                    <p>Старожили, пише Степанов, пам'ятали <q>братів-ковалів — Якова і Йосипа</q>, чиї молоти стукотіли з ранку до вечора навіть у свята. В'ячеслав згадував, що батька <q>хотіли вислати за богохульство та агітацію проти попів</q>. У польській справі він присутній тільки в імені синів: «син Якова».</p>
+                    <dl class="w18-ly-s">
+                        <dt class="sov">Степанов, 1968</dt><dd>портрет «Дубровицький коваль Я. Г. Лясковець» (с. 9) і світлина «з своїми синами» біля кузні (с. 13). На с. 148 польські легіонери катують його, підпалюють хату й змушують копати собі могилу, але сини встигають його врятувати. На с. 149: <q>польською дефензивою був закатований</q>.</dd>
+                    </dl>
+                    <p class="w18-ly-f"><b>Доля.</b> Відомо тільки зі Степанова: закатований польською дефензивою. Коли саме, книжка не каже. Як це узгоджується з порятунком сторінкою раніше, теж не пояснено.</p>
+                    <p class="w18-src">Степанов, с. 6, 8–9, 13, 148–149 · справа, арк. 601 (сини)</p>
+                </div>
+            </article>
+
+            <article class="w18-ly-c" id="ly-yosyp">
+                <button type="button" class="w18-ly-ph" data-lb="w18-ylyaskovets.jpg" data-cap="Йосип Григорович Лясковець (1868–1931). Фото з родинного архіву, з презентації." aria-label="Збільшити портрет: Йосип Лясковець"><img src="w18-ylyaskovets.jpg" alt="Портрет літнього чоловіка з бородою в кашкеті" width="162" height="220" loading="lazy" decoding="async"></button>
+                <div>
+                    <h3>Йосип Григорович Лясковець<small>1868 — лютий 1931</small></h3>
+                    <p class="w18-ly-role">коваль; батько Григорія, Степана, Сергія й Віри</p>
+                    <p><q>Один з кращих ковалів містечка</q>, як сказано в презентації. Члена партії з нього до 1929 року не було, але за свої переконання він кілька разів сидів у в'язниці. У його хаті збиралися обидві підпільні конференції 1918 року; на другій, 3 грудня, вирішили піднімати повстання. Хату громили гетьманці, а згодом спалили польські легіонери. У серпні 1921 року його схопили разом зі Степаном на болоті «Козаки», обміняли до СРСР, і він оселився в Харкові.</p>
+                    <dl class="w18-ly-s">
+                        <dt class="pl">Польська справа</dt><dd>Щеньовський (1922): на «Козаках» були <q>Лясковці — батько й син</q>, і обох схопили під час нічної облави.</dd>
+                        <dt class="sov">Степанов, 1968</dt><dd>у його хаті конференції (с. 49, 62, 66); хату спалили легіонери (с. 149); з сином <q>поранені і схоплені білополяками</q>, процес у «справі Закордота», обмін, Харків (с. 149–150); на світлині 1925 року в другому ряду (с. 147).</dd>
+                        <dt class="fam">Презентація</dt><dd>при арешті 24.VIII.1921 у нього знайшли 1000 радянських і 500 царських рублів. У Харкові вступив до ВКП(б), партквиток № 1176031 від 24.I.1929, працював на електромеханічному заводі.</dd>
+                    </dl>
+                    <figure class="w18-ly-doc"><button type="button" data-lb="w18-stepan/kvytok-yosyp.webp" data-cap="Партійний квиток Й. Г. Лясковця № 1176031, 1929. З презентації (родинний архів)." aria-label="Збільшити партквиток"><img src="w18-stepan/kvytok-yosyp.webp" alt="Розгорнутий партійний квиток ВКП(б) з фотографією літнього чоловіка" width="414" height="314" loading="lazy" decoding="async"></button><figcaption>Партквиток № 1176031, 1929</figcaption></figure>
+                    <p class="w18-ly-f"><b>Доля.</b> Помер у лютому 1931 року в Харкові. Газети надрукували некролог: <q>ЦК МОДРу із скорботою сповіщає про трагічну смерть активного модровця, більшовика Лясковця Й. Г., бувшого політкаторжанина та політв'язня</q>. Чим була ця «трагічна смерть», не пояснено.</p>
+                    <p class="w18-src">Арк. 376 <button type="button" class="w18-link-btn" data-doc="d185">Щеньовський</button> · Степанов, с. 49, 62, 66, 147, 149–150 · презентація</p>
+                </div>
+            </article>
+
+            <article class="w18-ly-c" id="ly-olha">
+                <div class="w18-ly-ph w18-ly-ph--none" aria-hidden="true"><span>О</span></div>
+                <div>
+                    <h3>Ольга Григорівна Лясковець<small>мати Степана</small></h3>
+                    <p class="w18-ly-role">дружина Йосипа</p>
+                    <p>Степанов пише, що під час першої підпільної конференції в липні 1918 року саме вона помітила біля хати відомого провокатора. На груповому фото 1925 року в Харкові вона стоїть у четвертому ряду, у світлій хустці. У протоколі допиту 1922 року Степан назвав себе <q>сином Юзефа і Ольги</q>. Презентація каже про обох батьків: <q>були людьми простими і підтримували ідеї більшовизму, хоч і не були членами більшовицької партії</q>.</p>
+                    <p class="w18-ly-f"><b>Доля.</b> Невідома.</p>
+                    <p class="w18-src">Арк. 315 <button type="button" class="w18-link-btn" data-doc="d315">допит Степана</button> · Степанов, с. 49, 147 · презентація · <a class="w18-link" href="#kharkiv-1925">світлина 1925 року</a></p>
+                </div>
+            </article>
+
+            <article class="w18-ly-c" id="ly-hryhorii">
+                <button type="button" class="w18-ly-ph" data-lb="w18-port/hlyaskovets.webp" data-cap="Г. Й. Лясковець — учасник Дубровицького повстання. Світлина з музейної добірки." aria-label="Збільшити портрет: Григорій Лясковець"><img src="w18-port/hlyaskovets-t.webp" alt="Портрет молодого чоловіка у військовій формі" width="372" height="560" loading="lazy" decoding="async"></button>
+                <div>
+                    <h3>Григорій Йосипович Лясковець<small>1895 — 1966</small></h3>
+                    <p class="w18-ly-role">старший брат Степана</p>
+                    <p>1917 року від більшовиків увійшов до Дубровицької ради, потім до червоногвардійського загону. На першій підпільній конференції 20 липня 1918 року запропонував піднімати повстання негайно. Після конференції його заарештували разом із Модеком і повезли до Лунінця, звідки вони втекли. 1919 року працював у Рівненському ревкомі.</p>
+                    <dl class="w18-ly-s">
+                        <dt class="pl">Польська справа</dt><dd>не згаданий.</dd>
+                        <dt class="sov">Степанов, 1968</dt><dd>с. 29–30, 37, 46, 48–49, 147; на світлині 1925 року в третьому ряду.</dd>
+                        <dt class="sov">Газети</dt><dd>«Поліський маяк», 1968: <q>брати Микола, В'ячеслав і Григорій Лясковці</q>, хоча Микола й В'ячеслав йому двоюрідні.</dd>
+                    </dl>
+                    <p class="w18-ly-f"><b>Доля.</b> Помер 1966 року, як сказано в презентації. Наскільки видно з джерел, він єдиний із родини, хто дожив до старості.</p>
+                    <p class="w18-src">Степанов, с. 29–30, 37, 46, 48–49, 147, 149 · «Поліський маяк», 3.XII.1968 · презентація</p>
+                </div>
+            </article>
+
+            <article class="w18-ly-c" id="ly-serhii">
+                <button type="button" class="w18-ly-ph" data-lb="w18-serlyaskovets.jpg" data-cap="Сергій Йосипович Лясковець (1899–1937). Фото з родинного архіву, з презентації." aria-label="Збільшити портрет: Сергій Лясковець"><img src="w18-serlyaskovets.jpg" alt="Портрет молодого чоловіка з зачесаним назад волоссям" width="153" height="220" loading="lazy" decoding="async"></button>
+                <div>
+                    <h3>Сергій Йосипович Лясковець<small>1899 — 1937</small></h3>
+                    <p class="w18-ly-role">молодший брат Степана</p>
+                    <p>Про нього пише тільки родинна презентація. Ні польська справа, ні Степанов, ні газети його не згадують. У презентації в нього той самий рік народження, що й у Степана, 1899; самого Степана там же в тексті записано 1898 роком.</p>
+                    <p class="w18-ly-f"><b>Доля.</b> Презентація називає його серед учасників повстання, знищених НКВС, поруч зі Степаном. Роки життя на підписі під портретом: 1899–1937.</p>
+                    <p class="w18-src">Презентація про С. Й. Лясковця</p>
+                </div>
+            </article>
+
+            <article class="w18-ly-c w18-ly-c--link">
+                <button type="button" class="w18-ly-ph" data-lb="w18-slyaskovets.jpg" data-cap="Степан Йосипович Лясковець. Фото з родинного архіву." aria-label="Збільшити портрет: Степан Лясковець"><img src="w18-slyaskovets.jpg" alt="Портрет молодого чоловіка у військовому кітелі" width="208" height="315" loading="lazy" decoding="async"></button>
+                <div>
+                    <h3>Степан Йосипович Лясковець<small>22.III.1899 — 1937</small></h3>
+                    <p class="w18-ly-role">голова ревкому; обвинувачений у справі Плятерів</p>
+                    <p>Йому присвячено окреме досьє: анкета 1922 року із зіркою на грудях, чотирнадцять джерел, розбіжності між ними і що кожне пише про його смерть.</p>
+                    <p><a class="w18-link" href="#stepan">Досьє Степана Лясковця</a></p>
+                </div>
+            </article>
+        </div>
+
+        <p class="w18-ly-other"><b>Інші Лясковці в справі.</b> Під проханням за Павла й Миколу Пельоньків, підписи на якому ґміна засвідчила в лютому 1920 року, стоять підписи Никона, Данила й Степана Лясковців; «Степан Ласькович» підписав і громадський «приговор» 1919 року. Хто такі Никон і Данило, справа не каже. Чи «Степан Ласькович» тут той самий Степан, сумнівно: за його власними словами 1937 року, 1919–1920 роки він провів у Червоній армії. Скаржачись у 1923 році, Степан і сам просив не карати його <q>за злочини, вчинені іншими Лясковцями</q>.</p>
+    </div>
+</section>
+
+<!-- § 21 -->
 <section class="ds-sec" id="potim">
     <div class="w18-wrap">
-        <div class="ds-sh"><b>§ 20</b><h2>Долі</h2><span>що сталося з людьми цієї історії · 1919–1983</span></div>
+        <div class="ds-sh"><b>§ 21</b><h2>Долі</h2><span>що сталося з людьми цієї історії · 1919–1983</span></div>
         <p class="w18-lead">Картки з позначкою «лише в радянській книжці» спираються тільки на «Безсмертя батьків» Лева Степанова (1968). Про кар'єри колишніх повстанців ця книжка пише охоче, а про розстріли 1937 року мовчить. Решту взято зі справи, тюремних документів, газет і презентації про Степана Лясковця.</p>
         <ul class="w18-after">
             <li class="is-book"><time>1919</time><h3>Рівне</h3><p>Після того як 23 травня Червона армія взяла Рівне, Микола й Григорій Лясковці та Микола Єфімов працювали в ревкомі, а Степан і В'ячеслав Лясковці, Дмитро Будкевич, Олександр Модек та Арвід Скуїн — у повітовій ЧК.</p><p class="w18-src">Степанов, с. 146–147</p></li>
@@ -3161,10 +3346,10 @@
     </div>
 </section>
 
-<!-- § 21 -->
+<!-- § 22 -->
 <section class="ds-sec" id="rozbizhnosti">
     <div class="w18-wrap">
-        <div class="ds-sh"><b>§ 21</b><h2>Що розходиться в джерелах</h2><span>справа 1919–1923 проти інших свідчень</span></div>
+        <div class="ds-sh"><b>§ 22</b><h2>Що розходиться в джерелах</h2><span>справа 1919–1923 проти інших свідчень</span></div>
         <div class="w18-diff-hd" aria-hidden="true"><span>Питання</span><span>Справа № 67/22</span><span>Інші джерела</span></div>
         <ul class="w18-diff">
             <li><h3>Дата нападу</h3><div><h4>Справа</h4><p>21–22 листопада 1918; книга хворих лікарні — 22 листопада. Прокурор 1922 року ще сумнівався, чи не з 22 на 23-тє, і фельдшер Пальонка підтвердив: <q>злочин було вчинено саме вдень 22 листопада</q>. Постанова 5.VI.1920 прямо називає 22 листопада <q>днем нападу на Воробин</q>. Частина свідків зсуває все на добу: Мольський (лютий і травень 1920, серпень 1922) і вартовий Буйновський кажуть про ніч з 22 на 23 листопада, Свириденко 1920 року — <q>у ніч на 23 листопада</q>, а 1922-го — <q>у п'ятницю 23 листопада</q>, хоча п'ятницею було 22-ге. Суд і слідство прийняли 21–22 листопада.</p></div><div><h4>Інші</h4><p>«Київська Думка» 27.XI.1918 і спогади учасників — так само. Стаття «Поліське повстання» і презентація — 3–6 грудня. Спогади О. Модека, П. Борка-Бруяки, Й. Сушка, І. Пирішка й П. Лосика (журнал «Жовтень», 1967, № 7; передрук у районній газеті) і «Поліський маяк» 1978 року — штурм 4 грудня.</p></div>
@@ -3187,10 +3372,10 @@
     </div>
 </section>
 
-<!-- § 22 -->
+<!-- § 23 -->
 <section class="ds-sec" id="dokumenty">
     <div class="w18-wrap">
-        <div class="ds-sh"><b>§ 22</b><h2>Документи справи</h2><span>скани аркушів і переклад поруч</span></div>
+        <div class="ds-sh"><b>§ 23</b><h2>Документи справи</h2><span>скани аркушів і переклад поруч</span></div>
         <p class="w18-lead">Добірка аркушів зі справи № 67/22 — фотографії оригіналів, зроблені в Державному архіві Рівненської області. Відкрийте документ: ліворуч скан (натисніть, щоб збільшити), праворуч переклад. Переклади цих аркушів звірено зі сканами; де звірено лише частину, це позначено.</p>
         <h3 class="w18-h3">Основні документи</h3>
         <ol class="w18-docs"><!--DC-M-->
@@ -3272,10 +3457,10 @@
     </div>
 </section>
 
-<!-- § 23 -->
+<!-- § 24 -->
 <section class="ds-sec" id="dzherelo">
     <div class="w18-wrap">
-        <div class="ds-sh"><b>§ 23</b><h2>Джерела</h2><span>що використано і що ще можна знайти</span></div>
+        <div class="ds-sh"><b>§ 24</b><h2>Джерела</h2><span>що використано і що ще можна знайти</span></div>
         <div class="w18-srcg">
             <div>
                 <h3 class="w18-h3">Використано</h3>
