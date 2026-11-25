@@ -104,6 +104,41 @@ if (HIST){
   M.glass.color.set('#1f2428');
 }
 
+/* ── weathering: lime plaster on an old church is never one flat white. World-space noise gives a broad mottling and a fine
+   grain, rain leaves grey streaks below every cornice and eave, and damp rises out of the ground up the lowest metre ── */
+var WNOISE = [
+  'float h3(vec3 p){ p = fract(p*0.3183099 + 0.1); p *= 17.0; return fract(p.x*p.y*p.z*(p.x + p.y + p.z)); }',
+  'float vn(vec3 x){ vec3 i = floor(x), f = fract(x); f = f*f*(3.0 - 2.0*f);',
+  '  return mix(mix(mix(h3(i), h3(i + vec3(1.0,0.0,0.0)), f.x), mix(h3(i + vec3(0.0,1.0,0.0)), h3(i + vec3(1.0,1.0,0.0)), f.x), f.y),',
+  '             mix(mix(h3(i + vec3(0.0,0.0,1.0)), h3(i + vec3(1.0,0.0,1.0)), f.x), mix(h3(i + vec3(0.0,1.0,1.0)), h3(i + vec3(1.0,1.0,1.0)), f.x), f.y), f.z); }',
+  'float fbm(vec3 p){ return .5*vn(p) + .25*vn(p*2.03 + 7.1) + .125*vn(p*4.07 + 3.3) + .0625*vn(p*8.13 + 1.7); }'
+].join('\n');
+var LEDGES = [8.9, 9.6, 16.0, 16.6, 17.4, 25.6];                                    // aisle eaves, the facade cornices, nave and presbytery eaves, tower cornice
+function weatherK(m, k){
+  var lmax = LEDGES.map(function(h){ var H = h.toFixed(2); return 'step(wp.y, ' + H + ')*exp(-(' + H + ' - wp.y)/2.6)'; })
+    .reduce(function(acc, e){ return acc ? 'max(' + acc + ', ' + e + ')' : e; }, '');
+  var frag = [
+    'vec3 wp = vWPos; float wm = fbm(wp*0.3), wg = vn(wp*6.5), u = wp.x + wp.z;',
+    'float st = vn(vec3(u*2.2, wp.y*0.14, 3.0)), st2 = vn(vec3(u*4.3, wp.y*0.35, 9.0));',
+    'float ledge = ' + lmax + ';',
+    'float streak = ledge*smoothstep(0.3, 0.85, st)*(0.6 + 0.4*st2) + 0.22*smoothstep(0.62, 0.95, st)*smoothstep(0.5, 1.0, st2);',
+    'float damp = 1.0 - smoothstep(0.1, 0.75 + 0.8*wm, wp.y);',
+    'diffuseColor.rgb *= 1.0 - ' + (.07*k).toFixed(3) + '*(wm - 0.5)*2.0 - ' + (.04*k).toFixed(3) + '*wg;',
+    'diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb*vec3(0.64, 0.62, 0.55), clamp(' + (1.25*k).toFixed(3) + '*streak + ' + (.9*k).toFixed(3) + '*damp, 0.0, 1.0));'
+  ].join('\n');
+  var prev = m.onBeforeCompile, prevKey = m.customProgramCacheKey;
+  m.onBeforeCompile = function(sh, r){
+    if (prev) prev.call(this, sh, r);
+    sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vWPos;')
+      .replace('#include <begin_vertex>', '#include <begin_vertex>\nvWPos = (modelMatrix * vec4(transformed, 1.0)).xyz;');
+    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying vec3 vWPos;\n' + WNOISE)
+      .replace('#include <map_fragment>', '#include <map_fragment>\n' + frag);
+  };
+  m.customProgramCacheKey = function(){ return (prevKey ? prevKey.call(this) : '') + '|kw' + k; };
+  m.needsUpdate = true;
+}
+if (HIST){ weatherK(M.wall, 1); weatherK(M.field, .8); weatherK(M.trim, .7); }
+
 /* louvres in the tower openings: horizontal slats */
 M.louv.map = canvasTex(16, 64, function(k){ k.fillStyle = '#1c1a17'; k.fillRect(0, 0, 16, 64); var g = k.createLinearGradient(0, 0, 0, 64); g.addColorStop(0, '#5a524a'); g.addColorStop(.6, '#3a352f'); g.addColorStop(1, '#1c1a17'); k.fillStyle = g; k.fillRect(0, 6, 16, 50); });
 M.louv.map.wrapS = M.louv.map.wrapT = THREE.RepeatWrapping; M.louv.map.repeat.set(1, 5); M.louv.color.set('#ffffff');
@@ -958,7 +993,7 @@ function useGLB(gltf){
   meshes.forEach(function(ob){
     var mt = ob.material, nm = mt.name || '', k = nm.replace(/^KX_/, '');
     if (nm !== k && M[k] && !M[k].map){ ob.material = M[k]; mt.dispose(); }
-    else if (nm === 'KE_masonry'){ mt.roughness = .93; mt.metalness = 0; }
+    else if (nm === 'KE_masonry'){ mt.roughness = .93; mt.metalness = 0; if (HIST) weatherK(mt, 1); }
     else if (nm === 'KE_roof'){ mt.roughness = .84; mt.metalness = 0; }
     else if (nm === 'KE_dome'){ mt.roughness = .5; mt.metalness = .35; }
     else { mt.roughness = Math.max(mt.roughness, .6); mt.metalness = 0; }

@@ -331,6 +331,45 @@ function init(api){
       shrub:    {tr: 0,   n: 3,  r: .55,  o: .25,  cy: .55, ys: .12, sy: .9, c: 1}
     };
     leafC.push('#7f9168'); autumnC.push('#d8c27a');                                   // white poplar: silvery leaves
+    /* leaf cards: small sprays of leaves on alpha-tested quads, scattered over the outside of every crown lump, so the crowns
+       get a ragged, leafy edge and light comes through them instead of reading as smooth balls */
+    var leafTex = (function(){
+      var c = document.createElement('canvas'), N = 256; c.width = c.height = N; var k = c.getContext('2d');
+      function leaf(x, y, l, w, a, g){ k.save(); k.translate(x, y); k.rotate(a); k.fillStyle = 'rgb(' + g + ',' + g + ',' + g + ')';
+        k.beginPath(); k.moveTo(0, -l*.5); k.bezierCurveTo(w*.9, -l*.25, w*.7, l*.3, 0, l*.5); k.bezierCurveTo(-w*.7, l*.3, -w*.9, -l*.25, 0, -l*.5); k.fill();
+        k.strokeStyle = 'rgba(0,0,0,.18)'; k.lineWidth = 1.2; k.beginPath(); k.moveTo(0, -l*.45); k.lineTo(0, l*.45); k.stroke(); k.restore(); }
+      var r = (function(sd){ return function(){ sd = (sd*16807) % 2147483647; return (sd - 1)/2147483646; }; })(4242);
+      for (var i = 0; i < 70; i++){ var a = r()*6.283, d = Math.sqrt(r())*N*.38; leaf(N/2 + Math.cos(a)*d, N/2 + Math.sin(a)*d, 32 + r()*24, 22 + r()*12, r()*6.283, 165 + (r()*90 | 0)); }
+      var t = new T.CanvasTexture(c); t.encoding = T.sRGBEncoding; t.anisotropy = 4; return t;
+    })();
+    var leafDepth = new T.MeshDepthMaterial({depthPacking: T.RGBADepthPacking, map: leafTex, alphaTest: .5, side: T.DoubleSide});
+    function leafCards(blobs, per, size, lo, hi){
+      var pos = [], nor = [], uv = [], col = [], idx = [], d = new T.Vector3(), t1 = new T.Vector3(), t2 = new T.Vector3(), up = new T.Vector3(0, 1, 0), n = new T.Vector3(), c = new T.Vector3(), sh = new T.Vector3();
+      var C = new T.Vector3(), y0 = 1e9, y1 = -1e9, R = 0; blobs.forEach(function(b){ C.add(b.p); y0 = Math.min(y0, b.p.y - b.r*b.sy); y1 = Math.max(y1, b.p.y + b.r*b.sy); }); C.multiplyScalar(1/blobs.length);
+      blobs.forEach(function(b){ R = Math.max(R, b.p.distanceTo(C) + b.r); });
+      blobs.forEach(function(b){
+        for (var i = 0; i < per; i++){
+          d.set(rnd()*2 - 1, rnd()*2 - 1, rnd()*2 - 1); if (d.lengthSq() > 1 || d.lengthSq() < .02){ i--; continue; }
+          var depth = .35 + .75*Math.pow(rnd(), .5);                                    // most sprays near the outside of each lump
+          d.normalize(); c.set(b.p.x + d.x*b.r*depth, b.p.y + d.y*b.r*b.sy*depth, b.p.z + d.z*b.r*depth);
+          var out = Math.min(1, c.distanceTo(C)/R), sz = size*(.75 + rnd()*.55);
+          n.set(rnd() - .5, rnd() - .5, rnd() - .5).normalize();
+          t1.crossVectors(Math.abs(n.y) > .95 ? new T.Vector3(1, 0, 0) : up, n).normalize(); t2.crossVectors(n, t1);
+          var ang = rnd()*6.283, ca = Math.cos(ang), sa = Math.sin(ang), u = t1.clone().multiplyScalar(ca).addScaledVector(t2, sa), v = t1.clone().multiplyScalar(-sa).addScaledVector(t2, ca);
+          sh.copy(c).sub(C).setY((c.y - C.y)*.8 + R*.25).normalize();                     // the whole crown shades as one round mass
+          var hk = (c.y - y0)/Math.max(.1, y1 - y0), k = (lo + (hi - lo)*hk)*(.62 + .38*out)*(.88 + rnd()*.24), tint = (rnd() - .5)*.12;
+          var base = pos.length/3;
+          [[-1, -1], [1, -1], [1, 1], [-1, 1]].forEach(function(q){
+            pos.push(c.x + (u.x*q[0] + v.x*q[1])*sz/2, c.y + (u.y*q[0] + v.y*q[1])*sz/2, c.z + (u.z*q[0] + v.z*q[1])*sz/2);
+            nor.push(sh.x, sh.y, sh.z); uv.push((q[0] + 1)/2, (q[1] + 1)/2); col.push(k*(1 + tint), k*(1 + tint*.4), k*(1 - tint*.6)); });
+          idx.push(base, base + 1, base + 2, base, base + 2, base + 3);
+        }
+      });
+      var g = new T.BufferGeometry(); g.setAttribute('position', new T.Float32BufferAttribute(pos, 3)); g.setAttribute('normal', new T.Float32BufferAttribute(nor, 3));
+      g.setAttribute('uv', new T.Float32BufferAttribute(uv, 2)); g.setAttribute('color', new T.Float32BufferAttribute(col, 3)); g.setIndex(idx); return g;
+    }
+    /* a few bare boughs from the trunk into the crown, seen through the gaps in the leaves */
+    var boughG = new T.CylinderGeometry(.05, .11, 1, 5); boughG.translate(0, .5, 0);
     function tree(x, y, z, kind, s){
       var g = new T.Group(); g.position.set(x, y, z); g.rotation.y = rnd()*6.28; var mats = [];
       var sp = SP[kind] || SP.dec, trunkH = kind === 'con' ? 1.4*s : sp.tr*s, tr = new T.Mesh(trunkG, trunkM); tr.scale.set(s*(kind === 'chestnut' ? 1.3 : 1), Math.max(.01, trunkH), s*(kind === 'chestnut' ? 1.3 : 1)); tr.position.y = trunkH/2; g.add(tr);
@@ -339,12 +378,20 @@ function init(api){
         var cm = new T.MeshStandardMaterial({color: conC, roughness: .95, vertexColors: true}); mats.push(cm);
         for (var k = 0; k < 4; k++){ var c = new T.Mesh(coneG, cm), w = (2.1 - k*.42)*s; c.scale.set(w, 2.6*s, w); c.position.y = trunkH + k*1.45*s + 1.1*s; g.add(c); }
       } else {
-        var li = sp.c != null ? sp.c : (rnd()*4) | 0, lm = new T.MeshStandardMaterial({color: leafC[li], roughness: .9, vertexColors: true}); lm.userData.leaf = li; lm.userData.c0 = leafC[li]; lm.userData.c1 = autumnC[li]; mats.push(lm); FOL.push(lm);
+        var li = sp.c != null ? sp.c : (rnd()*4) | 0, dk = '#' + new T.Color(leafC[li]).multiplyScalar(.45).getHexString(), lm = new T.MeshStandardMaterial({color: dk, roughness: .9, vertexColors: true}); lm.userData.leaf = li; lm.userData.c0 = dk; lm.userData.blob = true; lm.userData.c1 = autumnC[li]; mats.push(lm); FOL.push(lm);
         var top = sp.tr ? trunkH + sp.cy*s : sp.cy*s, crown = new T.Group(); crown.position.y = trunkH; g.add(crown); g.userData.crown = crown;
+        var blobs = [];
         for (var k2 = 0; k2 < sp.n; k2++){
           var b = new T.Mesh(crownG[k2 % 2], lm), r = sp.r*s*(.75 + rnd()*.5), a = rnd()*6.28, o = sp.o*s*(k2 ? .55 + rnd()*.6 : 0);
           var yy = top + (k2 ? (rnd()*2 - 1)*sp.ys*s*.8 : 0);
-          b.scale.set(r, r*sp.sy, r); b.position.set(Math.cos(a)*o, yy - trunkH, Math.sin(a)*o); b.rotation.set(rnd()*3, rnd()*3, 0); crown.add(b); }
+          b.scale.set(r*.42, r*sp.sy*.42, r*.42); b.position.set(Math.cos(a)*o, yy - trunkH, Math.sin(a)*o);
+          blobs.push({p: b.position.clone(), r: r, sy: sp.sy}); }
+        var lc = new T.MeshStandardMaterial({color: leafC[li], roughness: 1, metalness: 0, envMapIntensity: .45, vertexColors: true, map: leafTex, alphaTest: .5, side: T.DoubleSide});
+        lc.userData.leaf = li; lc.userData.c0 = leafC[li]; lc.userData.c1 = autumnC[li]; mats.push(lc); FOL.push(lc);
+        var cards = new T.Mesh(leafCards(blobs, sp.tr ? 64 : 26, (sp.tr ? 1.05 : .55)*Math.sqrt(s), .82, 1.38), lc); cards.customDepthMaterial = leafDepth; crown.add(cards);
+        if (sp.tr) for (var bi = 0; bi < 4; bi++){                                       // boughs
+          var bo = new T.Mesh(boughG, trunkM), ba = bi*1.57 + rnd()*.8, bl = sp.o*s*(.7 + rnd()*.5) + sp.cy*s*.4;
+          bo.scale.set(s, bl, s); bo.position.set(0, -.15*s, 0); bo.rotation.set(Math.cos(ba)*(.55 + rnd()*.35), 0, Math.sin(ba)*(.55 + rnd()*.35)); crown.add(bo); }
         if (!sp.tr) tr.visible = false;
       }
       mats.push(trunkM);
@@ -680,8 +727,8 @@ function init(api){
       var dx = o.x - centre.x, dz = o.z - centre.z, dd = Math.hypot(dx, dz), dot = (dx*tv.x + dz*tv.z)/(dd || 1);
       var block = !o.low && dot > .5 && dd < cd ? Math.min(1, (dot - .5)*4) : 0;
       if (Math.abs(block - o.fade) < .01) return; o.fade += (block - o.fade)*.15;
-      o.mats.forEach(function(m){ var on = o.fade > .02; if (m.transparent !== on){ m.transparent = on; m.depthWrite = !on; m.needsUpdate = true; } m.opacity = 1 - o.fade*.82; });
-      o.g.children.forEach(function(ch){ if (ch.isMesh && ch.material === o.trunk) ch.visible = o.fade < .35; });
+      o.mats.forEach(function(m){ var on = o.fade > .02; if (m.transparent !== on){ m.transparent = on; m.depthWrite = !on; m.needsUpdate = true; } m.opacity = 1 - o.fade*(m.userData.blob ? .96 : .82); });
+      o.g.traverse(function(ch){ if (ch.isMesh && ch.material === o.trunk) ch.visible = o.fade < .35; });
     });
   }
 
