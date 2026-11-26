@@ -1200,6 +1200,31 @@
 .w18-ly-other b{color:var(--w-ink)}
 @media(max-width:700px){.w18-ly-tree{grid-template-columns:1fr}.w18-ly-c{grid-template-columns:minmax(0,5.5rem) minmax(0,1fr)}.w18-ly-c>div{grid-column:1/-1}.w18-ly-c>.w18-ly-ph{grid-column:1}.w18-ly-s{grid-template-columns:1fr}.w18-ly-s dt{padding-bottom:0;border-bottom:0}.w18-ly-doc{float:none;width:100%;margin:0 0 .8rem}}
 .w18-ly-c .w18-ly-role{margin:.45rem 0 .8rem;font:600 .62rem/1.5 var(--ds-body);letter-spacing:.12em;text-transform:uppercase;color:var(--w-ink3)}
+/* картка справи */
+.w18-icard{padding:1.6rem 1.6rem 1.3rem;border-radius:12px;border-top:3px solid var(--ds-red)}
+.w18-icard::before{display:none}
+.w18-ic-k{margin:0 0 .9rem;font:600 .64rem/1 var(--ds-body);letter-spacing:.22em;text-transform:uppercase;color:var(--w-ink3)}
+.w18-ic-no{margin:0;font:400 clamp(2.6rem,4.2vw,3.3rem)/1 var(--ds-display);color:var(--w-ink);letter-spacing:-.01em;font-variant-numeric:lining-nums}
+.w18-ic-no span{margin-right:.3rem;font-size:.45em;vertical-align:.55em;color:var(--ds-red)}
+.w18-ic-t{margin:.6rem 0 .4rem;font:italic 400 1.08rem/1.4 var(--ds-display);color:var(--w-ink)}
+.w18-ic-org{margin:0 0 1.3rem;font-size:.78rem;line-height:1.5;color:var(--w-ink3)}
+.w18-ic-tl{list-style:none;margin:0 0 1.5rem;padding:0 0 0 1rem;border-left:1px solid var(--w-rule2)}
+.w18-ic-tl li{position:relative;padding:0 0 .7rem;font-size:.8rem;line-height:1.45;color:var(--w-ink2)}
+.w18-ic-tl li::before{content:'';position:absolute;left:calc(-1rem - 4px);top:.35em;width:7px;height:7px;border-radius:50%;background:var(--w-card);border:1.5px solid var(--w-ink3)}
+.w18-ic-tl li:nth-last-child(-n+2)::before{background:var(--ds-red);border-color:var(--ds-red)}
+.w18-ic-tl time{display:block;font:600 .7rem/1.4 var(--ds-body);letter-spacing:.04em;color:var(--w-ink);font-variant-numeric:lining-nums}
+.w18-ic-h{margin:0 0 .35rem;font:600 .64rem/1.4 var(--ds-body);letter-spacing:.18em;text-transform:uppercase;color:var(--w-ink3)}
+.w18-ic-law{margin:0 0 .8rem;font-size:.78rem;line-height:1.5;color:var(--w-ink3)}
+.w18-ic-art{list-style:none;margin:0 0 .8rem;padding:0;display:grid;gap:.55rem}
+.w18-ic-art li{display:grid;grid-template-columns:3.4rem minmax(0,1fr);gap:.7rem;align-items:start;padding:.7rem .75rem;border-radius:8px;background:var(--w-alt)}
+.w18-ic-art b{padding:.2rem 0;border-radius:4px;font:600 .72rem/1.4 var(--ds-body);text-align:center;color:#fff;background:var(--ds-red);font-variant-numeric:lining-nums}
+.w18-ic-art span{font-size:.8rem;line-height:1.55;color:var(--w-ink2)}
+.w18-ic-art em{display:block;margin-bottom:.15rem;font:normal 400 .98rem/1.3 var(--ds-display);color:var(--w-ink)}
+.w18-ic-pen{margin:0 0 1.2rem;font-size:.78rem;line-height:1.5;color:var(--w-ink2)}
+.w18-ic-meta{display:grid;grid-template-columns:6.4rem minmax(0,1fr);margin:0;font-size:.78rem;line-height:1.5;border-top:1px solid var(--w-rule2)}
+.w18-ic-meta dt,.w18-ic-meta dd{margin:0;padding:.55rem 0 0}
+.w18-ic-meta dt{color:var(--w-ink3)}
+.w18-ic-meta dd{color:var(--w-ink)}
 
 /* ── Харків, 1925 ── */
 .w18-k25-ph{margin:2.2rem calc((100% - min(100vw - 2rem, 1320px)) / 2) 0;padding:clamp(.6rem,1.4vw,1.1rem);background:#100d0a;border-radius:6px;box-shadow:0 30px 70px rgba(0,0,0,.28)}
@@ -1455,16 +1480,31 @@
                 <p>Сторінка має п'ять частин. <a href="#chastyna-1">Перша</a> розповідає, звідки в Дубровиці взялися більшовики й чому восени 1918 року село пішло на маєток. <a href="#chastyna-2">Друга</a> відтворює саму ніч за протоколами справи і показує, як ту саму ніч переказували радянські книжки. <a href="#chastyna-3">Третя</a> — про кілька місяців «червоної Дубровиці», <a href="#chastyna-4">четверта</a> — про слідство й суд, <a href="#chastyna-5">п'ята</a> — про долі людей і джерела. Усі аркуші справи, близько шестисот знімків, перекладено, і скани відкриваються поруч із перекладом.</p>
             </div>
             <aside class="w18-icard" aria-label="Картка справи">
-                <h3>Картка справи</h3>
-                <dl>
-                    <dt>Установа</dt><dd>Окружний суд у Луцьку, I кримінальний відділ</dd>
-                    <dt>Справа</dt><dd>№ 67/22 · Сарненський повіт</dd>
-                    <dt>Назва</dt><dd><i>«у справі Теодора Перішка, Івана Москальчука-Нашори та інших»</i></dd>
-                    <dt>Слідство</dt><dd>1919 — 1922: польова жандармерія, польові суди 4-ї дивізії піхоти, слідчі судді в Луцьку, Рівному й Сарнах</dd>
-                    <dt>Суд</dt><dd>15.III.1923, Ковель; апеляція — 11.IX.1923, Люблін, Ak. 527/23</dd>
-                    <dt>Статті</dt><dd>51, 122, 453 Кримінального кодексу 1903 р.: змова, участь у збіговиську, вбивство</dd>
-                    <dt>Зберігання</dt><dd>Державний архів Рівненської області (ДАРО), ф. 32, оп. 28, спр. 904</dd>
-                    <dt>Переклад</dt><dd>повний: три частини, близько 600 знімків</dd>
+                <p class="w18-ic-k">Картка справи</p>
+                <p class="w18-ic-no"><span>№</span>67/22</p>
+                <p class="w18-ic-t">«у справі Теодора Перішка, Івана Москальчука-Нашори та інших»</p>
+                <p class="w18-ic-org">Окружний суд у Луцьку, I кримінальний відділ · Сарненський повіт</p>
+
+                <ol class="w18-ic-tl">
+                    <li><time>1919</time><span>арешти польової жандармерії; польовий суд 4-ї дивізії піхоти в Сарнах</span></li>
+                    <li><time>1920</time><span>слідчий суддя в особливо важливих справах Родзевич, Луцьк і Рівне</span></li>
+                    <li><time>1921–22</time><span>слідчі судді Сарненського повіту; обвинувальний акт 31.X.1922</span></li>
+                    <li><time>15.III.1923</time><span>суд у Ковелі: шестеро засуджені, двоє виправдані</span></li>
+                    <li><time>11.IX.1923</time><span>Апеляційний суд у Любліні (Ak. 527/23): ще трьох виправдано, трьом скорочено строк</span></li>
+                </ol>
+
+                <p class="w18-ic-h">У чому обвинувачували</p>
+                <p class="w18-ic-law">Кримінальний кодекс 1903 року. Його ухвалили ще в Російській імперії, і на Волині польські суди користувалися ним до 1932 року.</p>
+                <ul class="w18-ic-art">
+                    <li><b>ст. 51</b><span><em>Співучасть.</em> Хто спільно з іншими вчинив злочин, підбурював до нього чи допомагав, відповідає як виконавець.</span></li>
+                    <li><b>ст. 122</b><span><em>Участь у натовпі, що вчинив насильство.</em> У кодексі це «публічне збіговисько», тобто велика група людей, яка «спільними силами» нападає на людей чи майно. Стаття дозволяла судити кожного, хто свідомо був у такому натовпі, навіть якщо не можна довести, хто саме стріляв.</span></li>
+                    <li><b>ст. 453</b><span><em>Умисне вбивство з обтяжувальними обставинами.</em> В обвинуваченні: <q>з класової ненависті та з метою користі</q>.</span></li>
+                </ul>
+                <p class="w18-ic-pen">Кара: від 10 до 12 років тяжкої в'язниці з позбавленням прав. Апеляційний суд скоротив її на третину за амністією 1919 року.</p>
+
+                <dl class="w18-ic-meta">
+                    <dt>Зберігання</dt><dd>Державний архів Рівненської області, ф. 32, оп. 28, спр. 904</dd>
+                    <dt>Переклад</dt><dd>повний, три частини, близько 600 знімків</dd>
                 </dl>
             </aside>
         </div>
