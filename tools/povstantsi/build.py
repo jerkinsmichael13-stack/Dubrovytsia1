@@ -46,7 +46,7 @@ def soviet_only(p): return 'S' not in p['src']
 # ── плитки покажчика ──
 def tile(p):
     so = ' data-sov="1"' if soviet_only(p) else ''
-    full = '<b class="pv-full" title="повна біографія">●</b>' if p['full'] else ''
+    full = ''
     return (f'<li data-name="{e(p["name"].lower())} {e(p.get("alt","").lower())}" data-tier="{p["tier"]}"{so}>'
             f'<a href="#p-{p["id"]}" class="pv-tile"><span class="pv-face">{face(p)}</span>'
             f'<span class="pv-tile-tx"><b>{e(p["name"])}{full}</b><small>{e(p["place"])} · {e(p["role"])}</small>'
@@ -71,7 +71,7 @@ def bio(p):
     if p.get('links'):
         body += '<p class="pv-more">' + ' '.join(f'<a href="{h}">{e(t)} →</a>' for t, h in p['links']) + '</p>'
     if not p['full']:
-        body += '<p class="pv-wip">Коротка довідка. Повна біографія — у роботі.</p>'
+        body += '<p class="pv-wip">Коротка довідка: інших відомостей про цю людину в джерелах немає.</p>'
     cls = 'pv-bio' + ('' if p['full'] else ' pv-bio--short')
     return f'<article class="{cls}" id="p-{p["id"]}" data-tier="{p["tier"]}" data-name="{e(p["name"].lower())} {e(p.get("alt","").lower())}"{so}>{head}<div class="pv-bio-b">{body}</div></article>'
 
@@ -138,7 +138,6 @@ page = f'''{head_start}<meta name="description" content="{e(desc)}">
       <p class="cover-lede">Хто підняв Дубровицю, хто вів загони на Воробин, хто лежав пораненим у лікарні й хто сидів потім на лаві підсудних. Про кожного — окремо, що каже польська кримінальна справа, що пише радянська книжка Лева Степанова, газети й родинні архіви.</p>
       <dl class="cover-facts">
         <div><dt>людей у реєстрі</dt><dd>{n_all}</dd></div>
-        <div><dt>повних біографій</dt><dd>{n_full}</dd></div>
         <div><dt>згадані в польській справі</dt><dd>{n_case}</dd></div>
         <div><dt>лише в радянських джерелах</dt><dd>{n_sov}</dd></div>
       </dl>
@@ -161,7 +160,6 @@ page = f'''{head_start}<meta name="description" content="{e(desc)}">
     <button type="button" class="pv-chip is-on" data-f="all">Усі</button>
     <button type="button" class="pv-chip" data-f="case">Є в польській справі</button>
     <button type="button" class="pv-chip" data-f="sov">Лише радянські джерела</button>
-    <button type="button" class="pv-chip" data-f="full">Повні біографії</button>
   </div>
   <p class="pv-count" id="pvCount" aria-live="polite"></p>
 </div>
