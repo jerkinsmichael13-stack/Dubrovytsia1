@@ -18,6 +18,23 @@ SRC = {'S': ('Справа', 'польська кримінальна справ
 BLOCKS = [('S', 'Польська справа'), ('T', 'Степанов, «Безсмертя батьків»'), ('G', 'Газети й спогади'), ('R', 'Родина й музейна добірка')]
 byid = {p['id']: p for p in P}
 
+# ── зв'язки з пресою ──
+import sys; sys.path.insert(0, HERE)
+from press_links import links as _press_links
+PRESS = {a['id']: a for a in json.load(open(os.path.join(ROOT, 'press-data.json'), encoding='utf-8'))}
+PL = {pid: sorted(set(ids), key=lambda i: (PRESS[i].get('date') or str(PRESS[i].get('year')), i)) for pid, ids in _press_links(P, list(PRESS.values())).items()}
+MON = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII']
+def pdate(a):
+    p = (a.get('date') or '').split('-')
+    if len(p) == 3 and p[1] != '00' and p[2] != '00': return f'{int(p[2])}.{MON[int(p[1]) - 1]}.{p[0]}'
+    if len(p) >= 2 and p[1] not in ('', '00'): return f'{MON[int(p[1]) - 1]}.{p[0]}'
+    return str(a.get('year') or '')
+def press_block(p):
+    ids = PL.get(p['id'])
+    if not ids: return ''
+    li = ''.join(f'<li><a href="presa.html?id={i}"><time>{pdate(PRESS[i])}</time> <b>«{e(PRESS[i]["source"])}»</b> — {e(PRESS[i]["headline"])}</a></li>' for i in ids)
+    return f'<section class="pv-blk pv-press"><h4>У пресі</h4><ul>{li}</ul></section>'
+
 def links(s):
     s = e(s)
     def rep(m):
@@ -68,6 +85,7 @@ def bio(p):
                 body += f'<section class="pv-blk pv-blk-{k}"><h4><i class="pv-dot pv-t-{k}"></i>{title}</h4><ul>' + ''.join(f'<li>{links(x)}</li>' for x in items) + '</ul></section>'
         if p.get('fate'): body += f'<section class="pv-blk pv-fate"><h4>Доля</h4><p>{links(p["fate"])}</p></section>'
         if p.get('diff'): body += f'<section class="pv-blk pv-diff"><h4>Що розходиться</h4><p>{links(p["diff"])}</p></section>'
+    body += press_block(p)
     if p.get('links'):
         body += '<p class="pv-more">' + ' '.join(f'<a href="{h}">{e(t)} →</a>' for t, h in p['links']) + '</p>'
     if not p['full']:
@@ -207,3 +225,15 @@ def w18_list():
     out.append(f'<p class="w18-ppl2-more"><a href="povstantsi-1918.html">Усі {n_all} учасників і біографії з джерелами →</a></p></div>')
     return ''.join(out)
 open(os.path.join(HERE, 'w18-list.html'), 'w', encoding='utf-8').write(w18_list())
+
+# ── зв'язки в читалці преси: presa.html, між /*W18_LINKS_START*/ і /*W18_LINKS_END*/ ──
+by_art = {}
+for p in P:
+    for i in PL.get(p['id'], []):
+        by_art.setdefault(i, []).append([p['id'], p['name']])
+pp = os.path.join(ROOT, 'presa.html')
+ps = open(pp, encoding='utf-8').read()
+a = ps.index('/*W18_LINKS_START*/'); b = ps.index('/*W18_LINKS_END*/')
+ps = ps[:a] + '/*W18_LINKS_START*/var W18_LINKS=' + json.dumps(by_art, ensure_ascii=False, separators=(',', ':')) + ';' + ps[b:]
+open(pp, 'w', encoding='utf-8').write(ps)
+print('presa.html: зв\'язки для', len(by_art), 'статей,', sum(map(len, by_art.values())), 'згадок')

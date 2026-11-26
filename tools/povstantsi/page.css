@@ -122,3 +122,9 @@
 .pv-lb figcaption{margin-top:.9rem;font:400 .85rem/1.5 var(--ds-body);color:rgba(245,240,232,.75)}
 .pv-lb-x{position:absolute;top:1rem;right:1.2rem;width:44px;height:44px;border:0;border-radius:50%;background:rgba(255,255,255,.1);color:#fff;font-size:1.6rem;cursor:pointer}
 @media(max-width:760px){.pv-bar{position:static}}
+.pv-press{border-left-color:color-mix(in srgb,var(--t-G) 55%,transparent)}
+.pv-press ul{list-style:none;padding:0}
+.pv-press a{display:block;color:var(--pv-ink2);text-decoration:none}
+.pv-press a b{font-weight:500;color:var(--ds-gold)}
+.pv-press a:hover{color:var(--ds-gold)}
+.pv-press time{font-variant-numeric:tabular-nums;color:var(--pv-ink2);opacity:.75;margin-right:.25rem}
