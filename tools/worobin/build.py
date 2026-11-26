@@ -126,6 +126,9 @@ if __name__ == '__main__':
         cur = rd(R + 'worobin-1918.html')
         print('однакові' if cur == out else 'РІЗНЯТЬСЯ', len(cur), len(out))
     else:
+        # застарілі написання, яких на сторінці бути не повинно (поза польськими формами)
+        for bad in ('Ласьков', 'Лясковичі', 'Олехнієвич', 'Перишк', 'Пиришк', 'Перішк', 'Кузін', 'Харковц', 'Веленц'):
+            if bad in out: print('УВАГА: на сторінці є «%s» — %d раз(и)' % (bad, out.count(bad)))
         with open(R + 'worobin-1918.html', 'w', encoding='utf-8') as f:
             f.write(out)
         print('worobin-1918.html', len(out))
