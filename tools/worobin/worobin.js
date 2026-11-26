@@ -376,3 +376,38 @@
   });
   document.addEventListener('click', function(e){ if (touch && cur && !e.target.closest('.w18-k25-f')) clear(); });
 })();
+
+/* ── Документи справи: пошук і фільтри ── */
+(function(){
+    var list = document.getElementById('w18-dl'); if (!list) return;
+    var q = document.getElementById('w18-df-q'), ft = document.getElementById('w18-df-t'), fp = document.getElementById('w18-df-p'),
+        fy = document.getElementById('w18-df-y'), fm = document.getElementById('w18-df-m'), out = document.getElementById('w18-df-n'),
+        rst = document.getElementById('w18-df-r'), none = document.getElementById('w18-dl-none');
+    var items = [].slice.call(list.querySelectorAll('li[data-t]'));
+    var norm = function(s){ return (s || '').toLowerCase().replace(/[’ʼ`]/g, "'").replace(/ґ/g, 'г'); };
+    items.forEach(function(li){ li._s = norm(li.textContent); });
+    var full = null, loading = false;
+    function loadFull(){
+        if (full || loading) return; loading = true;
+        fetch('w18-docs.json').then(function(r){ return r.json(); }).then(function(j){
+            full = {}; j.forEach(function(d){ full[d.id] = norm(d.title + ' ' + d.note + ' ' + d.arch + ' ' + d.date + ' ' + d.tr); }); apply();
+        }).catch(function(){ loading = false; });
+    }
+    function apply(){
+        var w = norm(q.value).trim().split(/\s+/).filter(Boolean), t = ft.value, p = fp.value, y = fy.value, m = fm.checked, n = 0;
+        items.forEach(function(li){
+            var id = li.firstChild.getAttribute('data-doc'), txt = (full && full[id]) || li._s;
+            var ok = (!t || li.dataset.t === t) && (!p || (' ' + li.dataset.p + ' ').indexOf(' ' + p + ' ') > -1) &&
+                     (!y || li.parentNode.parentNode.dataset.yr === y) && (!m || li.dataset.m === '1') &&
+                     w.every(function(x){ return txt.indexOf(x) > -1; });
+            li.hidden = !ok; if (ok) n++;
+        });
+        [].forEach.call(list.querySelectorAll('.w18-dl-y'), function(s){ s.hidden = !s.querySelector('li:not([hidden])'); });
+        out.textContent = n; none.hidden = n > 0;
+        rst.hidden = !(w.length || t || p || y || m);
+    }
+    var tm; q.addEventListener('input', function(){ loadFull(); clearTimeout(tm); tm = setTimeout(apply, 120); });
+    q.addEventListener('focus', loadFull);
+    [ft, fp, fy, fm].forEach(function(el){ el.addEventListener('change', apply); });
+    rst.addEventListener('click', function(){ q.value = ''; ft.value = fp.value = fy.value = ''; fm.checked = false; apply(); });
+})();

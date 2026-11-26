@@ -212,17 +212,19 @@ page = f'''{head_start}<meta name="description" content="{e(desc)}">
 open(os.path.join(ROOT, 'povstantsi-1918.html'), 'w', encoding='utf-8').write(page)
 print('povstantsi-1918.html', len(page), 'людей', n_all, 'повних', n_full)
 
-# ── для §13 сторінки worobin-1918: список із фото (вставляє build.py сторінки Воробина) ──
+# ── для розділу «Люди» сторінки worobin-1918: стислий покажчик (повні біографії — у реєстрі) ──
 def w18_list():
-    out = ['<div class="w18-ppl2">']
+    ph = [p for p in P if p.get('photo')][:14]
+    out = ['<div class="w18-ppl3">',
+           '<a class="w18-ppl3-cta" href="povstantsi-1918.html"><span class="w18-ppl3-faces" aria-hidden="true">'
+           + ''.join(f'<img src="{p["photo"]}" alt="" loading="lazy" decoding="async">' for p in ph)
+           + f'</span><b>Реєстр учасників повстання</b><span>{n_all} людей · біографії, де кожне джерело подано окремо, фото й згадки в пресі</span><i>Відкрити реєстр →</i></a>',
+           '<dl class="w18-ppl3-t">']
     for t, title, desc in TIERS:
         ps = [p for p in P if p['tier'] == t]
-        out.append(f'<h3 class="w18-ppl2-h"><b>{ROMAN[t]}</b> {title} <small>{len(ps)}</small></h3><ul class="w18-ppl2-g">')
-        for p in ps:
-            ph = f'<img src="{p["photo"]}" alt="" loading="lazy" decoding="async">' if p.get('photo') else f'<span>{initials(p["name"])}</span>'
-            out.append(f'<li><a href="povstantsi-1918.html#p-{p["id"]}"><i>{ph}</i><b>{e(p["name"])}</b><small>{e(p["role"])}</small></a></li>')
-        out.append('</ul>')
-    out.append(f'<p class="w18-ppl2-more"><a href="povstantsi-1918.html">Усі {n_all} учасників і біографії з джерелами →</a></p></div>')
+        out.append(f'<dt><b>{ROMAN[t]}</b> {title} <small>{len(ps)}</small></dt><dd>'
+                   + ', '.join(f'<a href="povstantsi-1918.html#p-{p["id"]}">{e(p["name"])}</a>' for p in ps) + '</dd>')
+    out.append('</dl></div>')
     return ''.join(out)
 open(os.path.join(HERE, 'w18-list.html'), 'w', encoding='utf-8').write(w18_list())
 

@@ -33,7 +33,7 @@ ORDER = [
     'chastyna-4',
     ('sud', 'Слідство й суд'), ('pidsudni', 'Підсудні'), ('holosy', 'Голоси'), ('nevynni', 'Не ті люди'),
     'chastyna-5',
-    ('kharkiv-1925', 'Харків, 1925'), ('stepan', 'Степан'), ('lyaskovtsi', 'Лясковці'),
+    ('kharkiv-1925', 'Харків, 1925'), ('lyaskovtsi', 'Лясковці'), ('stepan', 'Степан'),
     ('potim', 'Долі'), ('rozbizhnosti', 'Розбіжності'), ('dokumenty', 'Документи'), ('dzherelo', 'Джерела'),
 ]
 ROMAN = {'chastyna-1': 'I', 'chastyna-2': 'II', 'chastyna-3': 'III', 'chastyna-4': 'IV', 'chastyna-5': 'V'}
@@ -44,19 +44,56 @@ def rd(p):
         return f.read()
 
 
+from docs_facets import doc_type, doc_people, TYPE_NAMES, TYPES, OTHER, PEOPLE
+
+
 def doc_li(d):
     n = len(d['pages']); a = d.get('all') or n
     sm = (d['arch'] + ' · ' if d.get('arch') else '') + (f'{n} арк.' if n == a else f'{n} з {a} арк.')
     sm += {'ok': '', 'part': ' · звірено частково', 'raw': ' · переклад ще не звірено'}[d['st']]
     e = html.escape
-    return (f'<li><button type="button" class="w18-dc" data-doc="{d["id"]}"><span class="w18-dc-im"><img src="w18-scans/t/IMG_{d["pages"][0]}.webp" alt="" width="190" height="260" loading="lazy" decoding="async"></span>'
-            f'<span class="w18-dc-tx"><time>{d["date"]}</time><b>{e(d["title"], quote=False)}</b><span>{e(d["note"], quote=False)}</span><small>{e(sm, quote=False)}</small></span></button></li>')
+    t = doc_type(d)
+    attrs = f' data-y="{d["iso"][:4]}" data-t="{t}" data-p="{" ".join(doc_people(d))}" data-m="{1 if d["kind"] == "m" else 0}"'
+    return (f'<li{attrs}><button type="button" class="w18-dc" data-doc="{d["id"]}"><span class="w18-dc-im"><img src="w18-scans/t/IMG_{d["pages"][0]}.webp" alt="" width="190" height="260" loading="lazy" decoding="async"></span>'
+            f'<span class="w18-dc-tx"><time>{d["date"]}</time><b>{e(d["title"], quote=False)}</b><span>{e(d["note"], quote=False)}</span>'
+            f'<small><i>{TYPE_NAMES[t]}</i> · {e(sm, quote=False)}</small></span></button></li>')
+
+
+def docs_block(docs):
+    """Список документів із групами за роками + панель пошуку й фільтрів."""
+    from collections import Counter, OrderedDict
+    e = html.escape
+    yr = lambda d: d['iso'][:4] if d['iso'][:4] <= '1925' else 'пізніше'
+    groups = OrderedDict()
+    for d in docs: groups.setdefault(yr(d), []).append(d)
+    tc = Counter(doc_type(d) for d in docs)
+    pc = Counter(p for d in docs for p in doc_people(d))
+    opt_t = ''.join(f'<option value="{c}">{n} ({tc[c]})</option>' for c, n in [(c, n) for c, n, _ in TYPES] + [OTHER] if tc[c])
+    opt_y = ''.join(f'<option value="{y}">{y} ({len(v)})</option>' for y, v in groups.items())
+    og = OrderedDict()
+    for c, n, g, _ in PEOPLE:
+        if pc[c] >= 2: og.setdefault(g, []).append(f'<option value="{c}">{n} ({pc[c]})</option>')
+    opt_p = ''.join(f'<optgroup label="{g}">{"".join(v)}</optgroup>' for g, v in og.items())
+    nm = sum(d['kind'] == 'm' for d in docs)
+    bar = (f'<div class="w18-df" role="search">'
+           f'<label class="w18-df-q"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.6" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10.4 10.4l3.6 3.6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>'
+           f'<input type="search" id="w18-df-q" placeholder="Пошук у назвах, анотаціях і перекладах" autocomplete="off" aria-label="Пошук документів"></label>'
+           f'<select id="w18-df-t" aria-label="Тип документа"><option value="">Усі типи</option>{opt_t}</select>'
+           f'<select id="w18-df-p" aria-label="Особа"><option value="">Усі особи</option>{opt_p}</select>'
+           f'<select id="w18-df-y" aria-label="Рік"><option value="">Усі роки</option>{opt_y}</select>'
+           f'<label class="w18-df-m"><input type="checkbox" id="w18-df-m"> лише основні <small>{nm}</small></label>'
+           f'<p class="w18-df-n" aria-live="polite"><span id="w18-df-n">{len(docs)}</span> з {len(docs)} документів <button type="button" id="w18-df-r" hidden>скинути фільтри</button></p></div>')
+    out = [bar, '<div class="w18-dl" id="w18-dl">']
+    for y, ds in groups.items():
+        out.append(f'<section class="w18-dl-y" data-yr="{y}"><h3 class="w18-dl-h">{y}<small>{len(ds)}</small></h3><ol class="w18-docs">'
+                   + '\n'.join(doc_li(d) for d in ds) + '</ol></section>')
+    out.append('<p class="w18-dl-none" id="w18-dl-none" hidden>Нічого не знайдено. Спробуйте інше слово або скиньте фільтри.</p></div>')
+    return '\n'.join(out)
 
 
 def build():
     docs = sorted(json.loads(rd(R + 'w18-docs.json')), key=lambda d: d['iso'])
-    docs_m = '\n'.join(doc_li(d) for d in docs if d['kind'] == 'm')
-    docs_s = '\n'.join(doc_li(d) for d in docs if d['kind'] == 's')
+    docs_html = docs_block(docs)
     people = rd(R + 'tools/povstantsi/w18-list.html')
 
     body, toc, num = [], [], 0
@@ -70,7 +107,7 @@ def build():
         s = rd(T + f'sections/{sid}.html')
         assert s.count('@@N@@') == 1, sid
         s = s.replace('@@N@@', str(num))
-        s = s.replace('@@DOCS_M@@', docs_m).replace('@@DOCS_S@@', docs_s).replace('@@PEOPLE@@', people)
+        s = s.replace('@@DOCS@@', docs_html).replace('@@PEOPLE@@', people)
         body.append(f'<!-- § {num} -->\n' + s)
         toc.append(f'        <li><a href="#{sid}"><b>{num}</b>{label}</a></li>')
     toc_html = '<nav class="w18-toc" aria-label="Розділи сторінки">\n    <ol>\n' + '\n'.join(toc) + '\n    </ol>\n</nav>'
