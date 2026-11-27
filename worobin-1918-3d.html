@@ -35,7 +35,11 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;back
 .lb.b span{font:500 14px/1.1 var(--display);font-style:italic;letter-spacing:.01em;background:rgba(244,236,214,.9);color:#1c1710;border-color:transparent}
 .lb.b:hover span{background:var(--gold)}
 .lb.pin span{background:var(--gold);color:#1c1508;border-color:transparent;font-weight:600}
-.lb.pin::after{content:'';position:absolute;left:50%;top:100%;width:1.5px;height:26px;margin-left:-.75px;background:linear-gradient(var(--gold),rgba(226,189,98,0))}
+.lb.pin::after{content:'';position:absolute;left:50%;top:100%;width:1.5px;height:calc(26px + var(--lead,0px));margin-left:-.75px;background:linear-gradient(var(--gold),rgba(226,189,98,0))}
+.lb.pin{margin-top:-26px}
+.lb.b::after{content:'';position:absolute;left:50%;top:100%;width:1px;height:var(--lead,0px);margin-left:-.5px;background:rgba(244,236,214,.55)}
+.lb.dir span{background:none;border:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;font:italic 500 15px/1 var(--display);letter-spacing:.04em;color:rgba(244,236,214,.82);text-shadow:0 1px 10px rgba(0,0,0,.95),0 0 2px rgba(0,0,0,.9)}
+.lb.tag span{display:grid;place-items:center;width:26px;height:26px;padding:0;border-radius:50%;background:#c4452e;border:2px solid #ffd2b8;color:#fff;font:700 13px/1 var(--body);box-shadow:0 0 18px rgba(255,90,50,.6)}
 .lb.off{opacity:0;pointer-events:none!important}
 
 .top{position:fixed;z-index:3;left:0;right:0;top:0;display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;
@@ -158,10 +162,11 @@ body.intro-on .dock,body.intro-on .top,body.intro-on .compass,body.intro-on #lab
   <button type="button" class="x" aria-label="Закрити" id="infoX">×</button>
   <p class="k">як зроблено</p>
   <h2>Про цю реконструкцію</h2>
-  <p><b>Розташування будівель</b> узято з аерофотознімка, де видно обриси зруйнованих будівель маєтку. Масштаб і сторони світу визначено за павільйоном «Бібліотека»: портик на захід, вежа на північ, колонада на південь. Рельєф, парк, сад, стави й ріка намальовані за описами й старими фотографіями, а не скопійовані зі знімка.</p>
+  <p><b>Розташування будівель</b> узято з аерофотознімків, де видно обриси будівель маєтку. Масштаб і сторони світу визначено за павільйоном «Бібліотека»: портик на захід, вежа на північ, колонада на південь. Рельєф, парк, сад, стави й ріка намальовані за описами й старими фотографіями, а не скопійовані зі знімка.</p>
   <p><b>Палац</b> — П-подібна будівля біля шляху. Він має два двоповерхові крила й одноповерхову середину, як його описав вартовий Ліпінський. Решту будівель відтворено за історією резиденції й малюнком Наполеона Орди 1870 року. Вікна, дахи й ґанок умовні.</p>
   <p><b>Події</b> взято з протоколів слідства 1919–1922 років, обвинувального акту й вироків. Напрямки загонів — за схемою з газети «Красная звезда» 1927 року. Місця варти, німецьких постів і розстрілу приблизні. Час подано так, як його називали свідки; де вони розходяться, це сказано в картці.</p>
-  <p><b>Фігурки</b> збільшено, щоб їх було видно. Їхня кількість умовна.</p>
+  <p><b>Довкола маєтку.</b> На північ за річкою (через неї веде міст) — житлові будинки й, імовірно, спиртовий завод; на захід через шлях — будівлі лісництва. Брами, входи й портик відтворено за звичайним планом садиб і позначено як умовні.</p>
+  <p><b>Фігурки</b> збільшено, щоб їх було видно. Їхня кількість умовна. <b>Погода</b> (мряка, туман) — художня: якою вона була тієї ночі, документи не кажуть.</p>
   <a class="go" href="worobin-1918.html#khronika">Повна хроніка з цитатами й сканами →</a>
 </aside>
 <aside class="panel" id="binfo" aria-live="polite"></aside>
@@ -196,7 +201,7 @@ body.intro-on .dock,body.intro-on .top,body.intro-on .compass,body.intro-on #lab
 
 <script src="three-r147.js"></script>
 <script src="gltf-r147.js"></script>
-<script src="worobin-1918-3d.js?v=20261127a"></script>
+<script src="worobin-1918-3d.js?v=20261127c"></script>
 <script>
 (function(){
   var ib = document.getElementById('infoBtn'), info = document.getElementById('info');
