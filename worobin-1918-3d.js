@@ -256,10 +256,10 @@ var PP = (function(){
   var copy = new T.ShaderMaterial({uniforms: {t: {value: null}}, vertexShader: VS, depthTest: false, depthWrite: false, fragmentShader: 'uniform sampler2D t; varying vec2 vUv; void main(){ vec4 c = texture2D(t, vUv); gl_FragColor = (c.r == c.r && c.g == c.g && c.b == c.b) ? clamp(c, 0., 60.) : vec4(0., 0., 0., 1.); }'});
   var comp = new T.ShaderMaterial({uniforms: {t: {value: null}, b0: {value: null}, b1: {value: null}, b2: {value: null}, b3: {value: null}, b4: {value: null}, s0: {value: null}, s1: {value: null},
       bloom: {value: 1.2}, exposure: {value: 1}, time: {value: 0}, sat: {value: .9}, lift: {value: new T.Vector3()}, gain: {value: new T.Vector3(1, 1, 1)}, vig: {value: 1.1}, res: {value: new T.Vector2(1, 1)},
-      tilt: {value: 0}, focus: {value: .5}, shT: {value: new T.Vector3(1, 1, 1)}, hiT: {value: new T.Vector3(1, 1, 1)}, vigC: {value: new T.Vector3(1, 1, 1)}, contrast: {value: .28}},
+      tilt: {value: 0}, focus: {value: .5}, shT: {value: new T.Vector3(1, 1, 1)}, hiT: {value: new T.Vector3(1, 1, 1)}, vigC: {value: new T.Vector3(1, 1, 1)}, contrast: {value: .28}, photo: {value: 0}},
     vertexShader: VS, depthTest: false, depthWrite: false,
     fragmentShader: [
-      'uniform sampler2D t, b0, b1, b2, b3, b4, s0, s1; uniform float bloom, exposure, time, sat, vig, tilt, focus, contrast; uniform vec3 lift, gain, shT, hiT, vigC; uniform vec2 res; varying vec2 vUv;',
+      'uniform sampler2D t, b0, b1, b2, b3, b4, s0, s1; uniform float bloom, exposure, time, sat, vig, tilt, focus, contrast, photo; uniform vec3 lift, gain, shT, hiT, vigC; uniform vec2 res; varying vec2 vUv;',
       'vec3 sn(vec3 c){ return (c.r == c.r && c.g == c.g && c.b == c.b) ? clamp(c, 0., 60.) : vec3(0.); }',
       'vec3 aces(vec3 x){ return clamp((x*(2.51*x + .03))/(x*(2.43*x + .59) + .14), 0., 1.); }',
       'float h(vec2 p){ return fract(sin(dot(p, vec2(12.9898, 78.233)))*43758.5453); }',
@@ -274,7 +274,13 @@ var PP = (function(){
       '  l = dot(c, vec3(.2126, .7152, .0722)); c = mix(vec3(l), c, sat); c = c*gain + lift*(1. - c);',
       '  float vg = clamp(1. - r2*vig, 0., 1.); c *= mix(vigC*.7, vec3(1.), vg*vg);',
       '  c = pow(max(c, 0.), vec3(1./2.2));',
-      '  float g = h(vUv*res + fract(time)*91.7) - .5; c += g*(.026 - l*.014) + (h(vUv*res*1.3 + 7.) - .5)/255.; gl_FragColor = vec4(c, 1.); }'].join('\n')});
+      '  if (photo > .001){ float pl = dot(c, vec3(.299, .587, .114)); vec3 sp = vec3(pl*1.07 + .015, pl*.975 + .006, pl*.8);',              // стара фотографія: сепія, щільніші тіні, плівкова віньєтка
+      '    c = mix(c, mix(sp, vec3(pl), .2), photo*.9); c = mix(c, c*c*(3. - 2.*c), photo*.3); c *= 1. - photo*.42*smoothstep(.06, .32, r2);',
+      '    float fr = floor(time*14.); float scr = step(.9975, h(vec2(floor(vUv.x*700.), fr)))*(.4 + .6*h(vec2(floor(vUv.y*40.), fr)));',  // подряпини
+      '    c += photo*scr*.07; float dst = step(.99985, h(floor(vUv*res*.35) + fr*7.13)); c = mix(c, vec3(.07, .055, .04), dst*photo*.85);',      // порошинки
+      '    c *= 1. + photo*(h(vec2(fr, 3.1)) - .5)*.045; c += photo*vec3(.018, .012, .004); }',                                                   // мерехтіння
+
+      '  float g = h(vUv*res + fract(time)*91.7) - .5; c += g*(.026 - l*.014)*(1. + photo*1.9) + (h(vUv*res*1.3 + 7.) - .5)/255.; gl_FragColor = vec4(c, 1.); }'].join('\n')});
   function size(w, h){ main.setSize(w, h); var ww = w, hh = h; for (var i = 0; i < N; i++){ ww = Math.max(2, ww >> 1); hh = Math.max(2, hh >> 1); L[i][0].setSize(ww, hh); L[i][1].setSize(ww, hh); }
     S[0][0].setSize(Math.max(2, w >> 1), Math.max(2, h >> 1)); S[0][1].setSize(Math.max(2, w >> 1), Math.max(2, h >> 1)); S[1][0].setSize(Math.max(2, w >> 2), Math.max(2, h >> 2)); S[1][1].setSize(Math.max(2, w >> 2), Math.max(2, h >> 2));
     comp.uniforms.res.value.set(w, h); }
@@ -1093,26 +1099,44 @@ var ROUTES_DEF = [
 ];
 
 /* фігурки: свита/кожух у кольорі сторони, обличчя, шапка, рушниця */
+/* фігури в одязі доби: селяни — кожухи й свити, смушеві шапки, червона кокарда й пов'язка; варта — шинелі й кашкети з синьою стрічкою;
+   німці — польові сірі шинелі й сталеві шоломи. Одяг — body (колір кожному свій), барва сторони — mark (світиться вночі). */
 function personGeo(kind){
-  var body = [], rest = [];
-  var coat = new T.CylinderGeometry(.24, .38, 1.12, 8); coat.translate(0, 1.04, 0); body.push([coat]);
-  var sh = new T.SphereGeometry(.27, 8, 6); sh.scale(1.15, .55, .9); sh.translate(0, 1.6, 0); body.push([sh]);
-  [-1, 1].forEach(function(s){ var a = new T.CylinderGeometry(.07, .09, .7, 5); a.translate(0, -.35, 0); a.rotateZ(s*.18); a.rotateX(-.25); a.translate(s*.33, 1.58, .02); body.push([a]); });
-  [-1, 1].forEach(function(s){ var l = new T.CylinderGeometry(.08, .09, .55, 5); l.translate(s*.11, .27, 0); rest.push([l, 0x2a241d]); });
-  var hd = new T.SphereGeometry(.15, 8, 7); hd.translate(0, 1.84, 0); rest.push([hd, 0xd9b796]);
-  var hat = kind === 'ger' ? (function(){ var g = new T.SphereGeometry(.19, 8, 5, 0, 6.283, 0, 1.4); g.translate(0, 1.88, 0); return g; })() : kind === 'def' ? cyl(.15, .15, .14, 1.93, 8) : cyl(.17, .14, .2, 1.9, 8);
-  rest.push([hat, kind === 'ger' ? 0x4c5446 : kind === 'def' ? 0x232b3c : 0x3a2a1e]);
-  var gun = new T.BoxGeometry(.05, 1.15, .07); gun.rotateZ(.25); gun.translate(.28, 1.45, -.16); rest.push([gun, 0x3a2a1c]);
-  return {body: mergeG(body), rest: mergeG(rest, true)};
+  var body = [], rest = [], mark = [], att = kind === 'att', ger = kind === 'ger';
+  var cl = ger ? 1.28 : att ? 1.16 : 1.2, coat = new T.CylinderGeometry(.23, ger ? .43 : att ? .46 : .41, cl, 10); coat.translate(0, 1.6 - cl/2, 0); body.push([coat]);
+  var sh = new T.SphereGeometry(.27, 10, 6); sh.scale(1.12, .55, .88); sh.translate(0, 1.6, 0); body.push([sh]);
+  [-1, 1].forEach(function(s){ var a = new T.CylinderGeometry(.075, .095, .68, 6); a.translate(0, -.34, 0); a.rotateZ(s*.16); a.rotateX(-.28); a.translate(s*.32, 1.58, .02); body.push([a]);
+    var hn = new T.SphereGeometry(.06, 6, 5); hn.translate(s*.42, .95, .18); rest.push([hn, 0xc9a283]); });
+  [-1, 1].forEach(function(s){ var l = new T.CylinderGeometry(.075, .085, .45, 6); l.translate(s*.11, .25, 0); rest.push([l, att ? 0x4a4236 : 0x2a2620]);
+    var bt = new T.BoxGeometry(.13, .1, .24); bt.translate(s*.11, .05, .04); rest.push([bt, att ? 0x5a4630 : 0x1c1814]); });
+  var belt = new T.CylinderGeometry(.27, .28, .08, 10); belt.translate(0, 1.18, 0); rest.push([belt, att ? 0x7a2a22 : 0x3a2a1c]);              // селяни підперезані крайкою
+  var hd = new T.SphereGeometry(.145, 9, 7); hd.translate(0, 1.84, 0); rest.push([hd, 0xd2ad8b]);
+  if (att){ var cr = new T.TorusGeometry(.2, .06, 5, 12); cr.rotateX(Math.PI/2); cr.translate(0, 1.66, 0); rest.push([cr, 0xb09f7e]);          // смушевий комір
+    var pap = new T.CylinderGeometry(.17, .16, .24, 9); pap.translate(0, 1.98, 0); rest.push([pap, 0x2e2620]);                                  // смушева шапка
+    var ck = new T.SphereGeometry(.05, 6, 5); ck.translate(0, 2, .16); mark.push([ck]);                                                         // червона кокарда
+    var ab = new T.CylinderGeometry(.1, .1, .1, 8, 1, true); ab.translate(0, -.22, 0); ab.rotateZ(-.16); ab.rotateX(-.28); ab.translate(-.32, 1.58, .02); mark.push([ab]); }
+  else if (ger){ var hm = new T.SphereGeometry(.19, 10, 6, 0, 6.283, 0, 1.45); hm.translate(0, 1.9, 0); rest.push([hm, 0x4e5546]);              // сталевий шолом
+    var sk = new T.CylinderGeometry(.2, .25, .1, 12, 1, true); sk.translate(0, 1.86, -.02); rest.push([sk, 0x4a5142]);
+    var col = new T.TorusGeometry(.17, .045, 5, 12); col.rotateX(Math.PI/2); col.translate(0, 1.66, 0); mark.push([col]);
+    [-1, 1].forEach(function(s){ var pu = new T.BoxGeometry(.12, .1, .07); pu.translate(s*.14, 1.18, .25); rest.push([pu, 0x3a2e22]); }); }
+  else { var cap = new T.CylinderGeometry(.17, .15, .13, 10); cap.translate(0, 1.97, 0); rest.push([cap, 0x232838]);                          // кашкет варти
+    var vs = new T.BoxGeometry(.2, .025, .12); vs.translate(0, 1.92, .15); rest.push([vs, 0x141414]);
+    var bd = new T.CylinderGeometry(.172, .172, .045, 10, 1, true); bd.translate(0, 1.935, 0); mark.push([bd]);
+    [-1, 1].forEach(function(s){ var ep = new T.BoxGeometry(.12, .03, .2); ep.translate(s*.27, 1.64, 0); rest.push([ep, 0x2c3242]); }); }
+  var gl = ger || !att ? 1.3 : 1.05, gun = new T.BoxGeometry(.05, gl, .07); gun.rotateZ(.25); gun.translate(.28, 1.42, -.16); rest.push([gun, 0x3a2a1c]);
+  var brl = new T.CylinderGeometry(.018, .018, .45, 5); brl.rotateZ(.25); brl.translate(.28 - Math.sin(.25)*(gl/2 + .2), 1.42 + Math.cos(.25)*(gl/2 + .2), -.16); rest.push([brl, 0x1a1a1a]);
+  return {body: mergeG(body), rest: mergeG(rest, true), mark: mergeG(mark.length ? mark : [[new T.BoxGeometry(.01, .01, .01)]])};
 }
 var FIG = {def: personGeo('def'), att: personGeo('att'), ger: personGeo('ger')}, FIG_S = 1.45;
+var CLOTH = {att: [0x86684a, 0x9a8160, 0x5e5546, 0x6a604e, 0x4e463c, 0x74593e, 0x7d6f58], def: [0x3b4150, 0x444a3c, 0x353a44, 0x4c4a42, 0x5a5a52], ger: [0x5e6352, 0x646856, 0x585d4d]};
 var restMat = new T.MeshStandardMaterial({vertexColors: true, roughness: .8});
 GROUPS.forEach(function(G){
   var geo = FIG[G.cls];
-  G.mesh = new T.InstancedMesh(geo.body, new T.MeshStandardMaterial({color: G.col, roughness: .85, emissive: G.col, emissiveIntensity: 0}), G.n);
+  G.mesh = new T.InstancedMesh(geo.body, new T.MeshStandardMaterial({color: 0xffffff, roughness: .92}), G.n);
   G.rest = new T.InstancedMesh(geo.rest, restMat, G.n);
-  [G.mesh, G.rest].forEach(function(m){ m.castShadow = true; m.frustumCulled = false; m.instanceMatrix.setUsage(T.DynamicDrawUsage); scene.add(m); });
-  for (var k = 0; k < G.n; k++) G.mesh.setColorAt(k, new T.Color(1, 1, 1).offsetHSL(0, 0, (hash(k, 3) - .5)*.2));
+  G.mark = new T.InstancedMesh(geo.mark, new T.MeshStandardMaterial({color: G.col, roughness: .6, emissive: G.col, emissiveIntensity: .4}), G.n);
+  [G.mesh, G.rest, G.mark].forEach(function(m){ m.castShadow = true; m.frustumCulled = false; m.instanceMatrix.setUsage(T.DynamicDrawUsage); scene.add(m); });
+  var cp = CLOTH[G.cls]; for (var k = 0; k < G.n; k++) G.mesh.setColorAt(k, col(cp[(hash(k, 11 + G.n)*cp.length)|0]).offsetHSL(0, (hash(k, 5) - .5)*.05, (hash(k, 3) - .5)*.08 - (G.cls === 'att' ? .07 : 0)));
   G.from = []; G.to = []; G.cur = []; for (k = 0; k < G.n; k++){ G.from.push([0, 0, 0, 0]); G.to.push([0, 0, 0, 0]); G.cur.push([0, 0, 0, 0]); }
   G.ring = new T.Mesh(new T.RingGeometry(.92, 1, 64), new T.MeshBasicMaterial({color: G.col, transparent: true, opacity: 0, depthWrite: false, fog: false})); G.ring.rotation.x = -Math.PI/2; G.ring.renderOrder = 3; scene.add(G.ring);
   G.disc = new T.Mesh(new T.CircleGeometry(1, 48), new T.MeshBasicMaterial({color: G.col, transparent: true, opacity: 0, depthWrite: false, fog: false})); G.disc.rotation.x = -Math.PI/2; G.disc.renderOrder = 2; scene.add(G.disc);
@@ -1318,6 +1342,30 @@ function pathAt(P, t, off){ var L = [0], k; for (k = 1; k < P.length; k++) L.pus
   var s = t*L[L.length - 1]; for (k = 1; k < P.length - 1 && L[k] < s; k++);
   var u = (s - L[k - 1])/((L[k] - L[k - 1]) || 1), dx = P[k][0] - P[k - 1][0], dz = P[k][1] - P[k - 1][1], ln = Math.hypot(dx, dz) || 1, ed = Math.min(1, Math.min(s, L[L.length - 1] - s)/5);
   return [lerp(P[k - 1][0], P[k][0], u) - dz/ln*off*ed, lerp(P[k - 1][1], P[k][1], u) + dx/ln*off*ed, dx, dz]; }
+/* голоси зі справи — дослівно з розділів сайту, з аркушами; показуються як закадровий текст, сцена притихає */
+var VOICE = {
+  3: {q: 'Німецькі пости пропустили селян крізь свої ряди, так що за якихось 20 хвилин від початку штурму ми були змушені відступити до двоповерхової кам\'яниці.', w: 'Віктор Ліпінський', s: 'стражник маєтку · арк. 395 зв.'},
+  5: {q: 'Бий, грабуй, дери гайдамаків!', w: 'крики нападників', s: 'у переказі садівника Якова Галушкевича · арк. 580'},
+  7: {q: 'Бензин потрібен, щоби підпалити палац Плятерів, бо вони зачинилися всередині і захищаються зі зброєю!', w: 'озброєний чоловік у дубровицькій аптеці', s: 'у переказі аптекарки Ядвіги Більчинської · арк. 566 зв.–567'},
+  9: {q: 'Графи Плятери разом зі своїми урядовцями вийшли з будівлі, бо селяни пообіцяли, що їх лише заарештують і що буде суд. Однак, попри цю обіцянку, всі вони були замордовані.', w: 'Станіслав Буйновський', s: 'вартовий маєтку · допит 30.V.1920, арк. 579 зв.'},
+  10: {q: 'Тоді Олександр Конончук поставив це питання на голосування. Через стрілянину й натовп я не бачив добре, що відбувалося далі, але невдовзі почув залпи.', w: 'Аркадій Сибіковський', s: 'допит 7.IX.1922, арк. 398'},
+  11: {q: 'Ну, вже покінчили з графами і прислугою.', w: 'Прокіп Мітлюх', s: 'слова вдома ввечері 22 листопада, у переказі сина · арк. 440'}
+};
+var voiceEl = document.getElementById('voice'), VO = {on: 0, t0: 0, t1: 0, k: -1}, hush = 0, afterShot = 0;
+function voiceLen(k){ return VOICE[k] ? Math.max(5.5, Math.min(10, VOICE[k].q.length*.055)) : 0; }
+function showVoice(k, delay){ var v = VOICE[k]; VO.k = k; voiceEl.classList.remove('show'); if (!v) { VO.t0 = VO.t1 = 0; return; }
+  voiceEl.querySelector('q').textContent = v.q; voiceEl.querySelector('b').textContent = v.w; voiceEl.querySelector('small').textContent = v.s;
+  VO.t0 = performance.now() + delay*1000; VO.t1 = VO.t0 + voiceLen(k)*1000; }
+/* архівні зображення в окремі моменти */
+var ARCH = {0: {src: 'worobin-orda-1870.jpg', c: 'Воробин на рисунку Наполеона Орди, 1870', at: 3.5}, 11: {src: 'worobin-oficyna-1938.jpg', c: 'Ліва офіцина у Воробині, 1938', at: 9}};
+var archEl = document.getElementById('arch'), archT = 0;
+function showArch(k){ archEl.classList.remove('show', 'big'); var a = ARCH[k]; archT = 0; if (!a || matchMedia('(max-width:640px)').matches && k === 0) return;
+  archEl.querySelector('img').src = a.src; archEl.querySelector('figcaption').textContent = a.c; archT = performance.now() + a.at*1000; }
+archEl.onclick = function(){ archEl.classList.toggle('big'); };
+/* «стара плівка»: денні кроки й розстріл — повністю, нічні — ледь-ледь */
+var PHOTO_T = [.6, .25, .25, .25, .25, .3, .3, .85, .85, .9, 1, .55], photoCur = 0, filmOn = true, filmBtn = document.getElementById('filmBtn');
+filmBtn.onclick = function(){ filmOn = !filmOn; filmBtn.setAttribute('aria-pressed', filmOn); };
+function dwellFor(k){ var b = k >= 1 && k <= 6 ? 14000 : 11500; if (VOICE[k]) b += voiceLen(k)*1000*.6; if (k === 10) b = VOLLEY_T*1000 + 9000; if (k === 11) b += 3000; return b; }
 function go(k, instant){
   k = Math.max(0, Math.min(N - 1, k)); if (k === step && !instant) return;
   var first = step < 0, prev = step;
@@ -1327,7 +1375,8 @@ function go(k, instant){
       G.to[i] = L[i]; }
     G.labText = (G.lab && G.lab[k]) || ''; planPaths(G, first || instant, k); });
   fromHour = curHour; fireFrom = fireCur.slice(); roofFrom = roofCur.slice();
-  step = k; twStart = performance.now(); tw = first ? 1 : 0; volleyDone = false; VOLLEY_T = GROUPS[0].dur/1000 + 1.3;
+  step = k; twStart = performance.now(); tw = first ? 1 : 0; volleyDone = false; afterShot = 0; VOLLEY_T = GROUPS[0].dur/1000 + 1.3 + (k === 10 ? voiceLen(10) + 1.2 : 0);
+  showVoice(k, k === 10 ? GROUPS[0].dur/1000 + .9 : first ? 99 : 2.4); showArch(k);
   var s = STEPS[k]; cT.textContent = s.time; cD.textContent = s.day; cH.textContent = s.h; cP.textContent = s.p; cS2.textContent = s.s;
   var card = document.getElementById('card'); card.classList.remove('fresh'); void card.offsetWidth; card.classList.add('fresh');
   tickEls.forEach(function(b, j){ b.classList.toggle('cur', j === k); b.classList.toggle('done', j < k); });
@@ -1353,7 +1402,7 @@ function boomAt(x, z){ if (step !== 3 && step !== 4) return; var b = BOOMS.find(
 
 var playing = false, nextAt = 0, playBtn = document.getElementById('play'), playIc = document.getElementById('playIc'), DWELL = 10000;
 function stop(){ playing = false; playIc.setAttribute('d', 'M4 2.5v11l9-5.5z'); playBtn.setAttribute('aria-label', 'Відтворити'); }
-function play(){ playing = true; playIc.setAttribute('d', 'M4 2.5h3v11H4zM9 2.5h3v11H9z'); playBtn.setAttribute('aria-label', 'Пауза'); if (step >= N - 1) go(0); nextAt = performance.now() + DWELL; }
+function play(){ playing = true; playIc.setAttribute('d', 'M4 2.5h3v11H4zM9 2.5h3v11H9z'); playBtn.setAttribute('aria-label', 'Пауза'); if (step >= N - 1) go(0); nextAt = performance.now() + dwellFor(step); }
 playBtn.onclick = function(){ playing ? stop() : play(); };
 document.getElementById('prev').onclick = function(){ stop(); go(step - 1); };
 document.getElementById('next').onclick = function(){ stop(); go(step + 1); };
@@ -1394,12 +1443,13 @@ function project(el, p, hide){
 }
 var UIR = [], UIT = 0;
 function uiRects(){ var nw = performance.now(); if (nw - UIT < 600) return UIR; UIT = nw; UIR = [];
-  ['.top > div', '.top .tools', '.compass', '.dock'].forEach(function(q){ var e = document.querySelector(q); if (!e) return; var r = e.getBoundingClientRect(); if (r.width > 0 && r.height > 0) UIR.push([r.left - 6, r.top - 6, r.right + 6, r.bottom + 6]); });
+  ['.top > div', '.top .tools', '.compass', '.dock', '.arch.show'].forEach(function(q){ var e = document.querySelector(q); if (!e) return; var r = e.getBoundingClientRect(); if (r.width > 0 && r.height > 0) UIR.push([r.left - 6, r.top - 6, r.right + 6, r.bottom + 6]); });
   return UIR; }
 function layoutLabels(){                                                        // розсуваємо підписи, щоб не накладалися ні між собою, ні на панелі
   placed.sort(function(a, b){ return b.pr - a.pr; });
   var ui = uiRects(), boxes = ui.slice();
   placed.forEach(function(L){
+    if (!isFinite(L.x) || !isFinite(L.y)){ L.el.classList.add('off'); return; }
     L.x = Math.max(L.w/2 + 8, Math.min(innerWidth - L.w/2 - 8, L.x));                                  // не за краєм екрана
     var y = L.y, tries = 0, x0 = L.x - L.w/2, x1 = L.x + L.w/2, hit = false;
     while (tries++ < 14){ var yb = y - L.ex, y0 = yb - L.h; hit = false;                              // ex — ніжка мітки під підписом
@@ -1436,7 +1486,7 @@ function frame(now){
   requestAnimationFrame(frame);
   if (window.W18S && W18S.tAt != null){ now = twStart + W18S.tAt*1000; camStart = Math.min(camStart, twStart); }
   var dt = Math.min(DTMAX, clock.getDelta()), time = now*.001;
-  if (playing && now > nextAt){ if (step < N - 1){ go(step + 1); nextAt = now + DWELL; } else stop(); }
+  if (playing && now > nextAt){ if (step < N - 1){ go(step + 1); nextAt = now + dwellFor(step); } else stop(); }
   tw = Math.min(1, (now - twStart)/TW); var e = ease(tw);
   curHour = lerp(fromHour, STEPS[step].t, e);
   for (var p = 0; p < 3; p++){ fireCur[p] = lerp(fireFrom[p], FIRE[step][p], e); roofCur[p] = lerp(roofFrom[p], ROOF_GONE[step][p], ss(.3, 1, tw)); }
@@ -1445,7 +1495,12 @@ function frame(now){
   skyU.time.value = time; skyU.glow.value = fireMax*night*.8;
   HFOG.uFG.value.set(fireMax*.34, fireMax*.14, fireMax*.05, 75).multiplyScalar(1).setW(75); HFOG.uFG.value.x *= lerp(.35, 1.4, night); HFOG.uFG.value.y *= lerp(.35, 1.4, night); HFOG.uFG.value.z *= lerp(.35, 1.4, night);
   HFOG.uFP.value.set(cM[0], 10, cM[1]);
-  if (PP){ PP.U.tilt.value = LOW ? 0 : ss(30, 120, camera.position.y - controls.target.y)*.45; PP.bright.th.value = lerp(.85, 1.3, day); PP.U.exposure.value *= 1 - fireMax*.14*day - fireMax*.06 - fireMax*K.dusk*.14; }
+  if (PP){ PP.U.tilt.value = LOW ? 0 : ss(30, 120, camera.position.y - controls.target.y)*.45; PP.bright.th.value = lerp(.85, 1.3, day); PP.U.exposure.value *= 1 - fireMax*.14*day - fireMax*.06 - fireMax*K.dusk*.14;
+    var vOn = VO.t0 && now > VO.t0 && now < VO.t1; if (vOn !== !!VO.on){ VO.on = vOn; voiceEl.classList.toggle('show', vOn); LBL.classList.toggle('hush', vOn); }
+    hush = lerp(hush, vOn ? 1 : 0, Math.min(1, dt*1.6)); var as = afterShot ? (now - afterShot)/1000 : 99, black = as < 1 ? ss(0, .25, as) : as < 4 ? 1 : 1 - ss(4, 6.5, as);   // після залпу — тиша й темрява
+    PP.U.exposure.value *= (1 - hush*.22)*(1 - black*.5); PP.U.sat.value *= 1 - black*.5;
+    photoCur = lerp(photoCur, filmOn ? PHOTO_T[step] : 0, Math.min(1, dt*.8)); PP.U.photo.value = photoCur;
+    if (archT && now > archT){ archEl.classList.add('show'); archT = 0; } }
   waterU.uTime.value = time; waterU.uFire.value = fireMax*(.3 + night); waterU.fogColor.value.copy(scene.fog.color); waterU.fogDensity.value = scene.fog.density;
   // камера: проліт, далі повільний наїзд
   if (camFly < 1){ camFly = Math.min(1, Math.max(0, (now - camStart)/CAMDUR)); var ce = ease(camFly);
@@ -1488,8 +1543,8 @@ function frame(now){
   // залп на дорозі
   if (step === 10 && !volleyDone && (now - twStart)/1000 > VOLLEY_T){ volleyDone = true;
     GROUPS.forEach(function(G){ if (G.id !== 'a1') return; G.cur.forEach(function(c){ if (c[2] > .6) emit(FLASH, c[0] + .8, H(c[0], c[1]) + 3.2, c[1], 0, 0, 0, .16, 3.4, 0); }); });
-    var bv = BOOMS[0]; bv.t = .55; bv.m.position.set(-160, -50, -30); bv.l.position.set(-150, H(-150, -30) + 4, -30); }
-  var inten = lerp(SHOTS[Math.max(0, step - 1)] || 0, SHOTS[step], e)*(tw < .5 && step < 2 ? 0 : 1);
+    var bv = BOOMS[0]; bv.t = .55; bv.m.position.set(-160, -50, -30); bv.l.position.set(-150, H(-150, -30) + 4, -30); afterShot = now; }
+  var inten = lerp(SHOTS[Math.max(0, step - 1)] || 0, SHOTS[step], e)*(tw < .5 && step < 2 ? 0 : 1)*(step === 10 && !volleyDone ? 0 : 1)*(1 - hush*.85);
   if (now - lastShot > 70){ lastShot = now; if (inten > 0) shoot(inten); }
   for (var j = 0; j < TRN; j++){ var t2 = TR[j], o = j*6;
     if (!t2.on){ trPos[o] = trPos[o + 3] = 1e6; continue; }
@@ -1521,14 +1576,14 @@ function frame(now){
       if (stc && stc.fallAt){ var el2 = (now - twStart)/1000 - VOLLEY_T - stc.fallAt + 1.2 - (i % 6)*.07; if (el2 > 0) c[3] = Math.max(c[3], Math.min(1, el2*2.5)); }
       var face = moving ? Math.atan2(dirx, dirz) : (G.cls === 'def' ? Math.atan2(c[0] + 88, c[1] + 31) : Math.atan2(-88 - c[0], -31 - c[1])) + (hash(i, 7) - .5)*.8;
       dummy.position.set(c[0], gy + bob, c[1]); dummy.rotation.set(c[3]*Math.PI/2, face, moving ? Math.sin(now*.014 + i)*.06 : 0); dummy.scale.setScalar(Math.max(.001, c[2])*FIG_S);
-      dummy.updateMatrix(); G.mesh.setMatrixAt(i, dummy.matrix); G.rest.setMatrixAt(i, dummy.matrix);
+      dummy.updateMatrix(); G.mesh.setMatrixAt(i, dummy.matrix); G.rest.setMatrixAt(i, dummy.matrix); G.mark.setMatrixAt(i, dummy.matrix);
       if (c[2] > .3 && !c[3]){ sx += c[0]; sz2 += c[1]; nv++; }
       if (G.cls === 'att' && i % 4 === 0 && c[2] > .5 && night > .2 && tIdx < TORCH.n){
         torchArr[tIdx*3] = c[0] + .45; torchArr[tIdx*3 + 1] = gy + 3.6 + bob + Math.sin(now*.02 + i)*.1; torchArr[tIdx*3 + 2] = c[1];
         tCol[tIdx*3] = 1; tCol[tIdx*3 + 1] = .55 + Math.sin(now*.03 + i)*.08; tCol[tIdx*3 + 2] = .18; tSz[tIdx] = 1.5 + Math.sin(now*.025 + i*3)*.35; tA[tIdx] = night*c[2]; tIdx++; }
     }
-    G.mesh.instanceMatrix.needsUpdate = G.rest.instanceMatrix.needsUpdate = true;
-    G.mesh.material.emissiveIntensity = night*.12;
+    G.mesh.instanceMatrix.needsUpdate = G.rest.instanceMatrix.needsUpdate = G.mark.instanceMatrix.needsUpdate = true;
+    G.mark.material.emissiveIntensity = .35 + night*1.1;
     var txt = G.labText;
     if (nv && txt) G.labPos.set(sx/nv, H(sx/nv, sz2/nv) + 7, sz2/nv);
     else if (txt && stc && stc.hide) G.labPos.set(stc.c[0], 17, stc.c[1]);

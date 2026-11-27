@@ -122,7 +122,22 @@ body.intro-on .dock,body.intro-on .top,body.intro-on .compass,body.intro-on #lab
 .bigt span{display:block;margin-top:.5rem;font:600 .72rem var(--body);letter-spacing:.3em;text-transform:uppercase;color:rgba(244,236,214,.8);text-shadow:0 1px 10px rgba(0,0,0,.9)}
 .bigt.show{animation:bigt 3.4s var(--ease) both}
 @keyframes bigt{0%{opacity:0;transform:translate(-50%,10px);filter:blur(6px)}18%{opacity:1;transform:translate(-50%,0);filter:blur(0)}70%{opacity:1}100%{opacity:0;transform:translate(-50%,-6px)}}
+#labels{transition:opacity 1.2s var(--ease)}
+#labels.hush{opacity:.18}
+.voice{position:fixed;left:50%;top:38%;z-index:4;width:min(680px,calc(100vw - 32px));margin:0;transform:translate(-50%,-50%);text-align:center;pointer-events:none;opacity:0;filter:blur(6px);transition:opacity 1.6s var(--ease),filter 1.6s var(--ease)}
+.voice.show{opacity:1;filter:none}
+.voice q{display:block;font:italic 400 clamp(1.25rem,2.4vw,1.85rem)/1.35 var(--display);color:#f6eedb;text-shadow:0 2px 24px rgba(0,0,0,.85),0 0 2px rgba(0,0,0,.9);quotes:'«' '»'}
+.voice figcaption{margin-top:.9rem;font:600 .68rem/1.5 var(--body);letter-spacing:.16em;text-transform:uppercase;color:var(--gold);text-shadow:0 1px 10px rgba(0,0,0,.9)}
+.voice figcaption b{display:block;font-weight:600}
+.voice figcaption small{display:block;margin-top:.15rem;font-weight:500;letter-spacing:.08em;text-transform:none;color:var(--muted);font-size:.72rem}
+.arch{position:fixed;right:18px;top:96px;z-index:4;width:230px;margin:0;padding:8px 8px 10px;background:#e9e0cb;color:#2b2418;box-shadow:0 14px 40px rgba(0,0,0,.55);transform:rotate(1.6deg) translateY(8px);opacity:0;pointer-events:none;cursor:zoom-in;transition:opacity 1.4s var(--ease),transform 1.4s var(--ease),width .6s var(--ease)}
+.arch.show{opacity:1;pointer-events:auto;transform:rotate(1.6deg)}
+.arch.big{width:min(560px,calc(100vw - 36px));cursor:zoom-out;transform:rotate(0)}
+.arch img{display:block;width:100%;height:auto;filter:sepia(.35) contrast(1.05)}
+.arch figcaption{margin-top:6px;font:italic 400 .86rem/1.3 var(--display);color:#3a3022}
 @media(max-width:640px){
+  .voice{top:30%}
+  .arch{top:150px;right:12px;width:150px}
   .legend,.sub{display:none}
   .tools .chip span{display:none}
   .tools .chip{padding:.5rem .6rem}
@@ -142,6 +157,8 @@ body.intro-on .dock,body.intro-on .top,body.intro-on .compass,body.intro-on #lab
 <body class="intro-on">
 <canvas id="view" tabindex="0" aria-label="3D-реконструкція облоги маєтку Воробин. Тягніть, щоб обертати; колесо або два пальці — наблизити; натисніть на будівлю, щоб дізнатися про неї."></canvas>
 <div id="labels"></div>
+<figure class="voice" id="voice" aria-live="polite"><q></q><figcaption><b></b><small></small></figcaption></figure>
+<figure class="arch" id="arch" title="Натисніть, щоб збільшити"><img alt="" decoding="async"><figcaption></figcaption></figure>
 <p class="load" id="load">Завантаження…</p>
 
 <header class="top">
@@ -154,6 +171,7 @@ body.intro-on .dock,body.intro-on .top,body.intro-on .compass,body.intro-on #lab
   <div class="tools">
     <button type="button" class="chip" id="recam" title="Повернути камеру до цієї сцени"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 5.5h2l1.2-2h4.6l1.2 2h2v7.5h-11z"/><circle cx="8" cy="9" r="2.4"/></svg><span>Камера</span></button>
     <button type="button" class="chip" id="lblBtn" aria-pressed="false" title="Показати назви будівель"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 3.5h11v7h-6l-3 3v-3h-2z"/></svg><span>Будівлі</span></button>
+    <button type="button" class="chip" id="filmBtn" aria-pressed="true" title="Вигляд старої фотографії: сепія, зерно, подряпини"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2.5" y="3" width="11" height="10" rx="1"/><path d="M2.5 5.5h11M2.5 10.5h11M5 3v2.5M8 3v2.5M11 3v2.5M5 10.5V13M8 10.5V13M11 10.5V13"/></svg><span>Плівка</span></button>
     <button type="button" class="chip" id="infoBtn" aria-expanded="false" aria-controls="info"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6.3"/><path d="M8 7.2V11M8 5v.01"/></svg><span>Про схему</span></button>
   </div>
 </header>
@@ -203,7 +221,7 @@ body.intro-on .dock,body.intro-on .top,body.intro-on .compass,body.intro-on #lab
 
 <script src="three-r147.js"></script>
 <script src="gltf-r147.js"></script>
-<script src="worobin-1918-3d.js?v=20261127l"></script>
+<script src="worobin-1918-3d.js?v=20261128a"></script>
 <script>
 (function(){
   var ib = document.getElementById('infoBtn'), info = document.getElementById('info');
