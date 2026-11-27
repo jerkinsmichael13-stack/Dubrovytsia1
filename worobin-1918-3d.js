@@ -1315,7 +1315,8 @@ var cT = document.getElementById('cT'), cD = document.getElementById('cD'), cH =
 var ticks = document.getElementById('ticks'), fill = document.getElementById('fill'), tickEls = [];
 STEPS.forEach(function(s, k){
   var b = document.createElement('button'); b.type = 'button'; b.style.left = (k/(N - 1)*100) + '%';
-  b.setAttribute('aria-label', s.time + ' — ' + s.h); b.innerHTML = '<span>' + (k ? s.time : 'маєток') + '</span>';
+  b.setAttribute('aria-label', s.time + ' — ' + s.h); var sh = k ? s.time.replace(/^≈\s*/, '').replace(/(\d{1,2}):00–(\d{1,2}):00/, function(m, x, y){ return +x + '–' + +y; }) : 'маєток';
+  b.innerHTML = '<span data-full="' + (k ? s.time : 'маєток') + '">' + sh + '</span>';
   b.addEventListener('click', function(){ stop(); go(k); }); ticks.appendChild(b); tickEls.push(b);
 });
 function camFor(k){ var c = STEPS[k].cam, p = new T.Vector3(c[0][0], c[0][1], c[0][2]), t = new T.Vector3(c[1][0], c[1][1], c[1][2]); if (MOBILE) p.sub(t).multiplyScalar(1.4).add(t); return {p: p, t: t}; }
@@ -1344,12 +1345,12 @@ function pathAt(P, t, off){ var L = [0], k; for (k = 1; k < P.length; k++) L.pus
   return [lerp(P[k - 1][0], P[k][0], u) - dz/ln*off*ed, lerp(P[k - 1][1], P[k][1], u) + dx/ln*off*ed, dx, dz]; }
 /* голоси зі справи — дослівно з розділів сайту, з аркушами; показуються як закадровий текст, сцена притихає */
 var VOICE = {
-  3: {q: 'Німецькі пости пропустили селян крізь свої ряди, так що за якихось 20 хвилин від початку штурму ми були змушені відступити до двоповерхової кам\'яниці.', w: 'Віктор Ліпінський', s: 'стражник маєтку · арк. 395 зв.'},
-  5: {q: 'Бий, грабуй, дери гайдамаків!', w: 'крики нападників', s: 'у переказі садівника Якова Галушкевича · арк. 580'},
-  7: {q: 'Бензин потрібен, щоби підпалити палац Плятерів, бо вони зачинилися всередині і захищаються зі зброєю!', w: 'озброєний чоловік у дубровицькій аптеці', s: 'у переказі аптекарки Ядвіги Більчинської · арк. 566 зв.–567'},
-  9: {q: 'Графи Плятери разом зі своїми урядовцями вийшли з будівлі, бо селяни пообіцяли, що їх лише заарештують і що буде суд. Однак, попри цю обіцянку, всі вони були замордовані.', w: 'Станіслав Буйновський', s: 'вартовий маєтку · допит 30.V.1920, арк. 579 зв.'},
+  3: {q: 'Німецькі пости пропустили селян крізь свої ряди, так що за якихось 20 хвилин від початку штурму ми були змушені відступити до двоповерхової кам\'яниці.', w: 'Віктор Ліпінський', s: 'стражник маєтку, арк. 395 зв.'},
+  5: {q: 'Бий, грабуй, дери гайдамаків!', w: 'крики нападників', s: 'у переказі садівника Якова Галушкевича, арк. 580'},
+  7: {q: 'Бензин потрібен, щоби підпалити палац Плятерів, бо вони зачинилися всередині і захищаються зі зброєю!', w: 'озброєний чоловік у дубровицькій аптеці', s: 'у переказі аптекарки Ядвіги Більчинської, арк. 566 зв.–567'},
+  9: {q: 'Графи Плятери разом зі своїми урядовцями вийшли з будівлі, бо селяни пообіцяли, що їх лише заарештують і що буде суд. Однак, попри цю обіцянку, всі вони були замордовані.', w: 'Станіслав Буйновський', s: 'вартовий маєтку, допит 30.V.1920, арк. 579 зв.'},
   10: {q: 'Тоді Олександр Конончук поставив це питання на голосування. Через стрілянину й натовп я не бачив добре, що відбувалося далі, але невдовзі почув залпи.', w: 'Аркадій Сибіковський', s: 'допит 7.IX.1922, арк. 398'},
-  11: {q: 'Ну, вже покінчили з графами і прислугою.', w: 'Прокіп Мітлюх', s: 'слова вдома ввечері 22 листопада, у переказі сина · арк. 440'}
+  11: {q: 'Ну, вже покінчили з графами і прислугою.', w: 'Прокіп Мітлюх', s: 'слова вдома ввечері 22 листопада, у переказі сина, арк. 440'}
 };
 var voiceEl = document.getElementById('voice'), VO = {on: 0, t0: 0, t1: 0, k: -1}, hush = 0, afterShot = 0;
 function voiceLen(k){ return VOICE[k] ? Math.max(5.5, Math.min(10, VOICE[k].q.length*.055)) : 0; }
@@ -1377,10 +1378,10 @@ function go(k, instant){
   fromHour = curHour; fireFrom = fireCur.slice(); roofFrom = roofCur.slice();
   step = k; twStart = performance.now(); tw = first ? 1 : 0; volleyDone = false; afterShot = 0; VOLLEY_T = GROUPS[0].dur/1000 + 1.3 + (k === 10 ? voiceLen(10) + 1.2 : 0);
   showVoice(k, k === 10 ? GROUPS[0].dur/1000 + .9 : first ? 99 : 2.4); showArch(k);
-  var s = STEPS[k]; cT.textContent = s.time; cD.textContent = s.day; cH.textContent = s.h; cP.textContent = s.p; cS2.textContent = s.s;
+  var s = STEPS[k]; cT.textContent = s.time; cT.classList.toggle('long', s.time.length > 7); cD.textContent = s.day; cH.textContent = s.h; cP.textContent = s.p; cS2.textContent = s.s;
   var card = document.getElementById('card'); card.classList.remove('fresh'); void card.offsetWidth; card.classList.add('fresh');
-  tickEls.forEach(function(b, j){ b.classList.toggle('cur', j === k); b.classList.toggle('done', j < k); });
-  fill.style.width = (k/(N - 1)*100) + '%';
+  tickEls.forEach(function(b, j){ b.classList.toggle('cur', j === k); b.classList.toggle('done', j < k); var sp = b.firstChild; if (!sp._short) sp._short = sp.textContent; sp.textContent = j === k ? sp.dataset.full : sp._short; });
+  fill.style.clipPath = 'inset(0 ' + (100 - k/(N - 1)*100).toFixed(2) + '% 0 0)';
   pinEls.forEach(function(p){ p.el.remove(); }); pinEls = [];
   PIN_RINGS.forEach(function(r){ scene.remove(r); }); PIN_RINGS = [];
   (PINS[k] || []).forEach(function(q){ var x = q[0][0], z = q[0][1], inB = hitB(x, z), y = inB ? 0 : gY(x, z);
@@ -1413,7 +1414,7 @@ document.getElementById('lblBtn').onclick = function(){ var on = document.body.c
 
 var infoBox = document.getElementById('binfo');
 function openInfo(k){ var I = INFO[k]; if (!I) return;
-  infoBox.innerHTML = '<button type="button" class="x" aria-label="Закрити">×</button><p class="k">' + I.k + '</p><h2>' + I.h + '</h2>' + I.p.map(function(t){ return '<p>' + t + '</p>'; }).join('') +
+  infoBox.innerHTML = '<button type="button" class="x" aria-label="Закрити">×</button><p class="k">' + I.k.charAt(0).toUpperCase() + I.k.slice(1) + '</p><h2>' + I.h + '</h2>' + I.p.map(function(t){ return '<p>' + t + '</p>'; }).join('') +
     (I.link ? '<a class="go" href="' + I.link[0] + '">' + I.link[1] + '</a>' : '') + (I.s ? '<p class="src">' + I.s + '</p>' : '');
   infoBox.classList.add('open'); document.getElementById('info').classList.remove('open'); infoBox.querySelector('.x').onclick = function(){ infoBox.classList.remove('open'); }; }
 var PICK = [];

@@ -9,147 +9,175 @@
 <meta property="og:title" content="Облога Воробина, 21–22 листопада 1918 · 3D">
 <meta property="og:description" content="Де стояла варта, де були німецькі пости, звідки йшли загони, як горів палац — година за годиною, за свідченнями зі справи.">
 <meta property="og:url" content="https://dubrovytsia.site/worobin-1918-3d.html">
-<meta name="theme-color" content="#0b0f18">
+<meta name="theme-color" content="#0d0c0a">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Manrope:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=Golos+Text:wght@400;500;600&display=swap">
 <style>
-:root{--ink:#0b0f18;--text:#f4ecd6;--muted:rgba(244,236,214,.64);--faint:rgba(244,236,214,.15);--gold:#e2bd62;
-  --def:#6f9cf0;--att:#ef6a52;--ger:#a8b394;
-  --display:'Cormorant Garamond',Georgia,serif;--body:'Manrope',system-ui,sans-serif;--ease:cubic-bezier(.16,1,.3,1);color-scheme:dark}
+/* «Справа № 67/22»: оповідь набрано шрифтом друкарень 1910-х (Old Standard TT), керування — сучасним гротеском (Golos Text).
+   Папір і чорнило замість скла й золота; жар — лише для «зараз». */
+:root{--ink:#0d0c0a;--slab:rgba(16,14,11,.9);--paper:#ece4d2;--text:#ece4d2;--muted:rgba(236,228,210,.62);--faint:rgba(236,228,210,.16);--rule:rgba(236,228,210,.22);
+  --ember:#e8a254;--gold:#e8a254;--def:#7ea3e6;--att:#e5674e;--ger:#a9b28f;--night:#2b3550;--day:#8f8162;
+  --display:'Old Standard TT','Times New Roman',serif;--body:'Golos Text',system-ui,sans-serif;--ease:cubic-bezier(.16,1,.3,1);color-scheme:dark}
 *{box-sizing:border-box}
-html,body{height:100%;margin:0;overflow:hidden;background:var(--ink);color:var(--text);font:400 14px/1.5 var(--body)}
+html,body{height:100%;margin:0;overflow:hidden;background:var(--ink);color:var(--text);font:400 14px/1.55 var(--body);font-feature-settings:'kern','liga'}
 a{color:inherit}
+button{font-family:inherit}
+:focus-visible{outline:2px solid var(--ember);outline-offset:2px}
 #view{position:fixed;inset:0;width:100%;height:100%;display:block;outline:none;cursor:grab;touch-action:none}
 #view:active{cursor:grabbing}
-body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(120% 95% at 50% 45%,transparent 58%,rgba(4,6,10,.55) 100%)}
-#labels{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:1}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(120% 95% at 50% 45%,transparent 58%,rgba(5,4,3,.55) 100%)}
+
+/* підписи в сцені */
+#labels{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:1;transition:opacity 1.2s var(--ease)}
+#labels.hush{opacity:.16}
 .lb{position:absolute;left:0;top:0;white-space:nowrap;transition:opacity .45s;will-change:transform}
-.lb span{display:block;padding:4px 9px 5px;border-radius:7px;font:500 11.5px/1.2 var(--body);color:var(--text);background:rgba(10,12,18,.72);border:1px solid var(--faint);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.35)}
-.lb.g-def span{border-color:var(--def)}
-.lb.g-att span{border-color:var(--att)}
-.lb.g-ger span{border-color:var(--ger)}
-.lb.g-def span::before,.lb.g-att span::before,.lb.g-ger span::before{content:'';display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:6px;vertical-align:1px;background:var(--def)}
-.lb.g-att span::before{background:var(--att)} .lb.g-ger span::before{background:var(--ger)}
+.lb span{display:block;padding:3px 8px 4px 9px;border-radius:2px;font:500 12px/1.25 var(--body);color:var(--paper);background:rgba(14,12,10,.82);box-shadow:inset 3px 0 0 var(--muted),0 3px 12px rgba(0,0,0,.4)}
+.lb.g-def span{box-shadow:inset 3px 0 0 var(--def),0 3px 12px rgba(0,0,0,.4)}
+.lb.g-att span{box-shadow:inset 3px 0 0 var(--att),0 3px 12px rgba(0,0,0,.4)}
+.lb.g-ger span{box-shadow:inset 3px 0 0 var(--ger),0 3px 12px rgba(0,0,0,.4)}
 .lb.b{pointer-events:auto;cursor:pointer}
-.lb.b span{font:500 14px/1.1 var(--display);font-style:italic;letter-spacing:.01em;background:rgba(244,236,214,.9);color:#1c1710;border-color:transparent}
-.lb.b:hover span{background:var(--gold)}
-.lb.pin span{background:var(--gold);color:#1c1508;border-color:transparent;font-weight:600}
-.lb.pin::after{content:'';position:absolute;left:50%;top:100%;width:1.5px;height:calc(26px + var(--lead,0px));margin-left:-.75px;background:linear-gradient(var(--gold),rgba(226,189,98,0))}
+.lb.b span{padding:3px 8px 4px;font:italic 400 14px/1.15 var(--display);background:rgba(236,228,210,.92);color:#1d1912;box-shadow:0 3px 12px rgba(0,0,0,.35)}
+.lb.b:hover span{background:#fff8e8}
+.lb.b::after{content:'';position:absolute;left:50%;top:100%;width:1px;height:var(--lead,0px);margin-left:-.5px;background:rgba(236,228,210,.55)}
 .lb.pin{margin-top:-26px}
-.lb.b::after{content:'';position:absolute;left:50%;top:100%;width:1px;height:var(--lead,0px);margin-left:-.5px;background:rgba(244,236,214,.55)}
-.lb.dir span{background:none;border:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;font:italic 500 15px/1 var(--display);letter-spacing:.04em;color:rgba(244,236,214,.82);text-shadow:0 1px 10px rgba(0,0,0,.95),0 0 2px rgba(0,0,0,.9)}
-.lb.tag span{display:grid;place-items:center;width:26px;height:26px;padding:0;border-radius:50%;background:#c4452e;border:2px solid #ffd2b8;color:#fff;font:700 13px/1 var(--body);box-shadow:0 0 18px rgba(255,90,50,.6)}
+.lb.pin span{padding:4px 9px 5px;font:italic 400 14px/1.2 var(--display);color:#1a1209;background:var(--ember);box-shadow:0 4px 16px rgba(0,0,0,.45)}
+.lb.pin::after{content:'';position:absolute;left:50%;top:100%;width:1px;height:calc(26px + var(--lead,0px));margin-left:-.5px;background:linear-gradient(var(--ember),rgba(232,162,84,0))}
+.lb.dir span{background:none;box-shadow:none;padding:0;font:italic 400 16px/1 var(--display);letter-spacing:.02em;color:rgba(236,228,210,.86);text-shadow:0 1px 10px rgba(0,0,0,.95),0 0 2px rgba(0,0,0,.9)}
+.lb.tag span{display:grid;place-items:center;width:24px;height:24px;padding:0;border-radius:50%;background:#b8432e;color:#fff;font:600 12px/1 var(--body);box-shadow:0 0 0 2px rgba(255,225,205,.85),0 0 16px rgba(255,90,50,.5)}
 .lb.off{opacity:0;pointer-events:none!important}
 
+/* шапка */
 .top{position:fixed;z-index:3;left:0;right:0;top:0;display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;
-  padding:calc(env(safe-area-inset-top,0px) + 16px) clamp(16px,3vw,32px) 0;pointer-events:none}
+  padding:calc(env(safe-area-inset-top,0px) + 18px) clamp(16px,3vw,34px) 0;pointer-events:none}
 .top>*{pointer-events:auto}
-.back{display:inline-flex;align-items:center;gap:.4rem;margin:0 0 .6rem;font:500 .72rem var(--body);letter-spacing:.06em;color:var(--muted);text-decoration:none}
-.back:hover{color:var(--text)}
-h1{margin:0;font:400 clamp(1.6rem,3.2vw,2.6rem)/1 var(--display);letter-spacing:-.01em;text-shadow:0 2px 18px rgba(0,0,0,.7)}
-h1 em{color:var(--gold);font-style:italic}
-.sub{margin:.4rem 0 0;font:400 .78rem var(--body);color:var(--muted);text-shadow:0 1px 8px rgba(0,0,0,.9)}
-.legend{display:flex;flex-wrap:wrap;gap:.35rem .9rem;margin:.75rem 0 0;font:500 .72rem var(--body);color:rgba(244,236,214,.8);text-shadow:0 1px 8px rgba(0,0,0,.9)}
-.legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:.4rem;vertical-align:-1px;box-shadow:0 0 8px currentColor}
-.tools{display:flex;gap:.4rem;flex-wrap:wrap;justify-content:flex-end}
-.chip{display:inline-flex;align-items:center;gap:.45rem;padding:.5rem .85rem;border-radius:999px;border:1px solid var(--faint);background:rgba(10,12,18,.6);
-  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);font:500 .74rem var(--body);color:var(--text);cursor:pointer;transition:border-color .2s}
-.chip:hover,.chip[aria-expanded="true"],.chip[aria-pressed="true"]{border-color:var(--gold)}
-.chip svg{width:14px;height:14px}
+.back{display:inline-flex;align-items:center;gap:.4rem;margin:0 0 .55rem;font:500 12.5px var(--body);color:var(--muted);text-decoration:none}
+.back:hover{color:var(--paper)}
+h1{margin:0;font:400 clamp(1.7rem,3vw,2.5rem)/1.05 var(--display);letter-spacing:.005em;text-shadow:0 2px 18px rgba(0,0,0,.75)}
+.sub{margin:.45rem 0 0;max-width:34em;font:italic 400 15px/1.35 var(--display);color:var(--muted);text-shadow:0 1px 8px rgba(0,0,0,.9)}
+.legend{display:flex;flex-wrap:wrap;gap:.3rem 1rem;margin:.8rem 0 0;font:500 12px var(--body);color:rgba(236,228,210,.82);text-shadow:0 1px 8px rgba(0,0,0,.9)}
+.legend i{display:inline-block;width:12px;height:3px;margin-right:.45rem;vertical-align:3px}
+.tools{display:flex;gap:2px;justify-content:flex-end;background:rgba(14,12,10,.78);padding:3px;border-radius:3px;box-shadow:0 6px 20px rgba(0,0,0,.35)}
+.chip{display:inline-flex;align-items:center;gap:.45rem;white-space:nowrap;padding:.5rem .8rem;border:0;border-radius:2px;background:none;font:500 13px var(--body);color:var(--muted);cursor:pointer;transition:color .2s,background .2s}
+.chip:hover{color:var(--paper);background:rgba(236,228,210,.06)}
+.chip[aria-expanded="true"],.chip[aria-pressed="true"]{color:var(--paper);background:rgba(236,228,210,.1)}
+.chip svg{width:15px;height:15px}
 
-.panel{position:fixed;z-index:5;top:calc(env(safe-area-inset-top,0px) + 70px);right:clamp(16px,3vw,32px);width:min(390px,calc(100vw - 32px));max-height:calc(100% - 330px);overflow:auto;
-  padding:1.25rem 1.35rem 1.1rem;border-radius:18px;border:1px solid var(--faint);background:rgba(12,14,20,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-  box-shadow:0 30px 80px rgba(0,0,0,.5);opacity:0;transform:translateY(-8px);visibility:hidden;transition:opacity .35s var(--ease),transform .35s var(--ease),visibility .35s}
+/* панелі */
+.panel{position:fixed;z-index:5;top:calc(env(safe-area-inset-top,0px) + 74px);right:clamp(16px,3vw,34px);width:min(400px,calc(100vw - 32px));max-height:calc(100% - 340px);overflow:auto;
+  padding:1.3rem 1.4rem 1.2rem;border-radius:3px;background:var(--slab);border-top:1px solid var(--rule);
+  box-shadow:0 30px 80px rgba(0,0,0,.55);opacity:0;transform:translateY(-6px);visibility:hidden;transition:opacity .35s var(--ease),transform .35s var(--ease),visibility .35s}
 .panel.open{opacity:1;transform:none;visibility:visible}
-.panel h2{margin:0 0 .4rem;font:400 1.5rem/1.1 var(--display)}
-.panel .k{margin:0 0 .3rem;font:600 .64rem var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
-.panel p{margin:.55rem 0 0;font:400 .8rem/1.6 var(--body);color:rgba(244,236,214,.84)}
-.panel b{color:var(--text);font-weight:600}
-.panel .src{font-size:.7rem;color:rgba(244,236,214,.45)}
-.panel .go{display:inline-block;margin-top:.8rem;font:600 .78rem var(--body);color:var(--gold);text-decoration:none}
-.panel .x{position:absolute;top:.6rem;right:.7rem;width:30px;height:30px;border:0;border-radius:50%;background:rgba(244,236,214,.08);color:var(--text);font:400 1.1rem/1 var(--body);cursor:pointer}
+.panel .k{margin:0 0 .2rem;font:italic 400 14px var(--display);color:var(--ember)}
+.panel h2{margin:0 0 .5rem;font:400 1.55rem/1.15 var(--display)}
+.panel p{margin:.6rem 0 0;font:400 13.5px/1.6 var(--body);color:rgba(236,228,210,.86)}
+.panel b{color:var(--paper);font-weight:600}
+.panel .src{font:italic 400 13px/1.45 var(--display);color:var(--muted)}
+.panel .go{display:inline-block;margin-top:.9rem;font:500 13px var(--body);color:var(--ember);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+.panel .x{position:absolute;top:.6rem;right:.6rem;width:30px;height:30px;border:0;border-radius:2px;background:rgba(236,228,210,.08);color:var(--paper);font:400 1.1rem/1 var(--body);cursor:pointer}
 
-.dock{position:fixed;z-index:4;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 14px);transform:translateX(-50%);width:min(800px,calc(100vw - 20px))}
-.card{position:relative;padding:1rem 1.2rem .9rem;border-radius:18px;border:1px solid var(--faint);background:linear-gradient(180deg,rgba(14,16,23,.86),rgba(10,12,18,.93));
-  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 24px 70px rgba(0,0,0,.5)}
-.card.fresh .anim{animation:rise .7s var(--ease) both}
-.card.fresh .anim:nth-child(2){animation-delay:.06s} .card.fresh .anim:nth-child(3){animation-delay:.12s}
-@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-.when{display:flex;align-items:baseline;gap:.75rem;margin:0}
-.when b{font:500 1.75rem/1 var(--display);color:var(--gold);text-shadow:0 0 22px rgba(226,189,98,.35)}
-.when span{font:600 .66rem var(--body);letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
-.card h3{margin:.25rem 0 0;font:400 1.3rem/1.2 var(--display)}
-.card .txt{margin:.35rem 0 0;font:400 .83rem/1.58 var(--body);color:rgba(244,236,214,.88);max-height:9.6em;overflow:auto}
-.card small{display:block;margin-top:.45rem;font:400 .68rem/1.45 var(--body);color:rgba(244,236,214,.42)}
-.ctl{display:flex;align-items:center;gap:.6rem;margin-top:.75rem}
-.ctl>button{flex:none;display:grid;place-items:center;width:40px;height:40px;border-radius:50%;border:1px solid var(--faint);background:rgba(244,236,214,.05);color:var(--text);cursor:pointer;transition:border-color .2s,transform .2s}
-.ctl>button:hover{border-color:var(--gold)}
-.ctl>button:active{transform:scale(.94)}
-.ctl>button svg{width:16px;height:16px}
-.ctl #play{width:46px;height:46px;background:var(--gold);color:#1c1508;border-color:var(--gold);box-shadow:0 0 24px rgba(226,189,98,.35)}
-.ticks{position:relative;flex:1;height:40px;margin:0 6px}
-.ticks .rail{position:absolute;left:0;right:0;top:19px;height:2px;background:var(--faint);border-radius:2px}
-.ticks .fill{position:absolute;left:0;top:19px;height:2px;background:linear-gradient(90deg,#8a6a2a,var(--gold));border-radius:2px;transition:width .8s var(--ease)}
-.ticks button{position:absolute;top:10px;width:20px;height:20px;margin-left:-10px;border:0;background:none;padding:0;cursor:pointer}
-.ticks button::before{content:'';position:absolute;left:6px;top:6px;width:8px;height:8px;border-radius:50%;background:#4a4232;transition:background .3s,transform .3s,box-shadow .3s}
-.ticks button:hover::before{background:#8a7a52}
-.ticks button.done::before{background:var(--gold)}
-.ticks button.cur::before{background:var(--gold);transform:scale(1.7);box-shadow:0 0 0 3px rgba(226,189,98,.22),0 0 14px rgba(226,189,98,.6)}
-.ticks button span{position:absolute;top:23px;left:50%;transform:translateX(-50%);font:500 .58rem var(--body);color:var(--muted);white-space:nowrap}
-.ticks button.cur span{color:var(--gold)}
+/* картка кроку */
+.dock{position:fixed;z-index:4;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 16px);transform:translateX(-50%);width:min(860px,calc(100vw - 24px))}
+.card{display:grid;grid-template-columns:9.2rem 1fr;column-gap:1.6rem;padding:1.15rem 1.4rem .85rem;border-radius:3px;background:var(--slab);border-top:1px solid var(--rule);box-shadow:0 26px 70px rgba(0,0,0,.55)}
+.card.fresh .anim{animation:rise .8s var(--ease) both}
+.card.fresh .anim:nth-child(2){animation-delay:.07s}
+@keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.when{margin:0;padding-top:.15rem}
+.when b{display:block;font:400 2.35rem/1 var(--display);color:var(--ember);font-variant-numeric:lining-nums;letter-spacing:-.01em;white-space:nowrap}
+.when b.long{font-size:1.75rem;line-height:1.1;white-space:normal}
+.when span{display:block;margin-top:.45rem;font:italic 400 15px/1.3 var(--display);color:var(--muted)}
+.card h3{margin:0;font:400 1.5rem/1.15 var(--display);color:var(--paper)}
+.card .txt{margin:.45rem 0 0;max-width:62ch;font:400 14px/1.62 var(--body);color:rgba(236,228,210,.88);max-height:8.2em;overflow:auto;scrollbar-width:thin}
+.card small{display:block;margin-top:.5rem;max-width:72ch;font:italic 400 13px/1.4 var(--display);color:rgba(236,228,210,.5)}
+.ctl{grid-column:1/-1;display:flex;align-items:center;gap:.5rem;margin-top:.9rem;padding-top:.75rem;border-top:1px solid var(--faint)}
+.ctl>button{flex:none;display:grid;place-items:center;width:36px;height:36px;border-radius:2px;border:0;background:rgba(236,228,210,.06);color:var(--paper);cursor:pointer;transition:background .2s}
+.ctl>button:hover{background:rgba(236,228,210,.14)}
+.ctl>button svg{width:15px;height:15px}
+.ctl #play{width:42px;height:36px;background:var(--paper);color:#17130d}
+.ctl #play:hover{background:#fff8e8}
+/* шкала: ніч — день — ніч */
+.ticks{position:relative;flex:1;height:42px;margin:0 28px}
+.ticks .rail{position:absolute;left:0;right:0;top:12px;height:4px;border-radius:1px;opacity:.38;
+  background:linear-gradient(90deg,var(--day) 0 4%,var(--night) 9% 50%,#6a5a4a 56%,var(--day) 63% 80%,#6a4c3c 88%,var(--night) 95%)}
+.ticks .fill{position:absolute;left:0;right:0;top:12px;height:4px;border-radius:1px;
+  background:linear-gradient(90deg,var(--day) 0 4%,var(--night) 9% 50%,#6a5a4a 56%,var(--day) 63% 80%,#6a4c3c 88%,var(--night) 95%);clip-path:inset(0 100% 0 0);transition:clip-path .9s var(--ease)}
+.ticks .fill::after{content:'';position:absolute;inset:0;background:rgba(236,228,210,.25);mix-blend-mode:screen}
+.ticks button{position:absolute;top:0;width:24px;height:42px;margin-left:-12px;border:0;background:none;padding:0;cursor:pointer}
+.ticks button::before{content:'';position:absolute;left:11px;top:8px;width:2px;height:12px;background:rgba(236,228,210,.38);transition:background .3s,transform .3s}
+.ticks button:hover::before{background:var(--paper)}
+.ticks button.done::before{background:rgba(236,228,210,.72)}
+.ticks button.cur::before{left:7px;top:6px;width:10px;height:16px;background:var(--ember);clip-path:polygon(50% 100%,0 55%,0 0,100% 0,100% 55%);transform:none}
+.ticks button span{position:absolute;top:25px;left:50%;transform:translateX(-50%);font:500 11px/1 var(--body);font-variant-numeric:tabular-nums;color:rgba(236,228,210,.48);white-space:nowrap}
+.ticks button.cur span{z-index:1;padding:0 4px;background:rgba(16,14,11,.95)}
+.ticks button.cur span{color:var(--paper)}
 
-.intro{position:fixed;inset:0;z-index:9;display:grid;place-items:center;padding:24px;background:radial-gradient(80% 70% at 50% 40%,rgba(11,15,24,.25),rgba(6,8,12,.86));transition:opacity 1.2s var(--ease),visibility 1.2s}
+/* вступ */
+.intro{position:fixed;inset:0;z-index:9;display:grid;place-items:center;padding:24px;background:radial-gradient(80% 70% at 50% 40%,rgba(13,12,10,.3),rgba(8,7,5,.9));transition:opacity 1.2s var(--ease),visibility 1.2s}
 .intro.off{opacity:0;visibility:hidden}
-.intro>div{max-width:560px;text-align:center}
-.intro .k{margin:0;font:600 .7rem var(--body);letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
-.intro h2{margin:.7rem 0 0;font:400 clamp(2.4rem,6vw,4.2rem)/1 var(--display);text-shadow:0 4px 30px rgba(0,0,0,.6)}
-.intro p{margin:1rem auto 0;max-width:460px;font:400 .92rem/1.6 var(--body);color:rgba(244,236,214,.8)}
-.intro button{margin-top:1.6rem;padding:.9rem 1.7rem;border-radius:999px;border:0;background:var(--gold);color:#1c1508;font:600 .9rem var(--body);cursor:pointer;box-shadow:0 0 40px rgba(226,189,98,.35);transition:transform .2s}
-.intro button:hover{transform:translateY(-1px)}
-.intro .alt{display:block;margin:.9rem auto 0;background:none;box-shadow:none;color:var(--muted);font-weight:500;padding:.3rem}
-.intro small{display:block;margin-top:1rem;font:400 .72rem var(--body);color:var(--muted)}
-.load{position:fixed;inset:0;z-index:10;display:grid;place-items:center;font:400 1.1rem var(--display);font-style:italic;color:var(--muted);background:var(--ink);transition:opacity .8s}
+.intro>div{max-width:34rem;text-align:center}
+.intro .k{margin:0;font:italic 400 17px var(--display);color:var(--ember)}
+.intro h2{margin:.5rem 0 0;font:400 clamp(2.5rem,6vw,4.3rem)/1 var(--display);text-shadow:0 4px 30px rgba(0,0,0,.6)}
+.intro p{margin:1.1rem auto 0;max-width:30rem;font:400 15px/1.6 var(--body);color:rgba(236,228,210,.82)}
+.intro button{margin-top:1.7rem;padding:.85rem 1.8rem;border-radius:2px;border:0;background:var(--paper);color:#17130d;font:500 15px var(--body);cursor:pointer;transition:background .2s}
+.intro button:hover{background:#fff8e8}
+.intro .alt{display:block;margin:.8rem auto 0;background:none;color:var(--muted);padding:.3rem;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+.intro .alt:hover{background:none;color:var(--paper)}
+.intro small{display:block;margin-top:1.1rem;font:400 12.5px var(--body);color:var(--muted)}
+.load{position:fixed;inset:0;z-index:10;display:grid;place-items:center;font:italic 400 1.2rem var(--display);color:var(--muted);background:var(--ink);transition:opacity .8s}
 .load.off{opacity:0;pointer-events:none}
-.compass{position:fixed;z-index:3;right:clamp(16px,3vw,32px);bottom:calc(env(safe-area-inset-bottom,0px) + 250px);width:54px;height:54px;border-radius:50%;border:1px solid var(--faint);background:rgba(10,12,18,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+
+.compass{position:fixed;z-index:3;right:clamp(16px,3vw,34px);bottom:calc(env(safe-area-inset-bottom,0px) + 262px);width:50px;height:50px;border-radius:50%;background:rgba(14,12,10,.7);box-shadow:inset 0 0 0 1px var(--faint)}
 .compass i{position:absolute;inset:0}
-.compass i::before{content:'Пн';position:absolute;left:50%;top:4px;transform:translateX(-50%);font:600 .6rem var(--body);color:var(--gold)}
-.compass i::after{content:'';position:absolute;left:50%;top:17px;width:0;height:0;margin-left:-5px;border:5px solid transparent;border-bottom:15px solid var(--gold);border-top:0}
+.compass i::before{content:'Пн';position:absolute;left:50%;top:4px;transform:translateX(-50%);font:italic 400 12px var(--display);color:var(--paper)}
+.compass i::after{content:'';position:absolute;left:50%;top:18px;width:0;height:0;margin-left:-4px;border:4px solid transparent;border-bottom:13px solid var(--ember);border-top:0}
 body.intro-on .dock,body.intro-on .top,body.intro-on .compass,body.intro-on #labels{opacity:0;pointer-events:none}
-.dock,.top,.compass,#labels{transition:opacity .9s var(--ease)}
-.bigt{position:fixed;z-index:2;left:50%;top:16%;transform:translateX(-50%);text-align:center;pointer-events:none;opacity:0}
-.bigt b{display:block;font:400 clamp(3rem,8vw,6.5rem)/1 var(--display);color:#fff4d8;letter-spacing:.02em;text-shadow:0 0 40px rgba(226,189,98,.45),0 4px 30px rgba(0,0,0,.6)}
-.bigt span{display:block;margin-top:.5rem;font:600 .72rem var(--body);letter-spacing:.3em;text-transform:uppercase;color:rgba(244,236,214,.8);text-shadow:0 1px 10px rgba(0,0,0,.9)}
+.dock,.top,.compass{transition:opacity .9s var(--ease)}
+
+/* велика година при зміні кроку */
+.bigt{position:fixed;z-index:2;left:50%;top:15%;transform:translateX(-50%);text-align:center;pointer-events:none;opacity:0}
+.bigt b{display:block;font:400 clamp(3.2rem,8vw,6.6rem)/1 var(--display);color:#f6eedc;font-variant-numeric:lining-nums;text-shadow:0 4px 34px rgba(0,0,0,.7)}
+.bigt span{display:block;margin-top:.4rem;font:italic 400 clamp(1rem,1.8vw,1.35rem) var(--display);color:rgba(236,228,210,.85);text-shadow:0 1px 10px rgba(0,0,0,.9)}
 .bigt.show{animation:bigt 3.4s var(--ease) both}
-@keyframes bigt{0%{opacity:0;transform:translate(-50%,10px);filter:blur(6px)}18%{opacity:1;transform:translate(-50%,0);filter:blur(0)}70%{opacity:1}100%{opacity:0;transform:translate(-50%,-6px)}}
-#labels{transition:opacity 1.2s var(--ease)}
-#labels.hush{opacity:.18}
-.voice{position:fixed;left:50%;top:38%;z-index:4;width:min(680px,calc(100vw - 32px));margin:0;transform:translate(-50%,-50%);text-align:center;pointer-events:none;opacity:0;filter:blur(6px);transition:opacity 1.6s var(--ease),filter 1.6s var(--ease)}
-.voice.show{opacity:1;filter:none}
-.voice q{display:block;font:italic 400 clamp(1.25rem,2.4vw,1.85rem)/1.35 var(--display);color:#f6eedb;text-shadow:0 2px 24px rgba(0,0,0,.85),0 0 2px rgba(0,0,0,.9);quotes:'«' '»'}
-.voice figcaption{margin-top:.9rem;font:600 .68rem/1.5 var(--body);letter-spacing:.16em;text-transform:uppercase;color:var(--gold);text-shadow:0 1px 10px rgba(0,0,0,.9)}
-.voice figcaption b{display:block;font-weight:600}
-.voice figcaption small{display:block;margin-top:.15rem;font-weight:500;letter-spacing:.08em;text-transform:none;color:var(--muted);font-size:.72rem}
+@keyframes bigt{0%{opacity:0;transform:translate(-50%,8px)}18%{opacity:1;transform:translate(-50%,0)}70%{opacity:1}100%{opacity:0;transform:translate(-50%,-4px)}}
+
+/* голос свідка */
+.voice{position:fixed;left:50%;top:38%;z-index:4;width:min(40rem,calc(100vw - 32px));margin:0;transform:translate(-50%,-50%);text-align:center;pointer-events:none;opacity:0;transition:opacity 1.6s var(--ease)}
+.voice.show{opacity:1}
+.voice::before{content:'';position:absolute;inset:-18% -14%;z-index:-1;background:radial-gradient(closest-side,rgba(8,6,4,.62),rgba(8,6,4,.32) 60%,rgba(8,6,4,0))}
+.voice q{display:block;font:italic 400 clamp(1.3rem,2.5vw,1.95rem)/1.38 var(--display);color:#f6eedc;text-shadow:0 2px 26px rgba(0,0,0,.9),0 0 2px rgba(0,0,0,.9);quotes:'«' '»';text-wrap:balance}
+.voice figcaption{margin-top:1rem;font:500 13px/1.45 var(--body);color:rgba(236,228,210,.78);text-shadow:0 1px 10px rgba(0,0,0,.95)}
+.voice figcaption b{font-weight:600;color:var(--paper)}
+.voice figcaption b::before{content:'— '}
+.voice figcaption small{display:block;margin-top:.1rem;font:italic 400 14px var(--display);color:var(--muted)}
+
+/* архівна картка */
 .arch{position:fixed;right:18px;top:96px;z-index:4;width:230px;margin:0;padding:8px 8px 10px;background:#e9e0cb;color:#2b2418;box-shadow:0 14px 40px rgba(0,0,0,.55);transform:rotate(1.6deg) translateY(8px);opacity:0;pointer-events:none;cursor:zoom-in;transition:opacity 1.4s var(--ease),transform 1.4s var(--ease),width .6s var(--ease)}
 .arch.show{opacity:1;pointer-events:auto;transform:rotate(1.6deg)}
 .arch.big{width:min(560px,calc(100vw - 36px));cursor:zoom-out;transform:rotate(0)}
 .arch img{display:block;width:100%;height:auto;filter:sepia(.35) contrast(1.05)}
-.arch figcaption{margin-top:6px;font:italic 400 .86rem/1.3 var(--display);color:#3a3022}
+.arch figcaption{margin-top:6px;font:italic 400 14px/1.3 var(--display);color:#3a3022}
+
+@media(prefers-reduced-motion:reduce){.card.fresh .anim,.bigt.show{animation:none}.bigt{display:none}}
+@media(max-height:720px) and (min-width:641px){.voice{top:31%}.voice q{font-size:clamp(1.15rem,2.1vw,1.55rem)}}
+@media(max-width:1020px){.tools .chip span{display:none}.tools .chip{padding:.5rem .6rem}}
 @media(max-width:640px){
   .voice{top:30%}
   .arch{top:150px;right:12px;width:150px}
   .legend,.sub{display:none}
   .tools .chip span{display:none}
-  .tools .chip{padding:.5rem .6rem}
-  .card{padding:.8rem .95rem .75rem}
-  .card .txt{font-size:.78rem;max-height:6.4em}
-  .card h3{font-size:1.12rem}
-  .when b{font-size:1.45rem}
+  .tools .chip{padding:.5rem .55rem}
+  .card{grid-template-columns:1fr;padding:.85rem 1rem .7rem}
+  .when{display:flex;align-items:baseline;gap:.6rem;padding:0}
+  .when b,.when b.long{font-size:1.6rem;white-space:nowrap}
+  .when span{margin:0;font-size:14px}
+  .card h3{margin-top:.2rem;font-size:1.25rem}
+  .card .txt{font-size:13.5px;max-height:6.6em}
+  .card small{font-size:12px}
   .ticks button span{display:none}
   .ticks button.cur span{display:block}
   .compass{bottom:auto;top:calc(env(safe-area-inset-top,0px) + 96px);width:44px;height:44px}
-  .lb span{font-size:10.5px}
-  .lb.b span{font-size:12.5px}
+  .lb span{font-size:11px}
+  .lb.b span,.lb.pin span{font-size:13px}
   .panel{max-height:calc(100% - 300px)}
 }
 </style>
@@ -164,8 +192,8 @@ body.intro-on .dock,body.intro-on .top,body.intro-on .compass,body.intro-on #lab
 <header class="top">
   <div>
     <a class="back" href="worobin-1918.html#khronika"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 8H3M7 4 3 8l4 4"/></svg>Воробин, 1918</a>
-    <h1>Облога <em>Воробина</em></h1>
-    <p class="sub">21–22 листопада 1918 · година за годиною, за свідченнями зі справи № 67/22</p>
+    <h1>Облога Воробина</h1>
+    <p class="sub">21–22 листопада 1918 року, година за годиною, за свідченнями з кримінальної справи № 67/22</p>
     <div class="legend"><span><i style="background:var(--def);color:var(--def)"></i>варта й оборонці</span><span><i style="background:var(--att);color:var(--att)"></i>повстанці</span><span><i style="background:var(--ger);color:var(--ger)"></i>німецькі пости</span><span><i style="background:var(--gold);color:var(--gold)"></i>подія</span></div>
   </div>
   <div class="tools">
@@ -178,7 +206,7 @@ body.intro-on .dock,body.intro-on .top,body.intro-on .compass,body.intro-on #lab
 
 <aside class="panel" id="info" aria-label="Про схему">
   <button type="button" class="x" aria-label="Закрити" id="infoX">×</button>
-  <p class="k">як зроблено</p>
+  <p class="k">Як зроблено</p>
   <h2>Про цю реконструкцію</h2>
   <p><b>Розташування будівель</b> узято з аерофотознімків, де видно обриси будівель маєтку. Масштаб і сторони світу визначено за павільйоном «Бібліотека»: портик на захід, вежа на північ, колонада на південь. Стави, річки й насип через перешийок — за обрисами на аерофотознімку; парк і сад намальовано за описами й старими фотографіями.</p>
   <p><b>Палац</b> — П-подібна будівля біля шляху. Він має два двоповерхові крила й одноповерхову середину, як його описав вартовий Ліпінський. Решту будівель відтворено за історією резиденції й малюнком Наполеона Орди 1870 року. Вікна, дахи й ганок умовні.</p>
@@ -187,7 +215,7 @@ body.intro-on .dock,body.intro-on .top,body.intro-on .compass,body.intro-on #lab
   <p><b>Краєвид.</b> Довкілля — за аерофотознімком району: на захід від шляху вузькі смуги полів аж до великого лісу, на схід — заплава Горині зі стогами, шлях на південь веде до Дубровиці, на північ — на Висоцьк; Селець — за заплавою на північному сході, Острівці й Мочулище — на заході. Поля, переліски й стоги намальовано узагальнено.</p>
   
   <p><b>Фігурки</b> збільшено, щоб їх було видно. Їхня кількість умовна. <b>Погода</b> (мряка, туман) — художня: якою вона була тієї ночі, документи не кажуть.</p>
-  <a class="go" href="worobin-1918.html#khronika">Повна хроніка з цитатами й сканами →</a>
+  <a class="go" href="worobin-1918.html#khronika">Повна хроніка з цитатами й сканами</a>
 </aside>
 <aside class="panel" id="binfo" aria-live="polite"></aside>
 
@@ -196,9 +224,8 @@ body.intro-on .dock,body.intro-on .top,body.intro-on .compass,body.intro-on #lab
 
 <div class="dock">
   <div class="card fresh" id="card" aria-live="polite">
-    <div class="anim"><p class="when"><b id="cT"></b><span id="cD"></span></p></div>
-    <div class="anim"><h3 id="cH"></h3><p class="txt" id="cP"></p></div>
-    <div class="anim"><small id="cS"></small></div>
+    <p class="anim when"><b id="cT"></b><span id="cD"></span></p>
+    <div class="anim"><h3 id="cH"></h3><p class="txt" id="cP"></p><small id="cS"></small></div>
     <div class="ctl">
       <button type="button" id="prev" aria-label="Попередній крок"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 3 5 8l5 5"/></svg></button>
       <button type="button" id="play" aria-label="Відтворити"><svg viewBox="0 0 16 16" fill="currentColor"><path id="playIc" d="M4 2.5v11l9-5.5z"/></svg></button>
@@ -210,18 +237,18 @@ body.intro-on .dock,body.intro-on .top,body.intro-on .compass,body.intro-on #lab
 
 <div class="intro" id="intro">
   <div>
-    <p class="k">Воробин · 21–22 листопада 1918</p>
+    <p class="k">Воробин, 21–22 листопада 1918 року</p>
     <h2>Облога маєтку Плятерів</h2>
     <p>Вісімнадцять годин від перших пострілів до розстрілу на дорозі — так, як їх описали свідки в польській кримінальній справі. Ви побачите, де стояла варта, звідки йшли загони, де були німецькі пости і як горів палац.</p>
     <button type="button" id="start">Дивитися</button>
     <button type="button" class="alt" id="explore">Оглянути маєток самому</button>
-    <small>Тягніть, щоб обертати · колесо або два пальці — наблизити · натисніть на будівлю</small>
+    <small>Тягніть, щоб обертати; колесом або двома пальцями — наближати; натисніть на будівлю, щоб дізнатися про неї.</small>
   </div>
 </div>
 
 <script src="three-r147.js"></script>
 <script src="gltf-r147.js"></script>
-<script src="worobin-1918-3d.js?v=20261128a"></script>
+<script src="worobin-1918-3d.js?v=20261128c"></script>
 <script>
 (function(){
   var ib = document.getElementById('infoBtn'), info = document.getElementById('info');
