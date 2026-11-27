@@ -32,7 +32,7 @@ var LIB = W(646, 1074);
 var PAL = {N: {x0: -104, x1: -76, z0: -57, z1: -44}, M: {x0: -104, x1: -91, z0: -44, z1: -18.6}, S: {x0: -104, x1: -76, z0: -18.6, z1: -5.6}};
 var AXZ = -31.3;
 var LAWN = [-58, AXZ];
-var ROAD = [[-262, 470], [-197, 252], [-146, 0], [-132, -70], [-115, -198], [-78, -376], [-60, -480]];
+var ROAD = [[-227, 470], [-215.3, 383.7], [-192.5, 217.7], [-169.7, 68.3], [-148.9, -31.3], [-130.3, -114.3], [-111.6, -197.3], [-95.8, -280.3], [-82.5, -374.9], [-67.7, -480]];   // за аерофотознімком
 function roadX(z){ return polyAt(ROAD, z); }
 var PARK = {z0: -124, z1: 106};
 var GARDEN = [[775, 620], [772, 1082], [1295, 1090], [1365, 752], [1180, 742], [1180, 580], [1095, 548], [1040, 610]].map(function(p){ return W(p[0], p[1]); });
@@ -101,9 +101,23 @@ function pathDist(x, z){ var m = 1e9; for (var k = 0; k < PATHS.length; k++) m =
 function PARKD(x, z){ return fbm(x*.028 + .5, z*.028 + 2.1); }                      // «щільність» гаїв: високе — гай, низьке — галявина
 var PORTICO = [], CHIMNEY = new T.Vector3(), GATES = {};
 
+/* ═════════════ будівлі: обриси з аерофотознімків ═════════════ */
+function R(px0, px1, py0, py1){ var a = W(px0, py0), b = W(px1, py1); return {x0: Math.min(a[0], b[0]), x1: Math.max(a[0], b[0]), z0: Math.min(a[1], b[1]), z1: Math.max(a[1], b[1])}; }
+function RI(px0, px1, py0, py1){ var a = I(px0, py0), b = I(px1, py1); return {x0: Math.min(a[0], b[0]), x1: Math.max(a[0], b[0]), z0: Math.min(a[1], b[1]), z1: Math.max(a[1], b[1])}; }
+var OF1 = {x0: -75, x1: -42, z0: 27.4, z1: 40.6}, OF2 = {x0: -54, x1: -42, z0: 11.8, z1: 27.4};
+var NB = {x0: -63.8, x1: -37.8, z0: -54.6, z1: -43.4};
+var SMALL = [R(1170, 1285, 685, 740), R(1045, 1072, 1037, 1090), R(1073, 1105, 1060, 1095), R(1230, 1290, 1115, 1165), RI(1160, 1200, 500, 535)];
+var NORTH = [R(1380, 1460, 850, 900), R(1670, 1780, 860, 935), R(1700, 1780, 995, 1075), R(1795, 2030, 1020, 1085), R(1835, 2065, 815, 910), R(2040, 2100, 690, 835), {x0: 54, x1: 77, z0: -219, z1: -208.5}];
+var DIST = NORTH[3];
+var BARN7 = (function(){ var a = I(1560, 1142), b = I(1684, 1212), c = [(a[0] + b[0])/2, (a[1] + b[1])/2], L = Math.hypot(b[0] - a[0], b[1] - a[1]);   // довга будівля навскіс
+  return {cx: c[0], cz: c[1], L: L, D: 10.5, ang: Math.atan2(b[1] - a[1], b[0] - a[0])}; })();
+var FOREST = [R(1220, 1330, 165, 225), R(1250, 1340, 15, 50), RI(668, 757, 340, 372), RI(835, 890, 270, 295), RI(805, 840, 368, 392), RI(1582, 1640, 502, 545), RI(1587, 1640, 447, 467)];
+function aabb(s){ var c = Math.abs(Math.cos(s.ang)), n = Math.abs(Math.sin(s.ang)), hx = s.L/2*c + s.D/2*n, hz = s.L/2*n + s.D/2*c; return {x0: s.cx - hx, x1: s.cx + hx, z0: s.cz - hz, z1: s.cz + hz}; }
+function spec(r){ return r.L ? r : {cx: (r.x0 + r.x1)/2, cz: (r.z0 + r.z1)/2, L: r.x1 - r.x0, D: r.z1 - r.z0, ang: 0}; }
+
 /* ═════════════ рельєф ═════════════ */
 var MEADOW = -3.8, WL = -4.4, RIVER_W = -5;
-function H(x, z){
+function H0(x, z){
   var dB = dWaterB(x, z), dA = dWaterA(x, z), wd = Math.min(dA, dB), h;
   if (wd < 0){ var din = -wd; h = -4.28 - .35*Math.min(din, 3) - (.5 + Math.min(1.2, din*.12))*ss(2.5, 7, din); }
   else {
@@ -112,6 +126,20 @@ function H(x, z){
     if (inPoly(x, z, LOWLAND)){ var dl = closedDist(x, z, LOWLAND); h = lerp(h, MEADOW + (fbm(x*.015, z*.015) - .5)*.55*ss(2, 10, wd), ss(0, 12, dl)*ss(0, 3, wd)); }
   }
   var dr = Math.abs(x - riverX(z)); if (dr < 40) h = Math.min(h, MEADOW - 2.6*(1 - ss(22, 36, dr)));
+  return h;
+}
+/* майданчики під будівлями (рельєф вирівняно, щоб будинки не висіли й не тонули) і насип дороги через перешийок */
+var PADS = [PAL.N, PAL.M, PAL.S, OF1, OF2, NB].concat(SMALL, NORTH, FOREST, [BARN7]).map(function(r){ var s0 = spec(r), c = Math.cos(s0.ang), sn = Math.sin(s0.ang), sum = 0, n = 0;
+  for (var a = -.5; a <= .5; a += .25) for (var b = -.5; b <= .5; b += .25){ sum += H0(s0.cx + c*a*s0.L - sn*b*s0.D, s0.cz + sn*a*s0.L + c*b*s0.D); n++; }
+  return {cx: s0.cx, cz: s0.cz, hw: s0.L/2, hd: s0.D/2, c: c, s: sn, R: Math.hypot(s0.L, s0.D)/2 + 8, h: Math.max(sum/n, WL + .7)}; });
+function padY(r){ var s0 = spec(r); for (var k = 0; k < PADS.length; k++){ var p = PADS[k]; if (Math.abs(p.cx - s0.cx) < .01 && Math.abs(p.cz - s0.cz) < .01) return p.h; } return H(s0.cx, s0.cz); }
+var CAUSE = {top: WL + 1.75, half: 2.4, gap0: -200.2, gap1: -191};
+function H(x, z){
+  var h = H0(x, z);
+  for (var k = 0; k < PADS.length; k++){ var p = PADS[k], dx0 = x - p.cx, dz0 = z - p.cz; if (Math.abs(dx0) > p.R || Math.abs(dz0) > p.R) continue;
+    var lx = dx0*p.c + dz0*p.s, lz = -dx0*p.s + dz0*p.c, d = Math.hypot(Math.max(Math.abs(lx) - p.hw, 0), Math.max(Math.abs(lz) - p.hd, 0)); if (d < 7) h = lerp(h, p.h, 1 - ss(1.2, 7, d)); }
+  var ax = Math.abs(x - BRIDGE.x);                                                       // земляний насип дороги через перешийок; посередині — місток
+  if (ax < 12 && z < -168 && z > -222 && (z < CAUSE.gap0 || z > CAUSE.gap1)){ var top = CAUSE.top - Math.max(0, ax - CAUSE.half)*.75 + (fbm(x*.3, z*.3) - .5)*.12; if (top > h) h = top; }
   return h;
 }
 
@@ -282,15 +310,20 @@ for (i = 0; i < gp.count; i++){
   if (x > -92 && x < -36 && z > -50 && z < 8) c.lerp(C.gravel, .8);
   if (x > -91 && x < -76 && z > -44 && z < -18.6) c.lerp(C.gravel, .9);
   var dlw = Math.hypot(x - LAWN[0], z - LAWN[1]); if (dlw < 10.5) c.copy(C.lawn); else if (dlw < 16) c.lerp(C.gravel, 1);
-  var d1 = polyDist(x, z, ROAD); if (d1 < 6.5){ c.lerp(C.road, 1 - ss(3.5, 6.5, d1)); if (d1 < 3.2) c.lerp(C.mud, ss(.55, .8, fbm(x*.3, z*.3))*.6); }
+  var d1 = polyDist(x, z, ROAD); if (d1 < 6.5){ c.lerp(C.road, 1 - ss(3.5, 6.5, d1)); if (d1 < 3.2) c.lerp(C.mud, ss(.55, .8, fbm(x*.3, z*.3))*.6); if (Math.abs(d1 - 1.15) < .4) c.lerp(C.mud, .55*(1 - Math.abs(d1 - 1.15)/.4)); }   // колії
+  var axc = Math.abs(x - BRIDGE.x); if (axc < 9 && z < -168 && z > -222 && h > WL + .1){ c.lerp(C.mud, .55*(1 - ss(5, 9, axc))); c.lerp(C.road, .8*(1 - ss(2, 3, axc))); if (Math.abs(axc - .9) < .3) c.lerp(C.mud, .45); }   // насип: земляні укоси й дорога по верху
   var d2 = Math.min(polyDist(x, z, DRIVE), polyDist(x, z, LANE), polyDist(x, z, BACKPATH), polyDist(x, z, NPATH) + .6, polyDist(x, z, NPATH2) + .6);  if (inPark || inPoly(x, z, GARDEN)){ var pdd = pathDist(x, z); if (pdd < 2.2) c.lerp(tmp2.copy(C.gravel).multiplyScalar(.85), (1 - ss(.9, 2.2, pdd))*.7); }
   if (d2 < 3.6) c.lerp(C.gravel, (1 - ss(1.8, 3.6, d2))*.9);
   c.multiplyScalar(.8 + .32*n);
   gc[i*3] = c.r; gc[i*3 + 1] = c.g; gc[i*3 + 2] = c.b;
 }
 gGeo.setAttribute('color', new T.BufferAttribute(gc, 3)); gGeo.computeVertexNormals();
-var grainTex = canvasTex(256, function(g, s){ var d = g.createImageData(s, s); for (var k = 0; k < d.data.length; k += 4){ var v = 190 + Math.random()*65; d.data[k] = d.data[k + 1] = d.data[k + 2] = v; d.data[k + 3] = 255; } g.putImageData(d, 0, 0); });
-grainTex.encoding = T.LinearEncoding; grainTex.repeat.set(160, 200);
+var grainTex = canvasTex(512, function(g, s){                                                     // дрібна фактура: стебла трави, грудочки землі
+  var d = g.createImageData(s, s); for (var k = 0; k < d.data.length; k += 4){ var v = 205 + Math.random()*40; d.data[k] = d.data[k + 1] = d.data[k + 2] = v; d.data[k + 3] = 255; } g.putImageData(d, 0, 0);
+  for (var k2 = 0; k2 < 60; k2++){ var gx = Math.random()*s, gy = Math.random()*s, gr = g.createRadialGradient(gx, gy, 0, gx, gy, 20 + Math.random()*50); gr.addColorStop(0, 'rgba(150,150,150,.22)'); gr.addColorStop(1, 'rgba(150,150,150,0)'); g.fillStyle = gr; g.fillRect(0, 0, s, s); }
+  g.lineCap = 'round'; for (var k3 = 0; k3 < 5200; k3++){ var x = Math.random()*s, y = Math.random()*s, a = -Math.PI/2 + (Math.random() - .5)*1.1, l = 3 + Math.random()*9, v2 = Math.random() < .5 ? 255 : 150 + Math.random()*40;
+    g.strokeStyle = 'rgba(' + v2 + ',' + v2 + ',' + v2 + ',' + (.25 + Math.random()*.3) + ')'; g.lineWidth = .6 + Math.random()*1.1; g.beginPath(); g.moveTo(x, y); g.lineTo(x + Math.cos(a)*l, y + Math.sin(a)*l); g.stroke(); } });
+grainTex.encoding = T.LinearEncoding; grainTex.repeat.set(250, 320); grainTex.anisotropy = 4;
 var ground = new T.Mesh(gGeo, new T.MeshStandardMaterial({vertexColors: true, roughness: 1, map: grainTex}));
 ground.receiveShadow = true; scene.add(ground);
 (function(){
@@ -446,6 +479,62 @@ function simpleHouse(r, o){
     if (along){ q.position.set(u, hh*.5, s*(d/2 + .03)); q.rotation.y = s > 0 ? 0 : Math.PI; } else { q.position.set(s*(w/2 + .03), hh*.5, u); q.rotation.y = s*Math.PI/2; } grp.add(q); }); }
   return grp;
 }
+/* житлові й господарські будинки: цоколь, зруб або тинькування, вікна з лиштвами й віконницями, ганок, солом'яний / черепичний / ґонтовий дах */
+var PAINT = new T.MeshStandardMaterial({vertexColors: true, roughness: .85});
+var SHUT = [0x3d5a70, 0x4a6644, 0x6e3d2a, 0x2d4658];
+M.shingle = new T.MeshStandardMaterial({color: 0x8a7a66, map: woodTex, roughness: .95});
+function cottage(r, o){
+  var sp = spec(r), L = sp.L, D = sp.D, rot = sp.ang;
+  if (D > L){ var t0 = L; L = D; D = t0; rot += Math.PI/2; }
+  var hh = o.h || 3.2, fl = o.floors || 1, pl = .55, yt = pl + hh*fl, type = o.type || 'log', barn = !!o.barn;
+  var g = new T.Group(); g.position.set(sp.cx, padY(r) - .05, sp.cz); g.rotation.y = -rot; scene.add(g);
+  var wallM = type === 'brick' ? M.brick : type === 'white' ? M.plaster(o.wall || 0xd6cdb9) : M.wood;
+  var Wl = [], TR = [], ST = [], PT = [], GL = [], DR = [], RF = [], GB = [], CH = [];
+  ST.push(bx(L + .3, pl, D + .3, 0, pl/2, 0));
+  Wl.push(bx(L, hh*fl, D, 0, pl + hh*fl/2, 0));
+  if (type === 'log') [[-1, -1], [1, -1], [1, 1], [-1, 1]].forEach(function(c2){ for (var y = pl + .16; y < yt; y += .34){ Wl.push(bx(.62, .26, .3, c2[0]*(L/2 + .05), y, c2[1]*(D/2 - .1)), bx(.3, .26, .62, c2[0]*(L/2 - .1), y + .17, c2[1]*(D/2 + .05))); } });
+  if (type === 'brick'){ for (var f2 = 1; f2 <= fl; f2++) TR.push(bx(L + .2, .18, D + .2, 0, pl + f2*hh - .1, 0)); }
+  var shc = o.shut >= 0 ? SHUT[o.shut % SHUT.length] : null, du = barn ? 99 : -L*.18;
+  function win(u, yc, side, onEnd){ var ww = barn ? .75 : 1, wh = barn ? .5 : 1.22, P = [], Q = [], G = [];
+    P.push(bx(ww + .28, .12, .1, u, yc + wh/2 + .06, 0), bx(ww + .28, .1, .1, u, yc - wh/2 - .05, 0), bx(.12, wh, .1, u - ww/2 - .08, yc, 0), bx(.12, wh, .1, u + ww/2 + .08, yc, 0), bx(ww + .4, .08, .22, u, yc - wh/2 - .12, .06));
+    if (!barn) P.push(bx(.05, wh, .05, u, yc, .02), bx(ww, .05, .05, u, yc + wh*.18, .02));
+    if (shc && !barn) [-1, 1].forEach(function(sd){ Q.push([bx(.52, wh + .08, .05, u + sd*(ww/2 + .38), yc, .04), shc]); });
+    var gq = new T.PlaneGeometry(ww, wh); gq.translate(u, yc, .01); G.push(gq);
+    var m4 = onEnd ? new T.Matrix4().makeTranslation(side*(L/2 + .02), 0, 0).multiply(new T.Matrix4().makeRotationY(side*Math.PI/2)) : new T.Matrix4().makeTranslation(0, 0, side*(D/2 + .02)).multiply(new T.Matrix4().makeRotationY(side > 0 ? 0 : Math.PI));
+    if (!onEnd && side < 0) m4 = new T.Matrix4().makeTranslation(0, 0, -(D/2 + .02)).multiply(new T.Matrix4().makeRotationY(Math.PI));
+    P.forEach(function(q){ q.applyMatrix4(m4); TR.push(q); }); Q.forEach(function(q){ q[0].applyMatrix4(m4); PT.push(q); }); G.forEach(function(q){ q.applyMatrix4(m4); GL.push(q); }); }
+  var nW = barn ? Math.max(2, Math.floor(L/8)) : Math.max(1, Math.floor((L - 1.5)/3.4));
+  for (var f = 0; f < fl; f++){ var yc0 = pl + f*hh + (barn ? hh*.72 : hh*.5);
+    [-1, 1].forEach(function(sd){ for (var k = 0; k < nW; k++){ var u = -L/2 + (k + .5)*L/nW; if (sd > 0 && f === 0 && Math.abs(u - du) < 1.5) continue; win(sd > 0 ? u : -u, yc0, sd, false); } });
+    if (!barn && D > 5) [-1, 1].forEach(function(sd){ win(0, yc0, sd, true); }); }
+  if (!barn){                                                                                       // двері з ганком
+    DR.push(bx(1.05, 2.05, .08, du, pl + 1.02, D/2 + .05)); TR.push(bx(1.35, .12, .12, du, pl + 2.12, D/2 + .06), bx(.12, 2.1, .12, du - .6, pl + 1.05, D/2 + .06), bx(.12, 2.1, .12, du + .6, pl + 1.05, D/2 + .06));
+    ST.push(bx(1.8, .2, 1.1, du, pl - .1, D/2 + .55), bx(1.5, .2, .7, du, pl - .3, D/2 + 1.1));
+    [-1, 1].forEach(function(sd){ PT.push([bx(.14, 2.4, .14, du + sd*.85, pl + 1.2, D/2 + 1.15), 0x5a4632]); });
+    var cn = bx(2.4, .1, 1.6, du, pl + 2.5, D/2 + .75); cn.rotateX(.18); RF.push(cn);
+  } else {                                                                                          // ворота стодоли з торця
+    DR.push(bx(.1, 2.9, 3.4, L/2 + .05, pl + 1.45, 0)); [[-1, 1], [1, -1]].forEach(function(dg){ var br = bx(.06, 3.6, .14, L/2 + .12, pl + 1.45, dg[0]*.85); br.rotateX(dg[1]*.62); PT.push([br, 0x4a3a2a]); });
+    TR.push(bx(.16, .16, 3.8, L/2 + .1, pl + 3, 0));
+  }
+  var over = .55, rh = D*(o.pitch || (o.roof === 'thatch' ? .62 : .42)), th = o.roof === 'thatch' ? .42 : .16, roofM = o.roof === 'thatch' ? M.thatch : o.roof === 'shingle' ? M.shingle : M.tile;
+  if (o.hip){ var hr = hipRoof(L + 2*over, D + 2*over, rh, false); hr.translate(0, yt, 0); RF.push(hr); TR.push(bx(L + 2*over + .1, .14, D + 2*over + .1, 0, yt - .02, 0)); }
+  else {
+    var hw = D/2 + over, sl = Math.hypot(hw, rh), a2 = Math.atan2(rh, hw);
+    [-1, 1].forEach(function(sd){ var sb = bx(L + 2*over, th, sl + .1, 0, 0, 0); sb.rotateX(sd*a2); sb.translate(0, yt + rh/2 + th/2, sd*hw/2); RF.push(sb); });
+    if (o.roof === 'thatch'){ var rg = new T.CylinderGeometry(.3, .3, L + 2*over + .2, 8); rg.rotateZ(Math.PI/2); rg.translate(0, yt + rh + .12, 0); RF.push(rg); }
+    else RF.push(bx(L + 2*over + .1, .22, .32, 0, yt + rh + .08, 0));
+    [-1, 1].forEach(function(sd){ var pg = pedimentGeo(D, rh, .14); pg.rotateY(Math.PI/2); pg.translate(sd*(L/2) - (sd > 0 ? .14 : 0), yt, 0); GB.push(pg);
+      if (!barn){ var gw = new T.PlaneGeometry(.55, .55); gw.rotateY(sd*Math.PI/2); gw.translate(sd*(L/2 + .02), yt + rh*.38, 0); GL.push(gw); } });
+  }
+  if (o.chim){ var chx = L*.18; CH.push(bx(.8, rh + 1.3, .8, chx, yt + rh*.45 + .6, -D*.12), bx(1.05, .18, 1.05, chx, yt + rh + 1.2, -D*.12)); }
+  var gm = new T.MeshStandardMaterial({color: 0x1b2026, roughness: .2, metalness: .5, emissive: 0xffa850, emissiveIntensity: 0}); GLASS_MATS.push({m: gm, kind: 'house'});
+  [[Wl, wallM, 2.2], [TR, M.trim, 3], [ST, M.stone, 2], [DR, M.door, 2], [RF, roofM, 2.5], [GB, type === 'brick' ? M.brick : M.wood, 2], [CH, M.brick, 1.2]].forEach(function(q){
+    if (!q[0].length) return; var m = new T.Mesh(worldUV(mergeG(q[0].map(function(x){ return [x]; })), q[2]), q[1]); m.castShadow = m.receiveShadow = true; g.add(m); });
+  if (PT.length){ var pm = new T.Mesh(mergeG(PT, true), PAINT); pm.castShadow = true; g.add(pm); }
+  if (GL.length) g.add(new T.Mesh(mergeG(GL.map(function(x){ return [x]; })), gm));
+  HOUSES.push({g: g, sp: sp, L: L, D: D, rot: rot, barn: barn, du: du, yard: !!o.yard});
+  return g;
+}
 function pedimentGeo(wd, ht, depth){ var sh = new T.Shape(); sh.moveTo(-wd/2, 0); sh.lineTo(wd/2, 0); sh.lineTo(0, ht); sh.lineTo(-wd/2, 0); return new T.ExtrudeGeometry(sh, {depth: depth, bevelEnabled: false}); }
 
 /* палац: два двоповерхові крила й одноповерхова середина */
@@ -474,16 +563,20 @@ var ofc2 = building({r: OF2, floors: 1, fh: 4.3, wall: 0xeee3ca, chim: 1, kind: 
   var pd = new T.Mesh(pedimentGeo(9.4, 2.2, 1.6), M.trim); pd.position.set(x, y + Hh + .2, z + .3); pd.rotation.y = Math.PI; pd.castShadow = true; scene.add(pd); })();
 var NB = {x0: -63.8, x1: -37.8, z0: -54.6, z1: -43.4};
 var nbld = building({r: NB, floors: 1, fh: 4, wall: 0xe4d8bd, chim: 1, kind: 'other', roofMat: M.tile, doors: {s: [.3, .7]}, rust: false});
-function R(px0, px1, py0, py1){ var a = W(px0, py0), b = W(px1, py1); return {x0: Math.min(a[0], b[0]), x1: Math.max(a[0], b[0]), z0: Math.min(a[1], b[1]), z1: Math.max(a[1], b[1])}; }
-var SMALL = [R(1170, 1285, 685, 740), R(1045, 1072, 1037, 1090), R(1073, 1105, 1060, 1095), R(1230, 1290, 1115, 1165)];
 SMALL.forEach(function(r){ building({r: r, floors: 1, fh: 3.6, wall: 0xe3d7bb, chim: 1, roofMat: M.tile, kind: 'other', rust: false}); });
-var NORTH = [R(1380, 1460, 850, 900), R(1670, 1780, 860, 935), R(1700, 1780, 995, 1075), R(1795, 2030, 1020, 1085), R(1835, 2065, 815, 910), R(2040, 2100, 690, 835), {x0: 54, x1: 77, z0: -219, z1: -208.5}, {x0: 140, x1: 158, z0: -312, z1: -266}];
-var DIST = NORTH[3];
-NORTH.forEach(function(r, k){ if (k === 3 || k === 4) simpleHouse(r, {brick: true, h: 6.5, roof: M.tile, pitch: .3}); else simpleHouse(r, {white: k % 2 === 0, h: 3.4}); });
-(function(){ var c = cen(DIST), x = c[0] + 4, z = DIST.z0 + 6, y = H(x, z);
+var HOUSES = [];
+cottage(NORTH[0], {type: 'white', h: 3.3, roof: 'thatch', chim: 1, shut: 0, yard: true});
+cottage(NORTH[1], {type: 'white', h: 3.8, roof: 'tile', hip: true, chim: 2, shut: 1});
+cottage(NORTH[2], {type: 'log', h: 3.2, roof: 'thatch', chim: 1, shut: 2, yard: true});
+cottage(DIST, {type: 'brick', h: 4.2, floors: 2, roof: 'tile', pitch: .3, hip: true, chim: 0, shut: -1});
+cottage(NORTH[4], {type: 'brick', h: 4.6, roof: 'tile', pitch: .3, barn: true, shut: -1});
+cottage(NORTH[5], {type: 'log', h: 3.1, roof: 'thatch', chim: 1, shut: 3, yard: true});
+cottage(NORTH[6], {type: 'log', h: 3.4, roof: 'shingle', chim: 1, shut: 0, yard: true});
+cottage(BARN7, {type: 'log', h: 3.6, roof: 'thatch', barn: true, shut: -1});
+FOREST.forEach(function(r, k){ cottage(r, {type: k % 3 === 1 ? 'white' : 'log', h: 3.2, roof: k % 2 ? 'shingle' : 'thatch', chim: 1, shut: k % 4, yard: true}); });
+(function(){ var c = cen(DIST), x = c[0] + 4, z = DIST.z0 + 6, y = padY(DIST);
   var g = new T.CylinderGeometry(.9, 1.5, 26, 14); g.translate(x, y + 13, z); var m = new T.Mesh(worldUV(g, 1.5), M.brick); m.castShadow = true; scene.add(m);
   var cap = new T.Mesh(new T.CylinderGeometry(1.15, 1.15, .6, 14), M.brick); cap.position.set(x, y + 26.2, z); scene.add(cap); CHIMNEY.set(x, y + 27, z); })();
-[R(1220, 1330, 165, 225), R(1250, 1340, 15, 50), R(1160, 1210, 298, 330), R(1230, 1290, 318, 360), R(1060, 1130, 200, 250)].forEach(function(r){ simpleHouse(r, {h: 3.2}); });
 var libGroup = new T.Group(); libGroup.position.set(LIB[0], 0, LIB[1]); scene.add(libGroup);
 
 /* мур саду, паркан, брами */
@@ -499,6 +592,7 @@ var libGroup = new T.Group(); libGroup.position.set(LIB[0], 0, LIB[1]); scene.ad
   var F = [];
   for (var z = PARK.z0; z < PARK.z1; z += 2.6){
     if (Math.abs(z - GATE_Z) < 4.2 || Math.abs(z - BACK_Z) < 1.8) continue;
+    if (SMALL.concat(FOREST).some(function(r){ var xf = roadX(z) + 7.2; return xf > r.x0 - 1.5 && xf < r.x1 + 1.5 && z > r.z0 - 1.5 && z < r.z1 + 1.5; })) continue;
     var x = roadX(z) + 7.2, y = H(x, z), x2 = roadX(z + 2.6) + 7.2;
     F.push([bx(.18, 2.1, .18, x, y + 1.05, z)]);
     var gg = bx(.08, 1.7, 2.6, 0, 0, 0); gg.rotateY(Math.atan2(x2 - x, 2.6)); gg.translate((x + x2)/2, y + .95, z + 1.3); F.push([gg]);
@@ -540,8 +634,13 @@ function bridge(a, b, w, ya, yb, o){
   return {a: a, b: b, w: w, L: L, ux: ux, uz: uz, yAt: yAt, at: function(t){ return new T.Vector3(a[0] + dx*t, yAt(t) + .1, a[1] + dz*t); }};
 }
 (function(){
-  var za = BRIDGE.z0, zb = BRIDGE.z1;                                                                                    // міст через перешийок між ставами
-  BRIDGES.north = bridge([BRIDGE.x, za], [BRIDGE.x, zb], 3.6, H(BRIDGE.x, za) + .3, H(BRIDGE.x, zb) + .3, {arch: .7, span: 3.6, water: WL});
+  var za = CAUSE.gap1 + 1.8, zb = CAUSE.gap0 - 1.8;                                                                    // невеликий місток над протокою між насипами
+  BRIDGES.north = bridge([BRIDGE.x, za], [BRIDGE.x, zb], 3.8, CAUSE.top + .12, CAUSE.top + .12, {arch: .3, span: 3, water: WL});
+  var Q = [];                                                                                                          // дерев'яні оголовки насипу біля містка
+  [CAUSE.gap1 + .6, CAUSE.gap0 - .6].forEach(function(zc, k){ var sd = k ? -1 : 1;
+    for (var i = -3; i <= 3; i++){ var pg = new T.CylinderGeometry(.17, .2, 2.6, 7); pg.translate(BRIDGE.x + i*.75, WL + .55, zc); Q.push([pg]); }
+    for (var j = 0; j < 4; j++) Q.push([bx(5.4, .22, .24, BRIDGE.x, WL - .2 + j*.48, zc + sd*.15)]); });
+  var qm = new T.Mesh(worldUV(mergeG(Q), 1.5), new T.MeshStandardMaterial({color: 0x5e4e3c, map: woodTex, roughness: 1})); qm.castShadow = qm.receiveShadow = true; scene.add(qm);
   var z0 = -194, z1 = -217, a = [roadX(z0), z0], b = [roadX(z1), z1];                                                    // міст на шляху
   BRIDGES.road = bridge(a, b, 6.2, H(a[0], a[1]) + .25, H(b[0], b[1]) + .25, {arch: .45, span: 3.6, water: WL});
 })();
@@ -594,11 +693,11 @@ var TG = {
   fruit: branchTree(23, {trunk: 1.4, rad: .16, depth: LOW ? 2 : 3, ch0: 3, spread: 1, up: .2, decay: .7, tuft: .25, tuftR: .35, tuftC: 0x4e4436})
 };
 var TREES = {}; Object.keys(TG).forEach(function(k){ TREES[k] = []; });
-var CAMCLR = [[[-36, 7, -6], [-92, 7, -33]], [[-26, 34, 24], [-90, 6, -31]], [[-46, 20, 36], [-92, 8, -12]], [[-8, 26, 74], [-62, 2, 28]], [[-108, 24, 52], [-142, 1, 0]], [[-46, 22, -4], [-94, 9, -31]],
-  [[-44, 16, -2], [-86, 6, -36]], [[-110, 13, -84], [-142, 2, -28]], [[-112, 26, 40], [-145, 1, -10]]].map(function(c){ var p = c[0], t = c[1], m = [t[0] + (p[0] - t[0])*1.4, t[2] + (p[2] - t[2])*1.4]; return [m, [lerp(p[0], t[0], .3), lerp(p[2], t[2], .3)]]; });
+var CAMCLR = [[[-36, 7, -6], [-92, 7, -33]], [[-26, 34, 24], [-90, 6, -31]], [[-46, 20, 36], [-92, 8, -12]], [[-8, 26, 74], [-62, 2, 28]], [[-118, 24, 52], [-156, 1, 0]], [[-46, 22, -4], [-94, 9, -31]],
+  [[-44, 16, -2], [-86, 6, -36]], [[-112, 14, -84], [-150, 2, -28]], [[-118, 26, 40], [-154, 1, -10]]].map(function(c){ var p = c[0], t = c[1], m = [t[0] + (p[0] - t[0])*1.4, t[2] + (p[2] - t[2])*1.4]; return [m, [lerp(p[0], t[0], .3), lerp(p[2], t[2], .3)]]; });
 function blocked(x, z, r){
   for (var ci = 0; ci < CAMCLR.length; ci++) if (segDist(x, z, CAMCLR[ci][0], CAMCLR[ci][1]) < 9) return true;
-  r = r || 4; var boxes = [PAL.S, PAL.M, PAL.N, OF1, OF2, NB].concat(SMALL, NORTH);
+  r = r || 4; var boxes = [PAL.S, PAL.M, PAL.N, OF1, OF2, NB].concat(SMALL, NORTH, FOREST, [aabb(BARN7)]);
   for (var k = 0; k < boxes.length; k++){ var b = boxes[k]; if (x > b.x0 - r && x < b.x1 + r && z > b.z0 - r && z < b.z1 + r) return true; }
   if (Math.hypot(x - LIB[0], z - LIB[1]) < 24) return true;
   if (polyDist(x, z, ROAD) < 8 || polyDist(x, z, DRIVE) < 5 || polyDist(x, z, LANE) < 4.5 || polyDist(x, z, BACKPATH) < 3) return true;
@@ -640,6 +739,20 @@ for (i = 0; i < (LOW ? 150 : 260); i++){ var nw = nearWater(rt, 3, 13); if (!nw)
 for (i = 0; i < 9; i++){ var ic = ISLAND[(rt()*ISLAND.length)|0], ix = lerp(ic[0], -38, .45 + rt()*.4), iz = lerp(ic[1], -203, .45 + rt()*.4); if (dWater(ix, iz) > 1.5) addT(rt() < .6 ? 'willow' : 'wbig', ix, iz, .8 + rt()*.4); }
 for (i = 0; i < (LOW ? 280 : 520); i++){ var fa = rt()*6.283, fr = 480 + rt()*320, fx2 = 10 + Math.cos(fa)*fr*1.1, fz2 = -20 + Math.sin(fa)*fr; if (fx2 > 230 && Math.abs(fz2) < 340) continue; (TREES[rt() < .55 ? 'spruce' : 'pine']).push([fx2, -3.8, fz2, 2.2 + rt()*1.6, rt()*6.283, 0]); }
 var treeMat = new T.MeshStandardMaterial({vertexColors: true, roughness: .95, flatShading: true});
+(function(){                                                                                       // кущики сухої листопадової трави
+  var P = [], Cc = [], rr = rngF(97);
+  for (var k = 0; k < 7; k++){ var a = rr()*6.283, l = .35 + rr()*.45, lean = .25 + rr()*.35, bx0 = Math.cos(a)*.08, bz0 = Math.sin(a)*.08, w = .035;
+    var tip = [bx0 + Math.cos(a)*lean*l, l, bz0 + Math.sin(a)*lean*l], px = -Math.sin(a)*w, pz = Math.cos(a)*w;
+    P.push(bx0 - px, 0, bz0 - pz, bx0 + px, 0, bz0 + pz, tip[0], tip[1], tip[2]); var c = col(rr() < .55 ? 0x8a7b4e : rr() < .5 ? 0x6b6a3c : 0x9a8a5a); for (var q = 0; q < 3; q++) Cc.push(c.r*(q === 2 ? 1.15 : .8), c.g*(q === 2 ? 1.15 : .8), c.b*(q === 2 ? 1.15 : .8)); }
+  var g = new T.BufferGeometry(); g.setAttribute('position', new T.Float32BufferAttribute(P, 3)); g.setAttribute('color', new T.Float32BufferAttribute(Cc, 3)); g.computeVertexNormals();
+  var L2 = [], n = LOW ? 3500 : 9000;
+  for (var t = 0; t < n*3 && L2.length < n; t++){ var x = -200 + rr()*360, z = -330 + rr()*480, h = H(x, z);
+    if (h < WL + .25 || polyDist(x, z, ROAD) < 6 || x < roadX(z) - 6 || blocked(x, z, 1.5) || inPoly(x, z, GARDEN) && pathDist(x, z) < 2.4 || Math.hypot(x - LAWN[0], z - LAWN[1]) < 16) continue;
+    var cl = fbm(x*.08 + 3, z*.08); if (rr() > ss(.3, .6, cl) + .15) continue; L2.push([x, h, z]); }
+  var im = new T.InstancedMesh(g, new T.MeshStandardMaterial({vertexColors: true, roughness: 1, side: T.DoubleSide}), L2.length), dm = new T.Object3D();
+  L2.forEach(function(q, j){ dm.position.set(q[0], q[1] - .02, q[2]); dm.rotation.set(0, rr()*6.283, 0); var sc = .7 + rr()*.8; dm.scale.set(sc, sc*(.8 + rr()*.5), sc); dm.updateMatrix(); im.setMatrixAt(j, dm.matrix); });
+  im.receiveShadow = true; scene.add(im);
+})();
 var dummy = new T.Object3D();
 Object.keys(TREES).forEach(function(k){
   var L = TREES[k]; if (!L.length) return;
@@ -666,7 +779,7 @@ Object.keys(TREES).forEach(function(k){
 /* дрібниці */
 (function(){
   var hay = new T.MeshStandardMaterial({color: 0x8a7448, map: thatchTex, roughness: 1});
-  [[-230, 160], [-250, 120], [-215, 60], [-190, 230], [-60, 150], [-20, 175], [10, 140], [-280, -40], [-240, -100], [-10, -230], [100, -290]].forEach(function(p){
+  [[-230, 160], [-250, 120], [-215, 60], [-235, 230], [-60, 150], [-20, 175], [10, 140], [-280, -40], [-240, -100], [-10, -230], [100, -290]].forEach(function(p){
     var y = H(p[0], p[1]), g = new T.Mesh(new T.ConeGeometry(2.4, 4.2, 10), hay); g.position.set(p[0], y + 2.6, p[1]); g.castShadow = true; scene.add(g);
     var b = new T.Mesh(new T.CylinderGeometry(2.4, 2.5, 1.2, 10), hay); b.position.set(p[0], y + .5, p[1]); scene.add(b); });
   function well(x, z){ var y = H(x, z); var m = new T.Mesh(worldUV(mergeG([[bx(1.4, .9, 1.4, x, y + .45, z)], [bx(.25, 5.5, .25, x + 2.6, y + 2.75, z)]]), 2), M.wood); m.castShadow = true; scene.add(m);
@@ -674,6 +787,29 @@ Object.keys(TREES).forEach(function(k){
   well(-44, 50); well(30, -262); well(-8, -300);
   var logs = []; for (var k = 0; k < 9; k++){ var g = new T.CylinderGeometry(.22, .22, 3.2, 7); g.rotateX(Math.PI/2); g.translate(-38 + (k % 4)*.46 + (k > 3 ? .23 : 0) + (k > 6 ? .23 : 0), H(-38, 47) + .22 + Math.floor(k/4)*.4, 47); logs.push([g]); }
   var lm = new T.Mesh(mergeG(logs), M.wood); lm.castShadow = true; scene.add(lm);
+})();
+
+/* садиби: тини довкола подвір'їв, дровітні */
+(function(){
+  var F = [], Wd = [], v = new T.Vector3(), rr = rngF(81);
+  function occupied(x, z, self){ for (var k = 0; k < HOUSES.length; k++){ if (k === self) continue; var q = HOUSES[k], dx = x - q.sp.cx, dz = z - q.sp.cz, c = Math.cos(q.rot), s0 = Math.sin(q.rot), lx = dx*c + dz*s0, lz = -dx*s0 + dz*c; if (Math.abs(lx) < q.L/2 + 1.5 && Math.abs(lz) < q.D/2 + 1.5) return true; } return false; }
+  HOUSES.forEach(function(hq, hi){ if (!hq.yard) return; hq.g.updateMatrixWorld(true);
+    var L = hq.L, D = hq.D, ex = 3.2, fr = 8, P = [[-L/2 - ex, -D/2 - 2.5], [L/2 + ex, -D/2 - 2.5], [L/2 + ex, D/2 + fr], [-L/2 - ex, D/2 + fr]], y0 = hq.g.position.y;
+    for (var e = 0; e < 4; e++){ var a = P[e], b = P[(e + 1) % 4], Ls = Math.hypot(b[0] - a[0], b[1] - a[1]), n = Math.ceil(Ls/1.4), prev = null;
+      for (var k = 0; k <= n; k++){ var lx = lerp(a[0], b[0], k/n), lz = lerp(a[1], b[1], k/n);
+        if (e === 2 && Math.abs(lx - hq.du) < 1.8){ prev = null; continue; }                    // хвіртка навпроти дверей
+        v.set(lx, 0, lz).applyMatrix4(hq.g.matrixWorld); var x = v.x, z = v.z, y = H(x, z);
+        if (y < WL + .35 || polyDist(x, z, ROAD) < 6.5 || occupied(x, z, hi) || dWater(x, z) < 1.5){ prev = null; continue; }
+        F.push(bx(.11, 1.35, .11, x, y + .6, z));
+        if (prev){ var dx = x - prev[0], dz = z - prev[1], ln = Math.hypot(dx, dz), ang = -Math.atan2(dz, dx);
+          [.38, .68, .98].forEach(function(hb){ var gg = bx(ln + .1, .14, .07, 0, 0, 0); gg.rotateY(ang); gg.translate((x + prev[0])/2, (y + prev[2])/2 + hb, (z + prev[1])/2); F.push(gg); }); }
+        prev = [x, z, y]; } }
+    v.set(L/2 + 1.3, 0, -D/2 + 1.2).applyMatrix4(hq.g.matrixWorld);                                   // дровітня
+    if (!occupied(v.x, v.z, hi) && H(v.x, v.z) > WL + .3){ var yw = H(v.x, v.z); for (var q = 0; q < 10; q++){ var cg = new T.CylinderGeometry(.14 + rr()*.05, .14 + rr()*.05, 1.1, 6); cg.rotateZ(Math.PI/2); cg.rotateY(-hq.rot + Math.PI/2);
+      cg.translate(v.x + (q % 4 - 1.5)*.3*Math.cos(hq.rot), yw + .16 + Math.floor(q/4)*.27, v.z + (q % 4 - 1.5)*.3*Math.sin(hq.rot)); Wd.push([cg]); } }
+  });
+  if (F.length){ var fm = new T.Mesh(worldUV(mergeG(F.map(function(g){ return [g]; })), 1.5), new T.MeshStandardMaterial({color: 0x6b5a44, map: woodTex, roughness: 1})); fm.castShadow = true; fm.receiveShadow = true; scene.add(fm); }
+  if (Wd.length){ var wm = new T.Mesh(mergeG(Wd), M.wood); wm.castShadow = true; scene.add(wm); }
 })();
 
 /* німецька артилерія з боку саду */
@@ -694,7 +830,7 @@ var GUNS = [[-6, 50], [18, 52], [42, 50]];
 var campfire = new T.PointLight(0xff8a3a, 0, 36, 2); campfire.position.set(30, H(30, 58) + 1.5, 58); scene.add(campfire);
 
 /* ═════════════ хроніка ═════════════ */
-var cN = cen(PAL.N), cM = cen(PAL.M), cS = cen(PAL.S), DUB = [-235, 400];
+var cN = cen(PAL.N), cM = cen(PAL.M), cS = cen(PAL.S), DUB = [-220, 400];
 var STEPS = [
  {t: 13.2, cam: [[150, 92, 168], [-42, 0, -16]], time: 'листопад 1918', day: 'маєток Плятерів', h: 'Воробин перед повстанням',
   p: 'Маєток стоїть у старому парку між шляхом на Дубровицю і схилом над лугами Горині. Палацу як такого Плятери не збудували: жили в офіцинах. Найбільша — двоповерхова будівля біля шляху з двома крилами й одноповерховою серединою. Парадний вхід із портиком веде з двору, чорний — із боку шляху. На подвір\'ї газон з ялиною, довкола — пейзажний парк із доріжками, гаями й галявинами, частина його за муром, і павільйон «Бібліотека» над схилом. На північ, за ставами, куди веде міст через перешийок, — житлові будинки й, імовірно, спиртовий завод. Натисніть на будь-яку будівлю, щоб дізнатися про неї більше.',
@@ -714,7 +850,7 @@ var STEPS = [
  {t: 24, cam: [[-8, 26, 74], [-62, 2, 28]], time: '00:00', day: '22 листопада, п\'ятниця', h: 'Опівночі у дворі',
   p: 'Гурти нападників обшукують помешкання службовців і шукають вартових. До садівника Галушкевича вдираються п\'ятнадцятеро з криком «Де гайдамаки?!». Радванського, якого взяли за вартового, відпускає чоловік з червоною кокардою — Михайло Конончук. Сибіковського хочуть розстріляти як «гайдамаку», поки за нього не заступається Петро Кустов.',
   s: 'Радванський і Галушкевич, 1920, арк. 569, 580; Сибіковський, 1922, арк. 398'},
- {t: 28, cam: [[-108, 24, 52], [-142, 1, 0]], time: '00:00–11:00', day: '22 листопада', h: 'Поранених везуть до Дубровиці',
+ {t: 28, cam: [[-118, 24, 52], [-156, 1, 0]], time: '00:00–11:00', day: '22 листопада', h: 'Поранених везуть до Дубровиці',
   p: 'Поранених селян по одному чи по двоє везуть до лікарні в Дубровиці на підводі, яку повстанці заздалегідь виділили для цього. У книзі хворих їх запишуть 22 листопада; серед них Теодор Пирішко, Іван Дем\'янець і Онуфрій Харківець. Облога триває всю ніч.',
   s: 'Фельдшери Пальонка й Калінський, 1920 і 1922; книга хворих'},
  {t: 34.5, cam: [[-46, 22, -4], [-94, 9, -31]], time: '≈ 10:30', day: '22 листопада', h: 'Підпал',
@@ -726,10 +862,10 @@ var STEPS = [
  {t: 40, cam: [[-44, 16, -2], [-86, 6, -36]], time: '≈ 16:00', day: '22 листопада', h: 'Капітуляція',
   p: 'Набої скінчилися, будинок горить, дах провалюється. Оборонці складають зброю й виходять: селяни пообіцяли, що їх лише заарештують і що буде суд. На них кидаються з багнетами, але один із ватажків зупиняє натовп. Сибіковський чув, як Олександр Конончук поставив долю полонених «на голосування».',
   s: 'Буйновський, 1920, арк. 579 зв.; Ліпінський, арк. 396; Сибіковський, арк. 398'},
- {t: 41, cam: [[-110, 13, -84], [-142, 2, -28]], time: '15:00–17:00', day: '22 листопада', h: 'Розстріл',
+ {t: 41, cam: [[-112, 14, -84], [-150, 2, -28]], time: '15:00–17:00', day: '22 листопада', h: 'Розстріл',
   p: 'Полонених виводять на дорогу, шикують у шеренгу й розстрілюють. Повіреного Пшедзимирського вбивають раніше, коли він кидається тікати. Мітлюх казав, що графів відвели вбік на дорогу й розстріляли окремо. Згодом Свириденко бачить 21 тіло, покладене рядком.',
   s: 'Ліпінський, арк. 396–397; Сибіковський, арк. 398; Мітлюх, 1919. Час: близько 15:00 (Мольський, Калінський, Свириденко, Литвинчук) або 17:00 (Ліпінський).'},
- {t: 42.5, cam: [[-112, 26, 40], [-145, 1, -10]], time: '17:00–18:00', day: '22 листопада, вечір', h: 'Після',
+ {t: 42.5, cam: [[-118, 26, 40], [-154, 1, -10]], time: '17:00–18:00', day: '22 листопада, вечір', h: 'Після',
   p: 'Поранених Ліпінського й Піскунова три-чотири години б\'ють прикладами. Ліпінського рятує селянин, який просить віддати його під «революційний трибунал»: пораненого кладуть на воза під два трупи. Увечері обох привозять до лікарні в Дубровиці. Литвинчук зустрічає п\'яного Нашору, за яким везуть бочку горілки. Палац догоряє.',
   s: 'Ліпінський, арк. 396 зв.; Литвинчук; фельдшери, 1920'}
 ];
@@ -750,25 +886,25 @@ var GROUPS = [
   {id: 'def', cls: 'def', col: 0x3c5f9f, n: 22,
    st: [{pts: POSTS.concat(INNER)}, {pts: POSTS.concat(INNER)}, {pts: DEF2.concat(INNER)},
         {c: IN_S, r: 2, hide: true}, {c: IN_S, r: 2, hide: true}, {c: IN_S, r: 2, hide: true}, {c: IN_S, r: 2, hide: true}, {c: IN_N, r: 2, hide: true}, {c: IN_N, r: 2, hide: true},
-        Cc(-72, -31, 4.2), {line: [-139.5, -54, -144.8, -8], fallAt: 1.3}, {line: [-139.5, -54, -144.8, -8], down: true}],
+        Cc(-72, -31, 4.2), {line: [-143.8, -54, -153.6, -8], fallAt: 1.3}, {line: [-143.8, -54, -153.6, -8], down: true}],
    lab: ['', 'варта на постах', 'варта займає позиції', 'оборонці відступають до палацу', 'оборонці в правому крилі', 'оборонці в правому крилі', 'оборонці в правому крилі', 'оборонці перейшли в ліве крило', 'оборонці в лівому крилі', 'полонені', 'полонених вивели на дорогу', '']},
-  {id: 'a1', cls: 'att', col: 0xa33a2a, n: 34, spawn: [-262, 470],
-   st: [null, null, Cc(-182, 210, 11), Cc(-118, 10, 9), Cc(-96, 14, 9), Cc(-66, 8, 7), Cc(-96, 14, 9), Cc(-96, 14, 9), Cc(-98, 16, 10), Cc(-62, -12, 9), Cc(-162, -30, 7), {hide: true, c: [-255, 450], r: 10}],
+  {id: 'a1', cls: 'att', col: 0xa33a2a, n: 34, spawn: [-227, 470],
+   st: [null, null, Cc(-191, 210, 11), Cc(-118, 10, 9), Cc(-96, 14, 9), Cc(-66, 8, 7), Cc(-96, 14, 9), Cc(-96, 14, 9), Cc(-98, 16, 10), Cc(-62, -12, 9), Cc(-166, -30, 7), {hide: true, c: [-225, 450], r: 10}],
    lab: ['', '', 'загін № 1 · шляхом з Дубровиці', 'загін № 1 · крізь браму', 'нападники', 'обшук у дворі', 'нападники', 'нападники', 'нападники', 'нападники', 'нападники', '']},
   {id: 'a3', cls: 'att', col: 0xa33a2a, n: 26, spawn: [-350, 120],
-   st: [null, null, Cc(-245, 40, 10), Cc(-120, -44, 7), Cc(-120, -44, 7), Cc(-120, -44, 7), Cc(-120, -44, 7), Cc(-120, -42, 7), Cc(-120, -42, 7), Cc(-68, -64, 6), Cc(-160, -48, 5), {hide: true, c: [-350, 60], r: 8}],
+   st: [null, null, Cc(-245, 40, 10), Cc(-120, -44, 7), Cc(-120, -44, 7), Cc(-120, -44, 7), Cc(-120, -44, 7), Cc(-120, -42, 7), Cc(-120, -42, 7), Cc(-68, -64, 6), Cc(-162, -48, 5), {hide: true, c: [-350, 60], r: 8}],
    lab: ['', '', 'загін № 3 · з флангу', 'загін № 3 · за палацом, від шляху', '', '', '', '', '', '', '', '']},
   {id: 'a2', cls: 'att', col: 0xa33a2a, n: 26, spawn: [70, 460],
-   st: [null, null, Cc(52, 140, 10), Cc(-34, 52, 7), Cc(-62, -16, 8), Cc(-60, 52, 7), Cc(-62, -16, 8), Cc(-60, -18, 8), Cc(-60, -18, 8), Cc(-52, -31, 7), Cc(-158, -12, 5), {hide: true, c: [70, 450], r: 8}],
+   st: [null, null, Cc(52, 140, 10), Cc(-34, 52, 7), Cc(-62, -16, 8), Cc(-60, 52, 7), Cc(-62, -16, 8), Cc(-60, -18, 8), Cc(-60, -18, 8), Cc(-52, -31, 7), Cc(-168, -12, 5), {hide: true, c: [70, 450], r: 8}],
    lab: ['', '', 'загін № 2 · з флангу, з боку саду', 'загін № 2 пройшов повз німецькі пости', 'загін № 2 на подвір\'ї', 'обшук службових помешкань', '', '', '', '', '', '']},
   {id: 'a4', cls: 'att', col: 0xa33a2a, n: 20, spawn: [40, -500], 
-   st: [null, null, Cc(57, -238, 6), Cc(-90, -76, 7), Cc(-90, -76, 7), Cc(-90, -76, 7), Cc(-90, -76, 7), Cc(-90, -74, 7), Cc(-90, -74, 7), Cc(-48, -22, 5), Cc(-150, -68, 4), {hide: true, c: [-80, -490], r: 8}],
+   st: [null, null, Cc(57, -238, 6), Cc(-90, -76, 7), Cc(-90, -76, 7), Cc(-90, -76, 7), Cc(-90, -76, 7), Cc(-90, -74, 7), Cc(-90, -74, 7), Cc(-48, -22, 5), Cc(-154, -68, 4), {hide: true, c: [-80, -490], r: 8}],
    lab: ['', '', 'загін № 4 чекає ракети', 'загін № 4 іде в атаку', '', '', '', '', '', '', '', '']},
   {id: 'ost', cls: 'att', col: 0xa33a2a, n: 10, spawn: [-360, 70],
-   st: [null, null, null, null, null, null, null, null, Cc(-205, 44, 5), Cc(-104, 20, 5), Cc(-164, 6, 4), {hide: true, c: [-360, 70], r: 5}],
+   st: [null, null, null, null, null, null, null, null, Cc(-205, 44, 5), Cc(-104, 20, 5), Cc(-170, 6, 4), {hide: true, c: [-360, 70], r: 5}],
    lab: ['', '', '', '', '', '', '', '', 'з Острівців · Гончарі', '', '', '']},
   {id: 'moch', cls: 'att', col: 0xa33a2a, n: 18, spawn: [-360, -100],
-   st: [null, null, null, null, null, null, null, null, Cc(-212, -90, 6), Cc(-110, -70, 6), Cc(-142, -80, 5), {hide: true, c: [-360, -100], r: 6}],
+   st: [null, null, null, null, null, null, null, null, Cc(-212, -90, 6), Cc(-110, -70, 6), Cc(-148, -84, 5), {hide: true, c: [-360, -100], r: 6}],
    lab: ['', '', '', '', '', '', '', '', 'з Мочулища · загін Петрушка', '', '', '']},
   {id: 'ger', cls: 'ger', col: 0x6f7a5e, n: 9,
    st: STEPS.map(function(){ return {pts: [[-14, 44], [12, 44], [36, 44], [58, 44], [-6, 55], [18, 57], [42, 55], [30, 62], [26, 60]]}; }),
@@ -785,13 +921,13 @@ var PINS = [
   [[[cM[0], cM[1]], 'середина в огні'], [[cN[0], cN[1]], 'через горище — в ліве крило'], [DUB, 'аптека: «два пуди бензину» ↓']],
   [[[-272, 56], 'вершник: «Воробин оточений!»'], [[-232, -96], 'з Мольським під конвоєм']],
   [[[-76, -36], 'складають зброю'], [[-56, -22], '«на голосування»']],
-  [[[-141, -62], 'розстріл на дорозі'], [[-120, -76], 'Пшедзимирського вбито при втечі']],
-  [[[-142, -32], '21 тіло рядком'], [[-200, 250], 'Нашора з бочкою горілки']]
+  [[[-143, -62], 'розстріл на дорозі'], [[-120, -76], 'Пшедзимирського вбито при втечі']],
+  [[[-149, -32], '21 тіло рядком'], [[-200, 250], 'Нашора з бочкою горілки']]
 ];
 /* навігація: люди обходять будівлі, мур і паркан і заходять крізь брами, двері й міст */
-var OBST = [PAL.N, PAL.M, PAL.S, OF1, OF2, NB].concat(SMALL, NORTH);
+var OBST = [PAL.N, PAL.M, PAL.S, OF1, OF2, NB].concat(SMALL, NORTH, FOREST, [aabb(BARN7)]);
 function hitB(x, z){ for (var k = 0; k < OBST.length; k++){ var r = OBST[k]; if (x > r.x0 - .9 && x < r.x1 + .9 && z > r.z0 - .9 && z < r.z1 + .9) return true; } return Math.hypot(x - LIB[0], z - LIB[1]) < 13; }
-function wetAt(x, z){ return (z < -135 || x > 95) && dWater(x, z) < .2 && deckY(x, z) < -100; }
+function wetAt(x, z){ return (z < -135 || x > 95) && H(x, z) < WL + .08 && deckY(x, z) < -100; }
 function fenceSide(x, z){ return x - (roadX(z) + 7.2); }
 function clearSeg(a, b){
   var L = Math.hypot(b[0] - a[0], b[1] - a[1]), n = Math.max(2, Math.ceil(L/1.6)), ina = inPoly(a[0], a[1], GARDEN), fa = fenceSide(a[0], a[1]);
@@ -800,10 +936,10 @@ function clearSeg(a, b){
     var iq = inPoly(q[0], q[1], GARDEN); if (iq !== ina && Math.hypot(q[0] - GATES.garden[0], q[1] - GATES.garden[1]) > 3.5) return false; ina = iq;
     var fq = fenceSide(q[0], q[1]); if (fa*fq < 0 && q[1] > PARK.z0 && q[1] < PARK.z1 && Math.abs(q[1] - GATE_Z) > 2.8 && Math.abs(q[1] - BACK_Z) > .9) return false; fa = fq; }
   return true; }
-var NAV = [[-160, 120], [-150, 60], [-147, 2], [-143, -31.3], [-134, -70], [-127, -130], [-118, -200], [-205, 4], [-240, 40], [-212, -90], [-300, 50], [-262, 470], [-182, 210],
-  [-130, 2], [-112, 2], [-84, 4], [-66, -6], [-56, -15], [-127, -31.3], [-110, -31.3], [-112, -4], [-112, -62], [-90, -66], [-70, -62], [-66, -48], [-72, -31.3], [-84, -31.3],
+var NAV = [[roadX(120) - 1, 120], [roadX(60) - 1, 60], [roadX(GATE_Z) - 2, GATE_Z], [roadX(BACK_Z) - 2, BACK_Z], [roadX(-70) - 1, -70], [roadX(-130) - 1, -130], [roadX(-200) - 1, -200], [-205, 4], [-240, 40], [-212, -90], [-300, 50], [-227, 470], [-191, 210],
+  [roadX(GATE_Z) + 15, GATE_Z], [-112, 2], [-84, 4], [-66, -6], [-56, -15], [roadX(BACK_Z) + 13, BACK_Z], [-110, -31.3], [-112, -4], [-112, -62], [-90, -66], [-70, -62], [-66, -48], [-72, -31.3], [-84, -31.3],
   [-46, -8], [-35, -8], [-48, -30], [-46, 6], [-62, 6], [-82, 20], [-82, 46], [-58, 48], [-36, 50], [-10, 62], [20, 64], [50, 80], [60, 120], [52, 140], [-100, 40], [-120, 60], [-60, 80], [0, 90],
-  [-100, -100], [-62, -90], [-30, -90], [4, -124], [28, -158], [BRIDGE.x, -176], [BRIDGE.x, -213.5], [52, -215], [57, -236], [-110, -130], [-90, -300], [-75, -420], [40, -400], [62, -320], [-60, -480], [40, -490], [70, 450], [-350, 120], [-360, 70], [-360, -100], [-255, 450], [-350, 60], [-80, -490], [62, 300], [-290, -95], [0, -20], [40, -40], [10, 20]];
+  [-100, -100], [-62, -90], [-30, -90], [4, -124], [28, -158], [BRIDGE.x, -176], [BRIDGE.x, -213.5], [52, -215], [57, -236], [-110, -130], [-90, -300], [-75, -420], [40, -400], [62, -320], [-60, -480], [40, -490], [70, 450], [-350, 120], [-360, 70], [-360, -100], [-225, 450], [-350, 60], [-80, -490], [62, 300], [-290, -95], [0, -20], [40, -40], [10, 20]];
 var NADJ = NAV.map(function(){ return []; });
 for (var na = 0; na < NAV.length; na++) for (var nb = na + 1; nb < NAV.length; nb++){ var dd0 = Math.hypot(NAV[na][0] - NAV[nb][0], NAV[na][1] - NAV[nb][1]); if (dd0 < 330 && clearSeg(NAV[na], NAV[nb])){ NADJ[na].push([nb, dd0]); NADJ[nb].push([na, dd0]); } }
 var DOORS = [[-84, -31.3], [-110, -31.3], [-74, -50.5], [-74, -12.1]];
@@ -822,14 +958,14 @@ function route(a, b){                                                   // ла�
   return P; }
 function pathLen(P){ var L = 0; for (var k = 1; k < P.length; k++) L += Math.hypot(P[k][0] - P[k - 1][0], P[k][1] - P[k - 1][1]); return L; }
 var ROUTES_DEF = [
-  {pts: [[-262, 470], [-218, 330], [-172, 150], [-152, 50], [-148, 12], [-140, 3], [-122, 4]], on: [2, 3], tag: '1'},
-  {pts: [[-360, 120], [-285, 62], [-205, 4], [-155, -26], [-140, -31.3], [-124, -38]], on: [2, 3], tag: '3'},
+  {pts: [[-227, 470], [-208, 330], [-185, 150], [-165, 50], [-158, 12], [-150, 3], [-128, 4]], on: [2, 3], tag: '1'},
+  {pts: [[-360, 120], [-285, 62], [-205, 4], [-163, -26], [-150, -31.3], [-130, -38]], on: [2, 3], tag: '3'},
   {pts: [[70, 460], [60, 285], [44, 140], [20, 72], [-10, 58], [-32, 52]], on: [2, 3], tag: '2'},
   {pts: [[40, -500], [60, -380], [62, -300], [58, -250]], on: [2], tag: '4'},
   {pts: [[57, -236], [52, -218], [BRIDGE.x, -212], [BRIDGE.x, -195], [BRIDGE.x, -177], [8, -124], [-40, -92], [-84, -84]], on: [3], tag: '4'},
   {pts: [[-360, 70], [-285, 56], [-212, 44]], on: [8]},
   {pts: [[-360, -100], [-292, -95], [-218, -90]], on: [8]},
-  {pts: [[-138, -26], [-148, 40], [-178, 200], [-214, 330], [-262, 470]], on: [6, 11], gold: true}
+  {pts: [[-150, -26], [-164, 40], [-190, 200], [-208, 330], [-227, 470]], on: [6, 11], gold: true}
 ];
 
 /* фігурки: свита/кожух у кольорі сторони, обличчя, шапка, рушниця */
@@ -953,7 +1089,7 @@ var cart = (function(){ var g = new T.Group();
   var lamp = new T.PointLight(0xffb060, 0, 26, 2); lamp.position.set(0, 2.4, -1.4); g.add(lamp); g.userData.lamp = lamp;
   var lg = new T.Mesh(new T.SphereGeometry(.14, 8, 6), new T.MeshBasicMaterial({color: new T.Color(4, 2.6, 1.2), toneMapped: false})); lg.position.copy(lamp.position); g.add(lg);
   g.visible = false; scene.add(g); return g; })();
-var CART_PATH = new T.CatmullRomCurve3([[-138, -26], [-148, 40], [-178, 200], [-214, 330], [-262, 470]].map(function(p){ return new T.Vector3(p[0], 0, p[1]); }));
+var CART_PATH = new T.CatmullRomCurve3([[-150, -26], [-164, 40], [-190, 200], [-208, 330], [-227, 470]].map(function(p){ return new T.Vector3(p[0], 0, p[1]); }));
 for (i = 0; i < MIST.n; i++){ var mr = rnd(), mx, mz;
   if (mr < .7){ var nw = nearWater(rnd, -8, 30) || [0, -190]; mx = nw[0]; mz = nw[1]; }
   else { mz = GZ0 + rnd()*(GZ1 - GZ0); mx = 140 + rnd()*230; } MIST.st[i] = {x: mx, y: H(mx, mz) + .8 + rnd()*1.6, z: mz, ph: rnd()*6.283, s0: 20 + rnd()*22, life: 0, max: 1e9}; }
@@ -976,16 +1112,16 @@ var INFO = {
   garden: {k: 'парк', h: 'Парк за муром', p: ['Будинки Воробина потопали в зелені нерегулярного пейзажного парку на кілька гектарів, з могутніми старими деревами: білими тополями, тополями, липами, високими ялинами, ясенами, каштанами. На верхньому рівні — офіцини й «Бібліотека», на нижньому — ставки, обсаджені старими деревами. Частину парку обнесено муром (його видно на аерофотознімку).', 'Доріжки, гаї й галявини на схемі — умовні: плану парку не збереглося.', 'З цього боку маєток стерегли німецькі пости. Ліпінський пише, що саме вони пропустили селян. Брама з двору — умовно.'], s: 'Історія резиденції; Ліпінський, арк. 395 зв.'},
   guns: {k: 'німецька армія', h: 'Німецька артилерія', p: ['У листопаді 1918 року у Воробині стояв полк німецької артилерії. Німецька армія вже поверталася додому, а 15 листопада в Домбровиці солдати заарештували своїх офіцерів. Пости з боку саду пропустили нападників, а спогад 1927 року пише, що німецька солдатська рада дала повстанцям гвинтівки, набої й бомби.', 'Місце гармат на схемі умовне.'], s: 'Ліпінський, арк. 395 зв.; телеграма № 410; «Красная звезда», 1927'},
   north: {k: 'за ставами', h: 'Житлові будинки й завод', p: ['На північ від маєтку, за ставами: житлові будинки й, найімовірніше, спиртовий завод. Будівлі — за обрисами на аерофотознімках.'], s: 'Аерофотознімки'},
-  bridge: {k: 'переправа', h: 'Міст', p: ['Міст на перешийку між двома ставами на північ від маєтку — до житлових будинків і заводу. Місце — за аерофотознімком, вигляд умовний.'], s: 'Аерофотознімок'},
+  bridge: {k: 'переправа', h: 'Насип і місток', p: ['Дорога на північ, до житлових будинків і заводу, ішла через перешийок між двома ставами: земляними насипами з обох берегів, а над протокою посередині — невеликий дерев\'яний місток. Місце — за аерофотознімком, вигляд умовний.'], s: 'Аерофотознімок'},
   road: {k: 'шлях', h: 'Шлях Дубровиця — Воробин', p: ['Шлях на південь до Дубровиці, близько 5 км, обсаджений тополями. Ним ішов загін № 1, ним везли поранених до лікарні, і на ньому розстріляли полонених.'], s: '«Красная звезда», 1927; Ліпінський; Мітлюх'}
 };
 var BL = [
   ['palace', [cM[0] - 4, 22, cM[1]]], ['portico', [PAL.M.x1 + 3, 8, AXZ]], ['back', [PAL.M.x0 - 2, 6, AXZ]], ['gate', [GATES.main[0], 7, GATES.main[1]]],
   ['wingN', [cN[0], 17, cN[1]]], ['wingS', [cS[0], 17, cS[1]]], ['ofc', [-58, 11, 34]], ['nb', [-51, 10, -49]], ['lib', [LIB[0], 25, LIB[1]]], ['court', [LAWN[0], 14, LAWN[1]]],
-  ['garden', [26, 6, -46]], ['guns', [18, 7, 52]], ['north', [40, 12, -270]], ['bridge', [BRIDGE.x, 6, -190]], ['road', [-168, 6, 160]]
+  ['garden', [26, 6, -46]], ['guns', [18, 7, 52]], ['north', [40, 12, -270]], ['bridge', [BRIDGE.x, 3.5, -195.6]], ['road', [-186, 6, 160]]
 ].map(function(b){ var el = mkLabel(INFO[b[0]].h, 'b', 1); el.addEventListener('click', function(){ openInfo(b[0]); }); return {el: el, p: new T.Vector3(b[1][0], b[1][1], b[1][2]), k: b[0]}; });
 var DIRS = [
-  ['↓ Дубровиця · 5 км', [-240, 8, 430]], ['↑ Висоцьк · униз Горинню', [-70, 8, -480]], ['← Острівці · Мочулище · Крупове', [-345, 8, -10]], ['Горинь →', [riverX(-60), 2, -60]]
+  ['↓ Дубровиця · 5 км', [-224, 8, 430]], ['↑ Висоцьк · униз Горинню', [-70, 8, -480]], ['← Острівці · Мочулище · Крупове', [-345, 8, -10]], ['Горинь →', [riverX(-60), 2, -60]]
 ].map(function(d){ return {el: mkLabel(d[0], 'dir', 0), p: new T.Vector3(d[1][0], d[1][1], d[1][2])}; });
 GROUPS.forEach(function(G){ G.lab$ = mkLabel('', 'g-' + G.cls, 2); G.labPos = new T.Vector3(); });
 ROUTES.forEach(function(r){ if (r.tag) r.tagEl = mkLabel(r.tag, 'tag', 3); });
@@ -1011,7 +1147,7 @@ function setTime(hour){
   hemi.intensity = lerp(.42, .7, d); hemi.color.copy(tmp2.set(0x5c74b8).lerp(col(0xdfe6ee), d)); hemi.groundColor.set(d > .4 ? 0x4c412e : 0x14131a);
   stars.material.opacity = Math.max(0, 1 - d*1.6 - dusk*.7)*.75;
   waterU.uSky.value.copy(cHor).multiplyScalar(lerp(.5, 1, d)); waterU.uDeep.value.set(0x13202a).multiplyScalar(lerp(.45, 1, d)); waterU.uSun.value.copy(L); waterU.uSunC.value.copy(sun.color).multiplyScalar(d > .08 ? 1 : .6);
-  HFOG.uHF.value.set(lerp(.0085, .005, d) + dusk*.002, -3.6, lerp(1.6, 1.4, d), lerp(.7, .5, d));                          // приземний туман
+  HFOG.uHF.value.set(lerp(.0085, .0016, d) + dusk*.002, -3.8, lerp(1.6, 1.2, d), lerp(.7, .28, d));                          // приземний туман
   HFOG.uHFC.value.setRGB(.06, .08, .12).lerp(tmp2.copy(cHor).multiplyScalar(1.05), d).lerp(tmp2.set(0x9a7c6c), dusk*.4);
   if (PP){ var U = PP.U;                                                                                                       // кольорова корекція: ніч — холодні тіні й теплі вогні, день — м'яке листопадове світло, сутінки — бурштин
     U.exposure.value = lerp(1.5, 1.02, d) + dusk*.06; U.sat.value = lerp(.8, .86, d) - dusk*.04; U.contrast.value = lerp(.32, .24, d) + dusk*.06;
