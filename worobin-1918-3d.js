@@ -546,7 +546,7 @@ function bridge(a, b, w, ya, yb, o){
   BRIDGES.road = bridge(a, b, 6.2, H(a[0], a[1]) + .25, H(b[0], b[1]) + .25, {arch: .45, span: 3.6, water: WL});
 })();
 function deckY(x, z){ var best = -1e9; for (var k in BRIDGES){ var B = BRIDGES[k], rx = x - B.a[0], rz = z - B.a[1], t = (rx*B.ux + rz*B.uz)/B.L, off = Math.abs(-rx*B.uz + rz*B.ux);
-  if (t > -.01 && t < 1.01 && off < B.w/2 + .4) best = Math.max(best, B.yAt(Math.max(0, Math.min(1, t))) + .07); } return best; }
+  if (t > -2/B.L && t < 1 + 2/B.L && off < B.w/2 + .4) best = Math.max(best, B.yAt(Math.max(0, Math.min(1, t))) + .07); } return best; }
 function gY(x, z){ return Math.max(H(x, z), deckY(x, z)); }
 
 /* ═════════════ дерева: листопад ═════════════ */
@@ -594,7 +594,7 @@ var TG = {
   fruit: branchTree(23, {trunk: 1.4, rad: .16, depth: LOW ? 2 : 3, ch0: 3, spread: 1, up: .2, decay: .7, tuft: .25, tuftR: .35, tuftC: 0x4e4436})
 };
 var TREES = {}; Object.keys(TG).forEach(function(k){ TREES[k] = []; });
-var CAMCLR = [[[-36, 7, -6], [-92, 7, -33]], [[-26, 34, 24], [-90, 6, -31]], [[-46, 20, 36], [-92, 8, -12]], [[-12, 20, 40], [-50, 2, 14]], [[-108, 24, 52], [-142, 1, 0]], [[-46, 22, -4], [-94, 9, -31]],
+var CAMCLR = [[[-36, 7, -6], [-92, 7, -33]], [[-26, 34, 24], [-90, 6, -31]], [[-46, 20, 36], [-92, 8, -12]], [[-8, 26, 74], [-62, 2, 28]], [[-108, 24, 52], [-142, 1, 0]], [[-46, 22, -4], [-94, 9, -31]],
   [[-44, 16, -2], [-86, 6, -36]], [[-110, 13, -84], [-142, 2, -28]], [[-112, 26, 40], [-145, 1, -10]]].map(function(c){ var p = c[0], t = c[1], m = [t[0] + (p[0] - t[0])*1.4, t[2] + (p[2] - t[2])*1.4]; return [m, [lerp(p[0], t[0], .3), lerp(p[2], t[2], .3)]]; });
 function blocked(x, z, r){
   for (var ci = 0; ci < CAMCLR.length; ci++) if (segDist(x, z, CAMCLR[ci][0], CAMCLR[ci][1]) < 9) return true;
@@ -702,7 +702,7 @@ var STEPS = [
  {t: 21, cam: [[-36, 7, -6], [-92, 7, -33]], time: '21:00', day: '21 листопада, четвер', h: 'Вечір перед нападом',
   p: 'У палаці брати Ігнацій та Антоній Плятери, повірений Пшедзимирський і службовці. Маєток стереже найнята варта — шістнадцять чоловік під командою Кальтенберга з Рівного, з кулеметом. Біля саду стоїть німецька артилерія, її пости тримають варту з цього боку. А в Дубровиці о 10-й вечора повстанці захоплюють державну варту.',
   s: 'Ліпінський, 6.IX.1922, арк. 395; Буйновський, Латта, 1920; Ф. Пирішко, «Червоний прапор», 1958'},
- {t: 22, cam: [[-104, 58, 205], [-140, 0, 60]], time: '22:00', day: '21 листопада', h: 'Облога',
+ {t: 22, cam: [[-90, 470, 560], [-100, 0, 30]], time: '22:00', day: '21 листопада', h: 'Облога',
   p: 'З темряви виходять натовпи селян із навколишніх сіл, з карабінами, револьверами й гранатами, зі смолоскипами. За схемою 1927 року загін № 1 іде шляхом з Дубровиці, № 2 і № 3 обходять маєток з флангів, а № 4 стоїть на півночі й чекає сигналу ракетою. Варта сурмить тривогу й займає позиції.',
   s: 'Обвинувальний акт, арк. 3; Ліпінський, арк. 395 зв.; «Красная звезда», 1927. Інші свідки називають 23:00, північ або 1–2-гу ночі.'},
  {t: 22.33, cam: [[-26, 34, 24], [-90, 6, -31]], time: '≈ 22:20', day: '21 листопада', h: 'Перші двадцять хвилин',
@@ -711,7 +711,7 @@ var STEPS = [
  {t: 23.7, cam: [[-46, 20, 36], [-92, 8, -12]], time: 'до 24:00', day: 'ніч на 22 листопада', h: 'Оборона в правому крилі',
   p: '«Двадцять з чимось людей» обороняються в правому крилі, від дороги. Будинок має два двоповерхові крила й одноповерхову середину. Кілька гранат влітає всередину, на щастя, до порожньої зали. Ще до півночі куля влучає в ногу самому Ліпінському.',
   s: 'Ліпінський, арк. 395 зв.–396. «Праве від дороги» — якщо дивитися зі шляху на схід, тобто південне.'},
- {t: 24, cam: [[-12, 20, 40], [-50, 2, 14]], time: '00:00', day: '22 листопада, п\'ятниця', h: 'Опівночі у дворі',
+ {t: 24, cam: [[-8, 26, 74], [-62, 2, 28]], time: '00:00', day: '22 листопада, п\'ятниця', h: 'Опівночі у дворі',
   p: 'Гурти нападників обшукують помешкання службовців і шукають вартових. До садівника Галушкевича вдираються п\'ятнадцятеро з криком «Де гайдамаки?!». Радванського, якого взяли за вартового, відпускає чоловік з червоною кокардою — Михайло Конончук. Сибіковського хочуть розстріляти як «гайдамаку», поки за нього не заступається Петро Кустов.',
   s: 'Радванський і Галушкевич, 1920, арк. 569, 580; Сибіковський, 1922, арк. 398'},
  {t: 28, cam: [[-108, 24, 52], [-142, 1, 0]], time: '00:00–11:00', day: '22 листопада', h: 'Поранених везуть до Дубровиці',
@@ -720,7 +720,7 @@ var STEPS = [
  {t: 34.5, cam: [[-46, 22, -4], [-94, 9, -31]], time: '≈ 10:30', day: '22 листопада', h: 'Підпал',
   p: 'Селяни підпалюють будинок, і він горить зсередини. Середина вже в огні, тож оборонці через горище переходять із правого крила в ліве. У Дубровиці озброєний чоловік вимагає в аптеці два пуди бензину, «щоби підпалити палац Плятерів».',
   s: 'Ліпінський, арк. 396; Більчинська, 1920, арк. 566 зв.–567 (вона датує це 23 листопада)'},
- {t: 37, cam: [[-310, 80, 40], [-165, 0, -22]], time: 'удень', day: '22 листопада', h: 'Підмога із сіл',
+ {t: 37, cam: [[-430, 125, -24], [-165, 0, -24]], time: 'удень', day: '22 листопада', h: 'Підмога із сіл',
   p: 'До Острівців прискакує вершник: «Воробин оточений!». Лук\'ян і Хома Гончарі беруть карабіни й біжать до маєтку. З Мочулища приходить загін із сорока чоловік на чолі з Ісааком Петрушком і веде з собою управителя Мольського. Палац горить.',
   s: 'Голяк і Латта, 1920, арк. 571–573; Мольський, 1920 і 1922, арк. 565, 374'},
  {t: 40, cam: [[-44, 16, -2], [-86, 6, -36]], time: '≈ 16:00', day: '22 листопада', h: 'Капітуляція',
@@ -742,32 +742,33 @@ var RAIN = [0, .3, .5, .6, .7, .6, .5, .2, .1, .25, .35, .45];      // мряк�
 
 /* ═════════════ люди ═════════════ */
 function Cc(x, z, r, o){ o = o || {}; o.c = [x, z]; o.r = r; return o; }
-var POSTS = [[-136, 2], [-136, -31], [-110, -62], [-112, -2], [-80, -31], [-70, -52], [-70, -10], [-60, -22], [-48, -42], [-40, 2], [-30, 26], [-60, 48], [-90, 20], [-22, -30], [-100, -68], [66, 58]];
+var POSTS = [[-136, 2], [-136, -31], [-112, -62], [-112, -2], [-80, -31], [-70, -60], [-66, -8], [-62, -20], [-50, -40], [-47, 2], [-50, 46], [-62, 48], [-88, 20], [-47, -24], [-96, -66], [-84, 46]];
+var DEF2 = [[-86, -40], [-86, -22], [-80, -41], [-80, -21], [-72, -38], [-72, -24], [-71, -52], [-71, -10], [-74, -62], [-74, -1], [-66, -31], [-109, -26], [-109, -37], [-90, -62], [-90, -1], [-68, -42]];   // варта займає позиції довкола палацу
 var IN_N = [cN[0] + 4, cN[1]], IN_S = [cS[0] + 4, cS[1]];
 var INNER = [[-80, -30], [-80, -33], [-80, -27], [-82, -36], [-82, -25], [-78, -31]];
 var GROUPS = [
   {id: 'def', cls: 'def', col: 0x3c5f9f, n: 22,
-   st: [{pts: POSTS.concat(INNER)}, {pts: POSTS.concat(INNER)}, {pts: POSTS.map(function(p){ return [lerp(p[0], -80, .3), lerp(p[1], -31, .3)]; }).concat(INNER)},
+   st: [{pts: POSTS.concat(INNER)}, {pts: POSTS.concat(INNER)}, {pts: DEF2.concat(INNER)},
         {c: IN_S, r: 2, hide: true}, {c: IN_S, r: 2, hide: true}, {c: IN_S, r: 2, hide: true}, {c: IN_S, r: 2, hide: true}, {c: IN_N, r: 2, hide: true}, {c: IN_N, r: 2, hide: true},
-        Cc(-72, -31, 4.2), {line: [-139.5, -54, -144.8, -8], fallAt: 4.2}, {line: [-139.5, -54, -144.8, -8], down: true}],
-   lab: ['', 'варта на постах', 'варта займає позиції', 'оборонці в палаці (двадцять з гаком)', 'оборонці в правому крилі', 'оборонці в правому крилі', 'оборонці в правому крилі', 'оборонці перейшли в ліве крило', 'оборонці в лівому крилі', 'полонені', 'полонених вивели на дорогу', '']},
+        Cc(-72, -31, 4.2), {line: [-139.5, -54, -144.8, -8], fallAt: 1.3}, {line: [-139.5, -54, -144.8, -8], down: true}],
+   lab: ['', 'варта на постах', 'варта займає позиції', 'оборонці відступають до палацу', 'оборонці в правому крилі', 'оборонці в правому крилі', 'оборонці в правому крилі', 'оборонці перейшли в ліве крило', 'оборонці в лівому крилі', 'полонені', 'полонених вивели на дорогу', '']},
   {id: 'a1', cls: 'att', col: 0xa33a2a, n: 34, spawn: [-262, 470],
-   st: [null, null, Cc(-182, 210, 11), Cc(-118, 10, 9), Cc(-96, 12, 9), Cc(-54, 18, 9), Cc(-96, 12, 9), Cc(-96, 12, 9), Cc(-98, 14, 10), Cc(-62, -12, 9), Cc(-158, -30, 6), {hide: true, c: [-255, 450], r: 10}],
+   st: [null, null, Cc(-182, 210, 11), Cc(-118, 10, 9), Cc(-96, 14, 9), Cc(-66, 8, 7), Cc(-96, 14, 9), Cc(-96, 14, 9), Cc(-98, 16, 10), Cc(-62, -12, 9), Cc(-162, -30, 7), {hide: true, c: [-255, 450], r: 10}],
    lab: ['', '', 'загін № 1 · шляхом з Дубровиці', 'загін № 1 · крізь браму', 'нападники', 'обшук у дворі', 'нападники', 'нападники', 'нападники', 'нападники', 'нападники', '']},
   {id: 'a3', cls: 'att', col: 0xa33a2a, n: 26, spawn: [-350, 120],
-   st: [null, null, Cc(-245, 40, 10), Cc(-124, -42, 8), Cc(-122, -42, 8), Cc(-122, -42, 8), Cc(-122, -42, 8), Cc(-122, -40, 8), Cc(-122, -40, 8), Cc(-70, -48, 7), Cc(-128, -40, 5), {hide: true, c: [-350, 60], r: 8}],
+   st: [null, null, Cc(-245, 40, 10), Cc(-120, -44, 7), Cc(-120, -44, 7), Cc(-120, -44, 7), Cc(-120, -44, 7), Cc(-120, -42, 7), Cc(-120, -42, 7), Cc(-68, -64, 6), Cc(-160, -48, 5), {hide: true, c: [-350, 60], r: 8}],
    lab: ['', '', 'загін № 3 · з флангу', 'загін № 3 · за палацом, від шляху', '', '', '', '', '', '', '', '']},
   {id: 'a2', cls: 'att', col: 0xa33a2a, n: 26, spawn: [70, 460],
-   st: [null, null, Cc(52, 140, 10), Cc(-30, 22, 9), Cc(-62, -16, 9), Cc(-34, 22, 9), Cc(-62, -18, 9), Cc(-60, -20, 9), Cc(-60, -20, 9), Cc(-52, -31, 8), Cc(-128, -18, 5), {hide: true, c: [70, 450], r: 8}],
-   lab: ['', '', 'загін № 2 · з флангу, крізь сад', 'загін № 2 пройшов повз німецькі пости', 'загін № 2 на подвір\'ї', 'обшук службових помешкань', '', '', '', '', '', '']},
-  {id: 'a4', cls: 'att', col: 0xa33a2a, n: 20, spawn: [40, -500], via: {3: [[56, -226], [48, -214], [BRIDGE.x, -212.5], [BRIDGE.x, -177], [26, -158]]},
-   st: [null, null, Cc(57, -238, 6), Cc(-90, -78, 8), Cc(-90, -74, 8), Cc(-90, -74, 8), Cc(-90, -74, 8), Cc(-90, -72, 8), Cc(-90, -72, 8), Cc(-62, -52, 7), Cc(-126, -60, 4), {hide: true, c: [-80, -490], r: 8}],
+   st: [null, null, Cc(52, 140, 10), Cc(-34, 52, 7), Cc(-62, -16, 8), Cc(-60, 52, 7), Cc(-62, -16, 8), Cc(-60, -18, 8), Cc(-60, -18, 8), Cc(-52, -31, 7), Cc(-158, -12, 5), {hide: true, c: [70, 450], r: 8}],
+   lab: ['', '', 'загін № 2 · з флангу, з боку саду', 'загін № 2 пройшов повз німецькі пости', 'загін № 2 на подвір\'ї', 'обшук службових помешкань', '', '', '', '', '', '']},
+  {id: 'a4', cls: 'att', col: 0xa33a2a, n: 20, spawn: [40, -500], 
+   st: [null, null, Cc(57, -238, 6), Cc(-90, -76, 7), Cc(-90, -76, 7), Cc(-90, -76, 7), Cc(-90, -76, 7), Cc(-90, -74, 7), Cc(-90, -74, 7), Cc(-48, -22, 5), Cc(-150, -68, 4), {hide: true, c: [-80, -490], r: 8}],
    lab: ['', '', 'загін № 4 чекає ракети', 'загін № 4 іде в атаку', '', '', '', '', '', '', '', '']},
   {id: 'ost', cls: 'att', col: 0xa33a2a, n: 10, spawn: [-360, 70],
-   st: [null, null, null, null, null, null, null, null, Cc(-205, 44, 5), Cc(-104, 18, 5), Cc(-116, 4, 4), {hide: true, c: [-360, 70], r: 5}],
+   st: [null, null, null, null, null, null, null, null, Cc(-205, 44, 5), Cc(-104, 20, 5), Cc(-164, 6, 4), {hide: true, c: [-360, 70], r: 5}],
    lab: ['', '', '', '', '', '', '', '', 'з Острівців · Гончарі', '', '', '']},
   {id: 'moch', cls: 'att', col: 0xa33a2a, n: 18, spawn: [-360, -100],
-   st: [null, null, null, null, null, null, null, null, Cc(-212, -90, 6), Cc(-112, -66, 6), Cc(-118, -70, 5), {hide: true, c: [-360, -100], r: 6}],
+   st: [null, null, null, null, null, null, null, null, Cc(-212, -90, 6), Cc(-110, -70, 6), Cc(-142, -80, 5), {hide: true, c: [-360, -100], r: 6}],
    lab: ['', '', '', '', '', '', '', '', 'з Мочулища · загін Петрушка', '', '', '']},
   {id: 'ger', cls: 'ger', col: 0x6f7a5e, n: 9,
    st: STEPS.map(function(){ return {pts: [[-14, 44], [12, 44], [36, 44], [58, 44], [-6, 55], [18, 57], [42, 55], [30, 62], [26, 60]]}; }),
@@ -779,18 +780,51 @@ var PINS = [
   [[[-70, -31], 'варта сурмить тривогу']],
   [[[-64, -24], 'Піскунова й Росіна поранено'], [[-82, -24], 'кулемет заклинило'], [[24, 42], 'пости пропускають селян']],
   [[[cS[0], cS[1]], 'Ліпінського поранено в ногу'], [[cM[0], cM[1]], 'гранати в порожню залу']],
-  [[[-40, 26], 'шукають «гайдамаків»']],
+  [[[-60, 50], 'шукають «гайдамаків»']],
   [[DUB, 'до лікарні в Дубровиці ↓']],
   [[[cM[0], cM[1]], 'середина в огні'], [[cN[0], cN[1]], 'через горище — в ліве крило'], [DUB, 'аптека: «два пуди бензину» ↓']],
-  [[[-300, 50], 'вершник: «Воробин оточений!»'], [[-232, -96], 'з Мольським під конвоєм']],
+  [[[-272, 56], 'вершник: «Воробин оточений!»'], [[-232, -96], 'з Мольським під конвоєм']],
   [[[-76, -36], 'складають зброю'], [[-56, -22], '«на голосування»']],
   [[[-141, -62], 'розстріл на дорозі'], [[-120, -76], 'Пшедзимирського вбито при втечі']],
   [[[-142, -32], '21 тіло рядком'], [[-200, 250], 'Нашора з бочкою горілки']]
 ];
+/* навігація: люди обходять будівлі, мур і паркан і заходять крізь брами, двері й міст */
+var OBST = [PAL.N, PAL.M, PAL.S, OF1, OF2, NB].concat(SMALL, NORTH);
+function hitB(x, z){ for (var k = 0; k < OBST.length; k++){ var r = OBST[k]; if (x > r.x0 - .9 && x < r.x1 + .9 && z > r.z0 - .9 && z < r.z1 + .9) return true; } return Math.hypot(x - LIB[0], z - LIB[1]) < 13; }
+function wetAt(x, z){ return (z < -135 || x > 95) && dWater(x, z) < .2 && deckY(x, z) < -100; }
+function fenceSide(x, z){ return x - (roadX(z) + 7.2); }
+function clearSeg(a, b){
+  var L = Math.hypot(b[0] - a[0], b[1] - a[1]), n = Math.max(2, Math.ceil(L/1.6)), ina = inPoly(a[0], a[1], GARDEN), fa = fenceSide(a[0], a[1]);
+  for (var s = 1; s <= n; s++){ var t = s/n, q = [lerp(a[0], b[0], t), lerp(a[1], b[1], t)], de = Math.min(t, 1 - t)*L;
+    if (de > 1.5 && (hitB(q[0], q[1]) || wetAt(q[0], q[1]))) return false;
+    var iq = inPoly(q[0], q[1], GARDEN); if (iq !== ina && Math.hypot(q[0] - GATES.garden[0], q[1] - GATES.garden[1]) > 3.5) return false; ina = iq;
+    var fq = fenceSide(q[0], q[1]); if (fa*fq < 0 && q[1] > PARK.z0 && q[1] < PARK.z1 && Math.abs(q[1] - GATE_Z) > 2.8 && Math.abs(q[1] - BACK_Z) > .9) return false; fa = fq; }
+  return true; }
+var NAV = [[-160, 120], [-150, 60], [-147, 2], [-143, -31.3], [-134, -70], [-127, -130], [-118, -200], [-205, 4], [-240, 40], [-212, -90], [-300, 50], [-262, 470], [-182, 210],
+  [-130, 2], [-112, 2], [-84, 4], [-66, -6], [-56, -15], [-127, -31.3], [-110, -31.3], [-112, -4], [-112, -62], [-90, -66], [-70, -62], [-66, -48], [-72, -31.3], [-84, -31.3],
+  [-46, -8], [-35, -8], [-48, -30], [-46, 6], [-62, 6], [-82, 20], [-82, 46], [-58, 48], [-36, 50], [-10, 62], [20, 64], [50, 80], [60, 120], [52, 140], [-100, 40], [-120, 60], [-60, 80], [0, 90],
+  [-100, -100], [-62, -90], [-30, -90], [4, -124], [28, -158], [BRIDGE.x, -176], [BRIDGE.x, -213.5], [52, -215], [57, -236], [-110, -130], [-90, -300], [-75, -420], [40, -400], [62, -320], [-60, -480], [40, -490], [70, 450], [-350, 120], [-360, 70], [-360, -100], [-255, 450], [-350, 60], [-80, -490], [62, 300], [-290, -95], [0, -20], [40, -40], [10, 20]];
+var NADJ = NAV.map(function(){ return []; });
+for (var na = 0; na < NAV.length; na++) for (var nb = na + 1; nb < NAV.length; nb++){ var dd0 = Math.hypot(NAV[na][0] - NAV[nb][0], NAV[na][1] - NAV[nb][1]); if (dd0 < 330 && clearSeg(NAV[na], NAV[nb])){ NADJ[na].push([nb, dd0]); NADJ[nb].push([na, dd0]); } }
+var DOORS = [[-84, -31.3], [-110, -31.3], [-74, -50.5], [-74, -12.1]];
+function nearDoor(p){ var best = DOORS[0], bd = 1e9; DOORS.forEach(function(d){ var q = Math.hypot(d[0] - p[0], d[1] - p[1]); if (q < bd){ bd = q; best = d; } }); return best; }
+function route(a, b){                                                   // ламана a → … → b в обхід перешкод (Дейкстра по вузлах)
+  if (clearSeg(a, b)) return [a, b];
+  function vis(p){ var o = []; NAV.forEach(function(q, j){ var d = Math.hypot(q[0] - p[0], q[1] - p[1]); if (d < 420) o.push([j, d]); }); o.sort(function(x, y){ return x[1] - y[1]; }); return o.filter(function(x, k){ return k < 14 && clearSeg(p, NAV[x[0]]); }); }
+  var VA = vis(a), VB = vis(b); if (!VA.length || !VB.length) return [a, b];
+  var dist = NAV.map(function(){ return 1e9; }), prv = NAV.map(function(){ return -1; }), done = NAV.map(function(){ return false; });
+  VA.forEach(function(x){ dist[x[0]] = x[1]; });
+  for (;;){ var u = -1, bu = 1e9; for (var j = 0; j < NAV.length; j++) if (!done[j] && dist[j] < bu){ bu = dist[j]; u = j; } if (u < 0) break; done[u] = true;
+    NADJ[u].forEach(function(e){ if (dist[u] + e[1] < dist[e[0]]){ dist[e[0]] = dist[u] + e[1]; prv[e[0]] = u; } }); }
+  var end = -1, be = 1e9; VB.forEach(function(x){ if (dist[x[0]] + x[1] < be){ be = dist[x[0]] + x[1]; end = x[0]; } }); if (end < 0) return [a, b];
+  var P = [b]; for (var v = end; v >= 0; v = prv[v]) P.unshift(NAV[v]); P.unshift(a);
+  for (var k = 1; k < P.length - 1;){ if (clearSeg(P[k - 1], P[k + 1])) P.splice(k, 1); else k++; }      // спрямлення
+  return P; }
+function pathLen(P){ var L = 0; for (var k = 1; k < P.length; k++) L += Math.hypot(P[k][0] - P[k - 1][0], P[k][1] - P[k - 1][1]); return L; }
 var ROUTES_DEF = [
-  {pts: [[-262, 470], [-218, 330], [-172, 150], [-146, 50], [-122, 12]], on: [2, 3], tag: '1'},
-  {pts: [[-360, 120], [-285, 62], [-205, 4], [-150, -32], [-130, -42]], on: [2, 3], tag: '3'},
-  {pts: [[70, 460], [60, 285], [40, 135], [10, 52], [-26, 24]], on: [2, 3], tag: '2'},
+  {pts: [[-262, 470], [-218, 330], [-172, 150], [-152, 50], [-148, 12], [-140, 3], [-122, 4]], on: [2, 3], tag: '1'},
+  {pts: [[-360, 120], [-285, 62], [-205, 4], [-155, -26], [-140, -31.3], [-124, -38]], on: [2, 3], tag: '3'},
+  {pts: [[70, 460], [60, 285], [44, 140], [20, 72], [-10, 58], [-32, 52]], on: [2, 3], tag: '2'},
   {pts: [[40, -500], [60, -380], [62, -300], [58, -250]], on: [2], tag: '4'},
   {pts: [[57, -236], [52, -218], [BRIDGE.x, -212], [BRIDGE.x, -195], [BRIDGE.x, -177], [8, -124], [-40, -92], [-84, -84]], on: [3], tag: '4'},
   {pts: [[-360, 70], [-285, 56], [-212, 44]], on: [8]},
@@ -990,7 +1024,7 @@ function setTime(hour){
 }
 
 /* ═════════════ кроки ═════════════ */
-var volleyDone = false, step = -1, twStart = 0, TW = 2600, tw = 1, curHour = 13.2, fromHour = 13.2;
+var VOLLEY_T = 4.1, volleyDone = false, step = -1, twStart = 0, TW = 2600, tw = 1, curHour = 13.2, fromHour = 13.2;
 var fireCur = [0, 0, 0], fireFrom = [0, 0, 0], roofCur = [0, 0, 0], roofFrom = [0, 0, 0], rainCur = 0;
 var camFrom = {p: new T.Vector3(), t: new T.Vector3()}, camTo = {p: new T.Vector3(), t: new T.Vector3()}, camFly = 1, CAMDUR = 3400, camStart = 0, userMoved = false;
 var cT = document.getElementById('cT'), cD = document.getElementById('cD'), cH = document.getElementById('cH'), cP = document.getElementById('cP'), cS2 = document.getElementById('cS');
@@ -1009,6 +1043,21 @@ function viaPos(a, via, b, t, off){                                    // рух
   var s = t*L[L.length - 1]; for (k = 1; k < P.length - 1 && L[k] < s; k++);
   var u = (s - L[k - 1])/((L[k] - L[k - 1]) || 1), dx = P[k][0] - P[k - 1][0], dz = P[k][1] - P[k - 1][1], ln = Math.hypot(dx, dz) || 1, ed = Math.min(1, Math.min(s, L[L.length - 1] - s)/6);
   return [lerp(P[k - 1][0], P[k][0], u) - dz/ln*off*ed, lerp(P[k - 1][1], P[k][1], u) + dx/ln*off*ed, dx, dz]; }
+function planPaths(G, skip, k){                                           // маршрути для кожного: в обхід будівель, крізь брами й двері
+  G.paths = []; var mx = 0, stk = G.st[k], cluster = !(stk && (stk.pts || stk.line)) && G.n > 4, shared = null;
+  for (var i = 0; i < G.n; i++){ var a = G.from[i], b = G.to[i], P = null;
+    if (!skip && (a[2] > .05 || b[2] > .05) && Math.hypot(b[0] - a[0], b[1] - a[1]) > 1){
+      var s0 = [a[0], a[1]], s1 = [b[0], b[1]];
+      if (a[2] < .5 && hitB(a[0], a[1])) s0 = nearDoor(s0); if (b[2] < .5 && hitB(b[0], b[1])) s1 = nearDoor(s1);
+      if (cluster && shared){ P = [s0].concat(shared.slice(1, -1), [s1]); if (!clearSeg(s0, P[1]) || !clearSeg(P[P.length - 2], s1)) P = route(s0, s1); }
+      else { P = route(s0, s1); if (cluster) shared = P; }
+      mx = Math.max(mx, pathLen(P)); }
+    G.paths.push(P); }
+  G.dur = Math.max(2400, Math.min(9000, mx/24*1000)); }
+function pathAt(P, t, off){ var L = [0], k; for (k = 1; k < P.length; k++) L.push(L[k - 1] + Math.hypot(P[k][0] - P[k - 1][0], P[k][1] - P[k - 1][1]));
+  var s = t*L[L.length - 1]; for (k = 1; k < P.length - 1 && L[k] < s; k++);
+  var u = (s - L[k - 1])/((L[k] - L[k - 1]) || 1), dx = P[k][0] - P[k - 1][0], dz = P[k][1] - P[k - 1][1], ln = Math.hypot(dx, dz) || 1, ed = Math.min(1, Math.min(s, L[L.length - 1] - s)/5);
+  return [lerp(P[k - 1][0], P[k][0], u) - dz/ln*off*ed, lerp(P[k - 1][1], P[k][1], u) + dx/ln*off*ed, dx, dz]; }
 function go(k, instant){
   k = Math.max(0, Math.min(N - 1, k)); if (k === step && !instant) return;
   var first = step < 0, prev = step;
@@ -1016,19 +1065,20 @@ function go(k, instant){
     for (var i = 0; i < G.n; i++){ G.from[i] = first ? L[i].slice() : G.cur[i].slice();
       if (!first && G.cur[i][2] < .05 && L[i][2] === 1 && !G.st[prev] && G.spawn) G.from[i] = [G.spawn[0], G.spawn[1], 0, 0];
       G.to[i] = L[i]; }
-    G.labText = (G.lab && G.lab[k]) || ''; G.curVia = (!first && G.via && G.via[k] && k === prev + 1) ? G.via[k] : null; });
+    G.labText = (G.lab && G.lab[k]) || ''; planPaths(G, first || instant, k); });
   fromHour = curHour; fireFrom = fireCur.slice(); roofFrom = roofCur.slice();
-  step = k; twStart = performance.now(); tw = first ? 1 : 0; volleyDone = false;
+  step = k; twStart = performance.now(); tw = first ? 1 : 0; volleyDone = false; VOLLEY_T = GROUPS[0].dur/1000 + 1.3;
   var s = STEPS[k]; cT.textContent = s.time; cD.textContent = s.day; cH.textContent = s.h; cP.textContent = s.p; cS2.textContent = s.s;
   var card = document.getElementById('card'); card.classList.remove('fresh'); void card.offsetWidth; card.classList.add('fresh');
   tickEls.forEach(function(b, j){ b.classList.toggle('cur', j === k); b.classList.toggle('done', j < k); });
   fill.style.width = (k/(N - 1)*100) + '%';
   pinEls.forEach(function(p){ p.el.remove(); }); pinEls = [];
   PIN_RINGS.forEach(function(r){ scene.remove(r); }); PIN_RINGS = [];
-  (PINS[k] || []).forEach(function(q){ var x = q[0][0], z = q[0][1], y = Math.max(H(x, z), -1);
-    pinEls.push({el: mkLabel(q[1], 'pin', 5), p: new T.Vector3(x, y + 10, z)});
-    var rg = new T.Mesh(new T.RingGeometry(2.2, 2.8, 48), new T.MeshBasicMaterial({color: new T.Color(2.2, 1.7, .7), transparent: true, opacity: .9, depthWrite: false, fog: false, toneMapped: false}));
-    rg.rotation.x = -Math.PI/2; rg.position.set(x, y + .8, z); rg.renderOrder = 3; scene.add(rg); PIN_RINGS.push(rg); });
+  (PINS[k] || []).forEach(function(q){ var x = q[0][0], z = q[0][1], inB = hitB(x, z), y = inB ? 0 : gY(x, z);
+    pinEls.push({el: mkLabel(q[1], 'pin', 5), p: new T.Vector3(x, y + (inB ? 16 : 9), z)});
+    if (inB || Math.abs(x) > 220 || Math.abs(z) > 380) return;                                     // кільце — лише на відкритому місці
+    [0, 1].forEach(function(j){ var rg = new T.Mesh(new T.RingGeometry(j ? 1.25 : .95, j ? 1.45 : 1.25, 40), new T.MeshBasicMaterial({color: new T.Color(2, 1.55, .6), transparent: true, opacity: .85, depthWrite: false, fog: false, toneMapped: false}));
+      rg.rotation.x = -Math.PI/2; rg.position.set(x, y + .3, z); rg.renderOrder = 3; rg.userData.ping = j; scene.add(rg); PIN_RINGS.push(rg); }); });
   ROUTES.forEach(function(r){ r.target = r.on.indexOf(k) > -1 ? 1 : 0; });
   if (k === 3 && prev !== 3) rocket.t = 0;
   if (k === 3){ [900, 1900, 3000, 4300].forEach(function(t, j){ setTimeout(function(){ boomAt([-74, -84, -96, -70][j], [-28, -18, -36, -44][j]); }, t); }); }
@@ -1079,17 +1129,24 @@ function project(el, p, hide){
   var off = hide || v3.z > 1 || Math.abs(v3.x) > 1.05 || Math.abs(v3.y) > 1.05;
   if (off){ el.classList.add('off'); return; }
   el.classList.remove('off');
-  placed.push({el: el, x: (v3.x*.5 + .5)*innerWidth, y: (-v3.y*.5 + .5)*innerHeight, pr: el._pr, w: el._w || (el._w = el.offsetWidth || 80), h: el._h || (el._h = el.offsetHeight || 22)});
+  if (el._txt !== el.textContent || !el._w){ el._txt = el.textContent; el._w = el.offsetWidth || 80; el._h = el.offsetHeight || 22; }       // розмір — за поточним текстом
+  placed.push({el: el, x: (v3.x*.5 + .5)*innerWidth, y: (-v3.y*.5 + .5)*innerHeight, pr: el._pr, w: el._w, h: el._h, ex: el.classList.contains('pin') ? 26 : 0});
 }
-function layoutLabels(){                                                        // розсуваємо підписи, щоб не накладалися
+var UIR = [], UIT = 0;
+function uiRects(){ var nw = performance.now(); if (nw - UIT < 600) return UIR; UIT = nw; UIR = [];
+  ['.top > div', '.top .tools', '.compass', '.dock'].forEach(function(q){ var e = document.querySelector(q); if (!e) return; var r = e.getBoundingClientRect(); if (r.width > 0 && r.height > 0) UIR.push([r.left - 6, r.top - 6, r.right + 6, r.bottom + 6]); });
+  return UIR; }
+function layoutLabels(){                                                        // розсуваємо підписи, щоб не накладалися ні між собою, ні на панелі
   placed.sort(function(a, b){ return b.pr - a.pr; });
-  var boxes = [];
+  var ui = uiRects(), boxes = ui.slice();
   placed.forEach(function(L){
-    var y = L.y, tries = 0, x0 = L.x - L.w/2, x1 = L.x + L.w/2;
-    while (tries++ < 12){ var y0 = y - L.h, hit = false;
-      for (var k = 0; k < boxes.length; k++){ var b = boxes[k]; if (x0 < b[2] && x1 > b[0] && y0 < b[3] && y > b[1]){ hit = true; y = b[1] - 3; break; } }
+    L.x = Math.max(L.w/2 + 8, Math.min(innerWidth - L.w/2 - 8, L.x));                                  // не за краєм екрана
+    var y = L.y, tries = 0, x0 = L.x - L.w/2, x1 = L.x + L.w/2, hit = false;
+    while (tries++ < 14){ var yb = y - L.ex, y0 = yb - L.h; hit = false;                              // ex — ніжка мітки під підписом
+      for (var k = 0; k < boxes.length; k++){ var b = boxes[k]; if (x0 < b[2] && x1 > b[0] && y0 < b[3] && yb > b[1]){ hit = true; y = b[1] - 3 + L.ex; break; } }
       if (!hit) break; }
-    boxes.push([x0, y - L.h, x1, y]);
+    if (hit || y - L.ex - L.h < 4 || L.y - y > 160){ L.el.classList.add('off'); return; }                  // не влазить — ховаємо, а не накладаємо
+    boxes.push([x0, y - L.ex - L.h, x1, y - L.ex]);
     L.el.style.transform = 'translate(' + L.x.toFixed(1) + 'px,' + y.toFixed(1) + 'px) translate(-50%,-100%)';
     L.el.style.setProperty('--lead', Math.max(0, (L.y - y)).toFixed(0) + 'px');
   });
@@ -1117,6 +1174,7 @@ function upd(P, dt, fn){ var pos = P.g.attributes.position.array, cl = P.g.attri
 var HOT = PARTS.map(function(R0, p){ var r = rngF(90 + p), out = []; for (var k = 0; k < 4; k++) out.push([lerp(R0.x0 + 2, R0.x1 - 2, r()), lerp(R0.z0 + 2, R0.z1 - 2, r())]); return out; });   // осередки вогню
 function frame(now){
   requestAnimationFrame(frame);
+  if (window.W18S && W18S.tAt != null){ now = twStart + W18S.tAt*1000; camStart = Math.min(camStart, twStart); }
   var dt = Math.min(DTMAX, clock.getDelta()), time = now*.001;
   if (playing && now > nextAt){ if (step < N - 1){ go(step + 1); nextAt = now + DWELL; } else stop(); }
   tw = Math.min(1, (now - twStart)/TW); var e = ease(tw);
@@ -1127,12 +1185,12 @@ function frame(now){
   skyU.time.value = time; skyU.glow.value = fireMax*night*.8;
   HFOG.uFG.value.set(fireMax*.34, fireMax*.14, fireMax*.05, 75).multiplyScalar(1).setW(75); HFOG.uFG.value.x *= lerp(.35, 1.4, night); HFOG.uFG.value.y *= lerp(.35, 1.4, night); HFOG.uFG.value.z *= lerp(.35, 1.4, night);
   HFOG.uFP.value.set(cM[0], 10, cM[1]);
-  if (PP){ PP.U.tilt.value = LOW ? 0 : ss(14, 95, camera.position.y - controls.target.y)*.72; PP.bright.th.value = lerp(.85, 1.3, day); PP.U.exposure.value *= 1 - fireMax*.14*day - fireMax*.06; }
+  if (PP){ PP.U.tilt.value = LOW ? 0 : ss(14, 95, camera.position.y - controls.target.y)*.72; PP.bright.th.value = lerp(.85, 1.3, day); PP.U.exposure.value *= 1 - fireMax*.14*day - fireMax*.06 - fireMax*K.dusk*.14; }
   waterU.uTime.value = time; waterU.uFire.value = fireMax*(.3 + night); waterU.fogColor.value.copy(scene.fog.color); waterU.fogDensity.value = scene.fog.density;
   // камера: проліт, далі повільний наїзд
   if (camFly < 1){ camFly = Math.min(1, Math.max(0, (now - camStart)/CAMDUR)); var ce = ease(camFly);
     camera.position.lerpVectors(camFrom.p, camTo.p, ce); controls.target.lerpVectors(camFrom.t, camTo.t, ce);
-    camera.position.y += Math.sin(ce*Math.PI)*Math.min(70, camFrom.p.distanceTo(camTo.p)*.18); }
+    camera.position.y += Math.sin(ce*Math.PI)*Math.max(Math.min(14, camFrom.p.distanceTo(camTo.p)*.3), Math.min(70, camFrom.p.distanceTo(camTo.p)*.2)); }
   else if (!userMoved && (step === 6 || step === 11) && cart.visible){ var cg = new T.Vector3(cart.position.x, cart.position.y + 2, cart.position.z);
     var off = camera.position.clone().sub(controls.target); off.lerp(new T.Vector3(34, 18, 42), .015); controls.target.lerp(cg, .04); camera.position.copy(controls.target).add(off); }
   else if (!userMoved && step >= 0){ camera.position.sub(controls.target).applyAxisAngle(UPV, .00022).multiplyScalar(.99982).add(controls.target); }
@@ -1148,10 +1206,10 @@ function frame(now){
     FLAMES[p].forEach(function(o, j){ var u = o.userData, fl = f*(.75 + .25*Math.sin(time*11 + u.ph) + .15*Math.sin(time*23 + j));
       o.visible = false; if (!o.visible) return; var top = gy + ud.h*(1 - roofCur[p]*.5) + (1 - roofCur[p])*ud.rh*.35;
       o.position.y = top - .5; o.scale.set(u.w*fl, u.h*fl*(1 + .2*Math.sin(time*7 + u.ph)), u.w*fl); o.rotation.y = time*.5 + u.ph; });
-    fireLights[p].intensity = f*(1.6 + Math.sin(time*13 + p*2)*.4 + Math.sin(time*7.3)*.3)*(.18 + .9*night);
+    fireLights[p].intensity = f*(1.6 + Math.sin(time*13 + p*2)*.4 + Math.sin(time*7.3)*.3)*(.12 + .8*night*night);
     var rate = f*(LOW ? 120 : 210)*dt;
     for (var k = 0; k < rate; k++){
-      var hs = HOT[p][(Math.random()*HOT[p].length)|0], spread = .4 + roofCur[p]*.6, fx = lerp(hs[0], lerp(R0.x0 + 1, R0.x1 - 1, Math.random()), spread*.35) + (Math.random() - .5)*2.4, fz = lerp(hs[1], lerp(R0.z0 + 1, R0.z1 - 1, Math.random()), spread*.35) + (Math.random() - .5)*2.4, fy = gy + ud.h*(1 - roofCur[p]*.4) + Math.random()*ud.rh*.4*(1 - roofCur[p]);
+      var hs = HOT[p][(Math.random()*HOT[p].length)|0], spread = .4 + roofCur[p]*.6, fx = lerp(hs[0], lerp(R0.x0 + 1, R0.x1 - 1, Math.random()), spread*.35) + (Math.random() - .5)*2.4, fz = lerp(hs[1], lerp(R0.z0 + 1, R0.z1 - 1, Math.random()), spread*.35) + (Math.random() - .5)*2.4, fy = gy + ud.h*(1 - roofCur[p]*.3) + Math.random()*(ud.rh*.4*(1 - roofCur[p]) + 2.5*roofCur[p]);
       emit(FLAME, fx, fy, fz, (Math.random() - .5)*1.4 + .9, 3 + Math.random()*4, (Math.random() - .5)*1.4, .7 + Math.random()*.8, 3.2 + Math.random()*3.6, 0);
       if (Math.random() < .1) emit(EMBER, fx, fy + 2, fz, (Math.random() - .5)*3 + 2.5, 5 + Math.random()*6, (Math.random() - .5)*3, 2.5 + Math.random()*2.5, .45 + Math.random()*.3, 0);
     }
@@ -1168,7 +1226,7 @@ function frame(now){
     sz[k] = s.s0*(1 + u*3); al[k] = Math.min(1, u*5)*(1 - u)*(s.kind === 2 ? .25 : s.kind ? .35 : lerp(.62, .9, day)); s.vx += .3*dt; });
   upd(FLASH, dt, function(s, u, k, cl, sz, al){ cl[k*3] = 1; cl[k*3 + 1] = .85; cl[k*3 + 2] = .55; sz[k] = s.s0*(1 + u); al[k] = 1 - u; });
   // залп на дорозі
-  if (step === 10 && !volleyDone && (now - twStart)/1000 > 4.1){ volleyDone = true;
+  if (step === 10 && !volleyDone && (now - twStart)/1000 > VOLLEY_T){ volleyDone = true;
     GROUPS.forEach(function(G){ if (G.id !== 'a1') return; G.cur.forEach(function(c){ if (c[2] > .6) emit(FLASH, c[0] + .8, H(c[0], c[1]) + 3.2, c[1], 0, 0, 0, .16, 3.4, 0); }); });
     var bv = BOOMS[0]; bv.t = .55; bv.m.position.set(-160, -50, -30); bv.l.position.set(-150, H(-150, -30) + 4, -30); }
   var inten = lerp(SHOTS[Math.max(0, step - 1)] || 0, SHOTS[step], e)*(tw < .5 && step < 2 ? 0 : 1);
@@ -1181,7 +1239,7 @@ function frame(now){
     trCol[o] = t2.c[0]*.2; trCol[o + 1] = t2.c[1]*.2; trCol[o + 2] = t2.c[2]*.2; trCol[o + 3] = t2.c[0]; trCol[o + 4] = t2.c[1]; trCol[o + 5] = t2.c[2]; }
   trGeo.attributes.position.needsUpdate = trGeo.attributes.color.needsUpdate = true;
   BOOMS.forEach(function(b){ if (b.t > 1.2){ b.m.material.opacity = 0; b.l.intensity = 0; return; } b.t += dt; var u = b.t/1.2;
-    b.m.scale.setScalar(1 + u*5); b.m.material.opacity = Math.pow(1 - u, 2)*.7; b.l.intensity = Math.pow(1 - u, 2)*(3 + night*6); });
+    b.m.scale.setScalar(1 + u*3.5); b.m.material.opacity = Math.pow(1 - u, 2)*.42; b.l.intensity = Math.pow(1 - u, 2)*(2 + night*3.2); });
   if (rocket.t >= 0){ rocket.t += dt; var rt2 = rocket.t, r0 = [-150, -120];
     if (rt2 < 4.8){ var hh = Math.min(rt2, 2.3), y = H(r0[0], r0[1]) + 64*hh - 13.5*hh*hh + (rt2 > 2.3 ? -5*(rt2 - 2.3) : 0);
       rocket.head.visible = true; rocket.head.position.set(r0[0] + rt2*3, y, r0[1] + rt2*10); rocket.light.position.copy(rocket.head.position);
@@ -1194,13 +1252,14 @@ function frame(now){
   GROUPS.forEach(function(G){
     var sx = 0, sz2 = 0, nv = 0, stc = G.st[step];
     for (var i = 0; i < G.n; i++){
-      var a = G.from[i], b = G.to[i], c = G.cur[i], ei = ease(Math.min(1, Math.max(0, tw*1.25 - (i % 7)*.03)));
-      c[0] = lerp(a[0], b[0], ei); c[1] = lerp(a[1], b[1], ei); c[2] = lerp(a[2], b[2], ei); c[3] = lerp(a[3], b[3], ei);
+      var a = G.from[i], b = G.to[i], c = G.cur[i], tr = Math.min(1, Math.max(0, (now - twStart)/(G.dur || TW)*1.1 - (i % 7)*.015)), ei = tr*tr*(3 - 2*tr), P = G.paths && G.paths[i];
+      c[0] = lerp(a[0], b[0], ei); c[1] = lerp(a[1], b[1], ei); c[3] = lerp(a[3], b[3], ei);
+      c[2] = a[2] < b[2] ? b[2]*ss(0, .12, ei) : a[2] > b[2] ? a[2]*(1 - ss(.86, 1, ei)) : b[2];                 // з'являються на початку шляху, зникають наприкінці
       var dirx = b[0] - a[0], dirz = b[1] - a[1];
-      if (G.curVia && ei > 0 && ei < 1){ var vp = viaPos(a, G.curVia, b, ei, (hash(i, 3) - .5)*2.2); c[0] = vp[0]; c[1] = vp[1]; dirx = vp[2]; dirz = vp[3]; }
+      if (P && ei < 1){ var vp = pathAt(P, ei, (hash(i, 3) - .5)*2.4); c[0] = vp[0]; c[1] = vp[1]; dirx = vp[2]; dirz = vp[3]; }
       var moving = ei > 0 && ei < 1 && c[2] > .5, bob = moving ? Math.abs(Math.sin(now*.014 + i))*.18 : 0, gy = gY(c[0], c[1]);
-      if (stc && stc.fallAt){ var el2 = (now - twStart)/1000 - stc.fallAt - (i % 6)*.07; if (el2 > 0) c[3] = Math.max(c[3], Math.min(1, el2*2.5)); }
-      var face = moving ? Math.atan2(dirx, dirz) : (G.cls === 'def' ? -Math.PI/2 : Math.atan2(-88 - c[0], -31 - c[1])) + (hash(i, 7) - .5)*.8;
+      if (stc && stc.fallAt){ var el2 = (now - twStart)/1000 - VOLLEY_T - stc.fallAt + 1.2 - (i % 6)*.07; if (el2 > 0) c[3] = Math.max(c[3], Math.min(1, el2*2.5)); }
+      var face = moving ? Math.atan2(dirx, dirz) : (G.cls === 'def' ? Math.atan2(c[0] + 88, c[1] + 31) : Math.atan2(-88 - c[0], -31 - c[1])) + (hash(i, 7) - .5)*.8;
       dummy.position.set(c[0], gy + bob, c[1]); dummy.rotation.set(c[3]*Math.PI/2, face, moving ? Math.sin(now*.014 + i)*.06 : 0); dummy.scale.setScalar(Math.max(.001, c[2])*FIG_S);
       dummy.updateMatrix(); G.mesh.setMatrixAt(i, dummy.matrix); G.rest.setMatrixAt(i, dummy.matrix);
       if (c[2] > .3 && !c[3]){ sx += c[0]; sz2 += c[1]; nv++; }
@@ -1215,7 +1274,7 @@ function frame(now){
     else if (txt && stc && stc.hide) G.labPos.set(stc.c[0], 17, stc.c[1]);
     if (G.lab$.firstChild.textContent !== txt){ G.lab$.firstChild.textContent = txt; G.lab$._w = 0; }
     project(G.lab$, G.labPos, !txt || tw < .55);
-    var showR = nv > 3 && G.cls !== 'ger' && txt;
+    var showR = nv > 3 && G.cls !== 'ger' && txt && now - twStart > (G.dur || TW)*.85;                  // кільце — коли загін дійшов
     if (showR){ var rr = (stc && stc.r ? stc.r : 6) + 2.5, cx2 = sx/nv, cz2 = sz2/nv, cy = H(cx2, cz2) + .45;
       G.ring.position.set(cx2, cy, cz2); G.ring.scale.setScalar(rr*(1 + .04*Math.sin(time*2.5))); G.disc.position.set(cx2, cy - .05, cz2); G.disc.scale.setScalar(rr); }
     G.ring.material.opacity = lerp(G.ring.material.opacity, showR ? .8 : 0, .08); G.disc.material.opacity = lerp(G.disc.material.opacity, showR ? .16 : 0, .08);
@@ -1228,7 +1287,7 @@ function frame(now){
   // туман і мряка
   var ma = MIST.g.attributes, mk = Math.max(night*.5, K.dusk*.55, .12);
   for (var mi = 0; mi < MIST.n; mi++){ var s = MIST.st[mi]; ma.position.array[mi*3] = s.x + Math.sin(time*.05 + s.ph)*10; ma.position.array[mi*3 + 1] = s.y; ma.position.array[mi*3 + 2] = s.z + Math.cos(time*.04 + s.ph)*6;
-    ma.aCol.array[mi*3] = lerp(.55, .8, day); ma.aCol.array[mi*3 + 1] = lerp(.6, .8, day); ma.aCol.array[mi*3 + 2] = lerp(.72, .8, day); ma.aSize.array[mi] = s.s0; ma.aA.array[mi] = mk*.24; }
+    ma.aCol.array[mi*3] = lerp(.55, .8, day); ma.aCol.array[mi*3 + 1] = lerp(.6, .8, day); ma.aCol.array[mi*3 + 2] = lerp(.72, .8, day); ma.aSize.array[mi] = s.s0; ma.aA.array[mi] = mk*.24*(1 - ss(70, 220, camera.position.y)); }
   ma.position.needsUpdate = ma.aA.needsUpdate = ma.aCol.needsUpdate = ma.aSize.needsUpdate = true;
   var tgt = controls.target;
   for (var ri = 0; ri < RN; ri++){ var R1 = RS[ri]; R1[1] -= dt*26; R1[0] += dt*4; if (R1[1] < 0){ R1[1] += 70; R1[0] = rnd()*240 - 120; R1[2] = rnd()*240 - 120; }
@@ -1241,9 +1300,9 @@ function frame(now){
   cartLab.firstChild.textContent = step === 6 ? 'підвода з пораненими' : 'віз: Ліпінський під двома трупами';
   project(cartLab, new T.Vector3(cart.position.x, cart.position.y + 6, cart.position.z), !cart.visible || camFly < 1);
   // маршрути
-  ROUTES.forEach(function(r){ r.op += ((r.target || 0) - r.op)*.05; r.m.material.opacity = r.op*.95; r.hd.material.opacity = r.op; r.m.visible = r.hd.visible = r.op > .01; r.tex.offset.x -= dt*1.1;
+  ROUTES.forEach(function(r){ r.op += ((r.target || 0) - r.op)*.05; r.m.material.opacity = r.op*.62; r.hd.material.opacity = r.op*.8; r.m.visible = r.hd.visible = r.op > .01; r.tex.offset.x -= dt*1.1;
     if (r.tagEl) project(r.tagEl, r.tagP, r.op < .5); });
-  PIN_RINGS.forEach(function(rg, k){ var u = ((time*.6 + k*.3) % 1); rg.scale.setScalar(1 + u*2.2); rg.material.opacity = (1 - u)*.9*Math.min(1, tw*2); });
+  PIN_RINGS.forEach(function(rg, k){ var u = ((time*.55 + k*.37) % 1); if (rg.userData.ping){ rg.scale.setScalar(1 + u*2.4); rg.material.opacity = Math.pow(1 - u, 1.5)*.7*Math.min(1, tw*2); } else rg.material.opacity = .75*Math.min(1, tw*2); });
   // підписи й компас
   controls.update();
   var showB = step === 0 || document.body.classList.contains('lbl');
