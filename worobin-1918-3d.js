@@ -125,6 +125,18 @@ renderer.shadowMap.enabled = true; renderer.shadowMap.type = T.PCFSoftShadowMap;
 var GL2 = renderer.capabilities.isWebGL2;
 var scene = new T.Scene();
 scene.fog = new T.FogExp2(0x101828, .002);
+/* атмосфера: до звичайного туману додано приземний (у долинах і над водою) та відсвіт пожежі в серпанку */
+var HFOG = {uHF: {value: new T.Vector4(0, -3.6, 2, .8)}, uHFC: {value: new T.Color(.2, .24, .3)}, uFG: {value: new T.Vector4(0, 0, 0, 60)}, uFP: {value: new T.Vector3(-90, 6, -31)}};
+T.ShaderChunk.fog_pars_vertex = '#ifdef USE_FOG\nvarying float vFogDepth; varying vec3 vFogWP;\n#endif';
+T.ShaderChunk.fog_vertex = '#ifdef USE_FOG\nvFogDepth = - mvPosition.z; { vec3 fp = mvPosition.xyz - viewMatrix[3].xyz; vFogWP = vec3(dot(viewMatrix[0].xyz, fp), dot(viewMatrix[1].xyz, fp), dot(viewMatrix[2].xyz, fp)); }\n#endif';
+T.ShaderChunk.fog_pars_fragment = '#ifdef USE_FOG\nuniform vec3 fogColor; varying float vFogDepth; varying vec3 vFogWP; uniform vec4 uHF; uniform vec3 uHFC; uniform vec4 uFG; uniform vec3 uFP;\n#ifdef FOG_EXP2\nuniform float fogDensity;\n#else\nuniform float fogNear; uniform float fogFar;\n#endif\n#endif';
+T.ShaderChunk.fog_fragment = ['#ifdef USE_FOG',
+  '#ifdef FOG_EXP2', 'float fogFactor = 1.0 - exp(- fogDensity*fogDensity*vFogDepth*vFogDepth);', '#else', 'float fogFactor = smoothstep(fogNear, fogFar, vFogDepth);', '#endif',
+  '{ float hfd = uHF.x*vFogDepth*exp(-max(vFogWP.y - uHF.y, 0.)/max(uHF.z, .01)); float hf = uHF.w*(1. - exp(-hfd));',
+  '  vec3 fc = mix(fogColor, uHFC, hf/(fogFactor + hf + 1e-4)) + uFG.rgb*exp(-distance(vFogWP, uFP)/max(uFG.w, 1.));',
+  '  fogFactor = max(fogFactor, hf); gl_FragColor.rgb = mix(gl_FragColor.rgb, fc, fogFactor); }', '#endif'].join('\n');
+function applyHF(root){ root.traverse(function(o){ if (!o.material) return; (Array.isArray(o.material) ? o.material : [o.material]).forEach(function(m){
+  if (m.isShaderMaterial || m.userData.hf) return; m.userData.hf = 1; m.onBeforeCompile = function(sh){ sh.uniforms.uHF = HFOG.uHF; sh.uniforms.uHFC = HFOG.uHFC; sh.uniforms.uFG = HFOG.uFG; sh.uniforms.uFP = HFOG.uFP; }; m.needsUpdate = true; }); }); }
 var camera = new T.PerspectiveCamera(36, 1, 1.2, 7000);
 var controls = new T.OrbitControls(camera, cv);
 controls.enableDamping = true; controls.dampingFactor = .07; controls.maxPolarAngle = 1.45; controls.minDistance = 8; controls.maxDistance = 900; controls.screenSpacePanning = true;
@@ -134,39 +146,51 @@ var PP = (function(){
   var VS = 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = vec4(position.xy, 0., 1.); }';
   var qs = new T.Scene(), qc = new T.OrthographicCamera(-1, 1, 1, -1, 0, 1), quad = new T.Mesh(new T.PlaneGeometry(2, 2)); qs.add(quad); quad.frustumCulled = false;
   function rt(w, h, ms){ var r = new T.WebGLRenderTarget(w, h, {type: T.HalfFloatType, minFilter: T.LinearFilter, magFilter: T.LinearFilter, depthBuffer: !!ms, stencilBuffer: !!ms}); if (ms) r.samples = LOW ? 2 : 4; return r; }
-  var main = rt(4, 4, true), L = [], N = 5;
+  var main = rt(4, 4, true), L = [], N = 5, S = [[rt(4, 4), rt(4, 4)], [rt(4, 4), rt(4, 4)]];
   for (var i = 0; i < N; i++) L.push([rt(4, 4), rt(4, 4)]);
   var bright = new T.ShaderMaterial({uniforms: {t: {value: null}, th: {value: .85}}, vertexShader: VS, depthTest: false, depthWrite: false,
-    fragmentShader: 'uniform sampler2D t; uniform float th; varying vec2 vUv; void main(){ vec3 c = texture2D(t, vUv).rgb; float l = max(max(c.r, c.g), c.b); gl_FragColor = vec4(c*smoothstep(th, th*1.7 + .2, l), 1.); }'});
+    fragmentShader: 'uniform sampler2D t; uniform float th; varying vec2 vUv; vec3 sn(vec3 c){ return (c.r == c.r && c.g == c.g && c.b == c.b) ? clamp(c, 0., 60.) : vec3(0.); } void main(){ vec3 c = sn(texture2D(t, vUv).rgb); float l = max(max(c.r, c.g), c.b); gl_FragColor = vec4(c*smoothstep(th, th*1.7 + .2, l), 1.); }'});
   var blur = new T.ShaderMaterial({uniforms: {t: {value: null}, d: {value: new T.Vector2()}}, vertexShader: VS, depthTest: false, depthWrite: false,
     fragmentShader: 'uniform sampler2D t; uniform vec2 d; varying vec2 vUv; void main(){ vec3 c = texture2D(t, vUv).rgb*.227; c += (texture2D(t, vUv + d*1.385).rgb + texture2D(t, vUv - d*1.385).rgb)*.316; c += (texture2D(t, vUv + d*3.231).rgb + texture2D(t, vUv - d*3.231).rgb)*.07; gl_FragColor = vec4(c, 1.); }'});
-  var copy = new T.ShaderMaterial({uniforms: {t: {value: null}}, vertexShader: VS, depthTest: false, depthWrite: false, fragmentShader: 'uniform sampler2D t; varying vec2 vUv; void main(){ gl_FragColor = texture2D(t, vUv); }'});
-  var comp = new T.ShaderMaterial({uniforms: {t: {value: null}, b0: {value: null}, b1: {value: null}, b2: {value: null}, b3: {value: null}, b4: {value: null},
-      bloom: {value: 1.35}, exposure: {value: 1}, time: {value: 0}, sat: {value: .9}, lift: {value: new T.Vector3()}, gain: {value: new T.Vector3(1, 1, 1)}, vig: {value: 1.05}, res: {value: new T.Vector2(1, 1)}},
+  var copy = new T.ShaderMaterial({uniforms: {t: {value: null}}, vertexShader: VS, depthTest: false, depthWrite: false, fragmentShader: 'uniform sampler2D t; varying vec2 vUv; void main(){ vec4 c = texture2D(t, vUv); gl_FragColor = (c.r == c.r && c.g == c.g && c.b == c.b) ? clamp(c, 0., 60.) : vec4(0., 0., 0., 1.); }'});
+  var comp = new T.ShaderMaterial({uniforms: {t: {value: null}, b0: {value: null}, b1: {value: null}, b2: {value: null}, b3: {value: null}, b4: {value: null}, s0: {value: null}, s1: {value: null},
+      bloom: {value: 1.2}, exposure: {value: 1}, time: {value: 0}, sat: {value: .9}, lift: {value: new T.Vector3()}, gain: {value: new T.Vector3(1, 1, 1)}, vig: {value: 1.1}, res: {value: new T.Vector2(1, 1)},
+      tilt: {value: 0}, focus: {value: .5}, shT: {value: new T.Vector3(1, 1, 1)}, hiT: {value: new T.Vector3(1, 1, 1)}, vigC: {value: new T.Vector3(1, 1, 1)}, contrast: {value: .28}},
     vertexShader: VS, depthTest: false, depthWrite: false,
     fragmentShader: [
-      'uniform sampler2D t, b0, b1, b2, b3, b4; uniform float bloom, exposure, time, sat, vig; uniform vec3 lift, gain; uniform vec2 res; varying vec2 vUv;',
+      'uniform sampler2D t, b0, b1, b2, b3, b4, s0, s1; uniform float bloom, exposure, time, sat, vig, tilt, focus, contrast; uniform vec3 lift, gain, shT, hiT, vigC; uniform vec2 res; varying vec2 vUv;',
+      'vec3 sn(vec3 c){ return (c.r == c.r && c.g == c.g && c.b == c.b) ? clamp(c, 0., 60.) : vec3(0.); }',
       'vec3 aces(vec3 x){ return clamp((x*(2.51*x + .03))/(x*(2.43*x + .59) + .14), 0., 1.); }',
       'float h(vec2 p){ return fract(sin(dot(p, vec2(12.9898, 78.233)))*43758.5453); }',
       'void main(){ vec2 d = vUv - .5; float r2 = dot(d, d);',
-      '  vec2 ca = d*r2*.012; vec3 c = vec3(texture2D(t, vUv + ca).r, texture2D(t, vUv).g, texture2D(t, vUv - ca).b);',
-      '  vec3 b = texture2D(b0, vUv).rgb*.55 + texture2D(b1, vUv).rgb*.75 + texture2D(b2, vUv).rgb*.85 + texture2D(b3, vUv).rgb*.9 + texture2D(b4, vUv).rgb*1.;',
-      '  c = (c + b*bloom*.38)*exposure; c = aces(c); c = mix(c, c*c*(3. - 2.*c), .32);',
-      '  float l = dot(c, vec3(.2126, .7152, .0722)); c = mix(vec3(l), c, sat); c = c*gain + lift*(1. - c);',
-      '  c *= 1. - r2*vig; c = pow(max(c, 0.), vec3(1./2.2));',
-      '  c += (h(vUv*res + fract(time)*91.7) - .5)*.028; gl_FragColor = vec4(c, 1.); }'].join('\n')});
-  function size(w, h){ main.setSize(w, h); var ww = w, hh = h; for (var i = 0; i < N; i++){ ww = Math.max(2, ww >> 1); hh = Math.max(2, hh >> 1); L[i][0].setSize(ww, hh); L[i][1].setSize(ww, hh); } comp.uniforms.res.value.set(w, h); }
+      '  vec2 ca = d*r2*.0035; vec3 c = sn(vec3(texture2D(t, vUv + ca).r, texture2D(t, vUv).g, texture2D(t, vUv - ca).b));',
+      '  float tm = clamp(tilt*(smoothstep(.16, .5, abs(vUv.y - focus)) + r2*.7), 0., 1.);',                                          // м'який «об'єктив»: розмиття країв кадру
+      '  vec3 sc = mix(texture2D(s0, vUv).rgb, texture2D(s1, vUv).rgb, smoothstep(.35, 1., tm)); c = mix(c, sc, tm);',
+      '  vec3 b = texture2D(b0, vUv).rgb*.5 + texture2D(b1, vUv).rgb*.7 + texture2D(b2, vUv).rgb*.85 + texture2D(b3, vUv).rgb*.95 + texture2D(b4, vUv).rgb*1.05;',
+      '  b *= vec3(1.12, .96, .86);',                                                                                                      // теплий ореол (галяція плівки)
+      '  c = (c + b*bloom*.36)*exposure; c = aces(c); c = mix(c, c*c*(3. - 2.*c), contrast);',
+      '  float l = dot(c, vec3(.2126, .7152, .0722)); c *= mix(shT, hiT, smoothstep(.04, .7, l));',                                    // роздільне тонування тіней і світла
+      '  l = dot(c, vec3(.2126, .7152, .0722)); c = mix(vec3(l), c, sat); c = c*gain + lift*(1. - c);',
+      '  float vg = clamp(1. - r2*vig, 0., 1.); c *= mix(vigC*.7, vec3(1.), vg*vg);',
+      '  c = pow(max(c, 0.), vec3(1./2.2));',
+      '  float g = h(vUv*res + fract(time)*91.7) - .5; c += g*(.026 - l*.014) + (h(vUv*res*1.3 + 7.) - .5)/255.; gl_FragColor = vec4(c, 1.); }'].join('\n')});
+  function size(w, h){ main.setSize(w, h); var ww = w, hh = h; for (var i = 0; i < N; i++){ ww = Math.max(2, ww >> 1); hh = Math.max(2, hh >> 1); L[i][0].setSize(ww, hh); L[i][1].setSize(ww, hh); }
+    S[0][0].setSize(Math.max(2, w >> 1), Math.max(2, h >> 1)); S[0][1].setSize(Math.max(2, w >> 1), Math.max(2, h >> 1)); S[1][0].setSize(Math.max(2, w >> 2), Math.max(2, h >> 2)); S[1][1].setSize(Math.max(2, w >> 2), Math.max(2, h >> 2));
+    comp.uniforms.res.value.set(w, h); }
   function pass(m, target){ quad.material = m; renderer.setRenderTarget(target); renderer.render(qs, qc); }
+  function blur2(P, n){ for (var k = 0; k < n; k++){ var w = P[0].width, h = P[0].height;
+    blur.uniforms.t.value = P[0].texture; blur.uniforms.d.value.set(1/w, 0); pass(blur, P[1]); blur.uniforms.t.value = P[1].texture; blur.uniforms.d.value.set(0, 1/h); pass(blur, P[0]); } }
   function render(){
     renderer.setRenderTarget(main); renderer.render(scene, camera);
     bright.uniforms.t.value = main.texture; pass(bright, L[0][0]);
     for (var i = 0; i < N; i++){
       if (i > 0){ copy.uniforms.t.value = L[i - 1][0].texture; pass(copy, L[i][0]); }
-      var w = L[i][0].width, h = L[i][0].height;
-      blur.uniforms.t.value = L[i][0].texture; blur.uniforms.d.value.set(1/w, 0); pass(blur, L[i][1]);
-      blur.uniforms.t.value = L[i][1].texture; blur.uniforms.d.value.set(0, 1/h); pass(blur, L[i][0]);
+      blur2(L[i], 1);
     }
+    var tl = comp.uniforms.tilt.value > .01;
+    if (tl){ copy.uniforms.t.value = main.texture; pass(copy, S[0][0]); blur2(S[0], 1); copy.uniforms.t.value = S[0][0].texture; pass(copy, S[1][0]); blur2(S[1], 2); }
     comp.uniforms.t.value = main.texture; ['b0', 'b1', 'b2', 'b3', 'b4'].forEach(function(k, i){ comp.uniforms[k].value = L[i][0].texture; });
+    comp.uniforms.s0.value = tl ? S[0][0].texture : main.texture; comp.uniforms.s1.value = tl ? S[1][0].texture : main.texture;
     pass(comp, null);
   }
   return {size: size, render: render, U: comp.uniforms, bright: bright.uniforms};
@@ -282,7 +306,7 @@ ground.receiveShadow = true; scene.add(ground);
 })();
 
 /* ═════════════ вода ═════════════ */
-var waterU = {uTime: {value: 0}, uSky: {value: col(0x26324a)}, uDeep: {value: col(0x13202a)}, uSun: {value: new T.Vector3(0, 1, 0)}, uSunC: {value: col(0xffffff)}, uFire: {value: 0}, uFireP: {value: new T.Vector3(-90, 8, -31)},
+var waterU = {uHF: HFOG.uHF, uHFC: HFOG.uHFC, uFG: HFOG.uFG, uFP: HFOG.uFP, uTime: {value: 0}, uSky: {value: col(0x26324a)}, uDeep: {value: col(0x13202a)}, uSun: {value: new T.Vector3(0, 1, 0)}, uSunC: {value: col(0xffffff)}, uFire: {value: 0}, uFireP: {value: new T.Vector3(-90, 8, -31)},
   fogColor: {value: new T.Color()}, fogDensity: {value: .002}, uFlow: {value: 1}};
 var waterMat = new T.ShaderMaterial({uniforms: waterU, transparent: true, fog: true, depthWrite: false,
   vertexShader: 'attribute float aEdge; varying vec3 vW; varying float vE;\n#include <fog_pars_vertex>\nvoid main(){ vE = aEdge; vec4 w = modelMatrix*vec4(position, 1.); vW = w.xyz; vec4 mvPosition = viewMatrix*w; gl_Position = projectionMatrix*mvPosition;\n#include <fog_vertex>\n}',
@@ -571,7 +595,7 @@ var TG = {
 };
 var TREES = {}; Object.keys(TG).forEach(function(k){ TREES[k] = []; });
 var CAMCLR = [[[-36, 7, -6], [-92, 7, -33]], [[-26, 34, 24], [-90, 6, -31]], [[-46, 20, 36], [-92, 8, -12]], [[-12, 20, 40], [-50, 2, 14]], [[-108, 24, 52], [-142, 1, 0]], [[-46, 22, -4], [-94, 9, -31]],
-  [[-42, 13, -14], [-80, 5, -31]], [[-110, 13, -84], [-142, 2, -28]], [[-112, 26, 40], [-145, 1, -10]]].map(function(c){ var p = c[0], t = c[1], m = [t[0] + (p[0] - t[0])*1.4, t[2] + (p[2] - t[2])*1.4]; return [m, [lerp(p[0], t[0], .3), lerp(p[2], t[2], .3)]]; });
+  [[-44, 16, -2], [-86, 6, -36]], [[-110, 13, -84], [-142, 2, -28]], [[-112, 26, 40], [-145, 1, -10]]].map(function(c){ var p = c[0], t = c[1], m = [t[0] + (p[0] - t[0])*1.4, t[2] + (p[2] - t[2])*1.4]; return [m, [lerp(p[0], t[0], .3), lerp(p[2], t[2], .3)]]; });
 function blocked(x, z, r){
   for (var ci = 0; ci < CAMCLR.length; ci++) if (segDist(x, z, CAMCLR[ci][0], CAMCLR[ci][1]) < 9) return true;
   r = r || 4; var boxes = [PAL.S, PAL.M, PAL.N, OF1, OF2, NB].concat(SMALL, NORTH);
@@ -605,7 +629,7 @@ for (i = 0; i < 400 && i >= 0; i++){                                            
   if (TREES.oak.length + TREES.lime.length > 4000) break;
   if (rt() < .1){ var kk = rt(); addT(kk < .35 ? 'oak' : kk < .6 ? 'lime' : kk < .8 ? 'chestnut' : 'wpoplar', sx, sz, 1.35 + rt()*.35); }
 }
-[[-64, -12], [-70, -50], [-44, -38], [-46, -16], [-72, 6], [-34, 4], [-82, -64], [-50, 8]].forEach(function(p){ addT('poplar', p[0], p[1], 1.5 + rt()*.25); });   // пірамідальні тополі, як в Орди
+[[-112, -62], [-113, -4], [-74, -64], [-84, 9], [-40, -34], [-34, 6], [-62, -62]].forEach(function(p){ for (var ci = 0; ci < CAMCLR.length; ci++) if (segDist(p[0], p[1], CAMCLR[ci][0], CAMCLR[ci][1]) < 9) return; addT('poplar', p[0], p[1], 1.5 + rt()*.25); });   // пірамідальні тополі, як в Орди
 for (var zz = PARK.z0 - 60; zz < PARK.z1 + 160; zz += 10){ var rx2 = roadX(zz); [-1, 1].forEach(function(sd){ if (rt() < .85) addT('poplar', rx2 + sd*(5.5 + rt()*.8), zz + rt()*2, 1 + rt()*.25); }); }
 for (var ax = roadX(GATE_Z) + 12; ax < -84; ax += 7){ addT('lime', ax, GATE_Z - 5.5, 1.05); addT('lime', ax, GATE_Z + 5.5, 1.05); }
 for (i = 0; i < 80; i++){ var sz2 = -130 + rt()*250, sx2 = edgeX(sz2) + (rt() - .3)*14; if (!blocked(sx2, sz2)) addT(rt() < .4 ? 'spruce' : 'oak', sx2, sz2, .8 + rt()*.5); }
@@ -699,7 +723,7 @@ var STEPS = [
  {t: 37, cam: [[-310, 80, 40], [-165, 0, -22]], time: 'удень', day: '22 листопада', h: 'Підмога із сіл',
   p: 'До Острівців прискакує вершник: «Воробин оточений!». Лук\'ян і Хома Гончарі беруть карабіни й біжать до маєтку. З Мочулища приходить загін із сорока чоловік на чолі з Ісааком Петрушком і веде з собою управителя Мольського. Палац горить.',
   s: 'Голяк і Латта, 1920, арк. 571–573; Мольський, 1920 і 1922, арк. 565, 374'},
- {t: 40, cam: [[-42, 13, -14], [-80, 5, -31]], time: '≈ 16:00', day: '22 листопада', h: 'Капітуляція',
+ {t: 40, cam: [[-44, 16, -2], [-86, 6, -36]], time: '≈ 16:00', day: '22 листопада', h: 'Капітуляція',
   p: 'Набої скінчилися, будинок горить, дах провалюється. Оборонці складають зброю й виходять: селяни пообіцяли, що їх лише заарештують і що буде суд. На них кидаються з багнетами, але один із ватажків зупиняє натовп. Сибіковський чув, як Олександр Конончук поставив долю полонених «на голосування».',
   s: 'Буйновський, 1920, арк. 579 зв.; Ліпінський, арк. 396; Сибіковський, арк. 398'},
  {t: 41, cam: [[-110, 13, -84], [-142, 2, -28]], time: '15:00–17:00', day: '22 листопада', h: 'Розстріл',
@@ -835,21 +859,26 @@ var ROUTES = ROUTES_DEF.map(function(R0){
 });
 
 /* ═════════════ частинки ═════════════ */
-function particles(n, additive, tex, boost){
+function particles(n, additive, tex, boost, shape){
   var g = new T.BufferGeometry();
   g.setAttribute('position', new T.BufferAttribute(new Float32Array(n*3), 3));
   g.setAttribute('aCol', new T.BufferAttribute(new Float32Array(n*3), 3));
   g.setAttribute('aSize', new T.BufferAttribute(new Float32Array(n), 1));
   g.setAttribute('aA', new T.BufferAttribute(new Float32Array(n), 1));
-  var m = new T.ShaderMaterial({transparent: true, depthWrite: false, blending: additive ? T.AdditiveBlending : T.NormalBlending, uniforms: {map: {value: tex}, uScale: {value: 400}, uBoost: {value: boost || 1}, uNear: {value: 0}},
+  var m = new T.ShaderMaterial({transparent: true, depthWrite: false, blending: additive ? T.AdditiveBlending : T.NormalBlending, uniforms: {map: {value: tex}, uScale: {value: 400}, uBoost: {value: boost || 1}, uNear: {value: 0}, uShape: {value: shape || 0}},
     vertexShader: 'attribute vec3 aCol; attribute float aSize, aA; uniform float uScale, uNear; varying vec3 vC; varying float vA; void main(){ vC = aCol; vec4 mv = modelViewMatrix*vec4(position, 1.); vA = aA*smoothstep(uNear*.35, uNear, -mv.z); gl_PointSize = aSize*uScale/-mv.z; gl_Position = projectionMatrix*mv; }',
-    fragmentShader: 'uniform sampler2D map; uniform float uBoost; varying vec3 vC; varying float vA; void main(){ vec4 t = texture2D(map, gl_PointCoord); gl_FragColor = vec4(vC*uBoost, t.a*vA); if (gl_FragColor.a < .01) discard; }'});
+    fragmentShader: ['uniform sampler2D map; uniform float uBoost, uShape; varying vec3 vC; varying float vA;',
+      'void main(){ vec2 p = gl_PointCoord - .5; p.y = -p.y; float a; vec3 c = vC;',
+      '  if (uShape > 1.5){ float r = length(p); a = exp(-r*r*70.) + exp(-r*12.)*.22; c *= 1. + exp(-r*r*120.); }',                       // іскра
+      '  else if (uShape > .5){ float r = length(vec2(p.x*(1.15 + p.y*1.3), (p.y + .08)*.85)); a = 1. - smoothstep(0., .5, r); a *= a; c *= 1. + (1. - smoothstep(0., .25, r))*1.1; }',   // язик полум'я
+      '  else a = texture2D(map, gl_PointCoord).a;',
+      '  gl_FragColor = vec4(c*uBoost, a*vA); if (gl_FragColor.a < .01) discard; }'].join('\n')});
   var p = new T.Points(g, m); p.frustumCulled = false; scene.add(p);
   var st = []; for (var k = 0; k < n; k++) st.push({life: 1, max: 1, x: 0, y: -999, z: 0, vx: 0, vy: 0, vz: 0, s0: 1, kind: 0});
   return {g: g, m: m, st: st, n: n, i: 0};
 }
-var FLAME = particles(LOW ? 700 : 1300, true, DOT, 3.2), EMBER = particles(LOW ? 180 : 320, true, DOT, 4), SMOKE = particles(LOW ? 420 : 760, false, PUFF, 1), FLASH = particles(140, true, DOT, 6);
-var TORCH = particles(240, true, DOT, 3.5), MIST = particles(LOW ? 70 : 130, false, PUFF, 1); MIST.m.uniforms.uNear.value = 140; SMOKE.m.uniforms.uNear.value = 14;
+var FLAME = particles(LOW ? 800 : 1500, true, DOT, 2.6, 1), EMBER = particles(LOW ? 220 : 420, true, DOT, 5, 2), SMOKE = particles(LOW ? 640 : 1300, false, PUFF, 1), FLASH = particles(140, true, DOT, 6, 2);
+var TORCH = particles(240, true, DOT, 3.2, 1), MIST = particles(LOW ? 70 : 130, false, PUFF, 1); MIST.m.uniforms.uNear.value = 140; SMOKE.m.uniforms.uNear.value = 14;
 function emit(P, x, y, z, vx, vy, vz, life, size, kind){ var s = P.st[P.i]; P.i = (P.i + 1) % P.n; s.x = x; s.y = y; s.z = z; s.vx = vx; s.vy = vy; s.vz = vz; s.life = 0; s.max = life; s.s0 = size; s.kind = kind || 0; }
 var smokeAcc = [0, 0, 0];
 var fireLights = [0, 1, 2].map(function(k){ var l = new T.PointLight(0xff7a2a, 0, 90, 1.8), c = cen(PARTS[k]); l.position.set(c[0] + 10, 18, c[1]); scene.add(l); return l; });
@@ -930,7 +959,7 @@ var pinEls = [], cartLab = mkLabel('', 'pin', 4);
 
 /* ═════════════ небо й світло за годиною ═════════════ */
 var K = {night: 1, dusk: 0}, cSky = new T.Color(), cHor = new T.Color();
-var NIGHT_T = col(0x060a14), NIGHT_H = col(0x18202f), DAY_T = col(0x5d7088), DAY_H = col(0xb7bcbc), DUSK_T = col(0x2e3048), DUSK_H = col(0xb7805a);
+var tmp3 = new T.Vector3(), NIGHT_T = col(0x060a14), NIGHT_H = col(0x18202f), DAY_T = col(0x5d7088), DAY_H = col(0xb7bcbc), DUSK_T = col(0x2e3048), DUSK_H = col(0xb7805a);
 function setTime(hour){
   var h = hour % 24, rise = 7.3, set = 15.9;
   var d = ss(rise - .6, rise + .9, h)*(1 - ss(set - .7, set + .5, h));
@@ -948,8 +977,14 @@ function setTime(hour){
   hemi.intensity = lerp(.42, .7, d); hemi.color.copy(tmp2.set(0x5c74b8).lerp(col(0xdfe6ee), d)); hemi.groundColor.set(d > .4 ? 0x4c412e : 0x14131a);
   stars.material.opacity = Math.max(0, 1 - d*1.6 - dusk*.7)*.75;
   waterU.uSky.value.copy(cHor).multiplyScalar(lerp(.5, 1, d)); waterU.uDeep.value.set(0x13202a).multiplyScalar(lerp(.45, 1, d)); waterU.uSun.value.copy(L); waterU.uSunC.value.copy(sun.color).multiplyScalar(d > .08 ? 1 : .6);
-  if (PP){ PP.U.exposure.value = lerp(1.55, 1.05, d); PP.U.sat.value = lerp(.72, .92, d);
-    PP.U.lift.value.set(lerp(.012, .01, d), lerp(.018, .008, d), lerp(.05, .0, d)); PP.U.gain.value.set(lerp(.94, 1.04, d) + dusk*.05, lerp(.98, 1, d), lerp(1.08, .94, d) - dusk*.06); }
+  HFOG.uHF.value.set(lerp(.0085, .005, d) + dusk*.002, -3.6, lerp(1.6, 1.4, d), lerp(.7, .5, d));                          // приземний туман
+  HFOG.uHFC.value.setRGB(.06, .08, .12).lerp(tmp2.copy(cHor).multiplyScalar(1.05), d).lerp(tmp2.set(0x9a7c6c), dusk*.4);
+  if (PP){ var U = PP.U;                                                                                                       // кольорова корекція: ніч — холодні тіні й теплі вогні, день — м'яке листопадове світло, сутінки — бурштин
+    U.exposure.value = lerp(1.5, 1.02, d) + dusk*.06; U.sat.value = lerp(.8, .86, d) - dusk*.04; U.contrast.value = lerp(.32, .24, d) + dusk*.06;
+    U.shT.value.set(lerp(.86, .97, d), lerp(.97, 1, d), lerp(1.14, 1.04, d)).lerp(tmp3.set(.9, .97, 1.06), dusk*.8);
+    U.hiT.value.set(lerp(1.1, 1.04, d), lerp(1, 1, d), lerp(.86, .95, d)).lerp(tmp3.set(1.1, 1, .84), dusk*.8);
+    U.lift.value.set(lerp(.006, .012, d), lerp(.012, .012, d), lerp(.032, .013, d)); U.gain.value.set(lerp(.96, 1.02, d), lerp(.99, 1, d), lerp(1.04, .97, d));
+    U.vigC.value.set(lerp(.72, .92, d), lerp(.82, .9, d), lerp(1.08, .92, d)).lerp(tmp3.set(.95, .86, .78), dusk*.5); }
   else renderer.toneMappingExposure = lerp(1.6, 1, d);
   K.night = night; K.dusk = dusk; return d;
 }
@@ -1033,7 +1068,7 @@ cv.addEventListener('pointerup', function(e){ if (!downAt || Math.hypot(e.client
 
 fetch('worobin-1k.glb?v=20261019c').then(function(r){ return r.arrayBuffer(); }).then(function(buf){
   var dr = new T.DRACOLoader(); dr.setDecoderPath('draco/'); var gl = new T.GLTFLoader(); gl.setDRACOLoader(dr);
-  gl.parse(buf, '', function(g){ g.scene.traverse(function(o){ if (o.isMesh){ o.castShadow = true; o.receiveShadow = true; o.userData.info = 'lib'; PICK.push(o); } }); libGroup.add(g.scene); dr.dispose(); });
+  gl.parse(buf, '', function(g){ g.scene.traverse(function(o){ if (o.isMesh){ o.castShadow = true; o.receiveShadow = true; o.userData.info = 'lib'; PICK.push(o); } }); libGroup.add(g.scene); applyHF(g.scene); dr.dispose(); });
 }).catch(function(){});
 
 /* ═════════════ кадр ═════════════ */
@@ -1063,7 +1098,7 @@ function layoutLabels(){                                                        
 function ease(t){ return t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3)/2; }
 function randomFrom(G){ for (var k = 0; k < 6; k++){ var c = G.cur[(Math.random()*G.n)|0]; if (c[2] > .6 && !c[3]) return c; } return null; }
 function shoot(inten){
-  var att = GROUPS.filter(function(G){ return G.cls === 'att'; }), defWing = step >= 7 ? PAL.S : PAL.N, y0 = palN.position.y;
+  var att = GROUPS.filter(function(G){ return G.cls === 'att'; }), defWing = step >= 7 ? PAL.N : PAL.S, y0 = palN.position.y;
   var n = Math.random() < inten*.9 ? 1 + (Math.random()*2*inten|0) : 0;
   for (var q = 0; q < n; q++){
     var tr2 = TR.find(function(t){ return !t.on; }); if (!tr2) return;
@@ -1079,6 +1114,7 @@ function upd(P, dt, fn){ var pos = P.g.attributes.position.array, cl = P.g.attri
   for (var k = 0; k < P.n; k++){ var s = P.st[k]; if (s.life >= s.max){ al[k] = 0; continue; } s.life += dt; var u = s.life/s.max;
     s.x += s.vx*dt; s.y += s.vy*dt; s.z += s.vz*dt; pos[k*3] = s.x; pos[k*3 + 1] = s.y; pos[k*3 + 2] = s.z; fn(s, u, k, cl, sz, al); }
   P.g.attributes.position.needsUpdate = P.g.attributes.aCol.needsUpdate = P.g.attributes.aSize.needsUpdate = P.g.attributes.aA.needsUpdate = true; }
+var HOT = PARTS.map(function(R0, p){ var r = rngF(90 + p), out = []; for (var k = 0; k < 4; k++) out.push([lerp(R0.x0 + 2, R0.x1 - 2, r()), lerp(R0.z0 + 2, R0.z1 - 2, r())]); return out; });   // осередки вогню
 function frame(now){
   requestAnimationFrame(frame);
   var dt = Math.min(DTMAX, clock.getDelta()), time = now*.001;
@@ -1089,6 +1125,9 @@ function frame(now){
   rainCur = lerp(rainCur, RAIN[step], .02);
   var day = setTime(curHour), night = K.night, fireMax = Math.max.apply(null, fireCur);
   skyU.time.value = time; skyU.glow.value = fireMax*night*.8;
+  HFOG.uFG.value.set(fireMax*.34, fireMax*.14, fireMax*.05, 75).multiplyScalar(1).setW(75); HFOG.uFG.value.x *= lerp(.35, 1.4, night); HFOG.uFG.value.y *= lerp(.35, 1.4, night); HFOG.uFG.value.z *= lerp(.35, 1.4, night);
+  HFOG.uFP.value.set(cM[0], 10, cM[1]);
+  if (PP){ PP.U.tilt.value = LOW ? 0 : ss(14, 95, camera.position.y - controls.target.y)*.72; PP.bright.th.value = lerp(.85, 1.3, day); PP.U.exposure.value *= 1 - fireMax*.14*day - fireMax*.06; }
   waterU.uTime.value = time; waterU.uFire.value = fireMax*(.3 + night); waterU.fogColor.value.copy(scene.fog.color); waterU.fogDensity.value = scene.fog.density;
   // камера: проліт, далі повільний наїзд
   if (camFly < 1){ camFly = Math.min(1, Math.max(0, (now - camStart)/CAMDUR)); var ce = ease(camFly);
@@ -1107,26 +1146,26 @@ function frame(now){
     ud.wallMat.color.copy(ud.wall).lerp(tmp2.set(0x2a221c), burnt*.8); M.trim.color.setRGB(1, 1, 1);
     ud.roof.position.y = ud.h + .2 - roofCur[p]*(ud.h*.55); ud.roof.rotation.z = roofCur[p]*.06; ud.roof.visible = roofCur[p] < .97;
     FLAMES[p].forEach(function(o, j){ var u = o.userData, fl = f*(.75 + .25*Math.sin(time*11 + u.ph) + .15*Math.sin(time*23 + j));
-      o.visible = f > .03; if (!o.visible) return; var top = gy + ud.h*(1 - roofCur[p]*.5) + (1 - roofCur[p])*ud.rh*.35;
+      o.visible = false; if (!o.visible) return; var top = gy + ud.h*(1 - roofCur[p]*.5) + (1 - roofCur[p])*ud.rh*.35;
       o.position.y = top - .5; o.scale.set(u.w*fl, u.h*fl*(1 + .2*Math.sin(time*7 + u.ph)), u.w*fl); o.rotation.y = time*.5 + u.ph; });
-    fireLights[p].intensity = f*(1.8 + Math.sin(time*13 + p*2)*.45 + Math.sin(time*7.3)*.3)*(.35 + night);
+    fireLights[p].intensity = f*(1.6 + Math.sin(time*13 + p*2)*.4 + Math.sin(time*7.3)*.3)*(.18 + .9*night);
     var rate = f*(LOW ? 120 : 210)*dt;
     for (var k = 0; k < rate; k++){
-      var fx = lerp(R0.x0 + 1, R0.x1 - 1, Math.random()), fz = lerp(R0.z0 + 1, R0.z1 - 1, Math.random()), fy = gy + ud.h*(1 - roofCur[p]*.4) + Math.random()*ud.rh*.5*(1 - roofCur[p]);
-      emit(FLAME, fx, fy, fz, (Math.random() - .5)*1.2 + .9, 3 + Math.random()*4, (Math.random() - .5)*1.2, .5 + Math.random()*.6, 1.4 + Math.random()*2, 0);
-      if (Math.random() < .07) emit(EMBER, fx, fy + 2, fz, (Math.random() - .5)*3 + 2.5, 5 + Math.random()*6, (Math.random() - .5)*3, 2 + Math.random()*2, .8, 0);
+      var hs = HOT[p][(Math.random()*HOT[p].length)|0], spread = .4 + roofCur[p]*.6, fx = lerp(hs[0], lerp(R0.x0 + 1, R0.x1 - 1, Math.random()), spread*.35) + (Math.random() - .5)*2.4, fz = lerp(hs[1], lerp(R0.z0 + 1, R0.z1 - 1, Math.random()), spread*.35) + (Math.random() - .5)*2.4, fy = gy + ud.h*(1 - roofCur[p]*.4) + Math.random()*ud.rh*.4*(1 - roofCur[p]);
+      emit(FLAME, fx, fy, fz, (Math.random() - .5)*1.4 + .9, 3 + Math.random()*4, (Math.random() - .5)*1.4, .7 + Math.random()*.8, 3.2 + Math.random()*3.6, 0);
+      if (Math.random() < .1) emit(EMBER, fx, fy + 2, fz, (Math.random() - .5)*3 + 2.5, 5 + Math.random()*6, (Math.random() - .5)*3, 2.5 + Math.random()*2.5, .45 + Math.random()*.3, 0);
     }
-    smokeAcc[p] += f*(LOW ? 9 : 15)*dt;
-    while (smokeAcc[p] >= 1){ smokeAcc[p]--; emit(SMOKE, lerp(R0.x0 + 1, R0.x1 - 1, Math.random()), gy + ud.h + 3 + Math.random()*2, lerp(R0.z0 + 1, R0.z1 - 1, Math.random()), 1 + Math.random()*1.5, 4.5 + Math.random()*2.5, -.5 + (Math.random() - .5), 10 + Math.random()*6, 6 + Math.random()*4, 0); }
+    smokeAcc[p] += f*(LOW ? 11 : 21)*dt;
+    while (smokeAcc[p] >= 1){ smokeAcc[p]--; var hs2 = HOT[p][(Math.random()*HOT[p].length)|0]; emit(SMOKE, hs2[0] + (Math.random() - .5)*5, gy + ud.h + 2 + Math.random()*2, hs2[1] + (Math.random() - .5)*5, 1 + Math.random()*1.5, 4 + Math.random()*3, -.5 + (Math.random() - .5), 12 + Math.random()*7, 7 + Math.random()*6, 0); }
   }
   if (Math.random() < dt*2) emit(SMOKE, CHIMNEY.x, CHIMNEY.y, CHIMNEY.z, .8, 2.5, -.3, 9, 3, 2);          // заводський комин куриться
   waterU.uFireP.value.set(cM[0] + 10, 12, cM[1]);
-  upd(FLAME, dt, function(s, u, k, cl, sz, al){ cl[k*3] = 1; cl[k*3 + 1] = lerp(.62, .2, u); cl[k*3 + 2] = lerp(.2, .03, u); sz[k] = s.s0*(1 - u*.55); al[k] = (1 - u)*Math.min(1, u*8)*.55; s.vy *= .985; });
-  upd(EMBER, dt, function(s, u, k, cl, sz, al){ cl[k*3] = 1; cl[k*3 + 1] = .5; cl[k*3 + 2] = .15; sz[k] = s.s0*.7; al[k] = (1 - u)*(.5 + .4*Math.sin(now*.03 + k)); s.vy -= 2.2*dt; s.vx *= .99; });
-  var sCol = tmp2.set(0x3e3630).lerp(col(0x6a655e), day).clone();
-  upd(SMOKE, dt, function(s, u, k, cl, sz, al){ cl[k*3] = sCol.r; cl[k*3 + 1] = sCol.g; cl[k*3 + 2] = sCol.b;
-    if (s.kind === 0 && u < .25 && night > .4){ var gl = (1 - u*4)*.6; cl[k*3] += gl; cl[k*3 + 1] += gl*.38; cl[k*3 + 2] += gl*.1; }
-    sz[k] = s.s0*(1 + u*3); al[k] = Math.min(1, u*5)*(1 - u)*(s.kind === 2 ? .25 : s.kind ? .35 : lerp(.38, .55, day)); s.vx += .3*dt; });
+  upd(FLAME, dt, function(s, u, k, cl, sz, al){ cl[k*3] = lerp(1, .75, u*u); cl[k*3 + 1] = u < .3 ? lerp(.78, .45, u/.3) : lerp(.45, .1, (u - .3)/.7); cl[k*3 + 2] = lerp(.38, .02, Math.min(1, u*2)); sz[k] = s.s0*(1 - u*.5); al[k] = (1 - u)*Math.min(1, u*8)*.5; s.vy *= .985; s.vx += Math.sin(now*.004 + k)*dt*.8; });
+  upd(EMBER, dt, function(s, u, k, cl, sz, al){ cl[k*3] = 1; cl[k*3 + 1] = lerp(.6, .3, u); cl[k*3 + 2] = .12; sz[k] = s.s0; al[k] = (1 - u)*(.55 + .45*Math.sin(now*.03 + k)); s.vy -= 2.2*dt; s.vx *= .99; });
+  var sCol = tmp2.set(0x3a332e).lerp(col(0x635c54), day).clone();
+  upd(SMOKE, dt, function(s, u, k, cl, sz, al){ var soot = s.kind === 0 ? (1 - ss(.05, .5, u))*.45 - ss(.5, 1, u)*.35 : 0; cl[k*3] = sCol.r*(1 - soot); cl[k*3 + 1] = sCol.g*(1 - soot); cl[k*3 + 2] = sCol.b*(1 - soot);
+    if (s.kind === 0 && u < .35){ var gl = (1 - u/.35)*lerp(.22, .7, night); cl[k*3] += gl; cl[k*3 + 1] += gl*.36; cl[k*3 + 2] += gl*.08; }
+    sz[k] = s.s0*(1 + u*3); al[k] = Math.min(1, u*5)*(1 - u)*(s.kind === 2 ? .25 : s.kind ? .35 : lerp(.62, .9, day)); s.vx += .3*dt; });
   upd(FLASH, dt, function(s, u, k, cl, sz, al){ cl[k*3] = 1; cl[k*3 + 1] = .85; cl[k*3 + 2] = .55; sz[k] = s.s0*(1 + u); al[k] = 1 - u; });
   // залп на дорозі
   if (step === 10 && !volleyDone && (now - twStart)/1000 > 4.1){ volleyDone = true;
@@ -1226,6 +1265,7 @@ go(0, true);
 camera.position.set(460, 420, 640); controls.target.set(-40, 0, -20);
 var c0 = camFor(0); camFrom.p.copy(camera.position); camFrom.t.copy(controls.target); camTo.p.copy(c0.p); camTo.t.copy(c0.t); camStart = performance.now() + 300; camFly = 0; CAMDUR = 5600;
 setTimeout(function(){ CAMDUR = 3400; }, 6500);
+applyHF(scene);
 document.getElementById('load').classList.add('off');
 requestAnimationFrame(frame);
 window.W18S = {go: go, step: function(){ return step; }, cam: function(p, t){ userMoved = true; camFly = 1; camera.position.set(p[0], p[1], p[2]); controls.target.set(t[0], t[1], t[2]); controls.update(); }};
