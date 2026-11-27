@@ -1330,3 +1330,9 @@
 .w18-dl li[data-m="0"] .w18-dc{background:transparent}
 .w18-dl-none{margin:2rem 0;font:italic 400 1rem var(--ds-display);color:var(--w-ink3)}
 @media(max-width:600px){.w18-df select{flex:1 1 calc(50% - .3rem)}.w18-dl .w18-dc{grid-template-columns:64px minmax(0,1fr)}}
+.w18-3d{display:grid;grid-template-columns:1fr auto;align-items:center;gap:.2rem 1rem;margin:1.2rem 0 1.6rem;padding:1rem 1.2rem;border:1px solid var(--w-rule2);border-radius:12px;background:linear-gradient(120deg,#1d1a24,#2b2219);color:#f4e9c8;text-decoration:none;transition:border-color .2s}
+.w18-3d:hover{border-color:var(--w-gold)}
+.w18-3d b{font:400 1.3rem/1.2 var(--ds-display)}
+.w18-3d span{grid-column:1;font:400 .86rem/1.45 var(--ds-body);color:rgba(244,233,200,.72)}
+.w18-3d i{grid-column:2;grid-row:1/3;font:500 .9rem var(--ds-body);font-style:normal;color:#d4b25a}
+@media(max-width:520px){.w18-3d{grid-template-columns:1fr}.w18-3d i{grid-column:1;grid-row:auto}}
