@@ -1385,8 +1385,8 @@ function go(k, instant){
   pinEls.forEach(function(p){ p.el.remove(); }); pinEls = [];
   PIN_RINGS.forEach(function(r){ scene.remove(r); }); PIN_RINGS = [];
   (PINS[k] || []).forEach(function(q){ var x = q[0][0], z = q[0][1], inB = hitB(x, z), y = inB ? 0 : gY(x, z);
-    pinEls.push({el: mkLabel(q[1], 'pin', 5), p: new T.Vector3(x, y + (inB ? 16 : 9), z)});
-    if (inB || Math.abs(x) > 220 || Math.abs(z) > 380) return;                                     // кільце — лише на відкритому місці
+    pinEls.push({el: mkLabel(q[1], 'pin', 5), p: new T.Vector3(x, inB ? y + 14 : y + 1.2, z)});
+    return;                                     // кільце — лише на відкритому місці
     [0, 1].forEach(function(j){ var rg = new T.Mesh(new T.RingGeometry(j ? 1.25 : .95, j ? 1.45 : 1.25, 40), new T.MeshBasicMaterial({color: new T.Color(2, 1.55, .6), transparent: true, opacity: .85, depthWrite: false, fog: false, toneMapped: false}));
       rg.rotation.x = -Math.PI/2; rg.position.set(x, y + .3, z); rg.renderOrder = 3; rg.userData.ping = j; scene.add(rg); PIN_RINGS.push(rg); }); });
   ROUTES.forEach(function(r){ r.target = r.on.indexOf(k) > -1 ? 1 : 0; });
@@ -1440,7 +1440,7 @@ function project(el, p, hide){
   if (off){ el.classList.add('off'); return; }
   el.classList.remove('off');
   if (el._txt !== el.textContent || !el._w){ el._txt = el.textContent; el._w = el.offsetWidth || 80; el._h = el.offsetHeight || 22; }       // розмір — за поточним текстом
-  placed.push({el: el, x: (v3.x*.5 + .5)*innerWidth, y: (-v3.y*.5 + .5)*innerHeight, pr: el._pr, w: el._w, h: el._h, ex: el.classList.contains('pin') ? 26 : 0});
+  placed.push({el: el, x: (v3.x*.5 + .5)*innerWidth, y: (-v3.y*.5 + .5)*innerHeight, pr: el._pr, w: el._w, h: el._h, ex: el.classList.contains('pin') ? 44 : 0});
 }
 var UIR = [], UIT = 0;
 function uiRects(){ var nw = performance.now(); if (nw - UIT < 600) return UIR; UIT = nw; UIR = [];
@@ -1593,7 +1593,7 @@ function frame(now){
     var showR = nv > 3 && G.cls !== 'ger' && txt && now - twStart > (G.dur || TW)*.85;                  // кільце — коли загін дійшов
     if (showR){ var rr = (stc && stc.r ? stc.r : 6) + 2.5, cx2 = sx/nv, cz2 = sz2/nv, cy = H(cx2, cz2) + .45;
       G.ring.position.set(cx2, cy, cz2); G.ring.scale.setScalar(rr*(1 + .04*Math.sin(time*2.5))); G.disc.position.set(cx2, cy - .05, cz2); G.disc.scale.setScalar(rr); }
-    G.ring.material.opacity = lerp(G.ring.material.opacity, showR ? .8 : 0, .08); G.disc.material.opacity = lerp(G.disc.material.opacity, showR ? .16 : 0, .08);
+    G.ring.material.opacity = lerp(G.ring.material.opacity, showR ? .38 : 0, .08); G.disc.material.opacity = lerp(G.disc.material.opacity, showR ? .07 : 0, .08);
     if (G.cls === 'att' && gIdx < 4 && nv){ torchLights[gIdx].position.set(sx/nv, H(sx/nv, sz2/nv) + 5, sz2/nv); torchLights[gIdx].intensity = night*1.3*(1 + .15*Math.sin(now*.02 + gIdx)); gIdx++; }
   });
   for (var z2 = tIdx; z2 < TORCH.n; z2++) tA[z2] = 0;
@@ -1629,7 +1629,9 @@ function frame(now){
   layoutLabels();
   var az0 = Math.atan2(camera.position.x - controls.target.x, camera.position.z - controls.target.z); needle.style.transform = 'rotate(' + (az0*180/Math.PI) + 'deg)';
   var us = innerHeight*.9; [FLAME, EMBER, SMOKE, FLASH, TORCH, MIST].forEach(function(P){ P.m.uniforms.uScale.value = us; });
-  FRN++; if (FRN % 2 === 0 || camFly < 1) renderer.shadowMap.needsUpdate = true;                  // тіні — через кадр
+  FRN++; if (FRN % 2 === 0 || camFly < 1) renderer.shadowMap.needsUpdate = true;
+  var pn = performance.now(); if (pn - VOT > 400){ VOT = pn; VOFF_T = document.body.classList.contains('intro-on') ? 0 : (dockEl.offsetHeight || 0)*.55; }
+  if (Math.abs(VOFF - VOFF_T) > .5){ VOFF = lerp(VOFF, VOFF_T, Math.min(1, Math.max(dt, .05)*3)); viewOff(); camera.updateProjectionMatrix(); }                  // тіні — через кадр
   if (PP){ PP.U.time.value = time; PP.render(); } else renderer.render(scene, camera);
   var fdt = now - (LASTF || now); LASTF = now; FAVG = FAVG*.95 + Math.min(200, fdt)*.05;          // адаптивна роздільність: тримаємо ~45+ fps
   if (now - QT > 1500 && !document.hidden && DTMAX < .1){ QT = now;
@@ -1637,7 +1639,9 @@ function frame(now){
     else if (FAVG < 15 && DPR < DPR0){ DPR = Math.min(DPR0, DPR*1.1); renderer.setPixelRatio(DPR); size(); } }
 }
 var FRN = 0, LASTF = 0, FAVG = 16, QT = 0;
-function size(){ renderer.setSize(innerWidth, innerHeight, false); camera.aspect = innerWidth/innerHeight; camera.updateProjectionMatrix();
+var VOT = 0, VOFF = 0, VOFF_T = 0, dockEl = document.querySelector('.dock');
+function viewOff(){ if (VOFF > .5) camera.setViewOffset(innerWidth, innerHeight, 0, VOFF, innerWidth, innerHeight); else camera.clearViewOffset(); }   // центр кадру — над карткою, а не за нею
+function size(){ renderer.setSize(innerWidth, innerHeight, false); camera.aspect = innerWidth/innerHeight; VOFF_T = document.body.classList.contains('intro-on') ? 0 : (dockEl.offsetHeight || 0)*.55; viewOff(); camera.updateProjectionMatrix();
   if (PP) PP.size(Math.floor(innerWidth*DPR), Math.floor(innerHeight*DPR)); BL.forEach(function(b){ b.el._w = 0; }); }
 addEventListener('resize', size); size();
 
