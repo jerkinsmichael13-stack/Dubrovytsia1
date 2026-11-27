@@ -47,19 +47,23 @@ function chaikin(P, closed, it){                                                
     for (var i = 0; i < m; i++){ var a = P[i], b = P[(i + 1) % L]; Q.push(a.map(function(v, k){ return v*.75 + b[k]*.25; }), a.map(function(v, k){ return v*.25 + b[k]*.75; })); }
     if (!closed) Q.push(P[L - 1].slice()); P = Q; }
   return P; }
-function SP(a){ return chaikin(IP(a), true, 3); }
-function SL(a){ return chaikin(IP(a), false, 3); }
+function relax(P, closed, n, k){                                                    // згладжує різкі злами контрольних точок
+  for (var r = 0; r < n; r++){ var L = P.length; P = P.map(function(p, i){ if (!closed && (i === 0 || i === L - 1)) return p.slice(); var a = P[(i - 1 + L) % L], b = P[(i + 1) % L];
+    return p.map(function(v, j){ return j < 2 ? v + ((a[j] + b[j])/2 - v)*k : v; }); }); }
+  return P; }
+function SP(a, rl){ return chaikin(relax(IP(a), true, rl || 0, .4), true, 3); }
+function SL(a, rl){ return chaikin(relax(IP(a), false, rl == null ? 2 : rl, .45), false, 3); }
 var WPOLY = [
   SP([[1318, -80], [1322, 0], [1335, 100], [1348, 200], [1362, 300], [1378, 380], [1392, 450], [1398, 490], [1400, 522], [1440, 526], [1478, 513], [1445, 495], [1425, 460], [1408, 400], [1392, 300], [1375, 200], [1355, 100], [1342, 0], [1338, -80]]),
   SP([[1402, 545], [1452, 548], [1460, 600], [1466, 660], [1462, 720], [1452, 800], [1440, 870], [1432, 903], [1362, 895], [1356, 850], [1356, 780], [1362, 700], [1376, 640], [1396, 600], [1400, 565]]),
   SP([[1293, 935], [1305, 915], [1330, 907], [1425, 910], [1412, 945], [1410, 975], [1430, 1010], [1446, 1045], [1395, 1050], [1350, 1048], [1352, 1000], [1350, 965], [1320, 962], [1298, 958]]),
   SP([[395, 1059], [430, 1062], [462, 1078], [500, 1080], [560, 1077], [620, 1075], [700, 1074], [800, 1074], [900, 1073], [1000, 1070], [1080, 1069], [1115, 1073], [1140, 1090], [1158, 1130], [1166, 1180], [1175, 1225],
       [1195, 1250], [1230, 1262], [1265, 1272], [1300, 1290], [1335, 1300], [1335, 1318], [1300, 1312], [1260, 1300], [1215, 1288], [1182, 1268], [1165, 1235], [1157, 1190], [1145, 1140], [1125, 1108], [1090, 1093],
-      [1000, 1097], [920, 1106], [880, 1124], [850, 1142], [815, 1150], [790, 1143], [765, 1115], [720, 1100], [660, 1094], [590, 1094], [520, 1102], [470, 1110], [440, 1092], [395, 1074]])
+      [1000, 1097], [920, 1106], [880, 1124], [850, 1142], [815, 1150], [790, 1143], [765, 1115], [720, 1100], [660, 1094], [590, 1094], [520, 1102], [470, 1110], [440, 1092], [395, 1074]], 2)
 ];
 var ISLAND = SP([[1410, 643], [1432, 655], [1444, 700], [1443, 760], [1432, 790], [1408, 795], [1390, 770], [1386, 715], [1393, 670]]);
 var BUP = SL([[-260, 1290, 7], [-20, 1250, 7], [40, 1225, 7], [200, 1160, 8], [330, 1090, 9], [400, 1066, 10]]), BDOWN = SL([[1320, 1306, 15], [1450, 1316, 15], [1560, 1325, 15], [1660, 1345, 15], [1720, 1370, 15], [1900, 1420, 15], [2150, 1470, 15]]);
-var BBANK = chaikin(IP([[-260, 1286], [-20, 1246], [40, 1221], [200, 1156], [330, 1086], [395, 1059], [430, 1062], [462, 1078], [500, 1080], [560, 1077], [620, 1075], [700, 1074], [800, 1074], [900, 1073], [1000, 1070], [1080, 1069], [1115, 1073], [1140, 1090], [1158, 1130], [1166, 1180]]), false, 3);
+var BBANK = chaikin(relax(IP([[-260, 1286], [-20, 1246], [40, 1221], [200, 1156], [330, 1086], [395, 1059], [430, 1062], [462, 1078], [500, 1080], [560, 1077], [620, 1075], [700, 1074], [800, 1074], [900, 1073], [1000, 1070], [1080, 1069], [1115, 1073], [1140, 1090], [1158, 1130], [1166, 1180]]), false, 2, .45), false, 3);
 var RIVB = BUP.concat(BDOWN);                                                       // для сумісності (вибірки точок)
 var WLINES = [
   SL([[1335, 1040, 11], [1334, 1100, 11], [1335, 1180, 11], [1338, 1240, 12], [1330, 1290, 12], [1318, 1304, 12]]),                       // лівий рукав
@@ -82,7 +86,7 @@ function bX(z){ return polyAt(BBANK, Math.max(-95, Math.min(500, z))); }
 function edgeX(z){ return z > -100 ? bX(z) - 22 : 92; }
 function nearWater(rng, d0, d1, box){ box = box || [-360, 300, -500, 460];        // випадкова точка на відстані d0..d1 від води
   for (var k = 0; k < 400; k++){ var x = lerp(box[0], box[1], rng()), z = lerp(box[2], box[3], rng()), d = dWater(x, z); if (d >= d0 && d <= d1) return [x, z, d]; } return null; }
-function riverX(z){ return 334 + 30*Math.sin(z/170 + .5) + 9*Math.sin(z/61 + 1); }
+function riverX(z){ var az = Math.abs(z); return 334 + 30*Math.sin(z/170 + .5) + 9*Math.sin(z/61 + 1) + ss(550, 1150, az)*(110*Math.sin(z/650 + 1.3) + 40*Math.sin(z/230)); }
 var GATE_Z = 2, BACK_Z = AXZ;
 var DRIVE = [[roadX(GATE_Z) + 4, GATE_Z], [-112, GATE_Z], [-80, GATE_Z + 1], [-66, -6], [-58, -15]];
 var BACKPATH = [[roadX(BACK_Z) + 4, BACK_Z], [-104, BACK_Z]];
@@ -143,9 +147,23 @@ function forestM(x, z){                                                         
   var sel = ss(.55, .65, fbm(x*.004 + 2, z*.004 + 5))*(1 - ss(500, 1000, Math.hypot(x - 2300, z + 3200)));                    // гаї біля Сельця
   var scrub = (x > 260 ? 1 : 0)*ss(.72, .78, fbm(x*.005 + 11, z*.005 + 3))*ss(500, 700, Math.hypot(x*.8, z*.6));
   return Math.max(w, cop, sel, scrub*.75); }
+/* ріки поза ближньою ділянкою: Горинь, продовження річки під схилом (обидва кінці з'єднано з Горинню), канал на захід — у видолинку серед полів */
+var FARR = (function(){ var hor = []; for (var z = -3640; z <= 3640; z += 40) hor.push([riverX(z), z, 52]);
+  var b0 = BUP[0], b1 = BDOWN[BDOWN.length - 1], c0 = WPOLY[0].reduce(function(m, p){ return p[0] < m[0] ? p : m; }, [1e9, 0]);
+  var R = [{P: hor, L: -4.5, hor: true},
+    {P: chaikin([[riverX(1500) - 20, 1500, 15], [300, 1160, 13], [246, 870, 11], [214, 650, 9], [b0[0], b0[1] + 40, 8], [b0[0], b0[1], 7]], false, 3), L: WL},
+    {P: chaikin([[b1[0], b1[1], 15], [b1[0] + 10, b1[1] - 70, 16], [292, -660, 17], [riverX(-800) - 22, -800, 20]], false, 3), L: WL},
+    {P: chaikin([[c0[0] + 8, c0[1], 8], [-430, -158, 7], [-560, -178, 6], [-700, -160, 5], [-850, -185, 4], [-1000, -170, 3], [-1150, -195, 2], [-1260, -188, .4]], false, 3), L: WL, plat: true}];
+  R.forEach(function(r){ var bb = [1e9, -1e9, 1e9, -1e9]; r.P.forEach(function(p){ bb[0] = Math.min(bb[0], p[0]); bb[1] = Math.max(bb[1], p[0]); bb[2] = Math.min(bb[2], p[1]); bb[3] = Math.max(bb[3], p[1]); }); r.bb = bb; });
+  return R; })();
+function farRiverD(x, z){ var m = 1e9; for (var k = 0; k < FARR.length; k++){ var b = FARR[k].bb; if (x < b[0] - 80 || x > b[1] + 80 || z < b[2] - 80 || z > b[3] + 80) continue; m = Math.min(m, sdLine(x, z, FARR[k].P)); } return m; }
 function farY(x, z){ var o = nearOut(x, z), pw = plateauW(x, z);
-  var hp = -.35 + (fbm(x*.0012 + 1, z*.0012) - .5)*5*ss(60, 600, o), hm = MEADOW - .55 + (fbm(x*.004, z*.004) - .5)*.5;
-  return lerp(hm, hp, pw); }
+  var hp = -.35 + (fbm(x*.0012 + 1, z*.0012) - .5)*5*ss(60, 600, o), hm = MEADOW - .55 + (fbm(x*.004, z*.004) - .5)*.5, h = lerp(hm, hp, pw);
+  for (var k = 0; k < FARR.length; k++){ var r = FARR[k], b = r.bb; if (x < b[0] - 80 || x > b[1] + 80 || z < b[2] - 80 || z > b[3] + 80) continue; var d = sdLine(x, z, r.P);
+    if (r.plat) h = Math.min(h, lerp(r.L - .3, h, ss(10, 60, d)));                      // видолинок
+    else { h = Math.min(h, lerp(r.L + .12, h, ss(0, 14, d))); if (d < 0) h = Math.min(h, r.L - .6 - Math.min(1.4, -d*.12)); } }
+  return h; }
+function gAt(x, z){ return nearOut(x, z) > 0 ? farY(x, z) : H(x, z); }
 var LAND = {uPl: {value: col(0x55442f)}, uSt: {value: col(0x837350)}, uRye: {value: col(0x5c6342)}, uFal: {value: col(0x6d6849)}, uStr: {value: col(0x8d7f5e)}, uPool: {value: col(0x2b3436)}};
 var LAND_GLSL = [
   'uniform vec3 uPl, uSt, uRye, uFal, uStr, uPool; varying vec2 vLand; varying vec3 vLW;',
@@ -163,7 +181,7 @@ var LAND_GLSL = [
   '  float hz = fract((p.x + lh(vec2(bz, 2.))*420.)/(360. + 280.*lh(vec2(bz, 5.)))); c = mix(c, uFal, (1. - smoothstep(.0, .025, min(hz, 1. - hz)))*.5);',
   '  return c; }',
   'vec3 landColor(vec3 c, vec3 vc){ vec3 tx = c/max(vc, vec3(.001)); vec2 p = vLW.xz;',
-  '  if (vLand.y > .01){ float ch = 1. - smoothstep(.0, .03, abs(lvn(p*.0045 + 3.) - .5)); float pool = smoothstep(.76, .81, lvn(p*.011 + 9.));',
+  '  if (vLand.y > .01){ float ch = 1. - smoothstep(.0, .03, abs(lvn(p*.0045 + 3.) - .5)); float pool = smoothstep(.82, .86, lvn(p*.035 + 9.))*.45;',
   '    vec3 m = c*(.88 + .24*lvn(p*.07)); m = mix(m, m*vec3(.6, .68, .7), ch*.85); m = mix(m, uPool, pool*.9); c = mix(c, m, vLand.y); }',
   '  if (vLand.x > .01) c = mix(c, stripCol(p)*tx, vLand.x);',
   '  return c; }'].join('\n');
@@ -378,13 +396,14 @@ ground.receiveShadow = true; scene.add(ground);
     p.setY(k, y0 - .3);
     var pw = plateauW(x, z), fm = forestM(x, z), c = tmpC.copy(C.meadow).lerp(C.wet, .35 + .4*fbm(x*.003, z*.003)).lerp(C.field2, pw);
     c.lerp(tmp2.set(0x2a2a1e), fm*.8); cc[k*3] = c.r; cc[k*3 + 1] = c.g; cc[k*3 + 2] = c.b;
-    la[k*2] = pw*(1 - fm)*ss(10, 60, o + (o > 0 ? 0 : 999)); la[k*2 + 1] = (1 - pw)*(1 - fm); }
+    var dR = farRiverD(x, z), rv = 1 - ss(12, 60, dR); la[k*2] = pw*(1 - fm)*ss(10, 60, o + (o > 0 ? 0 : 999))*(1 - rv); la[k*2 + 1] = Math.max((1 - pw)*(1 - fm), rv*.8); }
   g.setAttribute('color', new T.BufferAttribute(cc, 3)); g.setAttribute('aLand', new T.BufferAttribute(la, 2)); g.computeVertexNormals();
   var m = new T.Mesh(g, landify(new T.MeshStandardMaterial({vertexColors: true, roughness: 1}))); m.receiveShadow = true; scene.add(m);
 })();
 (function(){                                                                          // масив лісу: суцільні крони з рваним краєм
   var S0 = 7200, st = LOW ? 46 : 34, n = Math.floor(S0/st), P = [], Cc = [], idx = [], rr = rngF(55), V = new Int32Array((n + 1)*(n + 1)).fill(-1), Y = new Float32Array((n + 1)*(n + 1));
   for (var j = 0; j <= n; j++) for (var i2 = 0; i2 <= n; i2++){ var x = -S0/2 + i2*st, z = -S0/2 + j*st, fm = nearOut(x, z) > 200 ? forestM(x, z) : 0, k = j*(n + 1) + i2;
+    if (fm > .5 && farRiverD(x, z) < 30) fm = 0;
     Y[k] = fm > .5 ? farY(x, z) + (x > 260 ? 7 : 13) + 7*fbm(x*.01, z*.01) + (rr() - .5)*4 : -99; }
   function vid(i2, j){ var k = j*(n + 1) + i2; if (V[k] < 0){ var x = -S0/2 + i2*st + (rr() - .5)*st*.4, z = -S0/2 + j*st + (rr() - .5)*st*.4; V[k] = P.length/3; P.push(x, Y[k], z);
     var t = fbm(x*.006 + 5, z*.006), c = tmpC.set(t > .55 ? 0x23301f : t > .42 ? 0x2d3923 : 0x4a4036).lerp(tmp2.set(0x5f574a), rr()*.25); if (x > 260) c.lerp(tmp2.set(0x4c4436), .6); Cc.push(c.r, c.g, c.b); } return V[k]; }
@@ -397,17 +416,17 @@ ground.receiveShadow = true; scene.add(ground);
 /* ═════════════ вода ═════════════ */
 var waterU = {uHF: HFOG.uHF, uHFC: HFOG.uHFC, uFG: HFOG.uFG, uFP: HFOG.uFP, uTime: {value: 0}, uSky: {value: col(0x26324a)}, uDeep: {value: col(0x13202a)}, uSun: {value: new T.Vector3(0, 1, 0)}, uSunC: {value: col(0xffffff)}, uFire: {value: 0}, uFireP: {value: new T.Vector3(-90, 8, -31)},
   fogColor: {value: new T.Color()}, fogDensity: {value: .002}, uFlow: {value: 1}};
-var waterMat = new T.ShaderMaterial({uniforms: waterU, transparent: true, fog: true, depthWrite: false,
+var waterMat = new T.ShaderMaterial({uniforms: waterU, transparent: true, fog: true, depthWrite: false, side: T.DoubleSide,
   vertexShader: 'attribute float aEdge; varying vec3 vW; varying float vE;\n#include <fog_pars_vertex>\nvoid main(){ vE = aEdge; vec4 w = modelMatrix*vec4(position, 1.); vW = w.xyz; vec4 mvPosition = viewMatrix*w; gl_Position = projectionMatrix*mvPosition;\n#include <fog_vertex>\n}',
   fragmentShader: ['uniform float uTime, uFire, uFlow; uniform vec3 uSky, uDeep, uSun, uSunC, uFireP; varying vec3 vW; varying float vE;',
     '#include <fog_pars_fragment>',
     'float hs(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7)))*43758.5453); }',
     'float n2(vec2 p){ vec2 i = floor(p), f = fract(p); f = f*f*(3. - 2.*f); return mix(mix(hs(i), hs(i + vec2(1, 0)), f.x), mix(hs(i + vec2(0, 1)), hs(i + vec2(1, 1)), f.x), f.y); }',
     'float hgt(vec2 p){ return n2(p*.35 + vec2(0., -uTime*.25*uFlow))*.6 + n2(p*.9 + vec2(uTime*.07, -uTime*.5*uFlow))*.3 + n2(p*2.3 - vec2(0., uTime*.9*uFlow))*.12; }',
-    'void main(){ vec2 p = vW.xz; float e = .25; float h0 = hgt(p); vec3 n = normalize(vec3(h0 - hgt(p + vec2(e, 0.)), .32, h0 - hgt(p + vec2(0., e))));',
+    'void main(){ vec2 p = vW.xz; float e = .25; float h0 = hgt(p); vec3 n = normalize(vec3(h0 - hgt(p + vec2(e, 0.)), .75, h0 - hgt(p + vec2(0., e))));',
     '  vec3 v = normalize(cameraPosition - vW); float fr = .04 + .96*pow(1. - max(dot(n, v), 0.), 5.);',
-    '  vec3 r = reflect(-v, n); vec3 sk = mix(uSky*.85, uSky*1.15, clamp(r.y, 0., 1.));',
-    '  vec3 c = mix(uDeep, sk, clamp(fr*1.25, 0., 1.)); float s = pow(max(dot(r, normalize(uSun)), 0.), 180.); c += uSunC*s*2.2;',
+    '  vec3 r = reflect(-v, n); vec3 sk = mix(uSky*.62, uSky*.95, clamp(r.y, 0., 1.));',
+    '  vec3 c = mix(uDeep, sk, clamp(fr*.95, 0., 1.)); float s = pow(max(dot(r, normalize(uSun)), 0.), 180.); c += uSunC*s*2.2;',
     '  vec3 fd = uFireP - vW; float fdist = length(fd); float fs = pow(max(dot(r, fd/fdist), 0.), 12.); c += vec3(1., .45, .12)*uFire*(fs*2.5 + fr*.3)*clamp(260./fdist, 0., 1.);',
     '  float sh = smoothstep(.0, .22, vE); c = mix(uDeep*1.6 + vec3(.04, .05, .03), c, sh); float fo = (1. - smoothstep(.02, .09, vE))*(.5 + .5*n2(p*2. + uTime*.3));',
     '  c += vec3(.6, .65, .62)*fo*.35; gl_FragColor = vec4(c, mix(.55, .94, sh));',
@@ -429,7 +448,15 @@ function waterDisc(x, z, rx, rz, level){
   for (var k = 0; k < p.count; k++) edge[k] = Math.min(.5, Math.max(0, (level - H(x + p.getX(k), z + p.getZ(k)))/1.4));
   g.setAttribute('aEdge', new T.BufferAttribute(edge, 1));
   var m = new T.Mesh(g, waterMat); m.position.set(x, level, z); m.renderOrder = 1; scene.add(m); return m; }
-waterStrip(riverX, 52, RIVER_W, GZ0 - 400, GZ1 + 400);
+function farStrip(r){                                                                // ріка змінної ширини (ширина — у 3-й координаті)
+  var cv = new T.CatmullRomCurve3(r.P.map(function(p){ return new T.Vector3(p[0], p[2], p[1]); })), Ln = cv.getLength(), segs = Math.ceil(Ln/5), pts = cv.getSpacedPoints(segs), pos = [], idx = [], edge = [];
+  for (var k = 0; k <= segs; k++){ var P = pts[k], Q = pts[Math.min(segs, k + 1)], R0 = pts[Math.max(0, k - 1)], tx = Q.x - R0.x, tz = Q.z - R0.z, L2 = Math.hypot(tx, tz) || 1, nx = -tz/L2, nz = tx/L2, w = Math.max(.2, P.y);
+    var lv = r.hor ? lerp(RIVER_W, r.L, ss(0, 160, nearOut(P.x, P.z))) : r.L;
+    for (var j = 0; j < 7; j++){ var f = j/6 - .5, qx = P.x + nx*w*f, qz = P.z + nz*w*f; pos.push(qx, lv, qz); edge.push(Math.min(.5, Math.max(0, (lv - gAt(qx, qz))/1.4))*(1 - Math.pow(Math.abs(f)*2, 6)*.6)); }
+    if (k){ var a = (k - 1)*7; for (j = 0; j < 6; j++) idx.push(a + j, a + j + 7, a + j + 1, a + j + 1, a + j + 7, a + j + 8); } }
+  var g = new T.BufferGeometry(); g.setAttribute('position', new T.Float32BufferAttribute(pos, 3)); g.setAttribute('aEdge', new T.Float32BufferAttribute(edge, 1)); g.setIndex(idx);
+  var m = new T.Mesh(g, waterMat); m.renderOrder = 1; scene.add(m); return m; }
+FARR.forEach(farStrip);
 (function(){                                                                    // уся вода маєтку — одна площина на рівні WL, береги дає рельєф
   var x0 = -362, x1 = 262, z0 = -500, z1 = 462, st = LOW ? 3.2 : 2.4, nx = Math.ceil((x1 - x0)/st), nz = Math.ceil((z1 - z0)/st), hv = new Float32Array((nx + 1)*(nz + 1)), pos = [], edge = [], idx = [], map = new Int32Array((nx + 1)*(nz + 1)).fill(-1);
   for (var j = 0; j <= nz; j++) for (var i2 = 0; i2 <= nx; i2++){ var x = x0 + i2*st, z = z0 + j*st; hv[j*(nx + 1) + i2] = (dWater(x, z) < 6) ? H(x, z) : 0; }
@@ -795,6 +822,7 @@ for (i = 0; i < (LOW ? 150 : 260); i++){ var nw = nearWater(rt, 3, 13); if (!nw)
 for (i = 0; i < 9; i++){ var ic = ISLAND[(rt()*ISLAND.length)|0], ix = lerp(ic[0], -38, .45 + rt()*.4), iz = lerp(ic[1], -203, .45 + rt()*.4); if (dWater(ix, iz) > 1.5) addT(rt() < .6 ? 'willow' : 'wbig', ix, iz, .8 + rt()*.4); }
 (function(){ var rf = rngF(71), cnt = 0, tries = 0, NT = LOW ? 900 : 1800;          // узлісся, переліски, межові дерева, кущі в заплаві
   while (cnt < NT && tries++ < 60000){ var x = -3300 + rf()*6600, z = -3300 + rf()*6600, o = nearOut(x, z); if (o < 30) continue;
+    if (farRiverD(x, z) < 8) continue;
     var fm = forestM(x, z), y = farY(x, z), sc = 1.3 + rf()*.9;
     if (fm > .3 && fm < .62){ TREES[rf() < .55 ? 'spruce' : rf() < .6 ? 'pine' : 'birch'].push([x, y, z, sc*1.35, rf()*6.283, 0]); cnt++; continue; }
     if (fm >= .62) continue;
@@ -851,7 +879,7 @@ Object.keys(TREES).forEach(function(k){
   well(-44, 50); well(30, -262); well(-8, -300);
   var HG = mergeG([[new T.ConeGeometry(2.3, 3.6, 9).translate(0, 3.2, 0)], [new T.CylinderGeometry(2.3, 2.45, 1.4, 9).translate(0, .7, 0)], [new T.CylinderGeometry(.07, .09, 7, 5).translate(0, 3.5, 0)]]);   // стоги на заплаві
   var HS = [], rh2 = rngF(33); for (var t = 0; t < 6000 && HS.length < (LOW ? 70 : 140); t++){ var x = 120 + rh2()*2600, z = -2600 + rh2()*5200, o = nearOut(x, z);
-    var y = o > 0 ? farY(x, z) - .3 : H(x, z); if (plateauW(x, z) > .3 || forestM(x, z) > .3 || (o <= 0 && (dWater(x, z) < 4 || Math.abs(x - riverX(z)) < 32))) continue;
+    var y = o > 0 ? farY(x, z) - .3 : H(x, z); if (plateauW(x, z) > .3 || forestM(x, z) > .3 || farRiverD(x, z) < 16 || (o <= 0 && (dWater(x, z) < 4 || Math.abs(x - riverX(z)) < 32))) continue;
     var cl = vnoise(x*.01 + 4, z*.01); if (rh2() > cl*cl*1.6) continue; HS.push([x, y, z]); }
   var him = new T.InstancedMesh(HG, hay, HS.length), hd = new T.Object3D();
   HS.forEach(function(q, j){ hd.position.set(q[0], q[1], q[2]); hd.rotation.set((rh2() - .5)*.06, rh2()*6.28, 0); var s2 = .75 + rh2()*.5; hd.scale.set(s2, s2*(.85 + rh2()*.3), s2); hd.updateMatrix(); him.setMatrixAt(j, hd.matrix); });
@@ -1218,7 +1246,7 @@ function setTime(hour){
   hemi.intensity = lerp(.42, .7, d); hemi.color.copy(tmp2.set(0x5c74b8).lerp(col(0xdfe6ee), d)); hemi.groundColor.set(d > .4 ? 0x4c412e : 0x14131a);
   stars.material.opacity = Math.max(0, 1 - d*1.6 - dusk*.7)*.75;
   waterU.uSky.value.copy(cHor).multiplyScalar(lerp(.5, 1, d)); waterU.uDeep.value.set(0x13202a).multiplyScalar(lerp(.45, 1, d)); waterU.uSun.value.copy(L); waterU.uSunC.value.copy(sun.color).multiplyScalar(d > .08 ? 1 : .6);
-  HFOG.uHF.value.set(lerp(.0085, .0016, d) + dusk*.002, -3.8, lerp(1.6, 1.2, d), lerp(.7, .28, d));                          // приземний туман
+  HFOG.uHF.value.set(lerp(.0085, .0007, d) + dusk*.002, -3.8, lerp(1.6, 1.1, d), lerp(.7, .16, d));                          // приземний туман
   HFOG.uHFC.value.setRGB(.06, .08, .12).lerp(tmp2.copy(cHor).multiplyScalar(1.05), d).lerp(tmp2.set(0x9a7c6c), dusk*.4);
   if (PP){ var U = PP.U;                                                                                                       // кольорова корекція: ніч — холодні тіні й теплі вогні, день — м'яке листопадове світло, сутінки — бурштин
     U.exposure.value = lerp(1.5, 1.02, d) + dusk*.06; U.sat.value = lerp(.8, .86, d) - dusk*.04; U.contrast.value = lerp(.32, .3, d) + dusk*.04;
