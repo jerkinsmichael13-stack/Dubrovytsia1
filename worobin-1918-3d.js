@@ -82,7 +82,7 @@ function bX(z){ return polyAt(BBANK, Math.max(-95, Math.min(500, z))); }
 function edgeX(z){ return z > -100 ? bX(z) - 22 : 92; }
 function nearWater(rng, d0, d1, box){ box = box || [-360, 300, -500, 460];        // випадкова точка на відстані d0..d1 від води
   for (var k = 0; k < 400; k++){ var x = lerp(box[0], box[1], rng()), z = lerp(box[2], box[3], rng()), d = dWater(x, z); if (d >= d0 && d <= d1) return [x, z, d]; } return null; }
-function riverX(z){ return 330 + 18*Math.sin(z/130 + .5) + 8*Math.sin(z/47 + 1); }
+function riverX(z){ return 334 + 30*Math.sin(z/170 + .5) + 9*Math.sin(z/61 + 1); }
 var GATE_Z = 2, BACK_Z = AXZ;
 var DRIVE = [[roadX(GATE_Z) + 4, GATE_Z], [-112, GATE_Z], [-80, GATE_Z + 1], [-66, -6], [-58, -15]];
 var BACKPATH = [[roadX(BACK_Z) + 4, BACK_Z], [-104, BACK_Z]];
@@ -133,6 +133,47 @@ var PADS = [PAL.N, PAL.M, PAL.S, OF1, OF2, NB].concat(SMALL, NORTH, FOREST, [BAR
   for (var a = -.5; a <= .5; a += .25) for (var b = -.5; b <= .5; b += .25){ sum += H0(s0.cx + c*a*s0.L - sn*b*s0.D, s0.cz + sn*a*s0.L + c*b*s0.D); n++; }
   return {cx: s0.cx, cz: s0.cz, hw: s0.L/2, hd: s0.D/2, c: c, s: sn, R: Math.hypot(s0.L, s0.D)/2 + 8, h: Math.max(sum/n, WL + .7)}; });
 function padY(r){ var s0 = spec(r); for (var k = 0; k < PADS.length; k++){ var p = PADS[k]; if (Math.abs(p.cx - s0.cx) < .01 && Math.abs(p.cz - s0.cz) < .01) return p.h; } return H(s0.cx, s0.cz); }
+/* ═════════════ довкілля за картою району (знімок Nr 5444): на захід — смугасті поля до великого лісу (~2 км), на схід — заплава Горині, на північ — шлях на Висоцьк ═════════════ */
+var NEAR = {x0: -360, x1: 380, z0: -500, z1: 460};
+function nearOut(x, z){ return Math.max(NEAR.x0 - x, x - NEAR.x1, NEAR.z0 - z, z - NEAR.z1, 0); }
+function plateauW(x, z){ return 1 - ss(70, 190, x + 60*(fbm(z*.002 + 3, x*.001) - .5)); }                  // 1 — плато з полями, 0 — заплава
+function forestM(x, z){                                                                                     // 0..1: ліс
+  var w = ss(-1750, -2050, x + 420*(fbm(x*.0009 + 4, z*.0009) - .5)) * (1 - ss(1100, 1500, z + 300*(fbm(z*.001, x*.001 + 2) - .5)));
+  var cop = ss(.7, .76, fbm(x*.0035 + 7.3, z*.0035 + 1.7))*ss(650, 900, Math.hypot(x*.9, z))*(x < 60 ? 1 : 0);
+  var sel = ss(.55, .65, fbm(x*.004 + 2, z*.004 + 5))*(1 - ss(500, 1000, Math.hypot(x - 2300, z + 3200)));                    // гаї біля Сельця
+  var scrub = (x > 260 ? 1 : 0)*ss(.72, .78, fbm(x*.005 + 11, z*.005 + 3))*ss(500, 700, Math.hypot(x*.8, z*.6));
+  return Math.max(w, cop, sel, scrub*.75); }
+function farY(x, z){ var o = nearOut(x, z), pw = plateauW(x, z);
+  var hp = -.35 + (fbm(x*.0012 + 1, z*.0012) - .5)*5*ss(60, 600, o), hm = MEADOW - .55 + (fbm(x*.004, z*.004) - .5)*.5;
+  return lerp(hm, hp, pw); }
+var LAND = {uPl: {value: col(0x55442f)}, uSt: {value: col(0x837350)}, uRye: {value: col(0x5c6342)}, uFal: {value: col(0x6d6849)}, uStr: {value: col(0x8d7f5e)}, uPool: {value: col(0x2b3436)}};
+var LAND_GLSL = [
+  'uniform vec3 uPl, uSt, uRye, uFal, uStr, uPool; varying vec2 vLand; varying vec3 vLW;',
+  'float lh(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7)))*43758.5453); }',
+  'float lvn(vec2 p){ vec2 i = floor(p), f = fract(p); f = f*f*(3. - 2.*f); return mix(mix(lh(i), lh(i + vec2(1., 0.)), f.x), mix(lh(i + vec2(0., 1.)), lh(i + vec2(1., 1.)), f.x), f.y); }',
+  'vec3 stripCol(vec2 p){',                                                     // шнурові поля Полісся: довгі вузькі смуги впоперек шляху
+  '  float wob = 16.*lvn(p*.0025), zw = p.y + wob, bz = floor(zw/190.);',
+  '  float bx = floor((p.x + lh(vec2(bz, 2.))*420.)/(360. + 280.*lh(vec2(bz, 5.)))), w = 6.5 + 9.*lh(vec2(bz, bx + 3.));',
+  '  float zz = zw - bz*190., si = floor(zz/w), fr = fract(zz/w), r = lh(vec2(si + bz*37., bx*13. + 1.));',
+  '  vec3 c = r < .3 ? uPl : r < .48 ? uSt : r < .68 ? uRye : r < .88 ? uFal : uStr;',
+  '  float fw = fwidth(zz);',
+  '  if (r < .3) c *= .92 + .08*sin(zz*7.85)*(1. - smoothstep(.15, .5, fw));',
+  '  c *= .86 + .26*lvn(p*.045 + r*17.);',
+  '  float ed = min(fr, 1. - fr)*w, balk = 1. - smoothstep(.25, .25 + max(.5, fw*1.5), ed); c = mix(c, uFal*1.12, balk*.55*(1. - smoothstep(.6, 2.5, fw)));',
+  '  float hz = fract((p.x + lh(vec2(bz, 2.))*420.)/(360. + 280.*lh(vec2(bz, 5.)))); c = mix(c, uFal, (1. - smoothstep(.0, .025, min(hz, 1. - hz)))*.5);',
+  '  return c; }',
+  'vec3 landColor(vec3 c, vec3 vc){ vec3 tx = c/max(vc, vec3(.001)); vec2 p = vLW.xz;',
+  '  if (vLand.y > .01){ float ch = 1. - smoothstep(.0, .03, abs(lvn(p*.0045 + 3.) - .5)); float pool = smoothstep(.76, .81, lvn(p*.011 + 9.));',
+  '    vec3 m = c*(.88 + .24*lvn(p*.07)); m = mix(m, m*vec3(.6, .68, .7), ch*.85); m = mix(m, uPool, pool*.9); c = mix(c, m, vLand.y); }',
+  '  if (vLand.x > .01) c = mix(c, stripCol(p)*tx, vLand.x);',
+  '  return c; }'].join('\n');
+function landify(mat){ mat.userData.hf = 1;
+  mat.onBeforeCompile = function(sh){ ['uHF', 'uHFC', 'uFG', 'uFP'].forEach(function(k){ sh.uniforms[k] = HFOG[k]; }); Object.keys(LAND).forEach(function(k){ sh.uniforms[k] = LAND[k]; });
+    sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nattribute vec2 aLand; varying vec2 vLand; varying vec3 vLW;')
+      .replace('#include <begin_vertex>', '#include <begin_vertex>\nvLand = aLand; vLW = (modelMatrix*vec4(position, 1.)).xyz;');
+    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\n' + LAND_GLSL)
+      .replace('#include <color_fragment>', '#include <color_fragment>\ndiffuseColor.rgb = landColor(diffuseColor.rgb, vColor.rgb);'); };
+  return mat; }
 var CAUSE = {top: WL + 1.75, half: 2.4, gap0: -200.2, gap1: -191};
 function H(x, z){
   var h = H0(x, z);
@@ -291,16 +332,17 @@ var M = {
 /* ═════════════ земля ═════════════ */
 var GX0 = -360, GX1 = 380, GZ0 = -500, GZ1 = 460;
 var gGeo = new T.PlaneGeometry(GX1 - GX0, GZ1 - GZ0, LOW ? 240 : 370, LOW ? 310 : 480); gGeo.rotateX(-Math.PI/2); gGeo.translate((GX0 + GX1)/2, 0, (GZ0 + GZ1)/2);
-var gp = gGeo.attributes.position, gc = new Float32Array(gp.count*3), tmpC = new T.Color(), tmp2 = new T.Color();
-var C = {field1: col(0x5d4a37), field2: col(0x6f5b42), winter: col(0x4f5a34), park: col(0x3f4a2a), leaf: col(0x5d4a2c), lawn: col(0x55633a), meadow: col(0x7b7848), wet: col(0x4f5d3c),
+var gp = gGeo.attributes.position, gc = new Float32Array(gp.count*3), gl2 = new Float32Array(gp.count*2), tmpC = new T.Color(), tmp2 = new T.Color();
+var C = {field1: col(0x5d4a37), field2: col(0x6f5b42), winter: col(0x4f5a34), park: col(0x3f4a2a), leaf: col(0x5d4a2c), lawn: col(0x55633a), meadow: col(0x6c6646), wet: col(0x4d5236),
   road: col(0x6a543b), gravel: col(0xa89a80), slope: col(0x4c4a2c), garden: col(0x47502f), bank: col(0x5a5a3c), yard: col(0x6b5c46), mud: col(0x4b3d2d)};
 for (i = 0; i < gp.count; i++){
   var x = gp.getX(i), z = gp.getZ(i), h = H(x, z); gp.setY(i, h);
   var e = edgeX(z), rx = roadX(z), n = fbm(x*.08, z*.08), c;
   var inPark = z > PARK.z0 && z < PARK.z1 && x > rx + 6 && x < e + 6;
-  if (x < rx - 6){ var band = Math.floor((z + 30*Math.sin(x*.004))/46), strip = Math.sin((x*.9 + z*.12)*1.7)*.5 + .5; c = tmpC.copy(hash(band, 3) > .6 ? C.winter : C.field1).lerp(C.field2, strip*.5); }
+  var fw0 = 0;
+  if (x < rx - 6){ c = tmpC.copy(C.field2); fw0 = ss(6, 11, rx - x); }
   else if (inPark){ var pd = PARKD(x, z); c = tmpC.copy(C.lawn).lerp(C.park, ss(.36, .5, pd)).lerp(C.leaf, ss(.45, .62, pd)*ss(.4, .7, fbm(x*.05 + 3, z*.05))*.9); }
-  else if (z < PARK.z0){ c = tmpC.copy(C.field1).lerp(C.field2, Math.sin((z*.8 + x*.2)*1.4)*.5 + .5); if (x > -40 && x < 110 && z < -205 && z > -350) c.lerp(C.yard, .75); }
+  else if (z < PARK.z0){ c = tmpC.copy(C.field2); fw0 = ss(PARK.z0 - 4, PARK.z0 - 14, z)*ss(-4, 8, polyDist(x, z, ROAD) - 6); if (x > -40 && x < 170 && z < -195 && z > -350){ c.lerp(C.yard, .75); fw0 = 0; } }
   else c = tmpC.copy(C.field1).lerp(C.winter, ss(.45, .6, fbm(x*.01, z*.01)));
   var dwA = dWaterA(x, z), dwB = dWaterB(x, z);
   if (h < -.7) c.lerp(C.slope, ss(-.7, -1.8, h)*.85);                                     // схили долин
@@ -314,28 +356,42 @@ for (i = 0; i < gp.count; i++){
   var axc = Math.abs(x - BRIDGE.x); if (axc < 9 && z < -168 && z > -222 && h > WL + .1){ c.lerp(C.mud, .55*(1 - ss(5, 9, axc))); c.lerp(C.road, .8*(1 - ss(2, 3, axc))); if (Math.abs(axc - .9) < .3) c.lerp(C.mud, .45); }   // насип: земляні укоси й дорога по верху
   var d2 = Math.min(polyDist(x, z, DRIVE), polyDist(x, z, LANE), polyDist(x, z, BACKPATH), polyDist(x, z, NPATH) + .6, polyDist(x, z, NPATH2) + .6);  if (inPark || inPoly(x, z, GARDEN)){ var pdd = pathDist(x, z); if (pdd < 2.2) c.lerp(tmp2.copy(C.gravel).multiplyScalar(.85), (1 - ss(.9, 2.2, pdd))*.7); }
   if (d2 < 3.6) c.lerp(C.gravel, (1 - ss(1.8, 3.6, d2))*.9);
+  fw0 *= ss(-1, -.4, h)*ss(4, 12, Math.min(dwA, dwB)); if (x > -60 && x < 180 && z < -150 && z > -360) fw0 = 0;
+  gl2[i*2] = fw0; gl2[i*2 + 1] = ss(-2.8, -3.6, h)*ss(1, 6, dwat)*.55;
   c.multiplyScalar(.8 + .32*n);
   gc[i*3] = c.r; gc[i*3 + 1] = c.g; gc[i*3 + 2] = c.b;
 }
-gGeo.setAttribute('color', new T.BufferAttribute(gc, 3)); gGeo.computeVertexNormals();
+gGeo.setAttribute('color', new T.BufferAttribute(gc, 3)); gGeo.setAttribute('aLand', new T.BufferAttribute(gl2, 2)); gGeo.computeVertexNormals();
 var grainTex = canvasTex(512, function(g, s){                                                     // дрібна фактура: стебла трави, грудочки землі
   var d = g.createImageData(s, s); for (var k = 0; k < d.data.length; k += 4){ var v = 205 + Math.random()*40; d.data[k] = d.data[k + 1] = d.data[k + 2] = v; d.data[k + 3] = 255; } g.putImageData(d, 0, 0);
   for (var k2 = 0; k2 < 60; k2++){ var gx = Math.random()*s, gy = Math.random()*s, gr = g.createRadialGradient(gx, gy, 0, gx, gy, 20 + Math.random()*50); gr.addColorStop(0, 'rgba(150,150,150,.22)'); gr.addColorStop(1, 'rgba(150,150,150,0)'); g.fillStyle = gr; g.fillRect(0, 0, s, s); }
   g.lineCap = 'round'; for (var k3 = 0; k3 < 5200; k3++){ var x = Math.random()*s, y = Math.random()*s, a = -Math.PI/2 + (Math.random() - .5)*1.1, l = 3 + Math.random()*9, v2 = Math.random() < .5 ? 255 : 150 + Math.random()*40;
     g.strokeStyle = 'rgba(' + v2 + ',' + v2 + ',' + v2 + ',' + (.25 + Math.random()*.3) + ')'; g.lineWidth = .6 + Math.random()*1.1; g.beginPath(); g.moveTo(x, y); g.lineTo(x + Math.cos(a)*l, y + Math.sin(a)*l); g.stroke(); } });
 grainTex.encoding = T.LinearEncoding; grainTex.repeat.set(250, 320); grainTex.anisotropy = 4;
-var ground = new T.Mesh(gGeo, new T.MeshStandardMaterial({vertexColors: true, roughness: 1, map: grainTex}));
+var ground = new T.Mesh(gGeo, landify(new T.MeshStandardMaterial({vertexColors: true, roughness: 1, map: grainTex})));
 ground.receiveShadow = true; scene.add(ground);
-(function(){
-  var g = new T.PlaneGeometry(6000, 6000, 90, 90); g.rotateX(-Math.PI/2);
-  var p = g.attributes.position, cc = new Float32Array(p.count*3);
-  for (var k = 0; k < p.count; k++){ var x = p.getX(k), z = p.getZ(k), e = edgeX(Math.max(-600, Math.min(600, z)));
-    var y0 = x > e + 30 ? MEADOW - .3 : -.35;                                     // далека площина ніде не вища за рельєф у своїй клітинці
-    if (Math.abs(x) < 900 && Math.abs(z) < 900){ var hm = 0; for (var sx = -66; sx <= 66; sx += 12) for (var sz = -66; sz <= 66; sz += 12) hm = Math.min(hm, H(x + sx, z + sz)); y0 = hm < -3.4 ? -8 : Math.min(y0, hm); }
+(function(){                                                                          // далекий краєвид: поля, заплава, ліс (за картою району)
+  var S0 = 7200, n = LOW ? 150 : 220, g = new T.PlaneGeometry(S0, S0, n, n); g.rotateX(-Math.PI/2);
+  var p = g.attributes.position, cc = new Float32Array(p.count*3), la = new Float32Array(p.count*2);
+  for (var k = 0; k < p.count; k++){ var x = p.getX(k), z = p.getZ(k), o = nearOut(x, z), y0 = farY(x, z);
+    if (o < 140){ var hm = 0; for (var sx = -42; sx <= 42; sx += 12) for (var sz = -42; sz <= 42; sz += 12) hm = Math.min(hm, H(x + sx, z + sz)); y0 = hm < -3.4 ? Math.min(-8, y0) : Math.min(y0, hm); }
     p.setY(k, y0 - .3);
-    var c = x > e + 30 ? tmpC.copy(C.meadow).lerp(C.wet, .4) : tmpC.copy(C.field1).lerp(C.winter, hash(Math.floor(x/140), Math.floor(z/140)) > .5 ? .6 : .1);
-    c.multiplyScalar(.75 + .25*hash(Math.floor(x/70), Math.floor(z/70))); cc[k*3] = c.r; cc[k*3 + 1] = c.g; cc[k*3 + 2] = c.b; }
-  g.setAttribute('color', new T.BufferAttribute(cc, 3)); g.computeVertexNormals(); scene.add(new T.Mesh(g, new T.MeshStandardMaterial({vertexColors: true, roughness: 1})));
+    var pw = plateauW(x, z), fm = forestM(x, z), c = tmpC.copy(C.meadow).lerp(C.wet, .35 + .4*fbm(x*.003, z*.003)).lerp(C.field2, pw);
+    c.lerp(tmp2.set(0x2a2a1e), fm*.8); cc[k*3] = c.r; cc[k*3 + 1] = c.g; cc[k*3 + 2] = c.b;
+    la[k*2] = pw*(1 - fm)*ss(10, 60, o + (o > 0 ? 0 : 999)); la[k*2 + 1] = (1 - pw)*(1 - fm); }
+  g.setAttribute('color', new T.BufferAttribute(cc, 3)); g.setAttribute('aLand', new T.BufferAttribute(la, 2)); g.computeVertexNormals();
+  var m = new T.Mesh(g, landify(new T.MeshStandardMaterial({vertexColors: true, roughness: 1}))); m.receiveShadow = true; scene.add(m);
+})();
+(function(){                                                                          // масив лісу: суцільні крони з рваним краєм
+  var S0 = 7200, st = LOW ? 46 : 34, n = Math.floor(S0/st), P = [], Cc = [], idx = [], rr = rngF(55), V = new Int32Array((n + 1)*(n + 1)).fill(-1), Y = new Float32Array((n + 1)*(n + 1));
+  for (var j = 0; j <= n; j++) for (var i2 = 0; i2 <= n; i2++){ var x = -S0/2 + i2*st, z = -S0/2 + j*st, fm = nearOut(x, z) > 200 ? forestM(x, z) : 0, k = j*(n + 1) + i2;
+    Y[k] = fm > .5 ? farY(x, z) + (x > 260 ? 7 : 13) + 7*fbm(x*.01, z*.01) + (rr() - .5)*4 : -99; }
+  function vid(i2, j){ var k = j*(n + 1) + i2; if (V[k] < 0){ var x = -S0/2 + i2*st + (rr() - .5)*st*.4, z = -S0/2 + j*st + (rr() - .5)*st*.4; V[k] = P.length/3; P.push(x, Y[k], z);
+    var t = fbm(x*.006 + 5, z*.006), c = tmpC.set(t > .55 ? 0x23301f : t > .42 ? 0x2d3923 : 0x4a4036).lerp(tmp2.set(0x5f574a), rr()*.25); if (x > 260) c.lerp(tmp2.set(0x4c4436), .6); Cc.push(c.r, c.g, c.b); } return V[k]; }
+  for (j = 0; j < n; j++) for (i2 = 0; i2 < n; i2++){ var k0 = j*(n + 1) + i2; if (Y[k0] < -50 || Y[k0 + 1] < -50 || Y[k0 + n + 1] < -50 || Y[k0 + n + 2] < -50) continue;
+    var a = vid(i2, j), b = vid(i2 + 1, j), c2 = vid(i2, j + 1), d = vid(i2 + 1, j + 1); idx.push(a, c2, b, b, c2, d); }
+  var g = new T.BufferGeometry(); g.setAttribute('position', new T.Float32BufferAttribute(P, 3)); g.setAttribute('color', new T.Float32BufferAttribute(Cc, 3)); g.setIndex(idx); g.computeVertexNormals();
+  var m = new T.Mesh(g, new T.MeshStandardMaterial({vertexColors: true, roughness: 1, flatShading: true})); scene.add(m);
 })();
 
 /* ═════════════ вода ═════════════ */
@@ -737,7 +793,15 @@ for (i = 0; i < (LOW ? 150 : 260); i++){ var nw = nearWater(rt, 3, 13); if (!nw)
   if (wx2 < GX0 || wx2 > GX1 || polyDist(wx2, wz2, ROAD) < 9 || Math.abs(wx2 - BRIDGE.x) < 7 && wz2 < BRIDGE.z0 + 6 && wz2 > BRIDGE.z1 - 6 || blocked(wx2, wz2, 2) || inPoly(wx2, wz2, GARDEN)) continue;
   var wr = rt(); addT(wr < .55 ? 'willow' : wr < .85 ? 'wbig' : 'birch', wx2, wz2, .75 + rt()*.5); }
 for (i = 0; i < 9; i++){ var ic = ISLAND[(rt()*ISLAND.length)|0], ix = lerp(ic[0], -38, .45 + rt()*.4), iz = lerp(ic[1], -203, .45 + rt()*.4); if (dWater(ix, iz) > 1.5) addT(rt() < .6 ? 'willow' : 'wbig', ix, iz, .8 + rt()*.4); }
-for (i = 0; i < (LOW ? 280 : 520); i++){ var fa = rt()*6.283, fr = 480 + rt()*320, fx2 = 10 + Math.cos(fa)*fr*1.1, fz2 = -20 + Math.sin(fa)*fr; if (fx2 > 230 && Math.abs(fz2) < 340) continue; (TREES[rt() < .55 ? 'spruce' : 'pine']).push([fx2, -3.8, fz2, 2.2 + rt()*1.6, rt()*6.283, 0]); }
+(function(){ var rf = rngF(71), cnt = 0, tries = 0, NT = LOW ? 900 : 1800;          // узлісся, переліски, межові дерева, кущі в заплаві
+  while (cnt < NT && tries++ < 60000){ var x = -3300 + rf()*6600, z = -3300 + rf()*6600, o = nearOut(x, z); if (o < 30) continue;
+    var fm = forestM(x, z), y = farY(x, z), sc = 1.3 + rf()*.9;
+    if (fm > .3 && fm < .62){ TREES[rf() < .55 ? 'spruce' : rf() < .6 ? 'pine' : 'birch'].push([x, y, z, sc*1.35, rf()*6.283, 0]); cnt++; continue; }
+    if (fm >= .62) continue;
+    var pw = plateauW(x, z);
+    if (pw > .9 && rf() < .5){ var wob = 16*vnoise(x*.0025, z*.0025), zw = z + wob, bz = Math.round(zw/190); if (Math.abs(zw - bz*190) < 2.5 && hash(bz, Math.floor(x/300)) < .4){ TREES[rf() < .6 ? 'birch' : rf() < .5 ? 'oak' : 'wbig'].push([x, y, z, sc, rf()*6.283, 0]); cnt++; } continue; }
+    if (pw < .2 && rf() < .02){ TREES[rf() < .7 ? 'willow' : 'shrub'].push([x, y, z, sc*1.2, rf()*6.283, 0]); cnt++; } }
+})();
 var treeMat = new T.MeshStandardMaterial({vertexColors: true, roughness: .95, flatShading: true});
 (function(){                                                                                       // кущики сухої листопадової трави
   var P = [], Cc = [], rr = rngF(97);
@@ -785,6 +849,13 @@ Object.keys(TREES).forEach(function(k){
   function well(x, z){ var y = H(x, z); var m = new T.Mesh(worldUV(mergeG([[bx(1.4, .9, 1.4, x, y + .45, z)], [bx(.25, 5.5, .25, x + 2.6, y + 2.75, z)]]), 2), M.wood); m.castShadow = true; scene.add(m);
     var pole = new T.Mesh(new T.CylinderGeometry(.08, .12, 9, 5), M.wood); pole.position.set(x + 1, y + 6.2, z); pole.rotation.z = -1.05; pole.castShadow = true; scene.add(pole); }
   well(-44, 50); well(30, -262); well(-8, -300);
+  var HG = mergeG([[new T.ConeGeometry(2.3, 3.6, 9).translate(0, 3.2, 0)], [new T.CylinderGeometry(2.3, 2.45, 1.4, 9).translate(0, .7, 0)], [new T.CylinderGeometry(.07, .09, 7, 5).translate(0, 3.5, 0)]]);   // стоги на заплаві
+  var HS = [], rh2 = rngF(33); for (var t = 0; t < 6000 && HS.length < (LOW ? 70 : 140); t++){ var x = 120 + rh2()*2600, z = -2600 + rh2()*5200, o = nearOut(x, z);
+    var y = o > 0 ? farY(x, z) - .3 : H(x, z); if (plateauW(x, z) > .3 || forestM(x, z) > .3 || (o <= 0 && (dWater(x, z) < 4 || Math.abs(x - riverX(z)) < 32))) continue;
+    var cl = vnoise(x*.01 + 4, z*.01); if (rh2() > cl*cl*1.6) continue; HS.push([x, y, z]); }
+  var him = new T.InstancedMesh(HG, hay, HS.length), hd = new T.Object3D();
+  HS.forEach(function(q, j){ hd.position.set(q[0], q[1], q[2]); hd.rotation.set((rh2() - .5)*.06, rh2()*6.28, 0); var s2 = .75 + rh2()*.5; hd.scale.set(s2, s2*(.85 + rh2()*.3), s2); hd.updateMatrix(); him.setMatrixAt(j, hd.matrix); });
+  him.castShadow = true; him.receiveShadow = true; scene.add(him);
   var logs = []; for (var k = 0; k < 9; k++){ var g = new T.CylinderGeometry(.22, .22, 3.2, 7); g.rotateX(Math.PI/2); g.translate(-38 + (k % 4)*.46 + (k > 3 ? .23 : 0) + (k > 6 ? .23 : 0), H(-38, 47) + .22 + Math.floor(k/4)*.4, 47); logs.push([g]); }
   var lm = new T.Mesh(mergeG(logs), M.wood); lm.castShadow = true; scene.add(lm);
 })();
@@ -832,7 +903,7 @@ var campfire = new T.PointLight(0xff8a3a, 0, 36, 2); campfire.position.set(30, H
 /* ═════════════ хроніка ═════════════ */
 var cN = cen(PAL.N), cM = cen(PAL.M), cS = cen(PAL.S), DUB = [-220, 400];
 var STEPS = [
- {t: 13.2, cam: [[150, 92, 168], [-42, 0, -16]], time: 'листопад 1918', day: 'маєток Плятерів', h: 'Воробин перед повстанням',
+ {t: 14.9, cam: [[150, 92, 168], [-42, 0, -16]], time: 'листопад 1918', day: 'маєток Плятерів', h: 'Воробин перед повстанням',
   p: 'Маєток стоїть у старому парку між шляхом на Дубровицю і схилом над лугами Горині. Палацу як такого Плятери не збудували: жили в офіцинах. Найбільша — двоповерхова будівля біля шляху з двома крилами й одноповерховою серединою. Парадний вхід із портиком веде з двору, чорний — із боку шляху. На подвір\'ї газон з ялиною, довкола — пейзажний парк із доріжками, гаями й галявинами, частина його за муром, і павільйон «Бібліотека» над схилом. На північ, за ставами, куди веде міст через перешийок, — житлові будинки й, імовірно, спиртовий завод. Натисніть на будь-яку будівлю, щоб дізнатися про неї більше.',
   s: 'Розташування — за аерофотознімками; будівлі — за історією резиденції, малюнком Н. Орди (1870) і описом Ліпінського (1922). Брами й входи — умовно.'},
  {t: 21, cam: [[-36, 7, -6], [-92, 7, -33]], time: '21:00', day: '21 листопада, четвер', h: 'Вечір перед нападом',
@@ -1121,7 +1192,7 @@ var BL = [
   ['garden', [26, 6, -46]], ['guns', [18, 7, 52]], ['north', [40, 12, -270]], ['bridge', [BRIDGE.x, 3.5, -195.6]], ['road', [-186, 6, 160]]
 ].map(function(b){ var el = mkLabel(INFO[b[0]].h, 'b', 1); el.addEventListener('click', function(){ openInfo(b[0]); }); return {el: el, p: new T.Vector3(b[1][0], b[1][1], b[1][2]), k: b[0]}; });
 var DIRS = [
-  ['↓ Дубровиця · 5 км', [-224, 8, 430]], ['↑ Висоцьк · униз Горинню', [-70, 8, -480]], ['← Острівці · Мочулище · Крупове', [-345, 8, -10]], ['Горинь →', [riverX(-60), 2, -60]]
+  ['Дубровиця · 5 км', [-224, 8, 430]], ['Висоцьк', [-70, 8, -480]], ['Селець', [348, 8, -490]], ['Острівці · Мочулище', [-370, 8, 83]], ['Горинь', [riverX(-60), 2, -60]]
 ].map(function(d){ return {el: mkLabel(d[0], 'dir', 0), p: new T.Vector3(d[1][0], d[1][1], d[1][2])}; });
 GROUPS.forEach(function(G){ G.lab$ = mkLabel('', 'g-' + G.cls, 2); G.labPos = new T.Vector3(); });
 ROUTES.forEach(function(r){ if (r.tag) r.tagEl = mkLabel(r.tag, 'tag', 3); });
@@ -1129,28 +1200,28 @@ var pinEls = [], cartLab = mkLabel('', 'pin', 4);
 
 /* ═════════════ небо й світло за годиною ═════════════ */
 var K = {night: 1, dusk: 0}, cSky = new T.Color(), cHor = new T.Color();
-var tmp3 = new T.Vector3(), NIGHT_T = col(0x060a14), NIGHT_H = col(0x18202f), DAY_T = col(0x5d7088), DAY_H = col(0xb7bcbc), DUSK_T = col(0x2e3048), DUSK_H = col(0xb7805a);
+var tmp3 = new T.Vector3(), NIGHT_T = col(0x060a14), NIGHT_H = col(0x18202f), DAY_T = col(0x4f6480), DAY_H = col(0xc4bba6), DUSK_T = col(0x2e3048), DUSK_H = col(0xb7805a);
 function setTime(hour){
   var h = hour % 24, rise = 7.3, set = 15.9;
   var d = ss(rise - .6, rise + .9, h)*(1 - ss(set - .7, set + .5, h));
   var dusk = Math.min(1, Math.max(0, 1 - Math.abs(h - set)/1.1)*(h > 12 ? 1 : 0) + Math.max(0, 1 - Math.abs(h - rise)/1.0)*(h < 12 ? 1 : 0));
   cSky.copy(NIGHT_T).lerp(DAY_T, d).lerp(DUSK_T, dusk*.55); cHor.copy(NIGHT_H).lerp(DAY_H, d).lerp(DUSK_H, dusk*.7);
   skyU.top.value.copy(cSky); skyU.hor.value.copy(cHor);
-  scene.fog.color.copy(cHor).multiplyScalar(.9); scene.fog.density = .0006 + .0014*(1 - d) + .0005*dusk;
+  scene.fog.color.copy(cHor).multiplyScalar(.86).lerp(tmp2.set(0x8e9aa6), .25*d); scene.fog.density = .00036 + .0016*(1 - d) + .0004*dusk;
   var az = (h - 12)/12*Math.PI*.95, el = Math.max(-.2, Math.sin((h - rise)/(set - rise)*Math.PI))*.38 + .02;
   var sdir = new T.Vector3(Math.sin(az)*Math.cos(el), Math.sin(el), Math.cos(az)*Math.cos(el)*.6 + .4).normalize();
   var moon = skyU.moonDir.value, night = 1 - d;
   skyU.sunDir.value.copy(sdir); skyU.sunK.value = Math.max(d*.45, dusk*.9); skyU.sunCol.value.copy(tmp2.set(0xffd9a0).lerp(col(0xff8a50), dusk*.75));
   skyU.moonK.value = night*(1 - dusk); skyU.cloudC.value.copy(tmp2.set(0x1a2030).lerp(col(0x8a8e92), d).lerp(col(0x7a5a4a), dusk*.5)); skyU.cloudK.value = .62 + .18*night;
   var L = d > .08 ? sdir : moon; sun.position.copy(controls.target).addScaledVector(L, 520); sun.target.position.copy(controls.target);
-  sun.intensity = d > .08 ? lerp(.4, 2.4, d) + dusk*.5 : .5; sun.color.copy(d > .08 ? tmp2.set(0xfff1d6).lerp(col(0xffa868), dusk*.7) : tmp2.set(0x8aa2e6));
+  var warm = ss(.3, .06, el); sun.intensity = d > .08 ? lerp(.4, 2.6, d) + dusk*.5 : .5; sun.color.copy(d > .08 ? tmp2.set(0xfff1d6).lerp(col(0xffb470), Math.max(dusk*.7, warm*.75)) : tmp2.set(0x8aa2e6));
   hemi.intensity = lerp(.42, .7, d); hemi.color.copy(tmp2.set(0x5c74b8).lerp(col(0xdfe6ee), d)); hemi.groundColor.set(d > .4 ? 0x4c412e : 0x14131a);
   stars.material.opacity = Math.max(0, 1 - d*1.6 - dusk*.7)*.75;
   waterU.uSky.value.copy(cHor).multiplyScalar(lerp(.5, 1, d)); waterU.uDeep.value.set(0x13202a).multiplyScalar(lerp(.45, 1, d)); waterU.uSun.value.copy(L); waterU.uSunC.value.copy(sun.color).multiplyScalar(d > .08 ? 1 : .6);
   HFOG.uHF.value.set(lerp(.0085, .0016, d) + dusk*.002, -3.8, lerp(1.6, 1.2, d), lerp(.7, .28, d));                          // приземний туман
   HFOG.uHFC.value.setRGB(.06, .08, .12).lerp(tmp2.copy(cHor).multiplyScalar(1.05), d).lerp(tmp2.set(0x9a7c6c), dusk*.4);
   if (PP){ var U = PP.U;                                                                                                       // кольорова корекція: ніч — холодні тіні й теплі вогні, день — м'яке листопадове світло, сутінки — бурштин
-    U.exposure.value = lerp(1.5, 1.02, d) + dusk*.06; U.sat.value = lerp(.8, .86, d) - dusk*.04; U.contrast.value = lerp(.32, .24, d) + dusk*.06;
+    U.exposure.value = lerp(1.5, 1.02, d) + dusk*.06; U.sat.value = lerp(.8, .86, d) - dusk*.04; U.contrast.value = lerp(.32, .3, d) + dusk*.04;
     U.shT.value.set(lerp(.86, .97, d), lerp(.97, 1, d), lerp(1.14, 1.04, d)).lerp(tmp3.set(.9, .97, 1.06), dusk*.8);
     U.hiT.value.set(lerp(1.1, 1.04, d), lerp(1, 1, d), lerp(.86, .95, d)).lerp(tmp3.set(1.1, 1, .84), dusk*.8);
     U.lift.value.set(lerp(.006, .012, d), lerp(.012, .012, d), lerp(.032, .013, d)); U.gain.value.set(lerp(.96, 1.02, d), lerp(.99, 1, d), lerp(1.04, .97, d));
@@ -1160,7 +1231,7 @@ function setTime(hour){
 }
 
 /* ═════════════ кроки ═════════════ */
-var VOLLEY_T = 4.1, volleyDone = false, step = -1, twStart = 0, TW = 2600, tw = 1, curHour = 13.2, fromHour = 13.2;
+var VOLLEY_T = 4.1, volleyDone = false, step = -1, twStart = 0, TW = 2600, tw = 1, curHour = 14.9, fromHour = 14.9;
 var fireCur = [0, 0, 0], fireFrom = [0, 0, 0], roofCur = [0, 0, 0], roofFrom = [0, 0, 0], rainCur = 0;
 var camFrom = {p: new T.Vector3(), t: new T.Vector3()}, camTo = {p: new T.Vector3(), t: new T.Vector3()}, camFly = 1, CAMDUR = 3400, camStart = 0, userMoved = false;
 var cT = document.getElementById('cT'), cD = document.getElementById('cD'), cH = document.getElementById('cH'), cP = document.getElementById('cP'), cS2 = document.getElementById('cS');
@@ -1321,7 +1392,7 @@ function frame(now){
   skyU.time.value = time; skyU.glow.value = fireMax*night*.8;
   HFOG.uFG.value.set(fireMax*.34, fireMax*.14, fireMax*.05, 75).multiplyScalar(1).setW(75); HFOG.uFG.value.x *= lerp(.35, 1.4, night); HFOG.uFG.value.y *= lerp(.35, 1.4, night); HFOG.uFG.value.z *= lerp(.35, 1.4, night);
   HFOG.uFP.value.set(cM[0], 10, cM[1]);
-  if (PP){ PP.U.tilt.value = LOW ? 0 : ss(14, 95, camera.position.y - controls.target.y)*.72; PP.bright.th.value = lerp(.85, 1.3, day); PP.U.exposure.value *= 1 - fireMax*.14*day - fireMax*.06 - fireMax*K.dusk*.14; }
+  if (PP){ PP.U.tilt.value = LOW ? 0 : ss(30, 120, camera.position.y - controls.target.y)*.45; PP.bright.th.value = lerp(.85, 1.3, day); PP.U.exposure.value *= 1 - fireMax*.14*day - fireMax*.06 - fireMax*K.dusk*.14; }
   waterU.uTime.value = time; waterU.uFire.value = fireMax*(.3 + night); waterU.fogColor.value.copy(scene.fog.color); waterU.fogDensity.value = scene.fog.density;
   // камера: проліт, далі повільний наїзд
   if (camFly < 1){ camFly = Math.min(1, Math.max(0, (now - camStart)/CAMDUR)); var ce = ease(camFly);
