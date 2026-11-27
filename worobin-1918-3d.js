@@ -24,6 +24,20 @@ function inPoly(x, z, P){ var c = false; for (var i = 0, j = P.length - 1; i < P
 function segDist(x, z, a, b){ var dx = b[0] - a[0], dz = b[1] - a[1], t = Math.max(0, Math.min(1, ((x - a[0])*dx + (z - a[1])*dz)/(dx*dx + dz*dz))); return Math.hypot(x - a[0] - dx*t, z - a[1] - dz*t); }
 function polyDist(x, z, P){ var m = 1e9; for (var i = 0; i < P.length - 1; i++) m = Math.min(m, segDist(x, z, P[i], P[i + 1])); return m; }
 function polyAt(P, z){ for (var i = 0; i < P.length - 1; i++){ var a = P[i], b = P[i + 1]; if ((z - a[1])*(z - b[1]) <= 0) return lerp(a[0], b[0], (z - a[1])/((b[1] - a[1]) || 1)); } return P[0][0]; }
+/* інстанси по плитках: three r147 відсікає InstancedMesh за сферою базової геометрії біля (0,0,0) — тому ділимо на плитки з власною сферою,
+   щоб справді відкидалося все, що поза кадром чи поза тіньовою камерою */
+var _dm = null;
+function instChunks(geo, mat, items, tile, setup, opt){ opt = opt || {}; _dm = _dm || new T.Object3D();
+  if (!geo.boundingSphere) geo.computeBoundingSphere(); var r0 = geo.boundingSphere.radius + geo.boundingSphere.center.length(), G = {}, out = [];
+  items.forEach(function(q){ var k = Math.floor(q[0]/tile) + ',' + Math.floor(q[2]/tile); (G[k] = G[k] || []).push(q); });
+  Object.keys(G).forEach(function(k){ var L = G[k], g = new T.BufferGeometry(); for (var a in geo.attributes) g.setAttribute(a, geo.attributes[a]); if (geo.index) g.setIndex(geo.index);
+    var im = new T.InstancedMesh(g, mat, L.length), mn = [1e9, 1e9, 1e9], mx = [-1e9, -1e9, -1e9], smax = 0;
+    L.forEach(function(q, j){ _dm.position.set(0, 0, 0); _dm.rotation.set(0, 0, 0); _dm.scale.set(1, 1, 1); setup(_dm, q, j, im); _dm.updateMatrix(); im.setMatrixAt(j, _dm.matrix);
+      ['x', 'y', 'z'].forEach(function(c, i){ mn[i] = Math.min(mn[i], _dm.position[c]); mx[i] = Math.max(mx[i], _dm.position[c]); }); smax = Math.max(smax, _dm.scale.x, _dm.scale.y, _dm.scale.z); });
+    var c = new T.Vector3((mn[0] + mx[0])/2, (mn[1] + mx[1])/2, (mn[2] + mx[2])/2); g.boundingSphere = new T.Sphere(c, Math.hypot(mx[0] - mn[0], mx[1] - mn[1], mx[2] - mn[2])/2 + r0*smax);
+    if (im.instanceColor) im.instanceColor.needsUpdate = true;
+    im.castShadow = !!opt.cast; im.receiveShadow = !!opt.recv; scene.add(im); out.push(im); });
+  return out; }
 function cen(r){ return [(r.x0 + r.x1)/2, (r.z0 + r.z1)/2]; }
 
 /* ═════════════ план ═════════════ */
@@ -205,10 +219,10 @@ function H(x, z){
 /* ═════════════ рендер і постобробка ═════════════ */
 var cv = document.getElementById('view');
 var renderer = new T.WebGLRenderer({canvas: cv, antialias: false, powerPreference: 'high-performance'});
-var DPR = Math.min(devicePixelRatio, LOW ? 1.25 : 1.75);
+var DPR0 = Math.min(devicePixelRatio, LOW ? 1.25 : 1.5), DPR = DPR0;
 renderer.setPixelRatio(DPR);
 renderer.outputEncoding = T.sRGBEncoding;
-renderer.shadowMap.enabled = true; renderer.shadowMap.type = T.PCFSoftShadowMap;
+renderer.shadowMap.enabled = true; renderer.shadowMap.type = T.PCFShadowMap; renderer.shadowMap.autoUpdate = false;
 var GL2 = renderer.capabilities.isWebGL2;
 var scene = new T.Scene();
 scene.fog = new T.FogExp2(0x101828, .002);
@@ -232,7 +246,7 @@ var PP = (function(){
   if (!GL2){ renderer.toneMapping = T.ACESFilmicToneMapping; return null; }
   var VS = 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = vec4(position.xy, 0., 1.); }';
   var qs = new T.Scene(), qc = new T.OrthographicCamera(-1, 1, 1, -1, 0, 1), quad = new T.Mesh(new T.PlaneGeometry(2, 2)); qs.add(quad); quad.frustumCulled = false;
-  function rt(w, h, ms){ var r = new T.WebGLRenderTarget(w, h, {type: T.HalfFloatType, minFilter: T.LinearFilter, magFilter: T.LinearFilter, depthBuffer: !!ms, stencilBuffer: !!ms}); if (ms) r.samples = LOW ? 2 : 4; return r; }
+  function rt(w, h, ms){ var r = new T.WebGLRenderTarget(w, h, {type: T.HalfFloatType, minFilter: T.LinearFilter, magFilter: T.LinearFilter, depthBuffer: !!ms, stencilBuffer: !!ms}); if (ms) r.samples = LOW ? 0 : 2; return r; }
   var main = rt(4, 4, true), L = [], N = 5, S = [[rt(4, 4), rt(4, 4)], [rt(4, 4), rt(4, 4)]];
   for (var i = 0; i < N; i++) L.push([rt(4, 4), rt(4, 4)]);
   var bright = new T.ShaderMaterial({uniforms: {t: {value: null}, th: {value: .85}}, vertexShader: VS, depthTest: false, depthWrite: false,
@@ -349,7 +363,19 @@ var M = {
 
 /* ═════════════ земля ═════════════ */
 var GX0 = -360, GX1 = 380, GZ0 = -500, GZ1 = 460;
-var gGeo = new T.PlaneGeometry(GX1 - GX0, GZ1 - GZ0, LOW ? 240 : 370, LOW ? 310 : 480); gGeo.rotateX(-Math.PI/2); gGeo.translate((GX0 + GX1)/2, 0, (GZ0 + GZ1)/2);
+var GSX = LOW ? 230 : 300, GSZ = LOW ? 300 : 390;
+/* кеш рельєфу й відстаней до води: точні функції дорогі, а потрібні тисячі разів (і щокадру — для людей) */
+(function(){ var nx = GSX + 1, nz = GSZ + 1, dx = (GX1 - GX0)/GSX, dz = (GZ1 - GZ0)/GSZ, HCc = new Float32Array(nx*nz), WAc = new Float32Array(nx*nz), WBc = new Float32Array(nx*nz);
+  for (var j = 0; j < nz; j++) for (var i2 = 0; i2 < nx; i2++){ var x = GX0 + i2*dx, z = GZ0 + j*dz, k = j*nx + i2; HCc[k] = H(x, z); WAc[k] = dWaterA(x, z); WBc[k] = dWaterB(x, z); }
+  var HX = H, WAX = dWaterA, WBX = dWaterB;
+  function look(A, X, x, z){ var fx = (x - GX0)/dx, fz = (z - GZ0)/dz; if (!(fx >= 0 && fz >= 0 && fx < nx - 1 && fz < nz - 1)) return X(x, z);
+    var i0 = fx|0, j0 = fz|0, u = fx - i0, v = fz - j0, k = j0*nx + i0; return (A[k]*(1 - u) + A[k + 1]*u)*(1 - v) + (A[k + nx]*(1 - u) + A[k + nx + 1]*u)*v; }
+  H = function(x, z){ return look(HCc, HX, x, z); };
+  dWaterA = function(x, z){ return look(WAc, WAX, x, z); };
+  dWaterB = function(x, z){ return look(WBc, WBX, x, z); };
+  dWater = function(x, z){ return Math.min(dWaterA(x, z), dWaterB(x, z)); };
+})();
+var gGeo = new T.PlaneGeometry(GX1 - GX0, GZ1 - GZ0, GSX, GSZ); gGeo.rotateX(-Math.PI/2); gGeo.translate((GX0 + GX1)/2, 0, (GZ0 + GZ1)/2);
 var gp = gGeo.attributes.position, gc = new Float32Array(gp.count*3), gl2 = new Float32Array(gp.count*2), tmpC = new T.Color(), tmp2 = new T.Color();
 var C = {field1: col(0x5d4a37), field2: col(0x6f5b42), winter: col(0x4f5a34), park: col(0x3f4a2a), leaf: col(0x5d4a2c), lawn: col(0x55633a), meadow: col(0x6c6646), wet: col(0x4d5236),
   road: col(0x6a543b), gravel: col(0xa89a80), slope: col(0x4c4a2c), garden: col(0x47502f), bank: col(0x5a5a3c), yard: col(0x6b5c46), mud: col(0x4b3d2d)};
@@ -389,7 +415,7 @@ grainTex.encoding = T.LinearEncoding; grainTex.repeat.set(250, 320); grainTex.an
 var ground = new T.Mesh(gGeo, landify(new T.MeshStandardMaterial({vertexColors: true, roughness: 1, map: grainTex})));
 ground.receiveShadow = true; scene.add(ground);
 (function(){                                                                          // далекий краєвид: поля, заплава, ліс (за картою району)
-  var S0 = 7200, n = LOW ? 150 : 220, g = new T.PlaneGeometry(S0, S0, n, n); g.rotateX(-Math.PI/2);
+  var S0 = 7200, n = LOW ? 130 : 170, g = new T.PlaneGeometry(S0, S0, n, n); g.rotateX(-Math.PI/2);
   var p = g.attributes.position, cc = new Float32Array(p.count*3), la = new Float32Array(p.count*2);
   for (var k = 0; k < p.count; k++){ var x = p.getX(k), z = p.getZ(k), o = nearOut(x, z), y0 = farY(x, z);
     if (o < 140){ var hm = 0; for (var sx = -42; sx <= 42; sx += 12) for (var sz = -42; sz <= 42; sz += 12) hm = Math.min(hm, H(x + sx, z + sz)); y0 = hm < -3.4 ? Math.min(-8, y0) : Math.min(y0, hm); }
@@ -478,9 +504,7 @@ FARR.forEach(farStrip);
     if (x < GX0 || x > GX1 || z < GZ0 || z > GZ1 || H(x, z) > -3.7) continue;
     L.push([x, H(x, z), z, .8 + rnd()*.7, rnd()*6.28]);
   }
-  var im = new T.InstancedMesh(reed, new T.MeshStandardMaterial({vertexColors: true, roughness: 1}), L.length), d = new T.Object3D();
-  L.forEach(function(q, j){ d.position.set(q[0], q[1], q[2]); d.rotation.set(0, q[4], 0); d.scale.set(q[3], q[3]*(.8 + rnd()*.6), q[3]); d.updateMatrix(); im.setMatrixAt(j, d.matrix); });
-  scene.add(im);
+  instChunks(reed, new T.MeshStandardMaterial({vertexColors: true, roughness: 1}), L, 90, function(d, q){ d.position.set(q[0], q[1], q[2]); d.rotation.set(0, q[4], 0); d.scale.set(q[3], q[3]*(.8 + rnd()*.6), q[3]); });
 })();
 
 /* ═════════════ будівлі ═════════════ */
@@ -736,10 +760,10 @@ function branchTree(seed, o){
   var rr = rngF(seed), parts = [];
   function br(p0, dir, len, rad, depth){
     var p1 = p0.clone().addScaledVector(dir, len);
-    var g = new T.CylinderGeometry(rad*.68, rad, len, depth > 2 ? 6 : 4, 1, true); g.translate(0, len/2, 0);
+    var g = new T.CylinderGeometry(rad*.68, rad, len, depth > 2 ? 5 : 3, 1, true); g.translate(0, len/2, 0);
     g.applyQuaternion(new T.Quaternion().setFromUnitVectors(new T.Vector3(0, 1, 0), dir)); g.translate(p0.x, p0.y, p0.z); parts.push([g, depth > 2 ? (o.bark || 0x3d342c) : (o.bark2 || 0x4a4038)]);
-    if (depth === 0){ if (rr() < o.tuft){ var t = new T.IcosahedronGeometry(o.tuftR*(.6 + rr()*.6), 0); t.translate(p1.x, p1.y, p1.z); parts.push([t, o.tuftC]); } return; }
-    var nch = depth > 2 ? o.ch0 : 3;
+    if (depth === 0){ if (rr() < o.tuft*.6){ var t = new T.IcosahedronGeometry(o.tuftR*(.6 + rr()*.6), 0); t.translate(p1.x, p1.y, p1.z); parts.push([t, o.tuftC]); } return; }
+    var nch = depth > 2 ? o.ch0 : depth > 1 ? 3 : 2;
     for (var k = 0; k < nch; k++){
       var a = rr()*6.283, sp = o.spread*(.6 + rr()*.6);
       var nd = new T.Vector3(Math.cos(a)*Math.sin(sp), Math.cos(sp), Math.sin(a)*Math.sin(sp)); nd.lerp(dir, o.up).normalize();
@@ -841,17 +865,20 @@ var treeMat = new T.MeshStandardMaterial({vertexColors: true, roughness: .95, fl
   for (var t = 0; t < n*3 && L2.length < n; t++){ var x = -200 + rr()*360, z = -330 + rr()*480, h = H(x, z);
     if (h < WL + .25 || polyDist(x, z, ROAD) < 6 || x < roadX(z) - 6 || blocked(x, z, 1.5) || inPoly(x, z, GARDEN) && pathDist(x, z) < 2.4 || Math.hypot(x - LAWN[0], z - LAWN[1]) < 16) continue;
     var cl = fbm(x*.08 + 3, z*.08); if (rr() > ss(.3, .6, cl) + .15) continue; L2.push([x, h, z]); }
-  var im = new T.InstancedMesh(g, new T.MeshStandardMaterial({vertexColors: true, roughness: 1, side: T.DoubleSide}), L2.length), dm = new T.Object3D();
-  L2.forEach(function(q, j){ dm.position.set(q[0], q[1] - .02, q[2]); dm.rotation.set(0, rr()*6.283, 0); var sc = .7 + rr()*.8; dm.scale.set(sc, sc*(.8 + rr()*.5), sc); dm.updateMatrix(); im.setMatrixAt(j, dm.matrix); });
-  im.receiveShadow = true; scene.add(im);
+  instChunks(g, new T.MeshStandardMaterial({vertexColors: true, roughness: 1, side: T.DoubleSide}), L2, 70, function(dm, q){ dm.position.set(q[0], q[1] - .02, q[2]); dm.rotation.set(0, rr()*6.283, 0); var sc = .7 + rr()*.8; dm.scale.set(sc, sc*(.8 + rr()*.5), sc); }, {recv: true});
 })();
 var dummy = new T.Object3D();
+/* далекі дерева — прості форми без тіней (LOD) */
+var TGF = (function(){ function blob(c1, c2, h, r, sq){ return mergeG([[cyl(.25*r, .16*r, h*.55, 0, 4), 0x3d342c], [new T.IcosahedronGeometry(r, 0).scale(1, sq, 1).translate(0, h*.62, 0), c1], [new T.IcosahedronGeometry(r*.7, 0).scale(1, sq, 1).translate(r*.35, h*.78, r*.2), c2]], true); }
+  var sp = mergeG([[cyl(.3, .16, 3, 0, 4), 0x3a2e24]].concat([0, 1, 2, 3].map(function(k){ var g = new T.ConeGeometry(3 - k*.6, 3.6, 6); g.translate(0, 3 + k*2, 0); return [g, k % 2 ? 0x1f3320 : 0x22381f]; })), true);
+  return {spruce: sp, pine: blob(0x2a3d24, 0x263a22, 12, 2.6, .55), birch: blob(0x6a6152, 0x5e5648, 9, 2.4, 1.1), oak: blob(0x5a4a34, 0x4e4130, 9, 3.4, .85), lime: blob(0x4a4236, 0x433b30, 10, 3.2, .9),
+    chestnut: blob(0x6a4626, 0x5e3f24, 9, 3.4, .85), ash: blob(0x4e4a3a, 0x48443a, 11, 3, 1), wpoplar: blob(0x75726a, 0x6a675e, 13, 3.4, 1), poplar: blob(0x3d3a30, 0x37342c, 14, 1.6, 2.6),
+    willow: blob(0x6e6436, 0x5e5a34, 6, 2.6, .8), wbig: blob(0x5c5a35, 0x4e4c30, 8, 3.2, .8), shrub: blob(0x4a4030, 0x3c3a2a, 1.6, 1.3, .8), fruit: blob(0x4e4436, 0x463c30, 4, 1.6, .9)}; })();
 Object.keys(TREES).forEach(function(k){
-  var L = TREES[k]; if (!L.length) return;
-  var im = new T.InstancedMesh(TG[k], treeMat, L.length); im.castShadow = true;
-  L.forEach(function(q, j){ dummy.position.set(q[0], q[1] - .1, q[2]); dummy.rotation.set(q[5], q[4], q[5]*.7); dummy.scale.setScalar(q[3]); dummy.updateMatrix(); im.setMatrixAt(j, dummy.matrix);
-    var v = .8 + hash(q[0], q[2])*.4; im.setColorAt(j, new T.Color(v, v, v)); });
-  scene.add(im);
+  var NEARL = [], FARL = []; TREES[k].forEach(function(q){ (nearOut(q[0], q[2]) > 25 ? FARL : NEARL).push(q); });
+  if (FARL.length && TGF[k]) instChunks(TGF[k], treeMat, FARL, 700, function(d, q, j, im){ d.position.set(q[0], q[1] - .1, q[2]); d.rotation.set(0, q[4], 0); d.scale.setScalar(q[3]); var v = .8 + hash(q[0], q[2])*.4; im.setColorAt(j, new T.Color(v, v, v)); });
+  else NEARL = NEARL.concat(FARL);
+  if (NEARL.length) instChunks(TG[k], treeMat, NEARL, 90, function(d, q, j, im){ d.position.set(q[0], q[1] - .1, q[2]); d.rotation.set(q[5], q[4], q[5]*.7); d.scale.setScalar(q[3]); var v = .8 + hash(q[0], q[2])*.4; im.setColorAt(j, new T.Color(v, v, v)); }, {cast: true});
 });
 (function(){                                                                        // жердяна огорожа довкола газону (Орда, 1870) і лавки в парку
   var F = [], n = 34, R = 10.2;
@@ -881,9 +908,7 @@ Object.keys(TREES).forEach(function(k){
   var HS = [], rh2 = rngF(33); for (var t = 0; t < 6000 && HS.length < (LOW ? 70 : 140); t++){ var x = 120 + rh2()*2600, z = -2600 + rh2()*5200, o = nearOut(x, z);
     var y = o > 0 ? farY(x, z) - .3 : H(x, z); if (plateauW(x, z) > .3 || forestM(x, z) > .3 || farRiverD(x, z) < 16 || (o <= 0 && (dWater(x, z) < 4 || Math.abs(x - riverX(z)) < 32))) continue;
     var cl = vnoise(x*.01 + 4, z*.01); if (rh2() > cl*cl*1.6) continue; HS.push([x, y, z]); }
-  var him = new T.InstancedMesh(HG, hay, HS.length), hd = new T.Object3D();
-  HS.forEach(function(q, j){ hd.position.set(q[0], q[1], q[2]); hd.rotation.set((rh2() - .5)*.06, rh2()*6.28, 0); var s2 = .75 + rh2()*.5; hd.scale.set(s2, s2*(.85 + rh2()*.3), s2); hd.updateMatrix(); him.setMatrixAt(j, hd.matrix); });
-  him.castShadow = true; him.receiveShadow = true; scene.add(him);
+  instChunks(HG, hay, HS, 400, function(hd, q){ hd.position.set(q[0], q[1], q[2]); hd.rotation.set((rh2() - .5)*.06, rh2()*6.28, 0); var s2 = .75 + rh2()*.5; hd.scale.set(s2, s2*(.85 + rh2()*.3), s2); }, {cast: true, recv: true});
   var logs = []; for (var k = 0; k < 9; k++){ var g = new T.CylinderGeometry(.22, .22, 3.2, 7); g.rotateX(Math.PI/2); g.translate(-38 + (k % 4)*.46 + (k > 3 ? .23 : 0) + (k > 6 ? .23 : 0), H(-38, 47) + .22 + Math.floor(k/4)*.4, 47); logs.push([g]); }
   var lm = new T.Mesh(mergeG(logs), M.wood); lm.castShadow = true; scene.add(lm);
 })();
@@ -1086,7 +1111,7 @@ GROUPS.forEach(function(G){
   var geo = FIG[G.cls];
   G.mesh = new T.InstancedMesh(geo.body, new T.MeshStandardMaterial({color: G.col, roughness: .85, emissive: G.col, emissiveIntensity: 0}), G.n);
   G.rest = new T.InstancedMesh(geo.rest, restMat, G.n);
-  [G.mesh, G.rest].forEach(function(m){ m.castShadow = true; m.instanceMatrix.setUsage(T.DynamicDrawUsage); scene.add(m); });
+  [G.mesh, G.rest].forEach(function(m){ m.castShadow = true; m.frustumCulled = false; m.instanceMatrix.setUsage(T.DynamicDrawUsage); scene.add(m); });
   for (var k = 0; k < G.n; k++) G.mesh.setColorAt(k, new T.Color(1, 1, 1).offsetHSL(0, 0, (hash(k, 3) - .5)*.2));
   G.from = []; G.to = []; G.cur = []; for (k = 0; k < G.n; k++){ G.from.push([0, 0, 0, 0]); G.to.push([0, 0, 0, 0]); G.cur.push([0, 0, 0, 0]); }
   G.ring = new T.Mesh(new T.RingGeometry(.92, 1, 64), new T.MeshBasicMaterial({color: G.col, transparent: true, opacity: 0, depthWrite: false, fog: false})); G.ring.rotation.x = -Math.PI/2; G.ring.renderOrder = 3; scene.add(G.ring);
@@ -1146,7 +1171,7 @@ function particles(n, additive, tex, boost, shape){
   var st = []; for (var k = 0; k < n; k++) st.push({life: 1, max: 1, x: 0, y: -999, z: 0, vx: 0, vy: 0, vz: 0, s0: 1, kind: 0});
   return {g: g, m: m, st: st, n: n, i: 0};
 }
-var FLAME = particles(LOW ? 800 : 1500, true, DOT, 2.6, 1), EMBER = particles(LOW ? 220 : 420, true, DOT, 5, 2), SMOKE = particles(LOW ? 640 : 1300, false, PUFF, 1), FLASH = particles(140, true, DOT, 6, 2);
+var FLAME = particles(LOW ? 600 : 1000, true, DOT, 2.6, 1), EMBER = particles(LOW ? 160 : 300, true, DOT, 5, 2), SMOKE = particles(LOW ? 420 : 800, false, PUFF, 1), FLASH = particles(140, true, DOT, 6, 2);
 var TORCH = particles(240, true, DOT, 3.2, 1), MIST = particles(LOW ? 70 : 130, false, PUFF, 1); MIST.m.uniforms.uNear.value = 140; SMOKE.m.uniforms.uNear.value = 14;
 function emit(P, x, y, z, vx, vy, vz, life, size, kind){ var s = P.st[P.i]; P.i = (P.i + 1) % P.n; s.x = x; s.y = y; s.z = z; s.vx = vx; s.vy = vy; s.vz = vz; s.life = 0; s.max = life; s.s0 = size; s.kind = kind || 0; }
 var smokeAcc = [0, 0, 0];
@@ -1442,13 +1467,13 @@ function frame(now){
       o.visible = false; if (!o.visible) return; var top = gy + ud.h*(1 - roofCur[p]*.5) + (1 - roofCur[p])*ud.rh*.35;
       o.position.y = top - .5; o.scale.set(u.w*fl, u.h*fl*(1 + .2*Math.sin(time*7 + u.ph)), u.w*fl); o.rotation.y = time*.5 + u.ph; });
     fireLights[p].intensity = f*(1.6 + Math.sin(time*13 + p*2)*.4 + Math.sin(time*7.3)*.3)*(.12 + .8*night*night);
-    var rate = f*(LOW ? 120 : 210)*dt;
+    var rate = f*(LOW ? 80 : 140)*dt;
     for (var k = 0; k < rate; k++){
       var hs = HOT[p][(Math.random()*HOT[p].length)|0], spread = .4 + roofCur[p]*.6, fx = lerp(hs[0], lerp(R0.x0 + 1, R0.x1 - 1, Math.random()), spread*.35) + (Math.random() - .5)*2.4, fz = lerp(hs[1], lerp(R0.z0 + 1, R0.z1 - 1, Math.random()), spread*.35) + (Math.random() - .5)*2.4, fy = gy + ud.h*(1 - roofCur[p]*.3) + Math.random()*(ud.rh*.4*(1 - roofCur[p]) + 2.5*roofCur[p]);
-      emit(FLAME, fx, fy, fz, (Math.random() - .5)*1.4 + .9, 3 + Math.random()*4, (Math.random() - .5)*1.4, .7 + Math.random()*.8, 3.2 + Math.random()*3.6, 0);
+      emit(FLAME, fx, fy, fz, (Math.random() - .5)*1.4 + .9, 3 + Math.random()*4, (Math.random() - .5)*1.4, .7 + Math.random()*.8, 3.8 + Math.random()*4.2, 0);
       if (Math.random() < .1) emit(EMBER, fx, fy + 2, fz, (Math.random() - .5)*3 + 2.5, 5 + Math.random()*6, (Math.random() - .5)*3, 2.5 + Math.random()*2.5, .45 + Math.random()*.3, 0);
     }
-    smokeAcc[p] += f*(LOW ? 11 : 21)*dt;
+    smokeAcc[p] += f*(LOW ? 7 : 13)*dt;
     while (smokeAcc[p] >= 1){ smokeAcc[p]--; var hs2 = HOT[p][(Math.random()*HOT[p].length)|0]; emit(SMOKE, hs2[0] + (Math.random() - .5)*5, gy + ud.h + 2 + Math.random()*2, hs2[1] + (Math.random() - .5)*5, 1 + Math.random()*1.5, 4 + Math.random()*3, -.5 + (Math.random() - .5), 12 + Math.random()*7, 7 + Math.random()*6, 0); }
   }
   if (Math.random() < dt*2) emit(SMOKE, CHIMNEY.x, CHIMNEY.y, CHIMNEY.z, .8, 2.5, -.3, 9, 3, 2);          // заводський комин куриться
@@ -1548,8 +1573,14 @@ function frame(now){
   layoutLabels();
   var az0 = Math.atan2(camera.position.x - controls.target.x, camera.position.z - controls.target.z); needle.style.transform = 'rotate(' + (az0*180/Math.PI) + 'deg)';
   var us = innerHeight*.9; [FLAME, EMBER, SMOKE, FLASH, TORCH, MIST].forEach(function(P){ P.m.uniforms.uScale.value = us; });
+  FRN++; if (FRN % 2 === 0 || camFly < 1) renderer.shadowMap.needsUpdate = true;                  // тіні — через кадр
   if (PP){ PP.U.time.value = time; PP.render(); } else renderer.render(scene, camera);
+  var fdt = now - (LASTF || now); LASTF = now; FAVG = FAVG*.95 + Math.min(200, fdt)*.05;          // адаптивна роздільність: тримаємо ~45+ fps
+  if (now - QT > 1500 && !document.hidden && DTMAX < .1){ QT = now;
+    if (FAVG > 26 && DPR > .6){ DPR = Math.max(.6, DPR*.85); renderer.setPixelRatio(DPR); size(); }
+    else if (FAVG < 15 && DPR < DPR0){ DPR = Math.min(DPR0, DPR*1.1); renderer.setPixelRatio(DPR); size(); } }
 }
+var FRN = 0, LASTF = 0, FAVG = 16, QT = 0;
 function size(){ renderer.setSize(innerWidth, innerHeight, false); camera.aspect = innerWidth/innerHeight; camera.updateProjectionMatrix();
   if (PP) PP.size(Math.floor(innerWidth*DPR), Math.floor(innerHeight*DPR)); BL.forEach(function(b){ b.el._w = 0; }); }
 addEventListener('resize', size); size();
